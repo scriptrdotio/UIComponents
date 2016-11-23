@@ -1,0 +1,28 @@
+var log = require("log");
+log.setLevel("INFO");
+
+log.info("rawBody")
+log.info(JSON.stringify(request.rawBody));
+
+log.info("params");
+log.info(JSON.stringify(request.parameters.data));
+
+log.info("body")
+log.info(JSON.stringify(request.body));
+
+// Import the document module
+var documents = require("document");
+ 
+// Uncomment: Delete the document with key "myCountryDocumentKey", 
+// 1- to invoke a logical error in api
+// 2- to return a nested metadata/ result set
+//return documents.delete("myCountryDocumentKey");
+
+//Return a valid data set to an http call
+return [  
+    ['Language', 'Speakers (in millions)'],
+    ['German',  5.85],
+    ['French',  1.66],
+    ['Italian', 0.316],
+    ['Romansh', 0.0791]
+];			

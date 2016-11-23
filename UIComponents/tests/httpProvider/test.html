@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My HTML File</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+ 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//marv.scriptrapps.io/UIComponents/httpProvider.js"></script>
+
+    <body ng-app="myApp">  
+		<div ng-controller="testCtrl as vm" ng-init="vm.init()">
+          	Data: {{vm.data || 'n/a'}}
+          	<br/>
+            error: {{vm.error || 'n/a'}}
+        </div>
+   	</body>
+   <script>
+    var myApp = angular.module('myApp', ["HttpClient"]);
+     
+     myApp.config(["httpClientProvider",function (httpClientProvider) {
+         httpClientProvider.setBaseUrl("https://marv.scriptrapps.io");
+         httpClientProvider.setToken("RTg2MTczN0ZDRQ==");
+      }]);
+     
+ 	 myApp.controller('testCtrl', function($scope, $controller, httpClient) {
+       	var vm = this;
+        vm.init = function() {
+            httpClient.get("UIComponents/tests/httpProvider/restApi", {"data":"www ss"}).then(
+                function(data, response) {
+                  vm.data = JSON.stringify(data);
+                  console.log("resolve", data)
+                },
+                function(err) {
+                  vm.error =  JSON.stringify(err)
+                  console.log("reject", err);
+                }
+              ); 
+
+            httpClient.post("UIComponents/tests/httpProvider/restApi", {"data":"www ss"}).then(
+                function(data, response) {
+                  vm.data = JSON.stringify(data)
+                  console.log("resolve", data)
+                },
+                function(err) {
+                  vm.error =  JSON.stringify(err)
+                  console.log("reject", err);
+                }
+              );
+        }
+    });
+  </script>
+</html>
