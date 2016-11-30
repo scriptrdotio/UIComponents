@@ -1,0 +1,1 @@
+angular.module('Management', ['HttpClient', 'underscore', 'ngTagsInput']);

@@ -4,76 +4,61 @@
     <meta charset="utf-8">
     <title>My HTML File</title>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
- 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
-    
     <script src="/UIComponents/wsProvider.js"></script>
-
     <body ng-app="myApp">  
-		<div ng-controller="testCtrl as vm" ng-init="vm.init()">
-          	SubscribeData: {{vm.subscribeData || 'n/a'}}
-          	<br/>
-            SubscribeError: {{vm.subscribeError || 'n/a'}}
-          	<br/><br/>
-         	CallData: {{vm.callData || 'n/a'}}
-          	<br/>
-            CallError: {{vm.callError || 'n/a'}}
-        </div>
-   	</body>
-   <script>
-    var myApp = angular.module('myApp', ["WsClient"]);
-     
-     myApp.config(["wsClientProvider",function (wsClientProvider) {
-         wsClientProvider.setBaseUrl("wss://api.scriptrapps.io/");
-         wsClientProvider.setToken("RTg2MTczN0ZDRQ==");
-         wsClientProvider.setPublishChannel("requestChannel");
-         wsClientProvider.setSubscribeChannel("responseChannel");
-      }]);
-     
- 	 myApp.controller('testCtrl', function($scope, $controller, wsClient) {
-       	var vm = this;
-        vm.init = function() {
-         	wsClient.onReady.then(function() {
-              
-              wsClient.call("UIComponents/tests/wsProvider/restApi", {"data":"www ss"}, "callBackId").then(
-                function(data, response) {
-                  vm.callData =  JSON.stringify(data)
-                  console.log("resolve call promise", data)
-                },
-                function(err) {
-                  vm.callError = JSON.stringify(error)
-                  console.log("reject call promise", err);
-                }
-            ); 
-          
-             wsClient.publish({"data":"www ss"}).then(
-                function(data, response) {
-                  vm.subscribeData =  JSON.stringify(data)
-                  console.log("resolve published promise", data)
-                },
-                function(err) {
-                  vm.subscribeError = JSON.stringify(error)
-                  console.log("reject published promise", err);
-                }
-            );
-              
-            });
-
-        }
-        
-      	wsClient.onError.then(function(error) {
-               console.log("ws ready error");
-            });
-       
-       	wsClient.onClose.then(function(error) {
-               console.log("ws closed ");
-            });
-       
-
-       
+      <div ng-controller="testCtrl as vm" ng-init="vm.init()">
+        SubscribeData: {{vm.subscribeData || 'n/a'}}
+        <br/>
+        SubscribeError: {{vm.subscribeError || 'n/a'}}
+        <br/><br/>
+        CallData: {{vm.callData || 'n/a'}}
+        <br/>
+        CallError: {{vm.callError || 'n/a'}}
+      </div>
+    </body>
+    <script>
+      var myApp = angular.module('myApp', ["WsClient"]);
       
-    });
-  </script>
-</html>
+      myApp.config(["wsClientProvider",function (wsClientProvider) {
+        wsClientProvider.setBaseUrl("wss://api.scriptrapps.io/");
+        wsClientProvider.setToken("RTg2MTczN0ZDRQ==");
+        wsClientProvider.setPublishChannel("requestChannel");
+        wsClientProvider.setSubscribeChannel("responseChannel");
+      }]);
+      
+      myApp.controller('testCtrl', function($scope, $controller, wsClient) {
+        var vm = this;
+        vm.init = function() {
+          wsClient.onReady.then(function() {
+            wsClient.call("UIComponents/tests/wsProvider/restApi", {"data":"www ss"}, "call").then(
+              function(data, response) {
+                vm.callData =  JSON.stringify(data)
+                console.log("resolve call promise", data)
+              },
+              function(err) {
+                vm.callError = JSON.stringify(error)
+                console.log("reject call promise", err);
+              }
+            ); 
+            wsClient.publish({"data":"www ss"}, "publish").then(
+              function(data, response) {
+                vm.subscribeData =  JSON.stringify(data)
+                console.log("resolve published promise", data)
+              },
+              function(err) {
+                vm.subscribeError = JSON.stringify(error)
+                console.log("reject published promise", err);
+              }
+            );
+          });
+        }
+
+        wsClient.onClose.then(function(error) {
+          console.log("websocket closed ");
+        });
+      });
+    </script>
+    </html>

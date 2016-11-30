@@ -75,11 +75,9 @@ angular.module('WsClient', [ 'ngWebSocket', 'ngCookies' ]).provider(
 		            var dataStream = $websocket(_socketUrl);
 
 		            var msg = [];
-		            var connect = $q.defer();
 		            var ready = $q.defer();
 		            var error = $q.defer();
 		            var close = $q.defer();
-		            var reconnect = $q.defer();
 
 		            // On open of the socket connection, if subscribeChannel available subscribe to read messages received on this channel
 		            dataStream.onOpen(function() {
@@ -102,19 +100,17 @@ angular.module('WsClient', [ 'ngWebSocket', 'ngCookies' ]).provider(
 					            if (ready) {
 						            ready.resolve();
 					            }
-					            if (connect) {
-						            connect.resolve();
-					            }
 				            }
 				            callbackHandler(data);
-			            } catch (e) {
-				            console.log("Error when parsing message", message, e)
+			            } catch (e) { 
+				            console.log("Error when parsing message received over socket", message, e)
 			            }
 		            });
 
 		            dataStream.onClose(function(e) {
 			            console.log("Socket Closed", e);
 			            close.resolve()
+                        console.log("Trying to reconnect closed socket.")
 			            dataStream.reconnect(); // Try to re-open socket
 		            });
 
@@ -123,17 +119,20 @@ angular.module('WsClient', [ 'ngWebSocket', 'ngCookies' ]).provider(
 			            error.resolve();
 		            });
 
+                  	//Check if message received has a registered callback in our registry
 		            var callbackHandler = function(data) {
 			            var messageObj = data;
-			            console.log("Received data from websocket: ", messageObj);
-			            // If an object exists with callback_id in our callbacks object, resolve it
-			            var callbackId = messageObj.id; // messageObj.id.split("-")[1]
-			            if (callbacks.hasOwnProperty(callbackId)) {
-				            console.log(callbacks[callbackId]);
+			            console.log("Received message data from websocket: ", messageObj);
+			            // Get the message callback id
+			            var callbackId = messageObj.id; 
+			            if (callbackId && callbacks.hasOwnProperty(callbackId)) {
+				            console.log("Execute registered call back for received socket message.", callbacks[callbackId]);
 				            $rootScope.$apply(callbacks[callbackId].cb
 				                  .resolve(messageObj.result));
 				            delete callbacks[callbackId];
-			            }
+			            } else {
+                           console.log("No callbacks registerd for received socket message.");
+                        }
 		            }
 
 		            // properties/methods that will be available in controller when passed the provider
@@ -159,7 +158,7 @@ angular.module('WsClient', [ 'ngWebSocket', 'ngCookies' ]).provider(
 				               };
 
 				               message["id"] = id;
-				               console.log('Sending request', message);
+				               console.log('Sending publish message', message);
 				               dataStream.send({
 				                  "method" : "Publish",
 				                  "params" : {
@@ -169,7 +168,7 @@ angular.module('WsClient', [ 'ngWebSocket', 'ngCookies' ]).provider(
 				               });
 				               return defer.promise;
 			               } else {
-				               console.log("No channel is deifned!")
+				               console.log("No channel is deifned, message won't be sent.", message)
 			               }
 		               },
 
@@ -190,7 +189,7 @@ angular.module('WsClient', [ 'ngWebSocket', 'ngCookies' ]).provider(
 			               };
 
 			               request["id"] = _getRequestCallId(callbackId, prefix);
-			               console.log('Sending request', request);
+			               console.log('Sending call api request over socket.', request);
 			               dataStream.send(request);
 			               return defer.promise;
 		               },
@@ -203,11 +202,9 @@ angular.module('WsClient', [ 'ngWebSocket', 'ngCookies' ]).provider(
 			               }
 		               },
 
-		               onConnect : connect.promise,
 		               onReady : ready.promise,
 		               onError : error.promise,
-		               onClose : close.promise,
-		               onReconnect : reconnect.promise
+		               onClose : close.promise
 
 		            };
 
