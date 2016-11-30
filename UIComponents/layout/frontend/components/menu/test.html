@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My HTML File</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+    <!-- font awesome.css -->
+    <script src="https://use.fontawesome.com/3d61d6959e.js"></script>
+    <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
+
+  
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
+
+    <link rel="stylesheet" href="/UIComponents/layout/frontend/components/menu/menu.css">
+    <script src="/UIComponents/layout/frontend/components/module.js"></script>
+    <script src="/UIComponents/layout/frontend/components/menu/menu.js"></script>
+    
+    
+    <body ng-app="myApp">  
+      <div ng-controller="testCtrl as vm">
+        <!-- menu items can also be passed as a json object directly here -->
+        <menu class="menu-wrap" menu-items="vm.menuItems"></menu>
+      </div>
+
+    </body>
+    <script>
+      var underscore = angular.module('underscore', []);
+      underscore.factory('_', ['$window', function($window) {		
+          return $window._; // assumes underscore has already been loaded on the page		
+      }]);
+      
+      var myApp = angular.module('myApp', ["Layout"]);
+   
+       myApp
+        .constant("menuItemsJson",  {
+            "mainMenu": "col1",
+            "col1": [
+                {"id":"4", "iconClass":"fa fa-globe", "label": "Map", "route":"#/map", "active":"false"},
+                {"id":"5","iconClass":"fa fa-dashboard","label":"Listing","route":"#/load", "active":"false", "sub": "col3"},
+                {"id":"2", "iconClass":"fa fa-bell-o", "label": "Notifications", "route": "#/notif","active":"false"},
+                {"id":"3", "iconClass":"fa fa-cogs", "label": "Generic Rule", "route": "#/gr","active":"false"}
+            ],
+            "col3": [
+              {"id":"6", "iconClass":"fa fa-dashboard", "label":"Logs", "route":"#/logs", "active":"false"},
+              {"id":"7", "iconClass":"fa fa-line-chart", "label": "Historical", "route":"#/hist", "active":"false"},
+              {"id":"8", "iconClass":"fa fa-ticket", "label":"Tickets", "route":"#/tickets", "active":"false"}
+            ]
+          }).controller('testCtrl', function($scope, menuItemsJson) {
+            var vm = this 
+         	vm.menuItems = menuItemsJson
+       });
+
+    </script>
+    </html>

@@ -1,0 +1,15 @@
+/*** header ***/
+header {background: #283746;}
+header {height: 45px; position: fixed; top: 0; z-index: 999; width: 100%;}
+
+/*** logo ***/
+.logo {background: #5477a0; width: 200px; height: 45px; text-align: center; padding: 9px 0 0 20px;}
+.logo img {max-width: 135px;}
+.username { color: #fff;font-size: 16px;margin: 10px 10px 10px 10px;}
+
+/*** logout ***/
+.logout a:link, .logout a:visited {height: 45px; border: none; color: #fff; display: block; padding: 10px 13px 13px 12px;}
+.logout {border-left: 1px solid rgba(255,255,255,0.5);}
+.logout:hover, .logout:focus {background: #64798e;}
+
+
