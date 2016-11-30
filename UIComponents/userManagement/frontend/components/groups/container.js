@@ -1,5 +1,6 @@
-angular.module('Management').component('groupContainer', {
-   template: "<div></div>",
+angular.module('Management').component('groupsContainer', {
+   template: '<div><h5 class="box-title text-uppercase fntmontessart">{{vm.title}}</h5><groups-list></groups-list><group-details></group-details></div>',
+   transclude: true,
    controller : function($scope, _) {
 	   var self = this;
 	   self.isLoading = true;
@@ -12,6 +13,7 @@ angular.module('Management').component('groupContainer', {
 		   $scope.$broadcast('loadGroupDetails', {});
 	   });
    },
+   controllerAs: 'vm',
    bindings: {
      'title': '@title'
    }

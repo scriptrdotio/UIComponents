@@ -8,10 +8,17 @@ angular.module('Management').component('groupDetails', {
 
    controller : function($scope, _, managementService) {
 	   var self = this;
+       
+       $scope.$on("loadGroupDetails", function(event, data) {
+         if (data.id) {
+           self.loadGroup(data.id);
+         } else {
+           self.group = {};
+           self.update = false;
+           originalGroup = angular.copy(self.group);
+         }
 
-	   $scope.$on("editGroup", function(event, data) {
-		   self.loadGroup(data.id);
-	   })
+       })
        
 	   self.isLoading = true;
 	   var originalGroup = angular.copy(this.group);
@@ -62,5 +69,7 @@ angular.module('Management').component('groupDetails', {
 	   this.isGroupChanged = function() {
 		   return !angular.equals(this.group, originalGroup);
 	   }
+         
+       
    }
 });

@@ -1,4 +1,4 @@
-angular.module('Management').component('container', {
+angular.module('Management').component('devicesContainer', {
    templateUrl : '/UIComponents/userManagement/frontend/components/devices/container.html',
    controllerAs : 'vm',
    controller : function($scope, _) {

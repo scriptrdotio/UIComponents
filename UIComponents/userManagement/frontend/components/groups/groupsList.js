@@ -53,9 +53,13 @@ angular.module('Management')
     }
     
     this.editGroup = function(id) {
-      $scope.$broadcast('editGroup', {
+      $scope.$emit('editGroup', {
         "id": id 
       });
+    };
+    
+    this.addGroup =  function() {
+       $scope.$emit('addGroup');
     }
   }
 });
