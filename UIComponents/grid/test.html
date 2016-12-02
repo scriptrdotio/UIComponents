@@ -1,0 +1,45 @@
+<html ng-app="myApp">
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+  
+    <!-- font awesome.css -->
+    <script src="https://use.fontawesome.com/3d61d6959e.js"></script>
+    <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
+    <!-- font awesome.css -->
+    <link href="style.css" rel="stylesheet">
+
+  
+  
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+  
+  	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+  
+  	<script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.min.js?ignore=notused36"></script>
+    <script src="./controller.js"></script>
+</head>
+  
+<script>
+      var myApp = angular.module('myApp', ["HttpClient", "myGrid", "agGrid"]);
+      myApp.config(["httpClientProvider",function (httpClientProvider) {
+        httpClientProvider.setBaseUrl("https://touta.scriptrapps.io");
+        httpClientProvider.setToken("UjkyNTI2OTk1RTpkZW1vOjNCOTUzNjE4NTU3ODdGRThBNEZBMTc2QkJGM0U3OTlC");
+      }]);
+</script>  
+
+<body ng-controller="exampleCtrl as vm">
+   <div class="col-xs-12 col-md-5 form-group">
+     <input type="text" class="form-control" ng-model="gridOptions.quickFilterText" placeholder="Type text to filter..."/>
+  </div>
+  <div class="clearfix"></div>
+  <div class="col-xs-12">
+    <div ag-grid="gridOptions" class="ag-bootstrap" style="height: 80%;"></div>
+  </div>
+</body>
+</html>

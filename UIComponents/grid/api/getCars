@@ -1,0 +1,30 @@
+var documents = require("document");
+var params = request.parameters;
+var columnName = params.columnName;
+var resultsPerPage = params.resultsPerPage;
+var pageNumber = params.pageNumber;
+var sort = params.sort;
+
+var results;
+
+var queryParams = {};
+var fieldsParams = "name, model, price";
+var queryString = 'formType = "cars"';
+var sortString = (columnName && columnName != "" && columnName != "undefined") ? columnName+"<string:"+sort+">" : null;
+
+queryParams["count"] = "true";
+queryParams["query"] =  queryString;
+queryParams["fields"] =  fieldsParams;
+if(sortString){
+  queryParams["sort"] = sortString;
+}
+if(resultsPerPage){
+  queryParams["resultsPerPage"] = resultsPerPage;
+}
+if(pageNumber){
+  queryParams["pageNumber"] = pageNumber;
+}
+
+results = documents.query(queryParams);
+
+return results.result;

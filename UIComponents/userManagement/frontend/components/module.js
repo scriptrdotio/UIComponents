@@ -1,1 +1,1 @@
-angular.module('Management', ['HttpClient', 'underscore', 'ngTagsInput']);
+angular.module('Management', ['underscore', 'ngTagsInput']);

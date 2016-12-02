@@ -1,0 +1,24 @@
+var documents = require("document");
+
+var params = request.parameters;
+var update = params.update;
+
+var carfields = {
+    "formType": "cars",
+    // add a field containing a string value called name
+    "name": "test12",
+    // add a field containing a numeric value called totalLandArea
+    "model": "test12",
+    // add a field containing a date value called independenceDay
+    "price": "15200",
+
+    "meta.types": {
+        "formType": "string",
+        "name": "string",
+        "model": "string",
+        "price": "numeric"
+    }
+};
+
+//var carfieldsResult = documents.save(carfields);
+return carfieldsResult

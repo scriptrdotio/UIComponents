@@ -23,7 +23,7 @@ if(!hasPermission) {
 }
 
 var users =[];
-var response = apsdb.callApi("ListDevices", {}, null);
+var response = apsdb.callApi("ListDevices", {"apsdb.count": true}, null);
   
 
 if(response.metadata.status == "failure") {
