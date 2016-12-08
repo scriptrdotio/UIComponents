@@ -1,7 +1,9 @@
+agGrid.initialiseAgGridWithAngular1(angular);
+angular.module('Grid', ['agGrid']);
+
 angular
   .module("Grid")
-  .component(
-  'scriptrGrid',
+  .component('scriptrGrid',
   {
     bindings : {
       
@@ -15,19 +17,26 @@ angular
       
       "enableColResize" : "<?",
       
-      "enableFilter" : "<?",
+      "cellEditable" : "<?",
       
-      "rowModelType": "<?", // rowModelType can be set to "pagination" or "virtual" (infinite scrolling)
+      "enableSorting": "<?", // client-side sorting
       
-      "rowModelSelection": "<?", //"multiple" or "single"
+      "serviceApi" : "@", // restApi 
+      
+      "onCellValueChangedScript" : "@", // script to  be called after editing a cell
+      
+      "providerOption" : "@", //"http" or "webSocketCall" or "publish"
+      
+      "enableClientFilter" : "<?",
+      
+      "rowModelType": "@", // rowModelType can be set to "pagination" or "virtual" (infinite scrolling)
+      
+      "rowModelSelection": "@", //"multiple" or "single"
       
       "rowDeselection": "<?",
       
       /** pagination properties **/
       "paginationPageSize": "<?", // In virtual paging context means how big each page in our page cache will be, default is 100
-      
-      /** virtual paging properties **/
-      "enableServerSideFilter": "<?", 
       
       /** virtual paging properties **/
       "paginationOverflowSize": "<?", // how many extra blank rows to display to the user at the end of the dataset, which sets the vertical scroll and then allows the grid to request viewing more rows of data. default is 1, ie show 1 row.
@@ -49,21 +58,28 @@ angular
       
       this.gridOptions = {};
       
+      if(!this.enableClientFilter){
+        this.hideClientFilter = "true";
+      }
+      if(!this.enableServerSideFilter){
+        this.hideServerFilter = "true";
+      }
+      
       this.dataSource = {
         getRows : function(params) {
           var APIParams = self.buildParams(params)
-          var dataResponse = dataService.getGridData(APIParams).then(
-          function(data, response) {
-            if (data && data.documents && data.count) {
-              var rowsData = data.documents;
-              var count = parseInt(data.count);
-              params.successCallback(rowsData, count);
-            } else {
-              params.failCallback();
-            }
-          }, function(err) {
-            console.log("reject", err);
-          });
+            var dataResponse = dataService.getGridData(self.serviceApi, APIParams, self.providerOption).then(
+            function(data, response) {
+              if (data && data.documents && data.count) {
+                var rowsData = data.documents;
+                var count = parseInt(data.count);
+                params.successCallback(rowsData, count);
+              } else {
+                params.failCallback();
+              }
+            }, function(err) {
+              console.log("reject", err);
+            });
         }
       }
      
@@ -71,10 +87,11 @@ angular
       
       this.$onInit = function() {
         this.gridOptions = {
-          enableServerSideSorting : (this.enableServerSideSorting)? this.enableServerSideSorting : true,
-          enableServerSideFilter : (this.enableServerSideFilter) ? this.enableServerSideFilter : true,
-          enableColResize : (this.enableColResize) ? this.enableColResize : true,
-          enableFilter : (this.enableFilter) ? this.enableFilter : true,
+          enableSorting: (typeof this.enableSorting != 'undefined')? this.enableSorting : true,
+          enableServerSideSorting : (typeof this.enableServerSideSorting != 'undefined')? this.enableServerSideSorting : true,
+          enableServerSideFilter : (typeof this.enableServerSideFilter != 'undefined') ? this.enableServerSideFilter : true,
+          enableColResize : (typeof this.enableColResize != 'undefined') ? this.enableColResize : true,
+          enableFilter : (typeof this.enableFilter != 'undefined') ? this.enableFilter : true,
           columnDefs : this.columnsDefinition,
           rowModelType :(this.rowModelType)? this.rowModelType : "pagination",
           rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
@@ -83,10 +100,10 @@ angular
             filterParams : {
               apply : true
             },
-            editable : true
+            editable : (typeof this.cellEditable != 'undefined')? this.cellEditable : true,
           },
           onCellValueChanged : function(event) {
-             callAPI("setCarsInfo", null, null, event);
+             self._saveData(self.onCellValueChangedScript, event.data);
           },
           onGridReady : function(event) {
             console.log('the grid is now ready');
@@ -94,6 +111,10 @@ angular
           },
           
         };
+      }
+      
+      this._saveData = function(onCellValueChangedScript, event){
+        dataService.saveGridData(onCellValueChangedScript, event);
       }
 
       // Get data from backend
@@ -127,13 +148,10 @@ angular
         var columnName = null;
         var type = null;
         var pageNumber = params.endRow / this.gridOptions.paginationPageSize;
-        if (params.sortModel.length > 0) {
+        if (params.sortModel && params.sortModel.length > 0) {
           var sort = params.sortModel[0].sort;
           var sortingColumnName = params.sortModel[0].colId;
-          type = (this.gridOptions.api
-                  .getColumnDef(sortingColumnName).type) ? this.gridOptions.api
-            .getColumnDef(sortingColumnName).type
-          : null;
+          type = (this.gridOptions.api.getColumnDef(sortingColumnName).type) ? this.gridOptions.api.getColumnDef(sortingColumnName).type : null;
         }
         if (params.filterModel) {
           for (p in params.filterModel) {
@@ -172,3 +190,61 @@ angular
       }
     }
   });
+
+angular
+  .module('Grid')
+  .service("dataService", function(httpClient, wsClient, $q) {
+  
+    this.saveGridData = function(api, params){
+      var d = $q.defer(); 
+      httpClient
+        .get(api, params).then(function(data, response){
+        var data = {"result": data}
+        d.resolve(data, response)
+      }, function(err) {
+        d.reject(err)
+      });
+      return d.promise;
+    }
+  
+    this.getGridData = function(api, params, provider, callback) {
+      var d = $q.defer(); 
+      if(provider == "http"){
+        httpClient
+          .get(api, params).then(function(data, response){
+            var data = {"documents": data.documents, "count": data.count}
+            d.resolve(data, response)
+        }, function(err) {
+          d.reject(err)
+        });
+        return d.promise;
+      }
+      
+     if(provider == "webSocketCall"){
+        wsClient.onReady.then(function() {
+          wsClient
+            .call(api, params, "call").then(function(data, response) {
+              var data = {"documents": data.documents, "count": data.count}
+          	  d.resolve(data, response)
+            }, function(err) {
+              d.reject(err)
+            }
+          ); 
+        }); 
+        return d.promise;
+      }
+      
+     if(provider == "publish"){
+      wsClient.onReady.then(function() {
+        wsClient.publish({"data":"www ss"}, "publish").then(function(data, response) {
+          var data = {"documents": data.documents, "count": data.count}
+          d.resolve(data, response)
+        }, function(err) {
+            d.reject(err)
+          }
+        );
+      }); 
+      return d.promise;
+     }
+    }
+});
