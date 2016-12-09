@@ -49,7 +49,7 @@
  <scriptr-grid columns-definition='[
           {headerName: "Make", field: "name"},
           {headerName: "Model", field: "model"},
-          {headerName: "Price", field: "price", type: "numeric"}]' 
+          {headerName: "Price", field: "price", type: "numeric", filter: "set"}]' 
            row-model-type='pagination'
            enable-sorting='true'
            cell-editable='true'
@@ -57,7 +57,7 @@
            enable-server-side-filter='true' 
            enable-server-side-sorting='true'
            row-model-selection='single'
-           pagination-page-size='20'
+           pagination-page-size='50'
            provider-option='http' 
            service-api='UIComponents/dashboard/frontend/components/grid/getCarsInfo'
            on-cell-value-changed-script='UIComponents/dashboard/frontend/components/grid/setCarsInfo'>

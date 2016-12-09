@@ -1,0 +1,21 @@
+var log = require("log");
+log.setLevel("INFO");
+
+var value = 500526;
+
+var requestParams = request.body;
+
+var publishResponse = function(channel, data, request) {
+   var message = {"result": data};
+   if(request.body && request.body.id) {
+     message["id"] = request.body.id;
+   } else {
+     //Add a default id to identify the message published over the socket
+      message["id"] = "speedometer";
+   }
+   publish(channel, message);
+}
+
+publishResponse("responseChannel", value, request);
+
+return value;

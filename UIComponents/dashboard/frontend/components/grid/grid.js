@@ -52,11 +52,9 @@ angular
     },
     
     templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
-    controller : function($scope, dataService) {
+    controller : function($scope, $window, dataService) {
       
       var self = this;
-      
-      this.gridOptions = {};
       
       if(!this.enableClientFilter){
         this.hideClientFilter = "true";
@@ -70,10 +68,11 @@ angular
           var APIParams = self.buildParams(params)
             var dataResponse = dataService.getGridData(self.serviceApi, APIParams, self.providerOption).then(
             function(data, response) {
-              if (data && data.documents && data.count) {
+              if (data && data.documents) {
                 var rowsData = data.documents;
                 var count = parseInt(data.count);
                 params.successCallback(rowsData, count);
+                self.gridOptions.api.sizeColumnsToFit();
               } else {
                 params.failCallback();
               }
@@ -83,19 +82,20 @@ angular
         }
       }
      
-     
       
       this.$onInit = function() {
         this.gridOptions = {
           enableSorting: (typeof this.enableSorting != 'undefined')? this.enableSorting : true,
           enableServerSideSorting : (typeof this.enableServerSideSorting != 'undefined')? this.enableServerSideSorting : true,
           enableServerSideFilter : (typeof this.enableServerSideFilter != 'undefined') ? this.enableServerSideFilter : true,
-          enableColResize : (typeof this.enableColResize != 'undefined') ? this.enableColResize : true,
+          enableColResize : (typeof this.enableColResize != 'undefined') ? this.enableColResize : false,
           enableFilter : (typeof this.enableFilter != 'undefined') ? this.enableFilter : true,
           columnDefs : this.columnsDefinition,
           rowModelType :(this.rowModelType)? this.rowModelType : "pagination",
           rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
           paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
+          overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> Please wait while your rows are loading</span>',
+
           defaultColDef : {
             filterParams : {
               apply : true
@@ -111,6 +111,10 @@ angular
           },
           
         };
+        
+       angular.element($window).bind('resize', function () {
+         self.gridOptions.api.sizeColumnsToFit();
+       });
       }
       
       this._saveData = function(onCellValueChangedScript, event){
@@ -212,8 +216,12 @@ angular
       if(provider == "http"){
         httpClient
           .get(api, params).then(function(data, response){
-            var data = {"documents": data.documents, "count": data.count}
-            d.resolve(data, response)
+            if(data && data.documents){
+              var data = {"documents": data.documents, "count": null}
+              d.resolve(data, response)
+            }else{
+              d.resolve(null, response)
+            }
         }, function(err) {
           d.reject(err)
         });
@@ -224,8 +232,12 @@ angular
         wsClient.onReady.then(function() {
           wsClient
             .call(api, params, "call").then(function(data, response) {
-              var data = {"documents": data.documents, "count": data.count}
-          	  d.resolve(data, response)
+              if(data && data.documents){
+                var data = {"documents": data.documents, "count": data.count}
+                d.resolve(data, response)
+              }else{
+                  d.resolve(null, response)
+              }
             }, function(err) {
               d.reject(err)
             }
@@ -237,8 +249,12 @@ angular
      if(provider == "publish"){
       wsClient.onReady.then(function() {
         wsClient.publish({"data":"www ss"}, "publish").then(function(data, response) {
-          var data = {"documents": data.documents, "count": data.count}
-          d.resolve(data, response)
+          if(data && data.documents){
+            var data = {"documents": data.documents, "count": data.count}
+            d.resolve(data, response)
+          }else{
+            d.resolve(null, response)
+          }
         }, function(err) {
             d.reject(err)
           }
