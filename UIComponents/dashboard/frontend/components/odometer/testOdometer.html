@@ -2,9 +2,9 @@
 
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <link rel="stylesheet" href="/scriptrUI/lib/widgets/odometer/odometer.car.css">
-    <script src="/scriptrUI/lib/widgets/odometer/odometer.min.js"></script>
-    <script src="/scriptrUI/lib/widgets/odometer/angular.odometer.min.js"></script>
+    <link rel="stylesheet" href="odometer.car.css">
+    <script src="odometer.min.js"></script>
+    <script src="angular.odometer.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
@@ -28,7 +28,8 @@
       }]);
   
 </script>
-   <div style="font-size: 43px; padding-top: 65px;"><scriptr-odometer
+   <div style="font-size: 43px; padding-top: 65px;">
+    <scriptr-odometer
     provider='http'
     api='UIComponents/dashboard/frontend/components/odometer/getOdometerVal'
     theme='car'
