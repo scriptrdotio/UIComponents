@@ -35,7 +35,7 @@
   <script src="/UIComponents/userManagement/frontend/components/devices/deviceDetails.js"></script>
   <script src="/UIComponents/userManagement/frontend/components/groups/groupsList.js"></script>
   <script src="/UIComponents/userManagement/frontend/components/groups/groupDetails.js"></script>
-   <script src="/UIComponents/userManagement/frontend/components/groups/container.js"></script>
+  <script src="/UIComponents/userManagement/frontend/components/groups/container.js"></script>
   
 </head>
   
@@ -45,11 +45,11 @@
       underscore.factory('_', ['$window', function($window) {		
           return $window._; // assumes underscore has already been loaded on the page		
       }]);
-      var myApp = angular.module('myApp', ["HttpClient", "Management", "Generic"]);
+      var myApp = angular.module('myApp', ["HttpClient", "Management"]);
   
   	  myApp.config(["httpClientProvider",function (httpClientProvider) {
-        httpClientProvider.setBaseUrl("https://touta.scriptrapps.io");
-        httpClientProvider.setToken("UjkyNTI2OTk1RTpkZW1vOjNCOTUzNjE4NTU3ODdGRThBNEZBMTc2QkJGM0U3OTlC");
+        httpClientProvider.setBaseUrl("https://dolly.scriptrapps.io");
+        httpClientProvider.setToken("S0M0MzMzQjJCMzpkZW1vOjMwOENEOTBCMjBBNDQ1MTU0M0QwMDkzODU4NUNFMzdC");
       }]);
   
   	  myApp

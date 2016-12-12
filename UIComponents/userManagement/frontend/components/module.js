@@ -1,1 +1,1 @@
-angular.module('Management', ['underscore', 'ngTagsInput']);
+angular.module('Management', ['underscore', 'ngTagsInput', 'Generic']);
