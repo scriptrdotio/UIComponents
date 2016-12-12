@@ -20,22 +20,9 @@ angular
 	            var currentSubscriberId = 0;
 	            var subscribersRegistry = {};
 
-	            // This creates a new cosubscriberD for a subscriber
-	            var _getSubscriberId = function(prefix) {
-		            currentSubscriberId += 1;
-		            if (currentSubscriberId > 10000) {
-			            currentSubscriberId = 0;
-		            }
-		            return currentSubscriberId;
-	            }
-
-	            var _getSubscriberId = function(subscriberId, prefix) {
-		            return (prefix) ? (prefix + "_" + subscriberId)
-		                  : subscriberId;
-	            }
+	            
 
 	            /** This section for subscribe* */
-
 	            this.setBaseUrl = function(textString) {
 		            _baseUrl = textString;
 	            };
@@ -118,9 +105,10 @@ angular
 		                        .onMessage(function(message) {
 			                        try {
 				                        var data = JSON.parse(message.data);
+                                        console.log("Received message data from websocket: ", data);
 				                        if (data.result == "connected.") {
 					                        _socketSession = data.id;
-					                        if (ready) {
+					                        if(ready) {
 						                        ready.resolve();
 					                        }
 				                        }
@@ -148,12 +136,8 @@ angular
 
 		                  // Check if message received has a registered callback in our registry
 		                  var callbackHandler = function(data) {
-			                  var messageObj = data;
-			                  console.log(
-			                        "Received message data from websocket: ",
-			                        messageObj);
 			                  // Get the message callback id
-			                  var callbackId = messageObj.id;
+			                  var callbackId = data.id;
 			                  if (callbackId
 			                        && callbacks.hasOwnProperty(callbackId)) {
 				                  console
@@ -161,7 +145,7 @@ angular
 				                              "Execute registered call back for received socket message.",
 				                              callbacks[callbackId]);
 				                  $rootScope.$apply(callbacks[callbackId].cb
-				                        .resolve(messageObj.result));
+				                        .resolve(data.result));
 				                  delete callbacks[callbackId];
 			                  } else {
 				                  console
@@ -170,12 +154,8 @@ angular
 		                  }
 
 		                  var subscriberHandler = function(data) {
-			                  var messageObj = data;
-			                  console.log(
-			                        "Received message data from websocket: ",
-			                        messageObj);
 			                  // Get the message callback id
-			                  var subscriberId = messageObj.id;
+			                  var subscriberId = data.id;
 			                  if (subscriberId
 			                        && subscribersRegistry
 			                              .hasOwnProperty(subscriberId)) {
@@ -183,8 +163,12 @@ angular
 				                        .log(
 				                              "Execute registered call back for received socket message.",
 				                              subscribersRegistry[subscriberId]);
-				                  // $rootScope.$apply(subscribersRegistry[subscriberId].cb.resolve(messageObj.result));
-				                  subscribersRegistry[subscriberId].cb(data)
+				                  // $rootScope.$apply(subscribersRegistry[subscriberId].cb.resolve(data.result));
+                                  var registeredSubscriptions =  subscribersRegistry[subscriberId];
+                                  for(var i = 0; i< registeredSubscriptions.length; i++) {
+                                    registeredSubscriptions[i].cb(data.result);
+                                  }
+				                  
 			                  } else {
 				                  console
 				                        .log("No subscribers registerd for received socket message.");
@@ -202,15 +186,16 @@ angular
 
 		                     subscribe : function(prefix, callback) {
 			                     if (_subscribeChannel) {
-				                     // var defer = $q.defer();
-				                     // Pass publisher id
-				                     var subscriberId = _getSubscriberId();
-				                     var id = _getSubscriberId(subscriberId, prefix);
-				                     subscribersRegistry[prefix] = {
+                                     var callback = {
 				                        time : new Date(),
 				                        cb : callback
 				                     }
-				                     // return defer.promise;
+                                     if(!subscribersRegistry[prefix]) {
+                                       subscribersRegistry[prefix] = [callback];
+                                     } else {
+                                        subscribersRegistry[prefix].push(callback)
+                                     }
+				                     
 			                     }
 		                     },
 

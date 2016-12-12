@@ -10,21 +10,57 @@
     <script src="/UIComponents/wsProvider.js"></script>
     <body ng-app="myApp">  
       <div ng-controller="testCtrl as vm" ng-init="vm.init()">
-        SubscribeData: {{vm.subscribeData || 'n/a'}}
+        <div>
+          Publishing a message over a channel in the form of {"id": "..","message":"..."}
+          Registering a promise when publishing based on the id sent, in case a message is received over socket with the 
+          same id sent when publishing, the promise will be resolved.
+        </div>
+        publishData: {{vm.publishResponseData || 'n/a'}}
         <br/>
-        SubscribeError: {{vm.subscribeError || 'n/a'}}
+        publishError: {{vm.publishResponseError || 'n/a'}}
         <br/><br/>
+        <div>
+          Publishing a message over a channel in the form of {"id": "..","message":"..."}
+          Registering a promise when publishing based on the id sent, in case a message is received over socket with the 
+          same id sent when publishing, the promise will be resolved.
+        </div>
+        publishData2: {{vm.publishResponseData2 || 'n/a'}}
+        <br/>
+        publishError2: {{vm.publishResponseError2 || 'n/a'}}
+        <br/><br/>
+        
+        <div>
+          Call a method over the socket and resolve a promise on response. Optional, send an id with message, will be returned in the response caught on the onMessage event.
+        </div>
         CallData: {{vm.callData || 'n/a'}}
         <br/>
         CallError: {{vm.callError || 'n/a'}}
+         <br/><br/>
+        CallData2: {{vm.callData2 || 'n/a'}}
+        <br/>
+        CallError2: {{vm.callError2 || 'n/a'}}
+         <br/><br/>
+        <div>
+          Subscribe to a socket messages that have a specific id
+        </div>
+          SubscribeData: {{vm.subscribeData || 'n/a'}}
+          <br/>
+          SubscribeError: {{vm.subscribeError || 'n/a'}}
+           <br/><br/>
+          SubscribeData2: {{vm.subscribeData2 || 'n/a'}}
+          <br/>
+          SubscribeError2: {{vm.subscribeError2 || 'n/a'}}
+          
+        </div>
+        
+        
       </div>
     </body>
     <script>
       var myApp = angular.module('myApp', ["WsClient"]);
       
       myApp.config(["wsClientProvider",function (wsClientProvider) {
-        wsClientProvider.setBaseUrl("wss://api.scriptrapps.io/");
-        wsClientProvider.setToken("RTg2MTczN0ZDRQ==");
+        wsClientProvider.setToken("UjkyNTI2OTk1RQ==");
         wsClientProvider.setPublishChannel("requestChannel");
         wsClientProvider.setSubscribeChannel("responseChannel");
       }]);
@@ -36,23 +72,54 @@
             wsClient.call("UIComponents/tests/wsProvider/restApi", {"data":"www ss"}, "call").then(
               function(data, response) {
                 vm.callData =  JSON.stringify(data)
-                console.log("resolve call promise", data)
+                console.log("resolve call promise on key 'call'", data)
               },
               function(err) {
                 vm.callError = JSON.stringify(error)
-                console.log("reject call promise", err);
+                console.log("reject call promise on key 'call'", err);
               }
             ); 
-            wsClient.publish({"data":"www ss"}, "publish").then(
+            
+            wsClient.call("UIComponents/tests/wsProvider/restApi2", {"data":"www ss"}, "call").then(
               function(data, response) {
-                vm.subscribeData =  JSON.stringify(data)
-                console.log("resolve published promise", data)
+                vm.callData2 =  JSON.stringify(data)
+                console.log("resolve call promise on same key 'call'", data)
               },
               function(err) {
-                vm.subscribeError = JSON.stringify(error)
-                console.log("reject published promise", err);
+                vm.callError2 = JSON.stringify(error)
+                console.log("reject call promise on same key 'call'", err);
               }
             );
+            
+            wsClient.publish({"data":"www ss"}, "publish").then(
+               function(data, response) {
+                vm.publishResponseData =  JSON.stringify(data)
+                console.log("resolve published callback promise on key 'publish'", data)
+              },
+              function(err) {
+                vm.publishResponseError = JSON.stringify(error)
+                console.log("reject published callback promise on key 'publish'", err);
+              }
+            );
+            
+            wsClient.publish({"data":"www ss"}, "publish").then(
+              function(data, response) {
+                vm.publishResponseData2 =  JSON.stringify(data)
+                console.log("different resolve published callback promise on same key 'publish'", data)
+              },
+              function(err) {
+                vm.publishResponseError2 = JSON.stringify(error)
+                console.log("different reject published callback promise on same key 'publish'", err);
+              }
+            );
+             wsClient.subscribe("test", function(data){
+                vm.subscribeData =  JSON.stringify(data)
+                console.log("resolve subscribe callback promise on key 'test'", data)
+             });
+             wsClient.subscribe("test", function(data){
+                vm.subscribeData2 =  JSON.stringify(data)
+                console.log("different resolve subscribe callback promise on key 'test'", data)
+              });
           });
         }
 

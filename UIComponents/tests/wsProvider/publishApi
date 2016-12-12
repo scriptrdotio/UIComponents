@@ -11,4 +11,6 @@ var publishResponse = function(channel, data, request) {
    publish(channel, message);
 }
 
-publishResponse("responseChannel", "Hello Device", request);
+publishResponse("responseChannel", "Hello Device 2", request);
+publish("responseChannel", {"id": "test", "result": "Tagged Data Sent"})
+
