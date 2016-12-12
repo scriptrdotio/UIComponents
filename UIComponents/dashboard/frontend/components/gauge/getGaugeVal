@@ -1,7 +1,7 @@
 var log = require("log");
 log.setLevel("INFO");
 
-var value = 75;
+var value =  Math.floor((Math.random() * 100) + 1); 
 
 var requestParams = request.body;
 
@@ -11,7 +11,7 @@ var publishResponse = function(channel, data, request) {
      message["id"] = request.body.id;
    } else {
      //Add a default id to identify the message published over the socket
-      message["id"] = "speedometer";
+      message["id"] = "gauge";
    }
    publish(channel, message);
 }

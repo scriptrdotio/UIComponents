@@ -1,7 +1,7 @@
 var log = require("log");
 log.setLevel("INFO");
 
-var value = 500526;
+var value =  Math.floor((Math.random() * 100) + 10000); 
 
 var requestParams = request.body;
 

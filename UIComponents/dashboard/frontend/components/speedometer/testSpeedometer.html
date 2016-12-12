@@ -31,14 +31,13 @@
 
   
    <scriptr-speedometer
-      theme="speed"
-      gauge-radius="250"
+      theme="rpm"
+      gauge-radius="220"
       pivot-col="#ade552"
-      provider= "http"
-      subscriber-id="speedometer"
-      api= "UIComponents/dashboard/frontend/components/speedometer/getSpeedometerVal"
-      api-data='{"name": "johnny", "lastName": "Manolly"}'>  
-   </scriptr-speedometer>
+      transport= "http"
+      masg-tag="speedometer"
+      api= "UIComponents/dashboard/frontend/components/speedometer/getSpeedometerVal">
+  </scriptr-speedometer>
   
 </body>
 

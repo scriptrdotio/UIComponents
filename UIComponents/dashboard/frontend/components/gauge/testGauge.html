@@ -30,10 +30,7 @@
 </script>
 
   <div style="width: 50%; height: 300px; border: 1px solid #eee; text-align: center;">            
-    <scriptr-gauge
-      value-font-color='#ade545'    
-      provider='http'
-      api='UIComponents/dashboard/frontend/components/gauge/getGaugeVal'> 
+    <scriptr-gauge transport='wss' msg-tag="gauge" api='UIComponents/dashboard/frontend/components/gauge/getGaugeVal'
     </scriptr-gauge>
   </div>
   

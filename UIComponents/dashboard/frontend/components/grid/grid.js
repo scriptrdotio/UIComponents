@@ -81,6 +81,12 @@ angular
             });
         }
       }
+      
+      for(var i = 0; i < this.columnsDefinition.length; i++){
+        if(this.columnsDefinition[i].hasOwnProperty("type")){
+          this.columnsDefinition[i].filter = "number";
+        }
+      }
      
       
       this.$onInit = function() {
@@ -107,6 +113,8 @@ angular
           },
           onGridReady : function(event) {
             console.log('the grid is now ready');
+            // set "Contains" in the column drop down filter to "StartWith" as it is not supported in our document query 
+            event.api.filterManager.availableFilters.text.CONTAINS = "startsWith";
             self._createNewDatasource();
           },
           
@@ -217,7 +225,7 @@ angular
         httpClient
           .get(api, params).then(function(data, response){
             if(data && data.documents){
-              var data = {"documents": data.documents, "count": null}
+              var data = {"documents": data.documents, "count": data.count}
               d.resolve(data, response)
             }else{
               d.resolve(null, response)

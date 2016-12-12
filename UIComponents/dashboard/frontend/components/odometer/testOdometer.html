@@ -30,11 +30,12 @@
 </script>
    <div style="font-size: 43px; padding-top: 65px;">
     <scriptr-odometer
-    provider='http'
-    api='UIComponents/dashboard/frontend/components/odometer/getOdometerVal'
-    theme='car'
-    animation='count'
-    duration='5000'> 
+      transport='wss'
+      api='UIComponents/dashboard/frontend/components/odometer/getOdometerVal'
+      theme='car'
+      msg-tag='odometer'
+      animation='count'
+      duration='1000'> 
     </scriptr-odometer></div>
   
 </body>
