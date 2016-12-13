@@ -1,19 +1,24 @@
 <header>
   <!-- begin logo -->
   <div class="logo pull-left">
-  	<img src="https://blog.scriptr.io/wp-content/uploads/2016/10/logo-1.png" class="img-responsive" />
+  	<img src="{{vm.logo}}" class="img-responsive" />
   </div>
   <!-- end logo -->
+  <!-- begin items in header -->
+  <div ng-repeat="item in vm.items track by $index" class="{{item.class}}">
+    <a href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i></a>
+  </div>
+  <!-- end items in header -->
   <!-- begin user -->
   <div class="pull-left username">
     {{vm.user}}
   </div>
   <!-- end user -->
   <!-- begin header side items -->
-  <div class="pull-right">
+  <div ng-show="vm.isLogout == 'true'" class="pull-right">
     <!-- begin logout -->  
     <span class="logout pull-left">
-      <a href="javascript:authorization.logout()"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+      <a href="#logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
     </span>
   </div>
   <!-- end header side items -->

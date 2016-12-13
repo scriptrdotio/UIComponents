@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>My HTML File</title>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
@@ -14,93 +13,107 @@
     <script src="https://use.fontawesome.com/3d61d6959e.js"></script>
     <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
     <!-- font awesome.css -->
-    
-    
-
-  
-    
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
-
     <link rel="stylesheet" href="/UIComponents/layout/frontend/components/menu/menu.css">
     <script src="/UIComponents/layout/frontend/components/module.js"></script>
     <script src="/UIComponents/layout/frontend/components/menu/menu.js"></script>
     <script src="/UIComponents/layout/frontend/components/header/header.js"></script>
     <link rel="stylesheet" href="/UIComponents/layout/frontend/components/header/header.css">
-    
-    
-    
-  <!--Multi Tags input -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.css" />
-  <script src="//cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.js"></script>
-  
-  <script src="/UIComponents/userManagement/frontend/components/common/list.js"></script>
-  
-  <script src="/UIComponents/httpProvider.js"></script>
-  <script src="/UIComponents/userManagement/frontend/components/module.js"></script>
-  <script src="/UIComponents/userManagement/frontend/services/managementService.js"></script>
-  <script src="/UIComponents/userManagement/frontend/components/groups/groupsList.js"></script>
-  <script src="/UIComponents/userManagement/frontend/components/groups/groupDetails.js"></script>
-  <script src="/UIComponents/userManagement/frontend/components/groups/container.js"></script>
-    
-  <link rel="stylesheet" href="/UIComponents/userManagement/frontend/style.css">
-   <link rel="stylesheet" href="test.css">
-
-    
-  </head>
-    <body ng-app="myApp">  
-       <!--header-top></header-top-->
-      <div ng-controller="testCtrl as vm">
-        <main>
-              <!-- menu items can also be passed as a json object directly here -->
-              <menu class="menu-wrap" menu-items="vm.menuItems"></menu>
-          	  <section>
-                <div class="page-content">
-                	<ng-view></ng-view>
-                </div>
-              </section>
-        </main>
-      </div>
-
-    </body>
-    <script>
-      var underscore = angular.module('underscore', []);
-      underscore.factory('_', ['$window', function($window) {		
-          return $window._; // assumes underscore has already been loaded on the page		
-      }]);
-      
-      var myApp = angular.module('myApp', ["Layout", "ngRoute", "Management", "HttpClient"]);
-      
-   	  myApp.config(["httpClientProvider",function (httpClientProvider) {
-        httpClientProvider.setBaseUrl("https://dolly.scriptrapps.io");
-        httpClientProvider.setToken("S0M0MzMzQjJCMzpkZW1vOjMwOENEOTBCMjBBNDQ1MTU0M0QwMDkzODU4NUNFMzdC");
-      }]);
-      
-       myApp
-        .constant("menuItemsJson",  {
-            "mainMenu": "col1",
-            "col1": [
-                {"id":"4", "iconClass":"fa fa-globe", "label": "Map", "route":"#/usermanagement", "active":"false"},
-                {"id":"5","iconClass":"fa fa-dashboard","label":"Listing","route":"#/load", "active":"false", "sub": "col3"},
-                {"id":"2", "iconClass":"fa fa-bell-o", "label": "Notifications", "route": "#/notif","active":"false"},
-                {"id":"3", "iconClass":"fa fa-cogs", "label": "Generic Rule", "route": "#/gr","active":"false"}
-            ],
-            "col3": [
-              {"id":"6", "iconClass":"fa fa-dashboard", "label":"Logs", "route":"#/logs", "active":"false"},
-              {"id":"7", "iconClass":"fa fa-line-chart", "label": "Historical", "route":"#/hist", "active":"false"},
-              {"id":"8", "iconClass":"fa fa-ticket", "label":"Tickets", "route":"#/tickets", "active":"false"}
-            ]
-          }).controller('testCtrl', function($scope, menuItemsJson) {
-            var vm = this 
-         	vm.menuItems = menuItemsJson
-       }).config(function($routeProvider){
-         $routeProvider
-         .when("/usermanagement", {
-           templateUrl: "/UIComponents/layout/frontend/trial/views/groups.html"
-         })
-       });
-
+    <!--Multi Tags input -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.js"></script>
+    <script src="/UIComponents/userManagement/frontend/components/common/list.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/userManagement/frontend/components/module.js"></script>
+    <script src="/UIComponents/userManagement/frontend/services/managementService.js"></script>
+    <script src="/UIComponents/userManagement/frontend/components/groups/groupsList.js"></script>
+    <script src="/UIComponents/userManagement/frontend/components/groups/groupDetails.js"></script>
+    <script src="/UIComponents/userManagement/frontend/components/groups/container.js"></script>
+    <script src="/modules/login/widgets/authorization.js" ></script>
+    <link rel="stylesheet" href="/UIComponents/userManagement/frontend/style.css">
+    <link rel="stylesheet" href="test.css">
+    <script type="text/javascript"> 
+      var authorization  = $.scriptr.authorization(
+        {
+          onTokenValid: function(){ }, 
+          loginPage:"/UIComponents/layout/frontend/trial/login.html"}
+      );
     </script>
-    </html>
+  </head>
+  <body ng-app="myApp" ng-controller="testCtrl as vm">  
+    <header-top user="vm.user" header-items="vm.headerItems"></header-top>
+    <div>
+      <main>
+        <!-- menu items can also be passed as a json object directly here -->
+        <menu class="menu-wrap" menu-items="vm.menuItems"></menu>
+        <section>
+          <div class="page-content">
+            <ng-view></ng-view>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+  <script>
+    var underscore = angular.module('underscore', []);
+    underscore.factory('_', ['$window', function($window) {		
+      return $window._; // assumes underscore has already been loaded on the page		
+    }]);
+    var myApp = angular.module('myApp', ["Layout", "ngRoute", "Management", "HttpClient"]);
+    myApp.config(["httpClientProvider",function (httpClientProvider) {
+      httpClientProvider.setBaseUrl("https://dolly.scriptrapps.io");
+      httpClientProvider.setToken("S0M0MzMzQjJCMzpkZW1vOjMwOENEOTBCMjBBNDQ1MTU0M0QwMDkzODU4NUNFMzdC");
+    }]);
+    myApp
+      .constant("menuItemsJson",  {
+      "mainMenu": "col1",
+      "col1": [
+        {"id":"4", "iconClass":"fa fa-globe", "label": "Map", "route":"#/usermanagement", "active":"false"},
+        {"id":"5","iconClass":"fa fa-dashboard","label":"Listing","route":"#/load", "active":"false", "sub": "col3"},
+        {"id":"2", "iconClass":"fa fa-bell-o", "label": "Notifications", "route": "#/notif","active":"false"},
+        {"id":"3", "iconClass":"fa fa-cogs", "label": "Generic Rule", "route": "#/gr","active":"false"}
+      ],
+      "col3": [
+        {"id":"6", "iconClass":"fa fa-dashboard", "label":"Logs", "route":"#/logs", "active":"false"},
+        {"id":"7", "iconClass":"fa fa-line-chart", "label": "Historical", "route":"#/hist", "active":"false"},
+        {"id":"8", "iconClass":"fa fa-ticket", "label":"Tickets", "route":"#/tickets", "active":"false"}
+      ]
+    })
+      .constant("headerItemsJson", {
+      "logout": "true",
+      "logo": "https://blog.scriptr.io/wp-content/uploads/2016/10/logo-1.png",
+      "items": [
+        //repeat this object for every item present in the header
+        {"icon": "fa fa-ticket", "label": "", "route":"#/logout", "class": "pull-left"},
+        {"icon": "fa fa-ticket", "label": "", "route":"#/logout", "class": "pull-left"},
+        {"icon": "fa fa-ticket", "label": "", "route":"#/logout", "class": "pull-left"}
+      ]
+    })
+    .constant("routingJson", {
+      "params": [
+        {"route": "usermanagement", "template": "/UIComponents/layout/frontend/trial/views/groups.html"},
+        {"route": "logout", "template": "/UIComponents/layout/frontend/trial/logout.html"}
+      ],
+      "otherwiseOption" : {"template": ""}
+    })
+      .controller('testCtrl', function($scope, menuItemsJson, headerItemsJson) {
+      var vm = this 
+      vm.menuItems = menuItemsJson
+      vm.headerItems = headerItemsJson
+      vm.user = vm.user = (atob(document.cookie.split("=")[1]).split(":")[1])
+    }).config(function($routeProvider, routingJson){
+      for(var i = 0; i < routingJson.params.length; i++){k
+        $routeProvider
+          .when("/" + routingJson.params[i].route, {
+          templateUrl: routingJson.params[i].template
+        })
+      }
+    });
+  </script>
+</html>
