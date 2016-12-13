@@ -1,0 +1,38 @@
+  <div class="text-center" ng-hide="$ctrl.data"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
+  <div ng-show="$ctrl.data">
+    <div ng-if="$ctrl.type == 'line'"
+         line-data='$ctrl.data'
+         line-xkey= {{$ctrl.xkey}}
+         line-ykeys='$ctrl.ykeys'
+         line-labels='$ctrl.labels'
+         line-colors='$ctrl.colors'
+         line-chart>
+    </div>
+
+    <div ng-if="$ctrl.type == 'bar'"
+         bar-data='$ctrl.data'
+         bar-x= {{$ctrl.xkey}}
+         bar-y='$ctrl.ykeys'
+         bar-labels='$ctrl.labels'
+         bar-colors='$ctrl.colors'
+         bar-chart>
+    </div> 
+
+    <div ng-if="$ctrl.type == 'area'"
+         area-chart 
+         area-data='$ctrl.data'
+         area-xkey={{$ctrl.xkey}}
+         area-ykeys='$ctrl.ykeys'
+         area-labels='$ctrl.labels'
+         line-colors='$ctrl.colors'>
+    </div>
+
+    <div ng-if="$ctrl.type == 'donut'"
+         donut-data='$ctrl.data'
+         donut-label-color= '$ctrl.donutLabelColor' 
+         donut-background-color='$ctrl.donutBackgroundColor' 
+         donut-colors='$ctrl.donutColors' 
+         donut-formatter='$ctrl.donutFormatter' 
+         donut-chart>
+    </div> 
+</div>

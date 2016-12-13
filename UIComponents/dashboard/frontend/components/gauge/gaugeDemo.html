@@ -16,13 +16,13 @@
   
   <script>
       var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Gauge"])
-      angular.module('Gauge').config(["wsClientProvider",function (wsClientProvider) {
+      angular.module('myApp').config(["wsClientProvider",function (wsClientProvider) {
         wsClientProvider.setToken("VzUwRURDNDQ2MQ==");
         wsClientProvider.setPublishChannel("requestChannel");
         wsClientProvider.setSubscribeChannel("responseChannel");
       }]);
     
-      angular.module('Gauge').config(["httpClientProvider",function (httpClientProvider) {
+      angular.module('myApp').config(["httpClientProvider",function (httpClientProvider) {
         httpClientProvider.setBaseUrl("https://component.scriptrapps.io");
         httpClientProvider.setToken("VzUwRURDNDQ2MQ==");
       }]);

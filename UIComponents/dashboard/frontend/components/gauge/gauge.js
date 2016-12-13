@@ -51,7 +51,7 @@ angular
                   "counter" : "@"
 
                },
-               templateUrl : 'gauge.html',
+               templateUrl : '/UIComponents/dashboard/frontend/components/gauge/gauge.html',
                controller : function(httpClient, wsClient) {
 
 	               var self = this;

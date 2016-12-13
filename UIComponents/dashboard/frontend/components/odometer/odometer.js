@@ -25,7 +25,7 @@ angular
           "apiData" : "<?"
 
         },
-        templateUrl: 'odometer.html',
+        templateUrl: '/UIComponents/dashboard/frontend/components/odometer/odometer.html',
         controller: function(httpClient, wsClient) {
 
            var self = this;

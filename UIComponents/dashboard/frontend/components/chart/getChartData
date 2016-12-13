@@ -1,0 +1,31 @@
+var log = require("log");
+log.setLevel("INFO");
+
+
+var requestParams = request.body;
+
+var publishResponse = function(channel, data, request, id) {
+   var message = {"result": data};
+   if(request.body && request.body.id) {
+     message["id"] = request.body.id;
+   } else {
+     if(!id) {
+        id = "gauge"
+     }
+     //Add a default id to identify the message published over the socket
+      message["id"] = id;
+   }
+   publish(channel, message);
+}
+
+// data for line, bar, and area charts
+var data = [{ y: "2009", a: 75}, { y: "2010", a: 50}, { y: "2011", a: 75}, { y: "2012", a: 100}];
+
+// data for donut chart
+var donutdata = [{label: "Download Sales", value: Math.floor((Math.random() * 100) + 1) }, {label: "In-Store Sales",value: Math.floor((Math.random() * 100) + 1) }, {label: "Mail-Order Sales", value: Math.floor((Math.random() * 100) + 1) }];
+
+publishResponse("responseChannel", data, request, "chart");
+
+publishResponse("responseChannel", donutdata, request, "donut");
+
+return data;

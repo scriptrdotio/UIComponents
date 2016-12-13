@@ -53,7 +53,7 @@ angular
         "apiData" : "<?"
         
       },
-      templateUrl: 'speedometer.html',
+      templateUrl: '/UIComponents/dashboard/frontend/components/speedometer/speedometer.html',
       controller: function(httpClient, wsClient) {
         
          var self = this;
@@ -133,7 +133,10 @@ angular
 
            this.classic.needleCol=(this.needleCol)? this.needleCol : this.classic.needleCol,
 
-           this.classic.defaultFonts=(this.defaultFonts)? this.defaultFonts : this.classic.defaultFonts
+           this.classic.defaultFonts=(this.defaultFonts)? this.defaultFonts : this.classic.defaultFonts,
+             
+           this.transport = (this.transport) ? this.transport : "wss";
+		   this.msgTag = (this.msgTag) ? this.msgTag : null;
 
            initDataService(this.transport);
          }
