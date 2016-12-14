@@ -38,13 +38,13 @@
     <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.js"></script>
   
   
-  	<script src="https://d3js.org/d3.v4.min.js"></script>
+  	<script src="//d3js.org/d3.v4.min.js"></script>
     <script src="/scriptrUI/lib/widgets/metergauge.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
   
   
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
+  	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
     <script src="/scriptrUI/lib/widgets/justgauge/angulargauge.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
   
@@ -76,7 +76,7 @@
           pivot-col="#ade552"
           transport= "https"
           msg-tag="speedometer"
-          api= "UIComponents/dashboard/frontend/components/speedometer/getSpeedometerVal">
+          api= "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal">
   		</scriptr-speedometer>
       </div>
   </div>
@@ -86,7 +86,7 @@
       <div style="padding-top: 65px;">
         <scriptr-odometer
         transport='wss'
-        api='UIComponents/dashboard/frontend/components/odometer/getOdometerVal'
+        api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
         theme='car'
         size="4"                 
         msg-tag='odometer'
@@ -105,7 +105,7 @@
                 msg-tag="gauge" 
                 width="50"
                 height="300"
-                api='UIComponents/dashboard/frontend/components/gauge/getGaugeVal'
+                api='UIComponents/dashboard/frontend/examples/gauge/getGaugeVal'
          	 </scriptr-gauge>
       	</div>
       </div>
@@ -129,7 +129,7 @@
         type="area"          
         transport="wss"
         msg-tag="chart"
-        api='UIComponents/dashboard/frontend/components/chart/getChartData'
+        api='UIComponents/dashboard/frontend/examples/chart/getChartData'
     </scriptr-chart>  
     </div>
   </div>
@@ -166,7 +166,7 @@
 		ykeys='["a", "b"]'
         transport="wss"
         msg-tag="chart"
-        api='UIComponents/dashboard/frontend/components/chart/getChartData'
+        api='UIComponents/dashboard/frontend/examples/chart/getChartData'
     </scriptr-chart>
     </div>
   </div>
