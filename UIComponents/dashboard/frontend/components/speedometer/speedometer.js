@@ -155,7 +155,7 @@ angular
 
               });
             } else {
-              if (transport == "http" && self.api) {
+              if (transport == "https" && self.api) {
                 httpClient
                   .get(self.api, self.apiData)
                   .then(

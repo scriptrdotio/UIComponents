@@ -19,10 +19,14 @@ angular
         "xkey" : "@",
         
         "ykeys" : "<?",
+         
+        "stacked": "<?",
         
         "labels" : "<?",
         
-        "lineColors" : "@",
+        "resize" : "<?",
+        
+        "colors" : "@",
         
         "api": "@",
         
@@ -48,19 +52,26 @@ angular
              this.xkey = (this.xkey) ? this.xkey : 'y'; // The name of the data record attribute that contains x-values.
              this.ykeys = (this.ykeys) ? this.ykeys : ["a"];  // A list of names of data record attributes that contain y-values.
              this.labels = (this.labels) ? this.labels : ["Serie A"]; // Labels for the ykeys -- will be displayed when you hover over the chart.
-             this.lineColors = (this.lineColors) ? this.lineColors : ["#FFC916"]
+             this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];
+             this.stacked = (this.stacked) ? this.stacked : false;
+             this.resize = (this.resize) ? this.resize : true;
              
              // donut config
-             this.donutLabelColor = (this.donutLabelColor) ? this.donutLabelColor : "#000000";
+             this.donutLabelColor = (this.donutLabelColor) ? this.donutLabelColor : "#666";
              this.donutBackgroundColor = (this.donutBackgroundColor) ? this.donutBackgroundColor : "#ffffff";
-             this.donutColors = (this.donutColors) ? this.donutColors : ["#31C0BE","#c7254e","#98a0d3"];
+             this.donutColors = (this.donutColors) ? this.donutColors : ["#38B9D6", "#1DBC68", "#CC5464", "#FCC717", "#E90088"];
              this.donutFormatter = (this.donutFormatter) ? this.donutFormatter : "currency";
          
              this.transport = (this.transport) ? this.transport : "wss";
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
            
-             initDataService(this.transport);
+            
          }
+         
+         
+        this.$postLink = function () {
+           initDataService(this.transport);
+        }
 
         var initDataService = function(transport) {
             if (transport == "wss") {
@@ -76,8 +87,8 @@ angular
 
               });
             } else {
-              if (transport == "http" && self.api) {
-                httpClient
+              if (transport == "https" && self.api) {
+              httpClient
                   .get(self.api, self.apiData)
                   .then(
                   function(data, response) {

@@ -48,7 +48,10 @@ angular
 
                   "refreshAnimationType" : "@",
 
-                  "counter" : "@"
+                  "counter" : "@",
+                  "width": "@", //%
+                  "height": "@", //px
+                 
 
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/gauge/gauge.html',
@@ -95,6 +98,9 @@ angular
 
 		               this.transport = (this.transport) ? this.transport : "wss";
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
+                     
+                       this.width = (this.width) ? this.width : 50;
+                       this.height = (this.height) ? this.height : 300;
 
 		               initDataService(this.transport);
 
@@ -114,7 +120,7 @@ angular
 				               
 			               });
 		               } else {
-			               if (transport == "http" && self.api) {
+			               if (transport == "https" && self.api) {
 				               httpClient
 				                     .get(self.api, self.apiData)
 				                     .then(

@@ -1,0 +1,179 @@
+<html ng-app="myApp">
+<head>
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+  
+    <!-- Adding Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <!-- Charts used in historical angular.morris -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/angular-morris/1.3.0/angular-morris.min.js"></script-->
+    
+  <!-- Added resize to all components to be responsive -->
+    <script src="/UIComponents/dashboard/frontend/components/chart/angular.morris.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
+  
+  
+    
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="/scriptrUI/lib/widgets/metergauge.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
+  
+    
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+  
+   
+  
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/odometer/odometer.car.css">
+    <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/odometer/angular.odometer.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.js"></script>
+  
+  
+  	<script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="/scriptrUI/lib/widgets/metergauge.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
+  
+  
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
+    <script src="/scriptrUI/lib/widgets/justgauge/angulargauge.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
+  
+  
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/examples/chart/chartDemo.css">
+</head> 
+<body>  
+  <script>
+
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart", "Speedometer", "Odometer", "Gauge"])
+      angular.module('myApp').config(["wsClientProvider",function (wsClientProvider) {
+        wsClientProvider.setToken("VzUwRURDNDQ2MQ==");
+        wsClientProvider.setPublishChannel("requestChannel");
+        wsClientProvider.setSubscribeChannel("responseChannel");
+      }]);
+    
+      angular.module('myApp').config(["httpClientProvider",function (httpClientProvider) {
+        httpClientProvider.setBaseUrl("https://component.scriptrapps.io");
+        httpClientProvider.setToken("VzUwRURDNDQ2MQ==");
+      }]);
+  
+    
+  </script>
+  
+  <div class="col-xs-12 col-sm-6 mb10"> 
+	<div class="box-shadow bg-white">
+      <scriptr-speedometer
+          theme="rpm"
+          pivot-col="#ade552"
+          transport= "https"
+          msg-tag="speedometer"
+          api= "UIComponents/dashboard/frontend/components/speedometer/getSpeedometerVal">
+  		</scriptr-speedometer>
+      </div>
+  </div>
+  
+   <div class="col-xs-12 col-sm-6 mb10"> 
+	<div class="box-shadow bg-white">
+      <div style="padding-top: 65px;">
+        <scriptr-odometer
+        transport='wss'
+        api='UIComponents/dashboard/frontend/components/odometer/getOdometerVal'
+        theme='car'
+        size="4"                 
+        msg-tag='odometer'
+        animation='count'
+        duration='1000'> 
+      </scriptr-odometer>
+      </div>
+      </div>
+  </div>
+  
+   <div class="col-xs-12 col-sm-6 mb10"> 
+	<div class="box-shadow bg-white">
+           <div class="center-block">
+             <scriptr-gauge 
+                transport='wss' 
+                msg-tag="gauge" 
+                width="50"
+                height="300"
+                api='UIComponents/dashboard/frontend/components/gauge/getGaugeVal'
+         	 </scriptr-gauge>
+      	</div>
+      </div>
+  </div>
+  <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
+  <div class="col-xs-12 col-sm-6 mb10"> 
+	<div class="box-shadow bg-white">
+    <scriptr-chart
+        type='donut'
+        transport="wss"
+        labels='["line A"]'
+        msg-tag="donut"         
+    </scriptr-chart>  
+    </div>
+  </div>
+  
+  <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
+  <div class="col-xs-12 col-sm-6 mb10"> 
+	<div class="box-shadow bg-white">
+    <scriptr-chart
+        type="area"          
+        transport="wss"
+        msg-tag="chart"
+        api='UIComponents/dashboard/frontend/components/chart/getChartData'
+    </scriptr-chart>  
+    </div>
+  </div>
+  
+   <!-- Initial data loaded statically than wait for messages published over channel with tag chart -->
+  <div class="col-xs-12 col-sm-6 mb10"> 
+	<div class="box-shadow bg-white">
+   <scriptr-chart
+        type='line'
+        transport="wss"
+        msg-tag="chart"
+        xkey='y'
+		ykeys='["a", "b"]'
+		labels='["Serie A", "Serie B"]'
+		colors='["#FCC717", "#E90088"]'
+        data='[{ y: "2006", a: 100, b: 90 },
+    { y: "2007", a: 75,  b: 65 },
+    { y: "2008", a: 50,  b: 40 },
+    { y: "2009", a: 75,  b: 65 },
+    { y: "2010", a: 50,  b: 40 },
+    { y: "2011", a: 75,  b: 65 },
+    { y: "2012", a: 100, b: 90 }]'
+    </scriptr-chart>
+    </div>
+  </div>
+  
+  <!-- On intial load use the wss call api method to load data from defined api, than wait for messages published over channel with tag chart -->
+  <div class="col-xs-12 col-sm-6 mb10"> 
+	<div class="box-shadow bg-white">
+      <scriptr-chart
+        type='bar'
+        stacked='true'
+        xkey='y'
+		ykeys='["a", "b"]'
+        transport="wss"
+        msg-tag="chart"
+        api='UIComponents/dashboard/frontend/components/chart/getChartData'
+    </scriptr-chart>
+    </div>
+  </div>
+  
+  
+  
+
+</body>  
+   
+</html>

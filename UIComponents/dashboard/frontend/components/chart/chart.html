@@ -1,11 +1,12 @@
-  <div class="text-center" ng-hide="$ctrl.data"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
-  <div ng-show="$ctrl.data">
+  <div class="text-center loading" ng-hide="$ctrl.data"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
+  <div ng-if="$ctrl.data">
     <div ng-if="$ctrl.type == 'line'"
          line-data='$ctrl.data'
          line-xkey= {{$ctrl.xkey}}
          line-ykeys='$ctrl.ykeys'
          line-labels='$ctrl.labels'
          line-colors='$ctrl.colors'
+         line-resize="$ctrl.resize"
          line-chart>
     </div>
 
@@ -15,6 +16,8 @@
          bar-y='$ctrl.ykeys'
          bar-labels='$ctrl.labels'
          bar-colors='$ctrl.colors'
+         bar-resize="$ctrl.resize"
+         bar-stacked="$ctrl.stacked"
          bar-chart>
     </div> 
 
@@ -24,6 +27,7 @@
          area-xkey={{$ctrl.xkey}}
          area-ykeys='$ctrl.ykeys'
          area-labels='$ctrl.labels'
+         area-resize="$ctrl.resize"
          line-colors='$ctrl.colors'>
     </div>
 
@@ -33,6 +37,7 @@
          donut-background-color='$ctrl.donutBackgroundColor' 
          donut-colors='$ctrl.donutColors' 
          donut-formatter='$ctrl.donutFormatter' 
+         donut-resize="$ctrl.resize"
          donut-chart>
     </div> 
 </div>

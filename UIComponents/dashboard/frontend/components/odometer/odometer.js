@@ -22,7 +22,9 @@ angular
 
           "msgTag" : "@",
 
-          "apiData" : "<?"
+          "apiData" : "<?",
+          
+          "size": "<?"
 
         },
         templateUrl: '/UIComponents/dashboard/frontend/components/odometer/odometer.html',
@@ -37,6 +39,8 @@ angular
                theme: (this.theme) ? this.theme : "car",
              }
              this.odometerOptions = this.config;
+             
+             this.size = (this.size) ? this.size : 1;
 
              this.transport = (this.transport) ? this.transport : "wss";
              this.msgTag = (this.msgTag) ? this.msgTag : null;
@@ -58,7 +62,7 @@ angular
 
                   });
               } else {
-                if (transport == "http" && self.api) {
+                if (transport == "https" && self.api) {
                     httpClient
                       .get(self.api, self.apiData)
                       .then(

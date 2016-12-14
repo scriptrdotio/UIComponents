@@ -2,13 +2,15 @@
 
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
-    <script src="/scriptrUI/lib/widgets/justgauge/angulargauge.min.js"></script>
+
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+  
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
+    <script src="/scriptrUI/lib/widgets/justgauge/angulargauge.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
 </head>  
   
@@ -29,8 +31,11 @@
   
 </script>
 
-  <div style="width: 50%; height: 300px; border: 1px solid #eee; text-align: center;">            
-    <scriptr-gauge transport='wss' msg-tag="gauge" api='UIComponents/dashboard/frontend/components/gauge/getGaugeVal'
+  <div style="border: 1px solid #eee; text-align: center;">            
+    <scriptr-gauge 
+              transport='wss' 
+              msg-tag="gauge" 
+              api='UIComponents/dashboard/frontend/components/gauge/getGaugeVal'
     </scriptr-gauge>
   </div>
   

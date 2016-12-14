@@ -2,12 +2,13 @@
 
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="/scriptrUI/lib/widgets/metergauge.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+  
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <script src="/scriptrUI/lib/widgets/metergauge.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
 </head>  
   
@@ -28,19 +29,15 @@
       }]);
   
 </script>
-
   
    <scriptr-speedometer
       theme="rpm"
       gauge-radius="220"
       pivot-col="#ade552"
-      transport= "http"
+      transport= "https"
       msg-tag="speedometer"
       api= "UIComponents/dashboard/frontend/components/speedometer/getSpeedometerVal">
   </scriptr-speedometer>
-  
-  
-  
   
 </body>
 
