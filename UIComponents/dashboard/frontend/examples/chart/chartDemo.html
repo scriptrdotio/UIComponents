@@ -22,25 +22,16 @@
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
+  
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
 </head> 
-<body>  
-  <script>
+  
+<script>
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart"])
+    angular.module('myApp').config(wssConfig);
+</script>
 
-      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart"])
-      angular.module('myApp').config(["wsClientProvider",function (wsClientProvider) {
-        wsClientProvider.setToken("VzUwRURDNDQ2MQ==");
-        wsClientProvider.setPublishChannel("requestChannel");
-        wsClientProvider.setSubscribeChannel("responseChannel");
-      }]);
-    
-      angular.module('myApp').config(["httpClientProvider",function (httpClientProvider) {
-        httpClientProvider.setBaseUrl("https://component.scriptrapps.io");
-        httpClientProvider.setToken("VzUwRURDNDQ2MQ==");
-      }]);
-  
-    
-  </script>
-  
+<body>   
   <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
   <div class="col-xs-12 col-sm-6 mb10"> 
 	<div class="box-shadow bg-white">

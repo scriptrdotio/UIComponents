@@ -10,26 +10,17 @@
     <script src="//d3js.org/d3.v4.min.js"></script>
     <script src="/scriptrUI/lib/widgets/metergauge.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
+  
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
 </head>  
   
-<body>
-  
-  <script>
-      
+<script>
       var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Speedometer"])
-      angular.module('myApp').config(["wsClientProvider",function (wsClientProvider) {
-        wsClientProvider.setToken("VzUwRURDNDQ2MQ==");
-        wsClientProvider.setPublishChannel("requestChannel");
-        wsClientProvider.setSubscribeChannel("responseChannel");
-      }]);
-    
-      angular.module('myApp').config(["httpClientProvider",function (httpClientProvider) {
-        httpClientProvider.setBaseUrl("https://component.scriptrapps.io");
-        httpClientProvider.setToken("VzUwRURDNDQ2MQ==");
-      }]);
-  
+      angular.module('myApp').config(wssConfig);
+      angular.module('myApp').config(httpsConfig);
 </script>
   
+<body> 
    <scriptr-speedometer
       theme="rpm"
       gauge-radius="220"
