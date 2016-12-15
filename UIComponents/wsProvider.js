@@ -83,7 +83,7 @@ angular
 		                  // Open a WebSocket connection
 		                  var dataStream = $websocket(_socketUrl);
 
-		                  var msg = [];
+		                  var msg = {};
 		                  var ready = $q.defer();
 		                  var error = $q.defer();
 		                  var close = $q.defer();
@@ -112,6 +112,7 @@ angular
 						                        ready.resolve();
 					                        }
 				                        }
+                                        msg["data"] = data;
 				                        callbackHandler(data);
 				                        subscriberHandler(data);
 			                        } catch (e) {
@@ -178,7 +179,7 @@ angular
 		                  // properties/methods that will be available in controller when passed the provider
 		                  var methods = {
 
-		                     message : msg,
+		                     getMessage : function(){ return msg;},
 
 		                     getStatus : function() {
 			                     return dataStream.readyState;

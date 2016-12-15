@@ -50,10 +50,12 @@
           SubscribeData2: {{vm.subscribeData2 || 'n/a'}}
           <br/>
           SubscribeError2: {{vm.subscribeError2 || 'n/a'}}
-          
+        <br/><br/>
+        <div>
+          Use watch to get messages received over websocket 
         </div>
-        
-        
+        <div id="allMessages">{{vm.messages}}</div>
+                
       </div>
     </body>
     <script>
@@ -67,6 +69,7 @@
       
       myApp.controller('testCtrl', function($scope, $controller, wsClient) {
         var vm = this;
+       
         vm.init = function() {
           wsClient.onReady.then(function() {
             wsClient.call("UIComponents/tests/wsProvider/restApi", {"data":"www ss"}, "call").then(
@@ -120,6 +123,13 @@
                 vm.subscribeData2 =  JSON.stringify(data)
                 console.log("different resolve subscribe callback promise on key 'test'", data)
               });
+            
+             
+             vm.messages = [];
+             $scope.$watch(function(){ return wsClient.getMessage()}, function(newValue, oldValue, scope) {
+                console.log("Watched Message on WS is: ", newValue);
+                vm.messages.push(newValue);
+              }, true);
           });
         }
 
