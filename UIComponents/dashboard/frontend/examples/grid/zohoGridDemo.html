@@ -1,0 +1,119 @@
+<html ng-app="myApp">
+
+<head>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  
+  
+  <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- font awesome.css -->
+    <script src="https://use.fontawesome.com/3d61d6959e.js"></script>
+    <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
+    <!-- font awesome.css -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36"></script>
+  
+  <script src="/UIComponents/httpProvider.js"></script>
+  <script src="/UIComponents/wsProvider.js"></script>
+  
+  <script src="/UIComponents/dashboard/frontend/components/grid/grid.js"></script>
+  <script src="/UIComponents/config/scriptrTransport.js"></script>
+  
+  <link rel="stylesheet" href="/UIComponents/dashboard/frontend/examples/grid/grid.css">
+</head>
+  
+<script>
+      
+  	  var myApp = angular.module('myApp', ["HttpClient", "WsClient", "Grid"]);
+      myApp.config(wssConfig);
+      myApp.config(httpsConfig);
+      myApp.controller('testCtrl', function($scope) {
+        var vm = this;
+        
+        vm.callback = function(data){
+        var ticketsData = [];
+        var rows = [];
+        try{
+          rows = JSON.parse(data).response.result.Cases.row;
+          for(var i = 0 ; i < rows.length; i++){
+            var row =   JSON.parse(data).response.result.Cases.row[i].fl;
+            var ticketData = {}
+            for(var k = 0; k < row.length;k++){
+              var content = row[k].content;
+              switch(row[k].val){
+                case "Subject":
+                  ticketData["subject"]  = content;
+                  break;
+                case "URI":
+                  ticketData["uri"]  = content;
+                  break;
+                case "Ticket Id":
+                  ticketData["id"] = content;
+                  break;
+                case "Status":
+                  ticketData["status"] = content;
+                  break;
+                case "Created Time":
+                  ticketData["creationDate"] = content;
+                  break;
+                case "Contact Name":
+                  ticketData["contactName"] = content;
+                  break;
+                case "CASEID":
+                  ticketData["caseId"] = content;
+                  break;
+              }
+            }
+            ticketsData.push(ticketData);
+          }
+          return {"documents" : ticketsData }
+        }catch(e){
+          console.log(e);
+        }
+      };
+      vm.myCellRenderer  = function(params){
+        return '<div><a target="_blank" href="https://support.zoho.com'+params.value+'">https://support.zoho.com'+params.value+'</a></div>'
+      }
+      
+      vm.colDef = [
+          {headerName: "Id", field: "id", type: "numeric", editable : false},
+          {headerName: "Subject", field: "subject", editable : false},
+          {headerName: "Status", field: "status", cellEditor: "select",
+          cellEditorParams: {
+            values: ["On hold", "Open", "Escalated", "Closed"]
+          }},
+          {headerName: "Creation Date", field: "creationDate", editable : false},
+          {headerName: "URI", field: "uri", editable : false, cellRenderer: function (params) {  
+            return vm.myCellRenderer(params);
+        }
+	 }] 
+   });
+     
+</script>
+<body>
+<div ng-controller="testCtrl as vm" >
+ <scriptr-grid
+           columns-definition= "vm.colDef" 
+           row-model-type='pagination'
+           enable-sorting='true'
+           cell-editable='true'
+           enable-client-filter='true'
+           enable-server-side-filter='true' 
+           enable-server-side-sorting='true'
+           row-model-selection='multiple'
+           pagination-page-size='50'
+           transport='http' 
+           service-api='telematics/zohoTicketing/api/listDeviceTickets'
+           api-data='{"id" : "253831"}'
+           on-cell-value-changed-script='telematics/zohoTicketing/api/updateTicketStatus'
+           on-format-data="vm.callback">
+  </scriptr-grid>
+</body>
+
+</html>
