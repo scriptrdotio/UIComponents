@@ -1,6 +1,4 @@
-:focus {outline: 0!important;}
-/*** filter ***/
-body {font-family: "Josefin Sans",sans-serif!important;}
+
 .full button span {
     background-color: limegreen;
     border-radius: 32px;
