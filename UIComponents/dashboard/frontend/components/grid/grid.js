@@ -50,6 +50,9 @@ angular
 
          /** virtual paging properties **/
         "maxPagesInCache" : "<?", // how many pages to store in cache. default is undefined, which allows an infinite sized cache, pages are never purged. this should be set for large data to stop your browser from getting full of data
+        "apiData" : "<?",
+        
+        "onFormatData" : "&"
       },
 
       templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
@@ -67,13 +70,23 @@ angular
         this.dataSource = {
           getRows : function(params) {
             var APIParams = self.buildParams(params)
-              var dataResponse = dataService.getGridData(self.serviceApi, APIParams, self.transport).then(
+              var tmp = null;
+              if(typeof self.onFormatData() == "function"){
+                  tmp = function(data){ 
+                  return self.onFormatData()(data); // Or we can have it as self.onFormatData({"data":data}) and pass it in the on-format-update as: vm.callback(data)
+                }
+              }
+              var dataResponse = dataService.getGridData(self.serviceApi, APIParams, self.transport, tmp).then(
               function(data, response) {
                 if (data && data.documents) {
                   var rowsData = data.documents;
                   var count = parseInt(data.count);
                   params.successCallback(rowsData, count);
                   self.gridOptions.api.sizeColumnsToFit();
+                  if(rowsData == null || rowsData.length == 0){
+                    var el = angular.element( document.querySelector( '#btNext' ) );
+                    el.attr('disabled', 'true');
+                  }
                 } else {
                   params.failCallback();
                 }
@@ -84,7 +97,7 @@ angular
         }
 		// set a numeric filter model for numerical columns
         for(var i = 0; i < this.columnsDefinition.length; i++){
-          if(this.columnsDefinition[i].hasOwnProperty("type") && this.columnsDefinition[2]["type"] == "numeric"){
+          if(this.columnsDefinition[i].hasOwnProperty("type") && this.columnsDefinition[i]["type"] == "numeric"){
             this.columnsDefinition[i].filter = "number";
           }
         }
@@ -98,7 +111,7 @@ angular
             enableColResize : (typeof this.enableColResize != 'undefined') ? this.enableColResize : false,
             enableFilter : (typeof this.enableFilter != 'undefined') ? this.enableFilter : true,
             columnDefs : this.columnsDefinition,
-            rowModelType :(this.rowModelType)? this.rowModelType : "pagination",
+            rowModelType :(this.rowModelType)? this.rowModelType : "virtual",
             rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
             paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
             overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> Please wait while your rows are loading</span>',
@@ -199,6 +212,13 @@ angular
           if (queryType) {
             APIParams["queryType"] = queryType;
           }
+          APIParams["startRow"] = params.startRow;
+          APIParams["endRow"] = params.endRow;
+          if(this.apiData){
+            for(var param in this.apiData){
+                 APIParams[param] = this.apiData[param];
+            }
+          }
           return APIParams;
         }
       }
@@ -219,14 +239,18 @@ angular
         });
         return d.promise;
       }
-
-      this.getGridData = function(api, params, transport, callback) {
+      
+      
+      this.getGridData = function(api, params, transport, formatterFnc) {
         
         var d = $q.defer(); 
-        
+        var self = this;
         if(transport == "http"){
           httpClient
             .get(api, params).then(function(data, response){
+              if(formatterFnc /**Check if function also*/){
+                data = formatterFnc(data);
+              }
               if(data && data.documents){
                 var data = {"documents": data.documents, "count": data.count}
                 d.resolve(data, response)
