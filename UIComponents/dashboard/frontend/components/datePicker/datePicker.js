@@ -12,6 +12,10 @@ angular
         
           "toggleMin" : "<?",
         
+          "tomorrowClass" : "@",
+        
+          "afterTomorrowClass" : "@",
+        
           "showWeeks" : "<?"
 
       },
@@ -27,10 +31,13 @@ angular
           customClass: getDayClass,
           minDate: new Date(),
         };
-        self.options.showWeeks = (typeof this.showWeeks != 'undefined') ? this.showWeeks : true;
-        self.options.minDate = (this.toggleMin == true) ? new Date() : null;
+        self.options.showWeeks = (typeof self.showWeeks != 'undefined') ? self.showWeeks : true;
+        self.options.minDate = (self.toggleMin == true) ? new Date() : null;
+        self.tomorrowClass = (self.tomorrowClass) ? self.tomorrowClass : '';
+        self.afterTomorrowClass = (self.afterTomorrowClass) ? self.afterTomorrowClass : '';
       }
-             
+      
+      // clear selected date
       self.clear = function() {
         self.dt = null;
       };
@@ -42,6 +49,7 @@ angular
         return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
       }
 	
+      // set date  
       self.setDate = function(year, month, day) {
         self.dt = new Date(year, month, day);
       };
@@ -53,11 +61,11 @@ angular
       self.events = [
         {
           date: tomorrow,
-          status: 'full'
+          status: self.tomorrowClass
         },
         {
           date: afterTomorrow,
-          status: 'partially'
+          status: self.afterTomorrowClass
         }
       ];
 
