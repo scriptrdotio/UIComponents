@@ -5,10 +5,10 @@
   It can take static value or be synced to a Real-time Communication. 
 
 ## Requirements:
-
-  D3.js v4.2.2
   
-  AngularJS v1.0.1+
+  AngularJS v1.5.6+
+  
+  Odometer 
   
   wsProvider.js
   
@@ -16,18 +16,25 @@
   
 ## Getting started:
 
-  You will need to include angular JS and 'D3 JS' in your project to make the component work
+  Include angular JS with angular-odometer.js in your application, as well as the odometer.js and the default theme CSS file
 
+  Include angular JS
+  
   ```html
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
   <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
-  <script src="https://d3js.org/d3.v4.min.js"></script>  
   ```
-  Include angular-metergauge module
+  Include Odometer modules
    
   ```html
-  <script src="/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js"></script>
+  <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.min.js"></script>
+  <script src="/UIComponents/dashboard/frontend/components/odometer/angular.odometer.min.js"></script>
+  ```
+  
+  Include a default theme CSS
+  ```html
+  <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/odometer/odometer.car.css">
   ```
   
   Include wsProvider and httpProvider for calling backend API's
@@ -46,38 +53,24 @@
   Add "WsClient", "HttpClient", "Speedometer" to your app module's dependency
   
   ```
-  angular.module("myApp", ["WsClient", "HttpClient", "Speedometer"])
+  angular.module("myApp", ["WsClient", "HttpClient", "Odometer"])
   ```
   
 ## Options:
 
-| Option        | Description   |
-| ------------- |:-------------:|
-  gauge-radius     | 	sets the size of the gauge (Optional).
-  min-val          | 	Minimum value to be shown in gauge scale.                  
-  max-val    	     | 	Maximum value to be shown in gauge scale. 
-  needle-val       | 	Sets the value of needle to be pointed.                      
-  tick-space-min-val | 	space between the major ticks of the gauge.                  
-  tick-space-maj-val | 	space between the sub ticks of the gauge.  					 
-  div-id           | 	sets an id for svg where gauge will be rendered (Optional).  
-  gauge-units      | 	Unit of the values to be shown(ex. Kmph,%).  				 
-  tick-col-maj      |  	sets colour of the major tick.  							 
-  tick-col-min      | 	sets colour of the sub tick.								 
-  outer-edge-col    | 	sets the colour of outer circle of the gauge.  				 		
-  pivot-col        | 	sets colour of the pivot.  									 
-  inner-col        | 	sets colour of inner body of the gauge. 					 
-  units-label-col   | 	sets colour of units label.  								 
-  tick-label-col    | 	sets colour of labels of the ticks.							 
-  needle-col       | 	sets colour of the needle.  								 
-  default-fonts    | 	sets the default fonts in gauge.						     
-  api             | 	Name of the api to call backend data (Optional).					 
-  transport       | 	method used to call api (can take "http" or "wss") (Optional).		 
-  msg-tag          | 	Subscribe to socket messages with tag name (Optional).		     
-  api-params         | 	api parameters (Optional).  					
+| Option        | Value   | Description   |
+| ------------- |:-------------:|:-------------:|
+  theme     | 'car'	 |Specify the theme (if you have more than one theme css file on the page).
+  duration     | 3000	 |Change how long the javascript expects the CSS animation to take.
+  animation     | 'count'	 | Count is a simpler animation method which just increments the value,use it when you're looking for something more subtle.
+  api       | 'getOdometerValue'    | 	Name of the api to call backend data (Optional).					 
+  transport |  'http'     | 	method used to call api (can take "http" or "wss") (Optional).		 
+  msg-tag   | 'odometer'      | 	Subscribe to socket messages with tag name (Optional).		     
+  api-params  | '{data : params}'       | 	api parameters (Optional).  					
   
   
 ## Componenet usage:
 
-scriptr-speedometer is an element component. you will just have to add it in your html view and add its relevant options.
+scriptr-odometer is an element component. you will just have to add it in your html view and add its relevant options.
 
 
