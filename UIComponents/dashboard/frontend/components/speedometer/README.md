@@ -50,8 +50,26 @@
 | Option        | Description   |
 | ------------- |:-------------:|
   gaugeRadius     | 	sets an id for svg where gauge will be rendered (Optional).
-  minVal         | 	Minimum value to be shown in gauge scale.                  
-  maxVal    	 | 	Maximum value to be shown in gauge scale.  					
+  minVal          | 	Minimum value to be shown in gauge scale.                  
+  maxVal    	  | 	Maximum value to be shown in gauge scale. 
+  needleVal       | 	Sets the value of needle to be pointed.                      
+  tickSpaceMinVal | 	space between the major ticks of the gauge.                  
+  tickSpaceMajVal | 	space between the sub ticks of the gauge.  					 
+  divID           | 	sets an id for svg where gauge will be rendered (Optional).  
+  gaugeUnits      | 	Unit of the values to be shown(ex. Kmph,%).  				 
+  tickColMaj      |  	sets colour of the major tick.  							 
+  tickColMin      | 	sets colour of the sub tick.								 
+  outerEdgeCol    | 	sets the colour of outer circle of the gauge.  				 		
+  pivotCol        | 	sets colour of the pivot.  									 
+  innerCol        | 	sets colour of inner body of the gauge. 					 
+  unitsLabelCol   | 	sets colour of units label.  								 
+  tickLabelCol    | 	sets colour of labels of the ticks.							 
+  needleCol       | 	sets colour of the needle.  								 
+  defaultFonts    | 	sets the default fonts in gauge.						     
+  api             | 	Name of the api to call backend data.						 
+  transport       | 	method used to call api (can take "http" or "wss")			 
+  msgTag          | 	Subscribe to socket messages with tag name				     
+  apiData         | 	api parameters  					
   
   
 ## Componenet usage:
