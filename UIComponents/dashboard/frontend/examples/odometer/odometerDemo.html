@@ -23,7 +23,12 @@
 <body>
    <div style="padding-top: 65px;">
       <scriptr-odometer
-        odometer-value="15240">
+        transport='wss'
+        api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
+        theme='car'
+        msg-tag='odometer'
+        animation='count'
+        duration='1000'> 
       </scriptr-odometer>
   </div>
 </body>
