@@ -73,4 +73,13 @@
 
 scriptr-odometer is an element component. you will just have to add it in your html view and add its relevant options.
 
-
+ ```html
+    <scriptr-odometer
+        transport='wss'
+        api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
+        theme='car'
+        msg-tag='odometer'
+        animation='count'
+        duration='1000'> 
+      </scriptr-odometer>
+  ```
