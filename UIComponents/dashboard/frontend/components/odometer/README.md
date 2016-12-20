@@ -1,4 +1,4 @@
-# Angular Speedometer 
+# Angular Odometer 
  
   Angular component for displaying meter gauge/odometer gauge visualization.
   
