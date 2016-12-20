@@ -58,15 +58,15 @@
   
 ## Options:
 
-| Option        | Value   | Description   |
+| Option        | Default value   | Description   |
 | ------------- |:-------------:|:-------------:|
   theme     | 'car'	 |Specify the theme (if you have more than one theme css file on the page).
   duration     | 3000	 |Change how long the javascript expects the CSS animation to take.
   animation     | 'count'	 | Count is a simpler animation method which just increments the value,use it when you're looking for something more subtle.
   api       | 'getOdometerValue'    | 	Name of the api to call backend data (Optional).					 
-  transport |  'http'     | 	method used to call api (can take "http" or "wss") (Optional).		 
-  msg-tag   | 'odometer'      | 	Subscribe to socket messages with tag name (Optional).		     
-  api-params  | '{data : params}'       | 	api parameters (Optional).  					
+  transport |  'wss'     | 	method used to call api (can take "http" or "wss") (Optional).		 
+  msg-tag   | null      | 	Subscribe to socket messages with tag name (Optional).		     
+  api-params  | null       | 	api parameters (Optional).  					
   
   
 ## Componenet usage:
