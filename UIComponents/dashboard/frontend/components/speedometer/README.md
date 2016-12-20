@@ -53,7 +53,7 @@
 
 | Option        | Description   |
 | ------------- |:-------------:|
-  gauge-radius     | 	sets an id for svg where gauge will be rendered (Optional).
+  gauge-radius     | 	sets the size of the gauge (Optional).
   min-val          | 	Minimum value to be shown in gauge scale.                  
   max-val    	     | 	Maximum value to be shown in gauge scale. 
   needle-val       | 	Sets the value of needle to be pointed.                      
@@ -73,7 +73,7 @@
   api             | 	Name of the api to call backend data (Optional).					 
   transport       | 	method used to call api (can take "http" or "wss") (Optional).		 
   msg-tag          | 	Subscribe to socket messages with tag name (Optional).		     
-  api-data         | 	api parameters (Optional).  					
+  api-params         | 	api parameters (Optional).  					
   
   
 ## Componenet usage:
