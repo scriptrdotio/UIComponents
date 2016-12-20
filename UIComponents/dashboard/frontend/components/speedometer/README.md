@@ -51,7 +51,7 @@
   |-------------------|------------------------------------------------------------------|
   |   gaugeRadius     | 	sets an id for svg where gauge will be rendered (Optional).  |
   |   minVal          | 	Minimum value to be shown in gauge scale.                    |
-  |   maxVal    	  | 	Maximum value to be shown in gauge scale.  					 |
+  |   maxVal    	     | 	Maximum value to be shown in gauge scale.  					 |
   |   needleVal       | 	Sets the value of needle to be pointed.                      |
   |   tickSpaceMinVal | 	space between the major ticks of the gauge.                  |
   |   tickSpaceMajVal | 	space between the sub ticks of the gauge.  					 |
