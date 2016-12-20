@@ -50,7 +50,7 @@
     <script src="/UIComponents/config/scriptrTransport.js"></script>
   ```
   
-  Add "WsClient", "HttpClient", "Speedometer" to your app module's dependency
+  Add "WsClient", "HttpClient", "Odometer" to your app module's dependency
   
   ```
   angular.module("myApp", ["WsClient", "HttpClient", "Odometer"])
