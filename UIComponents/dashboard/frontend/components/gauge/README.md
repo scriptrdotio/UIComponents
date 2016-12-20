@@ -54,7 +54,7 @@
   
 ## Options:
 
-| Option        | Value   | Description   |
+| Option        | Default value   | Description   |
 | ------------- |:-------------:|:-------------:|
   gauge-value     | 75	 | Sets the value of the gauge.
   custom-sectors  | [{color : "#A3CD3B", lo : 0, hi : 25}, { color : "#FF4A43", lo : 25, hi : 100 }] | array of objects with color, hi, lo attributes.
