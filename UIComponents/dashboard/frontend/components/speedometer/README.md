@@ -49,9 +49,9 @@
 
 | Option        | Description   |
 | ------------- |:-------------:|
-|   gaugeRadius     | 	sets an id for svg where gauge will be rendered (Optional).  |
-  |   minVal          | 	Minimum value to be shown in gauge scale.                    |
-  |   maxVal    	  | 	Maximum value to be shown in gauge scale.  					 |
+  gaugeRadius     | 	sets an id for svg where gauge will be rendered (Optional).
+  minVal         | 	Minimum value to be shown in gauge scale.                  
+  maxVal    	 | 	Maximum value to be shown in gauge scale.  					
   
   
 ## Componenet usage:
