@@ -1,6 +1,7 @@
 # Angular Speedometer 
  
-  Angular component for displaying meter gauge/speedometer gauge visualization
+  Angular component for displaying meter gauge/speedometer gauge visualization.
+  It can take static value or be synced to a Real-time Communication. 
 
 ## Requirements:
 
