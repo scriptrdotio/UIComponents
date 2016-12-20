@@ -5,8 +5,14 @@
 ## Requirements:
 
   D3.js v4.2.2
+  
+  
+  
   AngularJS v1.0.1+
+  
   wsProvider.js
+  
+  
   httpProvider.js
   
 ## Getting started:
