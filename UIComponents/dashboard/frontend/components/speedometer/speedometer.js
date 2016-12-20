@@ -50,7 +50,7 @@ angular
         
         "msgTag" : "@",
         
-        "apiData" : "<?"
+        "apiParams" : "<?"
         
       },
       templateUrl: '/UIComponents/dashboard/frontend/components/speedometer/speedometer.html',
@@ -97,6 +97,8 @@ angular
          }
 
          this.$onInit = function() {
+           
+            this.theme = (this.theme) ? this.theme : "speed";
             if(this.theme == "speed"){
                 this.classic = this.speedTheme;
             }else if(this.theme == "rpm"){
@@ -143,11 +145,11 @@ angular
 
         var initDataService = function(transport) {
             if (transport == "wss") {
-              wsClient.onReady.then(function() {
+              	wsClient.onReady.then(function() {
                 // Subscribe to socket messages with id chart
                 wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
                 if(self.api) {
-                  wsClient.call(self.api, self.apiData, self.msgTag)
+                  wsClient.call(self.api, self.apiParams, self.msgTag)
                     .then(function(data, response) {
                     self.consumeData(data)
                   });
@@ -157,7 +159,7 @@ angular
             } else {
               if (transport == "https" && self.api) {
                 httpClient
-                  .get(self.api, self.apiData)
+                  .get(self.api, self.apiParams)
                   .then(
                   function(data, response) {
                     self.consumeData(data)
