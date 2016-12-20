@@ -19,10 +19,12 @@ angular
           "animation" : "@",
 
           "transport" : "@",
+          
+          "odometerValue" : "@",
 
           "msgTag" : "@",
 
-          "apiData" : "<?",
+          "apiParams" : "<?",
           
           "size": "<?"
 
@@ -39,7 +41,7 @@ angular
                theme: (this.theme) ? this.theme : "car",
              }
              this.odometerOptions = this.config;
-             
+             this.odometerValue = (this.odometerValue) ? this.odometerValue : 0;
              this.size = (this.size) ? this.size : 1;
 
              this.transport = (this.transport) ? this.transport : "wss";
@@ -54,7 +56,7 @@ angular
                     // Subscribe to socket messages with id chart
                     wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
                     if(self.api) {
-                        wsClient.call(self.api, self.apiData, self.msgTag)
+                        wsClient.call(self.api, self.apiParams, self.msgTag)
                           .then(function(data, response) {
                           self.consumeData(data)
                         });
@@ -64,7 +66,7 @@ angular
               } else {
                 if (transport == "https" && self.api) {
                     httpClient
-                      .get(self.api, self.apiData)
+                      .get(self.api, self.apiParams)
                       .then(
                       function(data, response) {
                         self.consumeData(data)
