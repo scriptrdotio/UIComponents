@@ -80,4 +80,8 @@
 
 scriptr-speedometer is an element component. you will just have to add it in your html view and add its relevant options.
 
-
+  ```
+   <scriptr-speedometer
+      needle-val="50">
+  </scriptr-speedometer>
+  ```
