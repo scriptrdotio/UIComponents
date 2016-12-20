@@ -33,7 +33,6 @@
   ```html
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
-    <script src="/UIComponents/config/scriptrTransport.js"></script>
   ```
   
   Include scriptrTransport for configuration
@@ -52,27 +51,27 @@
 
 | Option        | Description   |
 | ------------- |:-------------:|
-  gaugeRadius     | 	sets an id for svg where gauge will be rendered (Optional).
-  minVal          | 	Minimum value to be shown in gauge scale.                  
-  maxVal    	  | 	Maximum value to be shown in gauge scale. 
-  needleVal       | 	Sets the value of needle to be pointed.                      
-  tickSpaceMinVal | 	space between the major ticks of the gauge.                  
-  tickSpaceMajVal | 	space between the sub ticks of the gauge.  					 
-  divID           | 	sets an id for svg where gauge will be rendered (Optional).  
-  gaugeUnits      | 	Unit of the values to be shown(ex. Kmph,%).  				 
-  tickColMaj      |  	sets colour of the major tick.  							 
-  tickColMin      | 	sets colour of the sub tick.								 
-  outerEdgeCol    | 	sets the colour of outer circle of the gauge.  				 		
-  pivotCol        | 	sets colour of the pivot.  									 
-  innerCol        | 	sets colour of inner body of the gauge. 					 
-  unitsLabelCol   | 	sets colour of units label.  								 
-  tickLabelCol    | 	sets colour of labels of the ticks.							 
-  needleCol       | 	sets colour of the needle.  								 
-  defaultFonts    | 	sets the default fonts in gauge.						     
-  api             | 	Name of the api to call backend data.						 
-  transport       | 	method used to call api (can take "http" or "wss")			 
-  msgTag          | 	Subscribe to socket messages with tag name				     
-  apiData         | 	api parameters  					
+  gauge-radius     | 	sets an id for svg where gauge will be rendered (Optional).
+  min-val          | 	Minimum value to be shown in gauge scale.                  
+  max-val    	     | 	Maximum value to be shown in gauge scale. 
+  needle-val       | 	Sets the value of needle to be pointed.                      
+  tick-space-min-val | 	space between the major ticks of the gauge.                  
+  tick-space-maj-val | 	space between the sub ticks of the gauge.  					 
+  div-id           | 	sets an id for svg where gauge will be rendered (Optional).  
+  gauge-units      | 	Unit of the values to be shown(ex. Kmph,%).  				 
+  tick-col-maj      |  	sets colour of the major tick.  							 
+  tick-col-min      | 	sets colour of the sub tick.								 
+  outer-edge-col    | 	sets the colour of outer circle of the gauge.  				 		
+  pivot-col        | 	sets colour of the pivot.  									 
+  inner-col        | 	sets colour of inner body of the gauge. 					 
+  units-label-col   | 	sets colour of units label.  								 
+  tick-label-col    | 	sets colour of labels of the ticks.							 
+  needle-col       | 	sets colour of the needle.  								 
+  default-fonts    | 	sets the default fonts in gauge.						     
+  api             | 	Name of the api to call backend data (Optional).					 
+  transport       | 	method used to call api (can take "http" or "wss") (Optional).		 
+  msg-tag          | 	Subscribe to socket messages with tag name (Optional).		     
+  api-data         | 	api parameters (Optional).  					
   
   
 ## Componenet usage:
