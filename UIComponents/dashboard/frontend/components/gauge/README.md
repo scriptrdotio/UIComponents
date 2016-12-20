@@ -74,8 +74,8 @@
   refresh-animation-type      | 'linear'    | 	 type of refresh animation (linear, >, <, <>, bounce).	
   counter      | true    | 	 increase numbers one by one.
   transport |  'wss'     | 	method used to call api (can take "http" or "wss").	 
-  msg-tag   | 'gauge'      | 	Subscribe to socket messages with tag name.		     
-  api-params  | '{data : params}'       | 	api parameters.  					
+  msg-tag   | null      | 	Subscribe to socket messages with tag name.		     
+  api-params  | null      | 	api parameters.  					
   
   
 ## Componenet usage:
