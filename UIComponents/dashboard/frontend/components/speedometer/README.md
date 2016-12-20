@@ -1,6 +1,7 @@
 # Angular Speedometer 
  
   Angular component for displaying meter gauge/speedometer gauge visualization.
+  
   It can take static value or be synced to a Real-time Communication. 
 
 ## Requirements:
@@ -78,17 +79,5 @@
 ## Componenet usage:
 
 scriptr-speedometer is an element component. you will just have to add it in your html view and add its relevant options.
-
-
-
-
-
-
-
-
-
-
-
-
 
 
