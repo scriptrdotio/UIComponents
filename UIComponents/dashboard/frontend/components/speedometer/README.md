@@ -8,7 +8,7 @@
 
   D3.js v4.2.2
   
-  AngularJS v1.0.1+
+  AngularJS v1.5.6+
   
   wsProvider.js
   
