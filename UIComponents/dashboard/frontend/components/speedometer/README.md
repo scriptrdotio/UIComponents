@@ -53,16 +53,15 @@
   
 ## Options:
 
-| Option        | Description   |
-| ------------- |:-------------:|
-  gauge-radius     | 	sets the size of the gauge (Optional).
-  min-val          | 	Minimum value to be shown in gauge scale.                  
-  max-val    	     | 	Maximum value to be shown in gauge scale. 
-  needle-val       | 	Sets the value of needle to be pointed.                      
-  tick-space-min-val | 	space between the major ticks of the gauge.                  
-  tick-space-maj-val | 	space between the sub ticks of the gauge.  					 
-  div-id           | 	sets an id for svg where gauge will be rendered (Optional).  
-  gauge-units      | 	Unit of the values to be shown(ex. Kmph,%).  				 
+| Option        | Default value   | Description   | Required   |
+| ------------- |:-------------:|:-------------:|:-------------:|
+  gauge-radius     | 120 |	sets the size of the gauge. | NO
+  min-val          | 0 | 	Minimum value to be shown in gauge scale. | NO                 
+  max-val    	     | 220 |	Maximum value to be shown in gauge scale. | NO
+  needle-val       | 	0 | Sets the value of needle to be pointed.  | NO                    
+  tick-space-min-val | 10 |	space between the major ticks of the gauge.    | NO              
+  tick-space-maj-val | 20 |	space between the sub ticks of the gauge.  	| NO				 
+  gauge-units      | "kmh"| 	Unit of the values to be shown(ex. Kmph,%).  				 | NO
   tick-col-maj      |  	sets colour of the major tick.  							 
   tick-col-min      | 	sets colour of the sub tick.								 
   outer-edge-col    | 	sets the colour of outer circle of the gauge.  				 		
@@ -72,10 +71,10 @@
   tick-label-col    | 	sets colour of labels of the ticks.							 
   needle-col       | 	sets colour of the needle.  								 
   default-fonts    | 	sets the default fonts in gauge.						     
-  api             | 	Name of the api to call backend data (Optional).					 
-  transport       | 	method used to call api (can take "http" or "wss") (Optional).		 
-  msg-tag          | 	Subscribe to socket messages with tag name (Optional).		     
-  api-params         | 	api parameters (Optional).  					
+  api             | 	Name of the api to call backend data.					 
+  transport       | 	method used to call api (can take "http" or "wss").		 
+  msg-tag          | 	Subscribe to socket messages with tag name.		     
+  api-params         | 	api parameters.  					
   
   
 ## Componenet usage:
