@@ -79,7 +79,7 @@
   api-params  | null      | 	api parameters.  					| NO
   
   
-## Componenet usage:
+## Component usage:
 
 scriptr-gauge is an element component. you will just have to add it in your html view and add its relevant options.
 
