@@ -113,5 +113,5 @@ Example where data is called from backend
    //Return data when someone calls api over websocket or http
    return value;
   ```
-  Each speedometer application subscribed to "responseChannel" with msg-tag = "odometer" gets updated everytime a rest api is called. 
+  Each odometer application subscribed to "responseChannel" with msg-tag = "odometer" gets updated everytime a rest api is called. 
 
