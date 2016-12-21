@@ -77,7 +77,7 @@
   api-params      | undefined   | 	api parameters. | NO  					
   
   
-## Componenet usage:
+## Component usage:
 
 scriptr-speedometer is an element component. you will just have to add it in your html view and add its relevant options.
 
