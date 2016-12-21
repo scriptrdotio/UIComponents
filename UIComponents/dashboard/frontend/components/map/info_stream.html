@@ -1,0 +1,26 @@
+<div ng-non-bindable="">
+    <!-- begin vehicle summary -->
+    <section class="col-xs-12 bg-white-light pdt10 pdb10 index-summary">
+      <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+        <div class="icon bg-blue" ng-bind-html="summaryIcons.vehicle">
+        </div>
+        <div class="nb fnt20">{{marker.assetId}}</div>
+        <small>Vehicle Id</small>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+        <div class="icon bg-orange" ng-bind-html="summaryIcons.telecom">
+        </div>
+        <div class="nb fnt20">{{marker.details.cep.value ||
+          "N/A"}}</div>
+        <small>CEP</small>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+        <div class="icon bg-yellow" ng-bind-html="summaryIcons.time">
+        </div>
+        <div class="nb fnt20">{{(marker.details.timestamp |
+          date:'MM/dd/yyyy hh:mm:ss') || "N/A"}}</div>
+        <small>Time</small>
+      </div>
+    </section>
+    <!-- end vehicle summary -->
+  </div>

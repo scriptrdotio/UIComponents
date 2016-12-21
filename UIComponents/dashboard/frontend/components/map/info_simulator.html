@@ -1,0 +1,51 @@
+<div ng-non-bindable="">
+    <!-- begin vehicle summary -->
+    <section class="col-xs-12 bg-white-light pdt10 pdb10 index-summary">
+      <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+        <div class="icon bg-green" ng-bind-html="summaryIcons.makemodel"> 
+        </div>
+        <div class="nb fnt20"><span>{{marker.details.make.value || "N/A"}}</span>&nbsp;<span>{{marker.details.model.value || "N/A"}}</span></div>
+        <small>Car type</small>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+        <div class="icon bg-blue" ng-bind-html="summaryIcons.vehicle">
+        </div>
+        <div class="nb fnt20">{{marker.assetId}}</div>
+        <small>Vehicle Id</small>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+        <div class="icon bg-orange" ng-bind-html="summaryIcons.mileage">
+        </div>
+        <div class="nb fnt20">{{marker.details.mileage.value || "N/A"}}<span ng-hide="!marker.details.mileage.value"> miles</span></div>
+        <small>Mileage</small>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+        <div class="icon bg-yellow" ng-bind-html="summaryIcons.time">
+        </div>
+        <div class="nb fnt20">{{(marker.details.timestamp | date:'MM/dd/yyyy hh:mm:ss') || "N/A"}}</div>
+        <small>Time</small>
+      </div>
+    </section>        
+    <!-- end vehicle summary -->
+    <!-- begin table -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Fuel</th>
+          <th>Voltage</th>
+          <th>Temperature</th>
+          <th>Speed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{marker.details.fuel.value || "n/a"}}<span ng-hide="!marker.details.fuel.value"> % full</span></td>
+          <td>{{marker.details.voltage.value || "n/a"}}<span ng-hide="!marker.details.voltage.value"> V</span></td>
+          <td>{{marker.details.coolantTemperature.value || "n/a"}}<span ng-hide="!marker.details.coolantTemperature.value"> °C</span></td>
+          <td>{{marker.details.speed.value || "n/a"}}<span ng-hide="!marker.details.speed.value"> mph</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- end table -->
+    <a type="button" ng-click="vm.showAssetDashboard(marker.assetId)" class="btn btn-success" >View vehicle details</a>
+</div>

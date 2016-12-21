@@ -1,240 +1,40 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
-    <title>Telematics</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
-    <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.0/css/bootstrap-select.min.css">-->
-    <!-- font awesome.css -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
-    <!-- font awesome.css -->
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
-    <script src="../../modules/login/widgets/authorization.js" ></script>
-    <!-- Adding Angular -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
-    <script src="/scriptrUI/channelManager.js"></script>
-    <script src="../static/appConfig.js"></script>
-    <script src="/telematics/static/map/controller.js"></script>
-    <script src="/telematics/static/map/constants.js"></script>
-    <!-- marker cluster -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js"></script>
-    <!-- Start Loading Required Widgets used in telematics Demo -->
-    <!-- x-editable.css -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap-editable/css/bootstrap-editable.css">
-    <!-- x-editable.css angular -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.2.0/css/xeditable.min.css">
-    <!-- x-editable -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-    <!-- x-editable angular -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.2.0/js/xeditable.min.js"></script>
-    <!-- ng-grid -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js"></script>
-    <!-- Gauge used for speed and rpm -->  
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="/scriptrUI/lib/widgets/metergauge.js"></script>
-    <!-- Odemeter used in mileage -->
-    <link rel="stylesheet" href="/scriptrUI/lib/widgets/odometer/odometer.car.css">
-    <script src="/scriptrUI/lib/widgets/odometer/odometer.min.js"></script>
-    <script src="/scriptrUI/lib/widgets/odometer/angular.odometer.min.js"></script>
-    <!-- Gauge used for fuel, voltage, temperature -->  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
-    <script src="/scriptrUI/lib/widgets/justgauge/angulargauge.min.js"></script>
-    <!-- Charts used in historical angular.morris -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-morris/1.3.0/angular-morris.min.js"></script>
-    <!-- Map widget -->
-    <script src="//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I"></script>
-    <script src="//rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js"></script>
-    <script type="text/javascript"> 
-      var authorization  = $.scriptr.authorization(
-        {
-          onTokenValid: function(){ }, 
-          loginPage:"./login.html"}
-      );
-    </script>
-  </head>
-  <body style="overflow-y: hidden;" ng-app="main" ng-controller="MainMapCtrl as vm" ng-init="vm.init();"  ng-cloak>
-    <div class="drag-container">
-      <section class="map-wrap"  ng-if="vm.draw == false">
-        <ng-map id="clustered" on-zoom_changed="vm.onClusteredZoomChanged();" single-info-window="true" zoom-to-inlude-markers="true"
-                center="{{vm.mapcenter || vm.defaultcenter}}"  zoom="{{vm.clusteredmapzoom}}">
-        </ng-map>
-      </section>
-      <section class="map-wrap" ng-if="vm.draw == true">
-        <ng-map  id="detailed" on-zoom_changed="vm.onDetailedZoomChanged();" single-info-window="true" zoom-to-inlude-markers="true"
-                center="{{vm.mapcenter || vm.defaultcenter}}"   zoom="{{vm.detailedmapzoom}}">
-          <div>
-            <div ng-repeat="(key, asset) in vm.displayedAssets">
-              <shape name="polyline"
-                     path="{{asset.path}}"
-                     stroke-color="{{asset.pathColor}}"
-                     stroke-opacity="{{asset.strokeOpacity}}"
-                     stroke-width="{{asset.strokeWeight}}"
-                     icons="{{asset.pathIcon}}">
-              </shape>
-              <div  ng-repeat="marker in asset.markers track by $index">
-                <div ng-if="vm.trackedAsset == null">
-                  <marker position="{{marker.position}}" title="{{marker.title}}"
-                          icon="{{marker.icon}}" on-click="vm.showAssetInfo(event, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')">
-                  </marker>
-                </div>
-                <div ng-if="vm.trackedAsset !=null">
-                  <marker position="{{marker.position}}" title="{{marker.title}}"
-                          icon="{{marker.icon}}" clickable="false">
-                    </div>
-                </div> <!-- end trip markers loop -->
-              </div>
-            </div>
-            
-            <div ng-if="vm.selectedAsset != null">
-              <info-window id="infoWindowTemplate_simulator" max-width="600">
-                <div ng-non-bindable="">
-                  <!-- begin vehicle summary -->
-                  <section class="col-xs-12 bg-white-light pdt10 pdb10 index-summary">
-                    <div class="col-xs-12 col-sm-6 col-md-3 text-center">
-                      <div class="icon bg-green" ng-bind-html="vm.infoWd.icons.makemodel">
-                      </div>
-                      <div class="nb fnt20"><span>{{vm.marker.details.make.value || "N/A"}}</span>&nbsp;<span>{{vm.marker.details.model.value || "N/A"}}</span></div>
-                      <small>Car type</small>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3 text-center">
-                      <div class="icon bg-blue" ng-bind-html="vm.infoWd.icons.vehicle">
-                      </div>
-                      <div class="nb fnt20">{{vm.marker.plate}}</div>
-                      <small>Vehicle Id</small>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3 text-center">
-                      <div class="icon bg-orange" ng-bind-html="vm.infoWd.icons.mileage">
-                      </div>
-                      <div class="nb fnt20">{{vm.marker.details.mileage.value || "N/A"}}<span ng-hide="!vm.marker.details.mileage.value"> miles</span></div>
-                      <small>Mileage</small>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3 text-center">
-                      <div class="icon bg-yellow" ng-bind-html="vm.infoWd.icons.time">
-                      </div>
-                      <div class="nb fnt20">{{(vm.marker.details.timestamp | date:'MM/dd/yyyy hh:mm:ss') || "N/A"}}</div>
-                      <small>Time</small>
-                    </div>
-                  </section>        
-                  <!-- end vehicle summary -->
-                  <!-- begin table -->
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Fuel</th>
-                        <th>Voltage</th>
-                        <th>Temperature</th>
-                        <th>Speed</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>{{vm.marker.details.fuel.value || "n/a"}}<span ng-hide="!vm.marker.details.fuel.value"> % full</span></td>
-                        <td>{{vm.marker.details.voltage.value || "n/a"}}<span ng-hide="!vm.marker.details.voltage.value"> V</span></td>
-                        <td>{{vm.marker.details.coolantTemperature.value || "n/a"}}<span ng-hide="!vm.marker.details.coolantTemperature.value"> °C</span></td>
-                        <td>{{vm.marker.details.speed.value || "n/a"}}<span ng-hide="!vm.marker.details.speed.value"> mph</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <a type="button" ng-click="vm.showAssetDashboard(vm.marker.plate)" class="btn btn-success" >View vehicle details</a>
-                </div>
-              </info-window>
-              <info-window id="infoWindowTemplate_stream" max-width="300">
-                <div ng-non-bindable="">
-                  <!-- begin vehicle summary -->
-                  <section class="col-xs-12 bg-white-light pdt10 pdb10 index-summary">
-                    <div class="col-xs-12 col-sm-6 col-md-4 text-center">
-                      <div class="icon bg-blue" ng-bind-html="vm.infoWd.icons.vehicle">
-                      </div>
-                      <div class="nb fnt20">{{vm.marker.plate}}</div>
-                      <small>Vehicle Id</small>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 text-center">
-                      <div class="icon bg-orange" ng-bind-html="vm.infoWd.icons.telecom">
-                      </div>
-                      <div class="nb fnt20">{{vm.marker.details.cep.value || "N/A"}}</div>
-                      <small>CEP</small>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 text-center">
-                      <div class="icon bg-yellow" ng-bind-html="vm.infoWd.icons.time">
-                      </div>
-                      <div class="nb fnt20">{{(vm.marker.details.timestamp | date:'MM/dd/yyyy hh:mm:ss') || "N/A"}}</div>
-                      <small>Time</small>
-                    </div>
-                  </section>        
-                  <!-- end vehicle summary -->
-                </div>
-              </info-window>
-            </div>
-            </ng-map>
-          </section>
-        <div ng-show="!vm.trackedAsset">
-          <div id="draggable3" class="draggable ui-widget-content col-sm-3 col-md-3 col-lg-2 pull-right">
-            <span class="logout pull-right btn btn-xs"><a href="javascript:authorization.logout()"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a></span>
-            <h3 ng-show="!vm.isEmptyObject(vm.sources)">Select vehicle</h3>
-            <h3 ng-show="vm.isEmptyObject(vm.sources)" style="text-align: center;"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i></h3>
-            
-             <div ng-repeat="(srcKey,srcAssets) in vm.sources">
-             	<label class="text-white text-normal">{{vm.sourcesLabels[srcKey]}}</label>
-                <div class="search-wrap">
-                	<input ng-model="vm.searchText" placeholder="Select Lock" class="form-control search-text">
-                	<span ng-click="vm.focusOnAsset('all','')"><i class="fa fa-times"></i></span>
-              	</div>
-              	<div id="searchTextResults" class="form-control">
-                  <ul class="listing-search">
-                    <li><a ng-click="vm.focusOnAsset('all', '')">All</a></li>
-                    <li ng-repeat="asset in srcAssets | filter:vm.searchText | orderBy:'label'" ng-class=""><a ng-click="vm.focusOnAsset(asset.key)">{{asset.label}}</a></li>
-                  </ul>  
-              	</div>
-              	<div class="clearfix"></div>
-            </div> 
-               
-            <!--div ng-repeat="(srcKey,srcAssets) in vm.sources">
-              <h3>{{vm.sourcesLabels[srcKey]}}</h3>
-              <div class="plain-select"> 
-                <select ng-model="vm.selectedAsset" ng-change="vm.focusOnAsset(vm.selectedAsset)">
-                  <option value="all" selected>All</option> 
-                  <option ng-repeat="assetKey in srcAssets track by $index" value="{{assetKey}}">{{vm.assets[assetKey].latestMarker.label}}</option>
-                </select>
-              </div>
-              <br/>
-              <br/>
-              <div class="clearfix"></div>
-            </div-->
-          </div> 
-        </div>
-        </div>
-      <script>
-        $( document ).ready(function() {
-          $( "#draggable3" ).draggable({ containment: ".drag-container", scroll: false });
-        });
-      </script>
-      <div id="dashboard" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body load-middle">
-              <div id="loadImg" class="load-Imgmiddle">
-                <div class="text-center"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
-               </div>
-              <iframe id="dashboard-iframe" frameBorder="0" onload="$('#loadImg').hide(); $('#dashboard-iframe').show();"></iframe>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->  
-      </body>
-    </html>
+<div>
+	<section class="map-wrap" ng-if="vm.clusteredView == true && vm.showDetailedMap == false">
+		<ng-map id="clustered" on-zoom_changed="vm.onClusteredZoomChanged();"
+			single-info-window="true" zoom-to-inlude-markers="true"
+			center="{{vm.mapcenter || vm.defaultcenter}}"
+			zoom="{{vm.clusterZoom}}"> </ng-map>
+	</section>
+	<section class="map-wrap" ng-if="vm.showDetailedMap == true || vm.clusteredView == false">
+		<ng-map id="detailed" on-zoom_changed="vm.onDetailedZoomChanged();"
+			single-info-window="true" zoom-to-inlude-markers="true"
+			center="{{vm.mapcenter || vm.defaultcenter}}"
+			zoom="{{vm.detailedmapzoom}}">
+		<div>
+			<div ng-repeat="(key, asset) in vm.displayedAssets">
+				<shape name="polyline" path="{{asset.path}}"
+					stroke-color="{{asset.pathColor}}"
+					stroke-opacity="{{asset.strokeOpacity}}"
+					stroke-width="{{asset.strokeWeight}}" icons="{{asset.pathIcon}}">
+				</shape>
+				<div ng-repeat="marker in asset.markers track by $index">
+					<div ng-if="vm.trackedAsset == null">
+						<marker position="{{marker.position}}" title="{{marker.title}}"
+							icon="{{marker.icon}}"
+							on-click="vm.showAssetInfo(event, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')">
+						</marker>
+					</div>
+					<div ng-if="vm.trackedAsset !=null">
+						<marker position="{{marker.position}}" title="{{marker.title}}"
+							icon="{{marker.icon}}" clickable="false">
+					</div>
+				</div>
+				<!-- end trip markers loop -->
+			</div>
+		</div>
+        <div ng-if="vm.selectedAsset != null">
+			<div ng-transclude></div>
+		</div>
+		</ng-map>
+	</section>
+</div>
