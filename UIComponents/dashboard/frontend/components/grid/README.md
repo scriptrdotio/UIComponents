@@ -86,6 +86,32 @@
 
 scriptr-grid is an element component. you will just have to add it in your html view and add its relevant options.
 
+## Service API Resposne:
+ 
+ The expected returned data structure from a service API is as follows:
+   ```javascript
+  {
+		"count": "500",
+		"documents": [
+			{
+				"key": "C91918B97B1EAA7A97D8435611452666",
+				"versionNumber": "1.0",
+				"name": "car_500",
+				"model": "model_500",
+				"price": "500.0"
+			},
+			{
+				"key": "DC2BEB691E480C22886AEC708D5A19A5",
+				"versionNumber": "1.0",
+				"name": "car_499",
+				"model": "model_499",
+				"price": "499.0"
+			},
+			]
+}
+  ```
+ 
+
  ```html
    <scriptr-grid columns-definition='[
           {headerName: "Make", field: "name"},
