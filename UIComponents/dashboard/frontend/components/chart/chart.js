@@ -53,6 +53,8 @@ angular
              this.ykeys = (this.ykeys) ? this.ykeys : ["a"];  // A list of names of data record attributes that contain y-values.
              this.labels = (this.labels) ? this.labels : ["Serie A"]; // Labels for the ykeys -- will be displayed when you hover over the chart.
              this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];
+             this.stacked = (this.stacked) ? this.stacked : false;
+             this.resize = (this.resize) ? this.resize : true;
              
              // donut config
              this.donutLabelColor = (this.donutLabelColor) ? this.donutLabelColor : "#666";
