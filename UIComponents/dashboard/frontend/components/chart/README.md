@@ -5,8 +5,12 @@
   It can take static value or be synced to a Real-time Communication. 
 
 ## Requirements:
+
+  Bootstrap
   
   AngularJS v1.5.6+
+  
+  JQuery
   
   chart Modules
   
