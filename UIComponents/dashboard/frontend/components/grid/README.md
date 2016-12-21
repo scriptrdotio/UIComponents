@@ -82,10 +82,6 @@
   api-params  | null      | 	Api parameters.  					| NO
   
   
-## Componenet usage:
-
-scriptr-grid is an element component. you will just have to add it in your html view and add its relevant options.
-
 ## Service API Resposne:
  
  The expected returned data structure from a service API is as follows:
@@ -113,6 +109,10 @@ scriptr-grid is an element component. you will just have to add it in your html 
  
 
  ```html
+ 
+ ## Componenet usage:
+
+scriptr-grid is an element component. you will just have to add it in your html view and add its relevant options.
    <scriptr-grid columns-definition='[
           {headerName: "Make", field: "name"},
           {headerName: "Model", field: "model"},
