@@ -52,7 +52,7 @@
   
   Add "WsClient", "HttpClient", "Odometer" to your app module's dependency
   
-  ```
+  ```javascript
   angular.module("myApp", ["WsClient", "HttpClient", "Odometer"])
   ```
   
@@ -94,3 +94,24 @@ Example where data is called from backend
         duration='1000'> 
       </scriptr-odometer>
   ```
+  
+  REST API example:
+  
+  ```javascript
+   var value =  Math.floor((Math.random() * 100) + 10); 
+
+   var publishResponse = function(channel, data, request) {
+      var message = {"result": data};
+
+      //Add a default id to identify the message published over the socket
+      message["id"] = "odometer";
+      publish(channel, message);
+   }
+
+   publishResponse("responseChannel", value, request);
+
+   //Return data when someone calls api over websocket or http
+   return value;
+  ```
+  Each speedometer application subscribed to "responseChannel" with msg-tag = "odometer" gets updated everytime a rest api is called. 
+
