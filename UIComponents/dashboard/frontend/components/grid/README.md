@@ -69,11 +69,14 @@
   enableSorting     | true	 |Turn sorting on for the grid. | NO
   enable-server-side-sorting  | true | Turn on server side filter. | NO
   enable-client-side-filter     | true	 | turn on client side filter. | NO
+  cell-editable | true | Turn on cell editing | NO
   enable-col-resize       | false    | Enable column resize. | NO
   row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination"	| NO
   row-selection       | "multiple"    | 	Type of row selection, set to either 'single' or 'multiple' to enable selection.	| NO
   pagination-page-size       | 50    | 	Number of rows per page.	| NO
   service-api       | undefined | Name of the api to call backend data | Required if row-data is undefined
+  on-format-data | undefined | Callback function to be called after data is returned from backend | NO
+  on-cell-value-changed-script | undefined | Name of the script to be called on cell editing | NO
   transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 | NO
   msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | NO    
   api-params  | null      | 	Api parameters.  					| NO
