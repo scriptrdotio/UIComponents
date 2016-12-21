@@ -74,7 +74,7 @@
   row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination"	| NO
   row-selection       | "multiple"    | 	Type of row selection, set to either 'single' or 'multiple' to enable selection.	| NO
   pagination-page-size       | 50    | 	Number of rows per page.	| NO
-  service-api       | undefined | Name of the api to call backend data | Required if row-data is undefined
+  service-api       | undefined | Name of the api to call backend data | NO
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO
   on-cell-value-changed-script | undefined | Name of the script to be called on cell editing | NO
   transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 | NO
