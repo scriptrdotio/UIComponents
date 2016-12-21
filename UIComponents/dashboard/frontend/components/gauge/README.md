@@ -83,6 +83,16 @@
 
 scriptr-gauge is an element component. you will just have to add it in your html view and add its relevant options.
 
+Example where data is static
+
+```html
+ <scriptr-gauge 
+        gauge-value='50'>
+ </scriptr-gauge>
+ ```
+ 
+ Example where data is called from backend
+ 
  ```html
      <scriptr-gauge 
               transport='wss' 
