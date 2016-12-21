@@ -118,7 +118,7 @@ Example where data is static
         type='bar'
         stacked='true'
         xkey='y'
-	ykeys='["a", "b"]'
+	 ykeys='["a", "b"]'
         transport="wss"
         msg-tag="chart"
         api='UIComponents/dashboard/frontend/examples/chart/getChartData'
