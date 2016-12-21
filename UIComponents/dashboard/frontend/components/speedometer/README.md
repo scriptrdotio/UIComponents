@@ -81,8 +81,18 @@
 
 scriptr-speedometer is an element component. you will just have to add it in your html view and add its relevant options.
 
+Example where data is static
+
   ```html
    <scriptr-speedometer
       needle-val="50">
+  </scriptr-speedometer>
+  ```
+  
+  Example where data is called from backend
+  
+  ```html
+  <scriptr-speedometer
+     api="UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal">
   </scriptr-speedometer>
   ```
