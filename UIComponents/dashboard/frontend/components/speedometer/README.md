@@ -5,10 +5,12 @@
   It can take static value or be synced to a Real-time Communication. 
 
 ## Requirements:
-
-  D3.js v4.2.2
   
   AngularJS v1.5.6+
+  
+  Metergauge
+  
+  D3.js v4.2.2
   
   wsProvider.js
   
@@ -22,11 +24,11 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
   <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
-  <script src="https://d3js.org/d3.v4.min.js"></script>  
   ```
-  Include angular-metergauge module
+  Include angular-metergauge module and D3.js
    
   ```html
+  <script src="https://d3js.org/d3.v4.min.js"></script>  
   <script src="/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js"></script>
   ```
   
