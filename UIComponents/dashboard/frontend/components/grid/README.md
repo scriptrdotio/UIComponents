@@ -5,6 +5,8 @@
   It can take static values or be synced to a Real-time Communication. 
 
 ## Requirements:
+
+  Bootstrap
   
   AngularJS v1.5.6+
   
