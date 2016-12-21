@@ -62,19 +62,19 @@
   tick-space-min-val | 10 |	space between the major ticks of the gauge.    | NO              
   tick-space-maj-val | 20 |	space between the sub ticks of the gauge.  	| NO				 
   gauge-units      | "kmh"| 	Unit of the values to be shown(ex. Kmph,%).  				 | NO
-  tick-col-maj      |  	sets colour of the major tick.  							 
-  tick-col-min      | 	sets colour of the sub tick.								 
-  outer-edge-col    | 	sets the colour of outer circle of the gauge.  				 		
-  pivot-col        | 	sets colour of the pivot.  									 
-  inner-col        | 	sets colour of inner body of the gauge. 					 
-  units-label-col   | 	sets colour of units label.  								 
-  tick-label-col    | 	sets colour of labels of the ticks.							 
-  needle-col       | 	sets colour of the needle.  								 
-  default-fonts    | 	sets the default fonts in gauge.						     
-  api             | 	Name of the api to call backend data.					 
-  transport       | 	method used to call api (can take "http" or "wss").		 
-  msg-tag          | 	Subscribe to socket messages with tag name.		     
-  api-params         | 	api parameters.  					
+  tick-col-maj      |  "#C64DFF" | 	sets colour of the major tick.  					| NO		 
+  tick-col-min      | "#999999" | 	sets colour of the sub tick.						| NO		 
+  outer-edge-col    | "#f4f4f4" | 	sets the colour of outer circle of the gauge.  				| NO 		
+  pivot-col        | "#434a54" |	sets colour of the pivot. | NO  									 
+  inner-col        | 	"#ffffff" | sets colour of inner body of the gauge. 				| NO	 
+  units-label-col   | "#C64DFF" |  	sets colour of units label.  					| NO			 
+  tick-label-col    | "#656D78" |	sets colour of labels of the ticks.			| NO				 
+  needle-col       | 	"#C64DFF" | sets colour of the needle.  		| NO						 
+  default-fonts    | undefined |	sets the default fonts in gauge.						     | NO
+  api             | undefined | 	Name of the api to call backend data. | 					 Required if needle-val is undefined
+  transport       | 	undefined | method used to call api (can take "http" or "wss").		| NO 
+  msg-tag          | undefined | 	Subscribe to socket messages with tag name.		     | NO
+  api-params      | undefined   | 	api parameters. | NO  					
   
   
 ## Componenet usage:
