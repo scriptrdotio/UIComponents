@@ -52,7 +52,7 @@ angular
 
          /** virtual paging properties **/
         "maxPagesInCache" : "<?", // how many pages to store in cache. default is undefined, which allows an infinite sized cache, pages are never purged. this should be set for large data to stop your browser from getting full of data
-        "apiData" : "<?",
+        "apiParams" : "<?",
         
         "onFormatData" : "&"
       },
@@ -221,9 +221,9 @@ angular
           }
           APIParams["startRow"] = params.startRow;
           APIParams["endRow"] = params.endRow;
-          if(this.apiData){
-            for(var param in this.apiData){
-                 APIParams[param] = this.apiData[param];
+          if(this.apiParams){
+            for(var param in this.apiParams){
+                 APIParams[param] = this.apiParams[param];
             }
           }
           return APIParams;
