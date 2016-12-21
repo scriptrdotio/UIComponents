@@ -56,7 +56,7 @@
   
   Add "WsClient", "HttpClient", "Grid" to your app module's dependency
   
-  ```
+  ```javascript
   angular.module("myApp", ["WsClient", "HttpClient", "Grid"])
   ```
   
@@ -82,7 +82,7 @@
   api-params  | null      | 	Api parameters.  					| NO
   
   
-## Service API Resposne:
+## Service API Response:
  
  The expected returned data structure from a service API is as follows:
    ```javascript
@@ -102,12 +102,19 @@
 				"name": "car_499",
 				"model": "model_499",
 				"price": "499.0"
-			},
+			}
 			]
 }
   ```
+ Each field name in the response should be defined in your columns-definition as follows:
  
-
+ ```javascript
+ columns-definition=[
+		     {headerName: "Make", field: "name"},
+		     {headerName: "Model", field: "model"},
+		     {headerName: "Price", field: "price", type: "numeric"}
+	  	   ]
+```
  ```html
  
  ## Componenet usage:
