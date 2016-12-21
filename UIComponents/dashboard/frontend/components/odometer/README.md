@@ -74,6 +74,16 @@
 
 scriptr-odometer is an element component. you will just have to add it in your html view and add its relevant options.
 
+Example where data is static
+
+ ```html
+     <scriptr-odometer
+           odometer-value="54151">        
+    </scriptr-odometer>
+  ```
+  
+Example where data is called from backend
+
  ```html
     <scriptr-odometer
         transport='wss'
