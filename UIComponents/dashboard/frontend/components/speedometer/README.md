@@ -101,18 +101,19 @@ Example where data is static
   REST API example:
   
   ```javascript
-  var value =  Math.floor((Math.random() * 100) + 10); 
+   var value =  Math.floor((Math.random() * 100) + 10); 
 
-var publishResponse = function(channel, data, request) {
-   var message = {"result": data};
-  
-   //Add a default id to identify the message published over the socket
-   message["id"] = "speedometer";
-   publish(channel, message);
-}
+   var publishResponse = function(channel, data, request) {
+      var message = {"result": data};
 
-publishResponse("responseChannel", value, request);
+      //Add a default id to identify the message published over the socket
+      message["id"] = "speedometer";
+      publish(channel, message);
+   }
 
-//Return data when someone calls api over websocket or http
-return value;
+   publishResponse("responseChannel", value, request);
+
+   //Return data when someone calls api over websocket or http
+   return value;
   ```
+  Each speedometer application subscribed to "responseChannel" with msg-tag = "speedometer" gets updated everytime a rest api is called. 
