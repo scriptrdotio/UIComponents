@@ -70,7 +70,7 @@
   api-params  | null       | 	api parameters.  					| NO
   
   
-## Componenet usage:
+## Component usage:
 
 scriptr-odometer is an element component. you will just have to add it in your html view and add its relevant options.
 
