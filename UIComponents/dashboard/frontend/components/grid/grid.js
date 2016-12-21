@@ -19,6 +19,8 @@ angular
         "enableColResize" : "<?",
 
         "cellEditable" : "<?",
+        
+        "rowData" : "<?",
 
         "enableSorting": "<?", // client-side sorting
 
@@ -28,7 +30,7 @@ angular
 
         "transport" : "@", //"http" or "wss" or "publish"
 
-        "enableClientFilter" : "<?",
+        "enableClientSideFilter" : "<?",
 
         "rowModelType" : "@", // rowModelType can be set to "pagination" or "virtual" (infinite scrolling)
 
@@ -60,7 +62,7 @@ angular
 
         var self = this;
 
-        if(!this.enableClientFilter){
+        if(!this.enableClientSideFilter){
           this.hideClientFilter = "true";
         }
         if(!this.enableServerSideFilter){
@@ -129,7 +131,12 @@ angular
               console.log('the grid is now ready');
               // set "Contains" in the column drop down filter to "StartWith" as it is not supported in document query 
               event.api.filterManager.availableFilters.text.CONTAINS = "startsWith";
-              self._createNewDatasource();
+              if(typeof self.rowData == 'undefined'){
+             	 self._createNewDatasource();
+              }else{
+                self.gridOptions.rowModelType = "normal";
+                event.api.setRowData(self.rowData);
+              }
             },
 
           };
