@@ -92,7 +92,27 @@ Example where data is static
   Example where data is called from backend
   
   ```html
-  <scriptr-speedometer
-     api="UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal">
+    <scriptr-speedometer
+     api="UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal"
+     msg-tag="speedometer">
   </scriptr-speedometer>
+  ```
+  
+  REST API example:
+  
+  ```javascript
+  var value =  Math.floor((Math.random() * 100) + 10); 
+
+var publishResponse = function(channel, data, request) {
+   var message = {"result": data};
+  
+   //Add a default id to identify the message published over the socket
+   message["id"] = "speedometer";
+   publish(channel, message);
+}
+
+publishResponse("responseChannel", value, request);
+
+//Return data when someone calls api over websocket or http
+return value;
   ```
