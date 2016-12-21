@@ -115,12 +115,14 @@
 		     {headerName: "Price", field: "price", type: "numeric"}
 	  	   ]
 ```
- ```html
  
  ## Componenet usage:
 
 scriptr-grid is an element component. you will just have to add it in your html view and add its relevant options.
 
+Example where data is static
+
+```html
    <scriptr-grid columns-definition='[
           {headerName: "Make", field: "name"},
           {headerName: "Model", field: "model"},
@@ -135,5 +137,26 @@ scriptr-grid is an element component. you will just have to add it in your html 
            pagination-page-size='50'
            transport='http' 
            service-api='UIComponents/dashboard/frontend/examples/grid/getCarsInfo'>
+  </scriptr-grid>
+  ```
+  
+  Example where data is called from backend
+  
+  ```html
+  <scriptr-grid
+           columns-definition= "vm.colDef" 
+           row-model-type='pagination'
+           enable-sorting='true'
+           cell-editable='true'
+           enable-client-filter='true'
+           enable-server-side-filter='false' 
+           enable-server-side-sorting='false'
+           row-model-selection='multiple'
+           pagination-page-size='50'
+           transport='http' 
+           service-api='telematics/zohoTicketing/api/listDeviceTickets'
+           api-data='{"id" : "253831"}'
+           on-cell-value-changed-script='telematics/zohoTicketing/api/updateTicketStatus'
+           on-format-data="vm.callback">
   </scriptr-grid>
   ```
