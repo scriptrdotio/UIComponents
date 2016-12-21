@@ -1,6 +1,6 @@
 # Angular Odometer 
  
-  Angular component for displaying meter gauge/odometer gauge visualization.
+  Angular component for displaying odometer gauge visualization.
   
   It can take static value or be synced to a Real-time Communication. 
 
