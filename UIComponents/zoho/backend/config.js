@@ -1,4 +1,4 @@
 var crmAuthToken = "";
-var supportAuthToken ="37755a85e39fec8f4f081e62570a8a42";
+var supportAuthToken ="b8a1446096351a33eb42d39f29c580bc";
 var portal = "scriptrdev";
 var department = "scriptrdev";
