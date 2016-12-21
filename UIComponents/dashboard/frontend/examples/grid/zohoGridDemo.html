@@ -92,7 +92,21 @@
           {headerName: "URI", field: "uri", editable : false, cellRenderer: function (params) {  
             return vm.myCellRenderer(params);
         }
-	 }] 
+	 }]
+      
+    
+    /** 
+    vm.columnDefs = [
+        {headerName: "Make", field: "make"},
+        {headerName: "Model", field: "model"},
+        {headerName: "Price", field: "price"}
+    ];
+    // for static data use rowData
+    vm.rowData = [
+        {make: "Toyota", model: "Celica", price: 35000},
+        {make: "Ford", model: "Mondeo", price: 32000},
+        {make: "Porsche", model: "Boxter", price: 72000}
+    ]; */
    });
      
 </script>
@@ -104,8 +118,8 @@
            enable-sorting='true'
            cell-editable='true'
            enable-client-filter='true'
-           enable-server-side-filter='true' 
-           enable-server-side-sorting='true'
+           enable-server-side-filter='false' 
+           enable-server-side-sorting='false'
            row-model-selection='multiple'
            pagination-page-size='50'
            transport='http' 
