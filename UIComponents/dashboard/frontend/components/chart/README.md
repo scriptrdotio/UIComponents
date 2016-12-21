@@ -87,7 +87,7 @@
   api-params  | null      | 	Api parameters.  	| NO				
   
   
-## Componenet usage:
+## Component usage:
 
 scriptr-chart is an element component. you will just have to add it in your html view and add its relevant options.
 
@@ -124,3 +124,42 @@ Example where data is static
         api='UIComponents/dashboard/frontend/examples/chart/getChartData'>
     </scriptr-chart>
     ```
+    
+    REST API example:
+  
+  ```javascript
+   	var requestParams = request.body;
+
+	var publishResponse = function(channel, data, request, id) {
+	   var message = {"result": data};
+	   if(request.body && request.body.id) {
+	     message["id"] = request.body.id;
+	   } else {
+	     if(!id) {
+		id = "gauge"
+	     }
+	     //Add a default id to identify the message published over the socket
+	      message["id"] = id;
+	   }
+	   publish(channel, message);
+	}
+
+	// data for line, bar, and area charts
+	var data = [{ y: "2006", a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) },
+	    { y: "2007", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+	    { y: "2008", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) }];
+
+	// data for donut chart
+	var donutdata = [{label: "Download Sales", value: Math.floor((Math.random() * 100) + 1) }, {label: "In-Store Sales",value: 		Math.floor((Math.random() * 100) + 1) }, {label: "Mail-Order Sales", value: Math.floor((Math.random() * 100) + 1) }];
+
+	publishResponse("responseChannel", data, request, "chart");
+
+	publishResponse("responseChannel", donutdata, request, "donut");
+
+	return data;
+
+  ```
+  Each chart application subscribed to "responseChannel" with msg-tag "chart" or "donut" or "gauge" gets updated everytime a rest api is called. 
+
+
+
