@@ -7,7 +7,7 @@ angular
                   device : '<device',
                   groups : '<groups',
                   message : '@message',
-                  title : '@title'
+                  title : '<title'
                },
                templateUrl : '/UIComponents/userManagement/frontend/components/devices/deviceDetails.html',
 

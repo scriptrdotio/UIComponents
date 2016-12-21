@@ -1,21 +1,20 @@
 <!-- begin device form -->
-<div class="col-xs-12 col-md-4" ng-init="$ctrl.listGroups()">
-  <div ng-if="$ctrl.message">{{$ctrl.message}}</div>
-  <div class="telematicsChart">
-    <!--div ng-controller="ExampleController"-->
+<div class="col-xs-12 col-md-4 device-details" ng-init="$ctrl.listGroups()">
+  <h5 ng-if="$ctrl.title" class="box-title text-uppercase fntmontessart">{{$ctrl.title}}</h5>
+  <div ng-if="$ctrl.message" class="alert alert-danger break-word">{{$ctrl.message}}</div>
     <form novalidate class="simple-form" name="myForm">
       <div class="form-group">
         <label>Id</label>
         <input type="text" ng-model="$ctrl.device.id" name="id" class="form-control" required ng-readonly="$ctrl.isUpdate"/>
-        <span style="color:red" ng-show="myForm.id.$dirty && myForm.id.$invalid">
-  			<span ng-show="myForm.id.$error.required">Id is required.</span>
+        <span ng-show="myForm.id.$dirty && myForm.id.$invalid">
+  			<span class="text-danger" ng-show="myForm.id.$error.required">Id is required.</span>
         </span>
       </div>
       <div class="form-group">
         <label>Name</label>
         <input type="text" ng-model="$ctrl.device.name" name="name" class="form-control" required/>
-        <span style="color:red" ng-show="myForm.name.$dirty && myForm.name.$invalid">
-  		 	<span ng-show="myForm.name.$error.required">Name is required.</span>
+        <span ng-show="myForm.name.$dirty && myForm.name.$invalid">
+  		 	<span class="text-danger" ng-show="myForm.name.$error.required">Name is required.</span>
        	</span>
       </div>
       <div class="form-group">
@@ -23,12 +22,14 @@
         <textarea ng-model="$ctrl.device.description" class="form-control"></textarea>
       </div>  
       <div class="form-group" ng-if="$ctrl.device.id != null">
-        <label>token</label>
-        <input type="text" value="{{$ctrl.token}}" name="name" class="form-control" required ng-readonly="true"/>
-        <a ng-click="$ctrl.renewToken($ctrl.device.id, $ctrl.token)"><i class="fa fa-refresh" aria-hidden="true"></i></a>
-        <span style="color:red" ng-show="myForm.name.$dirty && myForm.name.$invalid">
-  		 	<span ng-show="myForm.name.$error.required">Name is required.</span>
-       	</span>
+        <div class="row">
+            <label class="col-xs-12">Token</label>
+        	<div class="col-xs-11"><input type="text" value="{{$ctrl.token}}" name="name" class="form-control" required ng-readonly="true"/></div>
+        	<div class="pull-left mt10"><a ng-click="$ctrl.renewToken($ctrl.device.id, $ctrl.token)" class="pointer"><i class="fa fa-refresh" aria-hidden="true"></i></a></div>
+          <span ng-show="myForm.name.$dirty && myForm.name.$invalid" class="col-xs-12">
+              <span class="text-danger" ng-show="myForm.name.$error.required">Name is required.</span>
+          </span>
+        </div>
       </div>
       <div class="form-group">
         <tags-input ng-model="$ctrl.device.groups" key-property="name" display-property="name" placeholder="groups"  add-from-autocomplete-only="true">
@@ -41,6 +42,5 @@
                ng-disabled="myForm.name.$dirty && myForm.name.$invalid || myForm.id.$dirty && myForm.id.$invalid"/>
       </div>
     </form>
-  </div>   
 </div>
  <!-- end device form -->

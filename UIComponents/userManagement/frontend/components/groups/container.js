@@ -1,5 +1,5 @@
 angular.module('Management').component('groupsContainer', {
-   template: '<div><h5 class="box-title text-uppercase fntmontessart">{{vm.title}}</h5><groups-list></groups-list><group-details></group-details></div>',
+   template: '<div ng-transclude></div>',
    transclude: true,
    controller : function($scope, _) {
 	   var self = this;

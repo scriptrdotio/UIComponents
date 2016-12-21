@@ -1,10 +1,9 @@
 angular.module('Management')
   .component('groupsList', {
   bindings: {
+    title: '<title',
     groups: '<groups',
-    message: '@message',
-    onDelete: '&',
-    onUpdate: '&'
+    message: '@message'
   },
   templateUrl: '/UIComponents/userManagement/frontend/components/groups/groupsList.html',
   controller: function($scope, _ , managementService){

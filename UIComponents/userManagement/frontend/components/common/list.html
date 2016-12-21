@@ -1,4 +1,5 @@
-<div class="col-xs-12 col-md-4" ng-init="$ctrl.loadItems()">
+<div class="col-xs-12 col-md-4 management-list" ng-init="$ctrl.loadItems()">
+  <h5 ng-if="$ctrl.title" class="box-title text-uppercase fntmontessart">{{$ctrl.title}}</h5>
 	<div ng-if="$ctrl.message">{{$ctrl.message}}</div>
 	<div class="search-wrap">
 		<input ng-model="$ctrl.searchItem" placeholder="Select item"
@@ -7,10 +8,10 @@
 	</div>
 	<div id="searchTextResults" class="form-control user-search">
 		<ul class="listing-search">
-          	<item ng-repeat="item in $ctrl.items | filter: $ctrl.searchItem | orderBy:'item' track by $index  " item="item" on-update="$ctrl.updateItem(item)" on-delete="$ctrl.deleteItem(item)"></item>
+          	<item ng-repeat="item in $ctrl.items | filter: $ctrl.searchItem | orderBy:'item' track by $index  " item="item" on-update="$ctrl.updateItem(item)" on-delete="$ctrl.deleteItem(item)" has-update="$ctrl.hasUpdate" has-delete="$ctrl.hasDelete"></item>
 		</ul>
 	</div>
-  <div class="mt10">
+  <div class="mt10" ng-if="$ctrl.hasAdd">
     <a type="button" class="btn btn-default" ng-click="$ctrl.addItem()"  class="btn btn-success">
       <i class="fa fa-floppy-o"></i> Add Item
     </a>

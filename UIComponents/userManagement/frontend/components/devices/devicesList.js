@@ -1,6 +1,7 @@
 angular.module('Management')
   .component('devicesList', {
   bindings: {
+    title: '<title',
     devices: '<devices',
     message: '@message',
     onDelete: '&',

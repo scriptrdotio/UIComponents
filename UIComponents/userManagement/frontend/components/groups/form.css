@@ -1,0 +1,17 @@
+.device-details {font-family: 'Josefin Sans', sans-serif;}
+.fntmontessart {font-family: 'Montserrat', sans-serif;}
+.box-title {color: #9c9c9c; letter-spacing: -1px; display: inline-block; width: 100%;}
+
+.mt10 {margin-top: 10px;}
+.pointer {cursor: pointer;}
+.break-word {word-wrap: break-word;}
+
+
+/*** Override boostrap button styles ***/
+.btn-primary {
+  background: #337ab7;
+  border: none;
+  color: #fff;
+  text-shadow: none;
+}
+

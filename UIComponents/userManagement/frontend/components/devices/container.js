@@ -1,6 +1,7 @@
 angular.module('Management').component('devicesContainer', {
-   templateUrl : '/UIComponents/userManagement/frontend/components/devices/container.html',
+   template: '<div ng-transclude></div>',
    controllerAs : 'vm',
+   transclude: true,
    controller : function($scope, _) {
 	   var self = this;
 	   self.isLoading = true;
@@ -12,8 +13,5 @@ angular.module('Management').component('devicesContainer', {
      	$scope.$on('addDevice', function(event, data) {
 		   $scope.$broadcast('loadDeviceDetails', {});
 	   });
-   },
-   bindings: {
-     'title': '@title'
    }
 });

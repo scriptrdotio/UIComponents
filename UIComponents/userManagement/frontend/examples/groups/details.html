@@ -20,7 +20,8 @@
    <!--Multi Tags input -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.css" />
 
-  <link rel="stylesheet" href="/UIComponents/userManagement/frontend/style.css">
+  <link rel="stylesheet" href="/UIComponents/userManagement/frontend/components/common/list.css">
+  <link rel="stylesheet" href="/UIComponents/userManagement/frontend/components/devices/form.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.js"></script>
   
   <script src="/UIComponents/userManagement/frontend/components/common/list.js"></script>
@@ -36,7 +37,7 @@
   <script src="/UIComponents/userManagement/frontend/components/groups/groupsList.js"></script>
   <script src="/UIComponents/userManagement/frontend/components/groups/groupDetails.js"></script>
   <script src="/UIComponents/userManagement/frontend/components/groups/container.js"></script>
-  
+  <script src="/UIComponents/config/scriptrTransport.js"></script>
 </head>
   
 <script>
@@ -45,12 +46,9 @@
       underscore.factory('_', ['$window', function($window) {		
           return $window._; // assumes underscore has already been loaded on the page		
       }]);
-      var myApp = angular.module('myApp', ["HttpClient", "Management"]);
+      var myApp = angular.module('myApp', ["HttpClient", "underscore", "Management"]);
   
-  	  myApp.config(["httpClientProvider",function (httpClientProvider) {
-        httpClientProvider.setBaseUrl("https://dolly.scriptrapps.io");
-        httpClientProvider.setToken("S0M0MzMzQjJCMzpkZW1vOjMwOENEOTBCMjBBNDQ1MTU0M0QwMDkzODU4NUNFMzdC");
-      }]);
+  	  myApp.config(httpsConfig);
   
   	  myApp
         .constant("users",["t1","t2"])
@@ -60,15 +58,7 @@
 </script>
 
 <body>
-  <devices-container title="Devices management"></devices-container>
-  
-  <div class="clearfix"></div>
-  
-  <groups-container title="Groups management">
-  	<groups-list></groups-list>
-  	<group-details></group-details>
-  </groups-container>
-
+  	<group-details title="'Groups Details'"></group-details>
 </body>
 
 </html>

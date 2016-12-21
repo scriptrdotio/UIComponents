@@ -1,17 +1,36 @@
 angular.module('Generic', [])
   .component('list', {
   bindings: {
+    title: '<title',
     items: '<items',
     searchItem: '<',
     message: '@message',
-    onLoad: '&',
-    onDelete: '&',
-    onUpdate: '&',
-    onSelect: '&',
-    onAdd: '&'
+    onLoad: '&?',
+    onDelete: '&?',
+    onUpdate: '&?',
+    onSelect: '&?',
+    onAdd: '&?'
   },
   templateUrl: "/UIComponents/userManagement/frontend/components/common/list.html",
   controller: function(){
+    
+    this.$onInit = function() {
+      this.hasAdd = false;
+      if(this.onAdd) {
+        this.hasAdd = true
+      }
+      
+      this.hasUpdate = false;
+      if(this.onUpdate) {
+        this.hasUpdate = true
+      }
+
+      this.hasDelete = false;
+       if(this.onDelete) {
+        this.hasDelete = true
+      }
+    },
+      
    	this.deleteItem = function(item) {
       this.onDelete({"item": item});
     },
@@ -35,8 +54,10 @@ angular.module('Generic', [])
 }).component('item', {
   bindings: {
     item:'<item',
-    onDelete: '&',
-    onUpdate: '&'
+    onDelete: '&?',
+    onUpdate: '&?',
+    hasUpdate: '<hasUpdate',
+    hasDelete: '<hasDelete'
   },
   templateUrl: "/UIComponents/userManagement/frontend/components/common/item.html",
   controller: function(){

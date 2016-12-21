@@ -1,0 +1,34 @@
+/* CSS Document */
+.management-list {font-family: 'Josefin Sans', sans-serif;}
+.fntmontessart {font-family: 'Montserrat', sans-serif;}
+.box-title {color: #9c9c9c; letter-spacing: -1px; display: inline-block; width: 100%;}
+.mt10 {margin-top: 10px;}
+
+/*** search box ***/
+.search-text {position: relative; z-index: 1; font-size: 13px;}
+.search-wrap {position: relative;}
+.search-wrap .fa-times {position: absolute; right: 8px; z-index: 1000; font-size: 0.75em; top: 13px; cursor: pointer; color: #999;}
+
+/*** Listing search ***/
+#searchTextResults {background: #f1f4f9; height: calc(100vh - 115px); min-height: 30px; overflow-y: auto; margin-top: -4px; padding: 0; cursor: default;}
+.listing-search {color: #555; padding: 0; margin: 0; list-style: none;}
+.listing-search a {display: block; padding: 4px 12px; color: #666; cursor: pointer;}
+.listing-search a:hover {background: #ddd;}
+.user-list {padding: 8px 10px; border-top: 1px dotted #999;}
+.user-list a {display: inline-block; padding: 1px 6px;}
+
+
+/*** Override boostrap button styles ***/
+.btn-default {
+  background: #90C143;
+  border: none;
+  color: #fff;
+  text-shadow: none;
+}
+
+.btn-default:hover, .btn-default:active, .btn-default:focus, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover  {
+  background: #85B531;
+  color: #fff;
+  border: none;
+  outline: 0;
+}

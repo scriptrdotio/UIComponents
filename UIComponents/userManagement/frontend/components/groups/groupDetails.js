@@ -2,7 +2,7 @@ angular.module('Management').component('groupDetails', {
    bindings : {
       group : '<group',
       message : '@message',
-      title: '@title'
+      title: '<title'
    },
    templateUrl : '/UIComponents/userManagement/frontend/components/groups/groupDetails.html',
 
