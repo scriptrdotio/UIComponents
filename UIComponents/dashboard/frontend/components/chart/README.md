@@ -69,26 +69,29 @@
   
 ## Options:
 
-| Option        | Default value   | Description   |
-| ------------- |:-------------:|:-------------:|
-  data     | undefined	 |series data.
-  type  | line | There are 4 types of charts (line, bar, area and donut).
-  xkey     | 'y'	 | The name of the data record attribute that contains x-values.
-  ykeys       | ["a"]    | // A list of names of data record attributes that contain y-values.
-  labels       | ["Series A"]   | 	// Labels for the ykeys -- will be displayed when you hover over the chart.
-  colors       | ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"]    | 	Specify the color of each graph Successively	
-  donut-label-color       | '#666'    | 	Donut label color.	
-  donut-background-color       | '#ffffff'    | 	Donut Label Color.	
-  donut-colors       | ["#38B9D6", "#1DBC68", "#CC5464", "#FCC717", "#E90088"]    | 	 Donut Colors.	
-  donut-formatter       | 'currency'    | 	 can either be a string for a filter name (eg. 'currency') or a reference to a scope function.	
-  transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 
-  msg-tag   | null      | 	Subscribe to socket messages with tag name.		     
-  api-params  | null      | 	Api parameters.  					
+| Option        | Default value   | Description   | Required   |
+| ------------- |:-------------:|:-------------:|:-------------:|
+  data     | undefined	 |series data. | Required in case of static data
+  type  | line | There are 4 types of charts (line, bar, area and donut). | NO
+  xkey     | 'y'	 | The name of the data record attribute that contains x-values. | NO
+  ykeys       | ["a"]    | // A list of names of data record attributes that contain y-values. | NO
+  labels       | ["Series A"]   | 	// Labels for the ykeys -- will be displayed when you hover over the chart. | NO
+  colors       | ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"]    | 	Specify the color of each graph Successively	| NO
+  donut-label-color       | '#666'    | 	Donut label color. | NO	
+  donut-background-color       | '#ffffff'    | 	Donut Label Color. | NO	
+  donut-colors       | ["#38B9D6", "#1DBC68", "#CC5464", "#FCC717", "#E90088"]    | 	 Donut Colors.	| NO
+  donut-formatter       | 'currency'    | 	 can either be a string for a filter name (eg. 'currency') or a reference to a scope function.	| NO
+  api | undefined | Name of the api to get data | Required if getting data from backend
+  transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 | NO
+  msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | NO    
+  api-params  | null      | 	Api parameters.  	| NO				
   
   
 ## Componenet usage:
 
 scriptr-chart is an element component. you will just have to add it in your html view and add its relevant options.
+
+Example where data is static
 
  ```html
     <scriptr-chart
@@ -108,3 +111,16 @@ scriptr-chart is an element component. you will just have to add it in your html
                 { y: "2012", a: 100, b: 90 }]'>
     </scriptr-chart>
   ```
+ Example where data is called from backend
+ 
+ ```html
+    <scriptr-chart
+        type='bar'
+        stacked='true'
+        xkey='y'
+	ykeys='["a", "b"]'
+        transport="wss"
+        msg-tag="chart"
+        api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+    </scriptr-chart>
+    ```
