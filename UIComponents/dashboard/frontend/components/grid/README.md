@@ -62,19 +62,21 @@
   
 ## Options:
 
-| Option        | Default value   | Description   |
-| ------------- |:-------------:|:-------------:|
-  enableSorting     | true	 |Turn sorting on for the grid.
-  enable-server-side-sorting  | true | Turn on server side filter.
-  enable-client-side-filter     | true	 | turn on client side filter.
-  enable-col-resize       | false    | Enable column resize.
-  columns-definition       | undefined  | 	Series of data (Each column in the grid is defined using a column definition).
-  row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination"	
-  row-selection       | "multiple"    | 	Type of row selection, set to either 'single' or 'multiple' to enable selection.	
-  pagination-page-size       | 50    | 	Number of rows per page.	
-  transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 
-  msg-tag   | null      | 	Subscribe to socket messages with tag name.		     
-  api-params  | null      | 	Api parameters.  					
+| Option        | Default value   | Description   |   Required
+| ------------- |:-------------:|:-------------:|:-------------:|
+  columns-definition       | undefined  | 	Series of data (Each column in the grid is defined using a column definition). | YES
+  row-data         | undefined     | You pass row data to the grid. | Required if service-api is undefined
+  enableSorting     | true	 |Turn sorting on for the grid. | NO
+  enable-server-side-sorting  | true | Turn on server side filter. | NO
+  enable-client-side-filter     | true	 | turn on client side filter. | NO
+  enable-col-resize       | false    | Enable column resize. | NO
+  row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination"	| NO
+  row-selection       | "multiple"    | 	Type of row selection, set to either 'single' or 'multiple' to enable selection.	| NO
+  pagination-page-size       | 50    | 	Number of rows per page.	| NO
+  service-api       | undefined | Name of the api to call backend data | Required if row-data is undefined
+  transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 | NO
+  msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | NO    
+  api-params  | null      | 	Api parameters.  					| NO
   
   
 ## Componenet usage:
@@ -88,6 +90,7 @@ scriptr-grid is an element component. you will just have to add it in your html 
           {headerName: "Price", field: "price", type: "numeric"}]' 
            enable-sorting='true'
            cell-editable='true'
+           
            enable-client-side-filter='true'
            enable-server-side-filter='true' 
            enable-server-side-sorting='true'
