@@ -47,7 +47,7 @@
   
   Add "WsClient", "HttpClient", "Speedometer" to your app module's dependency
   
-  ```
+  ```javascript
   angular.module("myApp", ["WsClient", "HttpClient", "Speedometer"])
   ```
   
