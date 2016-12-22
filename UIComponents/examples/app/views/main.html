@@ -1,0 +1,96 @@
+<div class="col-xs-12 col-sm-6 mb10"> 
+  <div class="box-shadow bg-white">
+    <scriptr-speedometer
+                         theme="rpm"
+                         pivot-col="#ade552"
+                         transport= "https"
+                         msg-tag="speedometer"
+                         api= "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal">
+    </scriptr-speedometer>
+  </div>
+</div>
+<div class="col-xs-12 col-sm-6 mb10"> 
+  <div class="box-shadow bg-white">
+    <div style="padding-top: 65px;">
+      <scriptr-odometer
+                        transport='wss'
+                        api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
+                        theme='car'
+                        size="4"                 
+                        msg-tag='odometer'
+                        animation='count'
+                        duration='1000'> 
+      </scriptr-odometer>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12 col-sm-6 mb10"> 
+  <div class="box-shadow bg-white">
+    <div class="center-block">
+      <scriptr-gauge 
+                     transport='wss' 
+                     msg-tag="gauge" 
+                     width="50"
+                     height="300"
+                     api='UIComponents/dashboard/frontend/examples/gauge/getGaugeVal'
+                     </scriptr-gauge>
+    </div>
+  </div>
+</div>
+<!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
+<div class="col-xs-12 col-sm-6 mb10"> 
+  <div class="box-shadow bg-white">
+    <scriptr-chart
+                   type='donut'
+                   transport="wss"
+                   labels='["line A"]'
+                   msg-tag="donut"         
+                   </scriptr-chart>  
+  </div>
+</div>
+<!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
+<div class="col-xs-12 col-sm-6 mb10"> 
+  <div class="box-shadow bg-white">
+    <scriptr-chart
+                   type="area"          
+                   transport="wss"
+                   msg-tag="chart"
+                   api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+                   </scriptr-chart>  
+  </div>
+</div>
+<!-- Initial data loaded statically than wait for messages published over channel with tag chart -->
+<div class="col-xs-12 col-sm-6 mb10"> 
+  <div class="box-shadow bg-white">
+    <scriptr-chart
+                   type='line'
+                   transport="wss"
+                   msg-tag="chart"
+                   xkey='y'
+                   ykeys='["a", "b"]'
+                   labels='["Serie A", "Serie B"]'
+                   colors='["#FCC717", "#E90088"]'
+                   data='[{ y: "2006", a: 100, b: 90 },
+                         { y: "2007", a: 75,  b: 65 },
+                         { y: "2008", a: 50,  b: 40 },
+                         { y: "2009", a: 75,  b: 65 },
+                         { y: "2010", a: 50,  b: 40 },
+                         { y: "2011", a: 75,  b: 65 },
+                         { y: "2012", a: 100, b: 90 }]'
+                   </scriptr-chart>
+  </div>
+</div>
+<!-- On intial load use the wss call api method to load data from defined api, than wait for messages published over channel with tag chart -->
+<div class="col-xs-12 col-sm-6 mb10"> 
+  <div class="box-shadow bg-white">
+    <scriptr-chart
+                   type='bar'
+                   stacked='true'
+                   xkey='y'
+                   ykeys='["a", "b"]'
+                   transport="wss"
+                   msg-tag="chart"
+                   api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+                   </scriptr-chart>
+  </div>
+</div>
