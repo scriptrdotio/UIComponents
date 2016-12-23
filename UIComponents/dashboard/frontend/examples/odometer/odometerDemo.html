@@ -18,18 +18,29 @@
 <script>
       var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Odometer"])
       angular.module('myApp').config(wssConfig);
+  
+      angular.module('myApp').controller('testCtrl', function($scope) {
+            var vm = this;
+            vm.callback = function(data){
+              console.log("data formatter");
+              return data;
+            }
+      });
 </script>
   
 <body>
+  <div ng-controller="testCtrl as vm" >
    <div style="padding-top: 65px;">
-      <scriptr-odometer
-        transport='wss'
-        api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
-        theme='car'
-        msg-tag='odometer'
-        animation='count'
-        duration='1000'> 
-      </scriptr-odometer>
+        <scriptr-odometer
+          transport='wss'
+          api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
+          theme='car'
+          msg-tag='odometer'
+          animation='count'
+          on-format-data="vm.callback"
+          duration='1000'> 
+        </scriptr-odometer>
+    </div>
   </div>
 </body>
 
