@@ -2,7 +2,6 @@
 
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
@@ -20,15 +19,27 @@
       var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Gauge"])
       angular.module('myApp').config(wssConfig);
       angular.module('myApp').config(httpsConfig);
+  
+      angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.callback = function(data){
+            console.log("data formatter");
+            return data;
+          }
+      });
 </script>
   
 <body>
-  <div style="border: 1px solid #eee; text-align: center;">            
-    <scriptr-gauge 
-              transport='wss' 
-              msg-tag="gauge" 
-              api='UIComponents/dashboard/frontend/examples/gauge/getGaugeVal'
-    </scriptr-gauge>
+  
+  <div ng-controller="testCtrl as vm" >
+    <div style="border: 1px solid #eee; text-align: center;">            
+      <scriptr-gauge 
+                transport='wss' 
+                msg-tag="gauge" 
+                api='UIComponents/dashboard/frontend/examples/gauge/getGaugeVal'
+                on-format-data="vm.callback">
+      </scriptr-gauge>
+    </div>
   </div>
   
 </body>
