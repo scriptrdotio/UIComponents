@@ -18,12 +18,24 @@
       var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Speedometer"])
       angular.module('myApp').config(wssConfig);
       angular.module('myApp').config(httpsConfig);
+  
+      angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.callback = function(data){
+            console.log("data formatter");
+            return data;
+          }
+      });
 </script>
   
 <body> 
+  <div ng-controller="testCtrl as vm" >
    <scriptr-speedometer
-      needle-val="50">
+     api="UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal"
+     msg-tag="speedometer"
+     on-format-data="vm.callback">
   </scriptr-speedometer>
+  </div>   
   
 </body>
 
