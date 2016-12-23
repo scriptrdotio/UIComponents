@@ -30,69 +30,81 @@
     var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart"])
     angular.module('myApp').config(wssConfig);
   	angular.module('myApp').config(httpsConfig);
+  
+    angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.callback = function(data){
+            console.log("data formatter");
+            return data;
+          }
+      });
+  
 </script>
 
-<body>   
-  <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
-  <div class="col-xs-12 col-sm-6 mb10"> 
-	<div class="box-shadow bg-white">
-    <scriptr-chart
-        type='donut'
-        transport="wss"
-        labels='["line A"]'
-        msg-tag="donut"         
-    </scriptr-chart>  
-    </div>
-  </div>
-  
-  <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
-  <div class="col-xs-12 col-sm-6 mb10"> 
-	<div class="box-shadow bg-white">
-    <scriptr-chart
-        type="area"          
-        transport="https"
-        msg-tag="chart"
-        api='UIComponents/dashboard/frontend/examples/chart/getChartData'
-    </scriptr-chart>  
-    </div>
-  </div>
-  
-   <!-- Initial data loaded statically than wait for messages published over channel with tag chart -->
-  <div class="col-xs-12 col-sm-6 mb10"> 
-	<div class="box-shadow bg-white">
-   <scriptr-chart
-        type='line'
-        transport="wss"
-        msg-tag="chart"
-        xkey='y'
-		ykeys='["a", "b"]'
-		labels='["Serie A", "Serie B"]'
-		colors='["#FCC717", "#E90088"]'
-        data='[{ y: "2006", a: 100, b: 90 },
-    { y: "2007", a: 75,  b: 65 },
-    { y: "2008", a: 50,  b: 40 },
-    { y: "2009", a: 75,  b: 65 },
-    { y: "2010", a: 50,  b: 40 },
-    { y: "2011", a: 75,  b: 65 },
-    { y: "2012", a: 100, b: 90 }]'
-    </scriptr-chart>
-    </div>
-  </div>
-  
-  <!-- On intial load use the wss call api method to load data from defined api, than wait for messages published over channel with tag chart -->
-  <div class="col-xs-12 col-sm-6 mb10"> 
-	<div class="box-shadow bg-white">
+<body>  
+  <div ng-controller="testCtrl as vm" >
+    <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
       <scriptr-chart
-        type='bar'
-        stacked='true'
-        xkey='y'
-		ykeys='["a", "b"]'
-        transport="wss"
-        msg-tag="chart"
-        api='UIComponents/dashboard/frontend/examples/chart/getChartData'
-    </scriptr-chart>
+          type='donut'
+          transport="wss"
+          labels='["line A"]'
+          msg-tag="donut"         
+      </scriptr-chart>  
+      </div>
     </div>
-  </div>
+
+    <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+      <scriptr-chart
+          type="area"          
+          transport="https"
+          msg-tag="chart"
+          api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+          on-format-data="vm.callback">          
+      </scriptr-chart>  
+      </div>
+    </div>
+
+     <!-- Initial data loaded statically than wait for messages published over channel with tag chart -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+     <scriptr-chart
+          type='line'
+          transport="wss"
+          msg-tag="chart"
+          xkey='y'
+          ykeys='["a", "b"]'
+          labels='["Serie A", "Serie B"]'
+          colors='["#FCC717", "#E90088"]'
+          data='[ { y: "2006", a: 100, b: 90 },
+                  { y: "2007", a: 75,  b: 65 },
+                  { y: "2008", a: 50,  b: 40 },
+                  { y: "2009", a: 75,  b: 65 },
+                  { y: "2010", a: 50,  b: 40 },
+                  { y: "2011", a: 75,  b: 65 },
+                  { y: "2012", a: 100, b: 90 }]'
+      </scriptr-chart>
+      </div>
+    </div>
+
+    <!-- On intial load use the wss call api method to load data from defined api, than wait for messages published over channel with tag chart -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+        <scriptr-chart
+          type='bar'
+          stacked='true'
+          xkey='y'
+          ykeys='["a", "b"]'
+          transport="wss"
+          msg-tag="chart"
+          api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+      </scriptr-chart>
+      </div>
+    </div>
+  </div>  
 
 </body>  
    
