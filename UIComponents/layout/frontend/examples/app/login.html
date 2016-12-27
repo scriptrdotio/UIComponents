@@ -8,13 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
     <link rel="shortcut icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico" type="image/png" />
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js" ></script>
-    <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js" ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
-    <script src="/modules/login/widgets/login.js"> </script>
-    <script src="/modules/login/widgets/authorization.js"> </script>
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type ='text/css' />
     <link href='https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css' rel='stylesheet' type ='text/css' />
     <link href='//fonts.googleapis.com/css?family=Raleway:300,800' rel='stylesheet' type='text/css'>
@@ -22,6 +15,19 @@
     <link href='//fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="/modules/login/css/style.css">
+    
+    
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js" ></script>
+    <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+    <script src="/modules/login/widgets/login.js"> </script>
+    <script src="/modules/login/widgets/authorization.js"> </script>
+    
+    
+    <script  src="/UIComponents/layout/frontend/examples/app/config.js"></script>
+    
   </head>
   <body>
     <!-- begin header with company logo -->
@@ -48,8 +54,7 @@
       </div>
     </div>
     <!-- end form  -->
-    <script type="text/javascript">
-      $('#loginForm').loginWidget({redirectTarget:"/UIComponents/layout/frontend/trial/dasboard.html",expiry:3,anonymousToken:"S0M0MzMzQjJCMw==" });
+    <script type="text/javascript">	$('#loginForm').loginWidget({redirectTarget: login.redirectTarget,expiry: login.expiry,anonymousToken: login.anonymousToken});
     </script>
   </body>
 </html>

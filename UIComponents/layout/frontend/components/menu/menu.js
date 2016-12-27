@@ -8,19 +8,28 @@ angular
                },
                templateUrl : '/UIComponents/layout/frontend/components/menu/menu.html',
                controllerAs : 'vm',
-               controller : function($scope, _) {
+               controller : function($scope, _, $timeout, $location) {
 	               var vm = this;
 
 	               this.$onInit = function() {
 		               this.getMenuData(this.menuItems);
-		               console.log("menu items json: " + this.menuItems);
+		               console.log("menu items json", this.menuItems);
 	               };
 
+                   this.$postLink = function() {
+                     $timeout(function () {
+                        //DOM has finished rendering
+                        angular.element('.isSelected').trigger("click"); //MFE: do not use trigger handler as the ng-href will be prevented and only ng-click executed.
+                    });
+                      
+                   };
 	               this.getMenuData = function(data) {
 		               this.menuCols = [ data.mainMenu ];
 		               // menu is initially expanded
 		               this.menuColsExpansionClass = [ 'md' ];
 		               this.menuItems = data;
+                     
+                      
 	               };
 
 	               // method that checks if the current menu item has a sub menu

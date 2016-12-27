@@ -2,7 +2,7 @@
   <div ng-class="{'side-bar sm level-bg-{{$index}}' : vm.menuColsExpansionClass[$index] == 'sm', 'side-bar md level-bg-{{$index}}' : vm.menuColsExpansionClass[$index] == 'md'}" ng-repeat="col in vm.menuCols track by $index">
     <ul class="nav nav-pills">
       <li ng-repeat="item in vm.menuItems[col] track by $index" ng-class="{'active text-center': item.active == 'true', 'text-center': item.active != 'text-center'}">
-        <a href="{{item.route}}/{{vm.lockId.value}}" ng-click="vm.route(item, $event, col)">
+        <a ng-class="{'isSelected': item.active == 'true'}" href="{{item.route}}/{{vm.lockId.value}}" ng-click="vm.route(item, $event, col)">
           <i aria-hidden="true" class="{{item.iconClass}}"></i><strong>{{item.label}}</strong>
           <i ng-show="item.sub" aria-hidden="true" class="fa fa-angle-right sub-menu-indicator"></i>
         </a>

@@ -13,35 +13,21 @@
     <!-- font awesome.css -->
     <script src="https://use.fontawesome.com/3d61d6959e.js"></script>
     <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
-    <!-- font awesome.css -->
-    <link href="test.css" rel="stylesheet">
-
-  
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
+ 
 
     <link rel="stylesheet" href="/UIComponents/layout/frontend/components/menu/menu.css">
+ 
     <script src="/UIComponents/layout/frontend/components/module.js"></script>
     <script src="/UIComponents/layout/frontend/components/menu/menu.js"></script>
-    <script src="/UIComponents/layout/frontend/components/header/header.js"></script>
-    <link rel="stylesheet" href="/UIComponents/layout/frontend/components/header/header.css">
     
     
     <body ng-app="myApp">  
-       <header-top></header-top>
       <div ng-controller="testCtrl as vm">
-        <main>
-              <!-- menu items can also be passed as a json object directly here -->
-              <menu class="menu-wrap" menu-items="vm.menuItems"></menu>
-          	  <section>
-                <div class="page-content">
-                	vm.content
-                </div>
-              </section>
-        </main>
+        <!-- menu items can also be passed as a json object directly here -->
+        <menu class="menu-wrap" menu-items="vm.menuItems"></menu>
       </div>
 
     </body>

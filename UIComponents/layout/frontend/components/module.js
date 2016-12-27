@@ -1,1 +1,1 @@
-angular.module('Layout', ['underscore', 'ngRoute']);
+angular.module('Layout', ['underscore']);

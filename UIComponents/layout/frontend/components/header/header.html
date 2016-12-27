@@ -1,24 +1,24 @@
 <header>
   <!-- begin logo -->
   <div class="logo pull-left">
-  	<img src="{{vm.logo}}" class="img-responsive" />
+  	<img src="{{$ctrl.logo}}" class="img-responsive" />
   </div>
   <!-- end logo -->
   <!-- begin items in header -->
-  <div ng-repeat="item in vm.items track by $index" class="{{item.class}}">
+  <div ng-repeat="item in $crl.items track by $index" class="{{item.class}}">
     <a href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i></a>
   </div>
   <!-- end items in header -->
   <!-- begin user -->
   <div class="pull-left username">
-    {{vm.user}}
+    {{$ctrl.user}}
   </div>
   <!-- end user -->
   <!-- begin header side items -->
-  <div ng-show="vm.isLogout == 'true'" class="pull-right">
+  <div ng-show="$ctrl.logout" class="pull-right">
     <!-- begin logout -->  
     <span class="logout pull-left">
-      <a href="#logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+      <a ng-href="{{$ctrl.logout.route}}"><i class="fa fa-power-off" aria-hidden="true"></i></a>
     </span>
   </div>
   <!-- end header side items -->
