@@ -8,7 +8,7 @@ var menuItems = {
   "mainMenu": "col1",
   "col1": [
     {"id":"4", "iconClass":"fa fa-globe", "label": "dashboard", "route":"#/main", "active":"true"},
-    {"id":"5","iconClass":"fa fa-dashboard","label":"Listing","route":"#/load", "active":"false"},
+    {"id":"6","iconClass":"fa fa-dashboard","label":"Listing","route":"#/load", "active":"false"},
     {"id":"5","iconClass":"fa fa-dashboard","label":"Denied Destinations","route":"#/deniedDestinations", "active":"false"},
     {"id":"2", "iconClass":"fa fa-bell-o", "label": "Groups Management", "route": "#/groups","active":"false"},
     {"id":"3", "iconClass":"fa fa-cogs", "label": "Generic Rule", "route": "#/gr","active":"false"}
