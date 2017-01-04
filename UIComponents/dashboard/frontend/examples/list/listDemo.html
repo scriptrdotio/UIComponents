@@ -19,6 +19,7 @@
     <script src="/UIComponents/dashboard/frontend/components/list/angucomplete.alt.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/list/autocomplete.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
   </head>
   <script>
     
@@ -27,42 +28,30 @@
           	return $window._; // assumes underscore has already been loaded on the page		
       	}]);
     
-     	var myApp = angular.module('myApp', ["WsClient", "angucomplete-alt", "List"]);
-  		angular.module('myApp').config(["wsClientProvider",function (wsClientProvider) {
-            wsClientProvider.setToken("VzUwRURDNDQ2MTpzY3JpcHRyOkQ4NDQ0Qjg2MUVBQzY0NzEzRkVDNUE4RUZEMkE0NUMw");
-            wsClientProvider.setPublishChannel("requestChannel");
-            wsClientProvider.setSubscribeChannel("UI_channel");
-  		}]);
+     	var myApp = angular.module('myApp', ["WsClient", "HttpClient", "List"]);
+  		angular.module('myApp').config(wssConfig);
+   		angular.module('myApp').config(httpsConfig);
     
-      myApp.controller('testCtrl', function($scope, $controller, wsClient, $sce) {
-        var vm = this;
-         vm.countries =  [];
-        vm.init = function() {
-          	wsClient.onReady.then(function() {
-               vm.countries =   
-                 [{"name": "Afghanistan", "code": "AF"},
-    			  {"name": "Aland Islands", "code": "AX"},
-    			  {"name": "Albania", "code": "AL"}
-                 ];
-            });
-          	
-        	};
-        
-        
-        	vm.showAssetDashboard = function(id) {
-              alert(id)
-            };
+        myApp.controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.callback = function(data){
+            console.log("data formatter");
+            return data;
+          }
         });
   </script>
   
-  <body ng-controller="testCtrl as vm" ng-init="vm.init()">
+  <body ng-controller="testCtrl as vm">
     <scriptr-autocomplete
           placeholder="Search countries"
-          pause="100"
-          local-data="vm.countries"
+          pause="400"
           search-fields="name"
           title-field="name"
           minlength="0"
+          text-searching="Searching..."
+          transport="https"
+          on-format-data="vm.callback"
+          api="UIComponents/dashboard/frontend/examples/list/getCountries"
           input-class="form-control form-control-small">
     </scriptr-autocomplete>
   </body>
