@@ -17,6 +17,10 @@ angular
         "enableServerSideFilter" : "<?",
 
         "enableColResize" : "<?",
+        
+        "enableDeleteRow" : "<?",
+        
+        "enableAddRow" : "<?",
 
         "cellEditable" : "<?",
         
@@ -27,7 +31,9 @@ angular
         "serviceApi" : "@", // restApi 
 
         "onCellValueChangedScript" : "@", // script to  be called after editing a cell
-
+        
+        "onDeleteRowScript" : "@",
+        
         "transport" : "@", //"http" or "wss" or "publish"
 
         "enableClientSideFilter" : "<?",
@@ -54,20 +60,17 @@ angular
         "maxPagesInCache" : "<?", // how many pages to store in cache. default is undefined, which allows an infinite sized cache, pages are never purged. this should be set for large data to stop your browser from getting full of data
         "apiParams" : "<?",
         
-        "onFormatData" : "&"
+        "onFormatData" : "&",
+        
+        "removeRowMsgTag" : "@",
+        
+        "addRowMsgTag" : "@"
       },
 
       templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
       controller : function($window, dataService) {
 
         var self = this;
-
-        if(!this.enableClientSideFilter){
-          this.hideClientFilter = "true";
-        }
-        if(!this.enableServerSideFilter){
-          this.hideServerFilter = "true";
-        }
 
         this.dataSource = {
           getRows : function(params) {
@@ -83,8 +86,17 @@ angular
                 if (data && data.documents) {
                   var rowsData = data.documents;
                   var count = parseInt(data.count);
+                  
+                  // remove unnecessary fields that came from backend
+                  for(var i = 0; i < rowsData.length; i++){
+                    if(rowsData[i].versionNumber){
+                      delete rowsData[i]["versionNumber"];
+                    }
+                  }
                   params.successCallback(rowsData, count);
                   self.gridOptions.api.sizeColumnsToFit();
+                  
+                  // if there's no rows to be shown, disbale the next button
                   if(rowsData == null || rowsData.length == 0){
                     var el = angular.element( document.querySelector( '#btNext' ) );
                     el.attr('disabled', 'true');
@@ -97,7 +109,13 @@ angular
               });
           }
         }
-		// set a numeric filter model for numerical columns
+        
+        // Get data from backend
+        this._createNewDatasource = function() {
+          this.gridOptions.api.setDatasource(this.dataSource);
+        }
+        
+		// set a numeric filter model for each numerical column
         for(var i = 0; i < this.columnsDefinition.length; i++){
           if(this.columnsDefinition[i].hasOwnProperty("type") && this.columnsDefinition[i]["type"] == "numeric"){
             this.columnsDefinition[i].filter = "number";
@@ -117,7 +135,6 @@ angular
             rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
             paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
             overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> Please wait while your rows are loading</span>',
-
             defaultColDef : {
               filterParams : {
                 apply : true
@@ -140,36 +157,110 @@ angular
             },
 
           };
+         this.transport = (this.transport) ? this.transport : "wss";
+         this.removeRowMsgTag = (this.removeRowMsgTag) ? this.removeRowMsgTag : "remove";
+         this.addRowMsgTag = (this.addRowMsgTag) ? this.addRowMsgTag : "add";
+         this.enableDeleteRow =  (this.enableDeleteRow == true) ? false : true;
+         this.enableAddRow =  (this.enableAddRow == true) ? false : true;
+         this.enableClientSideFilter =  (this.enableClientSideFilter == true) ? false : true;
+         this.enableServerSideFilter =  (this.enableServerSideFilter == true) ? false : true;
+          
+         dataService.subscribe(this.onRemoveRowWebSocketCall, self.removeRowMsgTag);
+         dataService.subscribe(this.onEditRowWebSocketCall, self.addRowMsgTag);
 
          angular.element($window).bind('resize', function () {
            self.gridOptions.api.sizeColumnsToFit();
          });
         }
 
-        this._saveData = function(onCellValueChangedScript, event){
-          dataService.saveGridData(onCellValueChangedScript, event);
+        this._saveData = function(onCellValueChangedScript, fields){
+          dataService.gridHelper(onCellValueChangedScript, fields);
         }
 
-        // Get data from backend
-        this._createNewDatasource = function() {
-          this.gridOptions.api.setDatasource(this.dataSource);
+        this.onAddRow = function(){
+           var newRow = {};
+          
+          // Create a json object to save new row fields 
+           for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
+              newRow[self.gridOptions.columnDefs[n].field] = "";
+           }
+
+           self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
+           self.gridOptions.api.setFocusedCell(0, self.gridOptions.columnDefs[0].field);
+
+           self.gridOptions.api.startEditingCell({
+              rowIndex: 0,
+              colKey: self.gridOptions.columnDefs[0].field,
+              charPress: self.gridOptions.columnDefs[0].field
+          });
+        }
+        
+         this.onEditRowWebSocketCall = function(data) {
+          if(data && data.result){
+             var fields = data.result;
+            
+            // remove unnecessary fields returned from backend
+             if(fields["apsdb.documentKey"])
+               delete fields["apsdb.documentKey"];
+             if(fields["apsdb.store"])
+               delete fields["apsdb.store"];
+            
+             var rowKey = fields.key;
+             if(self.gridOptions.rowModelType == "pagination"){ 
+                self.gridOptions.api.forEachNode(function(node) {
+                  if (node.data.key == rowKey) {
+                    var index = node.childIndex;
+                    var model = self.gridOptions.api.getModel();
+                    var node = [ model.getRow(index) ][0];
+                    node.data = fields;
+                    self.gridOptions.api.refreshView();
+                  }
+                });
+               var firstRow = self.gridOptions.api.getRenderedNodes()[0];
+               if(!firstRow.data.key){
+                 firstRow.data.key = rowKey;
+               }
+             }else{
+               self.gridOptions.api.refreshVirtualPageCache();
+             }
+          }
         }
 
-        // add a specific row upon WebSocket call
-        function addItemsWebSocketCall(rowData) {
-          this.gridOptions.api.addItems(rowData);
-        }
         // remove a specific row upon WebSocket call
-        function onRemoveRowWebSocketCall(key) {
-          this.gridOptions.api.forEachNode(function(node) {
-            if (node.data.key == key) {
-              var index = node.id;
-              var model = this.gridOptions.api.getModel();
-              var node = [ model.getRow(index) ];
-              this.gridOptions.api.removeItems(node);
-            }
-          })
+        this.onRemoveRow = function(key) {
+          var selectedNodes = self.gridOptions.api.getSelectedNodes();
+          if(self.gridOptions.rowModelType == "pagination"){
+            self.gridOptions.api.removeItems(selectedNodes);
+          }
+          var selectedKeys = [];
+          for(var i = 0; i < selectedNodes.length; i++){
+            selectedKeys.push(selectedNodes[i].data.key);
+          }
+          
+          dataService.gridHelper(self.onDeleteRowScript, {keys : selectedKeys});
         }
+        
+         // remove rows upon WebSocket call
+        this.onRemoveRowWebSocketCall = function(data) {
+          if(data && data.result){
+             var keys = data.result;
+             if(self.gridOptions.rowModelType == "pagination"){ 
+               for(var i = 0; i < keys.length; i++){ 
+                self.gridOptions.api.forEachNode(function(node) {
+                  if (node.data.key == keys[i]) {
+                    var index = node.childIndex;
+                    var model = self.gridOptions.api.getModel();
+                    var node = [ model.getRow(index) ];
+                    self.gridOptions.api.removeItems(node);
+                  }
+                });
+               }
+             }else{
+               self.gridOptions.api.refreshVirtualPageCache();
+             }
+          }
+        }
+        
         this.onFilterChanged = function() {
           this.gridOptions.enableServerSideFilter = false;
           this.gridOptions.api.setQuickFilter(this.quickFilterValue);
@@ -228,18 +319,24 @@ angular
           }
           return APIParams;
         }
+        
       }
     });
 
   angular
     .module('Grid')
     .service("dataService", function(httpClient, wsClient, $q) {
-
-      this.saveGridData = function(api, params){
+      
+      this.subscribe = function(callback, tag){
+        wsClient.onReady.then(function() {
+          wsClient.subscribe(tag, callback.bind(self));
+        });
+      }
+    
+      this.gridHelper = function(api, params){
         var d = $q.defer(); 
-        httpClient
-          .get(api, params).then(function(data, response){
-          var data = {"result": data}
+        wsClient
+          .call(api, params, "grid").then(function(data, response){
           d.resolve(data, response)
         }, function(err) {
           d.reject(err)
