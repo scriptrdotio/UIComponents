@@ -1,17 +1,19 @@
 <div class="filter-bar">
   <form>
-    <div ng-hide= {{$ctrl.hideClientFilter}} class="form-group col-xs-12 col-sm-4">
+    <div ng-hide= {{$ctrl.enableClientSideFilter}} class="form-group col-xs-12 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Client filtering</div>
            <input type="text" class="form-control" ng-change="$ctrl.onFilterChanged()" ng-model="$ctrl.quickFilterValue"  placeholder="Type text to filter..." />
        </div>
     </div>   
-    <div ng-hide= {{$ctrl.hideServerFilter}} class="form-group col-xs-12 col-sm-4">
+    <div ng-hide= {{$ctrl.enableServerSideFilter}} class="form-group col-xs-12 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Server filtering</div>
 			<input type="text" class="form-control" ng-model="$ctrl.gridOptions.quickFilterText" placeholder="Type text to filter..." />
       </div>
-    </div>   
+    </div>  
+    <button ng-hide= {{$ctrl.enableDeleteRow}} ng-click="$ctrl.onRemoveRow()">Delete selected row</button>
+    <button ng-hide= {{$ctrl.enableAddRow}} ng-click="$ctrl.onAddRow()">Insert row</button>
   </form>   
 </div>
     
