@@ -1,0 +1,35 @@
+var documents = require("document");
+var params = {};
+var result = {};
+
+if(request.body != null){
+	params = request.body;
+}else if(request.parameters.body){
+	params = request.parameters.body;
+} else {
+  params = request.parameters;
+}
+if(typeof params == 'string' && params != null){
+  	try{
+    	params = JSON.parse(params);   
+    }catch(e){
+      	return "INVALID OR MISSING PARAMETER";
+    }
+}
+
+if(params.keys){
+  var keys = params.keys;
+  for(var i = 0; i < keys.length; i++){
+      documents.delete(keys[i]);
+  }
+} 
+
+var publishResponse = function(channel, data, request) {
+   var message = {"result": data};
+  
+   //Add a default id to identify the message published over the socket
+   message["id"] = "remove";
+   publish(channel, message);
+}
+
+publishResponse("responseChannel", {"result" : keys}, request);
