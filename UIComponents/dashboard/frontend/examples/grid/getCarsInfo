@@ -36,7 +36,7 @@ var results;
 
 var queryParams = {};
 if(sortType == null) sortType = "string"
-var fieldsParams = "name, model, price";
+var fieldsParams = "name, model, price, formType";
 var queryString = 'formType = "cars"';
 var sortString = (sortingColumnName && sortingColumnName != "" && sortingColumnName != "undefined") ? sortingColumnName+"<"+sortType+":"+sort+">" : null;
 
