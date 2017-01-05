@@ -74,7 +74,7 @@ angular
                       .get(self.api, self.apiParams)
                       .then(
                       function(data, response) {
-                        if(typeof self.onFormatData == "function"){
+                        if(typeof self.onFormatData() == "function"){
                            data = self.onFormatData()(data);
                         }
                         self.consumeData(data)
