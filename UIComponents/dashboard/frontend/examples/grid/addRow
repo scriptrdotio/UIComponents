@@ -1,0 +1,45 @@
+var documents = require("document");
+
+var params = {};
+var results = {};
+
+if(request.body != null){
+	params = request.body;
+}else if(request.parameters.body){
+	params = request.parameters.body;
+} else {
+  params = request.parameters;
+}
+if(typeof params == 'string' && params != null){
+  	try{
+    	params = JSON.parse(params);   
+    }catch(e){
+      	return "INVALID OR MISSING PARAMETER";
+    }
+}
+
+var fieldsToSave = params;
+fieldsToSave["formType"] = "cars";
+fieldsToSave["meta.types"] = {
+        "price": "numeric"
+    }
+
+var fieldsToSaveResult = documents.save(fieldsToSave);
+
+var status = fieldsToSaveResult.metadata;
+  
+// Pass the document key to front-end in case a new row is created
+if(fieldsToSaveResult.result && fieldsToSaveResult.result.document && fieldsToSaveResult.result.document.key){
+	fieldsToSave["key"] = fieldsToSaveResult.result.document.key;
+}
+
+var publishResponse = function(channel, data, request) {
+   var message = {"result": data};
+  
+   //Add a default id to identify the message published over the socket
+   message["id"] = "add";
+   publish(channel, message);
+}
+
+publishResponse("responseChannel", {status : status, result : fieldsToSave}, request);
+
