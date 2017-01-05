@@ -43,13 +43,18 @@
           {headerName: "Model", field: "model"},
           {headerName: "Price", field: "price", type: "numeric"}]' 
            enable-sorting='true'
+           row-model-type='pagination'
+           enable-delete-row='true'
+           enable-add-row='true'
+           on-cell-value-changed-script='UIComponents/dashboard/frontend/examples/grid/addRow'
+           on-delete-row-script='UIComponents/dashboard/frontend/examples/grid/removeRow'
            cell-editable='true'
            enable-client-side-filter='true'
            enable-server-side-filter='true' 
            enable-server-side-sorting='true'
-           row-model-selection='single'
-           pagination-page-size='50'
-           transport='http' 
+           row-model-selection='multiple'
+           pagination-page-size='5'
+           transport='wss' 
            service-api='UIComponents/dashboard/frontend/examples/grid/getCarsInfo'>
   </scriptr-grid>
 </body>
