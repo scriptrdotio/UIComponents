@@ -4,21 +4,25 @@
   	<img src="{{$ctrl.logo}}" class="img-responsive" />
   </div>
   <!-- end logo -->
+  
+  <!-- begin user -->
+  <div class="pull-left username">
+    {{$ctrl.user}}
+  </div>
+  <!-- end user -->
+
   <div  class="pull-right">
       <!-- begin items in header -->
-      <div ng-repeat="item in $ctrl.items track by $index" class="pull-left">
-        <a href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i>{{item.label}}</a>
+      <div class="header-items pull-left">
+        <div ng-repeat="item in $ctrl.items track by $index" class="pull-left">
+        	<a href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i>{{item.label}}</a>
+      	</div>
       </div>
       <!-- end items in header -->
-      <!-- begin user -->
-      <div class="pull-left username">
-        {{$ctrl.user}}
-      </div>
-      <!-- end user -->
       <!-- begin header side items -->
-      <div ng-show="$ctrl.logout" class="pull-left">
+      <div ng-show="$ctrl.logout" class="pull-left logout">
         <!-- begin logout -->  
-        <span class="logout">
+        <span>
           <a ng-href="{{$ctrl.logout.route}}"><i class="fa fa-power-off" aria-hidden="true"></i></a>
         </span>
       </div>

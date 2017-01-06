@@ -12,4 +12,8 @@ header {height: 45px; position: fixed; top: 0; z-index: 999; width: 100%;}
 .logout {border-left: 1px solid rgba(255,255,255,0.5);}
 .logout:hover, .logout:focus {background: #64798e;}
 
-
+/*** header items ***/
+.header-items a {color: #fff; padding: 12px 13px 12px 12px; display: block; font-size: 15px; font-weight: bold;}
+.header-items a:hover {background: #64798e; text-decoration: none;}
+.header-items i {margin-right: 4px;}
+.header-items .item {margin-right: 10px;}
