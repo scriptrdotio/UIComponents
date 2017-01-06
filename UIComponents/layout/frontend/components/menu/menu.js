@@ -15,7 +15,7 @@ angular
 
 	               this.$onInit = function() {
 		               this.getMenuData(this.menuItems);
-                     
+                       vm.currentRoute =  "#"+$route.current.$$route.originalPath;
                        $scope.$on('$routeChangeStart', function(next, current) { 
                          console.log("next", next);
                          if(current) {
