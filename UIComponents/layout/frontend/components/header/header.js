@@ -10,7 +10,6 @@ angular
                },
                templateUrl : '/UIComponents/layout/frontend/components/header/header.html',
                controller : function($scope, defaultLogo) {
-
 	               this.$onInit = function() {
                        this.logout = {};
                        

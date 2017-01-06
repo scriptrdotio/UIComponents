@@ -4,22 +4,24 @@
   	<img src="{{$ctrl.logo}}" class="img-responsive" />
   </div>
   <!-- end logo -->
-  <!-- begin items in header -->
-  <div ng-repeat="item in $crl.items track by $index" class="{{item.class}}">
-    <a href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i></a>
+  <div  class="pull-right">
+      <!-- begin items in header -->
+      <div ng-repeat="item in $ctrl.items track by $index" class="pull-left">
+        <a href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i>{{item.label}}</a>
+      </div>
+      <!-- end items in header -->
+      <!-- begin user -->
+      <div class="pull-left username">
+        {{$ctrl.user}}
+      </div>
+      <!-- end user -->
+      <!-- begin header side items -->
+      <div ng-show="$ctrl.logout" class="pull-left">
+        <!-- begin logout -->  
+        <span class="logout">
+          <a ng-href="{{$ctrl.logout.route}}"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+        </span>
+      </div>
+      <!-- end header side items -->
   </div>
-  <!-- end items in header -->
-  <!-- begin user -->
-  <div class="pull-left username">
-    {{$ctrl.user}}
-  </div>
-  <!-- end user -->
-  <!-- begin header side items -->
-  <div ng-show="$ctrl.logout" class="pull-right">
-    <!-- begin logout -->  
-    <span class="logout pull-left">
-      <a ng-href="{{$ctrl.logout.route}}"><i class="fa fa-power-off" aria-hidden="true"></i></a>
-    </span>
-  </div>
-  <!-- end header side items -->
 </header>
