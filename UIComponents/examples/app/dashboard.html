@@ -24,6 +24,10 @@
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
     
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.4.0.js"></script>
+    
     
     <script src="/UIComponents/layout/frontend/components/module.js"></script>
     <script src="/UIComponents/layout/frontend/components/header/header.js"></script>
@@ -120,7 +124,7 @@
     }]);
     
     
-    var myApp = angular.module('myApp', ["Layout", "ngRoute",  "WsClient", "HttpClient", "Chart", "Speedometer", "Odometer", "Gauge", "Management"]);
+    var myApp = angular.module('myApp', ["Layout",  "WsClient", "HttpClient", "Chart", "Speedometer", "Odometer", "Gauge", "Management"]);
     
     myApp
       .constant("menuItemsJson",  menuItems)
