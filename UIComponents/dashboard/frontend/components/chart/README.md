@@ -89,8 +89,7 @@
   ymin | undefined | Min. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the min y-value is at most [num]. You can use this to create graphs with false origins. | NO
   smooth | undefined | Set to false to disable line smoothing. | NO
   hideHover | undefined | Set to false to always show a hover legend. Set to true or 'auto' to only show the hover legend when the mouse cursor is over the chart. Set to 'always' to never show a hover legend. | NO
-  hoverCallback | undefined | Provide a function on this option to generate custom hover legends. 
-The function will be called with the index of the row under the hover legend, the options object passed to the constructor as arguments, a string containing the default generated hover legend content HTML, and an object containing the original data for the row as passed in the data option. | NO
+  hoverCallback | undefined | Provide a function on this option to generate custom hover legends. The function will be called with the index of the row under the hover legend, the options object passed to the constructor as arguments, a string containing the default generated hover legend content HTML, and an object containing the original data for the row as passed in the data option. | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
