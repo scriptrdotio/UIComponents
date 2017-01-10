@@ -105,7 +105,13 @@
   eventStrokeWidth | undefined | Width, in pixels, of the event lines. | NO
   eventLineColors | undefined | Array of color values to use for the event line colors. If you list fewer colors here than you have lines in events, then the values will be cycled. | NO
   continuousLine | undefined | When set to false (the default), all null and undefined values in a data series will be ignored and lines will be drawn spanning them. When set to true, null values will break the line and undefined values will be spanned. Note that in v0.5.0, this setting will be removed and the behaviour will be to break lines at null values. | NO
-  lineWidth | undefined | Width of the series lines, in pixels. | NO
+  axes | undefined | Set to false to disable drawing the x and y axes. | NO
+  grid | undefined | Set to false to disable drawing the horizontal grid lines. | NO
+  gridTextColor | undefined | Set the color of the axis labels (default: #888). | NO
+  gridTextSize | undefined | Set the point size of the axis labels (default: 12). | NO
+  gridTextFamily | undefined | Set the font family of the axis labels (default: sans-serif). | NO
+  gridTextWeight | undefined | Set the font weight of the axis labels (default: normal). | NO
+  fillOpacity | undefined | Change the opacity of the area fill colour. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque). | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
   api | undefined | Name of the api to get data | Required if getting data from backend
   transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 | NO
