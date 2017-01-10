@@ -81,8 +81,6 @@
   donut-background-color       | '#ffffff'    | 	Donut Label Color. | NO	
   donut-colors       | ["#38B9D6", "#1DBC68", "#CC5464", "#FCC717", "#E90088"]    | 	 Donut Colors.	| NO
   donut-formatter       | 'currency'    | 	 can either be a string for a filter name (eg. 'currency') or a reference to a scope function.	| NO
-  resize | true | Enable responsive mode | NO
-  stacked | false | Enable stack mode | NO
   api | undefined | Name of the api to get data | Required if getting data from backend
   transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 | NO
   msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | NO    

@@ -26,11 +26,22 @@ var data = [{ y: "2006", a: Math.floor((Math.random() * 100) + 1), b: Math.floor
     { y: "2011", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
     { y: "2012", a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) }];
 
+
+// data for line, bar, and area charts
+var dataline = [{ y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) }];
+
 // data for donut chart
 var donutdata = [{label: "Download Sales", value: Math.floor((Math.random() * 100) + 1) }, {label: "In-Store Sales",value: Math.floor((Math.random() * 100) + 1) }, {label: "Mail-Order Sales", value: Math.floor((Math.random() * 100) + 1) }];
 
 publishResponse("responseChannel", data, request, "chart");
 
+publishResponse("responseChannel", dataline, request, "chartline");
 publishResponse("responseChannel", donutdata, request, "donut");
 
 return data;

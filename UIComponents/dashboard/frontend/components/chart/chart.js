@@ -24,8 +24,6 @@ angular
         
         "labels" : "<?",
         
-        "resize" : "<?",
-        
         "colors" : "@",
         
         "api": "@",
@@ -36,8 +34,51 @@ angular
         
         "apiParams" : "<?",
         
-        "onFormatData" : "&"
+        "onFormatData" : "&",
         
+        "lineWidth": "@", 
+        "pointSize": "@",
+        "pointFillColors" : "@", 
+        "pointStrokeColors" : "@", 
+        "ymax" : "@", 
+        "ymin": "@", 
+        "smooth": "@", 
+        "hideHover": "@",
+        "parseTime": "@", 
+        "units": "@", 
+        "postUnits": "@", 
+        "preUnits": "@", 
+        
+        "xlabels": "@", 
+        "xlabelAngle": "<?", 
+        "ylabelAlign": "@",  
+        "goals": "@", 
+        "goalStrokeWidth": "@",
+        "goalLineColors": "@", 
+        "events": "@", 
+        "eventStrokeWidth": "@", 
+        "eventLineColors": "@", 
+        "continuousLine": "@",
+        "axes": "@", 
+        "grid": "@", 
+        "gridTextColor": "@", 
+        "gridTextSize": "@", 
+        "gridTextFamily": "@", 
+        "gridTextWeight": "@",
+        "fillOpacity": "@", 
+        "resize": "@", 
+        "behaveLikeLine": "@",
+        
+        //With donut
+        "labelColor": "@",
+        "donutFormatter": "&", 
+        "backgroundColor": "@",
+        
+        "hoverCallback": "&?", 
+        "dateFormat": "&?",
+        "xlabelFormat": "&?", 
+        "ylabelFormat": "&?"
+       
       },
       templateUrl: '/UIComponents/dashboard/frontend/components/chart/chart.html',
       controller: function(httpClient, wsClient) {
@@ -48,28 +89,21 @@ angular
              
              this.data = (this.data) ? this.data : null;
              
-           	 this.type = (this.type) ? this.type : "line";
+           	 //this.type = (this.type) ? this.type : "line";
            
-             // bar, line, area config
-             this.xkey = (this.xkey) ? this.xkey : 'y'; // The name of the data record attribute that contains x-values.
-             this.ykeys = (this.ykeys) ? this.ykeys : ["a"];  // A list of names of data record attributes that contain y-values.
-             this.labels = (this.labels) ? this.labels : ["Serie A"]; // Labels for the ykeys -- will be displayed when you hover over the chart.
              this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];
              this.stacked = (this.stacked) ? this.stacked : false;
              this.resize = (this.resize) ? this.resize : true;
              
              // donut config
-             this.donutLabelColor = (this.donutLabelColor) ? this.donutLabelColor : "#666";
-             this.donutBackgroundColor = (this.donutBackgroundColor) ? this.donutBackgroundColor : "#ffffff";
-             this.donutColors = (this.donutColors) ? this.donutColors : ["#38B9D6", "#1DBC68", "#CC5464", "#FCC717", "#E90088"];
-             this.donutFormatter = (this.donutFormatter) ? this.donutFormatter : "currency";
+             this.labelColor = (this.labelColor) ? this.labelColor : "#666";
+             this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#eee";
          
              this.transport = (this.transport) ? this.transport : "wss";
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
            
-            
-         }
-         
+           	 console.log(this.type, this.xlabelAngle)
+       }
          
         this.$postLink = function () {
            initDataService(this.transport);

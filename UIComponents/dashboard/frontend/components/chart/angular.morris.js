@@ -109,7 +109,16 @@
                 angular.forEach(optionKeys, function (key) {
                     var attrKey = s.keyToAttr(prefix, key);
                     if (scope.hasOwnProperty(attrKey) && typeof scope[attrKey] !== 'undefined') {
-                        options[key] = scope[attrKey];
+                       if (typeof scope[attrKey] === 'string' && attrKey !="formatter") {
+                         try {
+                              options[key] = JSON.parse(scope[attrKey]);
+                            } catch(e) {
+                              options[key] = scope[attrKey]
+                            }
+                       } else {
+                         	options[key] = scope[attrKey]
+                       }
+                           
                     }
                 });
                 return options;
@@ -193,15 +202,14 @@
                                 scope.areaLabels = JSON.parse(scope.areaLabels);
                             if (typeof scope.lineColors === 'string')
                                 scope.lineColors = JSON.parse(scope.lineColors);
-                           if (typeof scope.areaResize === 'string')
-                            	scope.areaResize = JSON.parse(scope.areaResize);
+                           
 
                             if (!scope.areaInstance) {
                                 // Generate Morris chart options
                                 var options = angularMorris.populateOptions({
                                     element: elem,
-                                    lineColors: scope.lineColors || ['#0b62a4', '#7a92a3', '#4da74d', '#afd8f8', '#edc240', '#cb4b4b', '#9440ed'],
-                                    resize: false
+                                    lineColors: scope.lineColors || ['#0b62a4', '#7a92a3', '#4da74d', '#afd8f8', '#edc240', '#cb4b4b', '#9440ed']
+                                   
                                 }, OPTION_KEYS, 'area', scope);
 
                                 // Checks if there are angular filters available for certain options
@@ -277,8 +285,7 @@
                             scope.barColors = JSON.parse(scope.barColors);
                         if (typeof scope.barStacked === 'string')
                             scope.barStacked = JSON.parse(scope.barStacked);
-                        if (typeof scope.barResize === 'string')
-                            scope.barResize = JSON.parse(scope.barResize);
+                       
 
 
                         if (!scope.barInstance) {
@@ -286,8 +293,6 @@
                             var options = angularMorris.populateOptions({
                                 element: elem,
                                 barColors: scope.barColors || ['#0b62a4', '#7a92a3', '#4da74d', '#afd8f8', '#edc240', '#cb4b4b', '#9440ed'],
-                                stacked: false,
-                                resize: false,
                                 xkey: scope.barX,
                                 ykeys: scope.barY,
                                 xLabelMargin: 2
@@ -349,16 +354,13 @@
 
                         if (typeof scope.donutColors === 'string')
                             scope.donutColors = JSON.parse(scope.donutColors);
-                      
-                        if (typeof scope.donutResize === 'string')
-                            scope.donutResize = JSON.parse(scope.donutResize);
+                        
 
                         if (!scope.donutInstance) {
                             // Generate Morris chart options
                             var options = angularMorris.populateOptions({
                                 element: elem,
-                                colors: ['#0b62a4', '#7a92a3', '#4da74d', '#afd8f8', '#edc240', '#cb4b4b', '#9440ed'],
-                                resize: false
+                                colors: ['#0b62a4', '#7a92a3', '#4da74d', '#afd8f8', '#edc240', '#cb4b4b', '#9440ed']
                             }, OPTION_KEYS, 'donut', scope);
 
                             // Checks if there are angular filters available for certain options
@@ -439,8 +441,6 @@
                             scope.lineColors = JSON.parse(scope.lineColors);
                         if (typeof scope.parseTime === 'boolean')
                             scope.parseTime = JSON.parse(scope.parseTime);
-                        if (typeof scope.lineResize === 'string')
-                            scope.lineResize = JSON.parse(scope.lineResize);
                       
 
                         if (!scope.lineInstance) {
@@ -448,8 +448,7 @@
                             var options = angularMorris.populateOptions({
                                 element: elem,
                                 lineColors: scope.lineColors || ['#0b62a4', '#7a92a3', '#4da74d', '#afd8f8', '#edc240', '#cb4b4b', '#9440ed'],
-                                parseTime: scope.parseTime,
-                                resize: false
+                                parseTime: scope.parseTime
                             }, OPTION_KEYS, 'line', scope);
 
                             // Checks if there are angular filters available for certain options
