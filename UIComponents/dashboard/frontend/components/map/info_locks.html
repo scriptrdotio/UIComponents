@@ -1,0 +1,53 @@
+<div ng-non-bindable="">
+                        <!-- begin vehicle summary -->
+                        <section class="col-xs-12 bg-white-light pdt10 pdb10 index-summary">
+                          <div class="col-xs-12 col-sm-3 text-center pdl0 pdr0">
+                              	<div id="{{vm.marker.id}}state" class="icon bg-white {{vm.marker.state}}">
+                            	</div>
+                            <div class="nb bold"><span>{{vm.marker.plate || "N/A"}}</span></div>
+                            <small>Id</small>
+                          </div>
+                          <div class="col-xs-12 col-sm-3 text-center">
+                            <div class="icon bg-orange" ng-bind-html="vm.infoWd.icons.location">
+                            </div>
+                            <div class="nb bold"><span>{{vm.marker.details.location || "N/A"}}</span></div>
+                            <small>Location</small>
+                          </div>
+                          <!--div class="col-xs-12 col-sm-2 text-center">
+                            <div class="icon bg-blue" ng-bind-html="vm.infoWd.icons.key">
+                            </div>
+                            <div class="nb bold">{{vm.marker.details.type.value || "N/A"}}</div>
+                            <small>Brand/Type</small>
+                          </div-->
+                          <div class="col-xs-12 col-sm-3 text-center">
+                            <div class="icon bg-yellow" ng-bind-html="vm.infoWd.icons.battery">
+                            </div>
+                            <div class="nb bold">{{vm.marker.details.batteryLevel.value || "N/A"}}</div>
+                            <small>Battery</small>
+                          </div>
+                           <div class="col-xs-12 col-sm-3 text-center">
+                            <div class="icon bg-yellow" ng-bind-html="vm.infoWd.icons.time">
+                            </div>
+                            <div class="nb bold">{{(vm.marker.details.timestamp | date:'MM/dd/yyyy hh:mm:ss') || "N/A"}}</div>
+                            <small>Time</small>
+                          </div>
+                           
+                        </section>        
+                        <a type="button" ng-click="vm.showAssetDashboard(vm.marker.plate)" class="btn btn-primary mt15" >View Dashboard</a>
+                      
+                        <a type="button" ng-click="vm.openEditor(vm.editorUrl,  vm.marker.source, vm.marker.plate, item.key)" class="btn btn-primary mt15" >Edit Rule</a> 
+                         <!--md-menu md-offset="0 -7">
+                            <md-button aria-label="Edit Rule" class="btn btn-primary mt15" ng-click="$mdOpenMenu($event)">
+                               Edit Rule
+                            </md-button>
+                            <md-menu-content width="2">
+                              <md-menu-item ng-repeat="item in vm.availableEditors">
+                                <md-button ng-click="vm.openEditor(vm.editorUrl,  vm.marker.source, vm.marker.plate, item.key)"> <span md-menu-align-target>{{item.label}}</span></md-button>
+                              </md-menu-item>
+                            </md-menu-content>
+                          </md-menu-->
+                        <a type="button" ng-click="vm.tamperLock()" class="btn btn-primary mt15">Simulate tampering</a>
+						<a type="button" ng-click="vm.lockUnlock()" class="btn mt15" ng-class="vm.marker.eventClass">Simulate {{vm.marker.availableEvent}}</a>
+                        
+                        
+                      </div>

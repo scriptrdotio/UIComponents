@@ -10,6 +10,14 @@
 			single-info-window="true" zoom-to-inlude-markers="true"
 			center="{{vm.mapcenter || vm.defaultcenter}}"
 			zoom="{{vm.detailedmapzoom}}">
+            <drawing-manager ng-if="vm.geofenceManager == true"
+                on-overlaycomplete="vm.onMapOverlayCompleted()"
+                drawing-control-options="{{vm.drawingOptions}}"
+                drawingControl="{{vm.drawingControl}}"
+                drawingMode="null"
+                rectangleOptions="{{vm.overlaySettings}}"
+               >
+              </drawing-manager>
 		<div>
 			<div ng-repeat="(key, asset) in vm.displayedAssets">
 				<shape name="polyline" path="{{asset.path}}"
@@ -36,5 +44,20 @@
 			<div ng-transclude></div>
 		</div>
 		</ng-map>
+          
+        <div  class="messages" ng-show="vm.drawingMessages != null">
+            <div class="alert alert-warning">
+              {{vm.drawingMessages}}
+            </div>
+        </div>
+
+        <div ng-if="vm.geofenceManager == true" class="drawingmanager-buttons">
+            <span>
+              <a ng-click="vm.removeGeofence()" data-toggle="tooltip" title="Delete geofence" data-placement="bottom"><i class="fa fa-trash" aria-hidden="true"></i></a>
+              <a  ng-click="vm.saveGeofence()" data-toggle="tooltip" title="Save geofence" data-placement="bottom"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
+              <a type="button" data-toggle="tooltip" title="Locate geofence" ng-click="vm.focusGeofence()" data-placement="bottom"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>
+              <a type="button" data-toggle="tooltip" title="Locate vehicle" ng-click="vm.focusVehicle()" data-placement="bottom"><i class="fa fa-car aria-hidden="true"></i> </a>
+            </span>
+      </div>
 	</section>
 </div>

@@ -17,9 +17,17 @@ angular
         "defaultCenter": "@", //Map default center
         "trackedAsset": "@",
         "summaryIcons": "<?",
+        
+        "assetsData": "<?",
+      	"api" : "@",
+      	"apiParams" : "@",
+        "msgTag": "@",
       
-      	"assets": "<?",
-      	
+         //TODO the below attributes, currently use without geofence
+        "geofenceManager": "<?", //True to show the geofence drawing manage icons or not
+      	"apiGeofence": "<?",
+        "apiGeofenceParams": "<?",
+        "msgTagGeofence": "<?",
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
     
@@ -35,10 +43,13 @@ angular
       this.$onInit = function() {
           vm.pathStrokeOpacity = (vm.pathStrokeOpacity) ? vm.pathStrokeOpacity : 0;
           vm.pathStrokeWeight = (vm.pathStrokeWeight) ? vm.pathStrokeWeight : 5;
+        
           vm.maxAssetPoints = (vm.maxAssetPoints) ? vm.maxAssetPoints : 100;
           vm.defaultcenter = (vm.defaultcenter) ? vm.defaultcenter : "40.7053111,-74.258188";
           vm.trackedAsset = (vm.trackedAsset) ? vm.trackedAsset : null;
         
+        
+          vm.geofenceManager = (vm.geofenceManager) ? vm.geofenceManager : false;
         
           $scope.$parent.summaryIcons = {};
           if(vm.summaryIcons) {
@@ -80,6 +91,12 @@ angular
          
          //Should use default one if not available
          vm.sourcesInfo = vm.sourcesInfo;//mapConstants.sourceAssetIcon;
+        
+        
+        
+        $scope.$on("mapFoucsOnMarker", function(event, data) {
+			vm.focusOnAsset(data)
+        });
       }
 
       //Load asset Icons per source
@@ -104,13 +121,94 @@ angular
       vm.dynMarkers = [];
       
       
+      
+      //Load initial map assets from api or from passed data and subscribe to channel messages to add newly published assets to map
+      var loadMapData =  function() {
+          	wsClient.onReady.then(function() {
+              if(vm.api) {
+           		    vm.apiParams =  (vm.apiParams) ? vm.apiParams : {};
+             	   	wsClient.call(vm.api, vm.apiParams).then(function(data, response) {
+                    vm.processAssets(data);
+                    console.log("api call "+ vm.api +" response returned", data)
+                  }, function(err) {
+                    vm.callError = JSON.stringify(error)
+                    console.log("api call "+ vm.apiParams +" reject call promise", err);
+                  });
+              }
+              if(vm.msgTag) {
+            	 wsClient.subscribe(vm.msgTag, vm.processAssets)
+              }
+              
+          });
+        
+          if(vm.assetsData) {
+          	 console.log("static assets data", vm.assetsData);
+             vm.processAssets(vm.assetsData);
+          }
+       
+      };
+
+      //Call when receiving a new asset, or a set of assets
+      vm.processAssets = function(data) {
+        var assets = data;
+       // var id = data.id;
+        var process = function(assets) {
+          if (!vm.trackedAsset || vm.trackedAsset == key) {
+              // Loop on assets
+              for (var key in assets) {
+                if (assets.hasOwnProperty(key)) {
+                    console.log(key, assets[key]);
+                    vm.pushAssets(key, assets[key])
+                  }
+                }
+          } else {
+               if (assets.hasOwnProperty(vm.trackedAsset)) {
+                 vm.pushAssets(vm.trackedAsset, assets[vm.trackedAsset])
+               }
+             }
+          vm.renderAssets();
+          if(vm.clusteredView && !vm.trackedAsset)  {
+            vm.renderClusterer();
+          }
+        };
+        
+        if (vm.clusteredView && !vm.markerClusterer && !vm.trackedAsset) {
+          NgMap
+            .getMap({
+            id : 'clustered' //TODO: figure out another thing then id, or pass id as a param
+          })
+            .then(
+            function(map) {
+              if (!vm.markerClusterer) {
+                vm.buildClusterer(map);
+              }
+             process(assets);
+            });
+        } else {
+          process(assets)
+        }
+    };
+      
+     vm.buildClusterer = function(map) {
+        vm.markerClusterer = new MarkerClusterer(
+          map,
+          vm.dynMarkers,
+          {
+            maxZoom :  vm.clusteredZoomMax,
+            imagePath : 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m',
+            minimumClusterSize : -1,
+            gridSize : 50,
+            averageCenter : true
+          });
+      };
+      
       //Render all assets
       var rerenderAllAssets = function() {
         vm.selectedAsset = "all";
         vm.renderAssets();
       };
 
-      // Render assets
+      // Render markers assets
       vm.renderAssets = function() {
         console.log("Render New Assets.")
         if (vm.selectedAsset == "all") {
@@ -121,6 +219,7 @@ angular
         }
       };
 
+      //Render marker clusters
       vm.renderClusterer = function() {
           console.log("Render clusterer.")
           vm.markerClusterer.resetViewport(true);
@@ -442,86 +541,136 @@ angular
         return (Object.keys(obj).length == 0);
       };
       
+      
+      
+      vm.assetsFences = [];
+      vm.drawingControl = ["rectangle"];
+      vm.drawingOptions = {position: 'TOP_CENTER',drawingModes:['rectangle']}
 
-	  //Load initial map assets
-      var loadMapData =  function() {
-  		var data = {
-          "timeframe" : "this_1_years", 
-          "limit" : "100"
+      vm.overlaySettings = {"fillColor": "#444", "fillOpacity": 0.2, "strokeWeight": 3, "strokeColor": "#ff8c00", "clickable": true, "zIndex": 1, "editable": true};
+
+      vm.setupDrawingManager = function() {
+        vm.assetsFences = [];
+        //Invoke
+        $scope.invoke("telematics/api/getVehicleGeofence", {
+           "vehicleId": vm.selectedAsset
+        }, "main-getgeofence_"+vm.selectedAsset);
+
+        //By Default hide rect drawing mode
+        hideRectDrawingMode();
+
+        //TODO: Put a loading on get & remove when response received
+      };
+
+
+      vm.drawGeofence = function(bounds) {
+         if(bounds != null) {
+           NgMap.getMap({id:'detailed'}).then(function(map) {
+              var props = {};
+              props["fillColor"] = vm.overlaySettings["fillColor"];
+              props["fillOpacity"] = vm.overlaySettings["fillOpacity"];
+              props["strokeWeight"] = vm.overlaySettings["strokeWeight"];
+              props["strokeColor"] = vm.overlaySettings["strokeColor"];
+              props["clickable"] = vm.overlaySettings["clickable"];
+              props["zIndex"] = vm.overlaySettings["zIndex"];
+              props["editable"] = vm.overlaySettings["editable"];
+              props["map"] = map;
+              props["bounds"] = JSON.parse(bounds);
+              var rectangle = new google.maps.Rectangle(props);
+              vm.assetsFences.push({assetId: vm.selectedAsset, assetFence: rectangle});
+            });
+            //TODO: Remove loading
+         } else {
+           showRectDrawingMode();
+           //TODO: Remove loading
+         }
+         $('[data-toggle="tooltip"]').tooltip(); 
+
+        $(".gmnoprint").each(function(){ //Add classes to drawing manager to override css
+              // ID the Hand button
+              newObj = $(this).find("[title='Stop drawing']");
+              newObj.attr('class', 'btnStop');
+              // ID the Rectangle Button
+              newObj = $(this).find("[title='Draw a rectangle']");
+              newObj.attr('id', 'btnRectangle');
+          });
+
+
+      }
+
+      var showRectDrawingMode = function() {
+         vm.drawingOptions = {position: 'TOP_CENTER',drawingModes:["rectangle"]};
+      }
+
+      var hideRectDrawingMode = function() {
+        vm.drawingOptions = {position: 'TOP_CENTER',drawingModes:[]};
+      }
+
+      vm.onMapOverlayCompleted = function(e){
+        hideRectDrawingMode();
+        vm.assetsFences.push({assetId: vm.selectedAsset, assetFence: e.overlay});
+
+        if(vm.drawingMessagesTimeout) {
+            $timeout.cancel(vm.drawingMessagesTimeout);
         }
-       
-       wsClient.onReady.then(function() {
-          wsClient.call("telematics/api/getLatestTrips", data).then(function(data, response) {
-            vm.processAssets(data);
-            console.log("response returned", data)
-          }, function(err) {
-            vm.callError = JSON.stringify(error)
-            console.log("reject call promise", err);
-          });
-          
-           wsClient.call("telematics/api/stream/getLatestTrips", data).then(function(data, response) {
-            vm.processAssets(data);
-            console.log("response returned", data)
-          }, function(err) {
-            vm.callError = JSON.stringify(error)
-            console.log("reject call promise", err);
-          });
-          wsClient.subscribe("everyone-main-live", vm.processAssets)
+
+        vm.drawingMessages = "Do not forget to save your geofence before selecting another vehicle."
+        vm.drawingMessagesTimeout = $timeout(function () { vm.drawingMessages = null }, 5000); 
+      };
+
+      vm.focusVehicle = function() {
+        if(vm.selectedAsset) {
+          vm.mapcenter = vm.assets[vm.selectedAsset].latestMarker.position
+        }
+      }
+
+      vm.drawingMessages = null;
+      vm.drawingMessagesTimeout = null;
+
+      vm.focusGeofence = function() {
+         var fenceOverlay =  _.findWhere(vm.assetsFences, {"assetId": vm.selectedAsset});
+         if(fenceOverlay) {
+            vm.mapcenter = fenceOverlay.assetFence.getBounds().getCenter()
+         } else {
+            if(vm.drawingMessagesTimeout) {
+                $timeout.cancel(vm.drawingMessagesTimeout);
+            }
+           vm.drawingMessages = "No geofence has been defined yet for selected vehicle."
+           vm.drawingMessagesTimeout = $timeout(function () { vm.drawingMessages = null }, 5000);  
+         }
+      }
+
+      vm.removeGeofence = function() {
+        var fenceOverlay =  _.findWhere(vm.assetsFences, {"assetId": vm.selectedAsset});
+        //substract fence
+        if(fenceOverlay) {
+          vm.assetsFences = _.without(vm.assetsFences, fenceOverlay);
+          $scope.invoke("telematics/api/removeVehicleGeofence", {
+               "vehicleId": vm.selectedAsset,
+            }, "main-removegeofence_"+vm.selectedAsset);
+            fenceOverlay.assetFence.setMap(null);
+        }
+        showRectDrawingMode();
+      };
+
+      vm.hideAllGeofences = function() {
+        _.every(vm.assetsFences, function(fenceOverlay) {
+            fenceOverlay.assetFence.setMap(null);
+            return true;
         });
       };
 
-      //Call when receiving a new asset, or a set of assets
-      vm.processAssets = function(data) {
-        var assets = data;
-       // var id = data.id;
-        var process = function(assets) {
-          if (!vm.trackedAsset || vm.trackedAsset == key) {
-              // Loop on assets
-              for (var key in assets) {
-                if (assets.hasOwnProperty(key)) {
-                    console.log(key, assets[key]);
-                    vm.pushAssets(key, assets[key])
-                  }
-                }
-          } else {
-               if (assets.hasOwnProperty(vm.trackedAsset)) {
-                 vm.pushAssets(vm.trackedAsset, assets[vm.trackedAsset])
-               }
-             }
-          vm.renderAssets();
-          if(vm.clusteredView && !vm.trackedAsset)  {
-            vm.renderClusterer();
-          }
-        };
-        
-        if (vm.clusteredView && !vm.markerClusterer && !vm.trackedAsset) {
-          NgMap
-            .getMap({
-            id : 'clustered' //TODO: figure out another thing then id, or pass id as a param
-          })
-            .then(
-            function(map) {
-              if (!vm.markerClusterer) {
-                vm.buildClusterer(map);
-              }
-             process(assets);
-            });
+      vm.saveGeofence = function() {
+         var fenceOverlay =  _.findWhere(vm.assetsFences, {"assetId": vm.selectedAsset});
+        if(fenceOverlay) {
+           $scope.invoke("telematics/api/saveVehicleGeofence", {
+               "vehicleId": vm.selectedAsset,
+               "bounds": JSON.stringify(fenceOverlay.assetFence.getBounds())
+            }, "main-savegeofence_"+vm.selectedAsset);
         } else {
-          process(assets)
+
         }
-    };
-      
-     vm.buildClusterer = function(map) {
-        vm.markerClusterer = new MarkerClusterer(
-          map,
-          vm.dynMarkers,
-          {
-            maxZoom :  vm.clusteredZoomMax,
-            imagePath : 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m',
-            minimumClusterSize : -1,
-            gridSize : 50,
-            averageCenter : true
-          });
       }
-    }
+	
+   }
 });
