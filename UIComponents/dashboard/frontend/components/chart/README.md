@@ -72,7 +72,7 @@
 | Option        | Default value   | Description   | Required   |
 | ------------- |:-------------:|:-------------:|:-------------:|
   data     | undefined	 |series data. | Required in case of static data
-  type  | line | There are 4 types of charts (line, bar, area and donut). | NO
+  type  | undefined | There are 4 types of charts (line, bar, area and donut). | YES
   xkey     | 'y'	 | The name of the data record attribute that contains x-values. | NO
   ykeys       | ["a"]    | // A list of names of data record attributes that contain y-values. | NO
   labels       | ["Series A"]   | 	// Labels for the ykeys -- will be displayed when you hover over the chart. | NO
@@ -81,6 +81,23 @@
   donut-background-color       | '#ffffff'    | 	Donut Label Color. | NO	
   donut-colors       | ["#38B9D6", "#1DBC68", "#CC5464", "#FCC717", "#E90088"]    | 	 Donut Colors.	| NO
   donut-formatter       | 'currency'    | 	 can either be a string for a filter name (eg. 'currency') or a reference to a scope function.	| NO
+  lineWidth | undefined | Width of the series lines, in pixels. | NO
+  pointSize | undefined | Diameter of the series points, in pixels. | NO
+  pointFillColors | undefined | Colors for the series points. By default uses the same values as lineColors. | NO
+  pointStrokeColors | undefined | Colors for the outlines of the series points. (#ffffff by default). | NO
+  ymax | undefined | Max. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the max y-value is at least [num]. | NO
+  ymin | Min. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the min y-value is at most [num]. 
+Hint: you can use this to create graphs with false origins. | NO
+  smooth | undefined | Set to false to disable line smoothing. | NO
+  hideHover | undefined | Set to false to always show a hover legend. 
+Set to true or 'auto' to only show the hover legend when the mouse cursor is over the chart. 
+Set to 'always' to never show a hover legend. | NO
+  lineWidth | undefined | Width of the series lines, in pixels. | NO
+  lineWidth | undefined | Width of the series lines, in pixels. | NO
+  lineWidth | undefined | Width of the series lines, in pixels. | NO
+  lineWidth | undefined | Width of the series lines, in pixels. | NO
+  lineWidth | undefined | Width of the series lines, in pixels. | NO
+  lineWidth | undefined | Width of the series lines, in pixels. | NO
   api | undefined | Name of the api to get data | Required if getting data from backend
   transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 | NO
   msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | NO    
