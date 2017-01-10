@@ -11,13 +11,12 @@ angular
                templateUrl : '/UIComponents/layout/frontend/components/header/header.html',
                controller : function($scope, defaultLogo) {
 	               this.$onInit = function() {
-                       this.logout = {};
-                       
-                       this.logout["route"] = (this.headerItems && this.headerItems.logout && this.headerItems.logout.route) ?   this.headerItems.logout.route : null;
+                       this.logout = (this.headerItems && this.headerItems.logout) ?   this.headerItems.logout : null;
                        this.appname =  (this.headerItems && this.headerItems.appname) ?  this.headerItems.appname : "";
                        this.logo = (this.headerItems && this.headerItems.logo) ?  this.headerItems.logo : defaultLogo;
                        this.user = (this.user) ? this.user : null;
                        this.items = (this.headerItems && this.headerItems.items) ?  this.headerItems.items : null;
+                       this.subitems = (this.headerItems && this.headerItems.subitems) ?  this.headerItems.subitems : null;
  	               };
                }
             });
