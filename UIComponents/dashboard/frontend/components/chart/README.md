@@ -98,6 +98,13 @@
   xlabelAngle | undefined | The angle in degrees from horizontal to draw x-axis labels.  | NO
   xLabelFormat | undefined | A function that accepts Date objects and formats them for display as x-axis labels. Overrides the default formatter chosen by the automatic labeller or the xLabels option. function (x) { return x.toString(); } | NO
   yLabelFormat | undefined | 	A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; } | NO
+  goals | undefined | A list of y-values to draw as horizontal 'goal' lines on the chart. goals: [1.0, -1.0] | NO
+  goalStrokeWidth | undefined | Width, in pixels, of the goal lines. | NO
+  goalLineColors | undefined | Array of color values to use for the goal line colors. If you list fewer colors here than you have lines in goals, then the values will be cycled. | NO
+  events | undefined | A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01', '2012-03-01'] | NO
+  lineWidth | undefined | Width of the series lines, in pixels. | NO
+  lineWidth | undefined | Width of the series lines, in pixels. | NO
+  lineWidth | undefined | Width of the series lines, in pixels. | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
   api | undefined | Name of the api to get data | Required if getting data from backend
