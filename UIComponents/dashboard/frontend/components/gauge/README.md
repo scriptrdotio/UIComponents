@@ -74,7 +74,7 @@
   refresh-animation-type      | 'linear'    | 	 type of refresh animation (linear, >, <, <>, bounce).	| NO
   counter      | true    | 	 increase numbers one by one. | NO
   api | undefined | Name of the API to get data | Required if getting data from backend | NO
-  on-format-data  | null      | 	format the data returned from backend  	| NO		 |
+  on-format-data | undefined | Callback function to be called after data is returned from backend | NO
   transport |  'wss'     | 	method used to call api (can take "http" or "wss").	 | NO
   msg-tag   | null      | 	Subscribe to socket messages with tag name.		     | NO
   api-params  | null      | 	api parameters.  					| NO
