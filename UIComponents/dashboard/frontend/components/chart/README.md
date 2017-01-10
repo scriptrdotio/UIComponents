@@ -104,8 +104,7 @@
   events | undefined | A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01', '2012-03-01'] | NO
   eventStrokeWidth | undefined | Width, in pixels, of the event lines. | NO
   eventLineColors | undefined | Array of color values to use for the event line colors. If you list fewer colors here than you have lines in events, then the values will be cycled. | NO
-  continuousLine | undefined | When set to false (the default), all null and undefined values in a data series will be ignored and lines will be drawn spanning them. When set to true, null values will break the line and undefined values will be spanned. 
-Note that in v0.5.0, this setting will be removed and the behaviour will be to break lines at null values. | NO
+  continuousLine | undefined | When set to false (the default), all null and undefined values in a data series will be ignored and lines will be drawn spanning them. When set to true, null values will break the line and undefined values will be spanned. Note that in v0.5.0, this setting will be removed and the behaviour will be to break lines at null values. | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
   api | undefined | Name of the api to get data | Required if getting data from backend
