@@ -211,7 +211,7 @@ Example where data is static
 	return data;
 
 ```
-  Each chart application subscribed to "responseChannel" with msg-tag "chart" or "donut" or "gauge" gets updated everytime a rest api is called. 
+  Each chart application subscribed to "responseChannel" with msg-tag "chart" or "chartline" or "donut" gets updated everytime a rest api is called. 
 
 
 
