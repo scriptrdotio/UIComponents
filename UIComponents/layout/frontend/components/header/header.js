@@ -14,6 +14,7 @@ angular
                        this.logout = {};
                        
                        this.logout["route"] = (this.headerItems && this.headerItems.logout && this.headerItems.logout.route) ?   this.headerItems.logout.route : null;
+                       this.appname =  (this.headerItems && this.headerItems.appname) ?  this.headerItems.appname : "";
                        this.logo = (this.headerItems && this.headerItems.logo) ?  this.headerItems.logo : defaultLogo;
                        this.user = (this.user) ? this.user : null;
                        this.items = (this.headerItems && this.headerItems.items) ?  this.headerItems.items : null;
