@@ -12,9 +12,11 @@
 			<input type="text" class="form-control" ng-model="$ctrl.gridOptions.quickFilterText" placeholder="Type text to filter..." />
       </div>
     </div>  
-    <button ng-hide= {{$ctrl.enableDeleteRow}} ng-click="$ctrl.onRemoveRow()">Delete selected row</button>
-    <button ng-hide= {{$ctrl.enableAddRow}} ng-click="$ctrl.onAddRow()">Insert row</button>
-  </form>   
+    <div class="col-xs-12 col-sm-4 text-right">
+      <button ng-hide= {{$ctrl.enableDeleteRow}} ng-click="$ctrl.onRemoveRow()" class="btn btn-danger"><i class="fa fa-close" aria-hidden="true"></i> Delete selected row</button>
+      <button ng-hide= {{$ctrl.enableAddRow}} ng-click="$ctrl.onAddRow()" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Insert row</button>
+    </div>
+   </form>   
 </div>
     
 
