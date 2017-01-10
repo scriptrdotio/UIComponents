@@ -96,8 +96,8 @@
   preUnits | undefined | Set to a string value (eg: '$') to add a label prefix all y-labels. | NO
   xlabels | undefined | Sets the x axis labelling interval. By default the interval will be automatically computed. The following are valid interval strings. "decade", "year", "month", "week", "day", "hour", "30min", "15min", "10min", "5min", "minute", "30sec", "15sec", "10sec", "5sec", "second"| NO
   xlabelAngle | undefined | The angle in degrees from horizontal to draw x-axis labels.  | NO
-  xLabelFormat | undefined | A function that accepts Date objects and formats them for display as x-axis labels. Overrides the default formatter chosen by the automatic labeller or the xLabels option. function (x) { return x.toString(); } | NO
-  yLabelFormat | undefined | 	A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; } | NO
+  xlabelFormat | undefined | A function that accepts Date objects and formats them for display as x-axis labels. Overrides the default formatter chosen by the automatic labeller or the xLabels option. function (x) { return x.toString(); } | NO
+  ylabelFormat | undefined | 	A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; } | NO
   goals | undefined | A list of y-values to draw as horizontal 'goal' lines on the chart. goals: [1.0, -1.0] | NO
   goalStrokeWidth | undefined | Width, in pixels, of the goal lines. | NO
   goalLineColors | undefined | Array of color values to use for the goal line colors. If you list fewer colors here than you have lines in goals, then the values will be cycled. | NO
