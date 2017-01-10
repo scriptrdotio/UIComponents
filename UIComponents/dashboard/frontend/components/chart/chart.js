@@ -51,7 +51,6 @@ angular
         
         "xlabels": "@", 
         "xlabelAngle": "<?", 
-        "ylabelAlign": "@",  
         "goals": "@", 
         "goalStrokeWidth": "@",
         "goalLineColors": "@", 
