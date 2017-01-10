@@ -71,7 +71,7 @@
 
 | Option        | Default value   | Description   | Required   | Line & Area | Bar | Donut
 | ------------- |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-  data     | undefined	 |series data. | Required in case of static data
+  data     | undefined	 |series data. | Required in case of static data | *  |  * | *
   type  | undefined | There are 4 types of charts (line, bar, area and donut). | YES
   xkey     | 'y'	 | The name of the data record attribute that contains x-values. | NO
   ykeys       | ["a"]    | // A list of names of data record attributes that contain y-values. | NO
