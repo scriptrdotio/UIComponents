@@ -128,35 +128,38 @@ scriptr-chart is an element component. you will just have to add it in your html
 Example where data is static
 
  ```html
-    <scriptr-chart
-        type='line'
-        transport="wss"
-        msg-tag="chart"
-        xkey='y'
-		ykeys='["a", "b"]'
-		labels='["Serie A", "Serie B"]'
-		colors='["#FCC717", "#E90088"]'
-        data='[ { y: "2006", a: 100, b: 90 },
-                { y: "2007", a: 75,  b: 65 },
-                { y: "2008", a: 50,  b: 40 },
-                { y: "2009", a: 75,  b: 65 },
-                { y: "2010", a: 50,  b: 40 },
-                { y: "2011", a: 75,  b: 65 },
-                { y: "2012", a: 100, b: 90 }]'>
-    </scriptr-chart>
+   <scriptr-chart
+          type='line'
+          transport="wss"
+          msg-tag="chartline"
+          ykeys='["a", "b"]'
+          xkey='y'
+          labels='["Serie A", "Serie B"]'   
+          date-format="vm.dateFormat"
+          line-width="20"
+          colors='["#FCC717", "#E90088"]'
+          data='[ { y: "2006", a: 100, b: 90 },
+                  { y: "2007", a: 75,  b: 65 },
+                  { y: "2008", a: 50,  b: 40 },
+                  { y: "2009", a: 75,  b: 65 },
+                  { y: "2010", a: 50,  b: 40 },
+                  { y: "2011", a: 75,  b: 65 },
+                  { y: "2012", a: 100, b: 90 }]'
+      </scriptr-chart>
   ```
  Example where data is called from backend
  
 ```html
-    <scriptr-chart
-        type='bar'
-        stacked='true'
-        xkey='y'
-	ykeys='["a", "b"]'
-        transport="wss"
-        msg-tag="chart"
-        api='UIComponents/dashboard/frontend/examples/chart/getChartData'>
-    </scriptr-chart>
+       <scriptr-chart
+          type='bar'
+          stacked='true'
+          xkey='y'
+          ykeys='["a", "b"]'
+          labels='["Serie A", "Serie B"]'   
+          transport="wss"
+          msg-tag="chart"
+          api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+      </scriptr-chart>
 ``` 
     
     REST API example:
@@ -181,16 +184,32 @@ Example where data is static
 	// data for line, bar, and area charts
 	var data = [{ y: "2006", a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) },
 	    { y: "2007", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
-	    { y: "2008", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) }];
+	    { y: "2008", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+	    { y: "2009", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+	    { y: "2010", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+	    { y: "2011", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+	    { y: "2012", a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) }];
+
+
+	// data for line, bar, and area charts
+	var dataline = [{ y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) },
+	    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+	    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+	    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+	    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+	    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+	    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) }];
 
 	// data for donut chart
-	var donutdata = [{label: "Download Sales", value: Math.floor((Math.random() * 100) + 1) }, {label: "In-Store Sales",value: 		Math.floor((Math.random() * 100) + 1) }, {label: "Mail-Order Sales", value: Math.floor((Math.random() * 100) + 1) }];
+	var donutdata = [{label: "Download Sales", value: Math.floor((Math.random() * 100) + 1) }, {label: "In-Store Sales",value: 	        Math.floor((Math.random() * 100) + 1) }, {label: "Mail-Order Sales", value: Math.floor((Math.random() * 100) + 1) }];
 
 	publishResponse("responseChannel", data, request, "chart");
 
+	publishResponse("responseChannel", dataline, request, "chartline");
 	publishResponse("responseChannel", donutdata, request, "donut");
 
 	return data;
+
 ```
   Each chart application subscribed to "responseChannel" with msg-tag "chart" or "donut" or "gauge" gets updated everytime a rest api is called. 
 
