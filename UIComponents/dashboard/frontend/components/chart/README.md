@@ -114,8 +114,7 @@
   fillOpacity | undefined | Change the opacity of the area fill colour. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque). | NO
   resize | undefined | Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default. | NO
   behaveLikeLine | undefined | Set to true to overlay the areas on top of each other instead of stacking them. | NO
-  dateFormat | undefined | A function that accepts millisecond timestamps and formats them for display as chart labels. 
-default. function (x) { return new Date(x).toString() }| NO
+  dateFormat | undefined | A function that accepts millisecond timestamps and formats them for display as chart labels. default is function (x) { return new Date(x).toString() }| NO
   api | undefined | Name of the api to get data | Required if getting data from backend
   transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 | NO
   msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | NO    
