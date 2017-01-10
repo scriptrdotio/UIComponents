@@ -8,14 +8,16 @@ angular
                },
                templateUrl : '/UIComponents/layout/frontend/components/menu/menu.html',
                controllerAs : 'vm',
-               controller : function($scope, _, $timeout, $location, $route, $routeParams) {
+               controller : function($scope, _, $timeout, $location, $route) {
 	               var vm = this;
                  
                    vm.currentRoute = null;
 
 	               this.$onInit = function() {
 		               this.getMenuData(this.menuItems);
-                       vm.currentRoute =  "#"+$route.current.$$route.originalPath;
+                       if($route.current && $route.current.$$route) {
+                         vm.currentRoute =  "#"+$route.current.$$route.originalPath;
+                       }
                        $scope.$on('$routeChangeStart', function(next, current) { 
                          console.log("next", next);
                          if(current) {
