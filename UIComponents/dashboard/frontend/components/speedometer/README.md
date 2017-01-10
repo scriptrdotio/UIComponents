@@ -73,6 +73,7 @@
   default-fonts    | undefined |	sets the default fonts in gauge.						     | NO
   api             | undefined | 	Name of the api to call backend data. | 					 Required if calling data from backend
   transport       | 	undefined | method used to call api (can take "http" or "wss").		| NO 
+  on-format-data | undefined | Callback function to be called after data is returned from backend | NO
   msg-tag          | undefined | 	Subscribe to socket messages with tag name.		     | NO
   api-params      | undefined   | 	api parameters. | NO  					
   
