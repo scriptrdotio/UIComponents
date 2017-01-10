@@ -95,7 +95,7 @@
   postUnits | undefined |Set to a string value (eg: '%') to add a label suffix all y-labels. | NO
   preUnits | undefined | Set to a string value (eg: '$') to add a label prefix all y-labels. | NO
   xlabels | undefined | Sets the x axis labelling interval. By default the interval will be automatically computed. The following are valid interval strings. "decade", "year", "month", "week", "day", "hour", "30min", "15min", "10min", "5min", "minute", "30sec", "15sec", "10sec", "5sec", "second"| NO
-  lineWidth | undefined | Width of the series lines, in pixels. | NO
+  xlabelAngle | undefined | The angle in degrees from horizontal to draw x-axis labels. | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
   lineWidth | undefined | Width of the series lines, in pixels. | NO
