@@ -86,8 +86,7 @@
   pointFillColors | undefined | Colors for the series points. By default uses the same values as lineColors. | NO
   pointStrokeColors | undefined | Colors for the outlines of the series points. (#ffffff by default). | NO
   ymax | undefined | Max. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the max y-value is at least [num]. | NO
-  ymin | Min. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the min y-value is at most [num]. 
-Hint: you can use this to create graphs with false origins. | NO
+  ymin | Min. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the min y-value is at most [num]. You can use this to create graphs with false origins. | NO
   smooth | undefined | Set to false to disable line smoothing. | NO
   hideHover | undefined | Set to false to always show a hover legend. 
 Set to true or 'auto' to only show the hover legend when the mouse cursor is over the chart. 
