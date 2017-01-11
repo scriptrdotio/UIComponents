@@ -17,6 +17,7 @@ angular
                        this.user = (this.user) ? this.user : null;
                        this.items = (this.headerItems && this.headerItems.items) ?  this.headerItems.items : null;
                        this.subitems = (this.headerItems && this.headerItems.subitems) ?  this.headerItems.subitems : null;
+                       this.caretlabel =  (this.headerItems && this.headerItems.caretlabel) ?  this.headerItems.caretlabel : null;
  	               };
                }
             });
