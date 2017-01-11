@@ -4,8 +4,8 @@ header {height: 45px; position: fixed; top: 0; z-index: 999; width: 100%;}
 
 /*** logo ***/
 .logo {background: #5477a0; width: 200px; height: 45px; text-align: center; padding: 9px 0 0 20px;}
-.logo img {max-width: 135px;}
-.username { color: #fff;font-size: 16px;margin: 10px 10px 10px 10px;}
+.username {background: #5477a0;}
+#username-button {line-height: 2.4; border: none; background: none; box-shadow: none;}
 
 /*** logout ***/
 .logout a:link, .logout a:visited {height: 45px; border: none; color: #fff; display: block; padding: 10px 13px 13px 12px;}
@@ -13,6 +13,7 @@ header {height: 45px; position: fixed; top: 0; z-index: 999; width: 100%;}
 .logout:hover, .logout:focus {background: #64798e;}
 
 /*** header items ***/
+.header-items {padding-right: 5px;}
 .header-items a {color: #fff; padding: 12px 13px 12px 12px; display: block; font-size: 15px; font-weight: bold;}
 .header-items a:hover {background: #64798e; text-decoration: none;}
 .header-items i {margin-right: 4px;}
