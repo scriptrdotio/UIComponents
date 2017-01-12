@@ -104,14 +104,14 @@
            enable-sorting='true'
            cell-editable='true'
            enable-client-filter='true'
-           enable-server-side-filter='true' 
-           enable-server-side-sorting='true'
+           enable-server-side-filter='false' 
+           enable-server-side-sorting='false'
            row-model-selection='multiple'
            pagination-page-size='50'
            transport='http' 
-           service-api='UIComponents/zoho/backend/api/listDeviceTickets'
-           api-data='{"id" : "253831"}'
-           on-cell-value-changed-script='UIComponents/zoho/backend/api/updateTicketStatus'
+           service-api='modules/zoho/api/listDeviceTickets'
+           api-params='{"id" : "253831"}'
+           on-cell-value-changed-script='modules/zoho/api/updateTicketStatus'
            on-format-data="vm.callback">
   </scriptr-grid>
 </body>
