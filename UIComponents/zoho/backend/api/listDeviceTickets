@@ -1,4 +1,4 @@
-var zohoLib =  require('../lib/zoho.js');
+var zohoLib =  require('../lib/zoho');
 var zoho = new zohoLib.zoho();
 
 

@@ -2,7 +2,7 @@
  * API used to update ticket status
  *
  */
-var zohoLib =  require('../lib/zoho.js');
+var zohoLib =  require('../lib/zoho');
 var zoho = new zohoLib.zoho();
 var ticketId = null;
 var status = null;

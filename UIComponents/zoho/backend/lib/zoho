@@ -1,5 +1,5 @@
-var config =  require("../config.js");
-var client = require("./client.js");
+var config =  require("../config");
+var client = require("./client");
 
 function zoho(){
 }
