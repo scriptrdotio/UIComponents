@@ -1,7 +1,6 @@
 :focus {outline: 0!important;}
 /*** filter ***/
-body {font-family: "Josefin Sans",sans-serif!important;}
-.filter-bar {padding: 4px 0; background: #f6f6f6; display: inline-block; width: 100%; margin-bottom: 8px;}
+.filter-bar {padding: 4px 0; background: #f6f6f6; display: inline-block; width: 100%; margin-bottom: 8px; font-family: "Josefin Sans",sans-serif;}
 .filter-bar .form-group {margin-bottom: 5px;}
 
 
