@@ -39,10 +39,15 @@
 <body>
 
  <scriptr-grid columns-definition='[
-          {headerName: "Make", field: "name"},
+          {headerName: "Name", field: "name"},
           {headerName: "Model", field: "model"},
           {headerName: "Price", field: "price", type: "numeric"}]' 
            enable-sorting='true'
+           row-data = '[
+              {name: "Toyota", model: "Celica", price: 35000},
+              {name: "Ford", model: "Mondeo", price: 32000},
+              {name: "Porsche", model: "Boxter", price: 72000}
+           ]'
            row-model-type='pagination'
            enable-delete-row='true'
            enable-add-row='true'
