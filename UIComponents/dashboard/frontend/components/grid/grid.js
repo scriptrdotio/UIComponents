@@ -132,7 +132,7 @@ angular
             enableFilter : (typeof this.enableFilter != 'undefined') ? this.enableFilter : true,
             columnDefs : this.columnsDefinition,
             rowData: (this.rowData)? this.rowData : null,
-            rowModelType :(this.rowModelType)? this.rowModelType : "virtual",
+            rowModelType :(this.rowModelType)? this.rowModelType : (this.rowData)? "normal" : "virtual",
             rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
             paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
             overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> Please wait while your rows are loading</span>',
@@ -152,9 +152,6 @@ angular
               event.api.filterManager.availableFilters.text.CONTAINS = "startsWith";
               if(typeof self.rowData == 'undefined' || self.rowData == null){
              	 self._createNewDatasource();
-              }else{
-                self.gridOptions.rowModelType = "normal";
-                event.api.setRowData(self.rowData);
               }
             },
 
