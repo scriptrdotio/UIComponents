@@ -32,7 +32,7 @@ var headerItems = {
 var routingItems = {
   "params": [
     {"route": "usermanagement", "template": "/UIComponents/layout/frontend/examples/app/groups.html"},
-    {"route": "logout", "template": "/UIComponents/layout/frontend/exmaples/app/logout.html"}
+    {"route": "logout", "template": "/UIComponents/layout/frontend/examples/app/logout.html"}
   ],
   "otherwiseOption" : {"template": ""}
 };
