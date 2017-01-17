@@ -24,8 +24,6 @@ angular
 
         "cellEditable" : "<?",
         
-        "rowData" : "<?",
-
         "enableSorting": "<?", // client-side sorting
 
         "serviceApi" : "@", // restApi 
@@ -43,6 +41,8 @@ angular
         "rowModelSelection" : "@", //"multiple" or "single"
 
         "rowDeselection" : "<?",
+        
+        "rowData" : "<?",
 
         /** pagination properties **/
         "paginationPageSize" : "<?", // In virtual paging context means how big each page in our page cache will be, default is 100
@@ -131,6 +131,7 @@ angular
             enableColResize : (typeof this.enableColResize != 'undefined') ? this.enableColResize : false,
             enableFilter : (typeof this.enableFilter != 'undefined') ? this.enableFilter : true,
             columnDefs : this.columnsDefinition,
+            rowData: (this.rowData)? this.rowData : null,
             rowModelType :(this.rowModelType)? this.rowModelType : "virtual",
             rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
             paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
@@ -146,9 +147,10 @@ angular
             },
             onGridReady : function(event) {
               console.log('the grid is now ready');
+              event.api.sizeColumnsToFit(); 
               // set "Contains" in the column drop down filter to "StartWith" as it is not supported in document query 
               event.api.filterManager.availableFilters.text.CONTAINS = "startsWith";
-              if(typeof self.rowData == 'undefined'){
+              if(typeof self.rowData == 'undefined' || self.rowData == null){
              	 self._createNewDatasource();
               }else{
                 self.gridOptions.rowModelType = "normal";
@@ -167,10 +169,11 @@ angular
           
          dataService.subscribe(this.onRemoveRowWebSocketCall, self.removeRowMsgTag);
          dataService.subscribe(this.onEditRowWebSocketCall, self.addRowMsgTag);
-
+          
          angular.element($window).bind('resize', function () {
            self.gridOptions.api.sizeColumnsToFit();
          });
+         
         }
 
         this._saveData = function(onCellValueChangedScript, fields){
