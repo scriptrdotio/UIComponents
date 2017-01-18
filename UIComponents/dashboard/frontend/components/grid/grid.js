@@ -87,12 +87,6 @@ angular
                   var rowsData = data.documents;
                   var count = parseInt(data.count);
                   
-                  // remove unnecessary fields that came from backend
-                  for(var i = 0; i < rowsData.length; i++){
-                    if(rowsData[i].versionNumber){
-                      delete rowsData[i]["versionNumber"];
-                    }
-                  }
                   params.successCallback(rowsData, count);
                   self.gridOptions.api.sizeColumnsToFit();
                   
@@ -199,12 +193,6 @@ angular
           if(data && data.result){
              var fields = data.result;
             
-            // remove unnecessary fields returned from backend
-             if(fields["apsdb.documentKey"])
-               delete fields["apsdb.documentKey"];
-             if(fields["apsdb.store"])
-               delete fields["apsdb.store"];
-            
              var rowKey = fields.key;
              if(self.gridOptions.rowModelType == "pagination"){ 
                 self.gridOptions.api.forEachNode(function(node) {
@@ -218,9 +206,13 @@ angular
                 });
                var firstRow = self.gridOptions.api.getRenderedNodes()[0];
                if(!firstRow.data.key){
-                 firstRow.data.key = rowKey;
+                   firstRow.data.key = rowKey;
                }
              }else{
+               var firstRow = self.gridOptions.api.getRenderedNodes()[0];
+               if(!firstRow.data.key){
+                   firstRow.data.key = rowKey;
+               }
                self.gridOptions.api.refreshVirtualPageCache();
              }
           }
