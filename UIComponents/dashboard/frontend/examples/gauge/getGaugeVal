@@ -18,4 +18,4 @@ var publishResponse = function(channel, data, request) {
 
 publishResponse("responseChannel", value, request);
 
-return {status : "success", result : value};
+return value;
