@@ -1,0 +1,229 @@
+<html ng-app="myApp">
+<head>
+    
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  
+    <!-- All css (grid.css + odometer.car.css + chart.css + morris.css) -->
+    <link rel="stylesheet" href="/UIComponents/build/css/concat.min.css">
+  
+    <!-- Adding JQuery + AngularJS + Angular Websocket + Angular cookies-->
+    <script src="/UIComponents/build/external/external_resources_1.min.js"></script>
+  
+    <!-- All directives -->
+    <script src="/UIComponents/build/javascript/directives.min.js"></script>
+    <script src="/UIComponents/build/external/external_resources_2.min.js"></script>
+    
+    <!-- Ag-Grid -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36"></script>
+  
+    <!-- All compponents -->
+    <script src="/UIComponents/build/javascript/components.min.js"></script>
+  
+    <!-- Https and WS config -->
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+</head> 
+ 
+<script>
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart", "Speedometer", "Odometer", "Gauge", "List", "Grid"])
+    angular.module('myApp').config(wssConfig);
+    angular.module('myApp').config(httpsConfig);
+  
+    angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.callback = function(data){
+            console.log("data formatter");
+            return data;
+          }
+          
+          vm.testDonutFormatter = function (y, data) {
+            return '$' +(2*y) 
+          };
+      
+      	  vm.hoverCallback =function(index, options, content){
+   			var row = options.data[index]
+            month = 'Y: ' + row.y
+           	line1 = 'A: ' + row.a
+           	line2 = 'B: ' + row.b
+           	return [month, line1, line2].join('<br/>')
+           }
+          
+          vm.dateFormat = function(x) {
+          	 return new Date(x).toTimeString()
+          }
+          
+          vm.xlabelFormat = function(x) {
+            return x.toString(); 
+          }
+          
+          vm.yLabelFormat = function(y) {
+            return y.toString() + 'km';
+          }
+          
+      });
+</script>
+  
+<body>   
+  
+  <div class="col-xs-12 col-sm-6 mb10"> 
+	<div class="box-shadow bg-white">
+      <scriptr-speedometer
+          theme="rpm"
+          pivot-col="#ade552"
+          transport= "https"
+          msg-tag="speedometer"
+          api= "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal">
+  		</scriptr-speedometer>
+      </div>
+  </div>
+  
+   <div class="col-xs-12 col-sm-6 mb10"> 
+	<div class="box-shadow bg-white">
+      <div style="padding-top: 65px;">
+        <scriptr-odometer
+        transport='wss'
+        api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
+        theme='car'
+        size="4"                 
+        msg-tag='odometer'
+        animation='count'
+        duration='1000'> 
+      </scriptr-odometer>
+      </div>
+      </div>
+  </div>
+  
+   <div class="col-xs-12 col-sm-6 mb10"> 
+	<div class="box-shadow bg-white">
+           <div class="center-block">
+             <scriptr-gauge 
+                transport='wss' 
+                msg-tag="gauge" 
+                width="50"
+                height="300"
+                api='UIComponents/dashboard/frontend/examples/gauge/getGaugeVal'
+         	 </scriptr-gauge>
+      	</div>
+      </div>
+  </div>
+  
+  <div ng-controller="testCtrl as vm" >
+    <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+      <scriptr-chart
+          type='donut'
+          transport="wss"
+                     background-color="#eee"
+                     colors='["#cfc","#ddd", "#fcd"]'
+                     label-color="ff0000"
+                     donut-formatter="vm.testDonutFormatter"
+          labels='["line A"]'
+          msg-tag="donut"         
+      </scriptr-chart>  
+      </div>
+    </div>
+
+    <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+      <scriptr-chart
+          type="area"     
+          ykeys='["a", "b"]'
+          xkey='y'
+          labels='["Serie A", "Serie B"]'    
+          transport="https"
+          msg-tag="chart"
+          xlabel-angle="45"
+          colors='["#cfc"]'
+          point-size="2"   
+          line-width="20"
+          goals="[1.0, -1.0]"
+          api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+          hover-callback="vm.hoverCallback"
+          on-format-data="vm.callback">          
+      </scriptr-chart>  
+      </div>
+    </div>
+
+     <!-- Initial data loaded statically than wait for messages published over channel with tag chart -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+     <scriptr-chart
+          type='line'
+          transport="wss"
+          msg-tag="chartline"
+          ykeys='["a", "b"]'
+          xkey='y'
+          labels='["Serie A", "Serie B"]'   
+          date-format="vm.dateFormat"
+          line-width="20"
+          colors='["#FCC717", "#E90088"]'
+          data='[ { y: "2006", a: 100, b: 90 },
+                  { y: "2007", a: 75,  b: 65 },
+                  { y: "2008", a: 50,  b: 40 },
+                  { y: "2009", a: 75,  b: 65 },
+                  { y: "2010", a: 50,  b: 40 },
+                  { y: "2011", a: 75,  b: 65 },
+                  { y: "2012", a: 100, b: 90 }]'
+      </scriptr-chart>
+      </div>
+    </div>
+
+    <!-- On intial load use the wss call api method to load data from defined api, than wait for messages published over channel with tag chart -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+        <scriptr-chart
+          type='bar'
+          stacked='true'
+          xkey='y'
+          ykeys='["a", "b"]'
+          labels='["Serie A", "Serie B"]'   
+          transport="wss"
+          msg-tag="chart"
+          api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+      </scriptr-chart>
+      </div>
+    </div>
+  </div>  
+  
+  <scriptr-autocomplete
+          placeholder="Search countries"
+          pause="400"
+          search-fields="name"
+          title-field="name"
+          minlength="0"
+          text-searching="Searching..."
+          transport="https"
+          on-format-data="vm.callback"
+          api="UIComponents/dashboard/frontend/examples/list/getCountries"
+          input-class="form-control form-control-small">
+    </scriptr-autocomplete>
+  
+  <scriptr-grid columns-definition='[
+          {headerName: "Name", field: "name"},
+          {headerName: "Model", field: "model"},
+          {headerName: "Price", field: "price", type: "numeric"}]' 
+           enable-sorting='true'
+           row-data = '[
+              {name: "Toyota", model: "Celica", price: 35000},
+              {name: "Ford", model: "Mondeo", price: 32000},
+              {name: "Porsche", model: "Boxter", price: 72000}
+           ]'
+           enable-delete-row='true'
+           enable-add-row='true'
+           on-cell-value-changed-script='UIComponents/dashboard/frontend/examples/grid/addRow'
+           on-delete-row-script='UIComponents/dashboard/frontend/examples/grid/removeRow'
+           cell-editable='true'
+           enable-client-side-filter='true'
+           enable-server-side-filter='true' 
+           enable-server-side-sorting='true'
+           row-model-selection='multiple'
+           pagination-page-size='5'
+           transport='wss' 
+           service-api='UIComponents/dashboard/frontend/examples/grid/getCarsInfo'>
+  </scriptr-grid>
+
+</body>  
+   
+</html>
