@@ -5,29 +5,31 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   
     <!-- All css (grid.css + odometer.car.css + chart.css + morris.css) -->
-    <link rel="stylesheet" href="/UIComponents/build/css/concat.min.css">
+    <link rel="stylesheet" href="/UIComponents/build/css/components.min.css">
   
     <!-- Adding JQuery + AngularJS + Angular Websocket + Angular cookies-->
-    <script src="/UIComponents/build/external/external_resources_1.min.js"></script>
+    <script src="/UIComponents/build/external/external_resources.min.js"></script>
   
     <!-- All directives -->
     <script src="/UIComponents/build/javascript/directives.min.js"></script>
-    <script src="/UIComponents/build/external/external_resources_2.min.js"></script>
+    <script src="/UIComponents/build/external/external_directives.min.js"></script>
     
     <!-- Ag-Grid -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36"></script>
   
-    <!-- All compponents -->
-    <script src="/UIComponents/build/javascript/components.min.js"></script>
-  
     <!-- Https and WS config -->
     <script src="/UIComponents/config/scriptrTransport.js"></script>
+  
+    <!-- All compponents + Templates -->
+    <script src="/UIComponents/build/javascript/components.min.js"></script>
+  
 </head> 
  
 <script>
     var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart", "Speedometer", "Odometer", "Gauge", "List", "Grid"])
     angular.module('myApp').config(wssConfig);
     angular.module('myApp').config(httpsConfig);
+    angular.module('myApp').run(templates);
   
     angular.module('myApp').controller('testCtrl', function($scope) {
           var vm = this;
