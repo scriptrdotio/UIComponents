@@ -43,6 +43,8 @@ angular
         "rowDeselection" : "<?",
         
         "rowData" : "<?",
+        
+        "gridHeight" : "@",
 
         /** pagination properties **/
         "paginationPageSize" : "<?", // In virtual paging context means how big each page in our page cache will be, default is 100
@@ -150,6 +152,7 @@ angular
             },
 
           };
+         this.gridHeight = (this.gridHeight) ? this.gridHeight : "500";
          this.transport = (this.transport) ? this.transport : "wss";
          this.removeRowMsgTag = (this.removeRowMsgTag) ? this.removeRowMsgTag : "remove";
          this.addRowMsgTag = (this.addRowMsgTag) ? this.addRowMsgTag : "add";

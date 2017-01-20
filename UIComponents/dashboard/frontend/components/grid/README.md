@@ -70,6 +70,7 @@
   enable-server-side-sorting  | true | Turn on server side filter. | NO
   enable-client-side-filter     | true	 | turn on client side filter. | NO
   cell-editable | true | Turn on cell editing | NO
+  grid-height | 500 | Set grid height | NO
   enable-col-resize       | false    | Enable column resize. | NO
   row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination"	| NO
   row-selection       | "multiple"    | 	Type of row selection, set to either 'single' or 'multiple' to enable selection.	| NO
