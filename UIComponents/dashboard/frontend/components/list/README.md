@@ -61,7 +61,6 @@
 ### Description of attributes
 | Attribute | Description | Required | Binding | Example  |
 | :------------- |:-------------| :-----:| :-----:| :-----|
-| id | A unique ID for the field. [example](https://ghiden.github.io/angucomplete-alt/#example1) | Yes | @ | members |
 | placeholder | Placeholder text for the search field. [example](https://ghiden.github.io/angucomplete-alt/#example1) | No | @ | Search members |
 | maxlength | Maxlength attribute for the search field. [example](https://ghiden.github.io/angucomplete-alt/#example1) | No | attribute | 25 |
 | pause | The time to wait (in milliseconds) before searching when the user enters new characters. [example](https://ghiden.github.io/angucomplete-alt/#example1) | No | @ | 400 |
@@ -96,7 +95,6 @@
 | focus-in | A function or expression to be called when input field gets focused. [example](https://ghiden.github.io/angucomplete-alt/#example12) | No | & | focusIn() |
 | focus-out | A function or expression to be called when input field lose focus. [example](https://ghiden.github.io/angucomplete-alt/#example12) | No | & | focusOut() |
 | disable-input | A model to control disable/enable of input field. [example page](https://ghiden.github.io/angucomplete-alt/#example13) | No | = | disableInput |
-| template-url | Customize the markup of the autocomplete template. [example page](https://ghiden.github.io/angucomplete-alt/#example14) | No | attribute | "/my-custom-template.html" |
 | focus-first | Automatically select the first match from the result list. |  No | @ | true |
 | parse-input | A function or expression to parse input string before comparing into search process. |  No | & | parseInput() |
 | field-tabindex | Setting the tabindex attribute on the input field. |  No | @ | field-tabindex="25" |
