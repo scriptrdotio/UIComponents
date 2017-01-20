@@ -34,20 +34,21 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
   <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
   ```
-
-  Include Grid module
-   
-  ```html
-    <script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36"></script>
-  ```
-
+  
   Include wsProvider and httpProvider for calling backend API's
   
   ```html
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
   ```
-  
+
+  Include Grid module + Component
+   
+  ```html
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36"></script>
+    <script src="/UIComponents/dashboard/frontend/components/grid/grid.js"></script>
+  ```
+
   Include scriptrTransport for configuration
   
   ```html
