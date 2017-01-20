@@ -1,0 +1,29 @@
+<div class="filter-bar">
+  <form>
+    <div ng-hide= {{$ctrl.enableClientSideFilter}} class="form-group col-xs-12 col-sm-4">
+        <div class="input-group">
+          <div class="input-group-addon">Client filtering</div>
+           <input type="text" class="form-control" ng-change="$ctrl.onFilterChanged()" ng-model="$ctrl.quickFilterValue"  placeholder="Type text to filter..." />
+       </div>
+    </div>   
+    <div ng-hide= {{$ctrl.enableServerSideFilter}} class="form-group col-xs-12 col-sm-4">
+        <div class="input-group">
+          <div class="input-group-addon">Server filtering</div>
+			<input type="text" class="form-control" ng-model="$ctrl.gridOptions.quickFilterText" placeholder="Type text to filter..." />
+      </div>
+    </div>  
+    <div class="col-xs-12 col-sm-4 text-right">
+      <button ng-hide= {{$ctrl.enableDeleteRow}} ng-click="$ctrl.onRemoveRow()" class="btn btn-danger"><i class="fa fa-close" aria-hidden="true"></i> Delete selected row</button>
+      <button ng-hide= {{$ctrl.enableAddRow}} ng-click="$ctrl.onAddRow()" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Insert row</button>
+    </div>
+   </form>   
+</div>
+    
+
+<div class="clearfix"></div>
+<div class="col-xs-12">
+  <div ag-grid="$ctrl.gridOptions" class="ag-bootstrap"  style="height: 500px; clear: left; width: 100%"></div>
+</div>
+
+
+  
