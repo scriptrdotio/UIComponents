@@ -192,6 +192,10 @@ angular
           });
         }
         
+        this.myFunc = function(){
+           console.log("clicked!");
+        }
+        
          this.onEditRowWebSocketCall = function(data) {
           if(data && data.result){
              var fields = data.result;
@@ -224,7 +228,7 @@ angular
         // remove a specific row upon WebSocket call
         this.onRemoveRow = function(key) {
           var selectedNodes = self.gridOptions.api.getSelectedNodes();
-          if(self.gridOptions.rowModelType == "pagination"){
+          if(self.gridOptions.rowModelType == "pagination" || self.gridOptions.rowModelType == "normal"){
             self.gridOptions.api.removeItems(selectedNodes);
           }
           var selectedKeys = [];
