@@ -90,7 +90,7 @@
   smooth | undefined | Set to false to disable line smoothing. | NO | *  |  | 
   hide-hover | undefined | Set to false to always show a hover legend. Set to true or 'auto' to only show the hover legend when the mouse cursor is over the chart. Set to 'always' to never show a hover legend. | NO | *  |  * | 
   hover-callback | undefined | Provide a function on this option to generate custom hover legends. The function will be called with the index of the row under the hover legend, the options object passed to the constructor as arguments, a string containing the default generated hover legend content HTML, and an object containing the original data for the row as passed in the data option. hoverCallback: function (index, options, content, row) {return "sin(" + row.x + ") = " + row.y} | NO | *  |  * | 
-  parse-time | undefined | Set to false to skip time/date parsing for X values, instead treating them as an equally-spaced series. | NO | *  |  * | *
+  parse-time | undefined | Set to false to skip time/date parsing for X values, instead treating them as an equally-spaced series. | NO | *  |  * | 
   units | undefined | Width of the series lines, in pixels. | NO | *  |  * | 
   post-units | undefined |Set to a string value (eg: '%') to add a label suffix all y-labels. | NO | *  |  * | 
   pre-units | undefined | Set to a string value (eg: '$') to add a label prefix all y-labels. | NO | *  |  * | 
