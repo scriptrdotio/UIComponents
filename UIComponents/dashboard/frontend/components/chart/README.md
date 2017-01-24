@@ -115,6 +115,7 @@
   resize | undefined | Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default. | NO | *  |  * | *
   behave-like-line | undefined | Set to true to overlay the areas on top of each other instead of stacking them. | NO | *  |  | 
   date-format | undefined | A function that accepts millisecond timestamps and formats them for display as chart labels. default is function (x) { return new Date(x).toString() }| NO | *  |  | 
+  stacked | undefined | Set to true to draw bars stacked vertically | NO |   |  * | 
   api | undefined | Name of the api to get data | Required if getting data from backend | *  |  * | *
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO | * | * | *
   transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 | NO | *  |  * | *
