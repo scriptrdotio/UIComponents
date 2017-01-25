@@ -35,80 +35,85 @@
       myApp.config(httpsConfig);
       myApp.controller('testCtrl', function($scope) {
         var vm = this;
+
+        vm.myCellRenderer  = function(params){
+          return '<div><a target="_blank" href="https://support.zoho.com'+params.value+'">https://support.zoho.com'+params.value+'</a></div>'
+        }
+        
+        vm.clickMe = function(self){
+          self.myFunc = function(){
+           alert("clicked!");
+          }
+        }
+
+        vm.myButtonRenderer = function(params){
+          return '<button ng-click="$ctrl.myFunc()">click me!</button>'
+        }
+        
+        vm.colDef = [
+            {headerName: "Id", field: "id", type: "numeric", editable : false},
+            {headerName: "Subject", field: "subject", editable : false},
+            {headerName: "Status", field: "status", cellEditor: "select",
+            cellEditorParams: {
+              values: ["On hold", "Open", "Escalated", "Closed"]
+            }},
+            {headerName: "Creation Date", field: "creationDate", editable : false},
+            {headerName: "Click me", editable : false, cellRenderer: function (params) {  
+              return vm.myButtonRenderer(params);
+            }},
+            {headerName: "URI", field: "uri", editable : false, cellRenderer: function (params) {  
+              return vm.myCellRenderer(params);
+            }
+         }]
         
         vm.callback = function(data){
-        var ticketsData = [];
-        var rows = [];
-        try{
-          rows = JSON.parse(data).response.result.Cases.row;
-          for(var i = 0 ; i < rows.length; i++){
-            var row =   JSON.parse(data).response.result.Cases.row[i].fl;
-            var ticketData = {}
-            for(var k = 0; k < row.length;k++){
-              var content = row[k].content;
-              switch(row[k].val){
-                case "Subject":
-                  ticketData["subject"]  = content;
-                  break;
-                case "URI":
-                  ticketData["uri"]  = content;
-                  break;
-                case "Ticket Id":
-                  ticketData["id"] = content;
-                  break;
-                case "Status":
-                  ticketData["status"] = content;
-                  break;
-                case "Created Time":
-                  ticketData["creationDate"] = content;
-                  break;
-                case "Contact Name":
-                  ticketData["contactName"] = content;
-                  break;
-                case "CASEID":
-                  ticketData["caseId"] = content;
-                  break;
+          var ticketsData = [];
+          var rows = [];
+          try{
+            rows = JSON.parse(data).response.result.Cases.row;
+            for(var i = 0 ; i < rows.length; i++){
+              var row =   JSON.parse(data).response.result.Cases.row[i].fl;
+              var ticketData = {}
+              for(var k = 0; k < row.length;k++){
+                var content = row[k].content;
+                switch(row[k].val){
+                  case "Subject":
+                    ticketData["subject"]  = content;
+                    break;
+                  case "URI":
+                    ticketData["uri"]  = content;
+                    break;
+                  case "Ticket Id":
+                    ticketData["id"] = content;
+                    break;
+                  case "Status":
+                    ticketData["status"] = content;
+                    break;
+                  case "Created Time":
+                    ticketData["creationDate"] = content;
+                    break;
+                  case "Contact Name":
+                    ticketData["contactName"] = content;
+                    break;
+                  case "CASEID":
+                    ticketData["caseId"] = content;
+                    break;
+                }
               }
+              ticketsData.push(ticketData);
+             }
+             return {"documents" : ticketsData }
+            }catch(e){
+              console.log(e);
             }
-            ticketsData.push(ticketData);
-          }
-          return {"documents" : ticketsData }
-        }catch(e){
-          console.log(e);
-        }
-      };
-      vm.myCellRenderer  = function(params){
-        return '<div><a target="_blank" href="https://support.zoho.com'+params.value+'">https://support.zoho.com'+params.value+'</a></div>'
-      }
-      
-      vm.colDef = [
-          {headerName: "Id", field: "id", type: "numeric", editable : false},
-          {headerName: "Subject", field: "subject", editable : false},
-          {headerName: "Status", field: "status", cellEditor: "select",
-          cellEditorParams: {
-            values: ["On hold", "Open", "Escalated", "Closed"]
-          }},
-          {headerName: "Creation Date", field: "creationDate", editable : false},
-          {headerName: "URI", field: "uri", editable : false, cellRenderer: function (params) {  
-            return vm.myCellRenderer(params);
-        }
-	 }]
-      
-    
-    /** 
-    vm.columnDefs = [
-        {headerName: "Make", field: "make"},
-        {headerName: "Model", field: "model"},
-        {headerName: "Price", field: "price"}
-    ];
-    // for static data use rowData
-    vm.rowData = [
-        {make: "Toyota", model: "Celica", price: 35000},
-        {make: "Ford", model: "Mondeo", price: 32000},
-        {make: "Porsche", model: "Boxter", price: 72000}
-    ]; */
+           };
    });
-     
+  
+    myApp.controller('myCtrl as vm', function($scope) {
+         var vm = this;
+         vm.count = "100";
+
+    });
 </script>
 <body>
 <div ng-controller="testCtrl as vm" >
@@ -126,6 +131,7 @@
            service-api='telematics/zohoTicketing/api/listDeviceTickets'
            api-params='{"id" : "253831"}'
            on-cell-value-changed-script='telematics/zohoTicketing/api/updateTicketStatus'
+           on-grid-ready="vm.clickMe"
            on-format-data="vm.callback">
   </scriptr-grid>
 </body>
