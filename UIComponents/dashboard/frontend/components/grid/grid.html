@@ -19,7 +19,7 @@
    </form>   
 </div>
     
-
+<div class="col-xs-12" ng-show="$ctrl.showError"><div class="alert alert-danger">{{$ctrl.msg}}</div></div>
 <div class="clearfix"></div>
 <div class="col-xs-12">
   <div ag-grid="$ctrl.gridOptions" class="ag-bootstrap"  style="height: {{$ctrl.gridHeight}}px; clear: left; width: 100%"></div>
