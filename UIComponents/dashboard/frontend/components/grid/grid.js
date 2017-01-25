@@ -66,7 +66,9 @@ angular
         
         "removeRowMsgTag" : "@",
         
-        "addRowMsgTag" : "@"
+        "addRowMsgTag" : "@",
+        
+        "onGridReady" : "&"
       },
 
       templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
@@ -121,6 +123,7 @@ angular
 
         this.$onInit = function() {
           this.gridOptions = {
+            angularCompileRows: true,
             enableSorting: (typeof this.enableSorting != 'undefined')? this.enableSorting : true,
             enableServerSideSorting : (typeof this.enableServerSideSorting != 'undefined')? this.enableServerSideSorting : true,
             enableServerSideFilter : (typeof this.enableServerSideFilter != 'undefined') ? this.enableServerSideFilter : true,
@@ -146,6 +149,9 @@ angular
             },
             onGridReady : function(event) {
               console.log('the grid is now ready');
+              if(typeof self.onGridReady() == "function"){
+             	 self.onGridReady()(self);
+              }
               event.api.sizeColumnsToFit(); 
               // set "Contains" in the column drop down filter to "StartWith" as it is not supported in document query 
               event.api.filterManager.availableFilters.text.CONTAINS = "startsWith";
