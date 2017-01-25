@@ -70,10 +70,10 @@ angular
       },
 
       templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
-      controller : function($window, dataService) {
+      controller : function($window, $timeout, dataService) {
 
         var self = this;
-
+        
         this.dataSource = {
           getRows : function(params) {
             var APIParams = self.buildParams(params)
@@ -139,7 +139,10 @@ angular
               editable : (typeof this.cellEditable != 'undefined')? this.cellEditable : true,
             },
             onCellValueChanged : function(event) {
-               self._saveData(self.onCellValueChangedScript, event.data);
+               self._saveData(self.onCellValueChangedScript, event);
+               self.oldEditedValue = event.oldValue;
+               self.editedColumn = event.colDef.field;
+               self.editedChildIndex = event.node.childIndex || event.node.id;
             },
             onGridReady : function(event) {
               console.log('the grid is now ready');
@@ -170,8 +173,8 @@ angular
          
         }
 
-        this._saveData = function(onCellValueChangedScript, fields){
-          dataService.gridHelper(onCellValueChangedScript, fields);
+        this._saveData = function(onCellValueChangedScript, event){
+          dataService.gridHelper(onCellValueChangedScript, event.data);
         }
 
         this.onAddRow = function(){
@@ -192,15 +195,11 @@ angular
           });
         }
         
-        this.myFunc = function(){
-           console.log("clicked!");
-        }
-        
          this.onEditRowWebSocketCall = function(data) {
           if(data && data.result){
              var fields = data.result;
             
-             var rowKey = fields.key;
+             var rowKey = fields.key || fields["apsdb.documentKey"];
              if(self.gridOptions.rowModelType == "pagination"){ 
                 self.gridOptions.api.forEachNode(function(node) {
                   if (node.data.key == rowKey) {
@@ -222,13 +221,37 @@ angular
                }
                self.gridOptions.api.refreshVirtualPageCache();
              }
+          }else{
+             if(self.oldEditedValue){
+               self.gridOptions.api.forEachNode(function(node) {
+                  if (node.childIndex == self.editedChildIndex || node.id == self.editedChildIndex) {
+                      node.setSelected(true, true);
+                  }
+                });
+               var selectedNode = self.gridOptions.api.getSelectedNodes()[0];
+               selectedNode.data[self.editedColumn] = self.oldEditedValue;
+               self.gridOptions.api.refreshView();
+             }else{
+               self.gridOptions.api.forEachNode(function(node) {
+                  if (node.childIndex == 0 || node.id == 0) {
+                      node.setSelected(true, true);
+                  }
+                });
+               var selectedNode = self.gridOptions.api.getSelectedNodes();
+               self.gridOptions.api.removeItems(selectedNode);
+             }
+             self.msg="an error has occurred";
+             self.showError = true;
+             $timeout(function(){
+                self.showError = false;
+             }, 5000);
           }
         }
 
         // remove a specific row upon WebSocket call
         this.onRemoveRow = function(key) {
           var selectedNodes = self.gridOptions.api.getSelectedNodes();
-          if(self.gridOptions.rowModelType == "pagination" || self.gridOptions.rowModelType == "normal"){
+          if(self.gridOptions.rowModelType == "normal"){
             self.gridOptions.api.removeItems(selectedNodes);
           }
           var selectedKeys = [];
@@ -257,6 +280,12 @@ angular
              }else{
                self.gridOptions.api.refreshVirtualPageCache();
              }
+          }else{
+             self.msg="an error has occurred";
+             self.showError = true;
+             $timeout(function(){
+                self.showError = false;
+             }, 5000);
           }
         }
         
