@@ -36,6 +36,13 @@
     <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
   
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36"></script>
+    <script src="/UIComponents/dashboard/frontend/components/grid/grid.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/examples/grid/grid.css">
+  
+    <script src="/UIComponents/dashboard/frontend/components/list/angucomplete.alt.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/list/autocomplete.js"></script>
+  
   
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/examples/chart/chartDemo.css">
   
@@ -43,7 +50,7 @@
 </head> 
  
 <script>
-    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart", "Speedometer", "Odometer", "Gauge"])
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart", "Speedometer", "Odometer", "Gauge", "List", "Grid"])
     angular.module('myApp').config(wssConfig);
     angular.module('myApp').config(httpsConfig);
 </script>
@@ -90,68 +97,121 @@
       	</div>
       </div>
   </div>
-  <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
-  <div class="col-xs-12 col-sm-6 mb10"> 
-	<div class="box-shadow bg-white">
-    <scriptr-chart
-        type='donut'
-        transport="wss"
-        labels='["line A"]'
-        msg-tag="donut"         
-    </scriptr-chart>  
-    </div>
-  </div>
-  
-  <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
-  <div class="col-xs-12 col-sm-6 mb10"> 
-	<div class="box-shadow bg-white">
-    <scriptr-chart
-        type="area"          
-        transport="wss"
-        msg-tag="chart"
-        api='UIComponents/dashboard/frontend/examples/chart/getChartData'
-    </scriptr-chart>  
-    </div>
-  </div>
-  
-   <!-- Initial data loaded statically than wait for messages published over channel with tag chart -->
-  <div class="col-xs-12 col-sm-6 mb10"> 
-	<div class="box-shadow bg-white">
-   <scriptr-chart
-        type='line'
-        transport="wss"
-        msg-tag="chart"
-        xkey='y'
-		ykeys='["a", "b"]'
-		labels='["Serie A", "Serie B"]'
-		colors='["#FCC717", "#E90088"]'
-        data='[{ y: "2006", a: 100, b: 90 },
-    { y: "2007", a: 75,  b: 65 },
-    { y: "2008", a: 50,  b: 40 },
-    { y: "2009", a: 75,  b: 65 },
-    { y: "2010", a: 50,  b: 40 },
-    { y: "2011", a: 75,  b: 65 },
-    { y: "2012", a: 100, b: 90 }]'
-    </scriptr-chart>
-    </div>
-  </div>
-  
-  <!-- On intial load use the wss call api method to load data from defined api, than wait for messages published over channel with tag chart -->
-  <div class="col-xs-12 col-sm-6 mb10"> 
-	<div class="box-shadow bg-white">
+    <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
       <scriptr-chart
-        type='bar'
-        stacked='true'
-        xkey='y'
-		ykeys='["a", "b"]'
-        transport="wss"
-        msg-tag="chart"
-        api='UIComponents/dashboard/frontend/examples/chart/getChartData'
-    </scriptr-chart>
+          type='donut'
+          transport="wss"
+                     background-color="#eee"
+                     colors='["#cfc","#ddd", "#fcd"]'
+                     label-color="ff0000"
+                     donut-formatter="vm.testDonutFormatter"
+          labels='["line A"]'
+          msg-tag="donut"         
+      </scriptr-chart>  
+      </div>
     </div>
-  </div>
+
+    <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+      <scriptr-chart
+          type="area"     
+          ykeys='["a", "b"]'
+          xkey='y'
+          labels='["Serie A", "Serie B"]'    
+          transport="https"
+          msg-tag="chart"
+          xlabel-angle="45"
+          colors='["#cfc"]'
+          point-size="2"   
+          line-width="20"
+          goals="[1.0, -1.0]"
+          api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+          hover-callback="vm.hoverCallback"
+          on-format-data="vm.callback">          
+      </scriptr-chart>  
+      </div>
+    </div>
+
+     <!-- Initial data loaded statically than wait for messages published over channel with tag chart -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+     <scriptr-chart
+          type='line'
+          transport="wss"
+          msg-tag="chartline"
+          ykeys='["a", "b"]'
+          xkey='y'
+          labels='["Serie A", "Serie B"]'   
+          date-format="vm.dateFormat"
+          line-width="20"
+          colors='["#FCC717", "#E90088"]'
+          data='[ { y: "2006", a: 100, b: 90 },
+                  { y: "2007", a: 75,  b: 65 },
+                  { y: "2008", a: 50,  b: 40 },
+                  { y: "2009", a: 75,  b: 65 },
+                  { y: "2010", a: 50,  b: 40 },
+                  { y: "2011", a: 75,  b: 65 },
+                  { y: "2012", a: 100, b: 90 }]'
+      </scriptr-chart>
+      </div>
+    </div>
+
+    <!-- On intial load use the wss call api method to load data from defined api, than wait for messages published over channel with tag chart -->
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+        <scriptr-chart
+          type='bar'
+          stacked='true'
+          xkey='y'
+          ykeys='["a", "b"]'
+          labels='["Serie A", "Serie B"]'   
+          transport="wss"
+          msg-tag="chart"
+          api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+      </scriptr-chart>
+      </div>
+    </div>
+  </div>  
   
+  <scriptr-autocomplete
+          placeholder="Search countries"
+          pause="400"
+          search-fields="name"
+          title-field="name"
+          minlength="0"
+          text-searching="Searching..."
+          transport="https"
+          on-format-data="vm.callback"
+          api="UIComponents/dashboard/frontend/examples/list/getCountries"
+          input-class="form-control form-control-small">
+    </scriptr-autocomplete>
   
+  <scriptr-grid columns-definition='[
+          {headerName: "Name", field: "name"},
+          {headerName: "Model", field: "model"},
+          {headerName: "Price", field: "price", type: "numeric"}]' 
+           enable-sorting='true'
+           row-data = '[
+              {name: "Toyota", model: "Celica", price: 35000},
+              {name: "Ford", model: "Mondeo", price: 32000},
+              {name: "Porsche", model: "Boxter", price: 72000}
+           ]'
+           enable-delete-row='true'
+           enable-add-row='true'
+           on-cell-value-changed-script='UIComponents/dashboard/frontend/examples/grid/addRow'
+           on-delete-row-script='UIComponents/dashboard/frontend/examples/grid/removeRow'
+           cell-editable='true'
+           enable-client-side-filter='true'
+           enable-server-side-filter='true' 
+           enable-server-side-sorting='true'
+           row-model-selection='multiple'
+           pagination-page-size='5'
+           transport='wss' 
+           service-api='UIComponents/dashboard/frontend/examples/grid/getCarsInfo'>
+  </scriptr-grid>
   
 
 </body>  
