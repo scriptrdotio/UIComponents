@@ -43,6 +43,8 @@ angular
                   "label" : "@",
 
                   "labelFontColor" : "@",
+                 
+                  "customSectors" : "<?",
 
                   "startAnimationType" : "@",
 
