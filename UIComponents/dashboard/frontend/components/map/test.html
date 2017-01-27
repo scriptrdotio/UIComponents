@@ -30,7 +30,7 @@
     
     <!-- Used by configuration controller -->
     <script src="/UIComponents/dashboard/frontend/components/map/mapConstants.js"></script>
-    <script src="/markerClusterer.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/map/markerClusterer.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/list/autocomplete.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
   </head>
@@ -67,7 +67,7 @@
   </script>
   <body>
      <div ng-controller="testCtrl as vm" ng-init="vm.init()">
-        <scriptr-map sources-info="vm.sources" clustered-view="true" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" api="telematics/api/getLatestTrips" api-params='{"timeframe" : "this_1_years", "limit" : "20"}' msg-tag="everyone-main-live" geofence-manager="false">
+        <scriptr-map sources-info="vm.sources" clustered-view="true" cluster-zoom="8" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" api="telematics/api/getLatestTrips" api-params='{"timeframe" : "this_1_years", "limit" : "20"}' msg-tag="everyone-main-live" geofence-manager="false">
           <div>
             <info-window id="infoWindowTemplate_simulator" template="info_simulator.html" max-width="600">
             </info-window>
