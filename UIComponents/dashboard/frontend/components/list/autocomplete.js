@@ -68,6 +68,8 @@ angular
       
         "api" : "@",
       
+        "msgTag" : "@",
+      
         "onFormatData" : "&"
       
     },
@@ -83,6 +85,7 @@ angular
            this.textSearching = (typeof this.textSearching != 'undefined') ? this.textSearching : false;
            
            this.transport = (this.transport) ? this.transport : "wss";
+           this.msgTag = (this.msgTag) ? this.msgTag : null;
            
            initDataService(this.transport);
          }
