@@ -1,42 +1,5 @@
 angular.module('Chart', [ 'angular.morris' ]);
 
-/**
- * Donut chart with resize set to true. after some actions, 
- * it is cleared from the dom. after this, resizing the browser will trigger a series of errors in the console.
- * Error: Invalid value for attribute transform="matrix(NaN,NaN,NaN,NaN,0,0)"
- * Temporary solution, override the resize handler
- * For more info check: https://github.com/morrisjs/morris.js/issues/420
- *
- */
-angular.element(document).ready(function () {
-    Morris.Donut.prototype.resizeHandler = function () {
-        this.timeoutId = null;
-        if (this.el && this.el.width() > 0 && this.el.height() > 0) {
-            this.raphael.setSize(this.el.width(), this.el.height());
-            return this.redraw();
-        }
-        else return null;
-    };
-    Morris.Donut.prototype.setData = function (data) {
-        var row;
-        this.data = data;
-        this.values = (function () {
-            var _i, _len, _ref, _results;
-            _ref = this.data;
-            _results = [];
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                row = _ref[_i];
-                _results.push(parseFloat(row.value));
-            }
-            return _results;
-        }).call(this);
-        if (this.el && this.el.width() > 0 && this.el.height() > 0) {
-            return this.redraw();
-        }
-        else return null;
-    };
-});
-
 angular
   .module('Chart')
   .component(
@@ -116,7 +79,7 @@ angular
         "ylabelFormat": "&?"
        
       },
-      templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
+      templateUrl: '/UIComponents/dashboard/frontend/components/chart/chart.html',
       controller: function(httpClient, wsClient) {
         
          var self = this;
@@ -167,9 +130,6 @@ angular
                   .get(self.api, self.apiParams)
                   .then(
                   function(data, response) {
-                    if(typeof self.onFormatData() == "function"){
-                       data = self.onFormatData()(data);
-                    }
                     self.consumeData(data)
                   },
                   function(err) {
@@ -183,6 +143,9 @@ angular
           }
 
           this.consumeData = function(data, response) {
+            if(typeof self.onFormatData() == "function"){
+              data = self.onFormatData()(data);
+            }
             this.data = data;
           }
         }
