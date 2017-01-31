@@ -1,0 +1,13 @@
+<uib-progressbar ng-if="!$ctrl.stacked"
+                 value="$ctrl.value"
+                 title="{{$ctrl.title}}"
+                 max="$ctrl.max"
+                 animate="$ctrl.animate"
+                 type="{{$ctrl.type}}"
+                 class="{{$ctrl.class}}"
+ >
+</uib-progressbar>
+
+<uib-progress ng-if="$ctrl.stacked" class="{{$ctrl.class}}">
+  <uib-bar ng-repeat="bar in $ctrl.stacked track by $index" value="bar.value" title="{{bar.title}}" type="{{bar.type}}">{{bar.value}}%</uib-bar>
+</uib-progress>
