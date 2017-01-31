@@ -1,0 +1,63 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    
+    <script src="/UIComponents/dashboard/frontend/components/progressBar/progressBar.js"></script>
+  
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+      
+    <script>
+      angular.module('myApp', ["WsClient", "HttpClient","ProgressBar"]);
+	  angular.module('myApp').config(wssConfig);
+      angular.module('myApp').config(httpsConfig);
+
+      angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.callback = function(data){
+            console.log("data formatter");
+            return data;
+          }
+      });
+  
+    </script>
+  </head>
+  <body>
+  	<div>
+       <scriptr-progressbar
+                 type="danger"
+                 max="100"
+                 animate="true"
+                 title="bar 90"
+                 value="90"
+                 api="UIComponents/dashboard/frontend/examples/progressBar/getProgressBarVal"
+                 class="progress-striped active">
+      </scriptr-progressbar>
+
+      <scriptr-progressbar
+           stacked='[
+                    {
+                     value : 50,
+                     type : "success",
+                     title : "bar1"
+                    },
+                    {
+                     value : 70,
+                     type : "warning",
+                     title : "bar2"
+                    }
+                    ]'>
+      </scriptr-progressbar>
+
+    </div>
+  </body>
+</html>
