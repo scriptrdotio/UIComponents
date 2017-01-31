@@ -1,0 +1,110 @@
+<html ng-app="myApp">
+<head>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+  
+    <!-- Adding Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+    
+    <!-- Charts used in historical angular.morris -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+  
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <!--script src="//cdnjs.cloudflare.com/ajax/libs/angular-morris/1.3.0/angular-morris.min.js"></script-->
+    <script src="/UIComponents/dashboard/frontend/components/chart/angular.morris.js"></script>
+  
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
+  
+  	<script src="//d3js.org/d3.v4.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
+  
+  
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/odometer/odometer.car.css">
+    <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/odometer/angular.odometer.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.js"></script>
+  
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+
+    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css">
+    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/dashboard.css">
+    <script src="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js"></script>
+</head> 
+  
+<script>
+   
+  
+(function() {
+      
+    var wssConfig = ["wsClientProvider",function (wsClientProvider) {
+        wsClientProvider.setToken("{{{transport.token}}}");
+        wsClientProvider.setPublishChannel("{{{transport.publishChannel}}}");
+        wsClientProvider.setSubscribeChannel("{{{transport.subscribeChannel}}}");
+    }];
+
+    var httpsConfig = ["httpClientProvider",function (httpClientProvider) {
+      httpClientProvider.setBaseUrl("{{{transport.baseUrl}}}");
+      httpClientProvider.setToken("{{{transport.token}}}");
+    }]
+
+     var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart", 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer'])
+     angular.module('myApp').config(wssConfig);
+     angular.module('myApp').config(httpsConfig);
+     
+     myApp.config(function($interpolateProvider) {
+        $interpolateProvider.startSymbol('{[{');
+        $interpolateProvider.endSymbol('}]}');
+     });
+     myApp.controller('RootCtrl', function($scope) {
+       var vm = this;
+       vm.gridsterOptions = {
+          columns: 6,
+          floating: true,
+          resizable: {
+            enabled: false
+          },
+          draggable: {
+             enabled: false
+          }
+       };
+     });
+        	
+})();
+  
+</script>
+
+  <body ng-app="app">
+      <div ng-controller="RootCtrl as vm"> 
+		<div gridster="vm.gridsterOptions">
+          <ul>
+             {{#each items}}
+                <li class="myItem" gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'>
+                    <div class="box">
+                        <div class="box-content">
+                         
+                           <{{type}}
+                           	      {{#each this.options}} {{@key}}='{{this}}' {{/each}}      
+                           ></{{type}}>
+                        </div>
+                    </div>
+                </li>
+             {{/each}}
+          </ul>
+        </div>
+      </div>
+  </body>  
+</html>

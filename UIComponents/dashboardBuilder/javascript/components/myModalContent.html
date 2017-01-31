@@ -1,0 +1,12 @@
+<div class="modal-header">
+   <h3 class="modal-title" id="modal-title">{{$ctrl.widget.label}}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+ 	 <form name="myForm"  ng-submit="$ctrl.onSubmit(myForm)">
+       <div sf-options="$ctrl.frmGlobalOptions" sf-schema="$ctrl.schema" sf-form="$ctrl.form" sf-model="$ctrl.model" ></div>
+       <button type="submit" class="btn btn-info" type="submit">Ok</button>
+       <button type="reset" class="btn btn-danger" ng-click="$ctrl.onCancel()">Reset</button>
+     </form>
+</div>
+<div class="modal-footer">
+</div>

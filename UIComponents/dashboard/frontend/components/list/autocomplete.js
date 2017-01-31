@@ -68,8 +68,6 @@ angular
       
         "api" : "@",
       
-        "msgTag" : "@",
-      
         "onFormatData" : "&"
       
     },
@@ -85,7 +83,6 @@ angular
            this.textSearching = (typeof this.textSearching != 'undefined') ? this.textSearching : false;
            
            this.transport = (this.transport) ? this.transport : "wss";
-           this.msgTag = (this.msgTag) ? this.msgTag : null;
            
            initDataService(this.transport);
          }
@@ -111,6 +108,9 @@ angular
                       .get(self.api, self.apiParams)
                       .then(
                       function(data, response) {
+                        if(typeof self.onFormatData() == "function"){
+                           data = self.onFormatData()(data);
+                        }
                         self.consumeData(data)
                       },
                       function(err) {
@@ -124,9 +124,6 @@ angular
          }
          
          this.consumeData = function(data, response) {
-           if(typeof self.onFormatData() == "function"){
-             data = self.onFormatData()(data);
-           }
            this.localData = data;
          }
     }

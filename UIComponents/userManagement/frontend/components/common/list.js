@@ -13,40 +13,32 @@ angular.module('Generic', [])
   },
   templateUrl: "/UIComponents/userManagement/frontend/components/common/list.html",
   controller: function(){
-    
     this.$onInit = function() {
       this.hasAdd = false;
       if(this.onAdd) {
         this.hasAdd = true
       }
-      
       this.hasUpdate = false;
       if(this.onUpdate) {
         this.hasUpdate = true
       }
-
       this.hasDelete = false;
-       if(this.onDelete) {
+      if(this.onDelete) {
         this.hasDelete = true
       }
     },
-      
-   	this.deleteItem = function(item) {
+      this.deleteItem = function(item) {
       this.onDelete({"item": item});
     },
-      
-    this.updateItem = function(item) {
+      this.updateItem = function(item) {
       this.onUpdate({"item": item});
     }
-    
     this.addItem = function() {
       this.onAdd();
     }
-
     this.loadItems = function(){
       this.onLoad()
     }
-    
     this.resetSearchItem = function() {
       this.searchItem = ""
     }
@@ -64,10 +56,8 @@ angular.module('Generic', [])
     this.deleteItem = function(item) {
       this.onDelete({user: item});
     },
-      
-    this.updateItem = function(item) {
+      this.updateItem = function(item) {
       this.onUpdate(item);
     }
   }
-  
 })

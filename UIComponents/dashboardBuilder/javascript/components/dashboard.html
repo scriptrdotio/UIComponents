@@ -1,0 +1,39 @@
+<div class="grey-bg pdt10 pdb10">
+<div class="slick-container">
+    <slick 
+           settings="$ctrl.slickConfig"
+           infinite=true 
+           slides-to-show=5
+           slides-to-scroll=1
+           ng-if="$ctrl.dataLoaded" 
+           init-onload="false"
+           data="$ctrl.dataLoaded"
+           >
+      <div class="slick-item" ng-repeat="item in $ctrl.widgetsConfig">
+         <span>
+             <a href="#"  ng-click="$ctrl.addWidget(item)">
+               <img ng-if="item.imgSrc" ng-src="{{ item.imgSrc }}" alt="{{ item.label}}" />
+               <i ng-if="item.iconSrc" class="{{ item.iconSrc }}" aria-hidden="true" alt="{{ item.label}}" /></i>
+               <span class="slick-label">{{ item.label }}</span>
+             </a>
+          </span>
+      </div>
+    </slick>
+ </div>
+</div>
+<div class="page-header col-xs-12">
+	<a class="pull-right btn btn-warning" ng-click="$ctrl.clear()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+    <a class="pull-right btn btn-warning" ng-click="$ctrl.setTransportSettings()"><i class="fa fa-cog" aria-hidden="true"></i></a>
+   <a class="pull-right btn btn-warning" ng-click="$ctrl.saveDashboard()"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
+</div>
+<div class="clearfix"></div>
+<div gridster="$ctrl.gridsterOptions">
+	<ul>
+		<li gridster-item="widget" ng-repeat="widget in $ctrl.dashboard.widgets">
+          <box widget="widget"></box>
+		</li>
+	</ul>
+</div>
+
+
+
