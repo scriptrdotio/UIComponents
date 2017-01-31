@@ -167,9 +167,6 @@ angular
                   .get(self.api, self.apiParams)
                   .then(
                   function(data, response) {
-                    if(typeof self.onFormatData() == "function"){
-                       data = self.onFormatData()(data);
-                    }
                     self.consumeData(data)
                   },
                   function(err) {
@@ -183,7 +180,10 @@ angular
           }
 
           this.consumeData = function(data, response) {
-            this.classic.needleVal = Math.round(data);
+             if(typeof self.onFormatData() == "function"){
+               data = self.onFormatData()(data);
+             }
+             this.classic.needleVal = Math.round(data);
           }
         }
 	});
