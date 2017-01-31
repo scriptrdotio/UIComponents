@@ -1,0 +1,174 @@
+import("devicemodels.Location")
+
+/*
+ *	A Device represents the model of a remote device 
+ *  Extend the Device class to create different device type models such as: Vehicle, Thermostat, Car etc.
+ *	A Device has settable properties and can be enabled, disabled, placed online or offline, saved and deleted 
+ *  If upon instantiation, the device has been passed a DeviceRepositoryAdaptor, 
+ *	the save/delete methods will use the DeviceRepositoryAdaptor's save and delete methods to persist the device model
+ */
+var Device = Class({
+  constructor: function(options) {
+    this.metadata = {}
+    if (options) {
+      if (options.adaptor) this.adaptor = options.adaptor
+
+      if (options.model) {
+        this.metadata = options.model
+      }
+    }
+    // Mandatory attributes
+    this.metadata.enabled = true,
+    this.metadata.cls = "devices.Device"
+    
+    /*
+     * { "eventType": [listenerFunctions, ...]}
+     */
+    this.eventListeners = {};
+  },
+
+  enable: function() {
+    this.metadata.enabled = true
+    this.save()
+  },
+  
+  disable: function() {
+    this.metadata.enabled = false
+    this.save()
+  },
+  
+  online: function() {
+    this.metadata.online = true
+    this.save()
+  },
+  
+  offline: function() {
+    this.metadata.online = false
+    this.save()
+  },
+
+  set: function(key, value) { // key could be a map, if key is a map, value is not used
+    if (typeof key == "string") {
+      if (key!="enabled" && key!="online") {
+        this.metadata[key] = value;       
+      } else {
+        logger.warn("Device - device metadata attribute ["+key+"] is reserved.");
+      }
+      this._invokeListeners(key, value);
+    } else if (typeof key == "object") {
+      // key is not a key, but a map
+      for (var k in key) {
+        if (k!="enabled" && k!="online") {
+          this.metadata[k]=key[k];         
+        }else {
+          logger.warn("Device - device metadata attribute ["+key+"] is reserved.")
+        }
+        
+        this._invokeListeners(k, key[k]);
+      }
+    }
+  },
+    
+  get: function(key) {
+    return (this.metadata[key])
+  },
+  
+  serialize: function() {
+    return this.metadata
+  },
+
+  save: function() {
+    if (this.adaptor) return this.adaptor.save(this); 
+    else logger.warn("Device.save - ["+this.metadata.id+"] hasn't been instantiated with a DeviceRepositoryAdaptor")
+  },
+  
+  delete: function() {
+    if (this.adaptor) return this.adaptor.delete(this)
+    else logger.warn("Device.delete - ["+this.metadata.id+"] hasn't been instantiated with a DeviceRepositoryAdaptor")
+  },
+  
+  /**
+   * @params {String} eventType: the name of a property to monitor 
+   * @params {Function} listener: a reference to a function that will be invoked whenever the value of the property is updated
+   * @params {String} expression: (optional) if defined, the listener is invoked only if the expression is true. Expression is relative to the new
+   * value of the field. the keyword "value" should be used as a placeholder in the expression. e.g. "value > 30 && value < 50"
+   */
+  addEventListener: function(eventType, listener, expression) {
+  	if (!eventType || !listener) {
+  		logger.error("Device - cannot invoke addEventListener with null/empty eventType or listener parameters");
+    } 
+  	if (!this.eventListeners[eventType]) {
+      this.eventListeners[eventType] = [];
+    }
+    
+    var obj = {
+      listener: listener,
+      expression: expression
+    };
+    
+    this.eventListeners[eventType].push(obj);
+  },
+  
+  /**
+   * @params {String} eventType: the name of a property to monitor 
+   * @params {Function} listener: a reference to a function that will be invoked whenever the value of the property is updated
+   */
+  removeEventListener: function(eventType, listener) {
+    if (eventType && listener) {
+      if (this.eventListeners[eventType]) {    
+        for (var i = 0; i < this.eventListeners[eventType].length; i++){ 
+          if (this.eventListeners[eventType][i].listener == listener){ 
+            this.eventListeners[eventType].splice(i,1);
+            break;
+          }
+        }
+      }
+    }
+  },
+  
+  /**
+   * @param {String} event name (property name), optional
+   * @return {Object} if event name if defined, all added listener objects for this event, otherwise, all added listener objects
+   */
+  listEventListeners: function(event) {
+    if (event) {
+      return this.eventListeners[event];
+    }else{
+      return this.eventListeners;
+    }
+  },
+  
+  _invokeListeners: function(event, value) {
+  
+    // invoke added listeners if any
+    var listeners = this.eventListeners[event];
+    for (var i = 0; listeners && i < listeners.length; i++) {
+      this._invokeListener(listeners[i].listener, value, listeners[i].expression);
+    }  
+
+    // invoke "native" listener (onEvent) if any
+    var k = event;
+    var nativeListenerName = "on" + k.charAt(0).toUpperCase() + k.substring(1); 
+    if (this[nativeListenerName]) {
+      this[nativeListenerName](value);
+    }    
+  },
+  
+  _invokeListener: function(listener, value, expr) {
+    
+    if (expr) {
+      var expression = expr.replace(/value/g, value);
+      var ruleVerified = false;
+      try {
+        ruleVerified = eval(expression);
+      }catch(exception){
+        logger.error("Device - _invokeListenr could not evaluate expression. Listener won't be called." + expr +  " Reported error " + JSON.stringify(exception));
+      }
+      if (ruleVerified){
+      	listener(value);
+      } 
+    }else{
+      listener(value);
+    }    
+  },
+})
