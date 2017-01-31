@@ -404,6 +404,9 @@ angular
                 wsClient.onReady.then(function() {
                   wsClient
                     .call(api, params, "grid").then(function(data, response) {
+                     if(formatterFnc /**Check if function also*/){
+                        data = formatterFnc(data);
+                      }
                       if(data && data.documents){
                           var data = {"documents": data.documents, "count": data.count}
                           d.resolve(data, response)
