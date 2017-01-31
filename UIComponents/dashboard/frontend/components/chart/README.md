@@ -73,9 +73,9 @@
 | ------------- |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
   data     | undefined	 |series data. | Required in case of static data | *  |  * | *
   type  | undefined | There are 4 types of charts (line, bar, area and donut). | YES | *  |  * | *
-  xkey     | 'y'	 | The name of the data record attribute that contains x-values. | Line, Areea & Bar | *  |  * | 
-  ykeys       | ["a"]    | // A list of names of data record attributes that contain y-values. | Line, Areea & Bar | *  |  * | 
-  labels       | ["Series A"]   | 	// Labels for the ykeys -- will be displayed when you hover over the chart. | NO | *  |  * | 
+  xkey     | 'y'	 | The name of the data record attribute that contains x-values. | Line, Area & Bar | *  |  * | 
+  ykeys       | ["a"]    | // A list of names of data record attributes that contain y-values. | Line, Area & Bar | *  |  * | 
+  labels       | ["Series A"]   | 	// Labels for the ykeys -- will be displayed when you hover over the chart. | Area | *  |  * | 
   colors       | ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"]    | 	Specify the color of each graph Successively	| NO | *  |  * | *
   donut-label-color       | '#666'    | 	Donut label color. | NO	|   |   | *
   donut-background-color       | '#ffffff'    | 	Donut Label Color. | NO	|   |   | *
