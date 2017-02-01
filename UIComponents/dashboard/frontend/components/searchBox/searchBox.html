@@ -1,0 +1,8 @@
+<form ng-submit="onSubmit()">
+  <div class="input-group">
+     <input type="text" class="form-control" ng-keyup="$event.keyCode == 13 ? $ctrl.onFilterChanged() : null" ng-model="$ctrl.searchValue"  placeholder="Type text to search..." />
+  </div>
+</form>
+<body>   
+   <abn-tree tree-data="$ctrl.my_data"></abn-tree>
+</body>  
