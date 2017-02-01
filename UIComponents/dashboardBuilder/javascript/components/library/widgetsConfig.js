@@ -1,6 +1,25 @@
 angular
   .module('DashboardBuilder')
   .constant("config", {
+        script: {
+      "form": [{
+      "key": "scriptName",
+      "notitle": true,
+      "placeholder": "Script Name*"
+    }],
+      "schema": {
+       	"type": "object",
+		"title": "Schema",
+		"properties": {
+			"scriptName": {
+				"type": "string",
+                "fieldHtmlClass": "script-name-input"
+			}
+        },
+        "required": [
+			"scriptName"
+		]
+    }},
     transport: {
       "label": "Transport configuration",
       "defaults": {

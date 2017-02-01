@@ -13,13 +13,27 @@ angular
   'dashboard',
   {
     bindings : {
+      widgets: "<"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $timeout, config, $uibModal, scriptrService) {
+    controller: function($scope, $timeout, config, $uibModal, scriptrService, $route, $routeParams) {
       
       this.$onInit = function() {
         
         this.transport = angular.copy(config.transport);
+        
+        this.frmGlobalOptions = {
+          "destroyStrategy" : "remove"
+        }
+        
+        this.schema =  angular.copy(config.script.schema)
+        this.form =   angular.copy(config.script.form)
+        this.model = {}
+        
+        var scriptName = $routeParams.scriptName
+        if(scriptName) {
+          this.model = {"scriptName": scriptName};
+        }
         
         this.slickConfig = {
             enabled: true,
@@ -68,6 +82,10 @@ angular
         };
 
         this.dashboard = { widgets: [] };
+        if(this.widgets) {
+          this.dashboard["widgets"] = this.widgets
+        }
+        
         
         this.widgetsConfig = config.widgets; 
         this.dataLoaded = true;
@@ -99,6 +117,7 @@ angular
               resolve: {
                 widget: function () {
                   return {
+                    "label":  self.transport.label,
                     "options": self.transport.defaults,
                     "schema": self.transport.schema,
                     "form": self.transport.form};
@@ -113,22 +132,34 @@ angular
             });
       };
       
-      this.saveDashboard = function() {
-        var data = {};
-        data["items"] = angular.copy(this.dashboard.widgets);
-        data["transport"] = angular.copy(this.transport.defaults)
-        var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
-        var unescapedHtml = Handlebars.compile(template)(data);
-        var scriptData = {}
-        scriptData["content"] = unescapedHtml;
-        scriptrService.saveScript(scriptData).then(
-		                     function(data, response) {
-			                     console.log("resolve", data)
-		                     }, function(err) {
-			                     console.log("reject", err);
-		                     });
-        //Save data to scriptr
-        console.log();        
+      this.saveDashboard = function(form) {
+		console.log("Form submit", form)
+        
+        $scope.$broadcast('schemaFormValidate');
+
+        // Then we check if the form is valid
+        if (form.$valid) {
+          var data = {};
+          data["items"] = angular.copy(this.dashboard.widgets);
+         // console.log(JSON.stringify(data["items"]));
+          data["transport"] = angular.copy(this.transport.defaults)
+          var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
+          var unescapedHtml = Handlebars.compile(template)(data);
+          var scriptData = {}
+          scriptData["content"] = unescapedHtml;
+          scriptData["scriptName"] =  this.model.scriptName ;
+          scriptData["userConfig"] = JSON.stringify(data["items"]);
+          scriptrService.saveScript(scriptData).then(
+                               function(data, response) {
+                                   console.log("resolve", data)
+                               }, function(err) {
+                                   console.log("reject", err);
+                               });
+          //Save data to scriptr
+          console.log();        
+        }
+        
+        
       }
       
      this.safe_tags= function(str) {
@@ -284,7 +315,6 @@ angular
         this.dismiss({$value: 'cancel'});
         console.log("Dissmissed")
       };
-
 
     }
 });

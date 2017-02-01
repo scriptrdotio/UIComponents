@@ -8,17 +8,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   
    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
-  <!-- Add the slick-theme.css if you want default styling -->
-  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css">
-  <script  src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+   <!-- Add the slick-theme.css if you want default styling -->
+   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css">
+   <script  src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
   
-  
-        <!-- Adding Angular -->
+    <!-- Adding Angular -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
   
-  
-  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-slick-carousel/3.1.7/angular-slick.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-slick-carousel/3.1.7/angular-slick.min.js"></script>
     
     <!-- Charts used in historical angular.morris -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
@@ -76,12 +74,7 @@
    <script src="/UIComponents/dashboardBuilder/javascript/components/module.js"></script>
    <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgetsConfig.js"></script>
    <script src="/UIComponents/dashboardBuilder/javascript/components/dashboard.js"></script>
-  
-  
-  
-  
-  
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script>
+   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script>
     
 </head> 
   
@@ -89,11 +82,31 @@
       var myApp= angular.module("myApp", ['ngAnimate', 'ngSanitize', "WsClient", "HttpClient", "Chart", 'gridster',  'ngRoute','DashboardBuilder', 'Gauge', 'Speedometer', 'Odometer']);
       angular.module('myApp').config(wssConfig);
       angular.module('myApp').config(httpsConfig);
+      angular.module('myApp').config(function($routeProvider){
+           $routeProvider
+            .when("/", {
+            templateUrl: "/UIComponents/dashboardBuilder/view/dashboard.html"
+          })
+          .when('/scriptName/:scriptName*', {
+              templateUrl: '/UIComponents/dashboardBuilder/view/dashboard.html', 
+              controller:  'myCtrl',
+              controllerAs: "vm"
+            })
+            .otherwise({redirectTo:'/'});
+       })
+   	  angular.module('myApp').controller('myCtrl', function($scope,  $route, $routeParams) {
+        var vm = this;
+          var param = $routeParams.scriptName
+  		  console.log(param);
+      });
+  
+  
 </script>
   
 <!--script src="/UIComponents/dashboardBuilder/javascript/dashboard.js"></script-->
 <body ng-app="app">
-  <dashboard></dashboard>
+
+  <ng-view></ng-view>
   
 <script type='text/x-handlebars-template' id="handlebar-template">
 &lt;html ng-app=&quot;myApp&quot;&gt;

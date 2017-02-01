@@ -41,32 +41,17 @@ var params = paramsEvaluator.buildParams(request.body, requiredParams, optionalP
 //TODO: putting the password hardcoded
 //params["password"] = "demo"
 var params = request.body;
-log.info(params["content"])
+
 
 var data = {};
 var script_name = "output/testTemplate_" + Math.floor((Math.random() * 100) + 1) + ".html";
 
-data["apsdb.name"] = script_name;
+data["apsdb.name"] = "output/testTemplate_99.html";
 
-data["apsdb.content"] = JSON.stringify({
-    "ACL": {
-            "execute":"anonymous",
-            "read":"anonymous",
-            "write":"nobody"
-    },
-    
-    "contentType":"text/html",
-    "content": params["content"]
-});
+var response = apsdb.callApi("GetFileContent", data, null);
 
+return response;
 
-var response = apsdb.callApi("SaveFile", data, null);
-
-if(response.metadata.status == "failure") {
-   return response.metadata;
-} else {
-  return script_name;
-}
 
 
 
