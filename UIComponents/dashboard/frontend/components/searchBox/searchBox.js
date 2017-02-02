@@ -11,6 +11,8 @@ angular
       
         "iconLeaf" : "@",
       
+        "paramName" : "@",
+      
         "iconExpand" : "@",
       
         "iconCollapse" : "@",
@@ -41,6 +43,8 @@ angular
            this.iconExpand = (this.iconExpand) ? this.iconExpand : "iicon-plus  glyphicon glyphicon-plus  fa fa-plus";
            this.iconCollapse = (this.iconCollapse) ? this.iconCollapse : "icon-minus glyphicon glyphicon-minus fa fa-minus";
            
+           this.paramName = (this.paramName) ? this.paramName : "criteria";
+           
            this.treeData = (this.treeData) ? this.treeData : [];
            this.iconLeaf = (this.iconLeaf) ? this.iconLeaf : null;
            this.transport = (this.transport) ? this.transport : "wss";
@@ -48,7 +52,9 @@ angular
          
          this.onFilterChanged = function() {
            console.log("submit");
-           initDataService(this.transport, this.searchValue);
+           if(this.searchValue != null && this.searchValue != ""){
+        	   initDataService(this.transport, this.searchValue);
+           }
         }
          
          var initDataService = function(transport, searchValue) {
@@ -57,7 +63,9 @@ angular
                // Subscribe to socket messages with id chart
                wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
                if(self.api) {
-                 wsClient.call(self.api, searchValue, self.msgTag)
+                 var params = {};
+                 params[self.paramName] = searchValue;
+                 wsClient.call(self.api, params, self.msgTag)
                    .then(function(data, response) {
                    self.consumeData(data)
                  });
