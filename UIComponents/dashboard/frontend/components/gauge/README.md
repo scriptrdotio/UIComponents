@@ -62,7 +62,7 @@
   min       | 0    | 	minimum value.		| NO
   max       | 100    | 	maximum value.	| NO
   hide-min-max       | false    | 	hide min and max values.	| NO
-  hide-value       | 0    | 	hide value text.	| NO
+  hide-value       | false    | 	hide value text.	| NO
   hide-inner-shadow       | true    | 	hide inner shadow.	| NO
   gauge-color       | '#e9e9e9'    | 	background color of gauge element.	| NO
   show-inner-shadow       | false    | 	true to display inner shadow.	| NO
