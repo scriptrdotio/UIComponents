@@ -1,5 +1,5 @@
 angular
-  .module("SearchBox", [])
+  .module("SearchBox", [ 'angularBootstrapNavTree' ])
   .component(
   'scriptrSearchbox',
   {
