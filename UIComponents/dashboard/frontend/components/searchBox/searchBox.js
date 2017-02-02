@@ -5,6 +5,22 @@ angular
   {
     bindings : {
       
+        "treeControl" : "<?",
+      
+        "treeData" : "<?",
+      
+        "iconLeaf" : "@",
+      
+        "iconExpand" : "@",
+      
+        "iconCollapse" : "@",
+      
+        "onSelect" : "&",
+      
+        "expandLevel" : "@",
+      
+        "initialSelection" : "@",
+      
         "transport" : "@",
       
         "api" : "@",
@@ -17,8 +33,16 @@ angular
       
          var self = this;
       
+     	 this.iconExpand = (this.iconExpand) ? this.iconExpand : null;
+      
       	 this.$onInit = function() {
-           this.my_data = [];
+           
+           this.iconLeaf = (this.iconLeaf) ? this.iconLeaf : "icon-file  glyphicon glyphicon-file  fa fa-file";
+           this.iconExpand = (this.iconExpand) ? this.iconExpand : "iicon-plus  glyphicon glyphicon-plus  fa fa-plus";
+           this.iconCollapse = (this.iconCollapse) ? this.iconCollapse : "icon-minus glyphicon glyphicon-minus fa fa-minus";
+           
+           this.treeData = (this.treeData) ? this.treeData : [];
+           this.iconLeaf = (this.iconLeaf) ? this.iconLeaf : null;
            this.transport = (this.transport) ? this.transport : "wss";
          }
          
@@ -65,7 +89,7 @@ angular
              data = self.onFormatData()(data);
            }
            console.log("display tree");
-           this.my_data = data;
+           this.treeData = data;
            
          }
     }

@@ -31,16 +31,22 @@
     
         myApp.controller('testCtrl', function($scope) {
           var vm = this;
+          vm.my_tree = {};
           vm.callback = function(data){
             console.log("data formatter");
             return data;
           }
+        vm.onSelect = function(branch){
+          console.log("on select");
+        }
         });
   </script>
-  
+  <button ng-click="vm.my_tree.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
   <body ng-controller="testCtrl as vm">
     <scriptr-searchbox
                      api='UIComponents/dashboard/frontend/examples/searchBox/getFile'
+                     tree-control="vm.my_tree"  
+                     on-select="vm.onSelect"
     </scriptr-searchbox>
   </body>
 </html>

@@ -23,13 +23,13 @@
             debugger;
             return void 0;
           };
-          if (attrs.iconExpand == null) {
+          if (attrs.iconExpand == null || attrs.iconExpand == "") {
             attrs.iconExpand = 'icon-plus  glyphicon glyphicon-plus  fa fa-plus';
           }
-          if (attrs.iconCollapse == null) {
+          if (attrs.iconCollapse == null || attrs.iconExpand == "") {
             attrs.iconCollapse = 'icon-minus glyphicon glyphicon-minus fa fa-minus';
           }
-          if (attrs.iconLeaf == null) {
+          if (attrs.iconLeaf == null || attrs.iconExpand == "") {
             attrs.iconLeaf = 'icon-file  glyphicon glyphicon-file  fa fa-file';
           }
           if (attrs.expandLevel == null) {
