@@ -45,7 +45,6 @@ angular
       
       this.$onInit = function() {
         
-        var userConfigRegex = /\/\*#\*SCRIPTR_PLUGIN\*#\*(.*\n?.*)\*#\*#\*\//;
         this.transport = angular.copy(config.transport);
         this.frmGlobalOptions = {
           "destroyStrategy" : "remove"
@@ -63,29 +62,7 @@ angular
   			var self = this;
             scriptrService.getScript(this.model).then(
               function(data, response) {
-                 if(data) {
-                     var userConfig = data.userConfig;
-                     var matches = userConfig.match(userConfigRegex);
-                     if(userConfig && matches) {
-                          var pluginContent = JSON.parse(matches[1]);
-                          if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "DashboardBuilder"){
-                            self.widgets = JSON.parse(pluginContent.metadata.plugindata); //This needs fixing
-                            self.dashboard["widgets"] = self.widgets;
-                            self.isEdit = true;
-                            self.savedScript = scriptName;
-                          } else {
-                             self.showAlert("danger", "Invalid dashboard script. Pass another script.")
-                             console.error("Invalid dashboard script. Pass another script.")
-                          }
-                     } else {
-                       self.showAlert("danger", "Invalid dashboard script. Pass another script.")
-                       console.error("Invalid dashboard script. Pass another script.")
-                     }
-                 } else {
-                   self.showAlert("danger", "Invalid dashboard script. Pass another script.")
-                   console.error("Invalid dashboard script. Pass another script.")
-                 }
-                 console.debug("resolve get script "+scriptName+ " :", data)
+                	self.postLoadScript(scriptName, data);
               }, function(err) {
                 console.error("reject", err);
             });
@@ -107,7 +84,7 @@ angular
         
         //Gidster Wall Options
         this.gridsterOptions = {
-          minRows: 2, // the minimum height of the grid, in rows
+          minRows: 1, // the minimum height of the grid, in rows
           maxRows: 100,
           columns: 6, // the width of the grid, in columns
           colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
@@ -116,10 +93,18 @@ angular
           defaultSizeX: 2, // the default width of a gridster item, if not specifed
           defaultSizeY: 1, // the default height of a gridster item, if not specified
           mobileBreakPoint: 600, // if the screen is not wider that this, remove the grid layout and stack the items
+          minColumns: 1, // the minimum columns the grid must have
+          //MFE: overriden in each item widget definition
+          //minSizeX: 1, // minimum column width of an item
+         // maxSizeX: null, // maximum column width of an item
+         // minSizeY: 2, // minumum row height of an item
+          //maxSizeY: 2, // maximum row height of an item
           resizable: {
             enabled: true,
             start: function(event, uiWidget, $element) {}, // optional callback fired when resize is started,
-            resize: function(event, uiWidget, $element) {}, // optional callback fired when item is resized,
+            resize: function(event, uiWidget, $element) {
+               console.log("resize event called:",event, uiWidget, $element);
+            }, // optional callback fired when item is resized,
             stop: function(event, uiWidget, $element) {
               console.log("End resize:",event, uiWidget, $element);
               $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
@@ -136,6 +121,7 @@ angular
             } // optional callback fired when item is finished dragging
           }
         };
+        
         
         this.widgetsConfig = config.widgets; 
         this.dataLoaded = true;
@@ -156,8 +142,12 @@ angular
       this.addWidget = function(wdg) {
           this.dashboard.widgets.push({
             "name": "New Widget",
-            "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 3,
+            "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
             "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
+            "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
+            "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
+            "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
+            "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
             "label": wdg.label,
             "type": wdg.class,
             "options": wdg.defaults,
@@ -230,6 +220,32 @@ angular
         
         
       }
+     this.postLoadScript = function(scriptName, data) {
+       	 var userConfigRegex = /\/\*#\*SCRIPTR_PLUGIN\*#\*(.*\n?.*)\*#\*#\*\//;
+     	 if(data) {
+           var userConfig = data.userConfig;
+           var matches = userConfig.match(userConfigRegex);
+           if(userConfig && matches) {
+             var pluginContent = JSON.parse(matches[1]);
+             if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "DashboardBuilder"){
+               this.widgets = JSON.parse(pluginContent.metadata.plugindata); //This needs fixing
+               this.dashboard["widgets"] = this.widgets;
+               this.isEdit = true;
+               this.savedScript = scriptName;
+             } else {
+               this.showAlert("danger", "Invalid dashboard script. Pass another script.")
+               console.error("Invalid dashboard script. Pass another script.")
+             }
+           } else {
+             this.showAlert("danger", "Invalid dashboard script. Pass another script.")
+             console.error("Invalid dashboard script. Pass another script.")
+           }
+         } else {
+           this.showAlert("danger", "Invalid dashboard script. Pass another script.")
+           console.error("Invalid dashboard script. Pass another script.")
+         }
+       console.debug("resolve get script "+scriptName+ " :", data) 
+     }
       
      this.safe_tags= function(str) {
 	    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') ;

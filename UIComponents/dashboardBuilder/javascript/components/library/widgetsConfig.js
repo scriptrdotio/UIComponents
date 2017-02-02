@@ -75,8 +75,6 @@ angular
        minSizeX: 1,
        minSizeY: 1,
        maxSizeY: 2
-       
-       
      },
      "box": {
        sizeX: 2,

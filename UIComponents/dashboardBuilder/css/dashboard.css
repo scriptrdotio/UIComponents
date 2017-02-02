@@ -20,7 +20,7 @@ form { margin-bottom: 0;}
 
 /*** box ***/
 .box { height: 100%;border: 1px solid #ccc;background-color: #fff;}
-.box-content {padding: 10px;}
+.box-content {padding: 10px; text-align: center;}
 
 /*** Box header ***/
 .box-header {position: relative; z-index: 1; display: inline-block; width: 100%;}
@@ -29,7 +29,7 @@ form { margin-bottom: 0;}
 .box-header a:link, .box-header a:visited {color: #ccc;}
 
 /*** slick styles ***/
-.slick-container {width: 80%;margin: 0 auto;}
+.slick-container {width: 100%;margin: 0 auto;}
 .slick-item {}
 .slick-slide {height: auto; text-align: center;}
 .slick-slide a[ng-click] {display: block; padding: 7px 0; color: #333;  background: #fdfdfd; box-shadow: 0 0 3px #b7b3b3 inset; cursor: pointer}
@@ -68,4 +68,8 @@ form { margin-bottom: 0;}
 
 .modal-footer {
      border-top: none;
+}
+
+.gauge {
+  margin: 0 auto;
 }
