@@ -1424,15 +1424,7 @@ angular
 			                        {
 			                          "type": "section",
 			                          "htmlClass": "col-xs-6",
-			                          "items": ["hide-min-max", "hide-value", "hide-inner-shadow", "show-inner-shadow", "start-animation-type", "refresh-animation-type", 
-		                                        {
-			                                        "key": "counter",
-			                                          "type": "radios-inline",
-			                                          titleMap: [
-			                                            { value: "true", name: "True" },
-			                                            { value: "false", name: "False" }
-			                                          ]
-			                                        }]
+			                          "items": ["hide-min-max", "hide-value", "hide-inner-shadow"]
 			                        },
                                     {
 			                          "type": "section",
