@@ -41,7 +41,17 @@
         }
         });
   </script>
+  <button ng-click="vm.my_tree.select_first_branch()" class="btn btn-default btn-sm">First Branch</button>
+  <button ng-click="vm.my_tree.select_next_sibling()" class="btn btn-default btn-sm">Next Sibling</button>
+  <button ng-click="vm.my_tree.select_prev_sibling()" class="btn btn-default btn-sm">Prev Sibling</button>
+  <button ng-click="vm.my_tree.select_next_branch()" class="btn btn-default btn-sm">Next Branch</button>
+  <button ng-click="vm.my_tree.select_prev_branch()" class="btn btn-default btn-sm">Prev Branch</button>
+  <button ng-click="vm.my_tree.select_parent_branch()" class="btn btn-default btn-sm">Parent</button>
+  <button ng-click="vm.my_tree.expand_branch()" class="btn btn-default btn-sm">Expand</button>
+  <button ng-click="vm.my_tree.collapse_branch()" class="btn btn-default btn-sm">Collapse</button>
+  <button ng-click="vm.my_tree.expand_all()" class="btn btn-default btn-sm">Expand All</button>
   <button ng-click="vm.my_tree.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
+  
   <body ng-controller="testCtrl as vm">
     <scriptr-searchbox
                      api='UIComponents/dashboard/frontend/examples/searchBox/getFile'
