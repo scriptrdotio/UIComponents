@@ -276,7 +276,7 @@ angular
 			},
 			"grid-text-size": {
 				"title": "Grid Text Size",
-				"type": "string",
+				"type": "number",
 				"description": "Set the point size of the axis labels (default: 12)."
 			},
 			"grid-text-family": {
@@ -340,7 +340,7 @@ angular
 			},
 			"units": {
 				"title": "Units",
-				"type": "string",
+				"type": "number",
 				"description": "Width of the series lines, in pixels."
 			},
 			"post-units": {
@@ -370,7 +370,7 @@ angular
 			},
 			"goal-stroke-width": {
 				"title": "Goal Stroke Width",
-				"type": "string",
+				"type": "number",
 				"description": "Width, in pixels, of the goal lines."
 			},
 			"goal-line-colors": {
@@ -385,7 +385,7 @@ angular
 			},
 			"event-stroke-width": {
 				"title": "Event Stroke Width",
-				"type": "string",
+				"type": "number",
 				"description": "Width, in pixels, of the event lines."
 			},
 			"event-line-colors": {
@@ -607,12 +607,12 @@ angular
 			},
 			"line-width": {
 				"title": "Line Width",
-				"type": "string",
+				"type": "number",
 				"description": "Width of the series lines, in pixels."
 			},
 			"point-size": {
 				"title": "Point Size",
-				"type": "string",
+				"type": "number",
 				"description": "Diameter of the series points, in pixels."
 			},
 			"point-fill-colors": {
@@ -657,7 +657,7 @@ angular
 			},
 			"units": {
 				"title": "Units",
-				"type": "string",
+				"type": "number",
 				"description": "Width of the series lines, in pixels."
 			},
 			"post-units": {
@@ -697,7 +697,7 @@ angular
 			},
 			"goal-stroke-width": {
 				"title": "Goal Stroke Width",
-				"type": "string",
+				"type": "number",
 				"description": "Width, in pixels, of the goal lines."
 			},
 			"goal-line-colors": {
@@ -712,7 +712,7 @@ angular
 			},
 			"event-stroke-width": {
 				"title": "Event Stroke Width",
-				"type": "string",
+				"type": "number",
 				"description": "Width, in pixels, of the event lines."
 			},
 			"event-line-colors": {
@@ -742,7 +742,7 @@ angular
 			},
 			"grid-text-size": {
 				"title": "Grid Text Size",
-				"type": "string",
+				"type": "number",
 				"description": "Set the point size of the axis labels (default: 12)."
 			},
 			"grid-text-family": {
@@ -757,7 +757,7 @@ angular
 			},
 			"fill-opacity": {
 				"title": "fill Opacity",
-				"type": "string",
+				"type": "number",
 				"description": "Change the opacity of the area fill colour. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque)."
 			},
 			"resize": {
@@ -1014,12 +1014,12 @@ angular
 			},
 			"line-width": {
 				"title": "Line Width",
-				"type": "string",
+				"type": "number",
 				"description": "Width of the series lines, in pixels."
 			},
 			"point-size": {
 				"title": "Point Size",
-				"type": "string",
+				"type": "number",
 				"description": "Diameter of the series points, in pixels."
 			},
 			"point-fill-colors": {
@@ -1064,7 +1064,7 @@ angular
 			},
 			"units": {
 				"title": "Units",
-				"type": "string",
+				"type": "number",
 				"description": "Width of the series lines, in pixels."
 			},
 			"post-units": {
@@ -1104,7 +1104,7 @@ angular
 			},
 			"goal-stroke-width": {
 				"title": "Goal Stroke Width",
-				"type": "string",
+				"type": "number",
 				"description": "Width, in pixels, of the goal lines."
 			},
 			"goal-line-colors": {
@@ -1119,7 +1119,7 @@ angular
 			},
 			"event-stroke-width": {
 				"title": "Event Stroke Width",
-				"type": "string",
+				"type": "number",
 				"description": "Width, in pixels, of the event lines."
 			},
 			"event-line-colors": {
@@ -1149,7 +1149,7 @@ angular
 			},
 			"grid-text-size": {
 				"title": "Grid Text Size",
-				"type": "string",
+				"type": "number",
 				"description": "Set the point size of the axis labels (default: 12)."
 			},
 			"grid-text-family": {
@@ -1164,7 +1164,7 @@ angular
 			},
 			"fill-opacity": {
 				"title": "Fill Opacity",
-				"type": "string",
+				"type": "number",
 				"description": "Change the opacity of the area fill colour. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque)."
 			},
 			"resize": {
@@ -1400,7 +1400,6 @@ angular
 	                      "msg-tag",
 	                      "api",
 	                      "api-params",
-	                      "data",
 	                      "on-format-data"
 	                    ]
 	                  },
@@ -1456,12 +1455,43 @@ angular
 			                        {
 			                          "type": "section",
 			                          "htmlClass": "col-xs-6",
-			                          "items": ["hide-min-max", "hide-value", "hide-inner-shadow"]
+			                          "items": [   {
+			                                        "key": "hide-min-max",
+			                                          "type": "radios-inline",
+			                                          titleMap: [
+			                                            { value: "true", name: "True" },
+			                                            { value: "false", name: "False" }
+			                                          ]
+			                                        }, 
+                                                    {
+			                                        "key": "hide-value",
+			                                          "type": "radios-inline",
+			                                          titleMap: [
+			                                            { value: "true", name: "True" },
+			                                            { value: "false", name: "False" }
+			                                          ]
+			                                        },
+                                                	{
+			                                        "key": "hide-inner-shadow",
+			                                          "type": "radios-inline",
+			                                          titleMap: [
+			                                            { value: "true", name: "True" },
+			                                            { value: "false", name: "False" }
+			                                          ]
+			                                        },
+                                              		{
+			                                        "key": "show-inner-shadow",
+			                                          "type": "radios-inline",
+			                                          titleMap: [
+			                                            { value: "true", name: "True" },
+			                                            { value: "false", name: "False" }
+			                                          ]
+			                                        }]
 			                        },
                                     {
 			                          "type": "section",
 			                          "htmlClass": "col-xs-6",
-			                          "items": ["show-inner-shadow", "start-animation-type", "refresh-animation-type", 
+			                          "items": ["start-animation-type", "refresh-animation-type", 
 		                                        {
 			                                        "key": "counter",
 			                                          "type": "radios-inline",
@@ -1515,12 +1545,12 @@ angular
 			},
 			"min": {
 				"title": "Minimum Value",
-				"type": "string",
+				"type": "number",
 				"description": "minimum value."
 			},
 			"max": {
 				"title": "Maximum Value",
-				"type": "string",
+				"type": "number",
 				"description": "maximum value."
 			},
 			"hide-min-max": {
@@ -1727,27 +1757,27 @@ angular
 			},
 			"min-val": {
 				"title": "Minimum Value",
-				"type": "string",
+				"type": "number",
 				"description": "Minimum value to be shown in gauge scale."
 			},
 			"max-val": {
 				"title": "Maximum Value",
-				"type": "string",
+				"type": "number",
 				"description": "Maximum value to be shown in gauge scale."
 			},
 			"needle-val": {
 				"title": "Needle Value",
-				"type": "string",
+				"type": "number",
 				"description": "Sets the value of needle to be pointed."
 			},
 			"tick-space-min-val": {
 				"title": "Tick Space min-val",
-				"type": "string",
+				"type": "number",
 				"description": "space between the major ticks of the gauge."
 			},
 			"tick-space-maj-val": {
 				"title": "Tick Space maj-val",
-				"type": "string",
+				"type": "number",
 				"description": "space between the sub ticks of the gauge."
 			},
 			"gauge-units": {
@@ -1866,10 +1896,6 @@ angular
 	                  {
 	                    title: "Gauge behaviour",
 	                    items: ["duration", "animation", "size"]
-	                  },
-	                  {
-	                    title: "Theme",
-	                    items: ["theme"]
 	                  }
 	                ]
 	              }
@@ -1880,17 +1906,12 @@ angular
 		"properties": {
 			"odometer-value": {
 				"title": "Odometer Value",
-				"type": "string",
+				"type": "number",
 				"description": "Set a static value for Odometer."
-			},
-			"theme": {
-				"title": "Theme",
-				"type": "string",
-				"description": "Specify the theme (if you have more than one theme css file on the page)."
 			},
 			"duration": {
 				"title": "Duration",
-				"type": "string",
+				"type": "number",
 				"description": "Change how long the javascript expects the CSS animation to take."
 			},
             "size": {
