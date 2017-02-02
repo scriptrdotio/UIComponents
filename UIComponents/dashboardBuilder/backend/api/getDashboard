@@ -44,13 +44,13 @@ var params = request.body;
 
 
 var data = {};
-var script_name = "output/testTemplate_" + Math.floor((Math.random() * 100) + 1) + ".html";
+//var script_name = "output/testTemplate_" + Math.floor((Math.random() * 100) + 1) + ".html";
 
-data["apsdb.name"] = "output/testTemplate_99.html";
+data["apsdb.name"] = params["scriptName"];//(params) ? params["scriptName"] : "dddd";
 
 var response = apsdb.callApi("GetFileContent", data, null);
 
-return response;
+return response.result;
 
 
 

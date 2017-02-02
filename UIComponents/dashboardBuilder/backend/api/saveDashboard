@@ -44,9 +44,17 @@ var params = request.body;
 log.info(params["content"])
 
 var data = {};
-var script_name = "output/testTemplate_" + Math.floor((Math.random() * 100) + 1) + ".html";
+var script_name = params["scriptName"];//"output/testTemplate_" + Math.floor((Math.random() * 100) + 1) + ".html";
 
-data["apsdb.name"] = script_name;
+data["apsdb.name"] = params["scriptName"];
+if(params["update"]) {
+  data["apsdb.update"] = params["update"]
+} 
+
+//This is needed as a workaround for the match regex
+var a = "/*#*SCRIPTR_PLUGIN*#*";
+var b = "*#*";
+var c= "#*/";
 
 data["apsdb.content"] = JSON.stringify({
     "ACL": {
@@ -54,7 +62,7 @@ data["apsdb.content"] = JSON.stringify({
             "read":"anonymous",
             "write":"nobody"
     },
-    
+    "userConfig": a + JSON.stringify({"metadata":{"name":"DashboardBuilder","plugindata": params["pluginData"]}}) + b + c,
     "contentType":"text/html",
     "content": params["content"]
 });
@@ -65,7 +73,9 @@ var response = apsdb.callApi("SaveFile", data, null);
 if(response.metadata.status == "failure") {
    return response.metadata;
 } else {
-  return script_name;
+  //Return saved scriptName
+  response.result = params["scriptName"]
+  return response.result;
 }
 
 

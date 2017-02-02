@@ -4,6 +4,11 @@ angular.module('DashboardBuilder').service(
     this.saveScript = function(data) {
       return httpClient.post(
         "UIComponents/dashboardBuilder/backend/api/saveDashboard", data)
+    };
+    
+    this.getScript = function(data) {
+      return httpClient.post(
+        "UIComponents/dashboardBuilder/backend/api/getDashboard", data)
     }
 });
 
@@ -16,15 +21,37 @@ angular
       widgets: "<"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $timeout, config, $uibModal, scriptrService, $route, $routeParams) {
+    controller: function($scope, $timeout, $window, config, $uibModal, scriptrService, $route, $routeParams) {
+      
+      this.show = false;
+      this.isEdit = false;      
+      
+      this.viewDasboard = function() {
+         $window.open("/"+this.savedScript);
+      };
+      
+      this.closeAlert = function() {
+         this.show = false;
+      };
+      
+      this.showAlert = function(type, content) {
+         this.closeAlert();
+         this.message = {
+           "type": type,
+           "content": content
+         }
+         this.show = true
+      }
       
       this.$onInit = function() {
         
+        var userConfigRegex = /\/\*#\*SCRIPTR_PLUGIN\*#\*(.*\n?.*)\*#\*#\*\//;
         this.transport = angular.copy(config.transport);
-        
         this.frmGlobalOptions = {
           "destroyStrategy" : "remove"
         }
+        
+        this.initializeDashboard();
         
         this.schema =  angular.copy(config.script.schema)
         this.form =   angular.copy(config.script.form)
@@ -33,6 +60,35 @@ angular
         var scriptName = $routeParams.scriptName
         if(scriptName) {
           this.model = {"scriptName": scriptName};
+  			var self = this;
+            scriptrService.getScript(this.model).then(
+              function(data, response) {
+                 if(data) {
+                     var userConfig = data.userConfig;
+                     var matches = userConfig.match(userConfigRegex);
+                     if(userConfig && matches) {
+                          var pluginContent = JSON.parse(matches[1]);
+                          if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "DashboardBuilder"){
+                            self.widgets = JSON.parse(pluginContent.metadata.plugindata); //This needs fixing
+                            self.dashboard["widgets"] = self.widgets;
+                            self.isEdit = true;
+                            self.savedScript = scriptName;
+                          } else {
+                             self.showAlert("danger", "Invalid dashboard script. Pass another script.")
+                             console.error("Invalid dashboard script. Pass another script.")
+                          }
+                     } else {
+                       self.showAlert("danger", "Invalid dashboard script. Pass another script.")
+                       console.error("Invalid dashboard script. Pass another script.")
+                     }
+                 } else {
+                   self.showAlert("danger", "Invalid dashboard script. Pass another script.")
+                   console.error("Invalid dashboard script. Pass another script.")
+                 }
+                 console.debug("resolve get script "+scriptName+ " :", data)
+              }, function(err) {
+                console.error("reject", err);
+            });
         }
         
         this.slickConfig = {
@@ -80,15 +136,17 @@ angular
             } // optional callback fired when item is finished dragging
           }
         };
-
-        this.dashboard = { widgets: [] };
-        if(this.widgets) {
-          this.dashboard["widgets"] = this.widgets
-        }
-        
         
         this.widgetsConfig = config.widgets; 
         this.dataLoaded = true;
+      };
+      
+      
+      this.initializeDashboard =  function() {
+          this.dashboard = { widgets: [] };
+          if(this.widgets) {
+            this.dashboard["widgets"] = this.widgets
+          }
       };
       
       this.clear = function() {
@@ -134,7 +192,7 @@ angular
       
       this.saveDashboard = function(form) {
 		console.log("Form submit", form)
-        
+        var self = this;
         $scope.$broadcast('schemaFormValidate');
 
         // Then we check if the form is valid
@@ -148,13 +206,24 @@ angular
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
           scriptData["scriptName"] =  this.model.scriptName ;
-          scriptData["userConfig"] = JSON.stringify(data["items"]);
+          scriptData["pluginData"] = JSON.stringify(data["items"]);
+          if(self.isEdit) {
+            scriptData["update"] = true;
+          }
           scriptrService.saveScript(scriptData).then(
-                               function(data, response) {
-                                   console.log("resolve", data)
-                               }, function(err) {
-                                   console.log("reject", err);
-                               });
+            function(data, response) {
+               console.log("resolve", data)
+               if(data.status == "failure") {
+                  self.showAlert("danger", data.errorDetail);
+               } else {
+                 self.isEdit = true;
+                 self.savedScript = scriptData["scriptName"];
+                 self.showAlert("success", "The dashboard has been saved successfully.");
+               }
+               
+            }, function(err) {
+              console.log("reject", err);
+		  });
           //Save data to scriptr
           console.log();        
         }
@@ -227,7 +296,7 @@ angular
             modalInstance.result.then(function (wdgModel) {
                self.updateWidget(wdgModel)
             }, function () {
-               $log.info('modal-component for widget update dismissed at: ' + new Date());
+               console.info('modal-component for widget update dismissed at: ' + new Date());
             });
       };
       
