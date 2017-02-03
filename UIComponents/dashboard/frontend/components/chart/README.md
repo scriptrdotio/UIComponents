@@ -118,7 +118,7 @@
   stacked | undefined | Set to true to draw bars stacked vertically | NO |   |  * | 
   api | undefined | Name of the api to get data | Required if getting data from backend | *  |  * | *
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO | * | * | *
-  transport |  'wss'     | 	Method used to call api (can take "http" or "wss").	 | NO | *  |  * | *
+  transport |  'wss'     | 	Method used to call api (can take "https" or "wss").	 | NO | *  |  * | *
   msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | NO     | *  |  * | *
   api-params  | null      | 	Api parameters.  	| NO		 | *  |  * | *
   
