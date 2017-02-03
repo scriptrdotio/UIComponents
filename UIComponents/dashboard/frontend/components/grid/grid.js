@@ -26,7 +26,7 @@ angular
         
         "enableSorting": "<?", // client-side sorting
 
-        "serviceApi" : "@", // restApi 
+        "api" : "@", // restApi 
 
         "onCellValueChangedScript" : "@", // script to  be called after editing a cell
         
@@ -85,7 +85,7 @@ angular
                   return self.onFormatData()(data); // Or we can have it as self.onFormatData({"data":data}) and pass it in the on-format-update as: vm.callback(data)
                 }
               }
-              var dataResponse = dataService.getGridData(self.serviceApi, APIParams, self.transport, tmp).then(
+              var dataResponse = dataService.getGridData(self.api, APIParams, self.transport, tmp).then(
               function(data, response) {
                 if (data && data.documents) {
                   var rowsData = data.documents;
