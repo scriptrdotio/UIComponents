@@ -383,7 +383,7 @@ angular
         
         var d = $q.defer(); 
         var self = this;
-        if(transport == "http"){
+        if(transport == "https"){
           httpClient
             .get(api, params).then(function(data, response){
               if(formatterFnc /**Check if function also*/){
