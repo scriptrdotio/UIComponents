@@ -47,7 +47,8 @@ angular
         
         this.transport = angular.copy(config.transport);
         this.frmGlobalOptions = {
-          "destroyStrategy" : "remove"
+          "destroyStrategy" : "remove",
+          "formDefaults": {"feedback": true}
         }
         
         this.initializeDashboard();
@@ -92,7 +93,7 @@ angular
           margins: [10, 10], // the pixel distance between each widget
           defaultSizeX: 2, // the default width of a gridster item, if not specifed
           defaultSizeY: 1, // the default height of a gridster item, if not specified
-          mobileBreakPoint: 600, // if the screen is not wider that this, remove the grid layout and stack the items
+          mobileBreakPoint: 1024, // if the screen is not wider that this, remove the grid layout and stack the items
           minColumns: 1, // the minimum columns the grid must have
           //MFE: overriden in each item widget definition
           //minSizeX: 1, // minimum column width of an item
@@ -137,7 +138,7 @@ angular
       
       this.clear = function() {
 			this.dashboard.widgets = [];
-		};
+	  };
 
       this.addWidget = function(wdg) {
           this.dashboard.widgets.push({
@@ -174,7 +175,8 @@ angular
             });
             modalInstance.result.then(function (transportModel) {
               console.log("modal-component transport settings data :", transportModel ,"submitted at: " + new Date());
-              self.transport.defaults = angular.copy(transportModel);
+              if(transportModel != "cancel")
+              	self.transport.defaults = angular.copy(transportModel);
             }, function () {
               console.log('modal-component transport settings dismissed at: ' + new Date());
             });
@@ -310,7 +312,9 @@ angular
               }
             });
             modalInstance.result.then(function (wdgModel) {
-               self.updateWidget(wdgModel)
+              if(wdgModel != "cancel") {
+                 self.updateWidget(wdgModel)
+              } 
             }, function () {
                console.info('modal-component for widget update dismissed at: ' + new Date());
             });
@@ -358,14 +362,12 @@ angular
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/myModalContent.html',
     controller: function ($scope) {
       this.$onInit = function () {
-
         this.widget = this.resolve.widget;
-
+        $scope.$broadcast('schemaFormRedraw')
         this.frmGlobalOptions = {
-          "destroyStrategy" : "remove"
+          "destroyStrategy" : "remove",
+          "formDefaults": {"feedback": false}
         }
-
-        this.model = {};
 
         if(this.widget) {
             if(this.widget.schema) {
@@ -396,6 +398,8 @@ angular
       };
 
       this.onCancel = function (myForm) {
+        this.schema = {};
+        this.form = {}
         this.model = angular.copy(this.widget.options);
         this.dismiss({$value: 'cancel'});
         console.log("Dissmissed")

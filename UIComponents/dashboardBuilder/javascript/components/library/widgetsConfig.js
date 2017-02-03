@@ -5,7 +5,7 @@ angular
       "form": [{
       "key": "scriptName",
       "notitle": true,
-      "placeholder": "Script Name*"
+      "placeholder": "Script Name"
     }],
       "schema": {
        	"type": "object",
@@ -53,7 +53,10 @@ angular
 				"type": "string",
 				"description": "Subscribe Channel"
 			}
-        }
+        },
+        "required": [
+			"token", "baseUrl", "publishChannel", "subscribeChannel"
+		]
     }},
     widgets :[
       {
@@ -65,6 +68,7 @@ angular
             "xkey": "y",
             "ykeys": "[\"a\", \"b\"]",
             "labels": "[\"Serie A\", \"Serie B\"]",
+            "colors": "[\"#1DBC68\", \"#E90088\"]",
             "transport": "wss",
             "api": "UIComponents/dashboard/frontend/examples/chart/getChartData",
             "msg-tag": "chart"
@@ -407,6 +411,7 @@ angular
 		"xkey": "y",
 		"ykeys": "[\"a\", \"b\"]",
 		"labels": "[\"Serie A\", \"Serie B\"]",
+        "colors": "[\"#CC5464\", \"#38B9D6\"]",
 		"transport": "wss",
 		"api": "UIComponents/dashboard/frontend/examples/chart/getChartData",
 		"msg-tag": "chart"
@@ -814,6 +819,7 @@ angular
 		"xkey": "y",
 		"ykeys": "[\"a\", \"b\"]",
 		"labels": "[\"Serie A\", \"Serie B\"]",
+        "colors": "[ \"#FCC717\", \"#38B9D6\"]",
 		"transport": "wss",
 		"api": "UIComponents/dashboard/frontend/examples/chart/getChartData",
 		"msg-tag": "chart"
@@ -1379,8 +1385,8 @@ angular
 		"transport": "wss",
 		"msg-tag": "gauge",
 		"api": "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal",
-        "width": "100",
-        "height": "200"
+        "width": 100,
+        "height": 200
 	},
   "box": {
        sizeX: 2,
@@ -1434,7 +1440,7 @@ angular
 		                        {
 		                          "type": "section",
 		                          "htmlClass": "col-xs-6",
-		                          "items": ["custom-sectors", "value-font-color", "gauge-color", "shadow-opacity", "label-font-color"]
+		                          "items": ["custom-sectors", "value-font-color"]
 		                        },
                                  {
 		                          "type": "section",

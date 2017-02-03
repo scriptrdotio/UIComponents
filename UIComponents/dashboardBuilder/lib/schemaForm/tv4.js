@@ -129,195 +129,6 @@ if (!Object.isFrozen) {
 		}
 	};
 }
-// Based on: https://github.com/geraintluff/uri-templates, but with all the de-substitution stuff removed
-
-var uriTemplateGlobalModifiers = {
-	"+": true,
-	"#": true,
-	".": true,
-	"/": true,
-	";": true,
-	"?": true,
-	"&": true
-};
-var uriTemplateSuffices = {
-	"*": true
-};
-
-function notReallyPercentEncode(string) {
-	return encodeURI(string).replace(/%25[0-9][0-9]/g, function (doubleEncoded) {
-		return "%" + doubleEncoded.substring(3);
-	});
-}
-
-function uriTemplateSubstitution(spec) {
-	var modifier = "";
-	if (uriTemplateGlobalModifiers[spec.charAt(0)]) {
-		modifier = spec.charAt(0);
-		spec = spec.substring(1);
-	}
-	var separator = "";
-	var prefix = "";
-	var shouldEscape = true;
-	var showVariables = false;
-	var trimEmptyString = false;
-	if (modifier === '+') {
-		shouldEscape = false;
-	} else if (modifier === ".") {
-		prefix = ".";
-		separator = ".";
-	} else if (modifier === "/") {
-		prefix = "/";
-		separator = "/";
-	} else if (modifier === '#') {
-		prefix = "#";
-		shouldEscape = false;
-	} else if (modifier === ';') {
-		prefix = ";";
-		separator = ";";
-		showVariables = true;
-		trimEmptyString = true;
-	} else if (modifier === '?') {
-		prefix = "?";
-		separator = "&";
-		showVariables = true;
-	} else if (modifier === '&') {
-		prefix = "&";
-		separator = "&";
-		showVariables = true;
-	}
-
-	var varNames = [];
-	var varList = spec.split(",");
-	var varSpecs = [];
-	var varSpecMap = {};
-	for (var i = 0; i < varList.length; i++) {
-		var varName = varList[i];
-		var truncate = null;
-		if (varName.indexOf(":") !== -1) {
-			var parts = varName.split(":");
-			varName = parts[0];
-			truncate = parseInt(parts[1], 10);
-		}
-		var suffices = {};
-		while (uriTemplateSuffices[varName.charAt(varName.length - 1)]) {
-			suffices[varName.charAt(varName.length - 1)] = true;
-			varName = varName.substring(0, varName.length - 1);
-		}
-		var varSpec = {
-			truncate: truncate,
-			name: varName,
-			suffices: suffices
-		};
-		varSpecs.push(varSpec);
-		varSpecMap[varName] = varSpec;
-		varNames.push(varName);
-	}
-	var subFunction = function (valueFunction) {
-		var result = "";
-		var startIndex = 0;
-		for (var i = 0; i < varSpecs.length; i++) {
-			var varSpec = varSpecs[i];
-			var value = valueFunction(varSpec.name);
-			if (value === null || value === undefined || (Array.isArray(value) && value.length === 0) || (typeof value === 'object' && Object.keys(value).length === 0)) {
-				startIndex++;
-				continue;
-			}
-			if (i === startIndex) {
-				result += prefix;
-			} else {
-				result += (separator || ",");
-			}
-			if (Array.isArray(value)) {
-				if (showVariables) {
-					result += varSpec.name + "=";
-				}
-				for (var j = 0; j < value.length; j++) {
-					if (j > 0) {
-						result += varSpec.suffices['*'] ? (separator || ",") : ",";
-						if (varSpec.suffices['*'] && showVariables) {
-							result += varSpec.name + "=";
-						}
-					}
-					result += shouldEscape ? encodeURIComponent(value[j]).replace(/!/g, "%21") : notReallyPercentEncode(value[j]);
-				}
-			} else if (typeof value === "object") {
-				if (showVariables && !varSpec.suffices['*']) {
-					result += varSpec.name + "=";
-				}
-				var first = true;
-				for (var key in value) {
-					if (!first) {
-						result += varSpec.suffices['*'] ? (separator || ",") : ",";
-					}
-					first = false;
-					result += shouldEscape ? encodeURIComponent(key).replace(/!/g, "%21") : notReallyPercentEncode(key);
-					result += varSpec.suffices['*'] ? '=' : ",";
-					result += shouldEscape ? encodeURIComponent(value[key]).replace(/!/g, "%21") : notReallyPercentEncode(value[key]);
-				}
-			} else {
-				if (showVariables) {
-					result += varSpec.name;
-					if (!trimEmptyString || value !== "") {
-						result += "=";
-					}
-				}
-				if (varSpec.truncate != null) {
-					value = value.substring(0, varSpec.truncate);
-				}
-				result += shouldEscape ? encodeURIComponent(value).replace(/!/g, "%21"): notReallyPercentEncode(value);
-			}
-		}
-		return result;
-	};
-	subFunction.varNames = varNames;
-	return {
-		prefix: prefix,
-		substitution: subFunction
-	};
-}
-
-function UriTemplate(template) {
-	if (!(this instanceof UriTemplate)) {
-		return new UriTemplate(template);
-	}
-	var parts = template.split("{");
-	var textParts = [parts.shift()];
-	var prefixes = [];
-	var substitutions = [];
-	var varNames = [];
-	while (parts.length > 0) {
-		var part = parts.shift();
-		var spec = part.split("}")[0];
-		var remainder = part.substring(spec.length + 1);
-		var funcs = uriTemplateSubstitution(spec);
-		substitutions.push(funcs.substitution);
-		prefixes.push(funcs.prefix);
-		textParts.push(remainder);
-		varNames = varNames.concat(funcs.substitution.varNames);
-	}
-	this.fill = function (valueFunction) {
-		var result = textParts[0];
-		for (var i = 0; i < substitutions.length; i++) {
-			var substitution = substitutions[i];
-			result += substitution(valueFunction);
-			result += textParts[i + 1];
-		}
-		return result;
-	};
-	this.varNames = varNames;
-	this.template = template;
-}
-UriTemplate.prototype = {
-	toString: function () {
-		return this.template;
-	},
-	fillFromObject: function (obj) {
-		return this.fill(function (varName) {
-			return obj[varName];
-		});
-	}
-};
 var ValidatorContext = function ValidatorContext(parent, collectMultiple, errorMessages, checkRecursive, trackUnknownProperties) {
 	this.missing = [];
 	this.missingMap = {};
@@ -355,14 +166,14 @@ ValidatorContext.prototype.defineKeyword = function (keyword, keywordFunction) {
 ValidatorContext.prototype.createError = function (code, messageParams, dataPath, schemaPath, subErrors) {
 	var messageTemplate = this.errorMessages[code] || ErrorMessagesDefault[code];
 	if (typeof messageTemplate !== 'string') {
-		return new ValidationError(code, "Unknown error code " + code + ": " + JSON.stringify(messageParams), messageParams, dataPath, schemaPath, subErrors);
+		return new ValidationError(code, "Unknown error code " + code + ": " + JSON.stringify(messageParams), dataPath, schemaPath, subErrors);
 	}
 	// Adapted from Crockford's supplant()
 	var message = messageTemplate.replace(/\{([^{}]*)\}/g, function (whole, varName) {
 		var subValue = messageParams[varName];
 		return typeof subValue === 'string' || typeof subValue === 'number' ? subValue : whole;
 	});
-	return new ValidationError(code, message, messageParams, dataPath, schemaPath, subErrors);
+	return new ValidationError(code, message, dataPath, schemaPath, subErrors);
 };
 ValidatorContext.prototype.returnError = function (error) {
 	return error;
@@ -450,11 +261,7 @@ ValidatorContext.prototype.getSchema = function (url, urlHistory) {
 	}
 };
 ValidatorContext.prototype.searchSchemas = function (schema, url) {
-	if (Array.isArray(schema)) {
-		for (var i = 0; i < schema.length; i++) {
-			this.searchSchemas(schema[i], url);
-		}
-	} else if (schema && typeof schema === "object") {
+	if (schema && typeof schema === "object") {
 		if (typeof schema.id === "string") {
 			if (isTrustedUrl(url, schema.id)) {
 				if (this.schemas[schema.id] === undefined) {
@@ -487,7 +294,7 @@ ValidatorContext.prototype.addSchema = function (url, schema) {
 			return;
 		}
 	}
-	if (url === getDocumentUri(url) + "#") {
+	if (url = getDocumentUri(url) + "#") {
 		// Remove empty fragment
 		url = getDocumentUri(url);
 	}
@@ -606,7 +413,6 @@ ValidatorContext.prototype.validateAll = function (data, schema, dataPathParts, 
 		|| this.validateArray(data, schema, dataPointerPath)
 		|| this.validateObject(data, schema, dataPointerPath)
 		|| this.validateCombinations(data, schema, dataPointerPath)
-		|| this.validateHypermedia(data, schema, dataPointerPath)
 		|| this.validateFormat(data, schema, dataPointerPath)
 		|| this.validateDefinedKeywords(data, schema, dataPointerPath)
 		|| null;
@@ -630,7 +436,7 @@ ValidatorContext.prototype.validateAll = function (data, schema, dataPathParts, 
 			this.prefixErrors(errorCount, dataPart, schemaPart);
 		}
 	}
-
+	
 	if (scannedFrozenSchemaIndex !== null) {
 		this.scannedFrozenValidationErrors[frozenIndex][scannedFrozenSchemaIndex] = this.errors.slice(startErrorCount);
 	} else if (scannedSchemasIndex !== null) {
@@ -651,26 +457,21 @@ ValidatorContext.prototype.validateFormat = function (data, schema) {
 	}
 	return null;
 };
-ValidatorContext.prototype.validateDefinedKeywords = function (data, schema, dataPointerPath) {
+ValidatorContext.prototype.validateDefinedKeywords = function (data, schema) {
 	for (var key in this.definedKeywords) {
-		if (typeof schema[key] === 'undefined') {
-			continue;
-		}
 		var validationFunctions = this.definedKeywords[key];
 		for (var i = 0; i < validationFunctions.length; i++) {
 			var func = validationFunctions[i];
-			var result = func(data, schema[key], schema, dataPointerPath);
+			var result = func(data, schema[key], schema);
 			if (typeof result === 'string' || typeof result === 'number') {
 				return this.createError(ErrorCodes.KEYWORD_CUSTOM, {key: key, message: result}).prefixWith(null, "format");
 			} else if (result && typeof result === 'object') {
-				var code = result.code;
+				var code = result.code || ErrorCodes.KEYWORD_CUSTOM;
 				if (typeof code === 'string') {
 					if (!ErrorCodes[code]) {
 						throw new Error('Undefined error code (use defineError): ' + code);
 					}
 					code = ErrorCodes[code];
-				} else if (typeof code !== 'number') {
-					code = ErrorCodes.KEYWORD_CUSTOM;
 				}
 				var messageParams = (typeof result.message === 'object') ? result.message : {key: key, message: result.message || "?"};
 				var schemaPath = result.schemaPath ||( "/" + key.replace(/~/g, '~0').replace(/\//g, '~1'));
@@ -771,20 +572,16 @@ ValidatorContext.prototype.validateEnum = function validateEnum(data, schema) {
 ValidatorContext.prototype.validateNumeric = function validateNumeric(data, schema, dataPointerPath) {
 	return this.validateMultipleOf(data, schema, dataPointerPath)
 		|| this.validateMinMax(data, schema, dataPointerPath)
-		|| this.validateNaN(data, schema, dataPointerPath)
 		|| null;
 };
 
-var CLOSE_ENOUGH_LOW = Math.pow(2, -51);
-var CLOSE_ENOUGH_HIGH = 1 - CLOSE_ENOUGH_LOW;
 ValidatorContext.prototype.validateMultipleOf = function validateMultipleOf(data, schema) {
 	var multipleOf = schema.multipleOf || schema.divisibleBy;
 	if (multipleOf === undefined) {
 		return null;
 	}
 	if (typeof data === "number") {
-		var remainder = (data/multipleOf)%1;
-		if (remainder >= CLOSE_ENOUGH_LOW && remainder < CLOSE_ENOUGH_HIGH) {
+		if (data % multipleOf !== 0) {
 			return this.createError(ErrorCodes.NUMBER_MULTIPLE_OF, {value: data, multipleOf: multipleOf});
 		}
 	}
@@ -810,16 +607,6 @@ ValidatorContext.prototype.validateMinMax = function validateMinMax(data, schema
 		if (schema.exclusiveMaximum && data === schema.maximum) {
 			return this.createError(ErrorCodes.NUMBER_MAXIMUM_EXCLUSIVE, {value: data, maximum: schema.maximum}).prefixWith(null, "exclusiveMaximum");
 		}
-	}
-	return null;
-};
-
-ValidatorContext.prototype.validateNaN = function validateNaN(data) {
-	if (typeof data !== "number") {
-		return null;
-	}
-	if (isNaN(data) === true || data === Infinity || data === -Infinity) {
-		return this.createError(ErrorCodes.NUMBER_NOT_A_NUMBER, {value: data}).prefixWith(null, "type");
 	}
 	return null;
 };
@@ -1191,7 +978,7 @@ ValidatorContext.prototype.validateOneOf = function validateOneOf(data, schema, 
 				}
 			}
 		} else if (error) {
-			errors.push(error);
+			errors.push(error.prefixWith(null, "" + i).prefixWith(null, "oneOf"));
 		}
 	}
 	if (this.trackUnknownProperties) {
@@ -1231,33 +1018,6 @@ ValidatorContext.prototype.validateNot = function validateNot(data, schema, data
 		return this.createError(ErrorCodes.NOT_PASSED, {}, "", "/not");
 	}
 	return null;
-};
-
-ValidatorContext.prototype.validateHypermedia = function validateCombinations(data, schema, dataPointerPath) {
-	if (!schema.links) {
-		return null;
-	}
-	var error;
-	for (var i = 0; i < schema.links.length; i++) {
-		var ldo = schema.links[i];
-		if (ldo.rel === "describedby") {
-			var template = new UriTemplate(ldo.href);
-			var allPresent = true;
-			for (var j = 0; j < template.varNames.length; j++) {
-				if (!(template.varNames[j] in data)) {
-					allPresent = false;
-					break;
-				}
-			}
-			if (allPresent) {
-				var schemaUrl = template.fillFromObject(data);
-				var subSchema = {"$ref": schemaUrl};
-				if (error = this.validateAll(data, subSchema, [], ["links", i], dataPointerPath)) {
-					return error;
-				}
-			}
-		}
-	}
 };
 
 // parseURI() and resolveUrl() are from https://gist.github.com/1088850
@@ -1347,7 +1107,6 @@ var ErrorCodes = {
 	NUMBER_MINIMUM_EXCLUSIVE: 102,
 	NUMBER_MAXIMUM: 103,
 	NUMBER_MAXIMUM_EXCLUSIVE: 104,
-	NUMBER_NOT_A_NUMBER: 105,
 	// String errors
 	STRING_LENGTH_SHORT: 200,
 	STRING_LENGTH_LONG: 201,
@@ -1376,7 +1135,7 @@ for (var key in ErrorCodes) {
 	ErrorCodeLookup[ErrorCodes[key]] = key;
 }
 var ErrorMessagesDefault = {
-	INVALID_TYPE: "Invalid type: {type} (expected {expected})",
+	INVALID_TYPE: "invalid type: {type} (expected {expected})",
 	ENUM_MISMATCH: "No enum match for: {value}",
 	ANY_OF_MISSING: "Data does not match any schemas from \"anyOf\"",
 	ONE_OF_MISSING: "Data does not match any schemas from \"oneOf\"",
@@ -1388,7 +1147,6 @@ var ErrorMessagesDefault = {
 	NUMBER_MINIMUM_EXCLUSIVE: "Value {value} is equal to exclusive minimum {minimum}",
 	NUMBER_MAXIMUM: "Value {value} is greater than maximum {maximum}",
 	NUMBER_MAXIMUM_EXCLUSIVE: "Value {value} is equal to exclusive maximum {maximum}",
-	NUMBER_NOT_A_NUMBER: "Value {value} is not a valid number",
 	// String errors
 	STRING_LENGTH_SHORT: "String is too short ({length} chars), minimum {minimum}",
 	STRING_LENGTH_LONG: "String is too long ({length} chars), maximum {maximum}",
@@ -1413,13 +1171,12 @@ var ErrorMessagesDefault = {
 	UNKNOWN_PROPERTY: "Unknown property (not in schema)"
 };
 
-function ValidationError(code, message, params, dataPath, schemaPath, subErrors) {
+function ValidationError(code, message, dataPath, schemaPath, subErrors) {
 	Error.call(this);
 	if (code === undefined) {
 		throw new Error ("No code supplied for error: "+ message);
 	}
 	this.message = message;
-	this.params = params;
 	this.code = code;
 	this.dataPath = dataPath || "";
 	this.schemaPath = schemaPath || "";
