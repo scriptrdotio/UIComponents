@@ -93,7 +93,7 @@ angular
                     "api",
                     "api-params",
                     "data",
-                    "on-format-data"
+                   // "on-format-data"
                   ]
                 },
                 {
@@ -145,69 +145,76 @@ angular
                    items: [
                       {
                         "type": "section",
-                        "htmlClass": "col-xs-6",
-                        "items": [{
-                            type: "radios-inline",
-                            key: "axes",
-                            titleMap: [
-                              { value: "true", name: "True" },
-                              { value: "false", name: "False" }
-                            ]
-                          },
-                          {
-                              "key": "resize",
-          					  "type": "radios-inline",
-                                titleMap: [
-                                  { value: "true", name: "True" },
-                                  { value: "false", name: "False" }
-                                ]
-                          },
-                          {
-                              type: "radios-inline",
-                              key: "hide-hover",
-                              titleMap: [
-                                { value: "true", name: "True" },
-                                { value: "false", name: "False" }
-                              ]
-                          },
-                          {
-                            "key": "stacked",
-        					  "type": "radios-inline",
-                              titleMap: [
-                                { value: "true", name: "True" },
-                                { value: "false", name: "False" }
-                              ]
-                        },
-                        {
-                            type: "radios-inline",
-                            key: "grid",
-                            titleMap: [
-                              { value: "true", name: "True" },
-                              { value: "false", name: "False" }
-                            ]
-                        }
-                        ]
-                      },
-                      {
-                        "type": "section",
-                        "htmlClass": "col-xs-6",
+                        "htmlClass": "row",
                         "items": [
-                        {
-                            type: "radios-inline",
-                            key: "parse-time",
-                            titleMap: [
-                              { value: "true", name: "True" },
-                              { value: "false", name: "False" }
+                              {
+                                 "type": "section",
+                                 "htmlClass": "col-xs-6",
+                                 "items": [
+                                      {
+                                        type: "radios-inline",
+                                        key: "axes",
+                                        titleMap: [
+                                          { value: "true", name: "True" },
+                                          { value: "false", name: "False" }
+                                        ]
+                                      },
+                                      {
+                                          "key": "resize",
+                                          "type": "radios-inline",
+                                            titleMap: [
+                                              { value: "true", name: "True" },
+                                              { value: "false", name: "False" }
+                                            ]
+                                      },
+                                      {
+                                          type: "radios-inline",
+                                          key: "hide-hover",
+                                          titleMap: [
+                                            { value: "true", name: "True" },
+                                            { value: "false", name: "False" }
+                                          ]
+                                      }
                             ]
-                        } ,"xlabel-angle", "hover-callback"]
-                      }
-                   ]
+                          },
+                          {
+                            "type": "section",
+                            "htmlClass": "col-xs-6",
+                            "items": [
+                               {
+                                 "key": "stacked",
+                                 "type": "radios-inline",
+                                 titleMap: [
+                                   { value: "true", name: "True" },
+                                   { value: "false", name: "False" }
+                                 ]
+                              },
+                              {
+                                  type: "radios-inline",
+                                  key: "grid",
+                                  titleMap: [
+                                    { value: "true", name: "True" },
+                                    { value: "false", name: "False" }
+                                  ]
+                              },
+                              {
+                                  type: "radios-inline",
+                                  key: "parse-time",
+                                  titleMap: [
+                                    { value: "true", name: "True" },
+                                    { value: "false", name: "False" }
+                                  ]
+                              } ,"xlabel-angle" /*"hover-callback"*/]
+                          }
+                       ]
+                    }
+                  ]
                 },
                 {
                    title: "Labels",
                    items: [
                         "labels",
-                        "ylabel-format",
+                       // "ylabel-format",
                     	"post-units",
                     	"pre-units"
                    ]
@@ -225,7 +232,7 @@ angular
 				"description": "Data series in case of static data.",
               	"x-schema-form": {
                   "type": "textarea",
-                  "placeholder": "data"
+                  "placeholder":  "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
                 }
 			},
 			"xkey": {
@@ -296,7 +303,8 @@ angular
 		 	"resize": {
 				"title": "Resize",
 				"type": "string",
-				"description": "Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default."
+				"description": "Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default.",
+                "default": "true",
 			},
 			"parse-time": {
 				"title": "Parse Time",
@@ -311,11 +319,15 @@ angular
 			"api-params": {
 				"title": "Api Params",
 				"type": "string",
-				"description": "Api parameters."
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
 			},
 			"transport": {
 				"title": "Transport",
 				"type": "string",
+                "enum": ["wss", "https"],
 				"description": "Method used to call api (can take 'http' or 'wss')."
 			},
 			"msg-tag": {
@@ -436,7 +448,7 @@ angular
 	                      "api",
 	                      "api-params",
 	                      "data",
-	                      "on-format-data"
+	                   //   "on-format-data"
 	                    ]
 	                  },
 	                  {
@@ -530,10 +542,10 @@ angular
 		                                { value: "false", name: "False" }
 		                              ]
 		                          },
-                                  "date-format",
-                                  "xlabel-format",
+                             //     "date-format",
+                              //    "xlabel-format",
                                   "xlabel-angle",
-                                  "ylabel-format"
+                               //   "ylabel-format"
                                   ]
                                  },
                                  {
@@ -563,7 +575,7 @@ angular
                                           { value: "true", name: "True" },
                                           { value: "false", name: "False" }
                                         ]
-                                     }, "hover-callback", "behave-like-line"
+                                     }, /* "hover-callback", */ "behave-like-line"
                                   ]
 	                            }
 	                     ]
@@ -588,7 +600,11 @@ angular
 			"data": {
 				"title": "Data",
 				"type": "string",
-				"description": "Data series in case of static data."
+				"description": "Data series in case of static data.",
+                "x-schema-form": {
+                  "type": "textarea",
+                  "placeholder":  "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
+                }
 			},
 			"xkey": {
 				"title": "x Key",
@@ -768,6 +784,7 @@ angular
 			"resize": {
 				"title": "Resize",
 				"type": "string",
+                "default" : "true",
 				"description": "Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default."
 			},
 			"behave-like-line": {
@@ -793,6 +810,7 @@ angular
 			"transport": {
 				"title": "Transport",
 				"type": "string",
+                "enum": ["wss", "https"],
 				"description": "Method used to call api (can take 'http' or 'wss')."
 			},
 			"msg-tag": {
@@ -803,7 +821,10 @@ angular
 			"api-params": {
 				"title": "Api Params",
 				"type": "string",
-				"description": "Api parameters."
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
 			}
 		},
 		"required": [
@@ -844,7 +865,7 @@ angular
 	                      "api",
 	                      "api-params",
 	                      "data",
-	                      "on-format-data"
+	                   //   "on-format-data"
 	                    ]
 	                  },
 	                  {
@@ -938,10 +959,10 @@ angular
 		                                { value: "false", name: "False" }
 		                              ]
 		                          },
-                                  "date-format",
-                                  "xlabel-format",
+                           //       "date-format",
+                            //      "xlabel-format",
                                   "xlabel-angle",
-                                  "ylabel-format"
+                            //      "ylabel-format"
                                   ]
                                  },
                                  {
@@ -971,7 +992,7 @@ angular
                                           { value: "true", name: "True" },
                                           { value: "false", name: "False" }
                                         ]
-                                     }, "hover-callback", "behave-like-line"
+                                     }, /* "hover-callback", */ "behave-like-line"
                                   ]
 	                            }
 	                     ]
@@ -996,7 +1017,11 @@ angular
 			"data": {
 				"title": "Data",
 				"type": "string",
-				"description": "Data series in case of static data."
+				"description": "Data series in case of static data.",
+                "x-schema-form": {
+                  "type": "textarea",
+                  "placeholder":  "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
+                }
 			},
 			"xkey": {
 				"title": "x Key",
@@ -1176,6 +1201,7 @@ angular
 			"resize": {
 				"title": "Resize",
 				"type": "string",
+                "default" : "true",
 				"description": "Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default."
 			},
 			"behave-like-line": {
@@ -1201,6 +1227,7 @@ angular
 			"transport": {
 				"title": "Transport",
 				"type": "string",
+                "enum": ["wss", "https"],
 				"description": "Method used to call api (can take 'http' or 'wss')."
 			},
 			"msg-tag": {
@@ -1211,7 +1238,10 @@ angular
 			"api-params": {
 				"title": "Api Params",
 				"type": "string",
-				"description": "Api parameters."
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
 			}
 		},
 		"required": [
@@ -1225,7 +1255,7 @@ angular
 	"defaults": {
 		"type": "donut",
 		"transport": "wss",
-		"msg-tag": "donut",
+        "data": '[{label: "Download Sales", value: 50}, {label: "In-Store Sales",value: 20 }, {label: "Mail-Order Sales", value: 30 }]',
      	"background-color":"#eee",
         "label-color":"ff0000",
         "parse-time": "false"
@@ -1250,7 +1280,7 @@ angular
 	                      "api",
 	                      "api-params",
 	                      "data",
-	                      "on-format-data"
+	                     // "on-format-data"
 	                    ]
 	                  },
 	                  {
@@ -1317,7 +1347,11 @@ angular
 			"data": {
 				"title": "Data",
 				"type": "string",
-				"description": "Data series in case of static data."
+				"description": "Data series in case of static data.",
+                "x-schema-form": {
+                  "type": "textarea",
+                  "placeholder":  "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
+                }
 			},
 			"colors": {
 				"title": "Colors",
@@ -1347,6 +1381,7 @@ angular
 			"resize": {
 				"title": "Resize",
 				"type": "string",
+                "default" : "true",
 				"description": "Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default."
 			},
 			"api": {
@@ -1362,6 +1397,7 @@ angular
 			"transport": {
 				"title": "Transport",
 				"type": "string",
+                "enum": ["wss", "https"],
 				"description": "Method used to call api (can take 'http' or 'wss')."
 			},
 			"msg-tag": {
@@ -1372,7 +1408,10 @@ angular
 			"api-params": {
 				"title": "Api Params",
 				"type": "string",
-				"description": "Api parameters."
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
 			}
 		},
 		"required": []
@@ -1406,7 +1445,7 @@ angular
 	                      "msg-tag",
 	                      "api",
 	                      "api-params",
-	                      "on-format-data"
+	                     // "on-format-data"
 	                    ]
 	                  },
 	                  {
@@ -1542,82 +1581,86 @@ angular
 			"custom-sectors": {
 				"title": "Custom Sectors",
 				"type": "string",
-				"description": "array of objects with color, hi, lo attributes."
+				"description": "Array of objects with color, hi, lo attributes.",
+                "x-schema-form": {
+              	  "type": "textarea",
+                  "placeholder": "Ex: [{color : '#A3CD3B', lo : 0, hi : 25}, { color : '#FF4A43', lo : 25, hi : 100 }]"
+                }
 			},
 			"value-font-color": {
 				"title": "Value Font Color",
 				"type": "string",
-				"description": "color of the value text."
+				"description": "Color of the value text."
 			},
 			"min": {
 				"title": "Minimum Value",
 				"type": "number",
-				"description": "minimum value."
+				"description": "Minimum value."
 			},
 			"max": {
 				"title": "Maximum Value",
 				"type": "number",
-				"description": "maximum value."
+				"description": "Maximum value."
 			},
 			"hide-min-max": {
 				"title": "Hide min-max",
 				"type": "string",
-				"description": "hide min and max values."
+				"description": "Hide min and max values."
 			},
 			"hide-value": {
 				"title": "Hide Value",
 				"type": "string",
-				"description": "hide value text."
+				"description": "Hide value text."
 			},
 			"hide-inner-shadow": {
 				"title": "Hide inner-shadow",
 				"type": "string",
-				"description": "hide inner shadow."
+				"description": "Hide inner shadow."
 			},
 			"gauge-color": {
 				"title": "Gauge Color",
 				"type": "string",
-				"description": "background color of gauge element."
+				"description": "Background color of gauge element."
 			},
 			"show-inner-shadow": {
 				"title": "Show inner-shadow",
 				"type": "string",
-				"description": "true to display inner shadow."
+				"description": "True to display inner shadow."
 			},
 			"shadow-size": {
 				"title": "Shadow Size",
 				"type": "string",
-				"description": "inner shadow size."
+				"description": "Inner shadow size."
 			},
 			"shadow-opacity": {
 				"title": "Shadow Opacity",
 				"type": "string",
-				"description": "shadow opacity, values 0 ~ 1."
+				"description": "Shadow opacity, values 0 ~ 1."
 			},
 			"label": {
 				"title": "Label",
 				"type": "string",
-				"description": "text to show below value."
+				"description": "Text to show below value."
 			},
 			"label-font-color": {
 				"title": "Label Font Color",
 				"type": "string",
-				"description": "color of label under the value."
+				"description": "Color of label under the value."
 			},
 			"start-animation-type": {
 				"title": "Start Animation Type",
 				"type": "string",
-				"description": "type of initial animation (linear, >, <, <>, bounce)."
+				"description": "Type of initial animation (linear, >, <, <>, bounce)."
 			},
 			"refresh-animation-type": {
 				"title": "Refresh Animation Type",
 				"type": "string",
-				"description": "type of refresh animation (linear, >, <, <>, bounce)."
+				"description": "Type of refresh animation (linear, >, <, <>, bounce)."
 			},
 			"counter": {
 				"title": "Counter",
 				"type": "string",
-				"description": "increase numbers one by one."
+				"description": "Increase numbers one by one."
 			},
           
             "width": {
@@ -1644,6 +1687,7 @@ angular
 			"transport": {
 				"title": "Transport",
 				"type": "string",
+             	"enum": ["wss", "https"],
 				"description": "Method used to call api (can take 'http' or 'wss')."
 			},
 			"msg-tag": {
@@ -1654,7 +1698,10 @@ angular
 			"api-params": {
 				"title": "Api Params",
 				"type": "string",
-				"description": "Api parameters."
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
 			}
 		},
 		"required": []
@@ -1688,7 +1735,7 @@ angular
 	                      "msg-tag",
 	                      "api",
 	                      "api-params",
-	                      "on-format-data"
+	                //      "on-format-data"
 	                    ]
 	                  },
 	                  {
@@ -1759,7 +1806,7 @@ angular
 			"gauge-radius": {
 				"title": "Gauge Radius",
 				"type": "string",
-				"description": "sets the size of the gauge."
+				"description": "Sets the size of the gauge."
 			},
 			"min-val": {
 				"title": "Minimum Value",
@@ -1779,12 +1826,12 @@ angular
 			"tick-space-min-val": {
 				"title": "Tick Space min-val",
 				"type": "number",
-				"description": "space between the major ticks of the gauge."
+				"description": "Space between the major ticks of the gauge."
 			},
 			"tick-space-maj-val": {
 				"title": "Tick Space maj-val",
 				"type": "number",
-				"description": "space between the sub ticks of the gauge."
+				"description": "Space between the sub ticks of the gauge."
 			},
 			"gauge-units": {
 				"title": "Gauge Units",
@@ -1794,47 +1841,47 @@ angular
 			"tick-col-maj": {
 				"title": "Tick col-maj",
 				"type": "string",
-				"description": "sets colour of the major tick."
+				"description": "Sets colour of the major tick."
 			},
 			"tick-col-min": {
 				"title": "Tick col-min",
 				"type": "string",
-				"description": "sets colour of the sub tick."
+				"description": "Sets colour of the sub tick."
 			},
 			"outer-edge-col": {
 				"title": "Outer Edge colour",
 				"type": "string",
-				"description": "sets the colour of outer circle of the gauge."
+				"description": "Sets the colour of outer circle of the gauge."
 			},
 			"pivot-col": {
 				"title": "Pivot colour",
 				"type": "string",
-				"description": "sets colour of the pivot."
+				"description": "Sets colour of the pivot."
 			},
 			"inner-col": {
 				"title": "Inner colour",
 				"type": "string",
-				"description": "sets colour of inner body of the gauge."
+				"description": "Sets colour of inner body of the gauge."
 			},
 			"units-label-col": {
 				"title": "Units Label Colour",
 				"type": "string",
-				"description": "sets colour of units label."
+				"description": "Sets colour of units label."
 			},
 			"tick-label-col": {
 				"title": "Tick Label Colour",
 				"type": "string",
-				"description": "sets colour of labels of the ticks."
+				"description": "Sets colour of labels of the ticks."
 			},
 			"needle-col": {
 				"title": "Needle Colour",
 				"type": "string",
-				"description": "sets colour of the needle."
+				"description": "Sets colour of the needle."
 			},
 			"default-fonts": {
 				"title": "Default Fonts",
 				"type": "string",
-				"description": "sets the default fonts in gauge."
+				"description": "Sets the default fonts in gauge."
 			},
 			"api": {
 				"title": "Api",
@@ -1849,6 +1896,7 @@ angular
 			"transport": {
 				"title": "Transport",
 				"type": "string",
+              	"enum": ["wss", "https"],
 				"description": "Method used to call api (can take 'http' or 'wss')."
 			},
 			"msg-tag": {
@@ -1859,7 +1907,10 @@ angular
 			"api-params": {
 				"title": "Api Params",
 				"type": "string",
-				"description": "Api parameters."
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
 			}
 		},
 		"required": []
@@ -1896,11 +1947,11 @@ angular
 	                      "msg-tag",
 	                      "api",
 	                      "api-params",
-	                      "on-format-data"
+	                   //   "on-format-data"
 	                    ]
 	                  },
 	                  {
-	                    title: "Gauge behaviour",
+	                    title: "Odometer behaviour",
 	                    items: ["duration", "animation", "size"]
 	                  }
 	                ]
@@ -1943,6 +1994,7 @@ angular
 			"transport": {
 				"title": "Transport",
 				"type": "string",
+                "enum": ["wss", "https"],
 				"description": "Method used to call api (can take 'http' or 'wss')."
 			},
 			"msg-tag": {
@@ -1953,7 +2005,10 @@ angular
 			"api-params": {
 				"title": "Api Params",
 				"type": "string",
-				"description": "Api parameters."
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
 			}
 		},
 		"required": []
