@@ -56,10 +56,7 @@ angular
                 if(self.api) {
                   wsClient.call(self.api, self.apiParams, self.msgTag)
                     .then(function(data, response) {
-                    if(typeof self.onFormatData() == "function"){
-                       data = self.onFormatData()(data);
-                    }
-                    self.consumeData(data)
+                      self.consumeData(data)
                   });
                 }
 

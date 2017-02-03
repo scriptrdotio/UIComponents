@@ -23,6 +23,8 @@ angular
       
         "initialSelection" : "@",
       
+        "apiParams" : "<?",
+      
         "transport" : "@",
       
         "api" : "@",
@@ -58,13 +60,20 @@ angular
         }
          
          var initDataService = function(transport, searchValue) {
+           var params = {};
+           params[self.paramName] = searchValue;
+           
+           if(self.apiParams){
+             for(var param in self.apiParams){
+                 params[param] = self.apiParams[param];
+             }
+           }
+           
            if (transport == "wss") {
              wsClient.onReady.then(function() {
                // Subscribe to socket messages with id chart
                wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
                if(self.api) {
-                 var params = {};
-                 params[self.paramName] = searchValue;
                  wsClient.call(self.api, params, self.msgTag)
                    .then(function(data, response) {
                    self.consumeData(data)
@@ -74,12 +83,9 @@ angular
            }else {
                 if (transport == "https" && self.api) {
                     httpClient
-                      .get(self.api, self.apiParams)
+                      .get(self.api, params)
                       .then(
                       function(data, response) {
-                        if(typeof self.onFormatData() == "function"){
-                           data = self.onFormatData()(data);
-                        }
                         self.consumeData(data)
                       },
                       function(err) {
