@@ -35,6 +35,8 @@ angular
                   "showInnerShadow" : "@",
                  
                   "gaugeValue" : "@",
+                  
+                  "customSectors": "<?",
 
                   "shadowSize" : "@",
 
