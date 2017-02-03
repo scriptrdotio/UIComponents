@@ -99,7 +99,10 @@
 | parse-input | A function or expression to parse input string before comparing into search process. |  No | parseInput() |
 | field-tabindex | Setting the tabindex attribute on the input field. |  No | field-tabindex="25" |
 | api | Name of the API to get data | Required if getting data from backend | NO |
-| on-format-data | Callback function to be called after data is returned from backend | NO |
+| on-format-data | Callback function to be called after data is returned from backend | NO | 
+| transport |	method used to call api (can take "https" or "wss").	 | NO | "wss"
+| msg-tag   |	Subscribe to socket messages with tag name.		     | NO | "countries" |
+| api-params  | 	api parameters.  					| NO | {"id" : "countries"} |
   
  
 ## Component usage:
