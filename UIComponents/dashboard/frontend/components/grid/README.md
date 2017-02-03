@@ -74,7 +74,7 @@
   grid-height | 500 | Set grid height | NO
   enable-col-resize       | false    | Enable column resize. | NO
   row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination"	| NO
-  row-selection       | "multiple"    | 	Type of row selection, set to either 'single' or 'multiple' to enable selection.	| NO
+  row-model-selection       | "multiple"    | Set to either 'single' or 'multiple' in case of backend data. Set to 'normal' in case of static data	| NO
   pagination-page-size       | 50    | 	Number of rows per page.	| NO
   service-api       | undefined | Name of the api to call backend data | NO
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO
