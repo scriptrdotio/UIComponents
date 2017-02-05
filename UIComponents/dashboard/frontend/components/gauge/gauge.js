@@ -91,7 +91,7 @@ angular
 		               this.shadowSize = (this.shadowSize) ? this.shadowSize : 0;
 		               this.shadowOpacity = (this.shadowOpacity) ? this.shadowOpacity
 		                     : 0;
-		               this.label = (this.label) ? this.label : "% full";
+		               this.label = (this.label) ? this.label : "";
 		               this.labelFontColor = (this.labelFontColor) ? this.labelFontColor
 		                     : "#666";
 		               this.startAnimationType = (this.startAnimationType) ? this.startAnimationType
