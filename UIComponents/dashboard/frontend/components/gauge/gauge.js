@@ -142,8 +142,8 @@ angular
 	               }
 
 	              this.consumeData = function(data, response) {
-                       if(typeof self.onFormatData() == "function"){
-                         data = self.onFormatData()(data);
+                       if(typeof this.onFormatData() == "function"){
+                         data = this.onFormatData()(data);
                        }
 		               this.gaugeValue = data;
 	               }
