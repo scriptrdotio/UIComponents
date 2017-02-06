@@ -1,6 +1,9 @@
 <html ng-app="myApp">
 <head>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
+    <title>Dashboard Builder</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     
    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
@@ -12,6 +15,10 @@
    <!-- Add the slick-theme.css if you want default styling -->
    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css">
    <script  src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
   
     <!-- Adding Angular -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
@@ -66,8 +73,6 @@
   <script src="/UIComponents/dashboardBuilder/lib/schemaForm/schemaForm.js"></script>
   <script src="/UIComponents/dashboardBuilder/lib/schemaForm/bootstrapDecorator.js"></script>
   
- 
-   
    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/dashboard.css">
   
    <script src="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js"></script>
@@ -75,11 +80,24 @@
    <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgetsConfig.js"></script>
    <script src="/UIComponents/dashboardBuilder/javascript/components/dashboard.js"></script>
    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script>
-    
+  
+   <!-- Search box -->
+   <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/searchBox/abn_tree.css">
+   <script src="/UIComponents/dashboard/frontend/components/searchBox/abn_tree_directive.js"></script>
+   <script src="/UIComponents/dashboard/frontend/components/searchBox/searchBox.js"></script>
+  
+   <!-- NG material -->
+   <link rel="stylesheet" href="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.css">
+   <script src="//s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>      
+   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>      
+   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script> 
+   <script src="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.js"></script>                                
+                                
+        
 </head> 
   
 <script>
-      var myApp= angular.module("myApp", ['ngAnimate', 'ngSanitize', "WsClient", "HttpClient", "Chart", 'gridster',  'ngRoute','DashboardBuilder', 'Gauge', 'Speedometer', 'Odometer']);
+      var myApp= angular.module("myApp", ['ngAnimate', 'ngSanitize', "WsClient", "HttpClient", "Chart", 'gridster',  'ngRoute','DashboardBuilder', 'Gauge', 'Speedometer', 'Odometer', 'SearchBox', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
       angular.module('myApp').config(wssConfig);
       angular.module('myApp').config(httpsConfig);
       angular.module('myApp').config(function($routeProvider){
@@ -181,8 +199,16 @@
      myApp.controller('RootCtrl', function($scope) {
        var vm = this;
        vm.gridsterOptions = {
-          columns: 6,
-          floating: true,
+          minRows: 1, // the minimum height of the grid, in rows
+          maxRows: 100,
+          columns: 6, // the width of the grid, in columns
+          colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
+          rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+          margins: [10, 10], // the pixel distance between each widget
+          defaultSizeX: 2, // the default width of a gridster item, if not specifed
+          defaultSizeY: 1, // the default height of a gridster item, if not specified
+          mobileBreakPoint: 1024, // if the screen is not wider that this, remove the grid layout and stack the items
+          minColumns: 1,
           resizable: {
             enabled: false
           },

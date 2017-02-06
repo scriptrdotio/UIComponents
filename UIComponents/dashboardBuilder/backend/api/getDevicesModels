@@ -1,0 +1,188 @@
+var log = require("log");
+log.setLevel("INFO");
+/*
+var value =  [
+             {
+                label: 'node1',
+                children: [
+                            {
+                            label: 'node1.1',
+                            children: ['node1.1.1','node1.1.2','node1.1.3']
+                            },
+                            'node1.2',
+                            'node1.3'
+                		  ]
+              },
+              { 
+                label: 'node2',
+                children: ['node2.1','node2.2','node2.3']
+              }
+            ]
+*/
+var value = [
+  {
+ "label": "devicemodels.vehicle",
+ "className": "devicemodels.vehicle",
+ "type": "model",
+ "children": [
+  {
+   "speed": {
+    "type": "numeric",
+    "widget": {
+     "type": "speedometer"
+    }
+   },
+   "type": "class-attribute",
+   "clickable": true,
+   "label": "speed"
+  },
+  {
+   "voltage": {
+    "type": "numeric",
+    "widget": {
+     "type": "gauge"
+    }
+   },
+   "type": "class-attribute",
+   "clickable": true,
+   "label": "voltage"
+  },
+  {
+   "oil": {
+    "type": "numeric",
+    "widget": {
+     "type": "gauge"
+    }
+   },
+   "type": "class-attribute",
+   "clickable": true,
+   "label": "oil"
+  },
+  {
+   "running": {
+    "type": "boolean",
+    "widget": {
+     "type": "toggle"
+    }
+   },
+   "type": "class-attribute",
+   "clickable": true,
+   "label": "running"
+  },
+  {
+   "enabled": {
+    "type": "boolean",
+    "widget": {
+     "type": "led"
+    }
+   },
+   "type": "class-attribute",
+   "clickable": true,
+   "label": "enabled"
+  },
+  {
+   "online": {
+    "type": "boolean",
+    "widget": {
+     "type": "led"
+    }
+   },
+   "type": "class-attribute",
+   "clickable": true,
+   "label": "online"
+  },
+  {
+   "location": {
+    "type": "geolocation",
+    "widget": {
+     "type": "map"
+    }
+   },
+   "type": "class-attribute",
+   "clickable": true,
+   "label": "location"
+  },
+  {
+   "id": "porshe",
+   "label": "porshe",
+   "className": "devicemodels.vehicle",
+   "type": "instance",
+   "clickable": true,
+   "children": [
+    {
+     "speed": {
+      "type": "numeric",
+      "widget": {
+       "type": "slider"
+      }
+     },
+     "type": "instance-attribute",
+     "clickable": true,
+     "label": "speed"
+    },
+    {
+     "running": {
+      "type": "boolean",
+      "widget": {
+       "type": "toggle"
+      }
+     },
+     "type": "instance-attribute",
+     "clickable": true,
+     "label": "running"
+    },
+    {
+     "enabled": {
+      "type": "boolean",
+      "widget": {
+       "type": "led"
+      }
+     },
+     "type": "instance-attribute",
+     "clickable": true,
+     "label": "enabled"
+    },
+    {
+     "online": {
+      "type": "boolean",
+      "widget": {
+       "type": "led"
+      }
+     },
+     "type": "instance-attribute",
+     "clickable": true,
+     "label": "online"
+    },
+    {
+     "location": {
+      "type": "geolocation",
+      "widget": {
+       "type": "map"
+      }
+     },
+     "type": "instance-attribute",
+     "clickable": true,
+     "label": "location"
+    }
+   ]
+  }
+ ]
+}
+]
+
+var requestParams = request.body;
+
+var publishResponse = function(channel, data, request) {
+   var message = {"result": data};
+   if(request.body && request.body.id) {
+     message["id"] = request.body.id;
+   } else {
+     //Add a default id to identify the message published over the socket
+      message["id"] = "gauge";
+   }
+   publish(channel, message);
+}
+
+publishResponse("responseChannel", value, request);
+
+return value;

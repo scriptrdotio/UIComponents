@@ -1,13 +1,20 @@
+body {font-family: 'Source Sans Pro', sans-serif;}
+html {background: #efefef;}
 .pdt10 {padding-top: 10px;}
 .pdb10 {padding-bottom: 10px;}
+.pdr10 {padding-right: 10px;}
+
+
+.pdt5 {padding-top: 5px;}
+.pdb5 {padding-bottom: 5px;}
+
+.pdl0 {padding-left: 0px;}
 .ml5 {margin-left: 5px;}
 
 .controls {
     margin-bottom: 20px;
 }
-.page-header {
-    margin-top: 20px;
-}
+
 ul {
     list-style: none;
 }
@@ -34,23 +41,26 @@ form { margin-bottom: 0;}
 .slick-slide {height: auto; text-align: center;}
 .slick-slide a[ng-click] {display: block; padding: 7px 0; color: #333;  background: #fdfdfd; box-shadow: 0 0 3px #b7b3b3 inset; cursor: pointer}
 .slick-slide a:hover, .slick-slide a:active {background: #f5f5f5; text-decoration: none;} 
-.slick-slide a:focus {outline: 0;}
-.slick-slide img {margin: 0 auto;}
-.slick-label {font-size: 12px;padding-top: 3px;line-height: 2.4em;font-weight: bold;}
+.slick-slide a:focus {outline: 0!important; text-decoration: none;}
+.slick-slide img {margin: 0 auto; display: inline;}
+.slick-label {font-size: 12px;padding-top: 3px;line-height: 2.4em; margin-left: 5px;}
 .slick-prev:before, .slick-next:before {color: #ff8c00;}
 
 /*** Gridtser ***/
 .gridster-item {cursor: move;}
-
+.gridster-loaded {background: #fff;}
 
 
 /** MFE **/
 .page-header {
-  padding-bottom: 0px;
-  margin: 5px;
-  border-bottom: 0px;
+padding: 5px 0;
+margin: 0;
+  border: none;
+  background: #fff;
 }
 
+.page-header .form-group {margin-bottom: 0;}
+.page-header .help-block {display: none;}
 :focus {
   outline: 0!important;
 }
@@ -73,3 +83,38 @@ form { margin-bottom: 0;}
 .gauge {
   margin: 0 auto;
 }
+
+/***  devices-models-tree ***/
+.devices-models-tree {height: calc(100vh - 44px);}
+.devices-models-tree .button-wrapper {padding: 0;}
+.devices-models-tree ul.abn-tree {margin-top: 10px;}
+
+.devices-models-tree ul.abn-tree li.abn-tree-row a {color: #555;}
+
+.devices-models-tree .nav-pills>li.active>a, 
+.devices-models-tree .nav-pills>li.active>a:focus, 
+.devices-models-tree .nav-pills>li.active>a:hover {background: #eca846; color: #fff!important;}
+
+.devices-models-tree ul.abn-tree i.indented {color: #eca846;}
+.devices-models-tree ul.abn-tree li.active i.indented {color: #fff;}
+
+
+@media screen and (max-width: 560px) {
+  .slick-slide a[ng-click] {min-height: 55px;}
+  .slick-label {line-height: 1.5em;}
+  .slick-slide img {max-width: 100%;}
+  .slick-label {display: none;}
+}
+
+@media screen and (min-width: 833px) {
+  .slick-slide a[ng-click] {min-height: 44px;}
+  .slick-slide img {width: 19%;}
+  .slick-slide .odometer-img, .slick-slide .gauge-img {width: 28%;}
+}
+
+@media screen and (min-width: 561px) and (max-width: 832px) { 
+  .slick-slide img {max-width: 100%;}
+  .slick-label {line-height: inherit; display: block;}
+  .slick-slide a[ng-click] {min-height: 88px;}
+}
+

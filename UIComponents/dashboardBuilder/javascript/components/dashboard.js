@@ -18,10 +18,11 @@ angular
   'dashboard',
   {
     bindings : {
-      widgets: "<"
+      widgets: "<",
+      devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $timeout, $window, config, $uibModal, scriptrService, $route, $routeParams) {
+    controller: function($scope, $timeout, $window, config, $uibModal, scriptrService, $route, $routeParams, _) {
       
       this.show = false;
       this.isEdit = false;      
@@ -123,11 +124,42 @@ angular
           }
         };
         
-        
         this.widgetsConfig = config.widgets; 
         this.dataLoaded = true;
       };
       
+      this.selectBranch = function(branch) {
+         console.log("Clicked branch data", branch);
+        //Get clicked item Name
+        var itemLabel = branch.label
+        //Check if it has a ui representation
+        
+        if(branch[itemLabel] && branch[itemLabel].widget && branch[itemLabel] .widget.type) {
+          var wdg = _.findWhere(config.widgets, {"name": branch[itemLabel].widget.type});
+          console.log("Widget is", wdg);
+          if(wdg) {
+             this.dashboard.widgets.push({
+                "name":  branch.label,
+                "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
+                "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
+                "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
+                "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
+                "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
+                "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
+                "label": wdg.label,
+                "type": wdg.class,
+                "options": wdg.defaults,
+                "schema": wdg.schema,
+                "form": wdg.form
+            })
+          }
+        } else {
+           return;
+        };
+        
+        
+       
+      }
       
       this.initializeDashboard =  function() {
           this.dashboard = { widgets: [] };
@@ -405,5 +437,24 @@ angular
         console.log("Dissmissed")
       };
 
+    }
+});
+
+angular
+  .module('DashboardBuilder')
+  .component('sidetoolbar', 
+  {
+  	bindings: {
+    },
+    templateUrl: '/UIComponents/dashboardBuilder/javascript/components/sideToolbar.html',
+    controller: function ($scope, $mdSidenav) {
+      this.close = function () {
+        // Component lookup should always be available since we are not using `ng-if`
+        $mdSidenav('left').close()
+          .then(function () {
+            console.debug("close LEFT is done");
+          });
+
+      };
     }
 });

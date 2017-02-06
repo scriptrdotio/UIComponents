@@ -1,0 +1,22 @@
+ <md-sidenav
+        class="md-sidenav-left"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-sm')"
+        md-whiteframe="2">
+		<scriptr-searchbox
+            api='UIComponents/dashboard/frontend/examples/searchBox/getFile'
+        </scriptr-searchbox>
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Sidenav Left</h1>
+      </md-toolbar>
+      <md-content layout-padding>
+        <md-button ng-click="$ctrl.close()" class="md-primary" hide-gt-md>
+          Close Sidenav Left
+        </md-button>
+        <p hide show-gt-md>
+         <scriptr-searchbox
+            api='UIComponents/dashboard/frontend/examples/searchBox/getFile'
+          </scriptr-searchbox>
+        </p>
+      </md-content>
+</md-sidenav>
