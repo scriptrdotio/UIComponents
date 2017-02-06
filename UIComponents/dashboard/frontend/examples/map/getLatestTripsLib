@@ -1,0 +1,62 @@
+function getTrips(request, source){
+//query will look like
+  /*
+{	timeframe: "this_1_years" || {start: iso date, end: iso date},
+    limit: 500,
+    properties: [fuel, ] optional
+}
+*/
+  //response will look like
+  /*
+{
+	vehicleId: {
+    	order: [tripId, ]
+    	tripId: [{lat: 123, long: 123, fuel: {value: 65, description: "percentage of fuel left"} },...]
+    }
+}
+*/
+  var config = require("UIComponents/dashboard/frontend/examples/map/config");
+  var log = require("log");
+  log.setLevel("INFO");
+  var query = null;
+  if(request.body != null){
+    query = request.body;
+  }else{
+    if(request.parameters.body != null){
+      	try{
+      		query = JSON.parse(request.parameters.body);  
+    	}catch(e){
+      		return "INVALID PARAMETER: invalid JSON";
+    	}
+    }
+  }
+  if(query == null){
+    	query = {}
+  }
+  var timeframe = query.timeframe == null? "this_1_years" : query.timeframe;
+  var limit = query.limit == null? config.DEFAULT_LIMIT : query.limit;
+  var properties = query.properties;
+  if(properties != null){
+    try{
+      properties = JSON.parse(properties);
+    }catch(e){
+      properties = config.getDefaultProperties(source);
+    }
+  }else{
+    properties = config.getDefaultProperties(source);
+  }
+  var document = require("document");
+  
+ var filter = 'source="' + source + '"';
+ var res = document.query({"query":filter, "fields":"*", "sort":"apsdb.creationTime<date:DESC>"});
+ if(res.result.documents) {
+   var response = res.result.documents;
+ }
+
+ if(!response)
+   return {};
+  
+ // console.log('we are here');
+  var dataFormatter = require("UIComponents/dashboard/frontend/examples/map/dataFornatter");
+  return dataFormatter.format(response, properties, config);
+}

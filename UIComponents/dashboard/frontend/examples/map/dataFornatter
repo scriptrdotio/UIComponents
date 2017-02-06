@@ -1,0 +1,52 @@
+/**
+returns the data in the following format
+{
+	vehicleId: {
+    	order: [tripId, ]
+    	tripId: [{lat: 123, long: 123, fuel: {value: 65, description: "percentage of fuel left"} },...]
+    }
+}
+*/
+function format(data, properties, config){
+    var trips = {}
+    for(var i = 0; i< data.length; i++){
+      var trip = data[i];
+      if(trips[trip.vehicleId] == null){
+        trips[trip.vehicleId] = {};
+        trips[trip.vehicleId]["source"] = trip.source;
+        trips[trip.vehicleId][trip.id] = [];
+        trips[trip.vehicleId]["order"] = [trip.id];
+      }
+      if(trips[trip.vehicleId][trip.id] == null){
+        trips[trip.vehicleId][trip.id] = [];
+        trips[trip.vehicleId]["order"].push(trip.id);
+      }
+      var point = {
+        lat: trip.lat,
+        long: trip.long
+   //     timestamp: trip.keen.timestamp
+      };
+      for(var j =0 ; j < properties.length; j++){
+        var prop = config.getPropertyKeys(properties[j]);
+        if(prop != null){
+          var value;
+          if(prop.formatter != null){
+          	value = prop.formatter(trip[prop.key]);
+          }else{
+            value = trip[prop.key];
+          }
+          point[properties[j]] = {
+            value: value,
+            description: trip[prop.description]
+          }  
+        }else{
+          point[properties[j]] = {
+            value: null,
+            description: "INVALID REQUESTED PROPERTY"
+          } 
+        }	
+      }
+      trips[trip.vehicleId][trip.id].push(point);
+    }
+    return trips;
+}

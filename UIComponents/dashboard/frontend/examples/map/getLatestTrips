@@ -1,0 +1,21 @@
+//query will look like
+/*
+{	timeframe: "this_1_years" || {start: iso date, end: iso date}, optional
+    limit: 500, optional
+    properties: [fuel, ] optional
+}
+*/
+//response will look like
+/*
+{
+	vehicleId: {
+    	order: [tripId, ]
+    	tripId: [{lat: 123, long: 123, fuel: {value: 65, description: "percentage of fuel left"} },...]
+    }
+}
+*/
+var log = require("log");
+log.setLevel("INFO");
+
+var getTripsLib = require("UIComponents/dashboard/frontend/examples/map/getLatestTripsLib");
+return getTripsLib.getTrips(request, "simulator");
