@@ -35,19 +35,20 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
   <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
   ```
-  
-  Include Angular Animate and Angular Sanitize
-  
-  ```html
-   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
-   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
-   ```
    
   Include  Angular UI Bootstrap
    
   ```html
   <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
   ```
+     
+  Include Angular Animate, Angular Sanitize and ProgressBar.js component
+  
+  ```html
+   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+   <script src="/UIComponents/dashboard/frontend/components/progressBar/progressBar.js"></script>
+   ```
   
   Include wsProvider and httpProvider for calling backend API's
   
