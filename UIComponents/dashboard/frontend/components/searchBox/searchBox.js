@@ -17,7 +17,7 @@ angular
       
         "iconCollapse" : "@",
       
-        "onSelect" : "&",
+        "onSelect" : "<?",
       
         "expandLevel" : "@",
       
