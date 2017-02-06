@@ -77,18 +77,7 @@
   max     | 100	 | A number that specifies the total value of bars that is required. | NO
   animate     | true |  Whether bars use transitions to achieve the width change. | NO
   title     | true |  Title to use as label (for accessibility). | NO
-  stacked     | null | Array of objects representing multiple stacked progress bars. Ex "[
-                    {
-                     value : 50,
-                     type : "success",
-                     title : "bar1"
-                    },
-                    {
-                     value : 70,
-                     type : "warning",
-                     title : "bar2"
-                    }
-                    ]" | NO
+  stacked     | null | Array of objects representing multiple stacked progress bars. | NO
   api       | undefined    | 	Name of the api to call backend data.		| Required if calling data from backend	 
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO
   transport |  'wss'     | 	method used to call api (can take "https" or "wss").		 | NO
