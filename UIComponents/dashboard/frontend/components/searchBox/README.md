@@ -8,8 +8,6 @@
   
   AngularJS v1.5.6+
   
-  Angular Animate 
-  
   abn_tree.css
   
   abn_tree_directive.js
@@ -79,6 +77,7 @@
   icon-collapse   | "icon-minus glyphicon glyphicon-minus fa fa-minus" | Bootstrap class | NO
   expand-level    | "1" |  Tree expanded level by default. | NO
   initial-selection     | null | Selected element by default | NO
+  param-name | "criteria" | Parameter name | NO
   api       | undefined    | 	Name of the api to call backend data.		| Required if calling data from backend	 
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO
   transport |  'wss'     | 	method used to call api (can take "https" or "wss").		 | NO
