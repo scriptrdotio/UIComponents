@@ -10,27 +10,27 @@ angular
         
         "onLoad" : "&onLoad",
         
-        "value" : "@",
+        "value" : "@", // The current value of progress bar.
         
-        "type" : "@",
+        "type" : "@", // Bootstrap style type. Possible values are 'success', 'info', 'warning', and, 'danger' to use Bootstrap's pre-existing styling, or any desired custom suffix.
         
-        "max" : "@",
+        "max" : "@", //  A number that specifies the total value of bars that is required.
         
-        "title" : "@",
+        "title" : "@", // Title to use as label (for accessibility).
         
-        "animate": "<?",
+        "animate": "<?", // Whether bars use transitions to achieve the width change.
         
-        "stacked" : "<?",
+        "stacked" : "<?", // Array of objects representing multiple stacked progress bars
         
-        "api": "@",
+        "api": "@", // Name of the api to call backend data.
         
-        "transport" : "@",
+        "transport" : "@", // 	method used to call api (can take "https" or "wss").
         
-        "msgTag" : "@",
+        "msgTag" : "@", // Subscribe to socket messages with tag name.
         
-        "apiParams" : "<?",
+        "apiParams" : "<?", // api parameters. 
         
-        "onFormatData" : "&"
+        "onFormatData" : "&" // Callback function to be called after data is returned from backend 
         
       },
       templateUrl: '/UIComponents/dashboard/frontend/components/progressBar/progressBar.html',
