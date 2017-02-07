@@ -26,7 +26,7 @@
 </head> 
  
 <script>
-    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart", "Speedometer", "Odometer", "Gauge", "List", "Grid"])
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart", "Speedometer", "Odometer", "Gauge", "List", "Grid", "SearchBox"])
     angular.module('myApp').config(wssConfig);
     angular.module('myApp').config(httpsConfig);
     angular.module('myApp').run(templates);
@@ -225,6 +225,13 @@
            transport='wss' 
            service-api='UIComponents/dashboard/frontend/examples/grid/getCarsInfo'>
   </scriptr-grid>
+  
+  <scriptr-searchbox
+                     api='UIComponents/dashboard/frontend/examples/searchBox/getFile'
+                     tree-control="vm.my_tree"  
+                     api-params='{"id" : "45645612"}'  
+                     on-select="vm.onSelect"
+    </scriptr-searchbox>
 
 </body>  
    
