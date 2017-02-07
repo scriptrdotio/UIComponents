@@ -27,7 +27,7 @@ form { margin-bottom: 0;}
 
 /*** box ***/
 .box { height: 100%;border: 1px solid #ccc;background-color: #fff;}
-.box-content {padding: 10px; text-align: center;}
+.box-content {padding: 5px; text-align: center;}
 
 /*** Box header ***/
 .box-header {position: relative; z-index: 1; display: inline-block; width: 100%;}

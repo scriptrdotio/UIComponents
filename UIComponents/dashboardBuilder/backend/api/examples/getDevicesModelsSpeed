@@ -1,0 +1,39 @@
+
+
+
+var params = {};
+
+if(request.body != null){
+	params = request.body;
+}else if(request.parameters.body){
+	params = request.parameters.body;
+} else {
+  params = request.parameters;
+}
+if(typeof params == 'string' && params != null){
+  	try{
+    	params = JSON.parse(params);   
+    }catch(e){
+      	return "INVALID OR MISSING PARAMETER";
+    }
+}
+
+var deviceId = params["deviceId"];
+var bla = params["bla"]
+
+var publishResponse = function(channel, data, request) {
+   var message = {"result": data};
+   if(params.id) {
+     message["id"] = params.id;
+   } else {
+     //Add a default id to identify the message published over the socket
+      message["id"] = "speed.porshe";
+   }
+   publish(channel, message);
+}
+
+var value = parseInt(deviceId);
+
+publishResponse("responseChannel", value, request);
+
+return value;

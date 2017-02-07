@@ -29,7 +29,10 @@ var value = [
    "speed": {
     "type": "numeric",
     "widget": {
-     "type": "speedometer"
+     "type": "speedometer",
+      "api": "UIComponents/dashboardBuilder/backend/api/examples/getDevicesModelsSpeed",
+      "api-params": ["deviceId","fieldName"],
+      "msg-tag": "speed.{[{fieldName}]}"
     }
    },
    "type": "class-attribute",
@@ -113,7 +116,10 @@ var value = [
      "speed": {
       "type": "numeric",
       "widget": {
-       "type": "slider"
+        "type": "speedometer",
+        "api": "UIComponents/dashboardBuilder/backend/api/examples/getDevicesModelsSpeed",
+        "api-params": {"deviceId":"porshe"},
+        "msg-tag": "speed.porshe"
       }
      },
      "type": "instance-attribute",

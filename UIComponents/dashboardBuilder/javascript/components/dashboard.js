@@ -23,7 +23,7 @@ angular
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
     controller: function($scope, $timeout, $window, config, $uibModal, scriptrService, $route, $routeParams, _) {
-      
+      var self = this;
       this.show = false;
       this.isEdit = false;      
       
@@ -46,6 +46,7 @@ angular
       
       this.$onInit = function() {
         
+         this.urlParams = [];
         this.transport = angular.copy(config.transport);
         this.frmGlobalOptions = {
           "destroyStrategy" : "remove",
@@ -135,10 +136,29 @@ angular
         //Check if it has a ui representation
         
         if(branch[itemLabel] && branch[itemLabel].widget && branch[itemLabel] .widget.type) {
-          var wdg = _.findWhere(config.widgets, {"name": branch[itemLabel].widget.type});
+          var dmWdg = branch[itemLabel].widget;
+          var wdg = _.findWhere(config.widgets, {"name": dmWdg.type});
           console.log("Widget is", wdg);
           if(wdg) {
-             this.dashboard.widgets.push({
+             
+            //MFE: TO REVIEW BIG TIME
+             if(dmWdg["api-params"]) {
+               var apiParamsOutput = "{";
+              _.each(dmWdg["api-params"], function(item, index) {
+                    self.urlParams =  self.urlParams.concat([item]);
+                    apiParamsOutput += "\""+item+"\": $eval("+ item + ((index < dmWdg["api-params"].length -1) ? ")," : ")");
+              
+                 });
+                apiParamsOutput +="}";
+                
+              }
+              console.log("apiParamsOutput",apiParamsOutput )
+             // self.urlParams =  self.urlParams.concat(Object.keys(dmWdg["api-params"]));
+             
+            
+             var defaults = {"api": dmWdg.api, "api-params": apiParamsOutput, "msg-tag": dmWdg["msg-tag"]}
+        
+             self.dashboard.widgets.push({
                 "name":  branch.label,
                 "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
                 "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
@@ -148,7 +168,7 @@ angular
                 "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
                 "label": wdg.label,
                 "type": wdg.class,
-                "options": wdg.defaults,
+                "options": angular.extend(wdg.defaults, defaults),
                 "schema": wdg.schema,
                 "form": wdg.form
             })
@@ -223,6 +243,7 @@ angular
         if (form.$valid) {
           var data = {};
           data["items"] = angular.copy(this.dashboard.widgets);
+          data["urlParams"] = angular.copy(this.urlParams);
          // console.log(JSON.stringify(data["items"]));
           data["transport"] = angular.copy(this.transport.defaults)
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
@@ -230,7 +251,7 @@ angular
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
           scriptData["scriptName"] =  this.model.scriptName ;
-          scriptData["pluginData"] = JSON.stringify(data["items"]);
+          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
           if(self.isEdit) {
             scriptData["update"] = true;
           }
@@ -262,7 +283,8 @@ angular
            if(userConfig && matches) {
              var pluginContent = JSON.parse(matches[1]);
              if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "DashboardBuilder"){
-               this.widgets = JSON.parse(pluginContent.metadata.plugindata); //This needs fixing
+               this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
+               this.urlParams = JSON.parse(pluginContent.metadata.plugindata).urlParams;
                this.dashboard["widgets"] = this.widgets;
                this.isEdit = true;
                this.savedScript = scriptName;

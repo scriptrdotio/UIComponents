@@ -65,11 +65,17 @@
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      
-     myApp.config(function($interpolateProvider) {
+     myApp.config(function($interpolateProvider, $locationProvider) {
         $interpolateProvider.startSymbol('{[{');
         $interpolateProvider.endSymbol('}]}');
+        $locationProvider.html5Mode({
+  enabled: true,
+  requireBase: false
+});
      });
-     myApp.controller('RootCtrl', function($scope) {
+  
+  
+     myApp.controller('RootCtrl', function($scope, $interpolate, $location) {
        var vm = this;
        vm.gridsterOptions = {
           pushing: false,
@@ -91,14 +97,23 @@
              enabled: false
           }
        };
+       
+
+       
+        vm.init = function() {
+          {{#each urlParams}}
+           	console.log("{{this}}", $location.search()["{{this}}"])
+            $scope.{{this}} = $location.search()["{{this}}"]
+          {{/each}}
+        }
      });
         	
 })();
   
 </script>
 
-  <body ng-app="app">
-      <div ng-controller="RootCtrl as vm"> 
+  <body>
+      <div ng-controller="RootCtrl as vm" ng-init="vm.init();"> 
 		<div gridster="vm.gridsterOptions">
           <ul>
              {{#each items}}
@@ -107,7 +122,9 @@
                         <div class="box-content">
                          
                            <{{type}}
-                           	      {{#each this.options}} {{@key}}='{{this}}' {{/each}}      
+                           	      {{#each this.options}} 
+                                        {{@key}}='{{this}}'
+                                  {{/each}}      
                            ></{{type}}>
                         </div>
                     </div>
