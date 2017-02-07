@@ -23,10 +23,10 @@ angular
     transport: {
       "label": "Transport configuration",
       "defaults": {
-         "token": "RTg2MTczN0ZDRQ==",
+         "token": "VzRGMjQ3OEFCMA==",
          "publishChannel": "requestChannel",
          "subscribeChannel": "responseChannel",
-         "baseUrl": "https://touta.scriptrapps.io/",
+         "baseUrl": "https://iotevolution.scriptrapps.io/",
        },
       "form": ["*"],
       "schema": {
@@ -1693,7 +1693,7 @@ angular
 		"transport": "wss",
 		"msg-tag": "speedometer",
 		"api": "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal",
-        "radius": "180"
+        "gauge-radius": "160"
 	},
    "box": {
        sizeX: 2,
