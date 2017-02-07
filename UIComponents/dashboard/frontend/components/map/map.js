@@ -22,6 +22,7 @@ angular
       	"api" : "@",
       	"apiParams" : "@",
         "msgTag": "@",
+      	"onFormatData" : "&",
       
          //TODO the below attributes, currently use without geofence
         "geofenceManager": "<?", //True to show the geofence drawing manage icons or not
@@ -128,6 +129,9 @@ angular
               if(vm.api) {
            		    vm.apiParams =  (vm.apiParams) ? vm.apiParams : {};
              	   	wsClient.call(vm.api, vm.apiParams).then(function(data, response) {
+                      if(typeof self.onFormatData() == "function"){
+                        data = self.onFormatData()(data);
+                      }
                     vm.processAssets(data);
                     console.log("api call "+ vm.api +" response returned", data)
                   }, function(err) {
