@@ -37,7 +37,7 @@ var dataline = [{ y: (new Date().getTime()), a: Math.floor((Math.random() * 100)
     { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) }];
 
 // data for donut chart
-var donutdata = [{label: "Download Sales", value: Math.floor((Math.random() * 100) + 1) }, {label: "In-Store Sales",value: Math.floor((Math.random() * 100) + 1) }, {label: "Mail-Order Sales", value: Math.floor((Math.random() * 100) + 1) }];
+var donutdata = [{label: "Cranes", value: Math.floor((Math.random() * 100) + 1) }, {label: "Drillers",value: Math.floor((Math.random() * 100) + 1) }, {label: "Blasters", value: Math.floor((Math.random() * 100) + 1) }];
 
 publishResponse("responseChannel", data, request, "chart");
 
