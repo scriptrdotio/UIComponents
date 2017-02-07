@@ -98,7 +98,7 @@ angular
                   ]
                 },
                 {
-                  title: "Measurements",
+                  title: "Dimensions",
                   items:[{
                     "type": "section",
                     "htmlClass": "row",
@@ -446,7 +446,7 @@ angular
 	                    ]
 	                  },
 	                  {
-	                    title: "Measurements",
+	                    title: "Dimensions",
 	                    items:[{
 	                      "type": "section",
 	                      "htmlClass": "row",
@@ -857,7 +857,7 @@ angular
 	                    ]
 	                  },
 	                  {
-	                    title: "Measurements",
+	                    title: "Dimensions",
 	                    items:[{
 	                      "type": "section",
 	                      "htmlClass": "row",
@@ -1237,7 +1237,8 @@ angular
 	"defaults": {
 		"type": "donut",
 		"transport": "wss",
-        "data": '[{label: "Download Sales", value: 50}, {label: "In-Store Sales",value: 20 }, {label: "Mail-Order Sales", value: 30 }]',
+        "data": '[{label: "Drillers", value: 50}, {label: "Cranes",value: 20 }, {label: "Blasters", value: 30 }]',  
+        "msg-tag": "donut"
      	"background-color":"#eee",
         "label-color":"ff0000",
         "parse-time": "false"
@@ -1427,7 +1428,7 @@ angular
 	                    ]
 	                  },
 	                  {
-	                    title: "Measurements",
+	                    title: "Dimensions",
 	                    items: [
 	                      {
 	                      "type": "section",
@@ -1718,7 +1719,7 @@ angular
 	                    ]
 	                  },
 	                  {
-	                    title: "Measurements",
+	                    title: "Dimensions",
 	                    items: [
 	                      {
 	                      "type": "section",
@@ -1905,7 +1906,7 @@ angular
 		"api": "UIComponents/dashboard/frontend/examples/odometer/getOdometerVal",
         "animation": "count",
         "duration": "1000",
-         "size": "4"
+        "size": "4"
 	},
     "box": {
        sizeX: 2,
