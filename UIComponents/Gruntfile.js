@@ -22,6 +22,8 @@ module.exports = function(grunt) {
 					   'dashboard/frontend/components/grid/grid.html',
 					   'dashboard/frontend/components/list/list.html',
 					   'dashboard/frontend/components/odometer/odometer.html',
+					   'dashboard/frontend/components/searchBox/searchBox.html',
+					   'dashboard/frontend/components/progressBar/progressBar.html',
 					   'dashboard/frontend/components/speedometer/speedometer.html'],
 			dest:      'build/javascript/templates.js',
 			options:      {
@@ -56,6 +58,8 @@ module.exports = function(grunt) {
 					'concat/min-safe/grid.js': ['dashboard/frontend/components/grid/grid.js'],
 					'concat/min-safe/gauge.js': ['dashboard/frontend/components/gauge/gauge.js'],
 					'concat/min-safe/chart.js': ['dashboard/frontend/components/chart/chart.js'],
+					'concat/min-safe/searchBox.js': ['dashboard/frontend/components/searchBox/searchBox.js'],
+					'concat/min-safe/progressBar.js': ['dashboard/frontend/components/progressBar/progressBar.js'],
 					'concat/min-safe/httpProvider.js': ['httpProvider.js'],
 					'concat/min-safe/wsProvider.js': ['wsProvider.js'],
 					'concat/min-safe/angucomplete.js': ['dashboard/frontend/components/list/angucomplete.alt.js'],
@@ -94,9 +98,9 @@ module.exports = function(grunt) {
 			basic_and_extras: {
                  files: {
 					'build/javascript/directives.js': ['dashboard/frontend/components/gauge/angular.gauge.min.js', 'dashboard/frontend/components/odometer/odometer.min.js', 'dashboard/frontend/components/odometer/angular.odometer.min.js',
-					'dashboard/frontend/components/speedometer/angular.metergauge.min.js', 'components/min-safe/angular.morris.js'],
+					'dashboard/frontend/components/speedometer/angular.metergauge.min.js', 'components/min-safe/angular.morris.js', 'dashboard/frontend/components/searchBox/abn_tree_directive.js'],
 					
-					'build/javascript/components.js': ['concat/min-safe/wsProvider.js', 'concat/min-safe/httpProvider.js', 'concat/min-safe/odometer.js', 'concat/min-safe/speedometer.js', 'concat/min-safe/angucomplete.js','concat/min-safe/autocomplete.js', 'concat/min-safe/chart.js', 'concat/min-safe/grid.js', 'concat/min-safe/gauge.js', 'concat/min-safe/templates.js']
+					'build/javascript/components.js': ['concat/min-safe/wsProvider.js', 'concat/min-safe/httpProvider.js', 'concat/min-safe/odometer.js', 'concat/min-safe/speedometer.js', 'concat/min-safe/angucomplete.js','concat/min-safe/autocomplete.js', 'concat/min-safe/chart.js', 'concat/min-safe/grid.js', 'concat/min-safe/gauge.js', 'concat/min-safe/templates.js', 'concat/min-safe/searchBox.js']
 				  },				
 			},
 			
@@ -104,6 +108,7 @@ module.exports = function(grunt) {
 				 src: ['dashboard/frontend/components/odometer/odometer.car.css',
 					   'dashboard/frontend/examples/grid/grid.css',
 					   'dashboard/frontend/examples/chart/chartDemo.css',
+					   'dashboard/frontend/components/searchBox/abn_tree.css',
 					   'concat/min-safe/morris.css'],
 				 dest: 'build/css/components.css'
 		    }
