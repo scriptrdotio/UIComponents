@@ -1402,11 +1402,11 @@ angular
 		"msg-tag": "gauge",
 		"api": "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal",
         "width": 100,
-        "height": 200
+        "height": 160
 	},
   "box": {
        sizeX: 2,
-       sizeY: 2,
+       sizeY: 1,
        minSizeX: 1,
        minSizeY: 1
     },
