@@ -215,5 +215,5 @@ Example where data is static
 ```
   Each chart application subscribed to "responseChannel" with msg-tag "chart" or "chartline" or "donut" gets updated everytime a rest api is called. 
 
-
+please refer to https://angular-morris.io/ for more info
 
