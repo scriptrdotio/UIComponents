@@ -255,6 +255,9 @@ angular
           if(self.isEdit) {
             scriptData["update"] = true;
           }
+          if(self.savedScript) {
+            scriptData["previousScriptName"]  = self.savedScript;
+          }
           scriptrService.saveScript(scriptData).then(
             function(data, response) {
                console.log("resolve", data)
