@@ -168,14 +168,7 @@ angular
                                               { value: "false", name: "False" }
                                             ]
                                       },
-                                      {
-                                          type: "radios-inline",
-                                          key: "hide-hover",
-                                          titleMap: [
-                                            { value: "true", name: "True" },
-                                            { value: "false", name: "False" }
-                                          ]
-                                      }
+                                      "hide-hover"
                             ]
                           },
                           {
@@ -519,14 +512,7 @@ angular
                                         { value: "false", name: "False" }
                                       ]
                                   },
-                                  {
-                                        type: "radios-inline",
-                                        key: "hide-hover",
-                                        titleMap: [
-                                          { value: "true", name: "True" },
-                                          { value: "false", name: "False" }
-                                        ]
-                                  },
+                                  "hide-hover",
                                   {
                                       "key": "resize",
                                         "type": "radios-inline",
@@ -937,14 +923,7 @@ angular
                                         { value: "false", name: "False" }
                                       ]
                                   },
-                                  {
-                                        type: "radios-inline",
-                                        key: "hide-hover",
-                                        titleMap: [
-                                          { value: "true", name: "True" },
-                                          { value: "false", name: "False" }
-                                        ]
-                                  },
+                                  "hide-hover",
                                   {
                                       "key": "resize",
                                         "type": "radios-inline",
