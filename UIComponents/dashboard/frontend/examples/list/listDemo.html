@@ -39,6 +39,9 @@
             console.log("data formatter");
             return data;
           }
+          vm.onSelect = function(data){
+            console.log("object selected");
+          }
         });
   </script>
   
@@ -47,6 +50,7 @@
           placeholder="Search countries"
           pause="400"
           search-fields="name"
+          selected-object="vm.onSelect"
           title-field="name"
           minlength="0"
           text-searching="Searching..."
