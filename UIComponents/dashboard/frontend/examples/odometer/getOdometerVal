@@ -11,7 +11,7 @@ var publishResponse = function(channel, data, request) {
      message["id"] = request.body.id;
    } else {
      //Add a default id to identify the message published over the socket
-      message["id"] = "speedometer";
+      message["id"] = "odometer";
    }
    publish(channel, message);
 }
