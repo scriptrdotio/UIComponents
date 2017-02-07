@@ -127,7 +127,7 @@ angular
              
            	 //this.type = (this.type) ? this.type : "line";
            
-             this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];
+             this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#7ed38c", "#dd7ca7"];
              this.stacked = (this.stacked) ? this.stacked : false;
              this.resize = (this.resize) ? this.resize : true;
              
