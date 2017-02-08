@@ -135,29 +135,64 @@ angular
         var itemLabel = branch.label
         //Check if it has a ui representation
         
-        if(branch[itemLabel] && branch[itemLabel].widget && branch[itemLabel] .widget.type) {
+        if(branch[itemLabel] && branch[itemLabel].widget && branch[itemLabel].widget.type) {
           var dmWdg = branch[itemLabel].widget;
           var wdg = _.findWhere(config.widgets, {"name": dmWdg.type});
           console.log("Widget is", wdg);
+          
           if(wdg) {
-             
+             var defApiParamsCount = 0;
+             if(dmWdg["default-api-params"]){
+               defApiParamsCount = Object.keys(dmWdg["default-api-params"]).length;
+             }
+            
+             var defaults = {};
+            _.each(dmWdg, function(value, key) {
+                defaults[key] = value;
+              });
+                   
             //MFE: TO REVIEW BIG TIME
-             if(dmWdg["api-params"]) {
-               var apiParamsOutput = "{";
-              _.each(dmWdg["api-params"], function(item, index) {
+             var apiParamsOutput = "{";
+             if(dmWdg["api-params-name"]) {
+              _.each(dmWdg["api-params-name"], function(item, index) {
                     self.urlParams =  self.urlParams.concat([item]);
-                    apiParamsOutput += "\""+item+"\": $eval("+ item + ((index < dmWdg["api-params"].length -1) ? ")," : ")");
-              
+                    apiParamsOutput += "\""+item+"\": vm."+ item + ((index < dmWdg["api-params-name"].length -1 || defApiParamsCount > 0) ? "," : "");
                  });
-                apiParamsOutput +="}";
-                
+              }
+             
+              if(dmWdg["default-api-params"]) {
+                  var cnt = 0;
+              	  _.each(dmWdg["default-api-params"], function(value, key) {
+                    	self.urlParams =  self.urlParams.concat([key]);
+                    	apiParamsOutput += "\""+key+"\": \""+ value + ((cnt < defApiParamsCount -1) ? "\"," : "\"");
+                        cnt++;
+                 	});
+                	apiParamsOutput +="}";
+              } else {
+                  apiParamsOutput +="}";
               }
               console.log("apiParamsOutput",apiParamsOutput )
              // self.urlParams =  self.urlParams.concat(Object.keys(dmWdg["api-params"]));
-             
-            
-             var defaults = {"api": dmWdg.api, "api-params": apiParamsOutput, "msg-tag": dmWdg["msg-tag"]}
-        
+              defaults["api-params"] =  apiParamsOutput; 
+            //, "msg-tag": dmWdg["msg-tag"]}
+              
+             self.dashboard.widgets.push({
+                "name":  branch.label,
+                "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
+                "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
+                "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
+                "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
+                "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
+                "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
+                "label": wdg.label,
+                "type": wdg.class,
+                "options": angular.extend(angular.copy(wdg.defaults), angular.copy(defaults)),
+                "schema": wdg.schema,
+                "form": wdg.form
+            })
+          } else {
+             var wdg = config.defaultWidget
+            //self.showAlert("warning", "Device model attribute \""+ itemLabel + "\" has a widget representation of type \""+ branch[itemLabel] .widget.type + "\". \""+ branch[itemLabel] .widget.type + "\" widget not available in you current list of dashboard widgets.")
              self.dashboard.widgets.push({
                 "name":  branch.label,
                 "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
@@ -396,10 +431,32 @@ angular
       
       this.updateWidget =  function(/**event, **/wdgModel) {
         var self = this;
-        this.parent.dashboard.widgets[this.parent.dashboard.widgets.indexOf(this.widget)]["options"] = angular.copy(wdgModel);
+       
         angular.forEach(wdgModel, function(value, key) {
-          self.chart.attr(key, value);
+         /** if(key == "api-params" &&(value instanceof Array)) {
+             var apiParamsOutput = "{";
+            _.each(dmWdg["api-params"], function(item, index) {
+              self.urlParams =  self.urlParams.concat([item]);
+              apiParamsOutput += "\""+item+"\": $eval("+ item + ((index < dmWdg["api-params"].length -1) ? ")," : ")");
+            });
+            apiParamsOutput +="}";
+            self.chart.attr("api-params", "apiParamsOutput");
+          } else { **/
+            self.chart.attr(key, value);
+          //}
         }, this);
+        
+        var mdl = angular.copy(wdgModel);
+       /** try {
+          if(mdl["api-params"] && JSON.parse(mdl["api-params"]) instanceof Array) {
+          		mdl["api-params"]  = apiParamsOutput;
+           }
+        } catch(e){
+           console.log("Not an array")
+        }**/
+        
+        this.parent.dashboard.widgets[this.parent.dashboard.widgets.indexOf(this.widget)]["options"] = angular.copy(mdl);
+
         $compile( self.chart )( $scope );
       };
     }

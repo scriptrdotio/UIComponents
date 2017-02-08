@@ -1,7 +1,7 @@
 angular
   .module('DashboardBuilder')
   .constant("config", {
-        script: {
+    script: {
       "form": [{
       "key": "scriptName",
       "notitle": true,
@@ -58,6 +58,24 @@ angular
 			"token", "baseUrl", "publishChannel", "subscribeChannel"
 		]
     }},
+    defaultWidget: {
+	"name": "message",
+    "label": "Display Box",
+	"class": "dsp-box",
+	"defaults": {
+		"transport": "wss",
+		"msg-tag": "myMessage",
+		"api": "UIComponents/dashboard/frontend/examples/message/message",
+        "type": "info"
+	},
+    "box": {
+       sizeX: 2,
+       sizeY: 1,
+       minSizeX: 1,
+       minSizeY: 1,
+       maxSizeY: 2
+    }
+    },
     widgets :[
       {
         "name": "bar",

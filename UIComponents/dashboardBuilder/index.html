@@ -89,13 +89,16 @@
    <script src="//s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>      
    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>      
    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script> 
-   <script src="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.js"></script>                                
+   <script src="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.js"></script>    
+   
+  <script src="/UIComponents/dashboard/frontend/components/message/displayBox.js"></script>
+   <script src="/UIComponents/dashboard/frontend/components/message/message.js"></script>
                                 
         
 </head> 
   
 <script>
-      var myApp= angular.module("myApp", ['ngAnimate', 'ngSanitize', "WsClient", "HttpClient", "Chart", 'gridster',  'ngRoute','DashboardBuilder', 'Gauge', 'Speedometer', 'Odometer', 'SearchBox', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
+      var myApp= angular.module("myApp", ['ngAnimate', 'ngSanitize', "WsClient", "HttpClient", "Chart", 'gridster',  'ngRoute','DashboardBuilder', 'Gauge', 'Speedometer', 'Odometer', 'SearchBox', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache', "Message"]);
       angular.module('myApp').config(wssConfig);
       angular.module('myApp').config(httpsConfig);
       angular.module('myApp').config(function($routeProvider){
@@ -168,10 +171,18 @@
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/dashboard.css&quot;&gt;
     &lt;script src=&quot;/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/message/displayBox.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/message/message.js&quot;&gt;&lt;/script&gt;
 &lt;/head&gt; 
   
+  
+&lt;style&gt;
+.box {
+	border: none!important;
+}
+  
+&lt;/style&gt;
 &lt;script&gt;
-   
   
 (function() {
       
@@ -186,7 +197,7 @@
       httpClientProvider.setToken(&quot;{{{transport.token}}}&quot;);
     }]
 
-     var myApp= angular.module(&quot;myApp&quot;, [&quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer'])
+     var myApp= angular.module(&quot;myApp&quot;, [&quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message'])
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      
@@ -228,7 +239,7 @@
         vm.init = function() {
           {{#each urlParams}}
            	console.log(&quot;{{this}}&quot;, $location.search()[&quot;{{this}}&quot;])
-            $scope.{{this}} = $location.search()[&quot;{{this}}&quot;]
+            vm.{{this}} = $location.search()[&quot;{{this}}&quot;]
           {{/each}}
         }
      });

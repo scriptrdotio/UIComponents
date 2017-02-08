@@ -1,4 +1,5 @@
-<div ng-if="$ctrl.show" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')" close="$ctrl.closeAlert()" dismiss-on-timeout="5000">{{$ctrl.message.content}}</div>
+<div ng-if="$ctrl.show" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')" close="$ctrl.closeAlert()" dismiss-on-timeout="5000">{{$ctrl.message.content}}
+</div>
 
 <div class="page-header col-xs-12">
    <form name="scriptForm" ng-submit="$ctrl.saveDashboard(scriptForm)">
@@ -45,7 +46,7 @@
  </div>
 </div>
 <div class="clearfix"></div>
-<div gridster="$ctrl.gridsterOptions">
+<div gridster="$ctrl.gridsterOptions" class="builder">
 	<ul>
 		<li gridster-item="widget" ng-repeat="widget in $ctrl.dashboard.widgets">
           <box widget="widget"></box>

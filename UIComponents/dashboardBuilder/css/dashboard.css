@@ -85,9 +85,11 @@ margin: 0;
 }
 
 /***  devices-models-tree ***/
-.devices-models-tree {height: calc(100vh - 44px);}
+.devices-models-tree {
+  height: calc(100vh - 44px);
+}
 .devices-models-tree .button-wrapper {padding: 0;}
-.devices-models-tree ul.abn-tree {margin-top: 10px;}
+.devices-models-tree ul.abn-tree {margin-top: 10px; max-height: calc(100vh - 95px); overflow-y: scroll;}
 
 .devices-models-tree ul.abn-tree li.abn-tree-row a {color: #555;}
 
@@ -117,4 +119,10 @@ margin: 0;
   .slick-label {line-height: inherit; display: block;}
   .slick-slide a[ng-click] {min-height: 88px;}
 }
+
+.builder .box dsp-box div {
+    margin-top: 35px;
+}
+
+
 
