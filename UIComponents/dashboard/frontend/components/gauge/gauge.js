@@ -16,7 +16,7 @@ angular
 
                   "msgTag" : "@",
 
-                  "apiParams" : "@",
+                  "apiParams" : "<?",
 
                   "valueFontColor" : "@",
 
