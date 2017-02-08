@@ -1238,7 +1238,7 @@ angular
 		"type": "donut",
 		"transport": "wss",
         "data": '[{label: "Drillers", value: 50}, {label: "Cranes",value: 20 }, {label: "Blasters", value: 30 }]',  
-        "msg-tag": "donut"
+        "msg-tag": "donut",
      	"background-color":"#eee",
         "label-color":"ff0000",
         "parse-time": "false"
