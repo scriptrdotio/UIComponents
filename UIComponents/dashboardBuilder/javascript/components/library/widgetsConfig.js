@@ -69,11 +69,11 @@ angular
         "type": "info"
 	},
     "box": {
-       sizeX: 2,
+       sizeX: 1,
        sizeY: 1,
        minSizeX: 1,
        minSizeY: 1,
-       maxSizeY: 2
+       maxSizeY: 1
     }
     },
     widgets :[
@@ -230,6 +230,12 @@ angular
                     	"post-units",
                     	"pre-units"
                    ]
+                },
+                {
+                  title: "Box Properties",
+                  items: [
+                   "boxLabel"
+                  ]
                 }
               ]
             }
@@ -238,6 +244,11 @@ angular
 		"type": "object",
 		"title": "Schema",
 		"properties": {
+            "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define box title"
+			},
 			"data": {
 				"title": "Data",
 				"type": "string",
@@ -594,7 +605,13 @@ angular
 		                      	"post-units",
 		                      	"pre-units"
 		                        ]
-	                  }
+	                  },
+                      {
+                        title: "Box Properties",
+                        items: [
+                         "boxLabel"
+                        ]
+                      }
 	                ]
 	              }
 	       ],
@@ -602,6 +619,11 @@ angular
 		"type": "object",
 		"title": "Schema",
 		"properties": {
+            "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define box title"
+			},
 			"data": {
 				"title": "Data",
 				"type": "string",
@@ -1005,7 +1027,13 @@ angular
 		                      	"post-units",
 		                      	"pre-units"
 		                        ]
-	                  }
+	                  },
+                {
+                  title: "Box Properties",
+                  items: [
+                   "boxLabel"
+                  ]
+                }
 	                ]
 	              }
 	       ],
@@ -1013,6 +1041,11 @@ angular
 		"type": "object",
 		"title": "Schema",
 		"properties": {
+             "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define box title"
+			},
 			"data": {
 				"title": "Data",
 				"type": "string",
@@ -1336,7 +1369,13 @@ angular
 	                      ]
 	                    }
 	                    ]
-	                   }
+	                   },
+                {
+                  title: "Box Properties",
+                  items: [
+                   "boxLabel"
+                  ]
+                }
                       ]
                 }
 	       ],
@@ -1344,6 +1383,11 @@ angular
 		"type": "object",
 		"title": "Schema",
 		"properties": {
+             "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define box title"
+			},
 			"data": {
 				"title": "Data",
 				"type": "string",
@@ -1562,7 +1606,13 @@ angular
 			                      ]
 			                    }
 			                 ]
-		                  }
+		                  },
+                {
+                  title: "Box Properties",
+                  items: [
+                   "boxLabel"
+                  ]
+                }
 	                ]
 	              }
 	       ],
@@ -1570,6 +1620,11 @@ angular
 		"type": "object",
 		"title": "Schema",
 		"properties": {
+             "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define box title"
+			},
 			"gauge-value": {
 				"title": "Gauge Value",
 				"type": "string",
@@ -1793,7 +1848,13 @@ angular
 			                      ]
 			                    }
 			                 ]
-		                  }
+		                  },
+                {
+                  title: "Box Properties",
+                  items: [
+                   "boxLabel"
+                  ]
+                }
 	                ]
 	              }
 	       ],
@@ -1801,6 +1862,11 @@ angular
 		"type": "object",
 		"title": "Schema",
 		"properties": {
+           "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define box title"
+			},
 			"gauge-radius": {
 				"title": "Gauge Radius",
 				"type": "string",
@@ -1953,7 +2019,13 @@ angular
 	                  {
 	                    title: "Odometer behaviour",
 	                    items: ["duration", "animation", "size"]
-	                  }
+	                  },
+                {
+                  title: "Box Properties",
+                  items: [
+                   "boxLabel"
+                  ]
+                }
 	                ]
 	              }
 	       ],
@@ -1961,6 +2033,11 @@ angular
 		"type": "object",
 		"title": "Schema",
 		"properties": {
+             "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define box title"
+			},
 			"odometer-value": {
 				"title": "Odometer Value",
 				"type": "number",

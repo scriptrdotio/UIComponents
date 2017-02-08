@@ -89,7 +89,7 @@ angular
         this.gridsterOptions = {
           minRows: 1, // the minimum height of the grid, in rows
           maxRows: 100,
-          columns: 6, // the width of the grid, in columns
+          columns: 5, // the width of the grid, in columns
           colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
           rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
           margins: [10, 10], // the pixel distance between each widget
@@ -140,76 +140,62 @@ angular
           var wdg = _.findWhere(config.widgets, {"name": dmWdg.type});
           console.log("Widget is", wdg);
           
-          if(wdg) {
-             var defApiParamsCount = 0;
-             if(dmWdg["default-api-params"]){
-               defApiParamsCount = Object.keys(dmWdg["default-api-params"]).length;
-             }
-            
-             var defaults = {};
-            _.each(dmWdg, function(value, key) {
-                defaults[key] = value;
-              });
-                   
-            //MFE: TO REVIEW BIG TIME
-             var apiParamsOutput = "{";
-             if(dmWdg["api-params-name"]) {
-              _.each(dmWdg["api-params-name"], function(item, index) {
-                    self.urlParams =  self.urlParams.concat([item]);
-                    apiParamsOutput += "\""+item+"\": vm."+ item + ((index < dmWdg["api-params-name"].length -1 || defApiParamsCount > 0) ? "," : "");
-                 });
-              }
-             
-              if(dmWdg["default-api-params"]) {
-                  var cnt = 0;
-              	  _.each(dmWdg["default-api-params"], function(value, key) {
-                    	self.urlParams =  self.urlParams.concat([key]);
-                    	apiParamsOutput += "\""+key+"\": \""+ value + ((cnt < defApiParamsCount -1) ? "\"," : "\"");
-                        cnt++;
-                 	});
-                	apiParamsOutput +="}";
-              } else {
-                  apiParamsOutput +="}";
-              }
-              console.log("apiParamsOutput",apiParamsOutput )
-             // self.urlParams =  self.urlParams.concat(Object.keys(dmWdg["api-params"]));
-              defaults["api-params"] =  apiParamsOutput; 
-            //, "msg-tag": dmWdg["msg-tag"]}
-              
-             self.dashboard.widgets.push({
-                "name":  branch.label,
-                "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
-                "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
-                "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
-                "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
-                "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
-                "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
-                "label": wdg.label,
-                "type": wdg.class,
-                "options": angular.extend(angular.copy(wdg.defaults), angular.copy(defaults)),
-                "schema": wdg.schema,
-                "form": wdg.form
-            })
-          } else {
-             var wdg = config.defaultWidget
-            //self.showAlert("warning", "Device model attribute \""+ itemLabel + "\" has a widget representation of type \""+ branch[itemLabel] .widget.type + "\". \""+ branch[itemLabel] .widget.type + "\" widget not available in you current list of dashboard widgets.")
-             self.dashboard.widgets.push({
-                "name":  branch.label,
-                "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
-                "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
-                "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
-                "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
-                "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
-                "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
-                "label": wdg.label,
-                "type": wdg.class,
-                "options": angular.extend(wdg.defaults, defaults),
-                "schema": wdg.schema,
-                "form": wdg.form
-            })
+          if(!wdg) {
+              wdg = config.defaultWidget
           }
+            
+          var defApiParamsCount = 0;
+          if(dmWdg["default-api-params"]){
+            defApiParamsCount = Object.keys(dmWdg["default-api-params"]).length;
+          }
+
+          var defaults = {};
+          _.each(dmWdg, function(value, key) {
+            defaults[key] = value;
+          });
+
+          //MFE: TO REVIEW BIG TIME
+          var apiParamsOutput = "{";
+          if(dmWdg["api-params-name"]) {
+            _.each(dmWdg["api-params-name"], function(item, index) {
+              self.urlParams =  self.urlParams.concat([item]);
+              apiParamsOutput += "\""+item+"\": vm."+ item + ((index < dmWdg["api-params-name"].length -1 || defApiParamsCount > 0) ? "," : "");
+            });
+          }
+
+          if(dmWdg["default-api-params"]) {
+            var cnt = 0;
+            _.each(dmWdg["default-api-params"], function(value, key) {
+              self.urlParams =  self.urlParams.concat([key]);
+              apiParamsOutput += "\""+key+"\": \""+ value + ((cnt < defApiParamsCount -1) ? "\"," : "\"");
+              cnt++;
+            });
+            apiParamsOutput +="}";
+          } else {
+            apiParamsOutput +="}";
+          }
+          console.log("apiParamsOutput",apiParamsOutput )
+          // self.urlParams =  self.urlParams.concat(Object.keys(dmWdg["api-params"]));
+          defaults["api-params"] =  apiParamsOutput; 
+          //, "msg-tag": dmWdg["msg-tag"]}
+
+          self.dashboard.widgets.push({
+            "name":  branch.label,
+            "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
+            "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
+            "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
+            "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
+            "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
+            "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
+            "label": wdg.label,
+            "type": wdg.class,
+            "options": angular.extend(angular.copy(wdg.defaults), angular.copy(defaults)),
+            "schema": wdg.schema,
+            "form": wdg.form
+          });
         } else {
-           return;
+          //self.showAlert("warning", "Device model attribute \""+ itemLabel + "\" has a no widget representation.")
+          return;
         };
         
         

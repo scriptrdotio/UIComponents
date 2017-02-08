@@ -178,7 +178,7 @@
   
 &lt;style&gt;
 .box {
-	border: none!important;
+	/**border: none!important;**/
 }
   
 &lt;/style&gt;
@@ -218,7 +218,7 @@
           
           minRows: 1, // the minimum height of the grid, in rows
           maxRows: 100,
-          columns: 6, // the width of the grid, in columns
+          columns: 5, // the width of the grid, in columns
           colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
           rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
           margins: [10, 10], // the pixel distance between each widget
@@ -233,8 +233,6 @@
              enabled: false
           }
        };
-       
-
        
         vm.init = function() {
           {{#each urlParams}}
@@ -256,7 +254,7 @@
                 &lt;li class=&quot;myItem&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
                     &lt;div class=&quot;box&quot;&gt;
                         &lt;div class=&quot;box-content&quot;&gt;
-                         
+                          &lt;div class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
                            &lt;{{type}}
                            	      {{#each this.options}} 
                                       	{{@key}}='{{this}}'
