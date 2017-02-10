@@ -30,6 +30,7 @@
   ```html
   <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.min.js"></script>
   <script src="/UIComponents/dashboard/frontend/components/odometer/angular.odometer.min.js"></script>
+  <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.js"></script>
   ```
   
   Include a default theme CSS
