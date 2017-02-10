@@ -54,8 +54,8 @@
   
 ## Options:
 
-| Option        | Default value   | Description   | Required   |
-| ------------- |:-------------:|:-------------:|:-------------:|
+| Option        | Default value   | Description   | Type | Required   |
+| ------------- |:-------------:|:-------------:|:-------------:|:----------|
   gauge-value     | 75	 | Sets the value of the gauge. | NO
   custom-sectors  | [{color : "#A3CD3B", lo : 0, hi : 25}, { color : "#FF4A43", lo : 25, hi : 100 }] | array of objects with color, hi, lo attributes. | NO
   value-font-color     | '#999'	 | color of the value text. | NO
