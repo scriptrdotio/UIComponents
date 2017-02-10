@@ -100,12 +100,12 @@ angular
 
          this.$onInit = function() {
            
-            this.theme = (this.theme) ? this.theme : "speed";
-            if(this.theme == "speed"){
+            if(this.theme == "speed" || typeof this.theme == 'undefined'){
                 this.classic = this.speedTheme;
             }else if(this.theme == "rpm"){
                 this.classic = this.rpmTheme;
             }
+           
            // override theme config
            this.classic.gaugeRadius = (this.gaugeRadius)? this.gaugeRadius : this.classic.gaugeRadius,
 
