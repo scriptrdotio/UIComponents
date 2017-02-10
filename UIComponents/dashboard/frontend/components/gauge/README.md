@@ -98,7 +98,7 @@
   start-animation-type       | 'linear'    | 	 type of initial animation (linear, >, <, <>, bounce).	| string | NO
   refresh-animation-type      | 'linear'    | 	 type of refresh animation (linear, >, <, <>, bounce).	| string | NO
   counter      | true    | 	 increase numbers one by one. | bool | NO
-  api | undefined | Name of the API to get data | Required if getting data from backend | string | NO
+  api | null | Name of the API to get data | Required if getting data from backend | string | NO
   on-format-data | null | Callback function to be called after data is returned from backend | function | NO
   transport |  'wss'     | 	method used to call api (can take "https" or "wss").	 | string | NO
   msg-tag   | null      | 	Subscribe to socket messages with tag name.		     | string | NO
