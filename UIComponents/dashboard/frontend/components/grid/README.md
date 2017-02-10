@@ -76,7 +76,7 @@
   row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination"	| NO
   row-model-selection       | "multiple"    | Set to either 'single' or 'multiple' in case of backend data. Set to 'normal' in case of static data	| NO
   pagination-page-size       | 50    | 	Number of rows per page.	| NO
-  service-api       | undefined | Name of the api to call backend data | NO
+  api       | undefined | Name of the api to call backend data | NO
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO
   on-cell-value-changed-script | undefined | Name of the script to be called on cell editing | NO
   transport |  'wss'     | 	Method used to call api (can take "https" or "wss").	 | NO
@@ -138,7 +138,7 @@ Example where data is static
            row-model-selection='single'
            pagination-page-size='50'
            transport='http' 
-           service-api='UIComponents/dashboard/frontend/examples/grid/getCarsInfo'>
+           api='UIComponents/dashboard/frontend/examples/grid/getCarsInfo'>
   </scriptr-grid>
   ```
   
@@ -157,7 +157,7 @@ Example where data is static
            pagination-page-size='50'
            transport='http' 
            service-api='telematics/zohoTicketing/api/listDeviceTickets'
-           api-data='{"id" : "253831"}'
+           api-params='{"id" : "253831"}'
            on-cell-value-changed-script='telematics/zohoTicketing/api/updateTicketStatus'
            on-format-data="vm.callback">
   </scriptr-grid>
