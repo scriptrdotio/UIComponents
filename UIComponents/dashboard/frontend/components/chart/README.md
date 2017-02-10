@@ -46,6 +46,7 @@
   ```html
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
   ```
 
   Include wsProvider and httpProvider for calling backend API's
