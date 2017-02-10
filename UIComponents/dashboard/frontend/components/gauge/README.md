@@ -61,6 +61,35 @@
   value-font-color     | '#999'	 | color of the value text. | NO
   min       | 0    | 	minimum value.		| NO
   max       | 100    | 	maximum value.	| NO
+  title-font-color       | #aaa    | 	color of the title text.	| NO
+  title-font-family       | null    | 	font-family of the title text.	| NO
+  title-position       | 'above'    | 	"above" or "below" the gauge.	| NO
+  value-font-family       | null    | 	font-family of the value text.	| NO
+  relative-gauge-size       | null    | 	true if the gauge has to grow with the container.	| NO
+  value-min-font-size       | null    | 	absolute minimum font size for the value.	| NO
+  title-min-font-size       | null    | 	absolute minimum font size for the title.	| NO
+  label-min-font-size       | null    | 	absolute minimum font size for the label.	| NO
+  min-label-min-font-size       | null    | 	absolute minimum font size for the minimum label.	| NO
+  max-label-min-font-size       | null    | 	absolute minimum font size for the maximum label.	| NO
+  gauge-width-scale       | null    | 	width of the gauge element.	| NO
+  shadow-vertical-offset       | null    | 	how much is shadow offset from top.	| NO
+  level-colors       | null    | 	array of strings, colors of indicator, from lower to upper, in hex format.	| NO
+  no-gradient       | null    | 	true to use sector-based color change, false to use gradual color change.	| NO
+  start-animation-time       | null    | 	length of initial load animation.	| NO
+  refresh-animation-time       | null    | 	length of refresh animation.	| NO
+  donut       | null    | 	turn the gauge into a full circle donut.	| NO
+  donut-start-angle       | null    | 	angle to start from when in donut mode.	| NO
+  reverse       | null    | 	if true, max and min are swapped (with max appearing on the left, min on the right).	| NO
+  decimals       | null    | 	quantity of decimal numbers to show.	| NO
+  symbol       | null    | 	unit of measure that will be appended to value.	| NO
+  format-number       | null    | 	whether to format numbers.	| NO
+  human-friendly       | null    | 	true to show shorthand big numbers (300K instead of 300XXX).	| NO
+  human-friendly-decimal       | null    | 	number of decimal places for our human friendly number to contain.	| NO
+  min-txt       | null    | 	maximum value.	| NO
+  max-txt       | null    | 	maximum value.	| NO
+  on-animation-end       | null    | 	maximum value.	| NO
+  pointer       | null    | 	maximum value.	| NO
+  pointerOptions       | null    | 	maximum value.	| NO
   hide-min-max       | false    | 	hide min and max values.	| NO
   hide-value       | false    | 	hide value text.	| NO
   hide-inner-shadow       | true    | 	hide inner shadow.	| NO
@@ -74,7 +103,7 @@
   refresh-animation-type      | 'linear'    | 	 type of refresh animation (linear, >, <, <>, bounce).	| NO
   counter      | true    | 	 increase numbers one by one. | NO
   api | undefined | Name of the API to get data | Required if getting data from backend | NO
-  on-format-data | undefined | Callback function to be called after data is returned from backend | NO
+  on-format-data | null | Callback function to be called after data is returned from backend | NO
   transport |  'wss'     | 	method used to call api (can take "https" or "wss").	 | NO
   msg-tag   | null      | 	Subscribe to socket messages with tag name.		     | NO
   api-params  | null      | 	api parameters.  					| NO
