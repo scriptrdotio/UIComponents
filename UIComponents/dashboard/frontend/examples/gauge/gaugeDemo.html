@@ -36,7 +36,18 @@
       <scriptr-gauge 
                 transport='wss' 
                 msg-tag="gauge" 
+                title="Title"
+                title-font-color="#aaa"
                 api='UIComponents/dashboard/frontend/examples/gauge/getGaugeVal'
+                     title-position="above"
+                     hide-inner-shadow="false"
+                     shadow-vertical-offset="3"
+                     shadow-opacity="0.2"
+                     pointer="true"
+                     value-font-color="#aff542"
+                     hide-inner-shadow="false"
+                     start-animation-type="bounce"
+                     refresh-animation-type="bounce"
                 on-format-data="vm.callback">
       </scriptr-gauge>
     </div>

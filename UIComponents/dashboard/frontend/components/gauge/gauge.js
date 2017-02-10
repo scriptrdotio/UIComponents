@@ -18,43 +18,103 @@ angular
 
                   "apiParams" : "<?",
 
-                  "valueFontColor" : "@",
+                  "valueFontColor" : "@", // color of the value text (string)
 
-                  "min" : "@",
+                  "min" : "@", // minimum value (float)
 
-                  "max" : "@",
+                  "max" : "@", // maximum value (float)
 
-                  "hideMinMax" : "@",
+                  "hideMinMax" : "@", // hide min and max values (bool)
 
-                  "hideValue" : "@",
+                  "hideValue" : "@", // hide value text (bool)
 
-                  "hideInnerShadow" : "@",
+                  "hideInnerShadow" : "@", // hide inner shadow
 
-                  "gaugeColor" : "@",
+                  "gaugeColor" : "@", // background color of gauge element (string)
 
-                  "showInnerShadow" : "@",
-                 
-                  "gaugeValue" : "@",
+                  "gaugeValue" : "@", //value to show (float)
                   
-                  "customSectors": "<?",
+                  "customSectors": "<?", // array of objects with color, hi, lo attributes ([ of object])
 
-                  "shadowSize" : "@",
+                  "shadowSize" : "@", // inner shadow size (int)
 
-                  "shadowOpacity" : "@",
+                  "shadowOpacity" : "@", // shadow opacity, values 0 ~ 1 (int)
 
-                  "label" : "@",
+                  "label" : "@", // text to show below value (string)
 
-                  "labelFontColor" : "@",
+                  "labelFontColor" : "@", // color of label under the value (string)
 
-                  "startAnimationType" : "@",
+                  "startAnimationType" : "@", // type of initial animation (linear, >, <, <>, bounce) (string)
 
-                  "refreshAnimationType" : "@",
+                  "refreshAnimationType" : "@", // type of refresh animation (linear, >, <, <>, bounce) (string)
+                 
+                  "title" : "@", // gauge title text
+                 
+                  "titleFontColor" : "@", // color of the title text
+                 
+                  "titleFontFamily" : "@", // font-family of the title text
+                 
+                  "titlePosition" : "@", // "above" or "below" the gauge
+                 
+                  "valueFontFamily" : "@", // font-family of the value text (string)
+                 
+                  "relativeGaugeSize" : "@", // true if the gauge has to grow with the container (bool)
+                 
+                  "valueMinFontSize" : "@", // absolute minimum font size for the value (int)
+                 
+                  "titleMinFontSize" : "@", // absolute minimum font size for the title
+                 
+                  "labelMinFontSize" : "@", // absolute minimum font size for the label
+                 
+                  "minLabelMinFontSize" : "@", // absolute minimum font size for the minimum label
+                 
+                  "maxLabelMinFontSize" : "@", // absolute minimum font size for the maximum label
+                 
+                  "gaugeWidthScale" : "@", // width of the gauge element (float)
+                 
+                  "shadowVerticalOffset" : "@", // how much is shadow offset from top (int)
+                 
+                  "levelColors" : "@", // array of strings, colors of indicator, from lower to upper, in hex format (string[])
+                 
+                  "noGradient" : "@", // true to use sector-based color change, false to use gradual color change (bool)
+                 
+                  "startAnimationTime" : "@", // length of initial load animation (int)
+                 
+                  "refreshAnimationTime" : "@", // length of refresh animation (int)
+                 
+                  "donut" : "@", // turn the gauge into a full circle donut (bool)
+                 
+                  "donutStartAngle" : "@", // angle to start from when in donut mode (int)
+                 
+                  "reverse" : "@", // if true, max and min are swapped (with max appearing on the left, min on the right) boolean
+                 
+                  "decimals" : "@", // quantity of decimal numbers to show (int)
+                 
+                  "symbol" : "@", // unit of measure that will be appended to value (string)
+                 
+                  "formatNumber" : "@", // whether to format numbers (bool)
+                 
+                  "humanFriendly" : "@", // true to show shorthand big numbers (300K instead of 300XXX) bool
+                 
+                  "humanFriendlyDecimal" : "@", // number of decimal places for our human friendly number to contain (int)
+                 
+                  "textRenderer" : "&", // function applied before rendering text (func)
+                 
+                  "minTxt" : "@", // min value text (string)
+                 
+                  "maxTxt" : "@", // max value (string)
+                 
+                  "onAnimationEnd" : "&", // function applied after animation is done (func)
+                 
+                  "pointer" : "@", // show value pointer
+                 
+                  "pointerOptions" : "@", // define pointer look
                  
                   "onFormatData" : "&",
 
-                  "counter" : "@",
-                  "width": "@", //%
-                  "height": "@", //px
+                  "counter" : "@", // increase numbers one by one (bool)
+                  "width": "@", //  gauge width in % (int)
+                  "height": "@", // gauge height in px (int)
                  
 
                },
@@ -82,16 +142,10 @@ angular
 		               this.hideMinMax = (this.hideMinMax) ? this.hideMinMax
 		                     : false;
 		               this.hideValue = (this.hideValue) ? this.hideValue : false;
-		               this.hideInnerShadow = (this.hideInnerShadow) ? this.hideInnerShadow
-		                     : true;
 		               this.gaugeColor = (this.gaugeColor) ? this.gaugeColor
 		                     : "#e9e9e9";
-		               this.showInnerShadow = (this.showInnerShadow) ? this.showInnerShadow
-		                     : false;
 		               this.shadowSize = (this.shadowSize) ? this.shadowSize : 0;
-		               this.shadowOpacity = (this.shadowOpacity) ? this.shadowOpacity
-		                     : 0;
-		               this.label = (this.label) ? this.label : "";
+		               this.label = (this.label) ? this.label : "% full";
 		               this.labelFontColor = (this.labelFontColor) ? this.labelFontColor
 		                     : "#666";
 		               this.startAnimationType = (this.startAnimationType) ? this.startAnimationType
