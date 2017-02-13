@@ -32,7 +32,7 @@ angular
 
                   "gaugeColor" : "@", // background color of gauge element (string)
 
-                  "gaugeValue" : "@", //value to show (float)
+                  "gaugeValue" : "<?", //value to show (float)
                   
                   "customSectors": "<?", // array of objects with color, hi, lo attributes ([ of object])
 
@@ -63,6 +63,8 @@ angular
                   "valueMinFontSize" : "@", // absolute minimum font size for the value (int)
                  
                   "titleMinFontSize" : "@", // absolute minimum font size for the title
+                 
+                  "hideMinMax" : "@",
                  
                   "labelMinFontSize" : "@", // absolute minimum font size for the label
                  
@@ -100,15 +102,9 @@ angular
                  
                   "textRenderer" : "&", // function applied before rendering text (func)
                  
-                  "minTxt" : "@", // min value text (string)
-                 
-                  "maxTxt" : "@", // max value (string)
-                 
                   "onAnimationEnd" : "&", // function applied after animation is done (func)
                  
                   "pointer" : "@", // show value pointer
-                 
-                  "pointerOptions" : "@", // define pointer look
                  
                   "onFormatData" : "&",
 
