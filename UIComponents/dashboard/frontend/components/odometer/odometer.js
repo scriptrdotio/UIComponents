@@ -20,7 +20,7 @@ angular
 
           "transport" : "@",
           
-          "odometerValue" : "@",
+          "odometerValue" : "<?",
 
           "msgTag" : "@",
 
