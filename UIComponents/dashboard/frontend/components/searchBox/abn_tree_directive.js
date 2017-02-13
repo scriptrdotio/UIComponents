@@ -80,32 +80,28 @@
               selected_branch = null;
               return;
             }
-            if (branch !== selected_branch) {
-              if (selected_branch != null) {
-                selected_branch.selected = false;
-              }
-              branch.selected = true;
-              selected_branch = branch;
-              expand_all_parents(branch);
-              if (branch.onSelect != null) {
+            if (selected_branch != null) {
+              selected_branch.selected = false;
+            }
+            branch.selected = true;
+            selected_branch = branch;
+            expand_all_parents(branch);
+            if (branch.onSelect != null) {
+              return $timeout(function() {
+                return branch.onSelect(branch);
+              });
+            } else {
+              if (scope.onSelect != null) {
                 return $timeout(function() {
-                  return branch.onSelect(branch);
-                });
-              } else {
-                if (scope.onSelect != null) {
-                  return $timeout(function() {
-                    return scope.onSelect({
-                      branch: branch
-                    });
+                  return scope.onSelect({
+                    branch: branch
                   });
-                }
+                });
               }
             }
           };
           scope.user_clicks_branch = function(branch) {
-            if (branch !== selected_branch) {
               return select_branch(branch);
-            }
           };
           get_parent = function(child) {
             var parent;
