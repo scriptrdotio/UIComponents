@@ -42,6 +42,8 @@ angular
 
         "rowDeselection" : "<?",
         
+        "onSelectionChanged": "&?",
+        
         "rowData" : "<?",
         
         "gridHeight" : "@",
@@ -140,6 +142,9 @@ angular
                 apply : true
               },
               editable : (typeof this.cellEditable != 'undefined')? this.cellEditable : true,
+            },
+            onSelectionChanged: function() {
+               return self.onSelectionChanged()(self.gridOptions);
             },
             onCellValueChanged : function(event) {
                self._saveData(self.onCellValueChangedScript, event);
