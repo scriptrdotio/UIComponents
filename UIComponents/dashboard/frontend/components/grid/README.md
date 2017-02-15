@@ -79,6 +79,8 @@
   api       | undefined | Name of the api to call backend data | NO
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO
   on-cell-value-changed-script | undefined | Name of the script to be called on cell editing | NO
+  on-cell-value-changed | null | function to be called on cell editing | NO
+  on-selection-changed | null | function to be called on cell selection | NO
   transport |  'wss'     | 	Method used to call api (can take "https" or "wss").	 | NO
   msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | NO    
   api-params  | null      | 	Api parameters.  					| NO
