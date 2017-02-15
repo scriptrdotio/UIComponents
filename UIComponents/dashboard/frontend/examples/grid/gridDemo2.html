@@ -36,6 +36,11 @@
            var selectedRows = gridOptions.api.getSelectedRows();
            console.log(1, selectedRows);
         }
+        vm.test2 = function(gridOptions) {
+           var selectedRows = gridOptions.api.getSelectedRows();
+           console.log("Cell value changed");
+           console.log(1, selectedRows);
+        }
       });
   		
   </script>
@@ -58,13 +63,14 @@
            enable-add-row='false'
            on-cell-value-changed-script='UIComponents/dashboard/frontend/examples/grid/addRow'
            on-delete-row-script='UIComponents/dashboard/frontend/examples/grid/removeRow'
-           cell-editable='false'
+           cell-editable='true'
            enable-client-side-filter='false'
            enable-server-side-filter='false' 
            enable-server-side-sorting='false'
            row-model-selection='single'
            pagination-page-size='5'
            on-selection-changed="vm.test"
+           on-cell-value-changed="vm.test2"    
            transport='wss'>
   </scriptr-grid>
 </body>

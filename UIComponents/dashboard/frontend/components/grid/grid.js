@@ -68,6 +68,8 @@ angular
         
         "removeRowMsgTag" : "@",
         
+        "onCellValueChanged" : "&",
+        
         "addRowMsgTag" : "@",
         
         "onGridReady" : "&"
@@ -144,9 +146,14 @@ angular
               editable : (typeof this.cellEditable != 'undefined')? this.cellEditable : true,
             },
             onSelectionChanged: function() {
-               return self.onSelectionChanged()(self.gridOptions);
+              if(self.onSelectionChanged != null && typeof self.onSelectionChanged() == "function"){
+              	 return self.onSelectionChanged()(self.gridOptions);
+              }
             },
             onCellValueChanged : function(event) {
+               if(self.onCellValueChanged != null && typeof self.onCellValueChanged() == "function"){
+                   return self.onCellValueChanged()(self.gridOptions);
+               }
                self._saveData(self.onCellValueChangedScript, event);
                self.oldEditedValue = event.oldValue;
                self.editedColumn = event.colDef.field;
