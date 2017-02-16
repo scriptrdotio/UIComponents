@@ -1,0 +1,72 @@
+<html ng-app="myApp">
+<head>
+  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/datetimepicker/datetimepicker.css">
+  
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/de.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/zh-cn.js"></script>
+  
+    <script type="text/javascript" src="/UIComponents/dashboard/frontend/components/datetimepicker/datetimepicker_directive.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-datetimepicker/1.1.3/js/datetimepicker.templates.min.js"></script>
+  
+    <script type="text/javascript" src="/UIComponents/dashboard/frontend/components/datetimepicker/dateTimeInput.js"></script>
+  
+    <script type="text/javascript" src="/UIComponents/dashboard/frontend/components/datetimepicker/datetimepicker.js"></script>
+     
+    <style>
+        .datetimepicker {
+            width: 400px;
+        }
+    </style>
+  
+</head> 
+  
+  <script>
+    var myApp= angular.module("myApp", ['DateTimePicker']);
+  
+    angular.module('myApp').controller('demoController', function($scope, $log) {
+    
+      var vm = this;
+      vm.dateHelper = {};
+      vm.onSetTime = function(date){
+        console.log("on set time function");
+      }
+      vm.startDateOnSetTime = function(date){
+        console.log("on set time function");
+      }
+      vm.endDateOnSetTime = function(date){
+        console.log("on set time function");
+      }
+      
+  });
+  
+
+</script>
+  
+<body ng-controller="demoController as vm">  
+    
+    <button ng-click="vm.dateHelper.getDate()" class="btn btn-default btn-sm">Get Date</button>
+    <button ng-click="vm.dateHelper.getDateRangeStart()" class="btn btn-default btn-sm">Get Start Date</button>
+    <button ng-click="vm.dateHelper.getDateRangeEnd()" class="btn btn-default btn-sm">Get End Date</button>
+  
+    <scriptr-date-time-picker
+         type="range"
+         start-date-config="{ startView:'day', minView:'day' }"
+         end-date-config="{ startView:'day', minView:'day' }"
+         date-helper="vm.dateHelper"      
+         start-date-label="date 1"     
+         end-date-label="date 2" 
+         on-set-time="vm.onSetTime" 
+         start-date-on-set-time="vm.startDateOnSetTime"
+         end-date-on-set-time="vm.endDateOnSetTime"
+                  >
+  </scriptr-date-time-picker>
+</body>  
+   
+</html>

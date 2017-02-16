@@ -1,161 +1,155 @@
-angular.module('DateTimePicker', []);
+angular.module('DateTimePicker', ['ui.bootstrap.datetimepicker', 'ui.dateTimeInput']);
 
 angular
       .module('DateTimePicker')
       .component(
-            'dateTimePicker',
+            'scriptrDateTimePicker',
             {
 
                bindings : {
-
+                 
+                "type" : "@", 
+                 
+                "config" : "<?",
+                 
+                "dateHelper" : "<?", 
+                 
+                "date" : "@", 
+                 
+                "startDateConfig" : "<?",
+                 
+                "endDateConfig" : "<?",
+                 
+                "startDateLabel" : "@",
+                 
+                "endDateLabel" : "@",
+                 
+                "onSetTime" : "&",
+                 
+                "startDateOnSetTime" : "&",
+                 
+                "endDateOnSetTime" : "&",
                   
 
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/datetimepicker/datetimepicker.html',
-               controller : function(httpClient, wsClient) {
+               controller : function($scope, $log) {
+                 
+                  var self = this;
 
-                 var self = this;
-                 this.validViews = ['year', 'month', 'day', 'hour', 'minute'];
-                 this.selectable = true;
-                 $scope.config = {
-                   datetimePicker: {
-                     startView: 'year'
-                   },
-                   configureOnConfig: {
-                     startView: 'year',
-                     configureOn: 'config-changed'
-                   },
-                   renderOnConfig: {
-                     startView: 'year',
-                     renderOn: 'valid-dates-changed'
-                   }
-                 }
-                
-				checkboxOnTimeSet = function(){
-              		this.data.checked = false;
-            	}
-  
-  				inputOnTimeSet = function(newDate){
-  					// If you are not using jQuery or bootstrap.js,
-                    // this will throw an error.
-                    // However, can write this function to take any
-                    // action necessary once the user has selected a
-                    // date/time using the picker
-                    $log.info(newDate);
-                    $('#dropdown3').dropdown('toggle');
-              }
+                  var validViews = ['year', 'month', 'day', 'hour', 'minute'];
+                  var selectable = true;
+                  this.configuration = {};
+                  var dateHelp;
 
-				getLocale = function (){
-                  return moment.locale();
-                }
-                
-                setLocale = function(newLocale){
-                  moment.locale(newLocale);
-                }
-                
-                guardianOnSetTime = function($index, guardian, newDate, oldDate){
-                  angular.element('#guardian' + $index).dropdown('toggle');
-                }
-                
-                beforeRender = function($dates){
-                  var index = Math.ceil($dates.length / 2);
-                  $dates[index].selectable = false;
-                }
-                
-                configFunction = function(){
-                  return {startView: 'month'};
-                }
-                
-                changeConfig = function(){
-                  var newIndex = validViews.indexOf(this.config.configureOnConfig.startView) + 1;
-                  console.log(newIndex);
-                  if (newIndex >= validViews.length) {
-                    newIndex = 0;
-                  }
-                  this.config.configureOnConfig.startView = validViews[newIndex];
-                  this.$broadcast('config-changed');
-                }
-                
-                renderOnBeforeRender = function($dates){
-                  angular.forEach($dates, function (dateObject) {
-                    dateObject.selectable = selectable;
-                  });
-                }
-                
-                renderOnClick = function(){
-                  selectable = (!selectable);
-      				$scope.$broadcast('valid-dates-changed');
-                }
-                
-                startDateOnSetTime = function(){
-                  $scope.$broadcast('start-date-changed');
-                }
-                
-                endDateOnSetTime = function(){
-                  $scope.$broadcast('end-date-changed');
-                }
-                
-                startDateBeforeRender = function($dates){
-                  if ($scope.dateRangeEnd) {
-                    var activeDate = moment($scope.dateRangeEnd);
+                  $scope.controllerName = 'demoController';
 
-                    $dates.filter(function (date) {
-                      return date.localDateValue() >= activeDate.valueOf()
-                    }).forEach(function (date) {
-                      date.selectable = false;
-                    })
-                  }
-                }
-
-                endDateBeforeRender = function($view, $dates){
-                  if ($scope.dateRangeStart) {
-                        var activeDate = moment($scope.dateRangeStart).subtract(1, $view).add(1, 'minute');
-
-                        $dates.filter(function (date) {
-                          return date.localDateValue() <= activeDate.valueOf()
-                        }).forEach(function (date) {
-                          date.selectable = false;
-                        })
+                  /* Bindable functions
+                         -----------------------------------------------*/
+                  $scope.endDateBeforeRender = endDateBeforeRender
+                  $scope.endDateOnSetTime = endDateOnSetTime
+                  $scope.onSetTime = onSetTime
+                  $scope.getLocale = getLocale;
+                  $scope.setLocale = setLocale;
+                  $scope.startDateBeforeRender = startDateBeforeRender
+                  $scope.startDateOnSetTime = startDateOnSetTime
+                  
+                  this.$onInit = function() {
+                    this.configuration = (this.config) ? this.config : { dropdownSelector: '#dropdown', startView:'day', minView:'day' };
+                    if(this.type != "range"){
+                      if(typeof this.config != 'undefined'){
+                        this.configuration["dropdownSelector"] = "#dropdown";
+                      }
+                    }else {
+                      this.startConfig = (this.startDateConfig) ? this.startDateConfig : { dropdownSelector: '#dropdownStart', renderOn : 'end-date-changed', startView:'day', minView:'minute' };
+                      this.endConfig = (this.endDateConfig) ? this.endDateConfig : { dropdownSelector: '#dropdownEnd', renderOn : 'start-date-changed', startView:'day', minView:'minute' };
+                      if(typeof this.startDateConfig != 'undefined'){
+                      	this.startConfig["dropdownSelector"] = "#dropdownStart";
+                        this.startConfig["renderOn"] = 'end-date-changed';
+                      }
+                      if(typeof this.endDateConfig != 'undefined'){
+                      	this.endConfig["dropdownSelector"] = "#dropdownEnd"; 
+                        this.endConfig["renderOn"] = 'start-date-changed';
                       }
                     }
+                    if (this.dateHelper != null) {
+                      if (angular.isObject(this.dateHelper)) {
+                        dateHelp = this.dateHelper;
+                        dateHelp.getDate = self.getDate;
+                        dateHelp.getDateRangeStart = self.getDateRangeStart;
+                        dateHelp.getDateRangeEnd = self.getDateRangeEnd;
+                      }
+                    }
+                  }
+
+                  moment.locale('en');
+                 
+                  self.getDate = function(){
+                    console.log(self.date);
+                    return self.date;
+                  }
+                  
+                  self.getDateRangeStart = function(){
+                    console.log(self.dateRangeStart);
+                    return self.dateRangeStart;
+                  }
+                     
+                  self.getDateRangeEnd = function(){
+                    console.log(self.dateRangeEnd);
+                    return self.dateRangeEnd;
+                  }
+                  
+                  function onSetTime () {
+                    if(typeof self.onSetTime() == "function"){
+                      data = self.onSetTime()(self.date);
+                    }
+                  }
+
+                  function getLocale () {
+                    return moment.locale();
+                  }
+
+                  function setLocale (newLocale) {
+                    moment.locale(newLocale);
+                  }
+
+                  function startDateOnSetTime () {
+                    $scope.$broadcast('start-date-changed');
+                    if(typeof self.startDateOnSetTime() == "function"){
+                      data = self.startDateOnSetTime()(self.dateRangeStart);
+                    }
+                  }
+
+                  function endDateOnSetTime () {
+                    $scope.$broadcast('end-date-changed');
+                    if(typeof self.endDateOnSetTime() == "function"){
+                      data = self.endDateOnSetTime()(self.dateRangeEnd);
+                    }
+                  }
+
+                  function startDateBeforeRender ($dates) {
+                    if (self.dateRangeEnd) {
+                      var activeDate = moment(self.dateRangeEnd);
+
+                      $dates.filter(function (date) {
+                        return date.localDateValue() >= activeDate.valueOf()
+                      }).forEach(function (date) {
+                        date.selectable = false;
+                      })
+                    }
+                  }
+
+                  function endDateBeforeRender ($view, $dates) {
+                    if (self.dateRangeStart) {
+                      var activeDate = moment(self.dateRangeStart).subtract(1, $view).add(1, 'minute');
+
+                      $dates.filter(function (date) {
+                        return date.localDateValue() <= activeDate.valueOf()
+                      }).forEach(function (date) {
+                        date.selectable = false;
+                      })
+                    }
+                  }
 
                 }
-	               /*this.$onInit = function() {
-
-	               }
-
-	               var initDataService = function(transport) {
-		               if (transport == "wss") {
-			               wsClient.onReady.then(function() {
-				               // Subscribe to socket messages with id chart
-				               wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
-				               if(self.api) {
-                                  wsClient.call(self.api, self.apiData, self.msgTag)
-                                   .then(function(data, response) {
-                                       self.consumeData(data)
-                                   });
-				               }
-				               
-			               });
-		               } else {
-			               if (transport == "http" && self.api) {
-				               httpClient
-				                     .get(self.api, self.apiData)
-				                     .then(
-				                           function(data, response) {
-					                           self.consumeData(data)
-				                           },
-				                           function(err) {
-					                           console
-					                                 .log(
-					                                       "reject published promise",
-					                                       err);
-				                           });
-			               }
-		               }
-	               }
-
-	              this.consumeData = function(data, response) {
-		               this.gaugeValue = data;
-	               }*/
             });
