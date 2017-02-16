@@ -87,6 +87,8 @@ angular
         
         //Gidster Wall Options
         this.gridsterOptions = {
+          defaultSizeY: 200,
+          defaultSizeX:200,
           minRows: 1, // the minimum height of the grid, in rows
           maxRows: 100,
           columns: 5, // the width of the grid, in columns
@@ -104,14 +106,15 @@ angular
           //maxSizeY: 2, // maximum row height of an item
           resizable: {
             enabled: true,
+            handle: '.my-class', // optional selector for resize handle
             start: function(event, uiWidget, $element) {}, // optional callback fired when resize is started,
             resize: function(event, uiWidget, $element) {
-               console.log("resize event called:",event, uiWidget, $element);
+               //console.log("resize event called:",event, uiWidget, $element);
             }, // optional callback fired when item is resized,
             stop: function(event, uiWidget, $element) {
               console.log("End resize:",event, uiWidget, $element);
               $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
-            } //optional callback fired when item is finished resizing
+            } //optional callback fired when item is finished resizing 
           },
           draggable: {
             enabled: true, // whether dragging items is supported
@@ -359,9 +362,22 @@ angular
           this.addWidget(this.widget)
         }
 
+      
         $scope.$on("resize_widget", function(event, data) {
-          console.log("Widget resize", event, data);
-          $(window).trigger('resize');
+          	console.log("Widget resize", event, data);
+          	$(window).trigger('resize');
+            if(self.widget == data.element) {
+              if(self.widget.type == "scriptr-gauge") {
+                data.element.options.height = (data.wdg.height() - 10)
+              	self.updateWidget(data.element.options)
+              }
+              if(self.widget.type == "scriptr-speedometer") {
+                var h = data.wdg.height();
+                var w = data.wdg.width()
+                data.element.options["gauge-radius"] = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
+              	self.updateWidget(data.element.options)
+              }
+            }
         });
         
          $scope.$on("drag_widget", function(event, data) {
@@ -369,7 +385,7 @@ angular
           $(window).trigger('resize');
         });
         
-        /**
+       /**
         $scope.$on("update_widget", function(event, data) {
           console.log("Widget update", event, data);
           self.updateWidget(event, data)

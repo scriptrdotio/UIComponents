@@ -62,7 +62,8 @@
     
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
     <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css">
  
    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/tv4.js"></script>
@@ -166,7 +167,8 @@
     &lt;script src=&quot;/UIComponents/wsProvider.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/httpProvider.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/chart/chart.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;
+   &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;
 
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/dashboard.css&quot;&gt;
@@ -254,7 +256,7 @@
                 &lt;li class=&quot;myItem&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
                     &lt;div class=&quot;box&quot;&gt;
                         &lt;div class=&quot;box-content&quot;&gt;
-                          &lt;div class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
+                          &lt;div  tooltip-placement=&quot;bottom&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot; class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
                            &lt;{{type}}
                            	      {{#each this.options}} 
                                       	{{@key}}='{{this}}'
