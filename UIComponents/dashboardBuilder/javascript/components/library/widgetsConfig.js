@@ -81,6 +81,7 @@ angular
         "name": "bar",
         "label": "Bar Chart",
         "class": "scriptr-chart",
+        "show": true,
         "defaults": {
             "type": "bar",
             "stacked": "true",
@@ -96,7 +97,8 @@ angular
          sizeY: 2,
          sizeX: 2,
          minSizeX: 1,
-         minSizeY: 1 //, maxSizeY: 2
+         minSizeY: 2,
+         maxSizeY: 2
        },
 	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAlCAYAAADBa/A+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjIwNzM5ODZDRTIzRjExRTZBNDMxODBDRDVCMkFCNTZGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjIwNzM5ODZERTIzRjExRTZBNDMxODBDRDVCMkFCNTZGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjA3Mzk4NkFFMjNGMTFFNkE0MzE4MENENUIyQUI1NkYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjA3Mzk4NkJFMjNGMTFFNkE0MzE4MENENUIyQUI1NkYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7BUDhKAAABLklEQVR42mJkGCDw+5iYA5Daj08NE8MgBqOOG3UcvQELCbkrAUgp4FFygNXq1YEBcRwQgBxnT0DNgdE0N+o4KqY5YjOOAJASwKPkBzDjvBgQxwFBARDX45E/CMQOo2lu1HEjIrd+fSYo8P8vbj8zMv3nYWB4NTCOe3NWyeDDLSmc8pziH5UZGG4Mg2iFFpr4wBdgofmH2hb//cnKTEy0viegxpHarQ0QeHFUXffNecXRomS0nMMJHm03VPn9iRN3ESHxwYDY8ovqjvvxlpf7+0t+3AZx/RQYWdF6d6UVXgW8Cq9VgNF1YEAc9+WJMF4FHKKfeEZz65BLc8xsf/7jVcH4/xfYF8x/f+FVy/T/B4zGpw5kDsxcgnYPZsBYXl4uMGijlYhWyWiGwAYAAgwAp1xSUMqF7k8AAAAASUVORK5CYII=",
 	 "form": [
@@ -440,6 +442,7 @@ angular
 {	"name": "area",
 	"label": "Area Chart",
 	"class": "scriptr-chart",
+ 	"show": true,
 	"defaults": {
 		"type": "area",
 		"xkey": "y",
@@ -454,7 +457,8 @@ angular
        sizeX: 2,
        sizeY: 2,
        minSizeX: 1,
-       minSizeY: 1 //, maxSizeY: 2
+       minSizeY: 2,
+       maxSizeY: 2
     },
 	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAlCAYAAADfosCNAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6ODU0QUJEQTNFMjRDMTFFNjg5OTNGRTg1NTI0MkFENEUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6ODU0QUJEQTJFMjRDMTFFNjg5OTNGRTg1NTI0MkFENEUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDMzZDNhZTEtYWE5Ni1iMjRiLWJhZDMtZWFmYjg0ZDNmMzgyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pjz0N0QAAALTSURBVHja7JdPiE1RHMfvnXfnNaPMYpSaV/7MmBmNBePPUwYbNYqQYiEbKxoaK4tnIRSSlSiMlOxENiSzUGQhLLyJjSYLjbERIf8m4T2fH7+b2+3d++6976qj7q8+/V73nPO73/M75/zuebZloM26PbQGdxw2TA6OvLENFXgTWqEMxSaDBU7BATJZsQ0WKEt9R9ps0wWKNRkgcBPuVpBA2vOOAQKvQbNfIG2yyovhnZMgcEGCwVUCfvhHAnO45dAhIu0YQWXgHjgG0+ErXIYzBB9rQOBH2EyMu+7y4lbADO1etiMGXYobgWUBXR7CObjCy77FFLiWMY+0TfblKk2CFUkkg9pwR2DYc8iewFFYD9t0w7v2Fi7KhHjxi5gC5V0rffHCRTJoK+4UFPTRZzgEpwn8Q/u043boNuj2DK/qiZXsjkpBpu92fl8KEChLO6BtVl2RDJgr+0wz5dp12EvQyYAJSZxBFbvRV9oko6MwpM/9AiUJRcgF5OuvSDrLLPbBQU/KX6q4GzEOxWzcLtgJM33NfoGduP46H5U/Iuksm/U8LNCGn3ASDhPwS50TPwdE2D36Vr1FGLcFdsNqeA/rPAL7cH0R5l226XxWA7n2QJaGYE9DxEl9lW3RCy36+D5jXgf0X4j7Tvsz3RqSvc6Ii1N2dIZiUpj3wwXZ6CHi5kEP5H3Nks2aIt0Ja+aLnsMYyRwtJ7IHT4RkollPb3fACRQryCTckx8QY8BTpCNbvTqZ16x1hYjz2mNETtSI06o1sC3BF7TsBIhr0ax1abajmiz5RI0PQq0inSyTOuMe3dS5hDGleE9FKNLxMkmwabj5Wk4avWNKNseJ2aE3mVyD8SwpQYt0WdO6pX+C53oXTCPm70wWUv4bITeYJWlejo36t5iJzERmIjOR5llFivm459ta1Vt5miYxK0kFwqv/YbUtu1Qq9ZsuUpZ7LDs4KdgvAQYAsIQCfa7zz00AAAAASUVORK5CYII=",
 	 "form": [
@@ -861,6 +865,7 @@ angular
     "name": "line",
 	"label": "Line Chart",
 	"class": "scriptr-chart",
+    "show": true,
 	"defaults": {
 		"type": "line",
 		"xkey": "y",
@@ -875,7 +880,8 @@ angular
        sizeX: 2,
        sizeY: 2,
        minSizeX: 1,
-       minSizeY: 1 //,maxSizeY: 2
+       minSizeY: 2,
+       maxSizeY: 2
     },
 	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAlCAYAAADBa/A+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkMyODMxQTMyRTIzRjExRTZCN0M2QjYwOTU2Q0U5QzZDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkMyODMxQTMzRTIzRjExRTZCN0M2QjYwOTU2Q0U5QzZDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QzI4MzFBMzBFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QzI4MzFBMzFFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7pqcU1AAACpElEQVR42uyXS2gUQRCGZ8d4kCQSiGIwHkQFCTm45ObBeEhAMIjxEgQfKMIelICIYdmTj5AETS4KCirk4SOHIHrygSGgkeAheFEUUXwcDSii6xMT16+kRppmZw7Znd0+pOGjumdqp/+tmq7uSeRyOc/VlnBBxIzXV4u5CRvhDnSs8DI/fUeC1AmboAK2wV656Iq4inwZdUXcI6Mvab2ST3G52n61x3jXTgYXfQcWQz2mHX7DRfOeC2lNwSK4QdTeOyOOqC1WcdLO2/fLHTlJZx08JWqTrok7FBa1WMWRsmpNW9j9RsxmyMK1kolj4l7MZ/hIvy3E7aDay6Q0WxJxWhoyWuWr4XS+qAZbVFhK44rcnDVuQMxxK8UirAruE7XnpRTXovYPvA0qP0wjMGml9FzBRyYeuh6zFh7wT79F+C3HSCSWyZaE7zDX5LQxCOtgFp5A0z93z1uFz+y8I8fDO3TCW/CYcWWE+1kVNg4jcoHJH2I2wBndCZrUt1bxCknrAcNPItgc8ie2Y3aCRDaFqP9HbPrf4TDdZ9YxqbJQcTPWuBchayxhNcaqyyDkXcizTsAv7V/C7828xTGppCioU3fhFSQ1vWb96oeVMBX1kiPmOkbey3r6qYK+IRAwhNkH93jYFsZL6Q/DDnU5BV+hWyOSxO9F7B84usomddJGJn2t1+U3XdBnRX4An65i1iQ/4ihzQYc9gTBNTQ6k6vdYP6sqdsEMe+eOSmWHl/m2H223rfFU7N+tRG211rUl0EqUJiJS36YLRj5Qrprlo+jitMCOwVYYZbJd5Tzs+YawTj3miLAvcKTcHxe+sQD6dXuRJuMPTojTY84P43qWlM45IQ4hcrzZrTuArNA93kJbaPG0RDqdrnFVnBz4Prkqznc5rX8FGAAWXa+WqoxqjwAAAABJRU5ErkJggg==",
 	 "form": [
@@ -1282,6 +1288,7 @@ angular
 	"name":"donut",
     "label": "Donut Chart",
 	"class": "scriptr-chart",
+    "show": true,
 	"defaults": {
 		"type": "donut",
 		"transport": "wss",
@@ -1292,10 +1299,11 @@ angular
         "parse-time": "false"
 	},
    "box": {
-       sizeX: 1,
-       sizeY: 1,
+       sizeX: 2,
+       sizeY: 2,
        minSizeX: 1,
-       minSizeY: 1//, maxSizeY: 2
+       minSizeY: 2,
+       maxSizeY: 2
     },
 	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAlCAYAAADBa/A+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RTkzNjBBNzJFMkQ2MTFFNkIzQ0Y4MTdBRTNEODBCRUMiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RTkzNjBBNzFFMkQ2MTFFNkIzQ0Y4MTdBRTNEODBCRUMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QzI4MzFBMzJFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QzI4MzFBMzNFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4tt2jHAAAD40lEQVR42rSYXUgVQRTH773eyjAsTZM+VCjsiwpEKTXJtEgf9C0iCiqi6Is+yMc+1J7qwQKxFPShCCnRIKJMibLMUktDgqwQEiFKQ8yiLM28/Y+ONq67e2b3rgf+nKs7u/vbMzNnzozb5/O53G63ywkbaog4AFcMDUJd0HuoCXoA1XsTu4dVnzXCZQcuoabNA7cCWgqFQjOhsvrg1OPwOQa3fYRKoAJA9qnAeS0A0RdsgfZA6VCIpgkXlUVQHpSNCNMHFAJyyOwGjyIYQb2CqqHtOmBk/YrfGQxdguoAGWXW0MtABcFdhna7nLdEqAWAGYhgi6XIAYy6odECWL8NwDDoEQDjlOEAthDuMbTKwosGbUaQurlar4s9OmCz4KqgJRZfQhOiFnoItUK/LUawHIBeLnKF0BobEejD2HkCbYZi8fdsMatvqyYE6Jj8jwl5DlHLgLtvAahHRKuBJk5j+spBg+ScBHcdWsw87wcUjY/rnZCEARaAC2+hGAWoDugUdMsISAcwVHz4WqZpLuDytHCUv24ovIeWp2xAWZ6dAvAlE8FPUGRAQtewPOaOKDw/B1CH7ICNJFV0F9wuptkCKGV8QiBq0XDJzE2VgDrnb+YF4DO4O0yzTfJsTWca/9TOJD+tWGHmjsNtYBoXIWqfHYSrZZL2MhmOWwnKnVxU0bWUoNtNmsyT4SLNkist0FOw8HebXJsuVyWhJg070aW+KYA7Az01uPaBLZmkyDlurflZVL63GU3AuIr/cMMm5VOYa2qsfmxW6tgXKMIj1fdGFoM8GOgkVfPWfTSM1qlOiHZmcG50OGpU9pvtqnpluCbmYYcdhjuqUFiMw1UzjbPQtckOdWkmXBLT7LUMR+sdtwJcA+BcP8FoX1KquIKMwiGP0WwtYm6gMqcKgCF+gFEJH8E0/TNW8Mrpg+C+MTdSodgCwPWK+90gKdoHxQkBZ3fjK0t79Mr0k3D5isGgsucK7dIQ+QEN1HK4baKSoV6JLSy5SAt9MxTF7WcB1zjprESU6nUKA1a2AXFg8xWaJsr8cE0bemYaAFfDPxdnK3p2D2CZY2clE1YFROAv3A5mUdbaDLFbSxEfFa7Thkqys3gxbRn3GjznlzbFTFqyANgJR/TfHc5tp9EzqQC8id8X9HIprnWwO34A0thIE2ucU0bvKgNguNi5VUnXCgB2VfmsBIBUw8WJPalTNp+2BACh4bMTekFg0Am9xuzhoZgkNBZyxS7erg2Jg8XzIq+yh4fKJ5uAnCMg9zOVs57ViL3uG9UbbB27iiPXJLFji3eNHr9S1g+UIkRj9Z1IIRWAarMaZuL6J8AAXG5blin5AbwAAAAASUVORK5CYII=",
 	 "form": [
@@ -1456,6 +1464,7 @@ angular
   	"name": "gauge",
 	"label": "Gauge",
 	"class": "scriptr-gauge",
+    "show": true,
 	"defaults": {
 		"transport": "wss",
 		"msg-tag": "gauge",
@@ -1464,7 +1473,7 @@ angular
         "height": 160
 	},
   "box": {
-       sizeX: 1,
+       sizeX: 2,
        sizeY: 1,
        minSizeX: 1,
        minSizeY: 1
@@ -1759,17 +1768,19 @@ angular
 	"name": "speedometer",
     "label": "Speedometer",
 	"class": "scriptr-speedometer",
+  	"show": true,
 	"defaults": {
 		"transport": "wss",
 		"msg-tag": "speedometer",
 		"api": "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal",
-        "gauge-radius": "70"
+        "gauge-radius": "160"
 	},
    "box": {
-       sizeX: 1,
-       sizeY: 1,
-       minSizeX: 1,
-       minSizeY: 1//, maxSizeY: 2
+       sizeX: 2,
+       sizeY: 2,
+       minSizeX: 2,
+       minSizeY: 2,
+       maxSizeY: 2
     },
 	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0U0RkEwQjZFN0I3MTFFNjhGMEZBOEREMDEzMkY1NjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0U0RkEwQjVFN0I3MTFFNjhGMEZBOEREMDEzMkY1NjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MmM0MmUzZDAtZTJjNC1iMjQyLWJjZTItYThjYWQ3ZjkxMzAyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Poq6iGcAAAS7SURBVHjazFhpbA1RFJ432qq1VUtUqK1FSGiUJ2jkWZ7YfpTG1ibULvHDnhA/hPhhDz+IJVWaWqKpNhEifRJCEY9KNSpEiiIhllL6qkFT3+FMnd4+rTfz+p6TfDkz584955szZ87cuTbNgrhcrhZQw4CxwFCgP9ADiAB0oAb4DLwEHgP3gCvAXafTWWM2rs0k2SFQC4C5QBcTLt4Cp4EMkL/frKRBNgFqCzBV859cADaDfKFfSYNsJNR2YKmXObVAMXCNdWnrgsL40Bev936PiV5TlZhQBFtfYDAwhrU3H0eADSD/yTJpEB4BdQbopQw9Aw4DJxHolRy4m7woCSoXmD4sJz1P8dcdKhVYBvRWfD4H5sDf7cY46U0QJufXJWHd81Vr5S5247AfnO9QCTcldD3No/nkh/wJoTjXOa7vpDFxBVQWECrMB9pnX8oNv/fQ3uHQmVFWCpnmkx/yR37FEMXL4vj/Xh6YMA/qhDBROlKRoVw8+p44fsQtLAGP3+fWBR/UKgu5RQ6AjzLEnE6lBrQSl85HzMwmM43JlMF0YXoPOIgwnVAAKHq81PbGm0z0eJ6/g/1p7N/B8QxJZz5/J40LOkKdBULY5KH2BoduZR6RTkTAfDOMeV4i+5H17uZ26mET8TjLvLyXBwYzoNKEaYaR4UAKl8o5YToOHgsakMaFo6EK/nTO2v3OiRNXaUESV37+Ps1mWylMiSB+Qy2PrXU1U1mlRR7LGYcXxhEMwhSX4hMPb/xsnOXhUHV1i1aUgx46hd9kKo+1qMNnASBLH5s99FGijvXVPvhi9dCByeISO7J9x8j0EjFQigtnUfMHTgFJvHILhPTgeBS3H3jMJj5i/BdPG7IcBv0OaM8D63E3u8XdxyHLTwJYGvXigd86qF18SsvczpTpkYJwLX8FZXt6Esh69hIvi3lpzHOkzgt4Q4qR5TfafyTMp1iYxhLpeGG4auGxDgBszcRd8orX+ftvyEMLjgcCB5uJuOTVn0hHC8NTC46p8S+n9QIviPwpklc0dQ+jyLU2rhtHwkpfvhYXbMeLUe1DiVB76sMta56ZFSD7Cae/GOP8W9+Ybh7nqLq2HCIvblFRuVSZvw+o9iHeLSadwsHNEifSm//w+tJglffDOPGMG+Gk9blAhYkSMYSIZ5oslQrJw+OwTxBjNZTpcmMboCYqsi0y88lC7V1Wzol4FIinwO9HH3o1lWwdD9fyOW3F8Add+UzG+eHDUKaYJwElID7FgutYcVymK+3E7oc3vcCLjToU/arFms2HOH5ApG8Kg4O3uqzIo7/Yw3hHytcfAhv/hhni1pU67MQbKlbkQyNjESb80b5LV3kfOr7tL6g7CeNii6Qb2966acLfQnFcAr6lxno6QwzMxCOJsfAyurm/q5LHPxS+lEYn3o3SJE+DdKboyaG8yWili6yGSuad0WzOVjK3Ml9kI9Ba7AwcV39sN0FtE+vqMXgUBUH7sXW5BkEVia82bcFtUH9s92u/N7+Nm8nAxIggEW7Ji/8Q8XLvbLBZg7uohFqhNPSDQUp0mrLOp1/Acq87TBg4D3VImKYFibRck+eAl2wU9Vd5LLRBQ91jMpdMMOQor/Ta8ZZCPfkpwABkBJ8fXRbYywAAAABJRU5ErkJggg==",
 	 "form": [
@@ -1976,9 +1987,120 @@ angular
 	}
 },
 {
+	"name": "thermometer",
+    "label": "Thermometer",
+	"class": "scriptr-thermometer",
+  	"show": true,
+	"defaults": {
+		"transport": "wss",
+		"msg-tag": "thermometer",
+		"api": "UIComponents/dashboard/frontend/examples/thermometer/getThermometerValue",
+        "height": 220,
+	},
+    "box": {
+       sizeX: 1,
+       sizeY: 1,
+       minSizeX: 1,
+       minSizeY: 1,
+       maxSizeX: 1,
+       maxSizeY: 1
+    },
+    "imgCls": "",
+	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0U0RkEwQjZFN0I3MTFFNjhGMEZBOEREMDEzMkY1NjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0U0RkEwQjVFN0I3MTFFNjhGMEZBOEREMDEzMkY1NjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MmM0MmUzZDAtZTJjNC1iMjQyLWJjZTItYThjYWQ3ZjkxMzAyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Poq6iGcAAAS7SURBVHjazFhpbA1RFJ432qq1VUtUqK1FSGiUJ2jkWZ7YfpTG1ibULvHDnhA/hPhhDz+IJVWaWqKpNhEifRJCEY9KNSpEiiIhllL6qkFT3+FMnd4+rTfz+p6TfDkz584955szZ87cuTbNgrhcrhZQw4CxwFCgP9ADiAB0oAb4DLwEHgP3gCvAXafTWWM2rs0k2SFQC4C5QBcTLt4Cp4EMkL/frKRBNgFqCzBV859cADaDfKFfSYNsJNR2YKmXObVAMXCNdWnrgsL40Bev936PiV5TlZhQBFtfYDAwhrU3H0eADSD/yTJpEB4BdQbopQw9Aw4DJxHolRy4m7woCSoXmD4sJz1P8dcdKhVYBvRWfD4H5sDf7cY46U0QJufXJWHd81Vr5S5247AfnO9QCTcldD3No/nkh/wJoTjXOa7vpDFxBVQWECrMB9pnX8oNv/fQ3uHQmVFWCpnmkx/yR37FEMXL4vj/Xh6YMA/qhDBROlKRoVw8+p44fsQtLAGP3+fWBR/UKgu5RQ6AjzLEnE6lBrQSl85HzMwmM43JlMF0YXoPOIgwnVAAKHq81PbGm0z0eJ6/g/1p7N/B8QxJZz5/J40LOkKdBULY5KH2BoduZR6RTkTAfDOMeV4i+5H17uZ26mET8TjLvLyXBwYzoNKEaYaR4UAKl8o5YToOHgsakMaFo6EK/nTO2v3OiRNXaUESV37+Ps1mWylMiSB+Qy2PrXU1U1mlRR7LGYcXxhEMwhSX4hMPb/xsnOXhUHV1i1aUgx46hd9kKo+1qMNnASBLH5s99FGijvXVPvhi9dCByeISO7J9x8j0EjFQigtnUfMHTgFJvHILhPTgeBS3H3jMJj5i/BdPG7IcBv0OaM8D63E3u8XdxyHLTwJYGvXigd86qF18SsvczpTpkYJwLX8FZXt6Esh69hIvi3lpzHOkzgt4Q4qR5TfafyTMp1iYxhLpeGG4auGxDgBszcRd8orX+ftvyEMLjgcCB5uJuOTVn0hHC8NTC46p8S+n9QIviPwpklc0dQ+jyLU2rhtHwkpfvhYXbMeLUe1DiVB76sMta56ZFSD7Cae/GOP8W9+Ybh7nqLq2HCIvblFRuVSZvw+o9iHeLSadwsHNEifSm//w+tJglffDOPGMG+Gk9blAhYkSMYSIZ5oslQrJw+OwTxBjNZTpcmMboCYqsi0y88lC7V1Wzol4FIinwO9HH3o1lWwdD9fyOW3F8Add+UzG+eHDUKaYJwElID7FgutYcVymK+3E7oc3vcCLjToU/arFms2HOH5ApG8Kg4O3uqzIo7/Yw3hHytcfAhv/hhni1pU67MQbKlbkQyNjESb80b5LV3kfOr7tL6g7CeNii6Qb2966acLfQnFcAr6lxno6QwzMxCOJsfAyurm/q5LHPxS+lEYn3o3SJE+DdKboyaG8yWili6yGSuad0WzOVjK3Ml9kI9Ba7AwcV39sN0FtE+vqMXgUBUH7sXW5BkEVia82bcFtUH9s92u/N7+Nm8nAxIggEW7Ji/8Q8XLvbLBZg7uohFqhNPSDQUp0mrLOp1/Acq87TBg4D3VImKYFibRck+eAl2wU9Vd5LLRBQ91jMpdMMOQor/Ta8ZZCPfkpwABkBJ8fXRbYywAAAABJRU5ErkJggg==",
+	 "form": [
+	            {
+	                type: "tabs",
+	                tabs: [
+	                  {
+	                    title: "Data",
+	                    items: [
+                          "percent",
+	                      "transport",
+	                      "msg-tag",
+	                      "api",
+	                      "api-params",
+	                   //   "on-format-data"
+	                    ]
+	                  },
+                      {
+                        title: "Box Properties",
+                        items: [
+                         "height",  {
+                                     "key": "size",
+                                     "type": "radios-inline",
+                                     titleMap: [
+                                       { value: "large", name: "large" },
+                                       { value: "small", name: "small" }
+                                     ]
+                                   }
+                        ]
+                      },
+                      {
+                        title: "Box Properties",
+                        items: [
+                         "boxLabel"
+                        ]
+                      }
+	                ]
+	              }
+	       ],
+	"schema": {
+		"type": "object",
+		"title": "Schema",
+		"properties": {
+            "percent": {
+				"title": "Thermometer Value",
+				"type": "string",
+				"description": "Thermometer Value (0 to 100)"
+			},
+			"size": {
+				"title": "Thermometer Size",
+				"type": "string",
+				"description": "Set the size of Thermometer (small)."
+			},
+			"height": {
+				"title": "Height",
+				"type": "number",
+				"description": "Set the height of Thermometer."
+			},
+			"api": {
+				"title": "Api",
+				"type": "string",
+				"description": "Name of the api to get data."
+			},
+			"on-format-data": {
+				"title": "Format Data",
+				"type": "string",
+				"description": "Callback function to be called after data is returned from backend."
+			},
+			"transport": {
+				"title": "Transport",
+				"type": "string",
+                "enum": ["wss", "https"],
+				"description": "Method used to call api (can take 'http' or 'wss')."
+			},
+			"msg-tag": {
+				"title": "Message Tag",
+				"type": "string",
+				"description": "Subscribe to socket messages with tag name."
+			},
+			"api-params": {
+				"title": "Api Params",
+				"type": "string",
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
+			}
+		},
+		"required": []
+	}
+},        
+{
 	"name": "odometer",
     "label": "Odometer",
 	"class": "scriptr-odometer",
+  	"show": true,
 	"defaults": {
 		"transport": "wss",
 		"msg-tag": "odometer",
@@ -2085,5 +2207,140 @@ angular
 		},
 		"required": []
 	}
-}
+},
+{
+	"name": "progressbar",
+    "label": "ProgressBar",
+	"class": "scriptr-progressbar",
+  	"show": true,
+	"defaults": {
+		"transport": "wss",
+		"msg-tag": "progressbar",
+		"api": "UIComponents/dashboard/frontend/examples/progressBar/getProgressBarVal",
+        "value": "20",
+        "animate": "true",
+        "title": "Progress bar",
+        "class": "progress-striped active"
+	},
+    "box": {
+       sizeX: 2,
+       sizeY: 1,
+       minSizeX: 1,
+       minSizeY: 1,
+       maxSizeY: 1
+    },
+    "imgCls": "",
+	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGsAAAAlCAYAAABF7RcQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjA0MzlBMzQxRTdCNjExRTZCREVBQURCRkE1MTI4QTFBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjA0MzlBMzQyRTdCNjExRTZCREVBQURCRkE1MTI4QTFBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDQzOUEzM0ZFN0I2MTFFNkJERUFBREJGQTUxMjhBMUEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDQzOUEzNDBFN0I2MTFFNkJERUFBREJGQTUxMjhBMUEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz75PGiuAAAGNUlEQVR42uxb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",
+	 "form": [
+	            {
+	                type: "tabs",
+	                tabs: [
+	                  {
+	                    title: "Data",
+	                    items: [
+                          "value",
+	                      "transport",
+	                      "msg-tag",
+	                      "api",
+	                      "api-params",
+	                   //   "on-format-data"
+	                    ]
+	                  },
+	                  {
+	                    title: "Progress bar behaviour",
+	                    items: ["stacked", "class", "type", "max", {
+                                     "key": "animate",
+                                     "type": "radios-inline",
+                                     titleMap: [
+                                       { value: "true", name: "True" },
+                                       { value: "false", name: "False" }
+                                     ]
+                                   }]
+	                  },
+                      {
+                        title: "Box Properties",
+                        items: [
+                         "boxLabel"
+                        ]
+                      }
+	                ]
+	              }
+	       ],
+	"schema": {
+		"type": "object",
+		"title": "Schema",
+		"properties": {
+            "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define box title"
+			},
+			"value": {
+				"title": "Progressbar Value",
+				"type": "number",
+				"description": "The current value of progress bar."
+			},
+			"animate": {
+				"title": "Animate",
+				"type": "string",
+				"description": "Whether bars use transitions to achieve the width change."
+			},
+            "class": {
+				"title": "Class",
+				"type": "string",
+				"description": "Can take 'progress-striped' or 'progress-striped active'"
+			},
+			"type": {
+				"title": "Type",
+				"type": "string",
+				"description": "Bootstrap style type. Possible values are 'success', 'info', 'warning', and, 'danger' to use Bootstrap's pre-existing styling, or any desired custom suffix."
+			},
+            "max": {
+                  "title": "Total number of bars",
+                  "type": "string",
+                  "description": "A number that specifies the total value of bars that is required.",
+            },
+          	"stacked": {
+				"title": "Stacked",
+				"type": "string",
+				"description": "Array of objects representing multiple stacked progress bars.",
+                 "x-schema-form": {
+                      "type": "textarea",
+                      "placeholder":  "[{value : 50, type : 'success', title : 'bar1'},{value : 70, type : 'warning', title : 'bar2'}]"
+                  }
+			},
+			"api": {
+				"title": "Api",
+				"type": "string",
+				"description": "Name of the api to get data."
+			},
+			"on-format-data": {
+				"title": "Format Data",
+				"type": "string",
+				"description": "Callback function to be called after data is returned from backend."
+			},
+			"transport": {
+				"title": "Transport",
+				"type": "string",
+                "enum": ["wss", "https"],
+				"description": "Method used to call api (can take 'http' or 'wss')."
+			},
+			"msg-tag": {
+				"title": "Message Tag",
+				"type": "string",
+				"description": "Subscribe to socket messages with tag name."
+			},
+			"api-params": {
+				"title": "Api Params",
+				"type": "string",
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
+			}
+		},
+		"required": []
+	}
+}      
+    
 ]});
