@@ -34,8 +34,8 @@
            init-onload="false"
            data="$ctrl.dataLoaded"
            >
-      <div class="slick-item" ng-repeat="item in $ctrl.widgetsConfig">
-         <span>
+      <div class="slick-item" ng-repeat="item in $ctrl.widgetsConfig" ng-if="item.show == true">
+         <span >
              <a ng-click="$ctrl.addWidget(item)">
                <img ng-if="item.imgSrc" ng-src="{{ item.imgSrc }}" class="{{item.imgCls}}" alt="{{ item.label}}" />
                <i ng-if="item.iconSrc" class="{{ item.iconSrc }}" aria-hidden="true" alt="{{ item.label}}" /></i>

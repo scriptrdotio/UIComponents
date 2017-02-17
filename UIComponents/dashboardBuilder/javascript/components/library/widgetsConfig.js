@@ -1990,7 +1990,7 @@ angular
 	"name": "thermometer",
     "label": "Thermometer",
 	"class": "scriptr-thermometer",
-  	"show": true,
+  	"show": false,
 	"defaults": {
 		"transport": "wss",
 		"msg-tag": "thermometer",
@@ -2212,7 +2212,7 @@ angular
 	"name": "progressbar",
     "label": "ProgressBar",
 	"class": "scriptr-progressbar",
-  	"show": true,
+  	"show": false,
 	"defaults": {
 		"transport": "wss",
 		"msg-tag": "progressbar",
