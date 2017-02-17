@@ -1,0 +1,59 @@
+<html ng-app="myApp">
+
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+  
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/thermometer/style.css">
+  
+    <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+</head>  
+  
+<script>
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Thermometer"])
+      angular.module('myApp').config(wssConfig);
+      angular.module('myApp').config(httpsConfig);
+  
+      angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.callback = function(data){
+            console.log("data formatter");
+            return data;
+          }
+      });
+</script>
+  
+<body>
+  
+  <div ng-controller="testCtrl as vm" >
+     <div class="centered">
+
+       <div class="col-xs-12 col-sm-6 mb10"> 
+           <scriptr-thermometer
+                         percent="36"  
+                         height="220"
+              >
+           <scriptr-thermometer>  
+      </div>
+         
+      <div class="col-xs-12 col-sm-6 mb10"> 
+         <scriptr-thermometer
+                       percent="10"  
+                       api="UIComponents/dashboard/frontend/examples/thermometer/getThermometerValue"      
+                       size="small"       
+                       height="120"
+            >
+         <scriptr-thermometer>  
+      </div>
+
+	</div>
+  </div>
+  
+</body>
+
+</html>
