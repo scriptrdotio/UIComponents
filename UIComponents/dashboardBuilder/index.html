@@ -9,7 +9,9 @@
    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
   
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
   
    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
    <!-- Add the slick-theme.css if you want default styling -->
@@ -56,7 +58,8 @@
     <script src="/UIComponents/httpProvider.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
   
- 
+    <script src="/UIComponents/dashboardBuilder/javascript/config/config.js"></script>
+    <script src="/modules/login/widgets/authorization.js" ></script>
   
     <script src="/UIComponents/config/scriptrTransport.js"></script>
     
@@ -93,10 +96,29 @@
    <script src="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.js"></script>    
    
   <script src="/UIComponents/dashboard/frontend/components/message/displayBox.js"></script>
-   <script src="/UIComponents/dashboard/frontend/components/message/message.js"></script>
+  <script src="/UIComponents/dashboard/frontend/components/message/message.js"></script>
+  
+  <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/thermometer/style.css">
+  
+  <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js"></script>
+  <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer.js"></script>
+  
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+  <script src="/UIComponents/dashboard/frontend/components/progressBar/progressBar.js"></script>
+  
+  <script src="/UIComponents/config/scriptrTransport.js"></script>
                                 
         
 </head> 
+  
+  <script type="text/javascript"> 
+    var authorization  = $.scriptr.authorization(
+      {
+        onTokenValid: function(){ }, 
+        loginPage: login.loginTarget
+      }
+    );
+  </script>
   
 <script>
       var myApp= angular.module("myApp", ['ngAnimate', 'ngSanitize', "WsClient", "HttpClient", "Chart", 'gridster',  'ngRoute','DashboardBuilder', 'Gauge', 'Speedometer', 'Odometer', 'SearchBox', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache', "Message"]);

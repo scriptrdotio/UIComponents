@@ -7,6 +7,7 @@
          <div sf-options="$ctrl.frmGlobalOptions" sf-schema="$ctrl.schema" sf-form="$ctrl.form" sf-model="$ctrl.model" ></div>
     </div>
     <div class="col-xs-12 col-sm-6">
+       <a class="pull-right btn btn-sm btn-warning ml5" ng-click="$ctrl.logout()"><i class="fa fa-user-circle" aria-hidden="true"></i> Logout</a>
        <a class="pull-right btn btn-sm btn-warning ml5" ng-click="$ctrl.clear()"><i class="fa fa-trash" aria-hidden="true"></i> Clear</a>
        <a class="pull-right btn  btn-sm btn-warning ml5" ng-click="$ctrl.setTransportSettings()"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
        <a class="pull-right  btn-sm  btn btn-warning ml5" ng-if="$ctrl.isEdit" ng-click="$ctrl.viewDasboard()"><i class="fa fa-eye" aria-hidden="true"></i> View</a>
@@ -27,7 +28,7 @@
     <slick 
            settings="$ctrl.slickConfig"
            infinite="true" 
-           slides-to-show="7"
+           slides-to-show="$ctrl.widgetsConfig.length"
            slides-to-scroll="0"
            ng-if="$ctrl.dataLoaded" 
            init-onload="false"

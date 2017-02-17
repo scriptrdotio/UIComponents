@@ -215,6 +215,10 @@ angular
       this.clear = function() {
 			this.dashboard.widgets = [];
 	  };
+      
+      this.logout = function() {
+		authorization.logout();
+	  };
 
       this.addWidget = function(wdg) {
           this.dashboard.widgets.push({
