@@ -18,6 +18,8 @@ angular
         
         "title" : "@", // Title to use as label (for accessibility).
         
+        "class" : "@",
+        
         "animate": "<?", // Whether bars use transitions to achieve the width change.
         
         "stacked" : "<?", // Array of objects representing multiple stacked progress bars
