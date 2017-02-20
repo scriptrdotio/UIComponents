@@ -61,7 +61,10 @@ angular
 	               };
 
 	               this.route = function(item, event, column) {
-		               console.log(item)
+		               console.log(item);
+                       var colIndex = this.menuCols.indexOf(column)+1;
+                       this.menuCols.splice(colIndex, this.menuCols.length -1)
+                       this.menuColsExpansionClass.splice(colIndex, this.menuColsExpansionClass.length -1);
 		               if (typeof item.sub != undefined && item.sub != null) {
 			               if (this.menuCols.indexOf(item.sub) == -1) {
 				               // case of opening a sub-menu
