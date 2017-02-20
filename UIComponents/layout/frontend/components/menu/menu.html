@@ -1,8 +1,8 @@
 <div>
-  <div ng-class="{'side-bar sm level-bg-{{$index}}' : vm.menuColsExpansionClass[$index] == 'sm', 'side-bar md level-bg-{{$index}}' : vm.menuColsExpansionClass[$index] == 'md'}" ng-repeat="col in vm.menuCols track by $index">
+  <div ng-class="{'side-bar sm level-bg-{{$index}}' : $ctrl.menuColsExpansionClass[$index] == 'sm', 'side-bar md level-bg-{{$index}}' : $ctrl.menuColsExpansionClass[$index] == 'md'}" ng-repeat="col in $ctrl.menuCols track by $index">
     <ul class="nav nav-pills">
-      <li ng-repeat="item in vm.menuItems[col] track by $index" ng-class="{'active text-center': (vm.currentRoute == item.route  || (vm.currentRoute == null && item.active == 'true')), 'text-center': item.active != 'text-center'}">
-        <a ng-class="{'isSelected': (vm.currentRoute == item.route || (vm.currentRoute == null && item.active == 'true'))}" href="{{item.route}}/{{vm.lockId.value}}" ng-click="vm.route(item, $event, col)">
+      <li ng-repeat="item in $ctrl.menuItems[col] track by $index" ng-class="{'active text-center': ($ctrl.currentRoute == item.route  || ($ctrl.currentRoute == null && item.active == 'true')), 'text-center': item.active != 'text-center'}">
+        <a ng-class="{'isSelected': ($ctrl.currentRoute == item.route || ($ctrl.currentRoute == null && item.active == 'true'))}" href="{{item.route}}/{{$ctrl.lockId.value}}" ng-click="$ctrl.route(item, $event, col)">
           <i aria-hidden="true" class="{{item.iconClass}}"></i><strong>{{item.label}}</strong>
           <i ng-show="item.sub" aria-hidden="true" class="fa fa-angle-right sub-menu-indicator"></i>
         </a>

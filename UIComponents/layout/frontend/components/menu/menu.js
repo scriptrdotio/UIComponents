@@ -7,22 +7,21 @@ angular
 	               menuItems : '<menuItems'
                },
                templateUrl : '/UIComponents/layout/frontend/components/menu/menu.html',
-               controllerAs : 'vm',
                controller : function($scope, _, $timeout, $location, $route) {
 	               var vm = this;
                  
-                   vm.currentRoute = null;
+                   this.currentRoute = null;
 
 	               this.$onInit = function() {
 		               this.getMenuData(this.menuItems);
                        if($route.current && $route.current.$$route) {
-                         vm.currentRoute =  "#"+$route.current.$$route.originalPath;
+                         this.currentRoute =  "#"+$route.current.$$route.originalPath;
                        }
                        $scope.$on('$routeChangeStart', function(next, current) { 
                          console.log("next", next);
                          if(current) {
                             console.log("current", current.$$route);
-                         	vm.currentRoute =  "#"+current.$$route.originalPath;
+                         	this.currentRoute =  "#"+current.$$route.originalPath;
                          } else {
                            console.log("Missing route definition")
                          }
