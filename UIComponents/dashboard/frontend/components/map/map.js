@@ -129,7 +129,7 @@ angular
               if(vm.api) {
            		    vm.apiParams =  (vm.apiParams) ? vm.apiParams : {};
              	   	wsClient.call(vm.api, vm.apiParams).then(function(data, response) {
-                      if(typeof self.onFormatData() == "function"){
+                      if(self.onFormatData && typeof self.onFormatData() == "function"){
                         data = self.onFormatData()(data);
                       }
                     vm.processAssets(data);
