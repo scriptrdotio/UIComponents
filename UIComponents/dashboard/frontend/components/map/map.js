@@ -486,8 +486,8 @@ angular
       //Close all info windows, redraw map with only asset trips tracked
       //If all assets are selected redraw all assets
       vm.focusOnAsset = function(assetKey) {
-        if(self.onSelectAsset && typeof self.onSelectAsset() == "function"){
-          data = self.onSelectAsset()(assetKey);
+        if(this.onSelectAsset && typeof this.onSelectAsset() == "function"){
+            this.onSelectAsset()(assetKey);
         }
         vm.selectedAsset = assetKey;
         vm.showDetailedMap = true;
