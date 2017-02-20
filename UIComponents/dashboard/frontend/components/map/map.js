@@ -23,6 +23,7 @@ angular
       	"apiParams" : "@",
         "msgTag": "@",
       	"onFormatData" : "&",
+        "onSelectAsset" : "&",
       
          //TODO the below attributes, currently use without geofence
         "geofenceManager": "<?", //True to show the geofence drawing manage icons or not
@@ -485,6 +486,9 @@ angular
       //Close all info windows, redraw map with only asset trips tracked
       //If all assets are selected redraw all assets
       vm.focusOnAsset = function(assetKey) {
+        if(self.onSelectAsset && typeof self.onSelectAsset() == "function"){
+          data = self.onSelectAsset()(assetKey);
+        }
         vm.selectedAsset = assetKey;
         vm.showDetailedMap = true;
         if (vm.infoWindow != null) {
