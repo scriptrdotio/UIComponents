@@ -41,6 +41,8 @@ angular
 
       var vm = this;
       
+      var self = this;
+      
       // On load, get latest 500 data points saved in db
       this.$onInit = function() {
           vm.pathStrokeOpacity = (vm.pathStrokeOpacity) ? vm.pathStrokeOpacity : 0;
@@ -486,8 +488,8 @@ angular
       //Close all info windows, redraw map with only asset trips tracked
       //If all assets are selected redraw all assets
       vm.focusOnAsset = function(assetKey) {
-        if(this.onSelectAsset && typeof this.onSelectAsset() == "function"){
-            this.onSelectAsset()(assetKey);
+        if(self.onSelectAsset && typeof self.onSelectAsset() == "function"){
+            self.onSelectAsset()(assetKey);
         }
         vm.selectedAsset = assetKey;
         vm.showDetailedMap = true;
