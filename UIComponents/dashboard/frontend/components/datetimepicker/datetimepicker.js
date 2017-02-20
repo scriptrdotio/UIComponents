@@ -61,8 +61,8 @@ angular
                         this.configuration["dropdownSelector"] = "#dropdown";
                       }
                     }else {
-                      this.startConfig = (this.startDateConfig) ? this.startDateConfig : { dropdownSelector: '#dropdownStart', renderOn : 'end-date-changed', startView:'day', minView:'minute' };
-                      this.endConfig = (this.endDateConfig) ? this.endDateConfig : { dropdownSelector: '#dropdownEnd', renderOn : 'start-date-changed', startView:'day', minView:'minute' };
+                      this.startConfig = (this.startDateConfig) ? this.startDateConfig : { dropdownSelector: '#dropdownStart', renderOn : 'end-date-changed', startView:'day', minView:'day' };
+                      this.endConfig = (this.endDateConfig) ? this.endDateConfig : { dropdownSelector: '#dropdownEnd', renderOn : 'start-date-changed', startView:'day', minView:'day' };
                       if(typeof this.startDateConfig != 'undefined'){
                       	this.startConfig["dropdownSelector"] = "#dropdownStart";
                         this.startConfig["renderOn"] = 'end-date-changed';
