@@ -1,1 +1,21 @@
-<meter-gauge gaugeconfig="$ctrl.classic"></meter-gauge>
+<meter-gauge 
+    gaugeconfig='{
+           gaugeRadius: $ctrl.gaugeRadius,
+           minVal: $ctrl.minVal,
+           maxVal: $ctrl.maxValue,
+           needleVal: $ctrl.needleVal,
+           tickSpaceMinVal: $ctrl.tickSpaceMinVal,
+           tickSpaceMajVal: $ctrl.tickSpaceMajVal,
+           gaugeUnits: $ctrl.gaugeUnits,
+           tickColMaj: $ctrl.tickColMaj,
+           tickColMin: $ctrl.tickColMin,
+           outerEdgeCol: $ctrl.outerEdgeCol,
+           pivotCol: $ctrl.pivotCol,
+           innerCol: $ctrl.innerCol,
+           unitsLabelCol: $ctrl.unitsLabelCol,
+           tickLabelCol: $ctrl.tickLabelCol,
+           needleCol: $ctrl.needleCol,
+           defaultFonts: $ctrl.defaultFonts
+         }'
+           >
+</meter-gauge>
