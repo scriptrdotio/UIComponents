@@ -76,7 +76,7 @@ angular
       },
 
       templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
-      controller : function($window, $timeout, dataService) {
+      controller : function($scope, $window, $timeout, dataService) {
 
         var self = this;
         
@@ -89,26 +89,26 @@ angular
                   return self.onFormatData()(data); // Or we can have it as self.onFormatData({"data":data}) and pass it in the on-format-update as: vm.callback(data)
                 }
               }
-              var dataResponse = dataService.getGridData(self.api, APIParams, self.transport, tmp).then(
-              function(data, response) {
-                if (data && data.documents) {
-                  var rowsData = data.documents;
-                  var count = parseInt(data.count);
-                  
-                  params.successCallback(rowsData, count);
-                  self.gridOptions.api.sizeColumnsToFit();
-                  
-                  // if there's no rows to be shown, disbale the next button
-                  if(rowsData == null || rowsData.length == 0){
-                    var el = angular.element( document.querySelector( '#btNext' ) );
-                    el.attr('disabled', 'true');
+              dataService.getGridData(self.api, APIParams, self.transport, tmp).then(
+                function(data, response) {
+                  if (data && data.documents) {
+                    var rowsData = data.documents;
+                    var count = parseInt(data.count);
+
+                    params.successCallback(rowsData, count);
+                    self.gridOptions.api.sizeColumnsToFit();
+
+                    // if there's no rows to be shown, disbale the next button
+                    if(rowsData == null || rowsData.length == 0){
+                      var el = angular.element( document.querySelector( '#btNext' ) );
+                      el.attr('disabled', 'true');
+                    }
+                  } else {
+                    params.failCallback();
                   }
-                } else {
-                  params.failCallback();
-                }
-              }, function(err) {
-                console.log("reject", err);
-              });
+                }, function(err) {
+                  console.log("reject", err);
+                });
           }
         }
         
@@ -135,7 +135,7 @@ angular
             enableFilter : (typeof this.enableFilter != 'undefined') ? this.enableFilter : true,
             columnDefs : this.columnsDefinition,
             rowData: (this.rowData)? this.rowData : null,
-            rowModelType :(this.rowModelType)? this.rowModelType : (this.rowData)? "normal" : "virtual",
+            rowModelType :(this.rowModelType)? this.rowModelType : (this.rowData)? "" : "virtual",
             rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
             paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
             overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> Please wait while your rows are loading</span>',
@@ -164,15 +164,19 @@ angular
               if(typeof self.onGridReady() == "function"){
              	 self.onGridReady()(self);
               }
-              event.api.sizeColumnsToFit(); 
               // set "Contains" in the column drop down filter to "StartWith" as it is not supported in document query 
               event.api.filterManager.availableFilters.text.CONTAINS = "startsWith";
               if(typeof self.rowData == 'undefined' || self.rowData == null){
              	 self._createNewDatasource();
+              }else{
+                event.api.sizeColumnsToFit();
               }
             },
+            onGridSizeChanged: function(event){
+              self.gridOptions.api.sizeColumnsToFit();
+            }
 
-          };
+         };
          this.gridHeight = (this.gridHeight) ? this.gridHeight : "500";
          this.transport = (this.transport) ? this.transport : "wss";
          this.removeRowMsgTag = (this.removeRowMsgTag) ? this.removeRowMsgTag : "remove";
@@ -184,10 +188,10 @@ angular
           
          dataService.subscribe(this.onRemoveRowWebSocketCall, self.removeRowMsgTag);
          dataService.subscribe(this.onEditRowWebSocketCall, self.addRowMsgTag);
-          
-         angular.element($window).bind('resize', function () {
-           self.gridOptions.api.sizeColumnsToFit();
-         });
+  
+         $scope.$on("updateData", function(event, data) {
+		 	self._createNewDatasource();
+        })
          
         }
 
