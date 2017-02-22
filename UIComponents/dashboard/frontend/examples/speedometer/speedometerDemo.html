@@ -25,16 +25,45 @@
             console.log("data formatter");
             return data;
           }
+          vm.value = 30;
+          vm.changeValue = function(){
+            vm.value = Math.floor((Math.random() * 100) + 10); 
+          }
       });
 </script>
   
 <body> 
   <div ng-controller="testCtrl as vm" >
-   <scriptr-speedometer
-     api="UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal"
-     msg-tag="speedometer"
-     on-format-data="vm.callback">
-  </scriptr-speedometer>
+   <button ng-click="vm.changeValue()" class="btn btn-default btn-sm">Change value</button>
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+         <scriptr-speedometer
+             resize='true'                 
+             min-value=0
+             max-value=300
+             tick-space-maj-val=50
+             gauge-units='req/sec'
+             transport='https' 
+             tick-col-maj="#329aff"
+             units-label-col="#329aff"
+             needle-col="#329aff"                 
+         </scriptr-speedometer>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 mb10"> 
+      <div class="box-shadow bg-white">
+        <scriptr-speedometer
+             min-value=0
+             max-value=10000
+             tick-space-maj-val=1000
+             tick-space-min-val=100
+             gauge-units='ms'
+             transport='https' 
+             api='UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal'
+         </scriptr-speedometer>
+      </div>
+    </div>
+    
   </div>   
   
 </body>

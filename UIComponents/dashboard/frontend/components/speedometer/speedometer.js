@@ -14,7 +14,7 @@ angular
         
         "theme" : "@",
         
-        "minVal" : "<?",
+        "minValue" : "<?",
         
         "maxValue" : "<?",
         
@@ -64,7 +64,7 @@ angular
            
             if(this.theme == "speed" || typeof this.theme == 'undefined'){
                  this.gaugeRadius = (this.gaugeRadius)? this.gaugeRadius : 150;
-                 this.minVal = (this.minVal)? this.minVal : 0;
+                 this.minValue = (this.minValue)? this.minValue : 0;
                  this.maxValue = (this.maxValue)? this.maxValue : 220;
                  this.needleVal= (this.needleVal)? Math.round(this.needleVal) : 0;
                  this.tickSpaceMinVal= (this.tickSpaceMinVal)? this.tickSpaceMinVal : 10;
@@ -81,7 +81,7 @@ angular
                  this.defaultFonts=(this.defaultFonts)? this.defaultFonts : '';
             }else if(this.theme == "rpm"){
                 this.gaugeRadius = (this.gaugeRadius)? this.gaugeRadius : 120;
-                 this.minVal= (this.minVal)? this.minVal : 0;
+                 this.minValue= (this.minValue)? this.minValue : 0;
                  this.maxValue= (this.maxValue)? this.maxValue : 1000;
                  this.needleVal= (this.needleVal)? Math.round(this.needleVal) : 0;
                  this.tickSpaceMinVal= (this.tickSpaceMinVal)? this.tickSpaceMinVal : 10;
