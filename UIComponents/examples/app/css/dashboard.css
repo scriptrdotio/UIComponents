@@ -1,7 +1,7 @@
 @media (min-width:768px) {
   main {display: flex; min-height: 100vh;}
 	.menu-wrap {margin-top: 45px!important; display: flex; height: auto!important;}
-    main>section{flex: 1;}
+   main>section{flex: 1; box-sizing: border-box; width: 100%; overflow: hidden;}
   .page-content {margin-top: 45px;}
   .side-bar .nav-pills {position: fixed; overflow-y: auto;}
   .page-content {overflow-y: auto; height: calc(100vh - 45px); position: relative;}
