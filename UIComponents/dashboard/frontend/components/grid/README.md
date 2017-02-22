@@ -73,8 +73,8 @@
   cell-editable | true | Turn on cell editing | NO
   grid-height | 500 | Set grid height | NO
   enable-col-resize       | false    | Enable column resize. | NO
-  row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination"	| NO
-  row-model-selection       | "multiple"    | Set to either 'single' or 'multiple' in case of backend data. Set to 'normal' in case of static data	| NO
+  row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination" for only non-static data	| NO
+  row-model-selection       | "multiple"    | Set to either 'single' or 'multiple' in case of backend data. 	| NO
   pagination-page-size       | 50    | 	Number of rows per page.	| NO
   api       | undefined | Name of the api to call backend data | NO
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO
