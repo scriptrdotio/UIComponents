@@ -8,25 +8,25 @@ angular
                },
                templateUrl : '/UIComponents/layout/frontend/components/menu/menu.html',
                controller : function($scope, _, $timeout, $location, $route) {
-	               var vm = this;
+	               var self = this;
                  
-                   this.currentRoute = null;
-
 	               this.$onInit = function() {
 		               this.getMenuData(this.menuItems);
                        if($route.current && $route.current.$$route) {
                          this.currentRoute =  "#"+$route.current.$$route.originalPath;
                        }
-                       $scope.$on('$routeChangeStart', function(next, current) { 
+                     
+                       $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
                          console.log("next", next);
-                         if(current) {
-                            console.log("current", current.$$route);
-                         	this.currentRoute =  "#"+current.$$route.originalPath;
+                         if(next) {
+                            console.log("current", next.$$route);
+                            
+                         	this.currentRoute =  "#"+next.$$route.originalPath;
                          } else {
-                           console.log("Missing route definition")
+                           console.log("Missing route definition");
+                           angularEvent.preventDefault();
                          }
  					   });
-
 	               };
 
                    this.$postLink = function() {
