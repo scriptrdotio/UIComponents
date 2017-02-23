@@ -80,16 +80,37 @@ angular
 
         var self = this;
         
+        self.broadcastData = null;
+        
         this.dataSource = {
           getRows : function(params) {
-            var APIParams = self.buildParams(params)
+            if(self.broadcastData != null){
+                if(self.broadcastData.api != null){
+                  var api = self.broadcastData.api
+                }else{
+                  var api = self.api
+                }
+                if(self.broadcastData.params != null){
+                    this.apiParams = self.broadcastData.params
+                }
+                if(self.broadcastData.transport != null){
+                  var transport = self.broadcastData.transport
+                }else{
+                  var transport = self.transport
+                }
+              }else{
+                var api = self.api;
+                var apiParams = APIParams;
+                var transport = self.transport;
+              }
+              var APIParams = self.buildParams(params)
               var tmp = null;
               if(typeof self.onFormatData() == "function"){
                   tmp = function(data){ 
                   return self.onFormatData()(data); // Or we can have it as self.onFormatData({"data":data}) and pass it in the on-format-update as: vm.callback(data)
                 }
               }
-              dataService.getGridData(self.api, APIParams, self.transport, tmp).then(
+              dataService.getGridData(api, APIParams, transport, tmp).then(
                 function(data, response) {
                   if (data && data.documents) {
                     var rowsData = data.documents;
@@ -189,7 +210,8 @@ angular
          dataService.subscribe(this.onRemoveRowWebSocketCall, self.removeRowMsgTag);
          dataService.subscribe(this.onEditRowWebSocketCall, self.addRowMsgTag);
   
-         $scope.$on("updateData", function(event, data) {
+         $scope.$on("updateGridData", function(event, broadcastData) {
+            self.broadcastData = broadcastData;
 		 	self._createNewDatasource();
         })
          
