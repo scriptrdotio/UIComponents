@@ -42,7 +42,7 @@ angular
       	 this.$onInit = function() {
            
            this.iconLeaf = (this.iconLeaf) ? this.iconLeaf : "icon-file  glyphicon glyphicon-file  fa fa-file";
-           this.iconExpand = (this.iconExpand) ? this.iconExpand : "iicon-plus  glyphicon glyphicon-plus  fa fa-plus";
+           this.iconExpand = (this.iconExpand) ? this.iconExpand : "icon-plus  glyphicon glyphicon-plus  fa fa-plus";
            this.iconCollapse = (this.iconCollapse) ? this.iconCollapse : "icon-minus glyphicon glyphicon-minus fa fa-minus";
            
            this.paramName = (this.paramName) ? this.paramName : "criteria";
