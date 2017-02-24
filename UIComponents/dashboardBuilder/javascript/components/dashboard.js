@@ -44,9 +44,62 @@ angular
          this.show = true
       }
       
+      //IDE CODE start
+      this.$postLink = function() {
+        
+        var self = this;
+        this.scriptrIdeRef = $routeParams.scriptrIdeRef;
+        angular.element($window).on('message', function(event) {
+            var msg = event.originalEvent.data;
+            if(msg[0] == "get_dashboard_data-"+self.scriptrIdeRef) {
+              	$window.parent.postMessage([ "dashboard_editor_save-" + self.scriptrIdeRef, self.getValue()], "*");
+           }	
+          
+            if(msg[0] == "load_dashboard_data-"+self.scriptrIdeRef) {
+              	self.setEditorValue(JSON.parse(msg[1]))
+           }	
+            		
+        });
+        
+        if($window.parent) {
+           $window.parent.postMessage([ "dashboard_editor_loaded-" + this.scriptrIdeRef ], "*");
+         }
+      }
+      
+      this.getValue = function() {
+        
+          var data = {};
+          data["items"] = angular.copy(this.dashboard.widgets);
+          data["urlParams"] = angular.copy(this.urlParams);
+          data["transport"] = angular.copy(this.transport.defaults)
+          var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
+          var unescapedHtml = Handlebars.compile(template)(data);
+          var scriptData = {}
+          scriptData["content"] = unescapedHtml;
+          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
+          return scriptData;
+      };
+        
+      this.getEditorValue = function() {
+       
+       };
+
+       this.saveEditorValue = function() {
+
+       };
+
+       this.setEditorValue = function(pluginData) {
+         if(pluginData) {
+             this.widgets = pluginData.wdg; //This needs fixing
+             this.urlParams = pluginData.urlParams;
+             this.dashboard["widgets"] = this.widgets;
+         }
+       }
+      //IDEC CODE end 
+      
       this.$onInit = function() {
         
-         this.urlParams = [];
+        this.urlParams = [];
         this.transport = angular.copy(config.transport);
         this.frmGlobalOptions = {
           "destroyStrategy" : "remove",
@@ -58,6 +111,8 @@ angular
         this.schema =  angular.copy(config.script.schema)
         this.form =   angular.copy(config.script.form)
         this.model = {}
+        
+        this.isInIde =  ($routeParams.scriptrIdeRef) ? true :  false;
         
         var scriptName = $routeParams.scriptName
         if(scriptName) {
@@ -82,7 +137,35 @@ angular
                 },
                 afterChange: function (event, slick, currentSlide, nextSlide) {
                 }
+            } /**,
+          responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+              }
+            },
+            {
+              breakpoint: 600,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
             }
+            // You can unslick at a given breakpoint now by adding:
+            // settings: "unslick"
+            // instead of a settings object
+          ]**/
         };
         
         //Gidster Wall Options
@@ -273,7 +356,7 @@ angular
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
          // console.log(JSON.stringify(data["items"]));
-          data["transport"] = angular.copy(this.transport.defaults)
+          data["transport"] = angular.copy(this.transport.defaults) //MFE: Transport info needs to be retrieved from url or cookie
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
