@@ -9,15 +9,15 @@
  </div>
 </form>
 
-<body>   
-   <abn-tree
-             tree-data         = "$ctrl.treeData"
-             tree-control      = "$ctrl.treeControl"
-             icon-leaf         = "{{$ctrl.iconLeaf}}"
-             icon-expand       = "{{$ctrl.iconExpand}}"
-             icon-collapse     = "{{$ctrl.iconCollapse}}"
-             on-select         = "$ctrl.onSelect(branch)"
-             expand-level      = "$ctrl.expandLevel"
-             initial-selection = "$ctrl.initialSelection">
+<div>
+  <abn-tree 
+            tree-data         = "$ctrl.treeData"
+            tree-control      = "$ctrl.treeControl"
+            icon-leaf         = "{{$ctrl.iconLeaf}}"
+            icon-expand       = "{{$ctrl.iconExpand}}"
+            icon-collapse     = "{{$ctrl.iconCollapse}}"
+            on-select         = "$ctrl.onSelect(branch)"
+            expand-level      = "$ctrl.expandLevel"
+            initial-selection = "$ctrl.initialSelection">
   </abn-tree>
-</body>  
+</div>

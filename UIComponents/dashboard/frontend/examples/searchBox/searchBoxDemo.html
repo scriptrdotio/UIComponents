@@ -55,8 +55,13 @@
   <body ng-controller="testCtrl as vm">
     <scriptr-searchbox
                      api='UIComponents/dashboard/frontend/examples/searchBox/getFile'
+                     transport='https'  
+                     initial-selection = "speed"
                      tree-control="vm.my_tree"  
+                     api-params='{"id" : "45645612"}'  
                      on-select="vm.onSelect"
+                     icon-expand       = "fa expand-collapse fa-caret-right"
+                     icon-collapse     = "fa expand-collapse fa-caret-down"
     </scriptr-searchbox>
   </body>
 </html>

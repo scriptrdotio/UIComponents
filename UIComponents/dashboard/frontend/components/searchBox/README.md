@@ -100,5 +100,3 @@ Example:
                      on-select="vm.onSelect"
     </scriptr-searchbox>
   ```
-
-
