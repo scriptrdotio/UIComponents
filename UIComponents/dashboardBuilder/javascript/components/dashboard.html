@@ -1,60 +1,82 @@
 <div ng-if="$ctrl.show" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')" close="$ctrl.closeAlert()" dismiss-on-timeout="5000">{{$ctrl.message.content}}
 </div>
 
-<div class="page-header col-xs-12">
-   <form name="scriptForm" ng-submit="$ctrl.saveDashboard(scriptForm)">
-     <div class="col-xs-12 col-sm-6">
-         <div ng-if="!$ctrl.isInIde" sf-options="$ctrl.frmGlobalOptions" sf-schema="$ctrl.schema" sf-form="$ctrl.form" sf-model="$ctrl.model" ></div>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-       <a class="pull-right btn btn-sm btn-warning ml5" ng-if="!$ctrl.isInIde" ng-click="$ctrl.logout()"><i class="fa fa-user-circle" aria-hidden="true"></i> Logout</a>
-       <a class="pull-right btn btn-sm btn-warning ml5"  ng-click="$ctrl.clear()"><i class="fa fa-trash" aria-hidden="true"></i> Clear</a>
-       <a class="pull-right btn  btn-sm btn-warning ml5" ng-click="$ctrl.setTransportSettings()"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
-       <a class="pull-right  btn-sm  btn btn-warning ml5" ng-if="!$ctrl.isInIde" ng-if="$ctrl.isEdit" ng-click="$ctrl.viewDasboard()"><i class="fa fa-eye" aria-hidden="true"></i> View</a>
-       <button class="pull-right  btn-sm  btn btn-warning ml5"  type="submit" ng-if="!$ctrl.isInIde"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
-    </div>
-  </form>
+<!-- begin left side -->
+<div class="left">
+  <div class="grey-bg pdt5 col-xs-12 devices-models-tree">
+    <scriptr-searchbox  api='{{$ctrl.devicesModel}}'
+                       on-select="$ctrl.selectBranch"
+    </scriptr-searchbox>
+  </div>
 </div>
-<div class="clearfix"></div>
-<div>
-<div class="grey-bg col-xs-2 pdt5 devices-models-tree">
-  <scriptr-searchbox  api='{{$ctrl.devicesModel}}'
-                     on-select="$ctrl.selectBranch"
-  </scriptr-searchbox>
-</div>
-<div class="col-xs-10 pdl0 slick-wrap">
-<div class="dark-grey-bg pdt5 pdb5 pdr10 chart-options-wrap">
-<div class="slick-container">
-    <slick 
-           settings="$ctrl.slickConfig"
-           infinite="true" 
-           slides-to-show="$ctrl.widgetsConfig.length"
-           slides-to-scroll="0"
-           ng-if="$ctrl.dataLoaded" 
-           init-onload="false"
-           data="$ctrl.dataLoaded"
-           >
-      <div class="slick-item" ng-repeat="item in $ctrl.widgetsConfig" ng-if="item.show != false">
-         <span >
-             <a ng-click="$ctrl.addWidget(item)">
-               <img ng-if="item.imgSrc" ng-src="{{ item.imgSrc }}" class="{{item.imgCls}}" alt="{{ item.label}}" />
-               <i ng-if="item.iconSrc" class="{{ item.iconSrc }}" aria-hidden="true" alt="{{ item.label}}" /></i>
-               <span class="slick-label">{{ item.label }}</span>
-             </a>
-          </span>
-      </div>
-    </slick>
- </div>
-</div>
-<div class="clearfix"></div>
-<div gridster="$ctrl.gridsterOptions" class="builder">
-	<ul>
-		<li gridster-item="widget" ng-repeat="widget in $ctrl.dashboard.widgets">
-          <box widget="widget"></box>
-		</li>
-	</ul>
-</div>
-</div>
-</div>
+<!-- end left side -->
 
+<!-- begin dashboard content -->
+<div class="dashboard-content">
+	<!-- begin page header -->
+	<div class="page-header col-xs-12">
+		 <form name="scriptForm" ng-submit="$ctrl.saveDashboard(scriptForm)">
 
+          <div class="form-group col-xs-12 col-sm-6">
+            <div class="row">
+              <div class="col-xs-12 col-sm-10"><div ng-if="!$ctrl.isInIde" sf-options="$ctrl.frmGlobalOptions" sf-schema="$ctrl.schema" sf-form="$ctrl.form" sf-model="$ctrl.model" ></div>
+              </div>
+              <div class="col-xs-12 col-sm-2"><button class="btn-sm  btn btn-warning ml5 btn-block"  type="submit" ng-if="!$ctrl.isInIde"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button></div>
+            </div>
+          </div>
+         
+		  <div class="col-xs-12 col-sm-6 pull-right">
+			 <a class="pull-right btn btn-sm btn-warning ml5" ng-if="!$ctrl.isInIde" ng-click="$ctrl.logout()"><i class="fa fa-user-circle" aria-hidden="true"></i> Logout</a>
+			 <a class="pull-right btn btn-sm btn-warning ml5"  ng-click="$ctrl.clear()"><i class="fa fa-trash" aria-hidden="true"></i> Clear</a>
+			 <a class="pull-right btn  btn-sm btn-warning ml5" ng-click="$ctrl.setTransportSettings()"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+			 <a class="pull-right  btn-sm  btn btn-warning ml5" ng-if="!$ctrl.isInIde" ng-if="$ctrl.isEdit" ng-click="$ctrl.viewDasboard()"><i class="fa fa-eye" aria-hidden="true"></i> View</a>
+		  </div>
+		</form>
+	</div>	
+	<!-- end page header -->
+
+  
+	<!-- begin slick wrap -->
+  <div class="col-xs-12 pdl0 slick-wrap">
+		<!-- begin carousel options -->
+		<div class="dark-grey-bg pdt5 pdb5 pdr10 chart-options-wrap">
+		  <div class="slick-container">
+			  <slick 
+					 settings="$ctrl.slickConfig"
+					 infinite="true" 
+					 slides-to-show="$ctrl.widgetsConfig.length"
+					 slides-to-scroll="0"
+					 ng-if="$ctrl.dataLoaded" 
+					 init-onload="false"
+					 data="$ctrl.dataLoaded"
+					 >
+				<div class="slick-item" ng-repeat="item in $ctrl.widgetsConfig" ng-if="item.show != false">
+				   <span >
+					   <a ng-click="$ctrl.addWidget(item)">
+						 <img ng-if="item.imgSrc" ng-src="{{ item.imgSrc }}" class="{{item.imgCls}}" alt="{{ item.label}}" />
+						 <i ng-if="item.iconSrc" class="{{ item.iconSrc }}" aria-hidden="true" alt="{{ item.label}}" /></i>
+						 <span class="slick-label">{{ item.label }}</span>
+					   </a>
+					</span>
+				</div>
+			  </slick>
+		   </div>
+		</div>
+		<!-- end carousel options -->
+
+	  <div class="clearfix"></div>
+
+	  <!-- begin gridster -->
+	  <div gridster="$ctrl.gridsterOptions" class="builder">
+		  <ul>
+			  <li gridster-item="widget" ng-repeat="widget in $ctrl.dashboard.widgets">
+				<box widget="widget"></box>
+			  </li>
+		  </ul>
+	  </div>
+	  <!-- end gridster -->
+  </div>
+  <!-- end slick wrap -->
+  
+</div>
+<!-- end dashboard content -->
