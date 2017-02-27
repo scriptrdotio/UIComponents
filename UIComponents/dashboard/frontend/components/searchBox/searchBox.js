@@ -107,6 +107,7 @@ angular
              this.treeData = data;
              this.noResults = false;
            }else{
+             this.treeData = [];
              this.noResults = true;
            }
            
