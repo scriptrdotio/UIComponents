@@ -195,6 +195,12 @@ angular
                        if(typeof this.onFormatData() == "function"){
                          data = this.onFormatData()(data);
                        }
+                       data = parseInt(data);
+                       if(typeof data == "number" && data.toString() != "NaN"){
+                         data = data;
+                       }else{
+                         data = 0;
+                       }
 		               this.gaugeValue = data;
 	               }
                }
