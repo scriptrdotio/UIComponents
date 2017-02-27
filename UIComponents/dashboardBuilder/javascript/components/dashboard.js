@@ -281,7 +281,7 @@ angular
             "schema": wdg.schema,
             "form": wdg.form
           });
-          this.notifyDashboardChange()
+          self.notifyDashboardChange()
         } else {
           //self.showAlert("warning", "Device model attribute \""+ itemLabel + "\" has a no widget representation.")
           return;
