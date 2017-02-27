@@ -21,6 +21,7 @@ ul {
 
 form { margin-bottom: 0;}
 .grey-bg {background: #efefef;}
+.dark-grey-bg {background: #e0e0e0;}
 
 /*** loading ***/
 .loading {margin: 20px auto;}
@@ -97,6 +98,10 @@ margin: 0;
 .gauge {
   margin: 0 auto;
 }
+
+/*** dashboard builder wrap ***/
+.slick-wrap {min-height: calc(100vh - 44px); background: #fff;}
+.chart-options-wrap {margin-right: -15px; padding-left: 6px; padding-right: 6px;}
 
 /***  devices-models-tree ***/
 .devices-models-tree {
