@@ -139,6 +139,12 @@ angular
             if(typeof self.onFormatData() == "function"){
               data = self.onFormatData()(data);
             }
+             data = parseInt(data);
+            if(typeof data == "number" && data.toString() != "NaN"){
+              data = data;
+            }else{
+              data = 0;
+            }
             this.needleVal = Math.round(data);
           }
         }
