@@ -445,6 +445,7 @@ angular
      
       this.remove = function(widget) {
         this.parent.dashboard.widgets.splice(this.parent.dashboard.widgets.indexOf(widget), 1);
+        this.parent.notifyDashboardChange();
       };
       
       this.$onInit =  function() {
@@ -549,7 +550,7 @@ angular
         }**/
         
         this.parent.dashboard.widgets[this.parent.dashboard.widgets.indexOf(this.widget)]["options"] = angular.copy(mdl);
-
+        this.parent.notifyDashboardChange();
         $compile( self.chart )( $scope );
       };
     }
