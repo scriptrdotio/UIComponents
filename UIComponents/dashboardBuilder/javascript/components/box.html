@@ -1,13 +1,13 @@
 <div class="box-wrapper">
 <div class="box">
-  <div class="box-header">
+  <div class="box-header col-xs-12">
+    <div class="box-label pull-left" uib-tooltip="{{$ctrl.widget.options.boxLabel}}">{{$ctrl.widget.options.boxLabel}}</div>
     <div class="box-header-btns pull-right">
       <a title="settings" ng-if="$ctrl.widget.form" ng-click="$ctrl.openSettings($ctrl.widget)"><i class="glyphicon glyphicon-cog"></i></a>
       <a title="Remove widget" ng-click="$ctrl.remove($ctrl.widget)"><i class="glyphicon glyphicon-trash"></i></a>
     </div>
   </div>
-  <div class="box-content">
-    <div class="box-label" uib-tooltip="{{$ctrl.widget.options.boxLabel}}">{{$ctrl.widget.options.boxLabel}}</div>
-  </div>
+  <div class="clearfix"></div>
+  <div class="box-content"></div>
 </div>
 </div>
