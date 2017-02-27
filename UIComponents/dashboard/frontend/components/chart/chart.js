@@ -120,11 +120,11 @@ angular
       controller: function(httpClient, wsClient) {
         
          var self = this;
-          
+        
          this.$onInit = function() {
              
              this.data = (this.data) ? this.data : null;
-             
+            
            	 //this.type = (this.type) ? this.type : "line";
            
              this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];
@@ -181,11 +181,12 @@ angular
               data = self.onFormatData()(data);
             }
             if(typeof data == "object"){
-              data = data;
+              this.data = data;
+              this.noResults = false;
             }else{
-              data = null;
+              this.data = [];
+              this.noResults = true;
             }
-            this.data = data;
           }
         }
 	});
