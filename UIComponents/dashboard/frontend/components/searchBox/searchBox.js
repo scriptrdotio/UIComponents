@@ -37,8 +37,6 @@ angular
       
          var self = this;
       
-         self.treeDataSet = false;
-      
      	 this.iconExpand = (this.iconExpand) ? this.iconExpand : null;
       
       	 this.$onInit = function() {
@@ -105,8 +103,12 @@ angular
              data = self.onFormatData()(data);
            }
            console.log("display tree");
-           this.treeData = data;
-           this.treeDataSet = true;
+           if(typeof data == "object"){
+             this.treeData = data;
+             this.noResults = false;
+           }else{
+             this.noResults = true;
+           }
            
          }
     }
