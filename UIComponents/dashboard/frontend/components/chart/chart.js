@@ -183,7 +183,7 @@ angular
             if(typeof data == "object"){
               data = data;
             }else{
-              data = [];
+              data = null;
             }
             this.data = data;
           }
