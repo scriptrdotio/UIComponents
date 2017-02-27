@@ -127,12 +127,12 @@ angular
              
            	 //this.type = (this.type) ? this.type : "line";
            
-             this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#7ed38c", "#dd7ca7"];
+             this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];
              this.stacked = (this.stacked) ? this.stacked : false;
              this.resize = (this.resize) ? this.resize : true;
              
              // donut config
-             this.labelColor = (this.labelColor) ? this.labelColor : "#666";
+             this.labelColor = (this.labelColor) ? this.labelColor : "#FFF";
              this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#eee";
          
              this.transport = (this.transport) ? this.transport : "wss";
@@ -179,6 +179,11 @@ angular
           this.consumeData = function(data, response) {
             if(typeof self.onFormatData() == "function"){
               data = self.onFormatData()(data);
+            }
+            if(typeof data == "object"){
+              data = data;
+            }else{
+              data = [];
             }
             this.data = data;
           }
