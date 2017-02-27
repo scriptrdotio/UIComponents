@@ -103,7 +103,7 @@ angular
              data = self.onFormatData()(data);
            }
            console.log("display tree");
-           if(typeof data == "object"){
+           if(typeof data == "object" && data.length > 0){
              this.treeData = data;
              this.noResults = false;
            }else{
