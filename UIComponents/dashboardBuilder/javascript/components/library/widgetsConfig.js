@@ -81,6 +81,7 @@ angular
         "name": "bar",
         "label": "Bar Chart",
         "class": "scriptr-chart",
+        "show": true,
         "defaults": {
             "type": "bar",
             "stacked": "true",
@@ -123,12 +124,12 @@ angular
                       {
                         "type": "section",
                         "htmlClass": "col-xs-6",
-                        "items": ["xkey","ykeys", "goals", "goal-stroke-width", "ymax"]
+                        "items": ["xkey", "ykeys", "units", "ymin", "ymax"]
                       },
                       {
                         "type": "section",
                         "htmlClass": "col-xs-6",
-                        "items": ["events", "event-stroke-width", "units", "ymin"]
+                        "items": ["goals", "goal-stroke-width", "event-stroke-width", "events"]
                       }
                     ]
                   }]
@@ -143,15 +144,15 @@ angular
                       {
                         "type": "section",
                         "htmlClass": "col-xs-6",
-                        "items": ["colors", "grid-text-color", "grid-text-family", "grid-text-size"]
+                        "items": ["grid-text-weight", "grid-text-size", "grid-text-color", "grid-text-family"]
                       },
                       {
                         "type": "section",
                         "htmlClass": "col-xs-6",
                         "items": [
+                            "colors",
                             "goal-line-colors",
-                            "event-line-colors",
-                            "grid-text-weight"
+                            "event-line-colors"
                            ]
                       }
                     ]
@@ -185,8 +186,16 @@ angular
                                               { value: "false", name: "False" }
                                             ]
                                       },
-                                      "hide-hover"
-                            ]
+                                      {
+                                        type: "radios-inline",
+                                        key: "parse-time",
+                                        titleMap: [
+                                          { value: "true", name: "True" },
+                                          { value: "false", name: "False" }
+                                        ]
+                                 	  }	
+                                     
+                            		]
                           },
                           {
                             "type": "section",
@@ -208,14 +217,7 @@ angular
                                     { value: "false", name: "False" }
                                   ]
                               },
-                              {
-                                  type: "radios-inline",
-                                  key: "parse-time",
-                                  titleMap: [
-                                    { value: "true", name: "True" },
-                                    { value: "false", name: "False" }
-                                  ]
-                              } ,"xlabel-angle" /*"hover-callback"*/]
+                               "hide-hover"/*"hover-callback"*/]
                           }
                        ]
                     }
@@ -225,6 +227,7 @@ angular
                    title: "Labels",
                    items: [
                         "labels",
+                        "xlabel-angle",
                        // "ylabel-format",
                     	"post-units",
                     	"pre-units"
@@ -414,12 +417,12 @@ angular
 			"goal-line-colors": {
 				"title": "Goal Line Colors",
 				"type": "string",
-				"description": "Array of color values to use for the goal line colors. If you list fewer colors here than you have lines in goals, then the values will be cycled."
+				"description": "Array of color values to use for the goal line colors."
 			},
 			"events": {
 				"title": "Events",
 				"type": "string",
-				"description": "A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01', '2012-03-01']"
+				"description": "A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01']"
 			},
 			"event-stroke-width": {
 				"title": "Event Stroke Width",
@@ -482,12 +485,12 @@ angular
 	                        {
 	                          "type": "section",
 	                          "htmlClass": "col-xs-6",
-	                          "items": ["xkey","ykeys", "xlabels", "goals", "ymin"]
+	                          "items": ["xkey", "ykeys", "units", "ymin", "ymax"]
 	                        },
 	                        {
 	                          "type": "section",
 	                          "htmlClass": "col-xs-6",
-	                          "items": ["units", "goal-stroke-width", "events", "event-stroke-width", "ymax"]
+	                          "items": ["goals", "goal-stroke-width", "events", "event-stroke-width"]
 	                        }
 	                      ]
 	                    }]
@@ -512,9 +515,9 @@ angular
 	                          "type": "section",
 	                          "htmlClass": "col-xs-6",
 	                          "items": [
-                                  "fill-opacity",
 		                          "point-stroke-colors",
 	                              "event-line-colors",
+                                  "fill-opacity",
 	                             ]
 	                        }
 	                      ]
@@ -540,7 +543,6 @@ angular
                                         { value: "false", name: "False" }
                                       ]
                                   },
-                                  "hide-hover",
                                   {
                                       "key": "resize",
                                         "type": "radios-inline",
@@ -548,6 +550,22 @@ angular
                                           { value: "true", name: "True" },
                                           { value: "false", name: "False" }
                                         ]
+                                  },
+                                  {
+                                      type: "radios-inline",
+                                      key: "grid",
+                                      titleMap: [
+                                        { value: "true", name: "True" },
+                                        { value: "false", name: "False" }
+                                      ]
+                                  },
+                                  {
+                                      type: "radios-inline",
+                                      key: "parse-time",
+                                      titleMap: [
+                                        { value: "true", name: "True" },
+                                        { value: "false", name: "False" }
+                                      ]
                                   },
                                   {
 		                              type: "radios-inline",
@@ -559,7 +577,6 @@ angular
 		                          },
                              //     "date-format",
                               //    "xlabel-format",
-                                  "xlabel-angle",
                                //   "ylabel-format"
                                   ]
                                  },
@@ -568,29 +585,13 @@ angular
                                   "htmlClass": "col-xs-6",
                                   "items": [
                                      {
-                                      type: "radios-inline",
-                                      key: "grid",
-                                      titleMap: [
-                                        { value: "true", name: "True" },
-                                        { value: "false", name: "False" }
-                                        ]
-                                     },
-                                     {
-                                      type: "radios-inline",
-                                      key: "parse-time",
-                                      titleMap: [
-                                        { value: "true", name: "True" },
-                                        { value: "false", name: "False" }
-                                      ]
-                                     },
-                                     {
                                         type: "radios-inline",
                                         key: "continuous-line",
                                         titleMap: [
                                           { value: "true", name: "True" },
                                           { value: "false", name: "False" }
                                         ]
-                                     }, /* "hover-callback", */ "behave-like-line"
+                                     }, /* "hover-callback", */"hide-hover", "behave-like-line"
                                   ]
 	                            }
 	                     ]
@@ -601,6 +602,8 @@ angular
 	                     title: "Labels",
 	                     items: [
 	                            "labels",
+                           		"xlabels",
+                            	"xlabel-angle",
 		                      	"post-units",
 		                      	"pre-units"
 		                        ]
@@ -673,12 +676,12 @@ angular
 				"description": "Colors for the outlines of the series points. (#ffffff by default)."
 			},
 			"ymax": {
-				"title": "y Max",
+				"title": "y Maximum Value",
 				"type": "string",
 				"description": "Max. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the max y-value is at least [num]."
 			},
 			"ymin": {
-				"title": "y Min",
+				"title": "y Minimum Value",
 				"type": "string",
 				"description": "Min. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the min y-value is at most [num]. You can use this to create graphs with false origins."
 			},
@@ -755,7 +758,7 @@ angular
 			"events": {
 				"title": "Events",
 				"type": "string",
-				"description": "A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01', '2012-03-01']"
+				"description": "A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01']"
 			},
 			"event-stroke-width": {
 				"title": "Event Stroke Width",
@@ -881,160 +884,160 @@ angular
     },
 	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAlCAYAAADBa/A+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkMyODMxQTMyRTIzRjExRTZCN0M2QjYwOTU2Q0U5QzZDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkMyODMxQTMzRTIzRjExRTZCN0M2QjYwOTU2Q0U5QzZDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QzI4MzFBMzBFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QzI4MzFBMzFFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7pqcU1AAACpElEQVR42uyXS2gUQRCGZ8d4kCQSiGIwHkQFCTm45ObBeEhAMIjxEgQfKMIelICIYdmTj5AETS4KCirk4SOHIHrygSGgkeAheFEUUXwcDSii6xMT16+kRppmZw7Znd0+pOGjumdqp/+tmq7uSeRyOc/VlnBBxIzXV4u5CRvhDnSs8DI/fUeC1AmboAK2wV656Iq4inwZdUXcI6Mvab2ST3G52n61x3jXTgYXfQcWQz2mHX7DRfOeC2lNwSK4QdTeOyOOqC1WcdLO2/fLHTlJZx08JWqTrok7FBa1WMWRsmpNW9j9RsxmyMK1kolj4l7MZ/hIvy3E7aDay6Q0WxJxWhoyWuWr4XS+qAZbVFhK44rcnDVuQMxxK8UirAruE7XnpRTXovYPvA0qP0wjMGml9FzBRyYeuh6zFh7wT79F+C3HSCSWyZaE7zDX5LQxCOtgFp5A0z93z1uFz+y8I8fDO3TCW/CYcWWE+1kVNg4jcoHJH2I2wBndCZrUt1bxCknrAcNPItgc8ie2Y3aCRDaFqP9HbPrf4TDdZ9YxqbJQcTPWuBchayxhNcaqyyDkXcizTsAv7V/C7828xTGppCioU3fhFSQ1vWb96oeVMBX1kiPmOkbey3r6qYK+IRAwhNkH93jYFsZL6Q/DDnU5BV+hWyOSxO9F7B84usomddJGJn2t1+U3XdBnRX4An65i1iQ/4ihzQYc9gTBNTQ6k6vdYP6sqdsEMe+eOSmWHl/m2H223rfFU7N+tRG211rUl0EqUJiJS36YLRj5Qrprlo+jitMCOwVYYZbJd5Tzs+YawTj3miLAvcKTcHxe+sQD6dXuRJuMPTojTY84P43qWlM45IQ4hcrzZrTuArNA93kJbaPG0RDqdrnFVnBz4Prkqznc5rX8FGAAWXa+WqoxqjwAAAABJRU5ErkJggg==",
 	 "form": [
-	            {
-	                type: "tabs",
-	                tabs: [
-	                  {
-	                    title: "Data",
-	                    items: [
-	                      "transport",
-	                      "msg-tag",
-	                      "api",
-	                      "api-params",
-	                      "data",
-	                   //   "on-format-data"
-	                    ]
-	                  },
-	                  {
-	                    title: "Dimensions",
-	                    items:[{
-	                      "type": "section",
-	                      "htmlClass": "row",
-	                      "items": [
-	                        {
-	                          "type": "section",
-	                          "htmlClass": "col-xs-6",
-	                          "items": ["xkey","ykeys", "xlabels", "goals", "ymin", "ymax"]
-	                        },
-	                        {
-	                          "type": "section",
-	                          "htmlClass": "col-xs-6",
-	                          "items": ["units", "goal-stroke-width", "events", "event-stroke-width"]
-	                        }
-	                      ]
-	                    }]
-	                  },
-	                  {
-	                    title: "Colors and Fonts",
-	                    items: [
-	                      {
-	                      "type": "section",
-	                      "htmlClass": "row",
-	                      "items": [
-	                        {
-	                          "type": "section",
-	                          "htmlClass": "col-xs-6",
-	                          "items": [
-	                                   "colors",
-	                                   "goal-line-colors",
-	  	                               "point-fill-colors"
-	                          ]
-	                        },
-	                        {
-	                          "type": "section",
-	                          "htmlClass": "col-xs-6",
-	                          "items": [
-                                  "fill-opacity",
-		                          "point-stroke-colors",
-	                              "event-line-colors",
-	                             ]
-	                        }
-	                      ]
-	                    }
-	                    ]
-	                  },
-	                  {
-	                     title: "Chart behaviour",
-	                     items: [
-	                        {
-	                          "type": "section",
-	                          "htmlClass": "row",
-	                          "items": [
-                                {
-                                  "type": "section",
-		                          "htmlClass": "col-xs-6",
-                                  "items": [
-                                    {
-                                      type: "radios-inline",
-                                      key: "axes",
-                                      titleMap: [
-                                        { value: "true", name: "True" },
-                                        { value: "false", name: "False" }
-                                      ]
-                                  },
-                                  "hide-hover",
-                                  {
-                                      "key": "resize",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                          { value: "true", name: "True" },
-                                          { value: "false", name: "False" }
-                                        ]
-                                  },
-                                  {
-		                              type: "radios-inline",
-		                              key: "smooth",
-		                              titleMap: [
-		                                { value: "true", name: "True" },
-		                                { value: "false", name: "False" }
-		                              ]
-		                          },
-                           //       "date-format",
-                            //      "xlabel-format",
-                                  "xlabel-angle",
-                            //      "ylabel-format"
-                                  ]
-                                 },
-                                 {
-                                  "type": "section",
-                                  "htmlClass": "col-xs-6",
-                                  "items": [
-                                     {
-                                      type: "radios-inline",
-                                      key: "grid",
-                                      titleMap: [
-                                        { value: "true", name: "True" },
-                                        { value: "false", name: "False" }
-                                        ]
-                                     },
-                                     {
-                                      type: "radios-inline",
-                                      key: "parse-time",
-                                      titleMap: [
-                                        { value: "true", name: "True" },
-                                        { value: "false", name: "False" }
-                                      ]
-                                     },
-                                     {
-                                        type: "radios-inline",
-                                        key: "continuous-line",
-                                        titleMap: [
-                                          { value: "true", name: "True" },
-                                          { value: "false", name: "False" }
-                                        ]
-                                     }, /* "hover-callback", */ "behave-like-line"
-                                  ]
-	                            }
-	                     ]
+       		{
+              type: "tabs",
+              tabs: [
+                {
+                  title: "Data",
+                  items: [
+                    "transport",
+                    "msg-tag",
+                    "api",
+                    "api-params",
+                    "data",
+                    //   "on-format-data"
+                  ]
+                },
+                {
+                  title: "Dimensions",
+                  items:[{
+                    "type": "section",
+                    "htmlClass": "row",
+                    "items": [
+                      {
+                        "type": "section",
+                        "htmlClass": "col-xs-6",
+                        "items": ["xkey", "ykeys", "units", "ymin", "ymax"]
+                      },
+                      {
+                        "type": "section",
+                        "htmlClass": "col-xs-6",
+                        "items": ["goals", "goal-stroke-width", "events", "event-stroke-width"]
+                      }
+                    ]
+                  }]
+                },
+                {
+                  title: "Colors and Fonts",
+                  items: [
+                    {
+                      "type": "section",
+                      "htmlClass": "row",
+                      "items": [
+                        {
+                          "type": "section",
+                          "htmlClass": "col-xs-6",
+                          "items": [
+                            "colors",
+                            "goal-line-colors",
+                            "point-fill-colors"
+                          ]
+                        },
+                        {
+                          "type": "section",
+                          "htmlClass": "col-xs-6",
+                          "items": [
+                            "point-stroke-colors",
+                            "event-line-colors",
+                            "fill-opacity",
+                          ]
                         }
                       ]
-	                  },
-	                  {
-	                     title: "Labels",
-	                     items: [
-	                            "labels",
-		                      	"post-units",
-		                      	"pre-units"
-		                        ]
-	                  },
+                    }
+                  ]
+                },
+                {
+                  title: "Chart behaviour",
+                  items: [
+                    {
+                      "type": "section",
+                      "htmlClass": "row",
+                      "items": [
+                        {
+                          "type": "section",
+                          "htmlClass": "col-xs-6",
+                          "items": [
+                            {
+                              type: "radios-inline",
+                              key: "axes",
+                              titleMap: [
+                                { value: "true", name: "True" },
+                                { value: "false", name: "False" }
+                              ]
+                            },
+                            {
+                              "key": "resize",
+                              "type": "radios-inline",
+                              titleMap: [
+                                { value: "true", name: "True" },
+                                { value: "false", name: "False" }
+                              ]
+                            },
+                            {
+                              type: "radios-inline",
+                              key: "grid",
+                              titleMap: [
+                                { value: "true", name: "True" },
+                                { value: "false", name: "False" }
+                              ]
+                            },
+                            {
+                              type: "radios-inline",
+                              key: "parse-time",
+                              titleMap: [
+                                { value: "true", name: "True" },
+                                { value: "false", name: "False" }
+                              ]
+                            },
+                            {
+                              type: "radios-inline",
+                              key: "smooth",
+                              titleMap: [
+                                { value: "true", name: "True" },
+                                { value: "false", name: "False" }
+                              ]
+                            },
+                            //     "date-format",
+                            //    "xlabel-format",
+                            //   "ylabel-format"
+                          ]
+                        },
+                        {
+                          "type": "section",
+                          "htmlClass": "col-xs-6",
+                          "items": [
+                            {
+                              type: "radios-inline",
+                              key: "continuous-line",
+                              titleMap: [
+                                { value: "true", name: "True" },
+                                { value: "false", name: "False" }
+                              ]
+                            }, /* "hover-callback", */"hide-hover", "behave-like-line"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  title: "Labels",
+                  items: [
+                    "labels",
+                    "xlabels",
+                    "xlabel-angle",
+                    "post-units",
+                    "pre-units"
+                  ]
+                },
                 {
                   title: "Box Properties",
                   items: [
-                   "boxLabel"
+                    "boxLabel"
                   ]
                 }
-	                ]
-	              }
+              ]
+            }
 	       ],
 	"schema": {
 		"type": "object",
@@ -1177,7 +1180,7 @@ angular
 			"events": {
 				"title": "Events",
 				"type": "string",
-				"description": "A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01', '2012-03-01']"
+				"description": "A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01']"
 			},
 			"event-stroke-width": {
 				"title": "Event Stroke Width",
@@ -1317,7 +1320,7 @@ angular
 	                    ]
 	                  },
 	                  {
-	                    title: "Colors and Goals",
+	                    title: "Colors",
 	                    items: [
 	                      {
 	                      "type": "section",
@@ -1448,6 +1451,7 @@ angular
 				"type": "string",
 				"description": "Api parameters.",
                 "x-schema-form": {
+                  "type": "textarea",
                   "placeholder": "Ex: {'id' : '599865'}"
                 }
 			}
@@ -1520,12 +1524,12 @@ angular
 		                        {
 		                          "type": "section",
 		                          "htmlClass": "col-xs-6",
-		                          "items": ["custom-sectors", "value-font-color"]
+		                          "items": ["label-font-color", "value-font-color", "custom-sectors"]
 		                        },
                                  {
 		                          "type": "section",
 		                          "htmlClass": "col-xs-6",
-		                          "items": ["gauge-color", "shadow-opacity", "label-font-color"]
+		                          "items": ["gauge-color", "shadow-opacity"]
 		                        }
 		                      ]
 		                    }
@@ -1788,6 +1792,7 @@ angular
 	                      "msg-tag",
 	                      "api",
 	                      "api-params",
+                          "needle-val",
 	                //      "on-format-data"
 	                    ]
 	                  },
@@ -1801,12 +1806,12 @@ angular
 		                        {
 		                          "type": "section",
 		                          "htmlClass": "col-xs-6",
-		                          "items": ["needle-val", "gauge-radius", "min-val"]
+		                          "items": ["gauge-radius", "min-value", "max-value"]
 		                        },
 		                        {
 		 	                      "type": "section",
 		 	                      "htmlClass": "col-xs-6",
-		 	                      "items": ["tick-space-maj-val", "max-val", "tick-space-min-val"]
+		 	                      "items": ["tick-space-maj-val", "tick-space-min-val"]
 		 	                    }
 	                        ]
 	                      }
@@ -1872,12 +1877,12 @@ angular
 				"type": "string",
 				"description": "Sets the size of the gauge."
 			},
-			"min-val": {
+			"min-value": {
 				"title": "Minimum Value",
 				"type": "number",
 				"description": "Minimum value to be shown in gauge scale."
 			},
-			"max-val": {
+			"max-value": {
 				"title": "Maximum Value",
 				"type": "number",
 				"description": "Maximum value to be shown in gauge scale."
@@ -1888,12 +1893,12 @@ angular
 				"description": "Sets the value of needle to be pointed."
 			},
 			"tick-space-min-val": {
-				"title": "Tick Space min-val",
+				"title": "Minor Tick Space Value",
 				"type": "number",
 				"description": "Space between the major ticks of the gauge."
 			},
 			"tick-space-maj-val": {
-				"title": "Tick Space maj-val",
+				"title": "Major Tick Space Value",
 				"type": "number",
 				"description": "Space between the sub ticks of the gauge."
 			},
@@ -1903,12 +1908,12 @@ angular
 				"description": "Unit of the values to be shown(ex. Kmph,%)."
 			},
 			"tick-col-maj": {
-				"title": "Tick col-maj",
+				"title": "Tick Major Color",
 				"type": "string",
 				"description": "Sets colour of the major tick."
 			},
 			"tick-col-min": {
-				"title": "Tick col-min",
+				"title": "Tick Minor Color",
 				"type": "string",
 				"description": "Sets colour of the sub tick."
 			},
@@ -2000,7 +2005,7 @@ angular
        maxSizeY: 1
     },
     "imgCls": "",
-	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0U0RkEwQjZFN0I3MTFFNjhGMEZBOEREMDEzMkY1NjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0U0RkEwQjVFN0I3MTFFNjhGMEZBOEREMDEzMkY1NjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MmM0MmUzZDAtZTJjNC1iMjQyLWJjZTItYThjYWQ3ZjkxMzAyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Poq6iGcAAAS7SURBVHjazFhpbA1RFJ432qq1VUtUqK1FSGiUJ2jkWZ7YfpTG1ibULvHDnhA/hPhhDz+IJVWaWqKpNhEifRJCEY9KNSpEiiIhllL6qkFT3+FMnd4+rTfz+p6TfDkz584955szZ87cuTbNgrhcrhZQw4CxwFCgP9ADiAB0oAb4DLwEHgP3gCvAXafTWWM2rs0k2SFQC4C5QBcTLt4Cp4EMkL/frKRBNgFqCzBV859cADaDfKFfSYNsJNR2YKmXObVAMXCNdWnrgsL40Bev936PiV5TlZhQBFtfYDAwhrU3H0eADSD/yTJpEB4BdQbopQw9Aw4DJxHolRy4m7woCSoXmD4sJz1P8dcdKhVYBvRWfD4H5sDf7cY46U0QJufXJWHd81Vr5S5247AfnO9QCTcldD3No/nkh/wJoTjXOa7vpDFxBVQWECrMB9pnX8oNv/fQ3uHQmVFWCpnmkx/yR37FEMXL4vj/Xh6YMA/qhDBROlKRoVw8+p44fsQtLAGP3+fWBR/UKgu5RQ6AjzLEnE6lBrQSl85HzMwmM43JlMF0YXoPOIgwnVAAKHq81PbGm0z0eJ6/g/1p7N/B8QxJZz5/J40LOkKdBULY5KH2BoduZR6RTkTAfDOMeV4i+5H17uZ26mET8TjLvLyXBwYzoNKEaYaR4UAKl8o5YToOHgsakMaFo6EK/nTO2v3OiRNXaUESV37+Ps1mWylMiSB+Qy2PrXU1U1mlRR7LGYcXxhEMwhSX4hMPb/xsnOXhUHV1i1aUgx46hd9kKo+1qMNnASBLH5s99FGijvXVPvhi9dCByeISO7J9x8j0EjFQigtnUfMHTgFJvHILhPTgeBS3H3jMJj5i/BdPG7IcBv0OaM8D63E3u8XdxyHLTwJYGvXigd86qF18SsvczpTpkYJwLX8FZXt6Esh69hIvi3lpzHOkzgt4Q4qR5TfafyTMp1iYxhLpeGG4auGxDgBszcRd8orX+ftvyEMLjgcCB5uJuOTVn0hHC8NTC46p8S+n9QIviPwpklc0dQ+jyLU2rhtHwkpfvhYXbMeLUe1DiVB76sMta56ZFSD7Cae/GOP8W9+Ybh7nqLq2HCIvblFRuVSZvw+o9iHeLSadwsHNEifSm//w+tJglffDOPGMG+Gk9blAhYkSMYSIZ5oslQrJw+OwTxBjNZTpcmMboCYqsi0y88lC7V1Wzol4FIinwO9HH3o1lWwdD9fyOW3F8Add+UzG+eHDUKaYJwElID7FgutYcVymK+3E7oc3vcCLjToU/arFms2HOH5ApG8Kg4O3uqzIo7/Yw3hHytcfAhv/hhni1pU67MQbKlbkQyNjESb80b5LV3kfOr7tL6g7CeNii6Qb2966acLfQnFcAr6lxno6QwzMxCOJsfAyurm/q5LHPxS+lEYn3o3SJE+DdKboyaG8yWili6yGSuad0WzOVjK3Ml9kI9Ba7AwcV39sN0FtE+vqMXgUBUH7sXW5BkEVia82bcFtUH9s92u/N7+Nm8nAxIggEW7Ji/8Q8XLvbLBZg7uohFqhNPSDQUp0mrLOp1/Acq87TBg4D3VImKYFibRck+eAl2wU9Vd5LLRBQ91jMpdMMOQor/Ta8ZZCPfkpwABkBJ8fXRbYywAAAABJRU5ErkJggg==",
+	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzgzODQxMTZGNzg1MTFFNjk0MTBGMzg4MzJCMkQ5QjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzgzODQxMTVGNzg1MTFFNjk0MTBGMzg4MzJCMkQ5QjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PoB6+/wAAAIXSURBVHja7JnNK0RRGMbv+I6QLIyIZvgjSInFlPKRyCR2WFiQj60k/wBGEmWyVcNuFjQrC1aytlCiRKFZmRDG8/LcuqahyT3NvVf3rafnfLzn3t/czjm3e8aTTCa1v4bH4/lWj8ViHbA5qAmSCx9DC4FA4NCYZ+aen/dVBQ3gSdhqmrR3KAjwPVtBA9gPO4Py2fVKz6M/QPUAf1QBnaOpiX4DcAgqp0Jsq4RaFd1LGXQN/RyaxRNNiKTMNokqu0HrcQ3Yd73C8rXieyiHzkrkqb4gFqUPtszqjCOgMSUuYL2GH6G508OFdqGzv3s0wrZYHXPK7iFvwDZ393Ch/8tCPOkf9cI6WN2POwH6trig3Zt42WZ5qNAJ0wPAN+nK7kJ0oR0GXZpBTp1toPGaHoaNZJC6yFxroQFRDVtn9R6aT5M2zz6JTYyptfpJT0Fl2tcRWHfFxs4TPGzoD6PtWfqYU6Liu9EsdA/9AHCn8F3Ib+iXcoR9ByljLINuoMsBY/MPi62OfYcpYyyD1se/QL+9sQuZI/FmNfQlXY52jwwLzhj37GtKGWMZdJTeFx8flEOaoPZ1QqqHlIPs60sZYxn0EiQ7Rq7AAO6Oi6+T8rMtypwnjjEVps+nse+OGj5kZb5GOB0kWqABAn9+6OIbMmyXQ3UBX4OKfkiVJzwhwFKx098XsrVNQ12Qj80XnBorAL7Sc81CfwgwAJTrtj6gcXkiAAAAAElFTkSuQmCC",
 	 "form": [
 	            {
 	                type: "tabs",
@@ -2119,11 +2124,11 @@ angular
 	                  {
 	                    title: "Data",
 	                    items: [
-                          "odometer-value",
 	                      "transport",
 	                      "msg-tag",
 	                      "api",
 	                      "api-params",
+                          "odometer-value",
 	                   //   "on-format-data"
 	                    ]
 	                  },
@@ -2224,7 +2229,7 @@ angular
        maxSizeY: 1
     },
     "imgCls": "",
-	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGsAAAAlCAYAAABF7RcQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjA0MzlBMzQxRTdCNjExRTZCREVBQURCRkE1MTI4QTFBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjA0MzlBMzQyRTdCNjExRTZCREVBQURCRkE1MTI4QTFBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDQzOUEzM0ZFN0I2MTFFNkJERUFBREJGQTUxMjhBMUEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDQzOUEzNDBFN0I2MTFFNkJERUFBREJGQTUxMjhBMUEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz75PGiuAAAGNUlEQVR42uxb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",
+	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MzIwMzYyNENGNzg1MTFFNkEwRUNDNjZDRjJCNDk3Q0YiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MzIwMzYyNEJGNzg1MTFFNkEwRUNDNjZDRjJCNDk3Q0YiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PnTLjfAAAAHGSURBVHja7JffK0NhGMe3mRWLbBEXLshc0eHOnbh2Q4miSC1kSpblbyBEWpRtRbI7/Aei3LhQfl65k/zI7581NN+3nlOvpzPjzup569Pznn3O8+57zt5zavZkMmnLtOGwZeCQ0BJaQktoCS2hJbSEltBphrM7etCCGgYJ7fMsUMrOfQNXNM8FRczfgweau0HhH/0deEyzvsoQcFDg+iW/UWaC4zhr+ARN5HzgiHl1MQb5SnD8g/dZ+AtQRb4CHDJ/CapVTpXXqe4wTj4xbVdkvx0lxJpGcc4GzcdAg+Y+QBv8KR1P0eKp/ATz76AV/pyOx0GjRf8Z5Ut829P4wECJscBxNEyS70AJMh+C3yTfgzLIfFDznShDzA/Db2s3jK8/Ar9l+SCiwYOyTvvJHHvAT74WJcIWXMaC0+TrUOaZj8HPkq9BWWB+ET5MXv38UYv1Z6zeHtloUPtwBZRr7hY0o+kV3ov5GsjR/C7opS8sQVkFLs3vgAHyqfr7yReQd7Mb1sd2gnoeXHZM1NtjDhSzC3oGNzTPA17m1UU90TwfeJi/Bi+/7Ld6m+jeHOqmBOzyb1xCS2gJLaEltISW0BJaQv+P8SXAADiWmlqqypMfAAAAAElFTkSuQmCC",
 	 "form": [
 	            {
 	                type: "tabs",
