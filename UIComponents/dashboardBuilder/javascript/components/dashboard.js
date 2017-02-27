@@ -19,6 +19,7 @@ angular
   {
     bindings : {
       widgets: "<",
+      dashboard: "<",
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
@@ -51,23 +52,24 @@ angular
         this.scriptrIdeRef = $routeParams.scriptrIdeRef;
         angular.element($window).on('message', function(event) {
             var msg = event.originalEvent.data;
-            if(msg[0] == "get_dashboard_data-"+self.scriptrIdeRef) {
-              	$window.parent.postMessage([ "dashboard_editor_save-" + self.scriptrIdeRef, self.getValue()], "*");
+            if(msg[0] == "get_editor_save_data-"+self.scriptrIdeRef) {
+              	if($window.parent) {
+                  $window.parent.postMessage([ "editor_save-" + self.scriptrIdeRef, self.getEditorValue()], "*");
+                }
            }	
           
-            if(msg[0] == "load_dashboard_data-"+self.scriptrIdeRef) {
+            if(msg[0] == "set_editor_load_data-"+self.scriptrIdeRef) {
               	self.setEditorValue(JSON.parse(msg[1]))
            }	
             		
         });
         
         if($window.parent) {
-           $window.parent.postMessage([ "dashboard_editor_loaded-" + this.scriptrIdeRef ], "*");
+           $window.parent.postMessage([ "editor_loaded-" + this.scriptrIdeRef ], "*");
          }
       }
       
-      this.getValue = function() {
-        
+      this.getEditorValue = function() {
           var data = {};
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
@@ -80,13 +82,6 @@ angular
           return scriptData;
       };
         
-      this.getEditorValue = function() {
-       
-       };
-
-       this.saveEditorValue = function() {
-
-       };
 
        this.setEditorValue = function(pluginData) {
          if(pluginData) {
@@ -94,6 +89,12 @@ angular
              this.urlParams = pluginData.urlParams;
              this.dashboard["widgets"] = this.widgets;
          }
+       }
+       
+       this.notifyDashboardChange = function() {
+         if($window.parent) {
+             $window.parent.postMessage([ "editor_data_changed-" + this.scriptrIdeRef , this.getEditorValue()], "*");
+           }
        }
       //IDEC CODE end 
       
@@ -213,6 +214,7 @@ angular
         
         this.widgetsConfig = config.widgets; 
         this.dataLoaded = true;
+        
       };
       
       this.selectBranch = function(branch) {
@@ -279,13 +281,11 @@ angular
             "schema": wdg.schema,
             "form": wdg.form
           });
+          this.notifyDashboardChange()
         } else {
           //self.showAlert("warning", "Device model attribute \""+ itemLabel + "\" has a no widget representation.")
           return;
         };
-        
-        
-       
       }
       
       this.initializeDashboard =  function() {
@@ -297,6 +297,7 @@ angular
       
       this.clear = function() {
 			this.dashboard.widgets = [];
+            this.notifyDashboardChange();
 	  };
       
       this.logout = function() {
@@ -318,6 +319,7 @@ angular
             "schema": wdg.schema,
             "form": wdg.form
           });
+          this.notifyDashboardChange();
       };
       
       this.setTransportSettings = function() {
@@ -338,8 +340,10 @@ angular
             });
             modalInstance.result.then(function (transportModel) {
               console.log("modal-component transport settings data :", transportModel ,"submitted at: " + new Date());
-              if(transportModel != "cancel")
-              	self.transport.defaults = angular.copy(transportModel);
+              if(transportModel != "cancel") {
+                self.transport.defaults = angular.copy(transportModel);
+                self.notifyDashboardChange()
+              }
             }, function () {
               console.log('modal-component transport settings dismissed at: ' + new Date());
             });
