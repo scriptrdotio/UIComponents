@@ -69,7 +69,7 @@ data["apsdb.content"] = JSON.stringify({
             "read":"anonymous",
             "write":"nobody"
     },
-    "userConfig": a + JSON.stringify({"metadata":{"name":"DashboardBuilder","plugindata": params["pluginData"]}}) + b + c,
+    "userConfig": a + JSON.stringify({"metadata":{"name":"CodeMirrorArbitraryFile","plugindata": params["pluginData"]}}) + b + c,
     "contentType":"text/html",
     "content": params["content"]
 });

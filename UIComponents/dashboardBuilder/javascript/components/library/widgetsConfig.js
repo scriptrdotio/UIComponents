@@ -808,7 +808,7 @@ angular
 			"fill-opacity": {
 				"title": "fill Opacity",
 				"type": "number",
-				"description": "Change the opacity of the area fill colour. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque)."
+				"description": "Change the opacity of the area fill color. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque)."
 			},
 			"resize": {
 				"title": "Resize",
@@ -1230,7 +1230,7 @@ angular
 			"fill-opacity": {
 				"title": "Fill Opacity",
 				"type": "number",
-				"description": "Change the opacity of the area fill colour. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque)."
+				"description": "Change the opacity of the area fill color. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque)."
 			},
 			"resize": {
 				"title": "Resize",
@@ -1298,8 +1298,8 @@ angular
         "parse-time": "false"
 	},
    "box": {
-       sizeX: 1,
-       sizeY: 1,
+       sizeX: 2,
+       sizeY: 2,
        minSizeX: 1,
        minSizeY: 1//, maxSizeY: 2
     },
@@ -1910,42 +1910,42 @@ angular
 			"tick-col-maj": {
 				"title": "Tick Major Color",
 				"type": "string",
-				"description": "Sets colour of the major tick."
+				"description": "Sets color of the major tick."
 			},
 			"tick-col-min": {
 				"title": "Tick Minor Color",
 				"type": "string",
-				"description": "Sets colour of the sub tick."
+				"description": "Sets color of the sub tick."
 			},
 			"outer-edge-col": {
-				"title": "Outer Edge colour",
+				"title": "Outer Edge color",
 				"type": "string",
-				"description": "Sets the colour of outer circle of the gauge."
+				"description": "Sets the color of outer circle of the gauge."
 			},
 			"pivot-col": {
-				"title": "Pivot colour",
+				"title": "Pivot color",
 				"type": "string",
-				"description": "Sets colour of the pivot."
+				"description": "Sets color of the pivot."
 			},
 			"inner-col": {
-				"title": "Inner colour",
+				"title": "Inner color",
 				"type": "string",
-				"description": "Sets colour of inner body of the gauge."
+				"description": "Sets color of inner body of the gauge."
 			},
 			"units-label-col": {
 				"title": "Units Label Colour",
 				"type": "string",
-				"description": "Sets colour of units label."
+				"description": "Sets color of units label."
 			},
 			"tick-label-col": {
 				"title": "Tick Label Colour",
 				"type": "string",
-				"description": "Sets colour of labels of the ticks."
+				"description": "Sets color of labels of the ticks."
 			},
 			"needle-col": {
 				"title": "Needle Colour",
 				"type": "string",
-				"description": "Sets colour of the needle."
+				"description": "Sets color of the needle."
 			},
 			"default-fonts": {
 				"title": "Default Fonts",
