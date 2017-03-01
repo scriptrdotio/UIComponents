@@ -156,9 +156,14 @@ angular
                 wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
                 if(self.api) {
                   wsClient.call(self.api, self.apiParams, self.msgTag)
-                    .then(function(data, response) {
-                    self.consumeData(data)
-                  });
+                    .then(
+                    function(data, response) {
+                     self.consumeData(data)
+                  },
+                  function(err) {
+                      console.log( "reject published promise", err);
+                      self.consumeData();
+                    });
                 }
 
               });
@@ -171,10 +176,8 @@ angular
                     self.consumeData(data)
                   },
                   function(err) {
-                    console
-                      .log(
-                      "reject published promise",
-                      err);
+                    console.log( "reject published promise", err);
+                    self.consumeData();
                   });
               }
             }
@@ -184,7 +187,7 @@ angular
             if(typeof self.onFormatData() == "function"){
               data = self.onFormatData()(data);
             }
-            if(typeof data == "object"){
+            if(data && data.length > 0 && typeof data == "object"){
               this.data = data;
               this.noResults = false;
             }else{

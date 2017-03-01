@@ -444,7 +444,8 @@ angular
                 d.resolve(null, response)
               }
           }, function(err) {
-            d.reject(err)
+            d.resolve(null);
+            d.reject(err);
           });
           return d.promise;
        } else if(transport == "wss"){
@@ -462,7 +463,8 @@ angular
                           d.resolve(null, response)
                       }
                     }, function(err) {
-                      d.reject(err)
+                      d.resolve(null);
+                      d.reject(err);
                     }
                   ); 
                 }); 
@@ -474,10 +476,11 @@ angular
                     var data = {"documents": data.documents, "count": data.count}
                     d.resolve(data, response)
                   }else{
-                    d.resolve(null, response)
+                    d.resolve(null, response);
                   }
                 }, function(err) {
-                    d.reject(err)
+                    d.resolve(null);
+                    d.reject(err);
                   }
                 );
               }); 
