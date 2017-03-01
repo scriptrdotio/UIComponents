@@ -166,7 +166,7 @@ angular
               filterParams : {
                 apply : true
               },
-              suppressFilter: (typeof this.suppressFilter != 'undefined')? this.cellEditable : false,
+              suppressFilter: (typeof this.suppressFilter != 'undefined')? this.suppressFilter : false,
               editable : (typeof this.cellEditable != 'undefined')? this.cellEditable : true,
             },
             onSelectionChanged: function() {
