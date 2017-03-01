@@ -124,6 +124,10 @@ angular
          this.$onInit = function() {
              
              this.data = (this.data) ? this.data : null;
+           
+             if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
+               this.noResults = true;
+             }
             
            	 //this.type = (this.type) ? this.type : "line";
            
