@@ -128,6 +128,9 @@ angular
                     }
                   } else {
                     params.failCallback();
+                    if(self.gridOptions.rowModelType == "virtual"){
+                        self.gridOptions.api.showNoRowsOverlay();
+                    }
                   }
                 }, function(err) {
                   console.log("reject", err);
@@ -190,8 +193,12 @@ angular
               }
               // set "Contains" in the column drop down filter to "StartWith" as it is not supported in document query 
               event.api.filterManager.availableFilters.text.CONTAINS = "startsWith";
-              if(typeof self.rowData == 'undefined' || self.rowData == null){
-             	 self._createNewDatasource();
+              if(typeof self.rowData == 'undefined' || self.rowData == null || (self.rowData && self.rowData.length ==0)){
+                 if(self.api){
+             	 	self._createNewDatasource();
+                 }else{
+                   event.api.setRowData([]);
+                 }
               }else{
                 event.api.sizeColumnsToFit();
               }
@@ -448,7 +455,7 @@ angular
                      if(formatterFnc /**Check if function also*/){
                         data = formatterFnc(data);
                       }
-                      if(data && data.documents){
+                      if(data && data.documents && data.documents.length != 0){
                           var data = {"documents": data.documents, "count": data.count}
                           d.resolve(data, response)
                       }else{
@@ -463,7 +470,7 @@ angular
              }else{
                 wsClient.onReady.then(function() {
                 wsClient.publish(params, "publish").then(function(data, response) {
-                  if(data && data.documents){
+                  if(data && data.documents && data.documents.length != 0){
                     var data = {"documents": data.documents, "count": data.count}
                     d.resolve(data, response)
                   }else{
