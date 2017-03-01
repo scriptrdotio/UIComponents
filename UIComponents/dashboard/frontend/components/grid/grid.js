@@ -46,6 +46,8 @@ angular
         
         "rowData" : "<?",
         
+        "suppressFilter": "<?",
+        
         "gridHeight" : "@",
 
         /** pagination properties **/
@@ -164,6 +166,7 @@ angular
               filterParams : {
                 apply : true
               },
+              suppressFilter: (typeof this.suppressFilter != 'undefined')? this.cellEditable : false,
               editable : (typeof this.cellEditable != 'undefined')? this.cellEditable : true,
             },
             onSelectionChanged: function() {
