@@ -437,7 +437,7 @@ angular
               if(formatterFnc /**Check if function also*/){
                 data = formatterFnc(data);
               }
-              if(data && data.documents){
+              if(data && data.documents && data.documents.length != 0){
                 var data = {"documents": data.documents, "count": data.count}
                 d.resolve(data, response)
               }else{
