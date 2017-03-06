@@ -107,6 +107,8 @@ angular
                   "pointer" : "@", // show value pointer
                  
                   "onFormatData" : "&",
+                 
+                  "heightUnit" : "@",
 
                   "counter" : "@", // increase numbers one by one (bool)
                   "width": "@", //  gauge width in % (int)
@@ -121,6 +123,7 @@ angular
 
 	               this.$onInit = function() {
 		               this.gaugeValue = (this.gaugeValue) ? this.gaugeValue : 0;
+                       this.heightUnit = (this.heightUnit) ? this.heightUnit : "px";
 		               this.customSectors = (this.customSectors) ? this.customSectors
 		                     : [ {
 		                        color : "#A3CD3B",

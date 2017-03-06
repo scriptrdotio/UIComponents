@@ -1,4 +1,4 @@
-<div style="width: {{$ctrl.width}}%; height: {{$ctrl.height}}px;" class="gauge">
+<div style="width: {{$ctrl.width}}%; height: {{$ctrl.height}}{{$ctrl.heightUnit}};" class="gauge">
     <div 
        value={{$ctrl.gaugeValue}}
        value-font-color={{$ctrl.valueFontColor}}
@@ -41,11 +41,8 @@
        format-number={{$ctrl.formatNumber}}  
        human-friendly={{$ctrl.humanFriendly}}
        human-friendly-decimal={{$ctrl.humanFriendlyDecimal}}  
-       min-txt={{$ctrl.minTxt}}
-       max-txt={{$ctrl.maxTxt}}
        on-animation-end={{$ctrl.onAnimationEnd}}
        pointer={{$ctrl.pointer}}
-       pointerOptions={{$ctrl.pointerOptions}}  
        justgage>
   </div>
 </div>
