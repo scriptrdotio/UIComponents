@@ -10,10 +10,20 @@ angular
                controller : function($scope, _, $timeout, $location, $route) {
 	               var self = this;
                  
+                   this.collaspsedCols = [];
+                 
 	               this.$onInit = function() {
-		               this.getMenuData(this.menuItems);
+                       this.cols = [];
+		               this.cols.push({
+                         "key" : this.menuItems.mainMenu,
+		                 "class" : "md"
+                       });
+                     
                        if($route.current && $route.current.$$route) {
                          this.currentRoute =  "#"+$route.current.$$route.originalPath;
+                         this.openMenuBasedOnRoute();
+                       }else{
+                         this.currentRoute = this.menuItems[this.menuItems.mainMenu][0].route;
                        }
                      
                        $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
@@ -28,110 +38,116 @@ angular
                          }
  					   });
 	               };
+                 
+                  this.openMenuBasedOnRoute = function(){
+                    for(menu in this.menuItems){
+                      if(menu != "mainMenu"){
+                        for(var i = 0; i <= this.menuItems[menu].length; i++){
+                          for(row in this.menuItems[menu][i]){
+                            if(this.menuItems[menu][i].route == this.currentRoute){
+                               this.menuItems[menu][i].active = "true";
+                               this.route(this.menuItems[menu][i], null, menu, null, null, true);
+                               return;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
 
-                   this.$postLink = function() {
-                     $timeout(function () {
-                        //DOM has finished rendering
-                        angular.element('.isSelected').trigger("click"); //MFE: do not use trigger handler as the ng-href will be prevented and only ng-click executed.
-                    });
-                      
-                   };
-	               this.getMenuData = function(data) {
-		               this.menuCols = [ data.mainMenu ];
-		               // menu is initially expanded
-		               this.menuColsExpansionClass = [ 'md' ];
-		               this.menuItems = data;
+	               this.route = function(item, event, column, colIndex, liIndex, routingBased) {
                      
-                      
-	               };
+                      var subOpened = false;
+                     
+                     if(routingBased){
+                       
+                       console.log("routing based");
+                       this.getPreviousCollapsedCols(column);
+                       this.collaspsedCols.push(column);
+                       this.collaspsedCols.sort();
+                       
+                       for(var x = 0; x < this.collaspsedCols.length; x++){
+                         this.cols.push({
+                             key : this.collaspsedCols[x],
+                             class: 'md'
+                           });
+                       }
+                       
+                       // change classes
+                       this.modifyColClasses();
+                       
+                     }else if (typeof item.sub != undefined && item.sub != null) {
+                        
+                         // close all columns after colIndex;
+                         this.cols = this.cols.splice(0, colIndex + 1);
 
-	               // method that checks if the current menu item has a sub menu
-	               this.checkIfHasSubMenu = function(col) {
-		               if (typeof this.menuItems[col] != 'undefined'
-		                     && this.menuItems[col] != null) {
-			               for (var i = 0; i < this.menuItems[col].length; i++) {
-				               var item = this.menuItems[col][i];
-				               if (typeof item.sub != 'undefined'
-				                     && item.sub != null)
-					               return true;
-			               }
-		               }
-		               return false;
-	               };
-
-	               this.route = function(item, event, column) {
-		               console.log(item);
-                       var colIndex = this.menuCols.indexOf(column)+1;
-                       this.menuCols.splice(colIndex, this.menuCols.length -1)
-                       this.menuColsExpansionClass.splice(colIndex, this.menuColsExpansionClass.length -1);
-		               if (typeof item.sub != undefined && item.sub != null) {
-			               if (this.menuCols.indexOf(item.sub) == -1) {
-				               // case of opening a sub-menu
-				               // push the sub-menu of the selected element to this.menuCols array
-				               this.menuCols.push(item.sub);
-				               // collapse all sub-menus already opened
-				               for (var i = 0; i < this.menuColsExpansionClass.length; i++)
-					               this.menuColsExpansionClass[i] = 'sm';
-				               // check if the sub-menu's children have sub-menus in order to know if the class of the sub-menu is sm or md
-				               // if(this.checkIfHasSubMenu(item.sub))
-				               // this.menuColsExpansionClass.push('sm');
-				               // else{
-				               this.menuColsExpansionClass.push('md');
-				               // }
-				               // prevent routing in this case and just open the sub-menu
-				               // event.preventDefault();
-			               } else {
-				               // case of collapsing the sub-menu
-				               var indx = this.menuCols.indexOf(item.sub);
-				               this.menuCols.splice(indx, this.menuCols.length
-				                     - indx);
-				               this.menuColsExpansionClass.splice(indx,
-				                     this.menuColsExpansionClass.length - indx);
-				               // expand the new last column in the menu
-				               this.menuColsExpansionClass[this.menuColsExpansionClass.length - 1] = "md";
-				               // prevent routing in this case and just close the sub-menu
-				               // event.preventDefault();
-				               this.revertActiveSelectionClass(item.sub);
-			               }
+                         // check if sub menu already opened
+                         for(var i = 0; i < this.cols.length; i++){
+                           if(this.cols[i].key == item.sub){
+                             subOpened = true;
+                           }
+                         }
+                         // open column
+                         if(!subOpened){
+                           this.cols.push({
+                             key : item.sub,
+                             class: 'md'
+                           });
+                         }
+                         // change classes
+                         this.modifyColClasses();
+                         // update active class of selected element
+                         this.addActiveClass(colIndex, liIndex);
+                        
 		               } else {
-			               // doesn't have sub-menu, then change css of this menu bar to be md not sm
-			               var colIndex = this.menuCols.indexOf(column);
-			               if (colIndex != -1) {
-				               // close other opened sub menus if they exist beyond the current column
-				               var menuColsLength = this.menuCols.length;
-				               for (var i = colIndex + 1; i < menuColsLength; i++) {
-					               this.revertActiveSelectionClass(this.menuCols[i]);
-					               // this.menuCols.splice(i, 1);
-					               // this.menuColsExpansionClass.splice(i, 1);
-				               }
-				               this.menuCols.splice(colIndex + 1,
-				                     this.menuCols.length - (colIndex + 1));
-				               this.menuColsExpansionClass.splice(colIndex + 1,
-				                     this.menuColsExpansionClass.length
-				                           - (colIndex + 1));
-				               if (this.menuColsExpansionClass.length > colIndex)
-					               this.menuColsExpansionClass[colIndex] = 'md';
-			               }
-		               }
-		               //update active class of selected element
-		               for (var i = 0; i < this.menuItems[column].length; i++) {
-			               if (this.menuItems[column][i].id == item.id) {
-				               if (this.menuItems[column][i].active == "false")
-					               this.menuItems[column][i].active = "true";
-			               } else {
-				               if (this.menuItems[column][i].active == "true")
-					               this.menuItems[column][i].active = "false";
-			               }
+                         // close all columns after colIndex;
+                         this.cols = this.cols.splice(0, colIndex + 1);
+                         //change classes
+                         this.modifyColClasses();
+                         // update active class of selected element
+                         this.addActiveClass(colIndex, liIndex);
 		               }
 	               };
-
-	               this.revertActiveSelectionClass = function(colIndex) {
-		               for (var i = 0; i < this.menuItems[colIndex].length; i++) {
-			               if (i == 0)
-				               this.menuItems[colIndex][i].active = "true";
-			               else if (this.menuItems[colIndex][i].active == "true")
-				               this.menuItems[colIndex][i].active = "false";
-		               }
-	               };
+                 
+                   this.getPreviousCollapsedCols = function(col){
+                     
+                     for(menu in this.menuItems){
+                       if(menu != "mainMenu"){
+                         for(var i = 0; i <= this.menuItems[menu].length; i++){
+                           for(row in this.menuItems[menu][i]){
+                            if(this.menuItems[menu][i].sub == col){
+                              if(menu != this.menuItems.mainMenu){
+                              	this.collaspsedCols.push(menu);
+                              }
+                              this.getPreviousCollapsedCols(menu);
+                              break;
+                            }
+                          }
+                         }
+                       }
+                     }
+                     
+                   }
+                 
+                   this.modifyColClasses = function(){
+                       for(var i = 0; i < this.cols.length; i++){
+                         if(i == this.cols.length - 1){
+                           this.cols[i].class = 'md'
+                         }else{
+                           this.cols[i].class = 'sm'
+                         }
+                       }
+                   }
+                   
+                   this.addActiveClass = function(colIndex, liIndex){
+                      var list = document.getElementById(colIndex).getElementsByTagName("li");
+                       for (var i = 0; i < list.length; i++){
+                           if(list[i].getAttribute("index") == liIndex.toString()){
+                             list[i].className = list[i].className = "active";
+                           }else{
+                              list[i].className = list[i].className = "";
+                           }
+                       }
+                   }
                }
             });
