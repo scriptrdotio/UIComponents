@@ -1,6 +1,6 @@
 angular.module('DashboardBuilder').service(
   "scriptrService",
-  function(httpClient) {
+  function(httpClient, $cookies) {
     this.saveScript = function(data) {
       return httpClient.post(
         "UIComponents/dashboardBuilder/backend/api/saveDashboard", data)
@@ -9,6 +9,10 @@ angular.module('DashboardBuilder').service(
     this.getScript = function(data) {
       return httpClient.post(
         "UIComponents/dashboardBuilder/backend/api/getDashboard", data)
+    }
+    
+    this.getToken = function(){
+       return $cookies.get("token") || null;
     }
 });
 
@@ -102,6 +106,10 @@ angular
         
         this.urlParams = [];
         this.transport = angular.copy(config.transport);
+        var cookieToken = scriptrService.getToken();
+        if(cookieToken != null){
+          this.transport.defaults.token = cookieToken;
+        }
         this.frmGlobalOptions = {
           "destroyStrategy" : "remove",
           "formDefaults": {"feedback": true}
@@ -305,6 +313,9 @@ angular
 	  };
 
       this.addWidget = function(wdg) {
+          if(wdg.name == "speedometer"){
+            wdg.defaults["gauge-radius"] = 70;
+          }
           this.dashboard.widgets.push({
             "name": "New Widget",
             "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
@@ -322,7 +333,7 @@ angular
           this.notifyDashboardChange();
       };
       
-      this.setTransportSettings = function() {
+      this.setTransportSettings = function(redirectTarget) {
         var self = this;
         var modalInstance = $uibModal.open({
               animation: true,
@@ -373,6 +384,8 @@ angular
           if(self.savedScript) {
             scriptData["previousScriptName"]  = self.savedScript;
           }
+          self.transport.defaults.redirectTarget = this.model.scriptName;
+          self.notifyDashboardChange();
           scriptrService.saveScript(scriptData).then(
             function(data, response) {
                console.log("resolve", data)
@@ -459,10 +472,6 @@ angular
           	console.log("Widget resize", event, data);
           	$(window).trigger('resize');
             if(self.widget == data.element) {
-              if(self.widget.type == "scriptr-gauge") {
-                data.element.options.height = (data.wdg.height() - 10)
-              	self.updateWidget(data.element.options)
-              }
               if(self.widget.type == "scriptr-speedometer") {
                 var h = data.wdg.height();
                 var w = data.wdg.width()

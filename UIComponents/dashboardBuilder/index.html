@@ -61,8 +61,6 @@
     <script src="/UIComponents/dashboardBuilder/javascript/config/config.js"></script>
     <script src="/modules/login/widgets/authorization.js" ></script>
   
-    <script src="/UIComponents/config/scriptrTransport.js"></script>
-    
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
      <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
@@ -91,8 +89,8 @@
    <!-- NG material -->
    <link rel="stylesheet" href="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.css">
    <script src="//s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>      
-   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>      
-   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script> 
+   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>      
+   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script> 
    <script src="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.js"></script>    
    
   <script src="/UIComponents/dashboard/frontend/components/message/displayBox.js"></script>
@@ -109,17 +107,15 @@
   
   <script type="text/javascript"> 
     var authorization  = $.scriptr.authorization(
-      {
-        onTokenValid: function(){ }, 
-        loginPage: login.loginTarget
-      }
-    );
+        {
+          onTokenValid: function(){ }, 
+          loginPage: login.loginTarget
+        }
+      );
   </script>
   
 <script>
-      var myApp= angular.module("myApp", ['ngAnimate', 'ngSanitize', "WsClient", "HttpClient", "Chart", 'gridster',  'ngRoute','DashboardBuilder', 'Gauge', 'Speedometer', 'Odometer', 'SearchBox', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache', "Message"]);
-      angular.module('myApp').config(wssConfig);
-      angular.module('myApp').config(httpsConfig);
+      var myApp= angular.module("myApp", ['ngAnimate', 'ngSanitize', "WsClient", "HttpClient", "Chart", 'gridster',  'ngRoute', 'DashboardBuilder', 'Gauge', 'Speedometer', 'Odometer', 'SearchBox', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache', "Message"]);
       angular.module('myApp').config(function($routeProvider){
            $routeProvider
             .when("/", {
@@ -154,6 +150,8 @@
     &lt;!-- Adding Angular --&gt;
     &lt;script src=&quot;//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;//code.jquery.com/ui/1.12.0/jquery-ui.js&quot;&gt;&lt;/script&gt;
+ 	&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js&quot; &gt;&lt;/script&gt;
   
     &lt;script src=&quot;//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js&quot;&gt;&lt;/script&gt;
     
@@ -171,6 +169,8 @@
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/gauge/gauge.js&quot;&gt;&lt;/script&gt;
+    
+    &lt;script src=&quot;/modules/login/widgets/authorization.js&quot; &gt;&lt;/script&gt;
   
   	&lt;script src=&quot;//d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js&quot;&gt;&lt;/script&gt;
@@ -187,7 +187,7 @@
     &lt;script src=&quot;/UIComponents/wsProvider.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/httpProvider.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/chart/chart.js&quot;&gt;&lt;/script&gt;
-   &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;
 
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css&quot;&gt;
@@ -205,6 +205,21 @@
   
 &lt;/style&gt;
 &lt;script&gt;
+  if(&quot;{{{transport.requiresLogin}}}&quot; == "Yes"){
+    var login = {
+       expiry:1,
+       loginTemplateTarget: &quot;/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget={{{transport.redirectTarget}}}&quot;,
+       anonymousToken: &quot;{{{transport.requiresLogin}}}&quot;
+    };
+
+    var authorization  = $.scriptr.authorization(
+        {
+          onTokenValid: function(){ }, 
+          loginPage: login.loginTemplateTarget
+        }
+      );
+   }
+
   
 (function() {
       
@@ -227,9 +242,9 @@
         $interpolateProvider.startSymbol('{[{');
         $interpolateProvider.endSymbol('}]}');
         $locationProvider.html5Mode({
-  enabled: true,
-  requireBase: false
-});
+          enabled: true,
+          requireBase: false
+        });
      });
   
   

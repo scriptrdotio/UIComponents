@@ -23,7 +23,9 @@ angular
     transport: {
       "label": "Transport configuration",
       "defaults": {
-         "token": "VzRGMjQ3OEFCMA==",
+         "token": "",
+         "requiresLogin": "No",
+         "redirectTarget" : "",
          "publishChannel": "requestChannel",
          "subscribeChannel": "responseChannel",
          "baseUrl": "https://iotevolution.scriptrapps.io/",
@@ -36,6 +38,17 @@ angular
 			"token": {
 				"title": "Token",
 				"type": "string",
+				"description": "Scriptr token."
+			},
+            "redirectTarget": {
+				"title": "Redirection",
+				"type": "hidden",
+				"description": "Scriptr token."
+			},
+            "requiresLogin": {
+				"title": "Requires Login",
+				"type": "string",
+                "enum": ["Yes", "No"],
 				"description": "Scriptr token."
 			},
 			"baseUrl": {
@@ -1393,8 +1406,10 @@ angular
 			"data": {
 				"title": "Data",
 				"type": "string",
+                "style": "control-label",
 				"description": "Data series in case of static data.",
                 "x-schema-form": {
+                  "style": "control-label",
                   "type": "textarea",
                   "placeholder":  "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
                 }
@@ -1469,7 +1484,8 @@ angular
 		"msg-tag": "gauge",
 		"api": "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal",
         "width": 100,
-        "height": 160
+        "height-unit": "%",
+        "height": 100
 	},
   "box": {
        sizeX: 1,
@@ -2103,7 +2119,7 @@ angular
 	"defaults": {
 		"transport": "wss",
 		"msg-tag": "odometer",
-		"api": "UIComponents/dashboard/frontend/examples/odometer/getOdometerVal",
+		"odometer-value": "1234567890",
         "animation": "count",
         "duration": "1000",
         "size": "4"

@@ -1,6 +1,3 @@
-<div ng-if="$ctrl.show" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')" close="$ctrl.closeAlert()" dismiss-on-timeout="5000">{{$ctrl.message.content}}
-</div>
-
 <!-- begin left side -->
 <div class="left">
   <div class="grey-bg pdt5 col-xs-12 devices-models-tree">
@@ -15,8 +12,8 @@
 <div class="dashboard-content">
 	<!-- begin page header -->
 	<div class="page-header col-xs-12">
+         <div ng-if="$ctrl.show" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')  + ' m10'" close="$ctrl.closeAlert()" dismiss-on-timeout="5000">{{$ctrl.message.content}}</div>
 		 <form name="scriptForm" ng-submit="$ctrl.saveDashboard(scriptForm)">
-
           <div class="form-group col-xs-12 col-sm-6">
             <div class="row">
               <div class="col-xs-12 col-sm-10 pdl10 pdr0"><div ng-if="!$ctrl.isInIde" sf-options="$ctrl.frmGlobalOptions" sf-schema="$ctrl.schema" sf-form="$ctrl.form" sf-model="$ctrl.model" ></div>
@@ -77,6 +74,7 @@
 	  <!-- end gridster -->
   </div>
   <!-- end slick wrap -->
+
   
 </div>
 <!-- end dashboard content -->
