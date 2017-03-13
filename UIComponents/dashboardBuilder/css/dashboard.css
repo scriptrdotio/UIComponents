@@ -12,9 +12,14 @@ html {background: #efefef;}
 
 .pdl0 {padding-left: 0px;}
 .ml5 {margin-left: 5px;}
+.m10 {margin: 10px!important;}
 
 .controls {
     margin-bottom: 20px;
+}
+
+scriptr-odometer {
+  white-space : normal !important
 }
 
 ul {
