@@ -119,14 +119,17 @@
       angular.module('myApp').config(function($routeProvider){
            $routeProvider
             .when("/", {
-            templateUrl: "/UIComponents/dashboardBuilder/view/dashboard.html"
-          })
-          .when('/scriptName/:scriptName*', {
-              templateUrl: '/UIComponents/dashboardBuilder/view/dashboard.html', 
-              controller:  'myCtrl',
-              controllerAs: "vm"
-            })
-            .otherwise({redirectTo:'/'});
+            	templateUrl: '/UIComponents/dashboardBuilder/view/dashboard.html'
+          	})
+            .when("/scriptrIdeRef/:scriptrIdeRef*", {
+            	templateUrl: '/UIComponents/dashboardBuilder/view/dashboard.html'
+          	})
+          	.when('/scriptName/:scriptName*', {
+              	templateUrl: '/UIComponents/dashboardBuilder/view/dashboard.html',
+             	controller:  'myCtrl',
+              	controllerAs: "vm"
+            }) 
+            .otherwise({redirectTo:'/'})
        })
    	  angular.module('myApp').controller('myCtrl', function($scope,  $route, $routeParams) {
           var vm = this;
