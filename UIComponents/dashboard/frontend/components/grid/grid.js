@@ -209,6 +209,10 @@ angular
 
          };
          this.gridHeight = (this.gridHeight) ? this.gridHeight : "500";
+         this.style = {};
+         this.style["height"] = this.gridHeight+"px";
+         this.style["clear"] = "left";
+         this.style["width"] = "100%";
          this.transport = (this.transport) ? this.transport : "wss";
          this.removeRowMsgTag = (this.removeRowMsgTag) ? this.removeRowMsgTag : "remove";
          this.addRowMsgTag = (this.addRowMsgTag) ? this.addRowMsgTag : "add";
