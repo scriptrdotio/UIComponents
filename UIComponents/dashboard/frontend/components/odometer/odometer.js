@@ -45,6 +45,9 @@ angular
              this.odometerOptions = this.config;
              this.odometerValue = (this.odometerValue) ? this.odometerValue : 0;
              this.size = (this.size) ? this.size : 1;
+             
+             this.style = {};
+             this.style["font-size"] = this.size+"em";
 
              this.transport = (this.transport) ? this.transport : "wss";
              this.msgTag = (this.msgTag) ? this.msgTag : null;
@@ -61,6 +64,10 @@ angular
                         wsClient.call(self.api, self.apiParams, self.msgTag)
                           .then(function(data, response) {
                           self.consumeData(data)
+                        },
+                        function(err) {
+                          console.log( "reject published promise", err);
+                          self.consumeData();
                         });
                     }
 
