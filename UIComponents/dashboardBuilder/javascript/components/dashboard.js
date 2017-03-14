@@ -371,12 +371,13 @@ angular
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
          // console.log(JSON.stringify(data["items"]));
+          self.transport.defaults.redirectTarget = this.model.scriptName;
           data["transport"] = angular.copy(this.transport.defaults) //MFE: Transport info needs to be retrieved from url or cookie
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
-          scriptData["scriptName"] =  this.model.scriptName ;
+          scriptData["scriptName"] =  this.model.scriptName;
           scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
           if(self.isEdit) {
             scriptData["update"] = true;
@@ -384,8 +385,6 @@ angular
           if(self.savedScript) {
             scriptData["previousScriptName"]  = self.savedScript;
           }
-          self.transport.defaults.redirectTarget = this.model.scriptName;
-          self.notifyDashboardChange();
           scriptrService.saveScript(scriptData).then(
             function(data, response) {
                console.log("resolve", data)
@@ -398,7 +397,8 @@ angular
                }
                
             }, function(err) {
-              console.log("reject", err);
+              self.showAlert("danger", err.data.response.metadata.errorDetail);
+              console.log("reject", err.data.response.metadata.errorDetail);
 		  });
           //Save data to scriptr
           console.log();        
@@ -413,7 +413,7 @@ angular
            var matches = userConfig.match(userConfigRegex);
            if(userConfig && matches) {
              var pluginContent = JSON.parse(matches[1]);
-             if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "DashboardBuilder"){
+             if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "CodeMirrorArbitraryFile"){
                this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
                this.urlParams = JSON.parse(pluginContent.metadata.plugindata).urlParams;
                this.dashboard["widgets"] = this.widgets;
