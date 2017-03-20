@@ -23,23 +23,16 @@ angular
     transport: {
       "label": "Transport configuration",
       "defaults": {
-         "token": "",
          "requiresLogin": "No",
          "redirectTarget" : "",
          "publishChannel": "requestChannel",
-         "subscribeChannel": "responseChannel",
-         "baseUrl": "https://iotevolution.scriptrapps.io/",
+         "subscribeChannel": "responseChannel"
        },
       "form": ["*"],
       "schema": {
        	"type": "object",
 		"title": "Schema",
 		"properties": {
-			"token": {
-				"title": "Token",
-				"type": "string",
-				"description": "Scriptr token."
-			},
             "redirectTarget": {
 				"title": "Redirection",
 				"type": "hidden",
@@ -50,11 +43,6 @@ angular
 				"type": "string",
                 "enum": ["Yes", "No"],
 				"description": "Scriptr token."
-			},
-			"baseUrl": {
-				"title": "Base url",
-				"type": "string",
-				"description": "Scriptr base url. ex: https://demo.scriptrapps.io"
 			},
 			"publishChannel": {
 				"title": "Publish Channel",
