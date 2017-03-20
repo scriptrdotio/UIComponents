@@ -1,7 +1,8 @@
 <!-- begin left side -->
-<div class="left">
+<div ng-if="!$ctrl.isInIde" class="left">
   <div class="grey-bg pdt5 col-xs-12 devices-models-tree">
-    <scriptr-searchbox  api='{{$ctrl.devicesModel}}'
+    <scriptr-searchbox 
+                       api='{{$ctrl.devicesModel}}'
                        on-select="$ctrl.selectBranch"
     </scriptr-searchbox>
   </div>
