@@ -106,10 +106,6 @@ angular
         
         this.urlParams = [];
         this.transport = angular.copy(config.transport);
-        var cookieToken = scriptrService.getToken();
-        if(cookieToken != null){
-          this.transport.defaults.token = cookieToken;
-        }
         this.frmGlobalOptions = {
           "destroyStrategy" : "remove",
           "formDefaults": {"feedback": true}
@@ -309,6 +305,7 @@ angular
 	  };
       
       this.logout = function() {
+        var authorization  = $.scriptr.authorization({loginPage: login.loginTarget});
 		authorization.logout();
 	  };
 
@@ -455,6 +452,8 @@ angular
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/box.html',
     controller: function($scope, $compile, $element, $uibModal) {
+      
+      var boxSelf = this;
      
       this.remove = function(widget) {
         this.parent.dashboard.widgets.splice(this.parent.dashboard.widgets.indexOf(widget), 1);
@@ -479,6 +478,7 @@ angular
               	self.updateWidget(data.element.options)
               }
             }
+            boxSelf.parent.notifyDashboardChange();
         });
         
          $scope.$on("drag_widget", function(event, data) {
