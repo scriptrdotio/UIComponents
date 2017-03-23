@@ -1,107 +1,85 @@
 <html ng-app="myApp">
 <head>
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
     <title>Dashboard Builder</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    
-   <script src="//use.fontawesome.com/3d61d6959e.js"></script>
   
-
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-   <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
-  
-   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
-   <!-- Add the slick-theme.css if you want default styling -->
-   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css">
-   <script  src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-  
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
-  
-    <!-- Adding Angular -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
-  
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-slick-carousel/3.1.7/angular-slick.min.js"></script>
-    
-    <!-- Charts used in historical angular.morris -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/chart/chart.css">
-  
-    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <!--script src="//cdnjs.cloudflare.com/ajax/libs/angular-morris/1.3.0/angular-morris.min.js"></script-->
-    <script src="/UIComponents/dashboard/frontend/components/chart/angular.morris.js"></script>
-  
-  	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
-  
-  	<script src="//d3js.org/d3.v4.min.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
-  
-  
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/searchBox/abn_tree.css">
+    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css">
+    <link rel="stylesheet" href="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.css">
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/odometer/odometer.car.css">
-    <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.min.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/odometer/angular.odometer.min.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/thermometer/style.css">
+    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/dashboard.css">
   
+    <!-- JQUERY Material-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+    <script  src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+  
+    <!-- Libraries -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script>
+  
+    <!-- Login -->
+    <script src="/modules/login/widgets/authorization.js"> </script>
+  
+    <!-- NG material -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
-    <script src="/UIComponents/wsProvider.js"></script>
-    <script src="/UIComponents/httpProvider.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
-  
-    <script src="/UIComponents/dashboardBuilder/javascript/config/config.js"></script>
-    <script src="/modules/login/widgets/authorization.js" ></script>
-  
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-slick-carousel/3.1.7/angular-slick.min.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
-     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
-    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css">
- 
-   <script src="/UIComponents/dashboardBuilder/lib/schemaForm/tv4.js"></script>
-   <script src="/UIComponents/dashboardBuilder/lib/schemaForm/objectPath.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>      
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script> 
+    <script src="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.js"></script> 
+    <script src="//s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script> 
   
-   <script src="/UIComponents/dashboardBuilder/lib/schemaForm/schemaForm.js"></script>
-   <script src="/UIComponents/dashboardBuilder/lib/schemaForm/bootstrapDecorator.js"></script>
+    <!-- Directives -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/chart/angular.morris.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js"></script>
+  	<script src="//d3js.org/d3.v4.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/odometer/angular.odometer.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/searchBox/abn_tree_directive.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js"></script>
   
-   <link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/dashboard.css">
-  
-   <script src="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js"></script>
-   <script src="/UIComponents/dashboardBuilder/javascript/components/module.js"></script>
-   <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgetsConfig.js"></script>
-   <script src="/UIComponents/dashboardBuilder/javascript/components/dashboard.js"></script>
-   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script>
-  
-   <!-- Search box -->
-   <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/searchBox/abn_tree.css">
-   <script src="/UIComponents/dashboard/frontend/components/searchBox/abn_tree_directive.js"></script>
-   <script src="/UIComponents/dashboard/frontend/components/searchBox/searchBox.js"></script>
-  
-   <!-- NG material -->
-   <link rel="stylesheet" href="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.css">
-   <script src="//s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>      
-   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>      
-   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script> 
-   <script src="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.js"></script>    
-   
-  <script src="/UIComponents/dashboard/frontend/components/message/displayBox.js"></script>
-  <script src="/UIComponents/dashboard/frontend/components/message/message.js"></script>
-  
-  <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/thermometer/style.css">
-  
-  <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js"></script>
-  <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer.js"></script>
-  
-  <script src="/UIComponents/dashboard/frontend/components/progressBar/progressBar.js"></script>                                
+    <!-- Compoenents -->
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>    
+    <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/tv4.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/objectPath.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/schemaForm.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/bootstrapDecorator.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
+    <script src="/UIComponents/dashboardBuilder/javascript/components/module.js"></script>
+    <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgetsConfig.js"></script>
+    <script src="/UIComponents/dashboardBuilder/javascript/components/dashboard.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/searchBox/searchBox.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/message/displayBox.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/message/message.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/progressBar/progressBar.js"></script>  
+    
+    <script src="/UIComponents/dashboardBuilder/javascript/config/config.js"></script>
+                              
         
 </head> 
   
@@ -115,8 +93,10 @@
   </script>
   
 <script>
-      var myApp= angular.module("myApp", ['ngAnimate', 'ngSanitize', "WsClient", "HttpClient", "Chart", 'gridster',  'ngRoute', 'DashboardBuilder', 'Gauge', 'Speedometer', 'Odometer', 'SearchBox', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache', "Message"]);
-      angular.module('myApp').config(function($routeProvider){
+     var myApp= angular.module("myApp", ['DashboardBuilder']);
+     angular.module('myApp').config(wssConfig);
+     angular.module('myApp').config(httpsConfig);    
+     angular.module('myApp').config(function($routeProvider){
            $routeProvider
             .when("/", {
             	templateUrl: '/UIComponents/dashboardBuilder/view/dashboard.html'
@@ -209,16 +189,13 @@
 &lt;/style&gt;
 &lt;script&gt;
   if(&quot;{{{transport.requiresLogin}}}&quot; == "Yes"){
-    var login = {
-       expiry:1,
-       loginTemplateTarget: &quot;/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget={{{transport.redirectTarget}}}&quot;,
-       anonymousToken: &quot;{{{transport.requiresLogin}}}&quot;
-    };
+  
+    var loginTemplateTarget = &quot;/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget={{{transport.redirectTarget}}}&quot;;
 
     var authorization  = $.scriptr.authorization(
         {
           onTokenValid: function(){ }, 
-          loginPage: login.loginTemplateTarget
+          loginPage: loginTemplateTarget
         }
       );
    }

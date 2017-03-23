@@ -45,7 +45,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/chart/angular.morris.js"></script>
-  	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js"></script>
@@ -81,10 +80,10 @@
 </head> 
   
 <script>
-      var myApp= angular.module("myApp", ['DashboardBuilder']);
-   angular.module('myApp').config(wssConfig);
-   angular.module('myApp').config(httpsConfig);   
-   angular.module('myApp').config(function($routeProvider){
+     var myApp= angular.module("myApp", ['DashboardBuilder']);
+     angular.module('myApp').config(wssConfig);
+     angular.module('myApp').config(httpsConfig);   
+     angular.module('myApp').config(function($routeProvider){
            $routeProvider
             .when("/", {
             	templateUrl: '/UIComponents/dashboardBuilder/view/dashboard.html'
