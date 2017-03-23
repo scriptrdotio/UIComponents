@@ -3,7 +3,7 @@ angular
       .provider(
       		'httpClient',
             function httpClientProvider() {
-	            var _baseUrl = null;
+                var _baseUrl = "https://example.scriptrapps.io";
 	            var _token = null;
 	            var _restUrl = "";
 
