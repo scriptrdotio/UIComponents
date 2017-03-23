@@ -170,9 +170,14 @@ angular
 				               wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
 				               if(self.api) {
                                   wsClient.call(self.api, self.apiParams, self.msgTag)
-                                   .then(function(data, response) {
+                                   .then(
+                                    function(data, response) {
                                        self.consumeData(data)
-                                   });
+                                   },
+                                   function(err) {
+                                    console.log( "reject published promise", err);
+                                    self.consumeData();
+                                  });
 				               }
 				               
 			               });
