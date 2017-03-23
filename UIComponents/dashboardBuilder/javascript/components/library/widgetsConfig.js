@@ -2107,7 +2107,7 @@ angular
 	"defaults": {
 		"transport": "wss",
 		"msg-tag": "odometer",
-		"odometer-value": "1234567890",
+		"api": "UIComponents/dashboard/frontend/examples/odometer/getOdometerVal",
         "animation": "count",
         "duration": "1000",
         "size": "4"
