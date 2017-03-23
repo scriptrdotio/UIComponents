@@ -3,6 +3,8 @@ angular
       .provider(
             'wsClient',
             function wsClientProvider() {
+              
+                var self = this;
 
 	            var _baseUrl = "wss://api.scriptrapps.io/";
 	            var _publishChannel = null;
@@ -33,6 +35,10 @@ angular
 
 	            this.setSubscribeChannel = function(textString) {
 		            _subscribeChannel = textString;
+	            };
+              
+                this.getSubscribeChannel = function(textString) {
+		           return _subscribeChannel;
 	            };
 
 	            this.setToken = function(textString) {
@@ -139,14 +145,9 @@ angular
 		                  var callbackHandler = function(data) {
 			                  // Get the message callback id
 			                  var callbackId = data.id;
-			                  if (callbackId
-			                        && callbacks.hasOwnProperty(callbackId)) {
-				                  console
-				                        .log(
-				                              "Execute registered call back for received socket message.",
-				                              callbacks[callbackId]);
-				                  $rootScope.$apply(callbacks[callbackId].cb
-				                        .resolve(data.result));
+			                  if (callbackId && callbacks.hasOwnProperty(callbackId)) {
+				                  console.log("Execute registered call back for received socket message.", callbacks[callbackId]);
+				                  $rootScope.$apply(callbacks[callbackId].cb.resolve(data.result));
 				                  delete callbacks[callbackId];
 			                  } else {
 				                  console
@@ -157,13 +158,19 @@ angular
 		                  var subscriberHandler = function(data) {
 			                  // Get the message callback id
 			                  var subscriberId = data.id;
-			                  if (subscriberId
-			                        && subscribersRegistry
-			                              .hasOwnProperty(subscriberId)) {
-				                  console
-				                        .log(
-				                              "Execute registered call back for received socket message.",
-				                              subscribersRegistry[subscriberId]);
+                            
+                            
+                              if(subscriberId && subscribersRegistry.hasOwnProperty("subscribeToAll")){
+                                
+                                  console.log("Execute registered call back for received socket message.", subscribersRegistry["subscribeToAll"]);
+                                  var registeredSubscriptions =  subscribersRegistry["subscribeToAll"];
+                                  for(var i = 0; i< registeredSubscriptions.length; i++) {
+                                    registeredSubscriptions[i].cb(data.result);
+                                  }
+                                
+                              } else if (subscriberId && subscribersRegistry.hasOwnProperty(subscriberId)) {
+                                
+				                  console.log("Execute registered call back for received socket message.", subscribersRegistry[subscriberId]);
 				                  // $rootScope.$apply(subscribersRegistry[subscriberId].cb.resolve(data.result));
                                   var registeredSubscriptions =  subscribersRegistry[subscriberId];
                                   for(var i = 0; i< registeredSubscriptions.length; i++) {
@@ -171,8 +178,7 @@ angular
                                   }
 				                  
 			                  } else {
-				                  console
-				                        .log("No subscribers registerd for received socket message.");
+				                  console.log("No subscribers registerd for received socket message.");
 			                  }
 		                  }
 
@@ -200,7 +206,9 @@ angular
 			                     }
 		                     },
 
-		                     publish : function(message, prefix) {
+		                     publish : function(message, prefix, overridenPubChannel) {
+                                 var publishingChannel = _publishChannel;
+                                 if(overridenPubChannel) publishingChannel = overridenPubChannel;
 			                     if (_publishChannel) {
 				                     var defer = $q.defer();
 
@@ -219,7 +227,7 @@ angular
 				                     dataStream.send({
 				                        "method" : "Publish",
 				                        "params" : {
-				                           "channel" : _publishChannel,
+				                           "channel" : publishingChannel,
 				                           "message" : JSON.stringify(message)
 				                        }
 				                     });
@@ -227,7 +235,7 @@ angular
 			                     } else {
 				                     console
 				                           .log(
-				                                 "No channel is deifned, message won't be sent.",
+				                                 "No channel is defined, message won't be sent.",
 				                                 message)
 			                     }
 		                     },
@@ -242,21 +250,34 @@ angular
 			                     };
 
 			                     var callbackId = _getCallbackId();
-			                     var trackId = _getResponseCallId(callbackId,
-			                           prefix);
+			                     var trackId = _getResponseCallId(callbackId, prefix);
+                               
 			                     callbacks[trackId] = {
 			                        time : new Date(),
 			                        cb : defer
 			                     };
 
-			                     request["id"] = _getRequestCallId(callbackId,
-			                           prefix);
-			                     console.log(
-			                           'Sending call api request over socket.',
-			                           request);
+			                     request["id"] = _getRequestCallId(callbackId, prefix);
+			                     console.log('Sending call api request over socket.', request);
+                               
 			                     dataStream.send(request);
 			                     return defer.promise;
 		                     },
+                            
+                             updateSubscriptionChannel : function(channel){
+                                    dataStream.send(JSON.stringify({
+                                         "method" : "Unsubscribe",
+                                         "params" : {
+                                             "channel" : self.getSubscribeChannel()
+                                         }
+                                    }));
+                                    self.setSubscribeChannel(channel);
+                               		dataStream.close(true);
+                             },
+                            
+                             updatePublishingChannel : function(channel){
+                                    self.setSubscribeChannel(channel);
+                             },
 
 		                     closeSocket : function(force) {
 			                     if (force) {
