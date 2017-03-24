@@ -24,10 +24,14 @@ angular
     bindings : {
       widgets: "<",
       dashboard: "<",
+      wsClient: "<",
+      plugIn: "<",
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $timeout, $window, config, $uibModal, scriptrService, $route, $routeParams, _) {
+    controller: function($scope, $timeout, $window, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, _) {
+      
+      this.wsClient = wsClient;
       var self = this;
       this.show = false;
       this.isEdit = false;      
@@ -103,7 +107,7 @@ angular
       //IDEC CODE end 
       
       this.$onInit = function() {
-        
+        this.plugIn = (typeof this.plugIn != 'undefined')? this.plugIn : false,
         this.urlParams = [];
         this.transport = angular.copy(config.transport);
         this.frmGlobalOptions = {
@@ -349,8 +353,14 @@ angular
             modalInstance.result.then(function (transportModel) {
               console.log("modal-component transport settings data :", transportModel ,"submitted at: " + new Date());
               if(transportModel != "cancel") {
+                if(self.transport.defaults.publishChannel != transportModel.publishChannel){
+                    self.wsClient.updatePublishingChannel(transportModel.publishChannel);
+                }
+                if(self.transport.defaults.subscribeChannel != transportModel.subscribeChannel){
+                  	self.wsClient.updateSubscriptionChannel(transportModel.subscribeChannel);
+                } 
                 self.transport.defaults = angular.copy(transportModel);
-                self.notifyDashboardChange()
+                self.notifyDashboardChange();
               }
             }, function () {
               console.log('modal-component transport settings dismissed at: ' + new Date());
@@ -367,6 +377,7 @@ angular
           var data = {};
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
+          data["token"] = scriptrService.getToken();
          // console.log(JSON.stringify(data["items"]));
           self.transport.defaults.redirectTarget = this.model.scriptName;
           data["transport"] = angular.copy(this.transport.defaults) //MFE: Transport info needs to be retrieved from url or cookie

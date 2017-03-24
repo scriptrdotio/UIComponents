@@ -1,5 +1,5 @@
 <!-- begin left side -->
-<div ng-if="!$ctrl.isInIde" class="left">
+<div ng-if="!$ctrl.isInIde && !$ctrl.plugIn" class="left">
   <div class="grey-bg pdt5 col-xs-12 devices-models-tree">
     <scriptr-searchbox 
                        api='{{$ctrl.devicesModel}}'
@@ -12,7 +12,7 @@
 <!-- begin dashboard content -->
 <div class="dashboard-content">
 	<!-- begin page header -->
-	<div class="page-header col-xs-12">
+	<div ng-if="!$ctrl.plugIn" class="page-header col-xs-12">
          <div ng-if="$ctrl.show" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')  + ' m10'" close="$ctrl.closeAlert()" dismiss-on-timeout="5000">{{$ctrl.message.content}}</div>
 		 <form name="scriptForm" ng-submit="$ctrl.saveDashboard(scriptForm)">
           <div class="form-group col-xs-12 col-sm-6">
@@ -32,8 +32,13 @@
 		</form>
 	</div>	
 	<!-- end page header -->
-
   
+  <div ng-if="$ctrl.plugIn"class="col-xs-12 col-sm-6 pull-right">
+    <a class="pull-right btn btn-sm btn-warning ml5"  ng-click="$ctrl.clear()"><i class="fa fa-trash" aria-hidden="true"></i> Clear</a>
+    <a class="pull-right  btn-sm  btn btn-warning ml5" ng-click="$ctrl.viewDasboard()"><i class="fa fa-eye" aria-hidden="true"></i> View</a>
+    <a class="pull-right btn  btn-sm btn-warning ml5" ng-click="$ctrl.saveDashboard('scriptName')"><i class="fa fa-cog" aria-hidden="true"></i> Save</a>
+  </div>
+
 	<!-- begin slick wrap -->
   <div class="col-xs-12 pdl0 slick-wrap">
 		<!-- begin carousel options -->
