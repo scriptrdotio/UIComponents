@@ -25,6 +25,7 @@ angular
       widgets: "<",
       dashboard: "<",
       wsClient: "<",
+      showToolBar: "<",
       plugIn: "<",
       devicesModel: "@"
     },
@@ -124,8 +125,11 @@ angular
         this.isInIde =  ($routeParams.scriptrIdeRef) ? true :  false;
         
         var scriptName = $routeParams.scriptName
-        if(scriptName) {
+        if(scriptName || this.plugIn) {
           this.model = {"scriptName": scriptName};
+          if(this.plugIn){
+            this.model = {"scriptName": "EnergyDemo/script/energyReports"};
+          }
   			var self = this;
             scriptrService.getScript(this.model).then(
               function(data, response) {
@@ -367,13 +371,13 @@ angular
             });
       };
       
-      this.saveDashboard = function(form) {
+      this.saveDashboard = function(form, plugIn) {
 		console.log("Form submit", form)
         var self = this;
         $scope.$broadcast('schemaFormValidate');
 
         // Then we check if the form is valid
-        if (form.$valid) {
+        if (form.$valid || plugIn) {
           var data = {};
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
@@ -385,7 +389,7 @@ angular
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
-          scriptData["scriptName"] =  this.model.scriptName;
+          scriptData["scriptName"] =  this.model.scriptName || "EnergyDemo/script/energyReports";
           scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
           if(self.isEdit) {
             scriptData["update"] = true;
