@@ -1,0 +1,2 @@
+/*** bug in component, remove filter by css ***/
+.gauge svg path {filter: none!important;}
