@@ -109,6 +109,7 @@ angular
       
       this.$onInit = function() {
         this.plugIn = (typeof this.plugIn != 'undefined')? this.plugIn : false,
+        this.showToolBar = (typeof this.showToolBar != 'undefined')? this.showToolBar : true,
         this.urlParams = [];
         this.transport = angular.copy(config.transport);
         this.frmGlobalOptions = {
