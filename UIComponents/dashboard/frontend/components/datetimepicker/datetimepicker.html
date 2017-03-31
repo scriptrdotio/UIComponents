@@ -16,9 +16,9 @@
   <!-- dateRange -->
   <div ng-if="$ctrl.type == 'range'">
     <div class="row">
-    <div class="col-xs-12 col-sm-6">
+    <div class={{$ctrl.startDateClass}}>
       <div class="dropdown form-group">
-          <label>{{$ctrl.startDateLabel}}</label>
+          <label ng-if="$ctrl.startDateLabel">{{$ctrl.startDateLabel}}</label>
           <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target="#"
              href="#">
               <div class="input-group date">
@@ -35,9 +35,9 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-sm-6">
+    <div class={{$ctrl.endDateClass}}>
       <div class="dropdown form-group">
-          <label>{{$ctrl.endDateLabel}}</label>
+          <label ng-if="$ctrl.endDateLabel">{{$ctrl.endDateLabel}}</label>
           <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="#"
              href="#">
               <div class="input-group date">

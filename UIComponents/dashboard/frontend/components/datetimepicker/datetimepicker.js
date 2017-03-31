@@ -26,6 +26,10 @@ angular
                  
                 "onSetTime" : "&",
                  
+                "startDateClass" : "@",
+                 
+                "endDateClass" : "@",
+                 
                 "startDateOnSetTime" : "&",
                  
                 "endDateOnSetTime" : "&",
