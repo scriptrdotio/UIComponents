@@ -18,3 +18,6 @@ header {height: 45px; position: fixed; top: 0; z-index: 999; width: 100%;}
 .header-items a:hover {background: #64798e; text-decoration: none;}
 .header-items i {margin-right: 4px;}
 .header-items .item {margin-right: 10px;}
+
+/*** appname ***/
+.appname {padding-top: 14px; color: #fff;}
