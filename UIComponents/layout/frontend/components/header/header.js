@@ -6,6 +6,7 @@ angular
             {
                bindings : {
 	               headerItems : '<headerItems',
+                   class : "@",
                    user: '<?'
                },
                templateUrl : '/UIComponents/layout/frontend/components/header/header.html',
@@ -19,16 +20,5 @@ angular
                        this.subitems = (this.headerItems && this.headerItems.subitems) ?  this.headerItems.subitems : null;
                        this.caretlabel =  (this.headerItems && this.headerItems.caretlabel) ?  this.headerItems.caretlabel : null;
  	               };
-                 
-                   $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
-                      console.log("next", next);
-                      if(next.$$route) {
-                        console.log("current", next.$$route);
-                      } else {
-                        console.log("Missing route definition");
-                        angularEvent.preventDefault();
-                      }
-                    }); 
-
                }
             });
