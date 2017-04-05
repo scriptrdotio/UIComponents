@@ -25,7 +25,7 @@ angular
       widgets: "<",
       dashboard: "<",
       wsClient: "<",
-      showToolBar: "<",
+      plugInScriptName : "@",
       plugIn: "<",
       devicesModel: "@"
     },
@@ -38,6 +38,9 @@ angular
       this.isEdit = false;      
       
       this.viewDasboard = function() {
+         if(self.plugIn){
+           this.savedScript = this.plugInScriptName;
+         }
          $window.open("/"+this.savedScript);
       };
       
@@ -109,7 +112,6 @@ angular
       
       this.$onInit = function() {
         this.plugIn = (typeof this.plugIn != 'undefined')? this.plugIn : false,
-        this.showToolBar = (typeof this.showToolBar != 'undefined')? this.showToolBar : true,
         this.urlParams = [];
         this.transport = angular.copy(config.transport);
         this.frmGlobalOptions = {
@@ -129,7 +131,7 @@ angular
         if(scriptName || this.plugIn) {
           this.model = {"scriptName": scriptName};
           if(this.plugIn){
-            this.model = {"scriptName": "EnergyDemo/script/energyReports"};
+            this.model = {"scriptName": this.plugInScriptName};
           }
   			var self = this;
             scriptrService.getScript(this.model).then(
@@ -390,7 +392,7 @@ angular
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
-          scriptData["scriptName"] =  this.model.scriptName || "EnergyDemo/script/energyReports";
+          scriptData["scriptName"] =  this.model.scriptName || this.plugInScriptName;
           scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
           if(self.isEdit) {
             scriptData["update"] = true;
