@@ -10,8 +10,12 @@ angular
                    user: '<?'
                },
                templateUrl : '/UIComponents/layout/frontend/components/header/header.html',
-               controller : function($scope, defaultLogo) {
+               controller : function($scope, $route, defaultLogo) {
+                   var self = this;
 	               this.$onInit = function() {
+                       if($route.current && $route.current.$$route) {
+                         this.currentRoute =  "#"+$route.current.$$route.originalPath;
+                       }
                        this.logout = (this.headerItems && this.headerItems.logout) ?   this.headerItems.logout : null;
                        this.appname =  (this.headerItems && this.headerItems.appname) ?  this.headerItems.appname : "";
                        this.logo = (this.headerItems && this.headerItems.logo) ?  this.headerItems.logo : defaultLogo;
@@ -20,5 +24,27 @@ angular
                        this.subitems = (this.headerItems && this.headerItems.subitems) ?  this.headerItems.subitems : null;
                        this.caretlabel =  (this.headerItems && this.headerItems.caretlabel) ?  this.headerItems.caretlabel : null;
  	               };
+                   self.addSelectedClass = function(colIndex, event){
+                     var list = document.getElementsByTagName("a");
+                     for (var i = 0; i < list.length; i++){
+                           if(list[i].getAttribute("index") == colIndex){
+                             list[i].className = list[i].className = "selected";
+                           }else{
+                              list[i].className = list[i].className = "";
+                           }
+                       }
+                 }
+                   $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
+                         console.log("next", next);
+                         if(next.$$route) {
+                            console.log("current", next.$$route);
+                            
+                         	this.currentRoute =  "#"+next.$$route.originalPath;
+                         } else {
+                           console.log("Missing route definition");
+                           angularEvent.preventDefault();
+                         }
+ 					   });
+            
                }
             });

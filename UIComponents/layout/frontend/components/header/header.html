@@ -16,7 +16,7 @@
         <!-- begin items in header -->
         <div class="header-items pull-left">
           <div ng-repeat="item in $ctrl.items track by $index" class="pull-left">
-              <a href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a>
+              <a index="{{colIndex = $index}}" ng-click="$ctrl.addSelectedClass(colIndex, $event)" href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true" ng-class="vm.selected"></i> {{item.label}}</a>
           </div>
         </div>
         <!-- end items in header -->
