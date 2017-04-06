@@ -7,7 +7,8 @@ angular
                bindings : {
 	               headerItems : '<headerItems',
                    class : "@",
-                   user: '<?'
+                   user: '<?',
+                   onHeaderItemClick : "&"
                },
                templateUrl : '/UIComponents/layout/frontend/components/header/header.html',
                controller : function($scope, $route, defaultLogo) {
@@ -15,6 +16,7 @@ angular
 	               this.$onInit = function() {
                        if($route.current && $route.current.$$route) {
                          this.currentRoute =  "#"+$route.current.$$route.originalPath;
+                       
                        }
                        this.logout = (this.headerItems && this.headerItems.logout) ?   this.headerItems.logout : null;
                        this.appname =  (this.headerItems && this.headerItems.appname) ?  this.headerItems.appname : "";
@@ -23,8 +25,25 @@ angular
                        this.items = (this.headerItems && this.headerItems.items) ?  this.headerItems.items : null;
                        this.subitems = (this.headerItems && this.headerItems.subitems) ?  this.headerItems.subitems : null;
                        this.caretlabel =  (this.headerItems && this.headerItems.caretlabel) ?  this.headerItems.caretlabel : null;
- 	               };
-                   self.addSelectedClass = function(colIndex, event){
+ 	               }
+                   this.onItemClick = function(item){
+                     if(typeof self.onHeaderItemClick(item) == "function"){
+                        self.onHeaderItemClick()(item);
+                     }
+                   }
+                   /*
+                   this.$postLink = function() {
+                     var list = document.getElementsByTagName("a");
+                     for (var i = 0; i < list.length; i++){
+                       if(list[i].getAttribute("route") == this.currentRoute){
+                         list[i].className = list[i].className = "selected";
+                       }else{
+                         list[i].className = list[i].className = "";
+                       }
+                     }
+     			   }
+                   */
+                   self.addSelectedClass = function(colIndex){
                      var list = document.getElementsByTagName("a");
                      for (var i = 0; i < list.length; i++){
                            if(list[i].getAttribute("index") == colIndex){
@@ -38,8 +57,15 @@ angular
                          console.log("next", next);
                          if(next.$$route) {
                             console.log("current", next.$$route);
-                            
                          	this.currentRoute =  "#"+next.$$route.originalPath;
+                            var list = document.getElementsByTagName("a");
+                            for (var i = 0; i < list.length; i++){
+                                 if(list[i].getAttribute("route") == this.currentRoute){
+                                   list[i].className = list[i].className = "selected";
+                                 }else{
+                                    list[i].className = list[i].className = "";
+                                 }
+                             }
                          } else {
                            console.log("Missing route definition");
                            angularEvent.preventDefault();
