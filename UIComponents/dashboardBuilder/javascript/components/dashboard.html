@@ -1,7 +1,11 @@
 <!-- begin left side -->
-<div ng-if="!$ctrl.isInIde && !$ctrl.plugIn" class="left-dashboard">
+<div ng-if="!$ctrl.isInIde && $ctrl.showTree" class="left-dashboard">
   <div class="grey-bg pdt5 col-xs-12 devices-models-tree">
     <scriptr-searchbox 
+                       transport="https"
+                       load-tree = "$ctrl.loadTree"
+                       icon-expand = "{{$ctrl.iconExpand || 'fa expand-collapse fa-caret-right'}} "
+                       icon-collapse = "{{$ctrl.iconCollapse || 'fa expand-collapse fa-caret-right'}}"
                        api='{{$ctrl.devicesModel}}'
                        on-select="$ctrl.selectBranch"
     </scriptr-searchbox>

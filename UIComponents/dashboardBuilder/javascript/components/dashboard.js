@@ -1,9 +1,12 @@
 angular.module('DashboardBuilder').service(
   "scriptrService",
   function(httpClient, $cookies) {
-    this.saveScript = function(data) {
-      return httpClient.post(
-        "UIComponents/dashboardBuilder/backend/api/saveDashboard", data)
+    this.saveScript = function(data, api) {
+      if(api && typeof api != 'undefined'){
+        return httpClient.post(api, data);
+      }else{
+        return httpClient.post("UIComponents/dashboardBuilder/backend/api/saveDashboard", data);
+      }
     };
     
     this.getScript = function(data) {
@@ -25,13 +28,18 @@ angular
       widgets: "<",
       dashboard: "<",
       wsClient: "<",
+      saveScriptApi: "@",
+      iconExpand: "@",
+      iconCollapse: "@",
+      loadTree: "<?",
+      showTree: "<",
       plugInScriptName : "@",
       plugIn: "<",
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
     controller: function($scope, $timeout, $window, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, _) {
-      
+
       this.wsClient = wsClient;
       var self = this;
       this.show = false;
@@ -112,6 +120,7 @@ angular
       
       this.$onInit = function() {
         this.plugIn = (typeof this.plugIn != 'undefined')? this.plugIn : false,
+        this.showTree = (typeof this.showTree != 'undefined')? this.showTree : true,
         this.urlParams = [];
         this.transport = angular.copy(config.transport);
         this.frmGlobalOptions = {
@@ -127,12 +136,9 @@ angular
         
         this.isInIde =  ($routeParams.scriptrIdeRef) ? true :  false;
         
-        var scriptName = $routeParams.scriptName
-        if(scriptName || this.plugIn) {
+        var scriptName = $routeParams.scriptName || this.plugInScriptName;
+        if(scriptName) {
           this.model = {"scriptName": scriptName};
-          if(this.plugIn){
-            this.model = {"scriptName": this.plugInScriptName};
-          }
   			var self = this;
             scriptrService.getScript(this.model).then(
               function(data, response) {
@@ -400,7 +406,7 @@ angular
           if(self.savedScript) {
             scriptData["previousScriptName"]  = self.savedScript;
           }
-          scriptrService.saveScript(scriptData).then(
+          scriptrService.saveScript(scriptData, self.saveScriptApi).then(
             function(data, response) {
                console.log("resolve", data)
                if(data.status == "failure") {
@@ -442,7 +448,7 @@ angular
              this.showAlert("danger", "Invalid dashboard script. Pass another script.")
              console.error("Invalid dashboard script. Pass another script.")
            }
-         } else {
+         } else if(!self.plugIn){
            this.showAlert("danger", "Invalid dashboard script. Pass another script.")
            console.error("Invalid dashboard script. Pass another script.")
          }

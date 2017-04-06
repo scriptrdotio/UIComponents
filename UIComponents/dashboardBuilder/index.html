@@ -3,6 +3,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
     <title>Dashboard Builder</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css">
   
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
@@ -178,6 +179,8 @@
     &lt;script src=&quot;/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/message/displayBox.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/message/message.js&quot;&gt;&lt;/script&gt;
+    
+    &lt;script src=&quot;/UIComponents/dashboardBuilder/javascript/config/config.js&quot;&gt;&lt;/script&gt;
 &lt;/head&gt; 
   
   
@@ -204,14 +207,13 @@
 (function() {
       
     var wssConfig = [&quot;wsClientProvider&quot;,function (wsClientProvider) {
-        wsClientProvider.setToken(&quot;{{{transport.token}}}&quot;);
+        wsClientProvider.setToken(&quot;{{{token}}}&quot;);
         wsClientProvider.setPublishChannel(&quot;{{{transport.publishChannel}}}&quot;);
         wsClientProvider.setSubscribeChannel(&quot;{{{transport.subscribeChannel}}}&quot;);
     }];
 
     var httpsConfig = [&quot;httpClientProvider&quot;,function (httpClientProvider) {
-      httpClientProvider.setBaseUrl(&quot;{{{transport.baseUrl}}}&quot;);
-      httpClientProvider.setToken(&quot;{{{transport.token}}}&quot;);
+      httpClientProvider.setToken(&quot;{{{token}}}&quot;);
     }]
 
      var myApp= angular.module(&quot;myApp&quot;, [&quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message'])
