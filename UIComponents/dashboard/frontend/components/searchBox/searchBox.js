@@ -25,6 +25,8 @@ angular
       
         "apiParams" : "<?",
       
+        "loadTree" : "<?",
+      
         "transport" : "@",
       
         "api" : "@",
@@ -41,15 +43,19 @@ angular
       
       	 this.$onInit = function() {
            
-           this.iconLeaf = (this.iconLeaf) ? this.iconLeaf : "icon-file  glyphicon glyphicon-file  fa fa-file";
-           this.iconExpand = (this.iconExpand) ? this.iconExpand : "icon-plus  glyphicon glyphicon-plus  fa fa-plus";
-           this.iconCollapse = (this.iconCollapse) ? this.iconCollapse : "icon-minus glyphicon glyphicon-minus fa fa-minus";
+           this.iconLeaf = (this.iconLeaf && this.iconLeaf != "$ctrl.iconLeaf") ? this.iconLeaf : "icon-file  glyphicon glyphicon-file  fa fa-file";
+           this.iconExpand = (this.iconExpand && this.iconExpand != "$ctrl.iconExpand") ? this.iconExpand : "icon-plus  glyphicon glyphicon-plus  fa fa-plus";
+           this.iconCollapse = (this.iconCollapse && this.iconCollapse != "$ctrl.iconCollapse") ? this.iconCollapse : "icon-minus glyphicon glyphicon-minus fa fa-minus";
            
            this.paramName = (this.paramName) ? this.paramName : "criteria";
            
            this.treeData = (this.treeData) ? this.treeData : [];
            this.iconLeaf = (this.iconLeaf) ? this.iconLeaf : null;
            this.transport = (this.transport) ? this.transport : "wss";
+           
+           if(this.loadTree){
+             initDataService(this.transport, this.searchValue);
+           }
          }
          
          this.onFilterChanged = function() {
@@ -58,6 +64,8 @@ angular
         	   initDataService(this.transport, this.searchValue);
            }
         }
+         
+        
          
          var initDataService = function(transport, searchValue) {
            var params = {};
@@ -78,7 +86,7 @@ angular
                    .then(function(data, response) {
                    self.consumeData(data)
                  },
-                  function(err) {
+                 function(err) {
                     console.log( "reject published promise", err);
                     self.consumeData();
                   });

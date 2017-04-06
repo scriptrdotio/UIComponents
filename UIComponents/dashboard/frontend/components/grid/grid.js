@@ -74,6 +74,10 @@ angular
         
         "addRowMsgTag" : "@",
         
+        "msgTag" : "@",
+        
+        "class" : "@",
+        
         "onGridReady" : "&"
       },
 
@@ -221,8 +225,15 @@ angular
          this.enableClientSideFilter =  (this.enableClientSideFilter == true) ? false : true;
          this.enableServerSideFilter =  (this.enableServerSideFilter == true) ? false : true;
           
-         dataService.subscribe(this.onRemoveRowWebSocketCall, self.removeRowMsgTag);
-         dataService.subscribe(this.onEditRowWebSocketCall, self.addRowMsgTag);
+         if(self.removeRowMsgTag){
+           dataService.subscribe(this.onRemoveRowWebSocketCall, self.removeRowMsgTag);
+         }
+         if(self.addRowMsgTag){
+           dataService.subscribe(this.onEditRowWebSocketCall, self.addRowMsgTag);
+         }
+         if(self.msgTag){
+           dataService.subscribe(this.addRowWebsocketCall, self.msgTag);
+         }
   
          $scope.$on("updateGridData", function(event, broadcastData) {
             self.broadcastData = broadcastData;
@@ -251,6 +262,26 @@ angular
               colKey: self.gridOptions.columnDefs[0].field,
               charPress: self.gridOptions.columnDefs[0].field
           });
+        }
+        
+         this.addRowWebsocketCall = function(data){
+           var newRow = {};
+           var data = data.result;
+          // Create a json object to save new row fields 
+           for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
+              for(row in data){
+                if(typeof self.gridOptions.columnDefs[n].field != "undefined"){
+                  if(self.gridOptions.columnDefs[n].field == row){
+                     newRow[self.gridOptions.columnDefs[n].field] = data[row];
+                     break;
+                  }else{
+                      newRow[self.gridOptions.columnDefs[n].field] = "";
+                  }
+                }
+              }
+           }
+
+           self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
         }
         
          this.onEditRowWebSocketCall = function(data) {
@@ -431,7 +462,7 @@ angular
       }
       
       
-      this.getGridData = function(api, params, transport, formatterFnc) {
+      this.getGridData = function(api, params, transport, formatterFnc, msgTag) {
         
         var d = $q.defer(); 
         var self = this;
