@@ -17,6 +17,8 @@ angular
         "defaultCenter": "@", //Map default center
         "trackedAsset": "@",
         "summaryIcons": "<?",
+      
+        "heatMapData" : "<?",
         
         "assetsData": "<?",
       	"api" : "@",
@@ -33,161 +35,157 @@ angular
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
     
-    controllerAs : "vm",
-
     controller : function($scope, $rootElement, $location, $sce,
                            $compile, $timeout, $interval, $controller, NgMap,
                            defaultConstants, wsClient) {
 
-      var vm = this;
-      
       var self = this;
       
       // On load, get latest 500 data points saved in db
       this.$onInit = function() {
-          vm.pathStrokeOpacity = (vm.pathStrokeOpacity) ? vm.pathStrokeOpacity : 0;
-          vm.pathStrokeWeight = (vm.pathStrokeWeight) ? vm.pathStrokeWeight : 5;
+          self.pathStrokeOpacity = (self.pathStrokeOpacity) ? self.pathStrokeOpacity : 0;
+          self.pathStrokeWeight = (self.pathStrokeWeight) ? self.pathStrokeWeight : 5;
         
-          vm.maxAssetPoints = (vm.maxAssetPoints) ? vm.maxAssetPoints : 100;
-          vm.defaultcenter = (vm.defaultcenter) ? vm.defaultcenter : "40.7053111,-74.258188";
-          vm.trackedAsset = (vm.trackedAsset) ? vm.trackedAsset : null;
+          self.maxAssetPoints = (self.maxAssetPoints) ? self.maxAssetPoints : 100;
+          self.defaultcenter = (self.defaultcenter) ? self.defaultcenter : "40.7053111,-74.258188";
+          self.trackedAsset = (self.trackedAsset) ? self.trackedAsset : null;
         
         
-          vm.geofenceManager = (vm.geofenceManager) ? vm.geofenceManager : false;
+          self.geofenceManager = (self.geofenceManager) ? self.geofenceManager : false;
         
           $scope.$parent.summaryIcons = {};
-          if(vm.summaryIcons) {
-             angular.forEach(vm.summaryIcons, function(value, key) {
+          if(self.summaryIcons) {
+             angular.forEach(self.summaryIcons, function(value, key) {
                 $scope.$parent.summaryIcons[key] = $sce.trustAsHtml(value);
             });
           }
         
-         if(!vm.trackedAsset) {
-           vm.showDetailedMap = false;
+         if(!self.trackedAsset) {
+           self.showDetailedMap = false;
          } else {
-           vm.showDetailedMap = true;
-           vm.clusteredView = false;
+           self.showDetailedMap = true;
+           self.clusteredView = false;
          }
           // If a specific map is tracked do not use clustering
         
-         if(vm.clusteredView) {
-           if(!vm.clusteredZoomMax) {
-           		vm.clusteredZoomMax = 11;
+         if(self.clusteredView) {
+           if(!self.clusteredZoomMax) {
+           		self.clusteredZoomMax = 11;
            }
-           vm.detailedZoomMin =  (vm.clusteredZoomMax < 20) ? (vm.clusteredZoomMax + 1) : vm.clusteredZoomMax;
-           if(!vm.clusterZoom) {
-           		vm.clusterZoom = 3;
+           self.detailedZoomMin =  (self.clusteredZoomMax < 20) ? (self.clusteredZoomMax + 1) : self.clusteredZoomMax;
+           if(!self.clusterZoom) {
+           		self.clusterZoom = 3;
             }
          } else { //No clustered View check the detailed zoom min
-           if(!vm.detailedZoomMin) {
-            	vm.detailedZoomMin = 0;
+           if(!self.detailedZoomMin) {
+            	self.detailedZoomMin = 0;
            }
            //By default set as if we are viewing all TODO: check if we are tracking a single asset
-           vm.detailedmapzoom = vm.detailedZoomMin;
+           self.detailedmapzoom = self.detailedZoomMin;
          }
         //Set the focus when showing a single asset
-        if(!vm.focusedMarkerZoom || (vm.clusteredView && vm.focusedMarkerZoom < vm.clusteredZoomMax)) {
-           vm.focusedMarkerZoom = (vm.detailedZoomMin < 18) ? (vm.detailedZoomMin + 3) : vm.detailedZoomMin;
+        if(!self.focusedMarkerZoom || (self.clusteredView && self.focusedMarkerZoom < self.clusteredZoomMax)) {
+           self.focusedMarkerZoom = (self.detailedZoomMin < 18) ? (self.detailedZoomMin + 3) : self.detailedZoomMin;
          } 
         	
          //This should be move to a parent component
       	 loadMapData();
          
          //Should use default one if not available
-         vm.sourcesInfo = vm.sourcesInfo;//mapConstants.sourceAssetIcon;
+         self.sourcesInfo = self.sourcesInfo;//mapConstants.sourceAssetIcon;
         
         
         
         $scope.$on("mapFoucsOnMarker", function(event, data) {
-			vm.focusOnAsset(data)
+			self.focusOnAsset(data)
         });
       }
 
       //Load asset Icons per source
       var sourcesInfo = null;
       
-      vm.sources = {}; // "Stream", "Simulator"
-      vm.assets = {};
+      self.sources = {}; // "Stream", "Simulator"
+      self.assets = {};
       
-      vm.selectedAsset = "all";
+      self.selectedAsset = "all";
       
-      vm.markerClusterer = null;
+      self.markerClusterer = null;
 
-      vm._hiddenAssets = {};
+      self._hiddenAssets = {};
 
       
-      vm.assetsKeys = [];
+      self.assetsKeys = [];
       
-      vm.mapcenter = null;
+      self.mapcenter = null;
       
-      vm.infoWindow = null;
+      self.infoWindow = null;
       
-      vm.dynMarkers = [];
+      self.dynMarkers = [];
       
       
       
       //Load initial map assets from api or from passed data and subscribe to channel messages to add newly published assets to map
       var loadMapData =  function() {
           	wsClient.onReady.then(function() {
-              if(vm.api) {
-           		    vm.apiParams =  (vm.apiParams) ? vm.apiParams : {};
-             	   	wsClient.call(vm.api, vm.apiParams).then(function(data, response) {
+              if(self.api) {
+           		    self.apiParams =  (self.apiParams) ? self.apiParams : {};
+             	   	wsClient.call(self.api, self.apiParams).then(function(data, response) {
                       if(self.onFormatData && typeof self.onFormatData() == "function"){
                         data = self.onFormatData()(data);
                       }
-                    vm.processAssets(data);
-                    console.log("api call "+ vm.api +" response returned", data)
+                    self.processAssets(data);
+                    console.log("api call "+ self.api +" response returned", data)
                   }, function(err) {
-                    vm.callError = JSON.stringify(error)
-                    console.log("api call "+ vm.apiParams +" reject call promise", err);
+                    self.callError = JSON.stringify(error)
+                    console.log("api call "+ self.apiParams +" reject call promise", err);
                   });
               }
-              if(vm.msgTag) {
-            	 wsClient.subscribe(vm.msgTag, vm.processAssets)
+              if(self.msgTag) {
+            	 wsClient.subscribe(self.msgTag, self.processAssets)
               }
               
           });
         
-          if(vm.assetsData) {
-          	 console.log("static assets data", vm.assetsData);
-             vm.processAssets(vm.assetsData);
+          if(self.assetsData) {
+          	 console.log("static assets data", self.assetsData);
+             self.processAssets(self.assetsData);
           }
        
       };
 
       //Call when receiving a new asset, or a set of assets
-      vm.processAssets = function(data) {
+      self.processAssets = function(data) {
         var assets = data;
        // var id = data.id;
         var process = function(assets) {
-          if (!vm.trackedAsset || vm.trackedAsset == key) {
+          if (!self.trackedAsset || self.trackedAsset == key) {
               // Loop on assets
               for (var key in assets) {
                 if (assets.hasOwnProperty(key)) {
                     console.log(key, assets[key]);
-                    vm.pushAssets(key, assets[key])
+                    self.pushAssets(key, assets[key])
                   }
                 }
           } else {
-               if (assets.hasOwnProperty(vm.trackedAsset)) {
-                 vm.pushAssets(vm.trackedAsset, assets[vm.trackedAsset])
+               if (assets.hasOwnProperty(self.trackedAsset)) {
+                 self.pushAssets(self.trackedAsset, assets[self.trackedAsset])
                }
              }
-          vm.renderAssets();
-          if(vm.clusteredView && !vm.trackedAsset)  {
-            vm.renderClusterer();
+          self.renderAssets();
+          if(self.clusteredView && !self.trackedAsset)  {
+            self.renderClusterer();
           }
         };
         
-        if (vm.clusteredView && !vm.markerClusterer && !vm.trackedAsset) {
+        if (self.clusteredView && !self.markerClusterer && !self.trackedAsset) {
           NgMap
             .getMap({
             id : 'clustered' //TODO: figure out another thing then id, or pass id as a param
           })
             .then(
             function(map) {
-              if (!vm.markerClusterer) {
-                vm.buildClusterer(map);
+              if (!self.markerClusterer) {
+                self.buildClusterer(map);
               }
              process(assets);
             });
@@ -196,12 +194,12 @@ angular
         }
     };
       
-     vm.buildClusterer = function(map) {
-        vm.markerClusterer = new MarkerClusterer(
+     self.buildClusterer = function(map) {
+        self.markerClusterer = new MarkerClusterer(
           map,
-          vm.dynMarkers,
+          self.dynMarkers,
           {
-            maxZoom :  vm.clusteredZoomMax,
+            maxZoom :  self.clusteredZoomMax,
             imagePath : 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m',
             minimumClusterSize : -1,
             gridSize : 50,
@@ -211,49 +209,49 @@ angular
       
       //Render all assets
       var rerenderAllAssets = function() {
-        vm.selectedAsset = "all";
-        vm.renderAssets();
+        self.selectedAsset = "all";
+        self.renderAssets();
       };
 
       // Render markers assets
-      vm.renderAssets = function() {
+      self.renderAssets = function() {
         console.log("Render New Assets.")
-        if (vm.selectedAsset == "all") {
-          vm.showAllAssets();
+        if (self.selectedAsset == "all") {
+          self.showAllAssets();
         } else { // Remove displaying single asset on select
-          vm.displayedAssets = {};
-          vm.displayedAssets[vm.selectedAsset] = vm.assets[vm.selectedAsset];
+          self.displayedAssets = {};
+          self.displayedAssets[self.selectedAsset] = self.assets[self.selectedAsset];
         }
       };
 
       //Render marker clusters
-      vm.renderClusterer = function() {
+      self.renderClusterer = function() {
           console.log("Render clusterer.")
-          vm.markerClusterer.resetViewport(true);
-          vm.markerClusterer.clearMarkers();
-          vm.markerClusterer.addMarkers(vm.dynMarkers, false);
-          vm.markerClusterer.repaint();
+          self.markerClusterer.resetViewport(true);
+          self.markerClusterer.clearMarkers();
+          self.markerClusterer.addMarkers(self.dynMarkers, false);
+          self.markerClusterer.repaint();
       };
 
       // Show all assets
-      vm.showAllAssets = function() {
-        vm.displayedAssets = angular.copy(vm.assets, {})
+      self.showAllAssets = function() {
+        self.displayedAssets = angular.copy(self.assets, {})
       };
 
       // Change map on zoom threshold
-      vm.onClusteredZoomChanged = function() {
-        if (!vm.trackedAsset) {
+      self.onClusteredZoomChanged = function() {
+        if (!self.trackedAsset) {
           NgMap.getMap({
             id : 'clustered'
           }).then(function(map) {
-            if (map.getZoom() > vm.detailedZoomMin) {
-              vm.showDetailedMap = true;
-              vm.mapcenter = map.getCenter();
-              vm.detaileddmapzoom = vm.detailedZoomMin;
+            if (map.getZoom() > self.detailedZoomMin) {
+              self.showDetailedMap = true;
+              self.mapcenter = map.getCenter();
+              self.detaileddmapzoom = self.detailedZoomMin;
             } else {
-              vm.showDetailedMap = false;
-              if(vm.markerClusterer) 
-                vm.markerClusterer.setMap(map);
+              self.showDetailedMap = false;
+              if(self.markerClusterer) 
+                self.markerClusterer.setMap(map);
               rerenderAllAssets();
             }
           });
@@ -261,17 +259,17 @@ angular
       }
 
       //Change map on zoom threshold
-      vm.onDetailedZoomChanged = function() {
-        if (!vm.trackedAsset && vm.clusteredView == true) {
+      self.onDetailedZoomChanged = function() {
+        if (!self.trackedAsset && self.clusteredView == true) {
           NgMap.getMap({
             id : 'detailed'
           }).then(function(map) {
-            if (map.getZoom() <=  vm.clusteredZoomMax) {
-              vm.showDetailedMap = false;
-              vm.clusterZoom =  vm.clusteredZoomMax;
+            if (map.getZoom() <=  self.clusteredZoomMax) {
+              self.showDetailedMap = false;
+              self.clusterZoom =  self.clusteredZoomMax;
               rerenderAllAssets();
             } else {
-              vm.showDetailedMap = true;
+              self.showDetailedMap = true;
             }
           });
         }
@@ -285,19 +283,19 @@ angular
       // Push an array of sources with asssets with multiple marker points to map
       // Data format of asset trips: {"tripId":[{"lat":"40.792300000000004","long":"-73.95045",...},{}],
       // "tripId2":[{},{}], "source":"simulator","order":[tripId1, tripId2]}
-      vm.pushAssets = function(assetId, trips) {
+      self.pushAssets = function(assetId, trips) {
         var assetSource = trips.source;
         var key = assetSource + "_" + assetId;
 
         // console.log("asset: " + key + " -> " + assets[key]);
         //Latest Marker for this asset on map
         var prevLatestMarker = null;
-        if (!vm.assets[key]) { //No assets with this key alreat drawn on map
+        if (!self.assets[key]) { //No assets with this key alreat drawn on map
           instantiateAsset(key);
           //NEED TO KEEP THIS IN CASE NEW ASSET
-          vm.assets[key]["pathColor"] = generateHexColor();
+          self.assets[key]["pathColor"] = generateHexColor();
         } else { //There is already a map marker for this asset
-          var markers = vm.assets[key]["markers"];
+          var markers = self.assets[key]["markers"];
           prevLatestMarker = markers[markers.length - 1];
         }
 
@@ -356,21 +354,21 @@ angular
                   tripMarker.strokeColor = prevLatestMarker.strokeColor;
                   tripMarker.fillColor = prevLatestMarker.fillColor;
                   // Change previous Marker icon to a small trip point
-                  vm.assets[key]["markers"][markers.length - 1].icon = buildTripIcon(
+                  self.assets[key]["markers"][markers.length - 1].icon = buildTripIcon(
                     6, 0.8, 0.8, prevLatestMarker.strokeColor,
                     prevLatestMarker.fillColor);
                 } else {
                   // Change previous Marker icon to a Large trip point marking it as last point in trip
-                  vm.assets[key]["markers"][markers.length - 1].icon = buildTripIcon(
+                  self.assets[key]["markers"][markers.length - 1].icon = buildTripIcon(
                     10, 1, 1, prevLatestMarker.strokeColor,
                     prevLatestMarker.fillColor);
                 }
               }
 
               if (t == 0 && i == 0) { //Reached last point in asset trip & last point in current trip
-                tripMarker.icon = (vm.sourcesInfo && vm.sourcesInfo[assetSource] && vm.sourcesInfo[assetSource]["icon"]) ? vm.sourcesInfo[assetSource]["icon"]
+                tripMarker.icon = (self.sourcesInfo && self.sourcesInfo[assetSource] && self.sourcesInfo[assetSource]["icon"]) ? self.sourcesInfo[assetSource]["icon"]
                 : defaultConstants.sourceIcon["default"];
-                vm.assets[key]["latestMarker"] = tripMarker;
+                self.assets[key]["latestMarker"] = tripMarker;
               } else {
                 if (i == 0) { //Reached last point in trip
                   tripMarker.icon = buildTripIcon(10, 1, 1, tripStrokeColor,
@@ -386,8 +384,8 @@ angular
               addMarkerToMap(key, tripMarker, tripPoint);
               
              
-              if (vm.mapcenter == null) {
-                vm.mapcenter = tripMarker.position;
+              if (self.mapcenter == null) {
+                self.mapcenter = tripMarker.position;
               }
             } //End looping on asset's trip's points
           }// End check for Availble tripKey in trips
@@ -398,17 +396,17 @@ angular
       //Check asset source, and push asset to appropriate source to display it in its source list box
       var addAssetToSourceList = function(assetSource, assetKey,
                                            label) {
-        if (!vm.sources[assetSource]) {
-          vm.sources[assetSource] = [ {
+        if (!self.sources[assetSource]) {
+          self.sources[assetSource] = [ {
             "key" : assetKey,
             "label" : label
           } ];
         } else {
-          //if(vm.sources[assetSource].indexOf(assetKey) == -1) {
-          if (_.findWhere(vm.sources[assetSource], {
+          //if(self.sources[assetSource].indexOf(assetKey) == -1) {
+          if (_.findWhere(self.sources[assetSource], {
             "key" : assetKey
           }) == undefined)
-            vm.sources[assetSource].push({
+            self.sources[assetSource].push({
               "key" : assetKey,
               "label" : label
             });
@@ -419,36 +417,36 @@ angular
       //Add asset marker trip point to asset markers
       var addMarkerToMap = function(key, newMarker, tripPoint) {
         //Push to assets
-        vm.assets[key]["markers"].push(newMarker);
-        vm.assets[key]["path"].push([ tripPoint.lat,
+        self.assets[key]["markers"].push(newMarker);
+        self.assets[key]["path"].push([ tripPoint.lat,
                                      tripPoint.long ]);
-        if (!vm.trackedAsset) {
+        if (!self.trackedAsset) {
           //Keep track for clusterer view as a marker Object not as JSON
           var dynMkr = angular.copy(newMarker, {});
           dynMkr.position = new google.maps.LatLng(tripPoint.lat,
                                                    tripPoint.long);
           var tmp = new google.maps.Marker(dynMkr);
-          vm.dynMarkers.push(tmp);
+          self.dynMarkers.push(tmp);
         }
       };
 
       //Control the asset markers trip points limits if maxAssetPoints defined, remove first pushed marker when limit reached
       var controlVehicleTrips = function(key) {
-        if(vm.maxAssetPoints) {
-          if (vm.assets[key]["markers"].length > vm.maxAssetPoints) {
-          	vm.assets[key]["markers"].shift();
+        if(self.maxAssetPoints) {
+          if (self.assets[key]["markers"].length > self.maxAssetPoints) {
+          	self.assets[key]["markers"].shift();
           }
         }
       };
 
       var instantiateAsset = function(assetKey) {
-        vm.assets[assetKey] = {
+        self.assets[assetKey] = {
           "markers" : [],
           "path" : [],
           "pathColor" : "",
           "latestMarker" : {},
-          "strokeOpacity" : vm.pathStrokeOpacity,
-          "strokeWeight" : vm.pathStrokeWeight,
+          "strokeOpacity" : self.pathStrokeOpacity,
+          "strokeWeight" : self.pathStrokeWeight,
           "pathIcon" : [ {
             icon : {
               path : 'M 0,-1 0,1',
@@ -487,29 +485,29 @@ angular
       //Focus on asset when selected from list box, on when clicked on its marker on map
       //Close all info windows, redraw map with only asset trips tracked
       //If all assets are selected redraw all assets
-      vm.focusOnAsset = function(assetKey) {
+      self.focusOnAsset = function(assetKey) {
         if(self.onSelectAsset && typeof self.onSelectAsset() == "function"){
             self.onSelectAsset()(assetKey);
         }
-        vm.selectedAsset = assetKey;
-        vm.showDetailedMap = true;
-        if (vm.infoWindow != null) {
-          vm.infoWindow.close();
+        self.selectedAsset = assetKey;
+        self.showDetailedMap = true;
+        if (self.infoWindow != null) {
+          self.infoWindow.close();
         }
-        if (vm.selectedAsset == "all") {
-          vm.detailedmapzoom = vm.detailedZoomMin;
-          vm.searchText = '';
+        if (self.selectedAsset == "all") {
+          self.detailedmapzoom = self.detailedZoomMin;
+          self.searchText = '';
         } else {
-          vm.searchText = vm.assets[assetKey].latestMarker.label;
-          vm.mapcenter = vm.assets[vm.selectedAsset].latestMarker.position;
-          vm.detailedmapzoom = vm.focusedMarkerZoom;
+          self.searchText = self.assets[assetKey].latestMarker.label;
+          self.mapcenter = self.assets[self.selectedAsset].latestMarker.position;
+          self.detailedmapzoom = self.focusedMarkerZoom;
         }
-        vm.renderAssets();
+        self.renderAssets();
       };
 
       //Show asset info in an info window
-      vm.showAssetInfo = function(event, assetKey, tripKey, id) {
-        vm.focusOnAsset(assetKey);
+      self.showAssetInfo = function(event, assetKey, tripKey, id) {
+        self.focusOnAsset(assetKey);
         var markerEl = this;
         NgMap.getMap({
           id : 'detailed' //TODO: MAke id parametrable or change selector if possible
@@ -517,7 +515,7 @@ angular
           function(map) {
             //Open info window
             $scope.$parent.marker = _.findWhere(
-              vm.assets[assetKey]["markers"], {
+              self.assets[assetKey]["markers"], {
                 "id" : id
               })
             var infoWindow = "infoWindowTemplate_"
@@ -526,7 +524,7 @@ angular
             $scope.map = map;
             $scope.map.showInfoWindow(event, infoWindow, markerEl);
             //Keep track of opened info window
-            vm.infoWindow = map.infoWindows[infoWindow];
+            self.infoWindow = map.infoWindows[infoWindow];
           });
       };
 
@@ -547,24 +545,24 @@ angular
           .toString(16).slice(1);
       };
 
-      vm.isEmptyObject = function(obj) {
+      self.isEmptyObject = function(obj) {
         return (Object.keys(obj).length == 0);
       };
       
       
       
-      vm.assetsFences = [];
-      vm.drawingControl = ["rectangle"];
-      vm.drawingOptions = {position: 'TOP_CENTER',drawingModes:['rectangle']}
+      self.assetsFences = [];
+      self.drawingControl = ["rectangle"];
+      self.drawingOptions = {position: 'TOP_CENTER',drawingModes:['rectangle']}
 
-      vm.overlaySettings = {"fillColor": "#444", "fillOpacity": 0.2, "strokeWeight": 3, "strokeColor": "#ff8c00", "clickable": true, "zIndex": 1, "editable": true};
+      self.overlaySettings = {"fillColor": "#444", "fillOpacity": 0.2, "strokeWeight": 3, "strokeColor": "#ff8c00", "clickable": true, "zIndex": 1, "editable": true};
 
-      vm.setupDrawingManager = function() {
-        vm.assetsFences = [];
+      self.setupDrawingManager = function() {
+        self.assetsFences = [];
         //Invoke
         $scope.invoke("telematics/api/getVehicleGeofence", {
-           "vehicleId": vm.selectedAsset
-        }, "main-getgeofence_"+vm.selectedAsset);
+           "vehicleId": self.selectedAsset
+        }, "main-getgeofence_"+self.selectedAsset);
 
         //By Default hide rect drawing mode
         hideRectDrawingMode();
@@ -573,21 +571,21 @@ angular
       };
 
 
-      vm.drawGeofence = function(bounds) {
+      self.drawGeofence = function(bounds) {
          if(bounds != null) {
            NgMap.getMap({id:'detailed'}).then(function(map) {
               var props = {};
-              props["fillColor"] = vm.overlaySettings["fillColor"];
-              props["fillOpacity"] = vm.overlaySettings["fillOpacity"];
-              props["strokeWeight"] = vm.overlaySettings["strokeWeight"];
-              props["strokeColor"] = vm.overlaySettings["strokeColor"];
-              props["clickable"] = vm.overlaySettings["clickable"];
-              props["zIndex"] = vm.overlaySettings["zIndex"];
-              props["editable"] = vm.overlaySettings["editable"];
+              props["fillColor"] = self.overlaySettings["fillColor"];
+              props["fillOpacity"] = self.overlaySettings["fillOpacity"];
+              props["strokeWeight"] = self.overlaySettings["strokeWeight"];
+              props["strokeColor"] = self.overlaySettings["strokeColor"];
+              props["clickable"] = self.overlaySettings["clickable"];
+              props["zIndex"] = self.overlaySettings["zIndex"];
+              props["editable"] = self.overlaySettings["editable"];
               props["map"] = map;
               props["bounds"] = JSON.parse(bounds);
               var rectangle = new google.maps.Rectangle(props);
-              vm.assetsFences.push({assetId: vm.selectedAsset, assetFence: rectangle});
+              self.assetsFences.push({assetId: self.selectedAsset, assetFence: rectangle});
             });
             //TODO: Remove loading
          } else {
@@ -609,74 +607,74 @@ angular
       }
 
       var showRectDrawingMode = function() {
-         vm.drawingOptions = {position: 'TOP_CENTER',drawingModes:["rectangle"]};
+         self.drawingOptions = {position: 'TOP_CENTER',drawingModes:["rectangle"]};
       }
 
       var hideRectDrawingMode = function() {
-        vm.drawingOptions = {position: 'TOP_CENTER',drawingModes:[]};
+        self.drawingOptions = {position: 'TOP_CENTER',drawingModes:[]};
       }
 
-      vm.onMapOverlayCompleted = function(e){
+      self.onMapOverlayCompleted = function(e){
         hideRectDrawingMode();
-        vm.assetsFences.push({assetId: vm.selectedAsset, assetFence: e.overlay});
+        self.assetsFences.push({assetId: self.selectedAsset, assetFence: e.overlay});
 
-        if(vm.drawingMessagesTimeout) {
-            $timeout.cancel(vm.drawingMessagesTimeout);
+        if(self.drawingMessagesTimeout) {
+            $timeout.cancel(self.drawingMessagesTimeout);
         }
 
-        vm.drawingMessages = "Do not forget to save your geofence before selecting another vehicle."
-        vm.drawingMessagesTimeout = $timeout(function () { vm.drawingMessages = null }, 5000); 
+        self.drawingMessages = "Do not forget to save your geofence before selecting another vehicle."
+        self.drawingMessagesTimeout = $timeout(function () { self.drawingMessages = null }, 5000); 
       };
 
-      vm.focusVehicle = function() {
-        if(vm.selectedAsset) {
-          vm.mapcenter = vm.assets[vm.selectedAsset].latestMarker.position
+      self.focusVehicle = function() {
+        if(self.selectedAsset) {
+          self.mapcenter = self.assets[self.selectedAsset].latestMarker.position
         }
       }
 
-      vm.drawingMessages = null;
-      vm.drawingMessagesTimeout = null;
+      self.drawingMessages = null;
+      self.drawingMessagesTimeout = null;
 
-      vm.focusGeofence = function() {
-         var fenceOverlay =  _.findWhere(vm.assetsFences, {"assetId": vm.selectedAsset});
+      self.focusGeofence = function() {
+         var fenceOverlay =  _.findWhere(self.assetsFences, {"assetId": self.selectedAsset});
          if(fenceOverlay) {
-            vm.mapcenter = fenceOverlay.assetFence.getBounds().getCenter()
+            self.mapcenter = fenceOverlay.assetFence.getBounds().getCenter()
          } else {
-            if(vm.drawingMessagesTimeout) {
-                $timeout.cancel(vm.drawingMessagesTimeout);
+            if(self.drawingMessagesTimeout) {
+                $timeout.cancel(self.drawingMessagesTimeout);
             }
-           vm.drawingMessages = "No geofence has been defined yet for selected vehicle."
-           vm.drawingMessagesTimeout = $timeout(function () { vm.drawingMessages = null }, 5000);  
+           self.drawingMessages = "No geofence has been defined yet for selected vehicle."
+           self.drawingMessagesTimeout = $timeout(function () { self.drawingMessages = null }, 5000);  
          }
       }
 
-      vm.removeGeofence = function() {
-        var fenceOverlay =  _.findWhere(vm.assetsFences, {"assetId": vm.selectedAsset});
+      self.removeGeofence = function() {
+        var fenceOverlay =  _.findWhere(self.assetsFences, {"assetId": self.selectedAsset});
         //substract fence
         if(fenceOverlay) {
-          vm.assetsFences = _.without(vm.assetsFences, fenceOverlay);
+          self.assetsFences = _.without(self.assetsFences, fenceOverlay);
           $scope.invoke("telematics/api/removeVehicleGeofence", {
-               "vehicleId": vm.selectedAsset,
-            }, "main-removegeofence_"+vm.selectedAsset);
+               "vehicleId": self.selectedAsset,
+            }, "main-removegeofence_"+self.selectedAsset);
             fenceOverlay.assetFence.setMap(null);
         }
         showRectDrawingMode();
       };
 
-      vm.hideAllGeofences = function() {
-        _.every(vm.assetsFences, function(fenceOverlay) {
+      self.hideAllGeofences = function() {
+        _.every(self.assetsFences, function(fenceOverlay) {
             fenceOverlay.assetFence.setMap(null);
             return true;
         });
       };
 
-      vm.saveGeofence = function() {
-         var fenceOverlay =  _.findWhere(vm.assetsFences, {"assetId": vm.selectedAsset});
+      self.saveGeofence = function() {
+         var fenceOverlay =  _.findWhere(self.assetsFences, {"assetId": self.selectedAsset});
         if(fenceOverlay) {
            $scope.invoke("telematics/api/saveVehicleGeofence", {
-               "vehicleId": vm.selectedAsset,
+               "vehicleId": self.selectedAsset,
                "bounds": JSON.stringify(fenceOverlay.assetFence.getBounds())
-            }, "main-savegeofence_"+vm.selectedAsset);
+            }, "main-savegeofence_"+self.selectedAsset);
         } else {
 
         }
