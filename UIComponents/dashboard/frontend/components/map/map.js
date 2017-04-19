@@ -1,3 +1,5 @@
+angular.module('Map', ['ngMap']);
+
 angular
   .module("Map")
   .component(
@@ -10,15 +12,13 @@ angular
         "clusteredZoomMax": "<?", //Max zoom of map where cluster view is rendered
         "clusterZoom": "<?", //The zoom of map when clusteredView is true and clustered map is rendered
         "detailedZoomMin" : "<?", //Ignored with clusteredView = true, set when no cluster view
-      	"focusedMarkerZoom": "<?", //Zoom when focusing on a single marker
+      	"focusedMarkerZoom": "<?", //Zoom level when focusing on a single marker
         "pathStrokeOpacity": "@",
         "pathStrokeWeight": "@",
         "maxAssetPoints": "@", // Number of tracked positions per asset per map instance, do not set if infinite
-        "defaultCenter": "@", //Map default center
+        "defaultCenter": "@", //Map default center, "lat,long"
         "trackedAsset": "@",
-        "summaryIcons": "<?",
-      
-        "heatMapData" : "<?",
+        "summaryIcons": "<?", //MFE: Check what to do with this in dashboard builder
         
         "assetsData": "<?",
       	"api" : "@",
@@ -28,10 +28,12 @@ angular
         "onSelectAsset" : "&",
       
          //TODO the below attributes, currently use without geofence
-        "geofenceManager": "<?", //True to show the geofence drawing manage icons or not
+        "geofenceManager": "@", //True to show the geofence drawing manage icons or not
       	"apiGeofence": "<?",
         "apiGeofenceParams": "<?",
         "msgTagGeofence": "<?",
+      
+        "markerInfoWindow": "@" //On marker click show info window
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
     
@@ -39,10 +41,13 @@ angular
                            $compile, $timeout, $interval, $controller, NgMap,
                            defaultConstants, wsClient) {
 
+      
       var self = this;
       
       // On load, get latest 500 data points saved in db
-      this.$onInit = function() {
+      self.$onInit = function() {
+          var self = this;
+          self.$wdgid = $scope.$id;
           self.pathStrokeOpacity = (self.pathStrokeOpacity) ? self.pathStrokeOpacity : 0;
           self.pathStrokeWeight = (self.pathStrokeWeight) ? self.pathStrokeWeight : 5;
         
@@ -61,7 +66,7 @@ angular
           }
         
          if(!self.trackedAsset) {
-           self.showDetailedMap = false;
+           self.showDetaithisdMap = false;
          } else {
            self.showDetailedMap = true;
            self.clusteredView = false;
@@ -95,6 +100,7 @@ angular
          self.sourcesInfo = self.sourcesInfo;//mapConstants.sourceAssetIcon;
         
         
+        self.markerInfoWindow = (self.markerInfoWindow) ? self.markerInfoWindow : true;
         
         $scope.$on("mapFoucsOnMarker", function(event, data) {
 			self.focusOnAsset(data)
@@ -170,7 +176,7 @@ angular
                if (assets.hasOwnProperty(self.trackedAsset)) {
                  self.pushAssets(self.trackedAsset, assets[self.trackedAsset])
                }
-             }
+          }
           self.renderAssets();
           if(self.clusteredView && !self.trackedAsset)  {
             self.renderClusterer();
@@ -180,7 +186,7 @@ angular
         if (self.clusteredView && !self.markerClusterer && !self.trackedAsset) {
           NgMap
             .getMap({
-            id : 'clustered' //TODO: figure out another thing then id, or pass id as a param
+            id : 'clustered-'+self.$wdgid //TODO: figure out another thing then id, or pass id as a param
           })
             .then(
             function(map) {
@@ -242,7 +248,7 @@ angular
       self.onClusteredZoomChanged = function() {
         if (!self.trackedAsset) {
           NgMap.getMap({
-            id : 'clustered'
+            id : 'clustered-'+self.$wdgid
           }).then(function(map) {
             if (map.getZoom() > self.detailedZoomMin) {
               self.showDetailedMap = true;
@@ -262,7 +268,7 @@ angular
       self.onDetailedZoomChanged = function() {
         if (!self.trackedAsset && self.clusteredView == true) {
           NgMap.getMap({
-            id : 'detailed'
+            id : 'detailed-'+self.$wdgid
           }).then(function(map) {
             if (map.getZoom() <=  self.clusteredZoomMax) {
               self.showDetailedMap = false;
@@ -278,10 +284,10 @@ angular
       
       
       // Add an asset marker point to map
-      // Example of pushed of asset trips: {"tripId":[{"lat":"51.650359051036","long":"-0.055656842290684",....},
+      // Example of pushed of asset trips: {"tripId":[{"lat":{"value": "51.650359051036","long": {"value":"-0.055656842290684",....},
       // "source":{"value":"stream"}}],"source":"stream","order":["0"]}
       // Push an array of sources with asssets with multiple marker points to map
-      // Data format of asset trips: {"tripId":[{"lat":"40.792300000000004","long":"-73.95045",...},{}],
+      // Data format of asset trips: {"tripId":[{"lat":"{"value": "40.792300000000004"},"long": {"value": "-73.95045"},...},{}],
       // "tripId2":[{},{}], "source":"simulator","order":[tripId1, tripId2]}
       self.pushAssets = function(assetId, trips) {
         var assetSource = trips.source;
@@ -291,7 +297,7 @@ angular
         //Latest Marker for this asset on map
         var prevLatestMarker = null;
         if (!self.assets[key]) { //No assets with this key alreat drawn on map
-          instantiateAsset(key);
+          self.instantiateAsset(key);
           //NEED TO KEEP THIS IN CASE NEW ASSET
           self.assets[key]["pathColor"] = generateHexColor();
         } else { //There is already a map marker for this asset
@@ -320,7 +326,7 @@ angular
               var tripPoint = trip[i];
 
               var tripMarker = {
-                "position" : ("" + tripPoint.lat + "," + tripPoint.long)
+                "position" : ("" + tripPoint.lat.value + "," + tripPoint.long.value)
               };
               tripMarker.title = "Source" + ": " + assetSource + ", Asset" + ": "
                 + assetId + ", trip: " + tripKey + ".";
@@ -338,7 +344,7 @@ angular
               : "";
               assetMake = (tripMarker.details && tripMarker.details.make) ? tripMarker.details.make.value
               : "";
-              tripMarker.label = buildAssetLabel(assetMake, assetModel, assetId);
+              tripMarker.display = buildAssetLabel(assetMake, assetModel, assetId);
 
               //If Asset doesn't exist on map yet
               if (!prevLatestMarker && prevLatestMarker == null) {
@@ -379,9 +385,9 @@ angular
                 }
               }
 
-              controlVehicleTrips(key); //TODO: MFE maybe this won't be needed anymore
+              self.controlVehicleTrips(key); //TODO: MFE maybe this won't be needed anymore
 
-              addMarkerToMap(key, tripMarker, tripPoint);
+              self.addMarkerToMap(key, tripMarker, tripPoint);
               
              
               if (self.mapcenter == null) {
@@ -390,11 +396,11 @@ angular
             } //End looping on asset's trip's points
           }// End check for Availble tripKey in trips
         }//End looping on asset's trips
-        addAssetToSourceList(assetSource, key, tripMarker.label);
+        self.addAssetToSourceList(assetSource, key, tripMarker.display);
       };
 
       //Check asset source, and push asset to appropriate source to display it in its source list box
-      var addAssetToSourceList = function(assetSource, assetKey,
+      self.addAssetToSourceList = function(assetSource, assetKey,
                                            label) {
         if (!self.sources[assetSource]) {
           self.sources[assetSource] = [ {
@@ -415,23 +421,24 @@ angular
       };
 
       //Add asset marker trip point to asset markers
-      var addMarkerToMap = function(key, newMarker, tripPoint) {
+      self.addMarkerToMap = function(key, newMarker, tripPoint) {
         //Push to assets
         self.assets[key]["markers"].push(newMarker);
-        self.assets[key]["path"].push([ tripPoint.lat,
-                                     tripPoint.long ]);
+        self.assets[key]["path"].push([ tripPoint.lat.value,
+                                     tripPoint.long.value ]);
         if (!self.trackedAsset) {
           //Keep track for clusterer view as a marker Object not as JSON
           var dynMkr = angular.copy(newMarker, {});
-          dynMkr.position = new google.maps.LatLng(tripPoint.lat,
-                                                   tripPoint.long);
+          dynMkr.position = new google.maps.LatLng(tripPoint.lat.value
+                                                   ,
+                                                   tripPoint.long.value);
           var tmp = new google.maps.Marker(dynMkr);
           self.dynMarkers.push(tmp);
         }
       };
 
       //Control the asset markers trip points limits if maxAssetPoints defined, remove first pushed marker when limit reached
-      var controlVehicleTrips = function(key) {
+      self.controlVehicleTrips = function(key) {
         if(self.maxAssetPoints) {
           if (self.assets[key]["markers"].length > self.maxAssetPoints) {
           	self.assets[key]["markers"].shift();
@@ -439,7 +446,7 @@ angular
         }
       };
 
-      var instantiateAsset = function(assetKey) {
+      self.instantiateAsset = function(assetKey) {
         self.assets[assetKey] = {
           "markers" : [],
           "path" : [],
@@ -498,33 +505,43 @@ angular
           self.detailedmapzoom = self.detailedZoomMin;
           self.searchText = '';
         } else {
-          self.searchText = self.assets[assetKey].latestMarker.label;
+          self.searchText = self.assets[assetKey].latestMarker.display;
           self.mapcenter = self.assets[self.selectedAsset].latestMarker.position;
           self.detailedmapzoom = self.focusedMarkerZoom;
         }
-        self.renderAssets();
+        //self.renderAssets(); //MFE: do not hide remaining asset on focus
       };
 
       //Show asset info in an info window
-      self.showAssetInfo = function(event, assetKey, tripKey, id) {
+      self.showAssetInfo = function(event, marker, assetKey, tripKey, id) {
         self.focusOnAsset(assetKey);
         var markerEl = this;
         NgMap.getMap({
-          id : 'detailed' //TODO: MAke id parametrable or change selector if possible
+          id : 'detailed-'+self.$wdgid //TODO: MAke id parametrable or change selector if possible
         }).then(
           function(map) {
             //Open info window
-            $scope.$parent.marker = _.findWhere(
+            $scope.$parent.marker = marker/**_.findWhere(
               self.assets[assetKey]["markers"], {
                 "id" : id
-              })
-            var infoWindow = "infoWindowTemplate_"
-            + $scope.$parent.marker.source;
+              })**/
+            var infoWindow = "infoWindowTemplate_"+ $scope.$parent.marker.source;
             
             $scope.map = map;
-            $scope.map.showInfoWindow(event, infoWindow, markerEl);
-            //Keep track of opened info window
-            self.infoWindow = map.infoWindows[infoWindow];
+            if(self.markerInfoWindow) {
+                if($scope.map.infoWindows[infoWindow]) {
+                 	$scope.map.showInfoWindow(event, infoWindow, markerEl);
+                 	//Keep track of opened info window
+                 	self.infoWindow = map.infoWindows[infoWindow];
+              } else {
+                    $scope.marker = marker;
+                	var infoWindow = 'infoWindowTemplate_default_'+self.$wdgid
+                	$scope.map.showInfoWindow(event, infoWindow, markerEl);
+                	self.infoWindow = map.infoWindows[infoWindow];
+              }
+           }
+
+
           });
       };
 
@@ -573,7 +590,7 @@ angular
 
       self.drawGeofence = function(bounds) {
          if(bounds != null) {
-           NgMap.getMap({id:'detailed'}).then(function(map) {
+           NgMap.getMap({id:'detailed-'+self.$wdgid}).then(function(map) {
               var props = {};
               props["fillColor"] = self.overlaySettings["fillColor"];
               props["fillOpacity"] = self.overlaySettings["fillOpacity"];
@@ -585,7 +602,7 @@ angular
               props["map"] = map;
               props["bounds"] = JSON.parse(bounds);
               var rectangle = new google.maps.Rectangle(props);
-              self.assetsFences.push({assetId: self.selectedAsset, assetFence: rectangle});
+              self.assetsFences.push({assetId: self.selectedAsset, thissetFence: rectangle});
             });
             //TODO: Remove loading
          } else {
@@ -681,4 +698,11 @@ angular
       }
 	
    }
+}).constant("defaultConstants", {
+  sourceIcon : {
+    "default": {
+      "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAoCAMAAAA1+gEjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjM5Q0JGQjdENzVBNTExRTY4RDczRThCNDhCQkVDQ0REIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjM5Q0JGQjdFNzVBNTExRTY4RDczRThCNDhCQkVDQ0REIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzlDQkZCN0I3NUE1MTFFNjhENzNFOEI0OEJCRUNDREQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzlDQkZCN0M3NUE1MTFFNjhENzNFOEI0OEJCRUNDREQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4YqnkxAAAAY1BMVEUAAAD///8fitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitItkdU7mdhJoNpXp91ztuOBveaPxemdzOur0+652vHH4vTV6ffj8Pnx+Pz////2ehAtAAAAEXRSTlMAABAgMEBQYHCAj5+vv8/f7/4ucL8AAAFeSURBVBgZfcEBYqIwFEXRP1FBEUtuVEAa5O1/lY0iFrTOOfaU7Stuqn1mL9zO88vvnM1sKpaqjT3l3NTdVdK1q7nJ7SEnqa+aXGuS3O4yIHxr7jsAmSXOQ+i11AfwzswKIOpVBAozB9RKYmAUopIacLYFBiWnYxwdz0oGYGsHqJX0dBp19EpqOJiHTknNoNFAraQDb0CU1DDXSIqAAZJ6QsOkCfSSAAMGKdLqxOikligNgAFRioQTk1MgShGwEi5SZClKFzhYDmcpshSlM2zNeYiSoNWoBUkRWJnt4SwpcNHoQpB0htLMVkArXaMm8Sq1wMaSPdBpqQMOdrPyQKO5hmRjdzuSY6dJdyQ52MhV3IS6izF2deBuZQ8b3hX2VPLKO3tynheZzWQslbZQMOdXtuAqZrb2Ys2v0t5smXhn70oeMvuD++KusD+tPcmXfZADfm2fFJDZZ2VhC//+5wfrMULZDg3JQwAAAABJRU5ErkJggg=="  	
+    }
+  }
 });
+ 

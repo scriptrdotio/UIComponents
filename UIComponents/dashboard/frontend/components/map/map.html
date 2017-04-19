@@ -1,17 +1,15 @@
-<div>
-	<section class="map-wrap" ng-if="$ctrl.clusteredView == true && $ctrl.showDetailedMap == false">
-		<ng-map id="clustered" on-zoom_changed="$ctrl.onClusteredZoomChanged();"
+<div style="height: 90%;"> 
+	<section class="map-wrap" ng-if="$ctrl.clusteredView == true || $ctrl.showDetailedMap == false">
+		<ng-map id="{{'clustered-'+$ctrl.$wdgid}}" on-zoom_changed="$ctrl.onClusteredZoomChanged();"
 			single-info-window="true" zoom-to-inlude-markers="true"
-			center="{{$ctrl.mapcenter || $ctrl.defaultcenter}}"
-			zoom="{{$ctrl.clusterZoom}}">
-      	</ng-map>
+			center="{{$ctrl.mapcenter || $ctrl.defaultCenter}}"
+			zoom="{{$ctrl.clusterZoom}}"> </ng-map>
 	</section>
-	<section class="map-wrap" ng-if="$ctrl.showDetailedMap == true || $ctrl.clusteredView == false">
-		<ng-map id="detailed" on-zoom_changed="$ctrl.onDetailedZoomChanged();"
+	<section class="map-wrap" ng-if="$ctrl.clusteredView == false || $ctrl.showDetailedMap == true">
+		<ng-map id="{{'detailed-'+$ctrl.$wdgid}}" on-zoom_changed="$ctrl.onDetailedZoomChanged();"
 			single-info-window="true" zoom-to-inlude-markers="true"
 			center="{{$ctrl.mapcenter || $ctrl.defaultcenter}}"
 			zoom="{{$ctrl.detailedmapzoom}}">
-            <heatmap-layer id="foo" data="{{$ctrl.heatMapData}}"></heatmap-layer>
             <drawing-manager ng-if="$ctrl.geofenceManager == true"
                 on-overlaycomplete="$ctrl.onMapOverlayCompleted()"
                 drawing-control-options="{{$ctrl.drawingOptions}}"
@@ -29,9 +27,9 @@
 				</shape>
 				<div ng-repeat="marker in asset.markers track by $index">
 					<div ng-if="$ctrl.trackedAsset == null">
-						<marker position="{{marker.position}}" title="{{marker.title}}"
+						<marker position="{{marker.position}}" title="{{marker.display}}"
 							icon="{{marker.icon}}"
-							on-click="$ctrl.showAssetInfo(event, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')">
+							on-click="$ctrl.showAssetInfo(event, marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')">
 						</marker>
 					</div>
 					<div ng-if="$ctrl.trackedAsset !=null">
@@ -42,8 +40,25 @@
 				<!-- end trip markers loop -->
 			</div>
 		</div>
-        <div ng-if="$ctrl.selectedAsset != null">
+        <div ng-if="$ctrl.selectedAsset != null && $ctrl.markerInfoWindow == true"  >
 			<div ng-transclude></div>
+          	<info-window id="{{'infoWindowTemplate_default_'+$ctrl.$wdgid}}">
+              	<div ng-non-bindable="">
+                  <!-- begin table -->
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th ng-repeat="(key, value) in marker.details">{{key}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td ng-repeat="(key, value) in marker.details">{{value.value || "N/A"}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+               </div>
+          	</info-window>
 		</div>
 		</ng-map>
           
