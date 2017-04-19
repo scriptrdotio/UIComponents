@@ -2354,7 +2354,7 @@ angular
 	  "transport": "wss",
       "clustered-view":"true",
       "cluster-zoom": 8,
-      "api": "UIComponents/dashboard/frontend/examples/map/carvoyantData" ,
+      "api": "UIComponents/dashboard/frontend/examples/map/simulatorData" ,
       "sources-info": "{'simulator': {'label': 'Carvoyant'}}",
       "msg-tag": "everyone-main-live"
 	 },
@@ -2440,14 +2440,8 @@ angular
                               
                             ]
                          }
-                          
-                          
-                                 
-                                 
-                                   
-                                    /** "detailed-zoom-min", **/
-                                   
-                                    /**, "tracked-asset"**/
+                         /** "detailed-zoom-min", **/
+                         /**, "tracked-asset"**/
                                     ]
 	                  },
 	                 /** {

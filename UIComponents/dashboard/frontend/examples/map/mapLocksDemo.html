@@ -1,0 +1,889 @@
+<!DOCTYPE HTML>
+<html ng-app="myApp">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
+    <title>Map</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+    <!-- font awesome.css -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
+    <!-- Map styles -->
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/map/map.css">
+    <!-- Adding Angular -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    
+
+    <script src="/UIComponents/wsProvider.js"></script>
+     <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/map/map.js"></script>
+    <!--script src="/UIComponents/dashboard/frontend/components/map/mapService.js"></script-->
+    
+    <!-- Map widget -->
+    <script src="//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I"></script>
+    <script src="//rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js"></script>
+    <!-- marker cluster -->
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js"></script!-->
+    
+    <!-- Used by configuration controller -->
+    <script src="/UIComponents/dashboard/frontend/examples/map/simulatorConstants.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/map/markerClusterer.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/list/autocomplete.js"></script>
+    
+     <link href="/UIComponents/dashboard/frontend/components/list/angucomplete.alt.css" rel="stylesheet">
+    <script src="/UIComponents/dashboard/frontend/components/list/angucomplete.alt.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/list/autocomplete.js"></script>
+    
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+  </head>
+  <script>
+    
+    	var underscore = angular.module('underscore', []);
+     	underscore.factory('_', ['$window', function($window) {		
+          	return $window._; // assumes underscore has already been loaded on the page		
+      	}]);
+    
+     	var myApp = angular.module('myApp', ["HttpClient","WsClient", "Map",  "List"]);
+  		angular.module('myApp').config(wssConfig);
+      	angular.module('myApp').config(httpsConfig);
+    
+      myApp.controller('testCtrl', function($scope, $controller, wsClient, mapConstants, $sce) {
+        var vm = this;
+        vm.init = function() {
+          	wsClient.onReady.then(function() {});
+          	vm.sources = mapConstants.sources;
+            vm.icons = mapConstants.infoWindows.icons;
+            vm.locksData = {
+   "5f5de510" : {
+      "0" : [ {
+         "id" : {"value": "5f5de510"},
+         "lat" : {"value": "45.512302336947116"},
+         "long" :  {"value": "-73.71048439933304"},
+         "location" :  {"value": "Ferdinanda's Home"},
+         "type" : {
+	         "value" : "Kwikset / Smart"
+         },
+         "state" : {
+	         "value" : "UNLOCKED"
+         },
+         "by" : {
+	         "value" : "Essinger"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "88.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:26:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "db6d50f6" : {
+      "0" : [ {
+         "id" : {"value": "db6d50f6"},
+         "lat" : {"value": "45.54869426401416"},
+         "long" :  {"value": "-73.71351792842732"},
+         "location" :  {"value": "Awad's Palace"},
+         "type" : {
+	         "value" : "Yale / Biometric"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Beatrisa"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "46.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T13:05:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "c04d2f7d" : {
+      "0" : [ {
+         "id" : {"value": "c04d2f7d"},
+         "lat" : {"value": "45.60875391455833"},
+         "long" :  {"value": "-73.71182917060361"},
+         "location" :  {"value": "Emlin's Home"},
+         "type" : {
+	         "value" : "Yale / Biometric"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Emmerie"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "90.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T11:21:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "910f51a5" : {
+      "0" : [ {
+         "id" : {"value": "910f51a5"},
+         "lat" : {"value": "45.62095091932819"},
+         "long" :  {"value": "-73.62978917432918"},
+         "location" :  {"value": "Gerald's Palace"},
+         "type" : {
+	         "value" : "Kwikset / Smart"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Col"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "27.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:27:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "f6055f3a" : {
+      "0" : [ {
+         "id" : {"value": "f6055f3a"},
+         "lat" : {"value": "45.497958089276565"},
+         "long" :  {"value": "-73.69885843540916"},
+         "location" :  {"value": "Berger's Residence"},
+         "type" : {
+	         "value" : "Yale / Biometric"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Baten"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "68.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T09:29:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "8027c65f" : {
+      "0" : [ {
+         "id" : {"value": "8027c65f"},
+         "lat" : {"value": "45.51587254416543"},
+         "long" :  {"value": "-73.56602051542673"},
+         "location" :  {"value": "Dey's Loft"},
+         "type" : {
+	         "value" : "August / Smart"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Dorkas"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "6.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:29:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "498419b7" : {
+      "0" : [ {
+         "id" : {"value": "498419b7"},
+         "lat" : {"value": "45.576303615337544"},
+         "long" :  {"value": "-73.72482114119028"},
+         "location" :  {"value": "Erastus's Palace"},
+         "type" : {
+	         "value" : "Yale / Biometric"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Busey"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "92.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T08:23:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "666c90a3" : {
+      "0" : [ {
+         "id" : {"value": "666c90a3"},
+         "lat" : {"value": "45.591622045692766"},
+         "long" :  {"value": "-73.61712401158267"},
+         "location" :  {"value": "Aleras's Palace"},
+         "type" : {
+	         "value" : "Kwikset / Biometric"
+         },
+         "state" : {
+	         "value" : "UNLOCKED"
+         },
+         "by" : {
+	         "value" : "Arnon"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "79.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:22:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "e098f15b" : {
+      "0" : [ {
+         "id" : {"value": "e098f15b"},
+         "lat" : {"value": "45.53665042080982"},
+         "long" :  {"value": "-73.71424038103318"},
+         "location" :  {"value": "Harmony's Residence"},
+         "type" : {
+	         "value" : "Kwikset / Smart"
+         },
+         "state" : {
+	         "value" : "UNLOCKED"
+         },
+         "by" : {
+	         "value" : "Antone"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "41.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:47:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "356e0138" : {
+      "0" : [ {
+         "id" : {"value": "356e0138"},
+         "lat" : {"value": "45.52703188727259"},
+         "long" :  {"value": "-73.85813661003937"},
+         "location" :  {"value": "Alpheus's Palace"},
+         "type" : {
+	         "value" : "Kwikset / Keypad"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Gratianna"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "26.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T10:46:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "52774ff7" : {
+      "0" : [ {
+         "id" : {"value": "52774ff7"},
+         "lat" : {"value": "45.53813206178499"},
+         "long" :  {"value": "-73.60056366531597"},
+         "location" :  {"value": "Buchalter's Condo"},
+         "type" : {
+	         "value" : "August / Keypad"
+         },
+         "state" : {
+	         "value" : "UNLOCKED"
+         },
+         "by" : {
+	         "value" : "Beutler"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "91.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:38:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "5a4e2a49" : {
+      "0" : [ {
+         "id" : {"value": "5a4e2a49"},
+         "lat" : {"value": "45.47419710494803"},
+         "long" :  {"value": "-73.78551503374199"},
+         "location" :  {"value": "As's Apt"},
+         "type" : {
+	         "value" : "Schlage / Smart"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Conte"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "91.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T13:14:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "180fd3f3" : {
+      "0" : [ {
+         "id" : {"value": "180fd3f3"},
+         "lat" : {"value": "45.58300436016352"},
+         "long" :  {"value": "-73.68407168411628"},
+         "location" :  {"value": "Caressa's Residence"},
+         "type" : {
+	         "value" : "Schlage / Biometric"
+         },
+         "state" : {
+	         "value" : "UNLOCKED"
+         },
+         "by" : {
+	         "value" : "Dichy"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "91.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T08:01:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "965e7696" : {
+      "0" : [ {
+         "id" : {"value": "965e7696"},
+         "lat" : {"value": "45.54519185344629"},
+         "long" :  {"value": "-73.76170682766518"},
+         "location" :  {"value": "Aurie's Residence"},
+         "type" : {
+	         "value" : "August / Smart"
+         },
+         "state" : {
+	         "value" : "UNLOCKED"
+         },
+         "by" : {
+	         "value" : "Backler"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "39.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T10:54:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "79b57fce" : {
+      "0" : [ {
+         "id" : {"value": "79b57fce"},
+         "lat" : {"value": "45.511377810360905"},
+         "long" :  {"value": "-73.67059884443765"},
+         "location" :  {"value": "Cora's Home"},
+         "type" : {
+	         "value" : "August / Biometric"
+         },
+         "state" : {
+	         "value" : "UNLOCKED"
+         },
+         "by" : {
+	         "value" : "Hollander"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "78.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T10:02:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "d4177885" : {
+      "0" : [ {
+         "id" : {"value": "d4177885"},
+         "lat" : {"value": "45.529680725820505"},
+         "long" :  {"value": "-73.73736515382298"},
+         "location" :  {"value": "Barnet's Palace"},
+         "type" : {
+	         "value" : "August / Keypad"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Angelique"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "84.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:16:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "0b672af2" : {
+      "0" : [ {
+         "id" : {"value": "0b672af2"},
+         "lat" : {"value": "45.61787767975521"},
+         "long" :  {"value": "-73.56564643990042"},
+         "location" :  {"value": "Donatelli's Loft"},
+         "type" : {
+	         "value" : "Yale / Keypad"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Haggar"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "84.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T11:00:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "1b7bfa94" : {
+      "0" : [ {
+         "id" : {"value": "1b7bfa94"},
+         "lat" : {"value": "45.570788559187335"},
+         "long" :  {"value": "-73.72145190164377"},
+         "location" :  {"value": "Castera's Loft"},
+         "type" : {
+	         "value" : "Yale / Biometric"
+         },
+         "state" : {
+	         "value" : "UNLOCKED"
+         },
+         "by" : {
+	         "value" : "Flin"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "17.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T13:09:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "2b58e309" : {
+      "0" : [ {
+         "id" : {"value": "2b58e309"},
+         "lat" : {"value": "45.47582991760499"},
+         "long" :  {"value": "-73.76969705368863"},
+         "location" :  {"value": "Calista's Home"},
+         "type" : {
+	         "value" : "August / Biometric"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Corette"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "90.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:06:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "b2ecfdbf" : {
+      "0" : [ {
+         "id" : {"value": "b2ecfdbf"},
+         "lat" : {"value": "45.598615496919756"},
+         "long" :  {"value": "-73.61273340623487"},
+         "location" :  {"value": "Fagaly's Apt"},
+         "type" : {
+	         "value" : "Yale / Biometric"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Fasta"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "94.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T13:00:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "184aa824" : {
+      "0" : [ {
+         "id" : {"value": "184aa824"},
+         "lat" : {"value": "45.56826643922288"},
+         "long" :  {"value": "-73.6347165317736"},
+         "location" :  {"value": "Christie's Home"},
+         "type" : {
+	         "value" : "August / Biometric"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Cadal"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "33.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T09:42:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "a21d5376" : {
+      "0" : [ {
+         "id" : {"value": "a21d5376"},
+         "lat" : {"value": "45.58916004871966"},
+         "long" :  {"value": "-73.69726289365437"},
+         "location" :  {"value": "Aleron's Residence"},
+         "type" : {
+	         "value" : "August / Keypad"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Cindi"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "12.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:50:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "b139dc4f" : {
+      "0" : [ {
+         "id" : {"value": "b139dc4f"},
+         "lat" : {"value": "45.493300817951834"},
+         "long" :  {"value": "-73.804347146526"},
+         "location" :  {"value": "Delanty's Loft"},
+         "type" : {
+	         "value" : "Kwikset / Biometric"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Erlond"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "43.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:30:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "0943447e" : {
+      "0" : [ {
+         "id" : {"value": "0943447e"},
+         "lat" : {"value": "45.481101970040505"},
+         "long" :  {"value": "-73.67625533458572"},
+         "location" :  {"value": "Ackerley's Apt"},
+         "type" : {
+	         "value" : "Yale / Keypad"
+         },
+         "state" : {
+	         "value" : "UNLOCKED"
+         },
+         "by" : {
+	         "value" : "Ian"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "82.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T05:57:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "72813e16" : {
+      "0" : [ {
+         "id" : {"value": "72813e16"},
+         "lat" : {"value": "45.47598261085013"},
+         "long" :  {"value": "-73.61459146618012"},
+         "location" :  {"value": "Asuncion's Apt"},
+         "type" : {
+	         "value" : "Kwikset / Biometric"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Asha"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "90.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T11:18:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "05d6e267" : {
+      "0" : [ {
+         "id" : {"value": "05d6e267"},
+         "lat" : {"value": "45.5628884832455"},
+         "long" :  {"value": "-73.80212623172694"},
+         "location" :  {"value": "Derinna's Apt"},
+         "type" : {
+	         "value" : "August / Smart"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Brooke"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "74.0%"
+         },
+         "tampered" : {
+	         "value" : true
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:40:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   },
+   "db8b65bf" : {
+      "0" : [ {
+         "id" : {"value": "db8b65bf"},
+         "lat" : {"value": "45.47322212627284"},
+         "long" :  {"value": "-73.75990410833788"},
+         "location" :  {"value": "Irvine's Loft"},
+         "type" : {
+	         "value" : "August / Biometric"
+         },
+         "state" : {
+	         "value" : "LOCKED"
+         },
+         "by" : {
+	         "value" : "Harwin"
+         },
+         "company" : {
+	         "value" : "scriptr.io"
+         },
+         "batteryLevel" : {
+	         "value" : "76.0%"
+         },
+         "tampered" : {
+	         "value" : false
+         },
+         "latest" : {"value": false},
+         "timestamp" : {"value": "2017-04-19T12:59:00.000Z"}
+      } ],
+      "order" : [ "0" ],
+      "source" : "simulator"
+   }
+};
+        }
+        	vm.showAssetDashboard = function(id) {
+              alert(id)
+            }
+        });
+  </script>
+  <body>
+     <div ng-controller="testCtrl as vm" ng-init="vm.init()">
+        <scriptr-map sources-info="vm.sources" clustered-view="true" detailed-zoom-min="12" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" msg-tag="everyone-main-live" assets-data="vm.locksData">
+          <div>
+            <info-window id="infoWindowTemplate_simulator" template="info_locks.html" max-width="600">
+            </info-window>
+          </div>
+        </scriptr-map>
+    </div>
+    <scriptr-autocomplete></scriptr-autocomplete>
+  </body>
+</html>

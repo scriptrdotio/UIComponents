@@ -1,0 +1,2562 @@
+return {
+   "253812" : {
+      "550153" : [
+            {
+               "lat" : {"value": "40.84969"},
+               "long" : {"value": "-73.94168"},
+               "speed" : {
+                  "value" : "8",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "30",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.3",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2818",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "91",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.99",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "55101"
+               },
+               "make" : {
+	               "value" : "Toyota"
+               },
+               "model" : {
+	               "value" : "Tacoma"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "61",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.84919"},
+               "long" : {"value": "-73.93897000000001"},
+               "speed" : {
+                  "value" : "5",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "57",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.4",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2838",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "94",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.15",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "55101"
+               },
+               "make" : {
+	               "value" : "Toyota"
+               },
+               "model" : {
+	               "value" : "Tacoma"
+               },
+               "snr" : {
+                  "value" : "9",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "48",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.848600000000005"},
+               "long" : {"value": "-73.93648"},
+               "speed" : {
+                  "value" : "9",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "76",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.2",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2465",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "97",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.39",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "55101"
+               },
+               "make" : {
+	               "value" : "Toyota"
+               },
+               "model" : {
+	               "value" : "Tacoma"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "69",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550153" ]
+   },
+   "253815" : {
+      "550191" : [
+            {
+               "lat" : {"value": "40.80913"},
+               "long" : {"value": "-73.90327"},
+               "speed" : {
+                  "value" : "7",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "56",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.2",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2123",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "100",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.45",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "55043"
+               },
+               "make" : {
+	               "value" : "Saab"
+               },
+               "model" : {
+	               "value" : "9-3"
+               },
+               "snr" : {
+                  "value" : "13",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "49",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.807500000000004"},
+               "long" : {"value": "-73.90557000000001"},
+               "speed" : {
+                  "value" : "6",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "16",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.7",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1946",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "95",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "12.87",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "55043"
+               },
+               "make" : {
+	               "value" : "Saab"
+               },
+               "model" : {
+	               "value" : "9-3"
+               },
+               "snr" : {
+                  "value" : "13",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "59",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550191" ]
+   },
+   "253816" : {
+      "550245" : [
+            {
+               "lat" : {"value": "40.800000000000004"},
+               "long" : {"value": "-73.94485"},
+               "speed" : {
+                  "value" : "13",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "84",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.6",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2468",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "91",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.30",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "65745"
+               },
+               "make" : {
+	               "value" : "Cadillac"
+               },
+               "model" : {
+	               "value" : "CTS Wagon"
+               },
+               "snr" : {
+                  "value" : "10",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "70",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.802060000000004"},
+               "long" : {"value": "-73.94976000000001"},
+               "speed" : {
+                  "value" : "2",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "94",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.9",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "934",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "95",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "12.98",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "65745"
+               },
+               "make" : {
+	               "value" : "Cadillac"
+               },
+               "model" : {
+	               "value" : "CTS Wagon"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "49",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550245" ]
+   },
+   "253819" : {
+      "550270" : [
+            {
+               "lat" : {"value": "40.712520000000005"},
+               "long" : {"value": "-74.01412"},
+               "speed" : {
+                  "value" : "3",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "78",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "0.8",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2191",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "96",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.45",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "65664"
+               },
+               "make" : {
+	               "value" : "Ram"
+               },
+               "model" : {
+	               "value" : "1500"
+               },
+               "snr" : {
+                  "value" : "12",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "64",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.7111"},
+               "long" : {"value": "-74.01440000000001"},
+               "speed" : {
+                  "value" : "6",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "26",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "2.5",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2117",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "97",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.32",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "65664"
+               },
+               "make" : {
+	               "value" : "Ram"
+               },
+               "model" : {
+	               "value" : "1500"
+               },
+               "snr" : {
+                  "value" : "12",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "51",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.710710000000006"},
+               "long" : {"value": "-74.01453000000001"},
+               "speed" : {
+                  "value" : "9",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "28",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "2.0",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1062",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "100",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "12.96",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "65664"
+               },
+               "make" : {
+	               "value" : "Ram"
+               },
+               "model" : {
+	               "value" : "1500"
+               },
+               "snr" : {
+                  "value" : "9",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "53",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550270" ]
+   },
+   "253821" : {
+      "550266" : [
+            {
+               "lat" : {"value": "40.76231000000001"},
+               "long" : {"value": "-73.95456"},
+               "speed" : {
+                  "value" : "4",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "50",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.8",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2167",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "97",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.74",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "65500"
+               },
+               "make" : {
+	               "value" : "Lexus"
+               },
+               "model" : {
+	               "value" : "LS 460"
+               },
+               "snr" : {
+                  "value" : "12",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "64",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.76055"},
+               "long" : {"value": "-73.95663"},
+               "speed" : {
+                  "value" : "7",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "30",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.3",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2041",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "94",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.32",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "65500"
+               },
+               "make" : {
+	               "value" : "Lexus"
+               },
+               "model" : {
+	               "value" : "LS 460"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "69",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550266" ]
+   },
+   "253831" : {
+      "550488" : [
+            {
+               "lat" : {"value": "40.859140000000004"},
+               "long" : {"value": "-72.67528"},
+               "speed" : {
+                  "value" : "6",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "57",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "0.9",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2181",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "104",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.38",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "54849"
+               },
+               "make" : {
+	               "value" : "Jeep"
+               },
+               "model" : {
+	               "value" : "Wrangler"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "46",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.859790000000004"},
+               "long" : {"value": "-72.67344"},
+               "speed" : {
+                  "value" : "11",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "23",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.6",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1498",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "87",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.68",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "54849"
+               },
+               "make" : {
+	               "value" : "Jeep"
+               },
+               "model" : {
+	               "value" : "Wrangler"
+               },
+               "snr" : {
+                  "value" : "10",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "49",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.86056000000001"},
+               "long" : {"value": "-72.67124000000001"},
+               "speed" : {
+                  "value" : "15",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "32",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.8",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1323",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "91",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.30",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "54849"
+               },
+               "make" : {
+	               "value" : "Jeep"
+               },
+               "model" : {
+	               "value" : "Wrangler"
+               },
+               "snr" : {
+                  "value" : "13",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "57",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550488" ]
+   },
+   "253846" : {
+      "550320" : [
+            {
+               "lat" : {"value": "40.79446"},
+               "long" : {"value": "-73.93963000000001"},
+               "speed" : {
+                  "value" : "1",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "82",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.1",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2322",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "91",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.25",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "98697"
+               },
+               "make" : {
+	               "value" : "Mercury"
+               },
+               "model" : {
+	               "value" : "Topaz"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "54",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.79608"},
+               "long" : {"value": "-73.94349000000001"},
+               "speed" : {
+                  "value" : "1",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "55",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "0.8",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "3111",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "103",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "12.63",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "98697"
+               },
+               "make" : {
+	               "value" : "Mercury"
+               },
+               "model" : {
+	               "value" : "Topaz"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "48",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.796820000000004"},
+               "long" : {"value": "-73.94525"},
+               "speed" : {
+                  "value" : "4",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "44",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.5",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1127",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "100",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "12.75",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "98697"
+               },
+               "make" : {
+	               "value" : "Mercury"
+               },
+               "model" : {
+	               "value" : "Topaz"
+               },
+               "snr" : {
+                  "value" : "10",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "53",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550320" ]
+   },
+   "253847" : {
+      "550312" : [
+            {
+               "lat" : {"value": "40.7565"},
+               "long" : {"value": "-73.97237000000001"},
+               "speed" : {
+                  "value" : "2",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "20",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "2.0",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1138",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "104",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.21",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "88063"
+               },
+               "make" : {
+	               "value" : "Buick"
+               },
+               "model" : {
+	               "value" : "LeSabre"
+               },
+               "snr" : {
+                  "value" : "13",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "61",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.757580000000004"},
+               "long" : {"value": "-73.97159"},
+               "speed" : {
+                  "value" : "1",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "16",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.1",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1941",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "97",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "12.61",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "88063"
+               },
+               "make" : {
+	               "value" : "Buick"
+               },
+               "model" : {
+	               "value" : "LeSabre"
+               },
+               "snr" : {
+                  "value" : "12",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "53",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.75963"},
+               "long" : {"value": "-73.97009"},
+               "speed" : {
+                  "value" : "7",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "92",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.6",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "3202",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "99",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.38",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "88063"
+               },
+               "make" : {
+	               "value" : "Buick"
+               },
+               "model" : {
+	               "value" : "LeSabre"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "68",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550312" ]
+   },
+   "253848" : {
+      "550317" : [
+            {
+               "lat" : {"value": "40.83679"},
+               "long" : {"value": "-73.94914"},
+               "speed" : {
+                  "value" : "3",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "88",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.6",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1692",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "97",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.11",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "78687"
+               },
+               "make" : {
+	               "value" : "Volkswagen"
+               },
+               "model" : {
+	               "value" : "Passat"
+               },
+               "snr" : {
+                  "value" : "13",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "53",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.83822000000001"},
+               "long" : {"value": "-73.94798"},
+               "speed" : {
+                  "value" : "2",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "100",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.8",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "3029",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "102",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.32",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "78687"
+               },
+               "make" : {
+	               "value" : "Volkswagen"
+               },
+               "model" : {
+	               "value" : "Passat"
+               },
+               "snr" : {
+                  "value" : "10",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "48",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550317" ]
+   },
+   "253850" : {
+      "550318" : [
+            {
+               "lat" : {"value": "40.797830000000005"},
+               "long" : {"value": "-73.92922"},
+               "speed" : {
+                  "value" : "14",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "23",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "0.7",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "3010",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "94",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.69",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "78685"
+               },
+               "make" : {
+	               "value" : "GMC"
+               },
+               "model" : {
+	               "value" : "Sonoma"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "70",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.79599"},
+               "long" : {"value": "-73.92946"},
+               "speed" : {
+                  "value" : "4",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "39",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "0.8",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2245",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "97",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.27",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "78685"
+               },
+               "make" : {
+	               "value" : "GMC"
+               },
+               "model" : {
+	               "value" : "Sonoma"
+               },
+               "snr" : {
+                  "value" : "14",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "57",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550318" ]
+   },
+   "253852" : {
+      "550367" : [
+            {
+               "lat" : {"value": "40.80199"},
+               "long" : {"value": "-73.97341"},
+               "speed" : {
+                  "value" : "2",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "77",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "2.2",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2785",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "101",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.08",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "90028"
+               },
+               "make" : {
+	               "value" : "GMC"
+               },
+               "model" : {
+	               "value" : "Sierra 1500"
+               },
+               "snr" : {
+                  "value" : "14",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "58",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.79966"},
+               "long" : {"value": "-73.97476"},
+               "speed" : {
+                  "value" : "1",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "57",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "0.9",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "3370",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "102",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "12.67",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "90028"
+               },
+               "make" : {
+	               "value" : "GMC"
+               },
+               "model" : {
+	               "value" : "Sierra 1500"
+               },
+               "snr" : {
+                  "value" : "12",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "67",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550367" ]
+   },
+   "253853" : {
+      "550335" : [
+            {
+               "lat" : {"value": "40.85625"},
+               "long" : {"value": "-73.97159"},
+               "speed" : {
+                  "value" : "15",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "39",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "2.1",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "3153",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "104",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.58",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "99111"
+               },
+               "make" : {
+	               "value" : "Chevrolet"
+               },
+               "model" : {
+	               "value" : "Spark"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "68",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.85557"},
+               "long" : {"value": "-73.96986000000001"},
+               "speed" : {
+                  "value" : "12",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "56",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "2.1",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1940",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "100",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.04",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "99111"
+               },
+               "make" : {
+	               "value" : "Chevrolet"
+               },
+               "model" : {
+	               "value" : "Spark"
+               },
+               "snr" : {
+                  "value" : "9",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "50",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550335" ]
+   },
+   "253854" : {
+      "550384" : [ {
+         "lat" : {"value": "40.70235"},
+         "long" : {"value": "-73.9847"},
+         "speed" : {
+            "value" : "0",
+            "description" : "Maximum Speed Recorded (since the previous reading)"
+         },
+         "fuel" : {
+            "value" : "80",
+            "description" : "Percentage of Fuel Remaining"
+         },
+         "fuelRate" : {
+            "value" : "1.3",
+            "description" : "Rate of Fuel Consumption"
+         },
+         "rpm" : {
+            "value" : "1097",
+            "description" : "Engine Speed"
+         },
+         "coolantTemperature" : {
+            "value" : "99",
+            "description" : "Engine Temperature"
+         },
+         "voltage" : {
+            "value" : "14.35",
+            "description" : "Battery Voltage"
+         },
+         "status" : {
+	         "value" : "OFF"
+         },
+         "address" : {
+            "value" : "63 Bridge St, Brooklyn, NY 11201, USA",
+            "description" : "The physical address nearest to the associated Waypoint"
+         },
+         "mileage" : {
+	         "value" : "88374"
+         },
+         "make" : {
+	         "value" : "Ford"
+         },
+         "model" : {
+	         "value" : "F-150"
+         },
+         "snr" : {
+            "value" : "10",
+            "description" : "Signal to Noise Ratio"
+         },
+         "rssi" : {
+            "value" : "64",
+            "description" : "Received Signal Strength Indicator"
+         }
+      } ],
+      "550391" : [ {
+         "lat" : {"value": "40.81895"},
+         "long" : {"value":  "-73.8961"},
+         "speed" : {
+            "value" : "0",
+            "description" : "Maximum Speed Recorded (since the previous reading)"
+         },
+         "fuel" : {
+            "value" : "94",
+            "description" : "Percentage of Fuel Remaining"
+         },
+         "fuelRate" : {
+            "value" : "0.7",
+            "description" : "Rate of Fuel Consumption"
+         },
+         "rpm" : {
+            "value" : "2820",
+            "description" : "Engine Speed"
+         },
+         "coolantTemperature" : {
+            "value" : "101",
+            "description" : "Engine Temperature"
+         },
+         "voltage" : {
+            "value" : "14.11",
+            "description" : "Battery Voltage"
+         },
+         "status" : {
+	         "value" : "ON"
+         },
+         "address" : {
+            "value" : "919 Intervale Ave, Bronx, NY 10459, USA",
+            "description" : "The physical address nearest to the associated Waypoint"
+         },
+         "mileage" : {
+	         "value" : "88374"
+         },
+         "make" : {
+	         "value" : "Ford"
+         },
+         "model" : {
+	         "value" : "F-150"
+         },
+         "snr" : {
+            "value" : "10",
+            "description" : "Signal to Noise Ratio"
+         },
+         "rssi" : {
+            "value" : "54",
+            "description" : "Received Signal Strength Indicator"
+         }
+      } ],
+      "source" : "simulator",
+      "order" : [ "550391", "550384" ]
+   },
+   "253855" : {
+      "550346" : [
+            {
+               "lat" : {"value": "40.88633"},
+               "long" : {"value": "-73.91257"},
+               "speed" : {
+                  "value" : "1",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "80",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.4",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "941",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "94",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.77",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "98850"
+               },
+               "make" : {
+	               "value" : "Dodge"
+               },
+               "model" : {
+	               "value" : "Ram Pickup 3500"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "56",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.88486"},
+               "long" : {"value": "-73.91428"},
+               "speed" : {
+                  "value" : "2",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "57",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "2.2",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1101",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "95",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.72",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "98850"
+               },
+               "make" : {
+	               "value" : "Dodge"
+               },
+               "model" : {
+	               "value" : "Ram Pickup 3500"
+               },
+               "snr" : {
+                  "value" : "14",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "57",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.88344"},
+               "long" : {"value": "-73.91535"},
+               "speed" : {
+                  "value" : "6",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "64",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.8",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "3242",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "93",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "12.90",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "98850"
+               },
+               "make" : {
+	               "value" : "Dodge"
+               },
+               "model" : {
+	               "value" : "Ram Pickup 3500"
+               },
+               "snr" : {
+                  "value" : "10",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "45",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550346" ]
+   },
+   "253859" : {
+      "550424" : [
+            {
+               "lat" : {"value": "40.704420000000006"},
+               "long" : {"value": "-74.01659000000001"},
+               "speed" : {
+                  "value" : "7",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "83",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "0.7",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "3226",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "101",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.41",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "85974"
+               },
+               "make" : {
+	               "value" : "Volkswagen"
+               },
+               "model" : {
+	               "value" : "Golf"
+               },
+               "snr" : {
+                  "value" : "13",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "46",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.70225000000001"},
+               "long" : {"value": "-74.01577"},
+               "speed" : {
+                  "value" : "1",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "23",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.6",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2454",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "93",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.12",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "85974"
+               },
+               "make" : {
+	               "value" : "Volkswagen"
+               },
+               "model" : {
+	               "value" : "Golf"
+               },
+               "snr" : {
+                  "value" : "14",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "70",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550424" ]
+   },
+   "253860" : {
+      "550472" : [
+            {
+               "lat" : {"value": "40.82374"},
+               "long" : {"value": "-73.94489"},
+               "speed" : {
+                  "value" : "8",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "34",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.7",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1914",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "100",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.03",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "98809"
+               },
+               "make" : {
+	               "value" : "Chevrolet"
+               },
+               "model" : {
+	               "value" : "Silverado 1500"
+               },
+               "snr" : {
+                  "value" : "12",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "64",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.81989"},
+               "long" : {"value": "-73.94668"},
+               "speed" : {
+                  "value" : "2",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "58",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.2",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2765",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "94",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.29",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "98809"
+               },
+               "make" : {
+	               "value" : "Chevrolet"
+               },
+               "model" : {
+	               "value" : "Silverado 1500"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "46",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550472" ]
+   },
+   "253861" : {
+      "550543" : [
+            {
+               "lat" : {"value": "40.738690000000005"},
+               "long" : {"value": "-73.99587000000001"},
+               "speed" : {
+                  "value" : "1",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "91",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "2.1",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1150",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "101",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.55",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "86078"
+               },
+               "make" : {
+	               "value" : "Chevrolet"
+               },
+               "model" : {
+	               "value" : "Silverado 1500"
+               },
+               "snr" : {
+                  "value" : "10",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "63",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.737370000000006"},
+               "long" : {"value": "-73.99684"},
+               "speed" : {
+                  "value" : "2",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "97",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.0",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2878",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "100",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.43",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "86078"
+               },
+               "make" : {
+	               "value" : "Chevrolet"
+               },
+               "model" : {
+	               "value" : "Silverado 1500"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "68",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.73666"},
+               "long" : {"value": "-73.99737"},
+               "speed" : {
+                  "value" : "5",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "41",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.7",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1938",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "99",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.87",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "86078"
+               },
+               "make" : {
+	               "value" : "Chevrolet"
+               },
+               "model" : {
+	               "value" : "Silverado 1500"
+               },
+               "snr" : {
+                  "value" : "9",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "48",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550543" ]
+   },
+   "253862" : {
+      "550425" : [
+            {
+               "lat" : {"value": "40.772380000000005"},
+               "long" : {"value": "-73.96279000000001"},
+               "speed" : {
+                  "value" : "4",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "11",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "2.2",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1718",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "91",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "12.61",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "85973"
+               },
+               "make" : {
+	               "value" : "Volvo"
+               },
+               "model" : {
+	               "value" : "XC90"
+               },
+               "snr" : {
+                  "value" : "9",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "69",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.771060000000006"},
+               "long" : {"value": "-73.96373000000001"},
+               "speed" : {
+                  "value" : "2",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "54",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.8",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2224",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "99",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.72",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "85973"
+               },
+               "make" : {
+	               "value" : "Volvo"
+               },
+               "model" : {
+	               "value" : "XC90"
+               },
+               "snr" : {
+                  "value" : "14",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "54",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550425" ]
+   },
+   "253863" : {
+      "550418" : [
+            {
+               "lat" : {"value": "40.840680000000006"},
+               "long" : {"value": "-73.94590000000001"},
+               "speed" : {
+                  "value" : "11",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "44",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.1",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1724",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "99",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.41",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "78867"
+               },
+               "make" : {
+	               "value" : "Mazda"
+               },
+               "model" : {
+	               "value" : "3"
+               },
+               "snr" : {
+                  "value" : "13",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "69",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.83905"},
+               "long" : {"value": "-73.94705"},
+               "speed" : {
+                  "value" : "9",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "39",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.9",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "3364",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "94",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.90",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "78867"
+               },
+               "make" : {
+	               "value" : "Mazda"
+               },
+               "model" : {
+	               "value" : "3"
+               },
+               "snr" : {
+                  "value" : "11",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "65",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550418" ]
+   },
+   "253864" : {
+      "550574" : [
+            {
+               "lat" : {"value": "40.766270000000006"},
+               "long" : {"value": "-73.95098"},
+               "speed" : {
+                  "value" : "9",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "86",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "0.7",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2035",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "98",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "13.00",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "85878"
+               },
+               "make" : {
+	               "value" : "Pontiac"
+               },
+               "model" : {
+	               "value" : "Sunfire"
+               },
+               "snr" : {
+                  "value" : "14",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "67",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.764610000000005"},
+               "long" : {"value": "-73.95247"},
+               "speed" : {
+                  "value" : "1",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "94",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "0.6",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2484",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "93",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.41",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "85878"
+               },
+               "make" : {
+	               "value" : "Pontiac"
+               },
+               "model" : {
+	               "value" : "Sunfire"
+               },
+               "snr" : {
+                  "value" : "10",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "61",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.76231000000001"},
+               "long" : {"value": "-73.95456"},
+               "speed" : {
+                  "value" : "2",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "56",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.9",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "1851",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "104",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.23",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "85878"
+               },
+               "make" : {
+	               "value" : "Pontiac"
+               },
+               "model" : {
+	               "value" : "Sunfire"
+               },
+               "snr" : {
+                  "value" : "14",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "66",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550574" ]
+   },
+   "253867" : {
+      "550277" : [
+            {
+               "lat" : {"value": "40.762190000000004"},
+               "long" : {"value": "-73.99361"},
+               "speed" : {
+                  "value" : "11",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "52",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "1.6",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2915",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "93",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "12.89",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "98965"
+               },
+               "make" : {
+	               "value" : "Ford"
+               },
+               "model" : {
+	               "value" : "F-150"
+               },
+               "snr" : {
+                  "value" : "12",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "58",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            },
+            {
+               "lat" : {"value": "40.72016"},
+               "long" : {"value": "-73.97969"},
+               "speed" : {
+                  "value" : "5",
+                  "description" : "Maximum Speed Recorded (since the previous reading)"
+               },
+               "fuel" : {
+                  "value" : "65",
+                  "description" : "Percentage of Fuel Remaining"
+               },
+               "fuelRate" : {
+                  "value" : "2.2",
+                  "description" : "Rate of Fuel Consumption"
+               },
+               "rpm" : {
+                  "value" : "2347",
+                  "description" : "Engine Speed"
+               },
+               "coolantTemperature" : {
+                  "value" : "98",
+                  "description" : "Engine Temperature"
+               },
+               "voltage" : {
+                  "value" : "14.16",
+                  "description" : "Battery Voltage"
+               },
+               "status" : {
+	               "value" : "RUNNING"
+               },
+               "address" : {},
+               "mileage" : {
+	               "value" : "98965"
+               },
+               "make" : {
+	               "value" : "Ford"
+               },
+               "model" : {
+	               "value" : "F-150"
+               },
+               "snr" : {
+                  "value" : "10",
+                  "description" : "Signal to Noise Ratio"
+               },
+               "rssi" : {
+                  "value" : "61",
+                  "description" : "Received Signal Strength Indicator"
+               }
+            } ],
+      "source" : "simulator",
+      "order" : [ "550277" ]
+   }
+};
