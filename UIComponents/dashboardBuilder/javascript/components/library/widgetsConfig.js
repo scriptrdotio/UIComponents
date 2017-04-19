@@ -2530,10 +2530,10 @@ angular
          "sources-info": {
                 "title": "Sources Info",
                 "type": "string",
-                "description": "Sources Info.",
+                "description": "Sources Info.ex: {'stream': {'label': 'Carvoyant', 'url': 'http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png'}}",
                   "x-schema-form": {
                        "type": "textarea",
-                       "placeholder":  "{'stream': {'label': 'Carvoyant'}}"
+                       "placeholder":  "{'stream': {'label': 'Carvoyant', 'url': 'http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png'}}"
                    }
          },
          "path-stroke-opacity":{
@@ -2552,7 +2552,7 @@ angular
        	"api": {
            "title": "Api",
            "type": "string",
-           "description": "Name of the api to get data."
+           "description": "Api to load map data. ex:  UIComponents/dashboard/frontend/examples/map/locksData"
          },
          "transport": {
             "title": "Transport",
