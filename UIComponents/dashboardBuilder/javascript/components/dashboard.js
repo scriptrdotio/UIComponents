@@ -495,11 +495,14 @@ angular
           	console.log("Widget resize", event, data);
           	$(window).trigger('resize');
             if(self.widget == data.element) {
-              if(self.widget.type == "scriptr-speedometer") {
+              if(self.widget.type == "scriptr-speedometer") { //MFE: THIS IS NOT 100% correct, we need to be able to resize
                 var h = data.wdg.height();
                 var w = data.wdg.width()
                 data.element.options["gauge-radius"] = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
               	self.updateWidget(data.element.options)
+              }
+              if(self.widget.type == "scriptr-map") { //MFE: THIS IS NOT 100% correct
+               // self.updateWidget(data.element.options)
               }
             }
             boxSelf.parent.notifyDashboardChange();

@@ -2344,6 +2344,238 @@ angular
 		},
 		"required": []
 	}
-}      
+},
+{
+   "name": "map",
+   "label": "Map",
+	"class": "scriptr-map",
+  	"show": true,
+	"defaults": {
+	  "transport": "wss",
+      "clustered-view":"true",
+      "cluster-zoom": 8,
+      "api": "UIComponents/dashboard/frontend/examples/map/carvoyantData" ,
+      "sources-info": "{'simulator': {'label': 'Carvoyant'}}",
+      "msg-tag": "everyone-main-live"
+	 },
+    "box": {
+       sizeX: 2,
+       sizeY: 2,
+       minSizeX: 2,
+       minSizeY: 2
+    },
+   "imgCls": "",
+	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MkU0NTdGMTJGMUU1MTFFNkJDRDE5REMyQjEzM0VEQzYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MkU0NTdGMTFGMUU1MTFFNkJDRDE5REMyQjEzM0VEQzYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Phrv2GYAAAP1SURBVHja7JlrSFRBFMfnqklWW5qP0NK2KCgqo6DACntpRQ8MAwtK+tBLiygiqCiIDAyjD/Uhn5VFH8oUKYuCMiUqS4JKgojIrdQv+SDDtJe72//ocZu97euuXlfBgT9nd+48fvfMzNmZWcVqtQo5KYoi+jr9qYpIgNkDLYZCoG9QFZQ3bEHjLWf11Gw2Rj2hARsIkw9tdVGMoDcDvt1TaD+hb7rgBphSElSEF/SYRTdoQKyESbUbxeFGoYxdJZSgqeria8jbnrYdoKOX99p5x5gh/CJ3/Rv6phvCXLsfH8xy+as+9TTSUpuHQ9fZAXflhacIvwi7gZiH0RnhM2h0boCxASjByxxHgZAEdVaEz6ARCdpg2mwZlp+OC1o67L5BzdEP0sI1Q6NSFjSpD9jv2eZvcwkzqZgxr6X0CC/7HbYU/VdA8501/F+cjilPpwwrd5oD3a1PzLV4QomOpsOkQKdMI0sXwlbYOgpbL/yNJzEMmAGdrcJSlyksX67I1TdObk+ugX3Xk1GXkKNoiR5UeDXrE2DyYC8CvskBaCTMJg5vczi7HiqEXtAC6/b2TdHZXIYeRwthbpOjBqUP5GFoDFQpL2JvQ56RPAedAGAxbDb0Bkrm2LpcNc1olOIw1JewIA/J3u6aIvCyg3QU5TuFyG1BH2XuoF0txGPQTqiGvwcy5FPoK3QZSpTaIK8eJOdjRHbwgqxkD7pKj6FiLYvFlafb0XkBbAHePg52N89XgvfnMo3QOfoZRtlaJ+3sg1ZAoxxFRygNL2fVAu1RyAPQM4jm7ATosBTOKD/TBTB5uwHmgJPHx/H8rdawpClO00KEsvDRpDFu04jdVmXTNDvtTSzVe5cnp208nQSPVCpexjygoQHYxNtUmr/p+P7R27b609MCPx7VMEtgy3vTTr9CI50B8A8+zQwa6FCKONDEwQQtpBg/qKDFEPQQ9BD0wIAOw84x1tvKAf1FCcgpfKCgNJ726ch7wke6EmzEfg8IaEBRTF5Lew3eU6vPfItYZ1GWrtDyfAYNgHEw2yG6oYlWPX5IBwtoFpehsnRtcASi41lDb6DnovNgDFurBth49uoG2thJj6gNOnpno733nFeE8hl81qQ68bzGYtz14+wKoSfRbco16Dw6eyXBvYaZLbqvaelEs4WPYzNV7b+kutB11O9w88IzuA1qz+DqCsERNJ3p0qBpqrLVfBKnG5bnDE175CDV+e8XQdICA2i1F1PLwE5IB3SsR9B0qY6KCh/j6c2TVNOohQ+3BlVbJo4EhYBt6Yu14fU/AXiBKL5KoGuBKPXNFnSHYe97ehOlO7QEH8Bep/9OaP5RiMoH6Ge9QqYz6L8CDAAxBVRygRGqnQAAAABJRU5ErkJggg==",
+	 "form": [
+	            {
+	                type: "tabs",
+	                tabs: [
+	                 {
+	                    title: "Data",
+	                    items: [
+	                      "transport",
+	                      "msg-tag",
+	                      "api",
+	                      "api-params",
+	                   //   "on-format-data"
+	                    ]
+	                  },
+	                 
+	                  {
+	                    title: "Map behaviour",
+	                    items: [
+                          {
+                            "type": "section",
+                            "htmlClass": "row",
+                            "items": [
+                              {
+                                "type": "section",
+                                "htmlClass": "col-xs-6",
+                                "items": [
+                                   {
+                                    "key": "clustered-view",
+                                    "type": "radios-inline",
+                                     titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                   },
+                                   "cluster-zoom",
+                                   "clustered-zoom-max",
+                                   "detailed-zoom-min",
+                                ]
+                              },
+                              {
+                                "type": "section",
+                                "htmlClass": "col-xs-6",
+                                "items": [
+                                  {
+                                    "key": "marker-info-window",
+                                    "type": "radios-inline",
+                                    titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                  },
+                                  "focused-marker-zoom",
+                                  "path-stroke-opacity",
+                                  "path-stroke-weight",
+                                  "max-asset-points"
+                                ]
+                              }
+                            ]
+                         },
+                         {
+                            "type": "section",
+                            "htmlClass": "row",
+                            "items": [
+                               {
+                                "type": "section",
+                                "htmlClass": "col-xs-12",
+                                "items": [
+                                   
+                                  "sources-info", "default-center",
+                                ]
+                              }
+                              
+                            ]
+                         }
+                          
+                          
+                                 
+                                 
+                                   
+                                    /** "detailed-zoom-min", **/
+                                   
+                                    /**, "tracked-asset"**/
+                                    ]
+	                  },
+	                 /** {
+		                    title: "Geofence behaviour",
+		                    items: [ "geofence-manager", "api-geofence", "api-geofence-params", "msg-tag-geofence"]
+		               },**/
+                      {
+                        title: "Box Properties",
+                        items: [
+                         "boxLabel"
+                        ]
+                      },
+                      {
+	                    title: "Help",
+	                    items: [
+	                     {
+                            "type": "help", 
+                            "helpvalue": "<div class=\"alert alert-info\"><h4>Map data format is as below, where: <br/> <br/>\"253831\": asset id, <br/> <br/> \"550488\": asset trip id & contains an array  of asset trip points data,  <br/> <br/>  \"order\" : [ \"550488\" ]\r\n   contains the asset's trips order <br/> <br/>and \"source\" : \"simulator\" is the asset source name.  </h4></div> <pre class=\"map-help-settings\">{\"253831\" : {\r\n      \"550488\" : [\r\n            {\r\n               \"lat\" : {\"value\": \"40.859140000000004\"},\r\n               \"long\" : {\"value\": \"-72.67528\"},\r\n               \"speed\" : {\r\n                  \"value\" : \"6\",\r\n                  \"description\" : \"Maximum Speed Recorded (since the previous reading)\"\r\n               },\r\n               \"fuel\" : {\r\n                  \"value\" : \"57\",\r\n                  \"description\" : \"Percentage of Fuel Remaining\"\r\n               },\r\n               \"fuelRate\" : {\r\n                  \"value\" : \"0.9\",\r\n                  \"description\" : \"Rate of Fuel Consumption\"\r\n               },\r\n               \"rpm\" : {\r\n                  \"value\" : \"2181\",\r\n                  \"description\" : \"Engine Speed\"\r\n               },\r\n               \"coolantTemperature\" : {\r\n                  \"value\" : \"104\",\r\n                  \"description\" : \"Engine Temperature\"\r\n               },\r\n               \"voltage\" : {\r\n                  \"value\" : \"13.38\",\r\n                  \"description\" : \"Battery Voltage\"\r\n               },\r\n               \"status\" : {\r\n\t               \"value\" : \"RUNNING\"\r\n               },\r\n               \"address\" : {},\r\n               \"mileage\" : {\r\n\t               \"value\" : \"54849\"\r\n               },\r\n               \"make\" : {\r\n\t               \"value\" : \"Jeep\"\r\n               },\r\n               \"model\" : {\r\n\t               \"value\" : \"Wrangler\"\r\n               },\r\n               \"snr\" : {\r\n                  \"value\" : \"11\",\r\n                  \"description\" : \"Signal to Noise Ratio\"\r\n               },\r\n               \"rssi\" : {\r\n                  \"value\" : \"46\",\r\n                  \"description\" : \"Received Signal Strength Indicator\"\r\n               }\r\n            },\r\n            {\r\n               \"lat\" : {\"value\": \"40.859790000000004\"},\r\n               \"long\" : {\"value\": \"-72.67344\"},\r\n               \"speed\" : {\r\n                  \"value\" : \"11\",\r\n                  \"description\" : \"Maximum Speed Recorded (since the previous reading)\"\r\n               },\r\n               \"fuel\" : {\r\n                  \"value\" : \"23\",\r\n                  \"description\" : \"Percentage of Fuel Remaining\"\r\n               },\r\n               \"fuelRate\" : {\r\n                  \"value\" : \"1.6\",\r\n                  \"description\" : \"Rate of Fuel Consumption\"\r\n               },\r\n               \"rpm\" : {\r\n                  \"value\" : \"1498\",\r\n                  \"description\" : \"Engine Speed\"\r\n               },\r\n               \"coolantTemperature\" : {\r\n                  \"value\" : \"87\",\r\n                  \"description\" : \"Engine Temperature\"\r\n               },\r\n               \"voltage\" : {\r\n                  \"value\" : \"13.68\",\r\n                  \"description\" : \"Battery Voltage\"\r\n               },\r\n               \"status\" : {\r\n\t               \"value\" : \"RUNNING\"\r\n               },\r\n               \"address\" : {},\r\n               \"mileage\" : {\r\n\t               \"value\" : \"54849\"\r\n               },\r\n               \"make\" : {\r\n\t               \"value\" : \"Jeep\"\r\n               },\r\n               \"model\" : {\r\n\t               \"value\" : \"Wrangler\"\r\n               },\r\n               \"snr\" : {\r\n                  \"value\" : \"10\",\r\n                  \"description\" : \"Signal to Noise Ratio\"\r\n               },\r\n               \"rssi\" : {\r\n                  \"value\" : \"49\",\r\n                  \"description\" : \"Received Signal Strength Indicator\"\r\n               }\r\n            },\r\n            {\r\n               \"lat\" : {\"value\": \"40.86056000000001\"},\r\n               \"long\" : {\"value\": \"-72.67124000000001\"},\r\n               \"speed\" : {\r\n                  \"value\" : \"15\",\r\n                  \"description\" : \"Maximum Speed Recorded (since the previous reading)\"\r\n               },\r\n               \"fuel\" : {\r\n                  \"value\" : \"32\",\r\n                  \"description\" : \"Percentage of Fuel Remaining\"\r\n               },\r\n               \"fuelRate\" : {\r\n                  \"value\" : \"1.8\",\r\n                  \"description\" : \"Rate of Fuel Consumption\"\r\n               },\r\n               \"rpm\" : {\r\n                  \"value\" : \"1323\",\r\n                  \"description\" : \"Engine Speed\"\r\n               },\r\n               \"coolantTemperature\" : {\r\n                  \"value\" : \"91\",\r\n                  \"description\" : \"Engine Temperature\"\r\n               },\r\n               \"voltage\" : {\r\n                  \"value\" : \"14.30\",\r\n                  \"description\" : \"Battery Voltage\"\r\n               },\r\n               \"status\" : {\r\n\t               \"value\" : \"RUNNING\"\r\n               },\r\n               \"address\" : {},\r\n               \"mileage\" : {\r\n\t               \"value\" : \"54849\"\r\n               },\r\n               \"make\" : {\r\n\t               \"value\" : \"Jeep\"\r\n               },\r\n               \"model\" : {\r\n\t               \"value\" : \"Wrangler\"\r\n               },\r\n               \"snr\" : {\r\n                  \"value\" : \"13\",\r\n                  \"description\" : \"Signal to Noise Ratio\"\r\n               },\r\n               \"rssi\" : {\r\n                  \"value\" : \"57\",\r\n                  \"description\" : \"Received Signal Strength Indicator\"\r\n               }\r\n            } ],\r\n      \"source\" : \"simulator\",\r\n      \"order\" : [ \"550488\" ]\r\n   } }</pre>"
+                          }
+	                    ]
+	                  },
+	                ]
+	              }
+	       ],
+	"schema": {
+		"type": "object",
+		"title": "Schema",
+		"properties": {
+         "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define box title"
+			},
+			"clustered-view": {
+				"title": "Clustered View",
+				"type": "string",
+				"description": "Render map with a cluster view for conglomerate markers or not."
+			},
+			"cluster-zoom": {
+				"title": "Cluster Zoom",
+				"type": "number",
+				"description": "The initial map zoom level when clustered view is true.",
+				"default": 3
+			},
+			"clustered-zoom-max": {
+				"title": "Cluster Zoom Max",
+				"type": "number",
+				"description": "Map max zoom level with a rendered cluster view.",
+			   "default": 11
+			},
+			"focused-marker-zoom": {
+				"title": "Focused marker zoom",
+				"type": "number",
+				"description": "Zoom level when focusing on a single marker. If not set it is equal to detailed map zoom + 3.",
+			},
+            "detailed-zoom-min": {
+				"title": "Detailed map initial zoom",
+				"type": "number",
+				"description": "Ignored when clustered view true.",
+                "default": 0
+			},
+			"max-asset-points": {
+				"title": "Max marker trip points",
+				"type": "string",
+				"description": "Number of tracked trip points per marker, do not set if infinite.",
+				"default": 100
+			},
+			"marker-info-window": {
+				"title": "Show marker info",
+				"type": "string",
+				"description": "Whether to show an info window on marker click.",
+				"default": "true"
+			},
+			"default-center": {
+				"title": "Default Map Center",
+				"type": "string",
+				"description": "Default map center before marker(s) is/are loaded. String format lat,long.",
+				"default": "40.7053111,-74.258188"
+			},
+         "sources-info": {
+                "title": "Sources Info",
+                "type": "string",
+                "description": "Sources Info.",
+                  "x-schema-form": {
+                       "type": "textarea",
+                       "placeholder":  "{'stream': {'label': 'Carvoyant'}}"
+                   }
+         },
+         "path-stroke-opacity":{
+         	"title": "Path stroke opacity",
+				"type": "number",
+				"description": "Default marker trail opacity.",
+				"default": 0
+					
+   		}, 
+          "path-stroke-weight": {
+            "title": "Path stroke weight",
+            "type": "number",
+            "description": "Default marker trail stroke weight.",
+            "default": 1
+          },
+       	"api": {
+           "title": "Api",
+           "type": "string",
+           "description": "Name of the api to get data."
+         },
+         "transport": {
+            "title": "Transport",
+            "type": "string",
+            "enum": ["wss"],
+            "description": "Method used to call api (can take only 'wss')."
+          },
+          "msg-tag": {
+            "title": "Message Tag",
+            "type": "string",
+            "description": "Subscribe to socket messages with tag name."
+          },
+          "api-params": {
+            "title": "Api Params",
+            "type": "string",
+            "description": "Api parameters.",
+            "x-schema-form": {
+              "placeholder": "Ex: {'id' : '599865'}"
+            }
+          }
+		},
+		"required": []
+	}
+}
     
 ]});
