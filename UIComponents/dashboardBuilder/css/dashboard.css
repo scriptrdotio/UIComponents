@@ -154,3 +154,7 @@ margin: 0;
 .left-dashboard {position: relative;float: left;left: auto; transition: all .3s ease-in-out; width: 250px;z-index: 999;}
 .dashboard-content {transition: width .4s; overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 
+.map-wrap {height: 90%; width: 97%; position: absolute;}
+
+
+.map-help-settings {height: 300px; overflow: auto;}
