@@ -1,0 +1,31 @@
+<html ng-app="myApp">
+
+<head>
+  
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+  
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/css/xeditable.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js"></script>	
+</head>  
+  
+<script>
+      var myApp= angular.module("myApp", ["xeditable"]);
+      myApp.run(function(editableOptions) {
+      editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+    });
+  
+      angular.module('myApp').controller('testCtrl', function($scope) {
+        $scope.user = {
+          name: 'awesome user'
+        }; 
+      });
+</script>
+  
+  <body>
+    <div ng-controller="testCtrl">
+      <a href="#" editable-text="user.name">{{ user.name || "empty" }}</a>
+    </div>
+  </body>
+
+</html>

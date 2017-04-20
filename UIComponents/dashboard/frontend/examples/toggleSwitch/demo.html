@@ -1,32 +1,29 @@
 <html ng-app="myApp">
 
 <head>
-    <link href="/UIComponents/dashboard/frontend/examples/toggleSwitch/angular_toggle_switch.css" media="all" rel="stylesheet" type="text/css">
+  
+    <link href="/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css" media="all" rel="stylesheet" type="text/css">
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
-  
-    <script src="/UIComponents/dashboard/frontend/examples/toggleSwitch/angular_toggle_switch.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js"></script>
 </head>  
   
 <script>
-      var myApp= angular.module("myApp", ["ngSanitize", "toggle-switch"])
+      var myApp= angular.module("myApp", ["toggle-switch"])
   
       angular.module('myApp').controller('testCtrl', function($scope) {
           var vm = this;
       });
 </script>
   
-<body>
-    <div class="col-xs-12 col-sm-6 mb10"> 
-      <div class="box-shadow bg-white">
-     <toggle-switch
-            ng-model="switchStatus"
-            class="switch-success">
-          </toggle-switch>
-      </div>
-  </div>
-  
-</body>
+  <body>
+    <div>
+      <toggle-switch
+                     ng-model="switchStatus"
+                     class="switch-success switch-large">
+      </toggle-switch>
+    </div>
+
+  </body>
 
 </html>

@@ -21,7 +21,7 @@
   cursor: pointer;
   display: inline-block;
   float: left;
-  height: 100%;
+  height: auto;
   line-height: 20px;
   padding: 4px;
   text-align: center;
@@ -103,8 +103,8 @@
   border-right: none;
   border-left: none;
   text-align: center;
-  margin-top: -1px;
-  margin-bottom: -1px;
+  margin-top: 0;
+  margin-bottom: 0;
   z-index: 100;
   background: #fff;
 }
