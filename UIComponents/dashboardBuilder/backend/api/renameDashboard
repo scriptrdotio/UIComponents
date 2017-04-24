@@ -1,0 +1,44 @@
+var document = require("document");
+
+var params = {};
+
+if(request.body != null){
+	params = request.body;
+}else if(request.parameters.body){
+	params = request.parameters.body;
+} else {
+  params = request.parameters;
+}
+if(typeof params == 'string' && params != null){
+  	try{
+    	params = JSON.parse(params);   
+    }catch(e){
+      	return "INVALID OR MISSING PARAMETER";
+    }
+}
+
+var path = params.path;
+var newName = params.name;
+
+var queryParams = {};
+var queryString = 'formType = "customDashboards" and path = "' + path + '"';
+
+queryParams["fields"] =  "*";
+queryParams["query"] =  queryString;
+
+var dashDoc = document.query(queryParams);
+if(dashDoc.metadata.status == "failure") {
+   return {status : "failure", errorDetails : "an error has occured when quering energyLatestData doc ", errorMsg: dashDoc};
+}
+var docs = dashDoc.result.documents
+
+if(docs.length == 1){
+   var result = document.update({key: docs[0].key, name: newName});
+   return result.result
+}
+
+
+
+
+
+

@@ -1,0 +1,97 @@
+var document = require("document");
+
+var params = {};
+
+if(request.body != null){
+	params = request.body;
+}else if(request.parameters.body){
+	params = request.parameters.body;
+} else {
+  params = request.parameters;
+}
+if(typeof params == 'string' && params != null){
+  	try{
+    	params = JSON.parse(params);   
+    }catch(e){
+      	return "INVALID OR MISSING PARAMETER";
+    }
+}
+
+
+var publishResponse = function(channel, data, request, id) {
+   var message = {"result": data};
+   if(request.body && request.body.id) {
+     message["id"] = request.body.id;
+   } else {
+     //Add a default id to identify the message published over the socket
+      message["id"] = id;
+   }
+   publish(channel, message);
+}
+
+var path = params.path;
+
+ var queryParams = {};
+    var queryString = 'formType = "customDashboards" and path ="' + path + '"';
+
+    queryParams["fields"] =  "*";
+    queryParams["query"] =  queryString;
+
+
+var results;
+results = document.query(queryParams);
+if(results.metadata.status == "failure") {
+  return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: results};
+}
+
+
+var deleteResult =  document.delete(results.result.documents[0].key);
+apsdb.callApi("DeleteFile", {"apsdb.name": path}, {});
+
+
+
+var counterQueryParams = {};
+var counterQueryString = 'formType = "customDashboards"';
+
+counterQueryParams["fields"] =  "*";
+counterQueryParams["query"] =  counterQueryString;
+counterQueryParams["aggregateExpression"] = "max($counter)";
+
+var counterResults;
+counterResults = document.query(counterQueryParams);
+if(counterResults.metadata.status == "failure") {
+  return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: counterResults};
+}
+publishResponse("responseChannel", counterResults.result, request, "homeCustomDashboard");
+
+
+return path;
+
+
+
+
+
+
+
+
+function toHex(input){
+  try { hexcase } catch(e) { hexcase=0; }
+  var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+  var output = "";
+  var x;
+  for(var i = 0; i < input.length; i++)
+  {
+    x = input.charCodeAt(i);
+    output += hex_tab.charAt((x >>> 4) & 0x0F)
+      + hex_tab.charAt( x & 0x0F);
+  }
+  return output;
+}
+
+
+
+
+
+
+
+

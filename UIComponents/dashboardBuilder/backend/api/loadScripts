@@ -1,0 +1,16 @@
+var documents = require("document");
+
+var queryParams = {};
+var queryString = 'formType = "customDashboards"';
+
+queryParams["fields"] =  "*";
+queryParams["query"] =  queryString;
+queryParams["aggregateExpression"] = "max($counter)";
+
+var results;
+results = documents.query(queryParams);
+if(results.metadata.status == "failure") {
+     return {status : "failure", errorDetails : "an error has occured when quering energyLatestData doc ", errorMsg: results};
+}
+
+return results.result

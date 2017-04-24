@@ -29,98 +29,59 @@ angular
       dashboard: "<",
       wsClient: "<",
       saveScriptApi: "@",
+      treeSearchCriteria : "@",
       iconExpand: "@",
       iconCollapse: "@",
       loadTree: "<?",
       showTree: "<",
       plugInScriptName : "@",
-      plugIn: "<",
+      custom: "<",
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $timeout, $window, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, _) {
-
+    controller: function($scope, $timeout, $sce, $window, httpClient, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, _) {
+      
       this.wsClient = wsClient;
       var self = this;
       this.show = false;
-      this.isEdit = false;      
-      
-      this.viewDasboard = function() {
-         if(self.plugIn){
-           this.savedScript = this.plugInScriptName;
-         }
-         $window.open("/"+this.savedScript);
-      };
-      
-      this.closeAlert = function() {
-         this.show = false;
-      };
-      
-      this.showAlert = function(type, content) {
-         this.closeAlert();
-         this.message = {
-           "type": type,
-           "content": content
-         }
-         this.show = true
-      }
-      
-      //IDE CODE start
-      this.$postLink = function() {
-        
-        var self = this;
-        this.scriptrIdeRef = $routeParams.scriptrIdeRef;
-        angular.element($window).on('message', function(event) {
-            var msg = event.originalEvent.data;
-            if(msg[0] == "get_editor_save_data-"+self.scriptrIdeRef) {
-              	if($window.parent) {
-                  $window.parent.postMessage([ "editor_save-" + self.scriptrIdeRef, self.getEditorValue()], "*");
-                }
-           }	
-          
-            if(msg[0] == "set_editor_load_data-"+self.scriptrIdeRef) {
-              	self.setEditorValue(JSON.parse(msg[1]))
-           }	
-            		
-        });
-        
-        if($window.parent) {
-           $window.parent.postMessage([ "editor_loaded-" + this.scriptrIdeRef ], "*");
-         }
-      }
-      
-      this.getEditorValue = function() {
-          var data = {};
-          data["items"] = angular.copy(this.dashboard.widgets);
-          data["urlParams"] = angular.copy(this.urlParams);
-          data["transport"] = angular.copy(this.transport.defaults)
-          var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
-          var unescapedHtml = Handlebars.compile(template)(data);
-          var scriptData = {}
-          scriptData["content"] = unescapedHtml;
-          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
-          return scriptData;
-      };
-        
-
-       this.setEditorValue = function(pluginData) {
-         if(pluginData) {
-             this.widgets = pluginData.wdg; //This needs fixing
-             this.urlParams = pluginData.urlParams;
-             this.dashboard["widgets"] = this.widgets;
-         }
-       }
-       
-       this.notifyDashboardChange = function() {
-         if($window.parent) {
-             $window.parent.postMessage([ "editor_data_changed-" + this.scriptrIdeRef , this.getEditorValue()], "*");
-           }
-       }
-      //IDEC CODE end 
-      
+      this.isEdit = false;
+            
       this.$onInit = function() {
-        this.plugIn = (typeof this.plugIn != 'undefined')? this.plugIn : false,
-        this.showTree = (typeof this.showTree != 'undefined')? this.showTree : true,
+        
+        this.custom = (typeof this.custom != 'undefined')? this.custom : false,
+        this.plugInScriptName = (typeof this.plugInScriptName != 'undefined')? this.plugInScriptName : "dashboard",  
+        this.saveScriptApi = "UIComponents/dashboardBuilder/backend/api/saveDashboard",
+          
+        this.showTree = (typeof this.showTree != 'undefined')? this.showTree : true,  
+          
+          
+        this.dashboardCounter = 1;
+        this.mainScriptName = this.plugInScriptName;
+        this.scriptName = this.plugInScriptName;
+        this.scriptName += "_" + this.dashboardCounter;
+        this.showDashboard = false;
+        this.dashboardScriptName = "/" +  this.scriptName;
+        this.switchStatus = false;
+        self = this;
+        httpClient
+          .get("UIComponents/dashboardBuilder/backend/api/loadScripts", {})
+          .then(
+          function(data, response) {
+            if(data && data.documents){
+              self.customDashboards = data.documents;
+              self.dashboardCounter = parseInt(data.aggregate.pageScope.value) + 1;
+            }else{
+              console.log("No data found");
+            }
+          },
+          function(err) {
+            console
+              .log(
+              "reject published promise",
+              err);
+          });  
+        
+        
         this.urlParams = [];
         this.transport = angular.copy(config.transport);
         this.frmGlobalOptions = {
@@ -136,16 +97,9 @@ angular
         
         this.isInIde =  ($routeParams.scriptrIdeRef) ? true :  false;
         
-        var scriptName = $routeParams.scriptName || this.plugInScriptName;
+        var scriptName = $routeParams.scriptName;
         if(scriptName) {
-          this.model = {"scriptName": scriptName};
-  			var self = this;
-            scriptrService.getScript(this.model).then(
-              function(data, response) {
-                	self.postLoadScript(scriptName, data);
-              }, function(err) {
-                console.error("reject", err);
-            });
+          this.openEditor(scriptName);
         }
         
         this.slickConfig = {
@@ -237,6 +191,173 @@ angular
         this.dataLoaded = true;
         
       };
+      
+           //IDE CODE start
+      this.$postLink = function() {
+        
+        var self = this;
+        this.scriptrIdeRef = $routeParams.scriptrIdeRef;
+        angular.element($window).on('message', function(event) {
+            var msg = event.originalEvent.data;
+            if(msg[0] == "get_editor_save_data-"+self.scriptrIdeRef) {
+              	if($window.parent) {
+                  $window.parent.postMessage([ "editor_save-" + self.scriptrIdeRef, self.getEditorValue()], "*");
+                }
+           }	
+          
+            if(msg[0] == "set_editor_load_data-"+self.scriptrIdeRef) {
+              	self.setEditorValue(JSON.parse(msg[1]))
+           }	
+            		
+        });
+        
+        if($window.parent) {
+           $window.parent.postMessage([ "editor_loaded-" + this.scriptrIdeRef ], "*");
+         }
+      }
+      
+      this.checkForSavedScript = function(){
+        if(this.savedScript){
+          return true;
+        }else{
+          this.switchStatus = true;
+          self.showAlert("danger", "Please save your dashboard first.");
+        }
+      } 
+
+      this.trustSrc = function(src) {
+        return $sce.trustAsResourceUrl(src);
+      }
+      this.addCustomDashboard = function(){
+        this.showDashboard = true;
+        this.switchStatus = true;
+        this.scriptName = this.mainScriptName;
+        this.scriptName += "_" + this.dashboardCounter;
+        this.dashboardScriptName =  "/" + this.scriptName;
+        self.savedScript = null;
+        this.model.scriptName = null;
+        self.isEdit = false;
+        this.dashboard.widgets = [];
+      }
+      this.showCustomDashboard = function(scriptName){
+        this.showDashboard = true;
+        this.scriptName = scriptName;
+        this.switchStatus = false;
+        this.dashboardScriptName = "/" + this.scriptName;
+        this.openEditor(scriptName);
+      }
+      this.homeCallback = function(data){
+        if(data && data.documents){
+          self.customDashboards = data.documents;
+          self.dashboardCounter = parseInt(data.aggregate.pageScope.value) + 1;
+        }else{
+          console.log("No data found");
+        }
+      }
+      this.deleteDashboard = function(path){
+        console.log(name, path);
+        var params = {
+          "path" : path,
+          "name" : name
+        }
+
+        self = this;
+        httpClient
+          .get("UIComponents/dashboardBuilder/backend/api/deleteDashboard", params)
+          .then(
+          function(data, response) {
+            console.log("success");
+            for(var i = 0; i < self.customDashboards.length; i++){
+              if(self.customDahboards[i].path == data){
+                self.customDahboards.splice(i, 1);
+                break;
+              }
+            }
+          },
+          function(err) {
+            console
+              .log(
+              "reject published promise",
+              err);
+          });
+      }
+
+      this.renameDashboard = function(name, path){
+        console.log(name, path);
+        var params = {
+          "path" : path,
+          "name" : name
+        }
+        httpClient
+          .get("UIComponents/dashboardBuilder/backend/api/renameDashboard", params)
+          .then(
+          function(data, response) {
+            console.log("success");
+          },
+          function(err) {
+            console
+              .log(
+              "reject published promise",
+              err);
+          });
+      }
+          
+      this.viewDasboard = function() {
+         $window.open("/"+this.savedScript);
+      };
+      
+      this.closeAlert = function() {
+         this.show = false;
+      };
+      
+      this.showAlert = function(type, content) {
+         this.closeAlert();
+         this.message = {
+           "type": type,
+           "content": content
+         }
+         this.show = true
+      }
+      
+      this.getEditorValue = function() {
+          var data = {};
+          data["items"] = angular.copy(this.dashboard.widgets);
+          data["urlParams"] = angular.copy(this.urlParams);
+          data["transport"] = angular.copy(this.transport.defaults)
+          var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
+          var unescapedHtml = Handlebars.compile(template)(data);
+          var scriptData = {}
+          scriptData["content"] = unescapedHtml;
+          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
+          return scriptData;
+      };
+        
+
+       this.setEditorValue = function(pluginData) {
+         if(pluginData) {
+             this.widgets = pluginData.wdg; //This needs fixing
+             this.urlParams = pluginData.urlParams;
+             this.dashboard["widgets"] = this.widgets;
+         }
+       }
+       
+       this.notifyDashboardChange = function() {
+         if($window.parent) {
+             $window.parent.postMessage([ "editor_data_changed-" + this.scriptrIdeRef , this.getEditorValue()], "*");
+           }
+       }
+      //IDEC CODE end 
+       
+      this.openEditor = function(scriptName){
+        this.model = {"scriptName": scriptName};
+        var self = this;
+        scriptrService.getScript(this.model).then(
+          function(data, response) {
+            self.postLoadScript(scriptName, data);
+          }, function(err) {
+            console.error("reject", err);
+          });
+      }
       
       this.selectBranch = function(branch) {
          console.log("Clicked branch data", branch);
@@ -380,13 +501,13 @@ angular
             });
       };
       
-      this.saveDashboard = function(form, plugIn) {
+      this.saveDashboard = function(form, custom) {
 		console.log("Form submit", form)
         var self = this;
         $scope.$broadcast('schemaFormValidate');
 
         // Then we check if the form is valid
-        if (form.$valid || plugIn) {
+        if (form.$valid || custom) {
           var data = {};
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
@@ -398,7 +519,7 @@ angular
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
-          scriptData["scriptName"] =  this.model.scriptName || this.plugInScriptName;
+          scriptData["scriptName"] =  this.model.scriptName || this.scriptName;
           scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
           if(self.isEdit) {
             scriptData["update"] = true;
@@ -406,6 +527,8 @@ angular
           if(self.savedScript) {
             scriptData["previousScriptName"]  = self.savedScript;
           }
+          scriptData["custom"] = this.custom;
+          scriptData["dashboardCounter"] = this.dashboardCounter;
           scriptrService.saveScript(scriptData, self.saveScriptApi).then(
             function(data, response) {
                console.log("resolve", data)
@@ -448,7 +571,7 @@ angular
              this.showAlert("danger", "Invalid dashboard script. Pass another script.")
              console.error("Invalid dashboard script. Pass another script.")
            }
-         } else if(!self.plugIn){
+         } else if(!self.custom){
            this.showAlert("danger", "Invalid dashboard script. Pass another script.")
            console.error("Invalid dashboard script. Pass another script.")
          }
@@ -495,14 +618,11 @@ angular
           	console.log("Widget resize", event, data);
           	$(window).trigger('resize');
             if(self.widget == data.element) {
-              if(self.widget.type == "scriptr-speedometer") { //MFE: THIS IS NOT 100% correct, we need to be able to resize
+              if(self.widget.type == "scriptr-speedometer") {
                 var h = data.wdg.height();
                 var w = data.wdg.width()
                 data.element.options["gauge-radius"] = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
               	self.updateWidget(data.element.options)
-              }
-              if(self.widget.type == "scriptr-map") { //MFE: THIS IS NOT 100% correct
-               // self.updateWidget(data.element.options)
               }
             }
             boxSelf.parent.notifyDashboardChange();

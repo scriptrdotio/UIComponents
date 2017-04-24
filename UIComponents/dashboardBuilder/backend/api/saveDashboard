@@ -1,45 +1,24 @@
 var _ = require("/modules/underscore/underscore.js")._;
-/**
-var aclEvaluator = require("../../lib/AclEvaluator");
-var paramsEvaluator = require("../../lib/ParamsEvaluator");
-var errorHandler = require("../../lib/ErrorHandler");
 
-var errorHandler = new errorHandler.ErrorHandler();
+var documents = require("document");
 
-var config = require("../../config").config;
-**/
 var log = require("log")
 log.setLevel("INFO");
-/**
-//Check permissions
-var userManagementGroups = config.userManagementGroups;
-
-//Check if user has rights to access the userManagement Module
-var aclEvaluator = new aclEvaluator.AclEvaluator();
-
-//user needs to be in the userManagementGroups
-var hasPermission = aclEvaluator.hasPermissions(request.user, userManagementGroups);
-if(!hasPermission) {
-  return errorHandler.buildError("no_permission", "You do not have enough permissions to manage devices.");
-}
-
-var requiredParams = ["id", "name"];
-var optionalParams = ["apsdb.update", "description", "groups"];
-
-//Check if required params
-var paramsEvaluator = new paramsEvaluator.ParamsEvaluator();
-hasAllRequiredParams = paramsEvaluator.hasRequiredParams(request.body, requiredParams)
-if(!hasAllRequiredParams.success) {
-  return errorHandler.buildError("missing_parameter", "Parameter \""+hasAllRequiredParams.param+ "\" is required.");
-}
-
-log.info(JSON.stringify(request.body))
-var params = paramsEvaluator.buildParams(request.body, requiredParams, optionalParams);
-**/
-
 
 var params = request.body;
-log.info(params["content"])
+var custom = params["custom"];
+log.info(params["content"]);
+
+var publishResponse = function(channel, data, request, id) {
+   var message = {"result": data};
+   if(request.body && request.body.id) {
+     message["id"] = request.body.id;
+   } else {
+     //Add a default id to identify the message published over the socket
+      message["id"] = id;
+   }
+   publish(channel, message);
+}
 
 var data = {};
 var script_name = params["scriptName"];//"output/testTemplate_" + Math.floor((Math.random() * 100) + 1) + ".html";
@@ -79,13 +58,52 @@ var response = apsdb.callApi("SaveFile", data, null);
 
 if(response.metadata.status == "failure") {
    return response.metadata;
-} else {
-  //Return saved scriptName
-  response.result = "success"
-  return response.result;
+} else if(custom && !params["update"]) {
+  
+  var fields = {};
+  var name = script_name;
+  var counter = params["dashboardCounter"];
+  if(script_name.indexOf("/") != -1){
+     var array = script_name.split("/");
+     name = array[array.length - 1];
+  }
+  fields["formType"] = "customDashboards";
+  fields["path"] = script_name;
+  fields["name"] = name;
+  fields["counter"] = counter;
+  
+  fields["meta.types"] = {
+        "counter": "numeric"
+    }
+  var saveFieldsResult = documents.save(fields);
+
+  if(saveFieldsResult.metadata.status == "failure") {
+     return saveFieldsResult.metadata;
+  } else {
+ 
+    var queryParams = {};
+    var queryString = 'formType = "customDashboards"';
+
+    queryParams["fields"] =  "*";
+    queryParams["query"] =  queryString;
+    queryParams["aggregateExpression"] = "max($counter)";
+
+    var results;
+    results = documents.query(queryParams);
+    if(results.metadata.status == "failure") {
+         return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: results};
+    }
+	publishResponse("responseChannel", results.result, request, "homeCustomDashboard");
+
+    response.result = "success"
+    return response.result;
+
+  }
+}else{
+    response.result = "success"
+    return response.result;
+
 }
-
-
 
 
 
