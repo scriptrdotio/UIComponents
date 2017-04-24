@@ -17,7 +17,6 @@
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
-    <script src="/UIComponents/config/scriptrTransport.js"></script>
     
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/searchBox/abn_tree.css">
     <script src="/UIComponents/dashboard/frontend/components/searchBox/abn_tree_directive.js"></script>
@@ -55,7 +54,8 @@
   <body ng-controller="testCtrl as vm">
     <scriptr-searchbox
                      api='UIComponents/dashboard/frontend/examples/searchBox/getFile'
-                     transport='https'  
+                     transport='https'  3
+                     search-text="Filter by name"
                      initial-selection = "speed"
                      tree-control="vm.my_tree"  
                      api-params='{"id" : "45645612"}'  

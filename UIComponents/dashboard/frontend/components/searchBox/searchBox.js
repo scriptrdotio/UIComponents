@@ -9,6 +9,8 @@ angular
       
         "treeData" : "<?",
       
+        "searchText": "@",
+      
         "iconLeaf" : "@",
       
         "paramName" : "@",
@@ -26,6 +28,8 @@ angular
         "apiParams" : "<?",
       
         "loadTree" : "<?",
+      
+        "treeSearchCriteria" : "@",
       
         "transport" : "@",
       
@@ -49,17 +53,21 @@ angular
            
            this.paramName = (this.paramName) ? this.paramName : "criteria";
            
+           this.searchText = (this.searchText) ? this.searchText : "Type to search";
+           
            this.treeData = (this.treeData) ? this.treeData : [];
            this.iconLeaf = (this.iconLeaf) ? this.iconLeaf : null;
            this.transport = (this.transport) ? this.transport : "wss";
            
            if(this.loadTree){
+             this.searching = true;
              initDataService(this.transport, this.searchValue);
            }
          }
          
          this.onFilterChanged = function() {
            console.log("submit");
+           this.searching = true;
            if(this.searchValue != null && this.searchValue != ""){
         	   initDataService(this.transport, this.searchValue);
            }
@@ -69,7 +77,7 @@ angular
          
          var initDataService = function(transport, searchValue) {
            var params = {};
-           params[self.paramName] = searchValue;
+           params[self.paramName] = searchValue || self.treeSearchCriteria;
            
            if(self.apiParams){
              for(var param in self.apiParams){
@@ -122,7 +130,7 @@ angular
              this.treeData = [];
              this.noResults = true;
            }
-           
+           this.searching = false;
          }
     }
 });
