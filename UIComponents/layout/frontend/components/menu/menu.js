@@ -67,10 +67,12 @@ angular
                        this.collaspsedCols.sort();
                        
                        for(var x = 0; x < this.collaspsedCols.length; x++){
-                         this.cols.push({
+                         if(this.collaspsedCols[x] != this.menuItems.mainMenu){
+                            this.cols.push({
                              key : this.collaspsedCols[x],
                              class: 'md'
                            });
+                         }
                        }
                        
                        // change classes
