@@ -93,6 +93,11 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js"></script>
   
     <script src="/UIComponents/dashboard/frontend/components/publisher/publisherComponent.js"></script>
+  
+     <script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36"></script>
+    <script src="/UIComponents/dashboard/frontend/components/grid/grid.js"></script>
+  
+  <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/grid/grid.css">
                               
         
 </head> 
@@ -135,104 +140,6 @@
        })
    	  angular.module('myApp').controller('mapCtrl', function($scope, httpClient, $sce, $route, $routeParams) {
           var vm = this;
-          
-          vm.init = function(){
-            vm.dashboardCounter = 1;
-            vm.mainScriptName = "creatorWizard/scripts/dashbaord";
-            vm.scriptName = "creatorWizard/scripts/dashbaord";
-            vm.showDashboard = false;
-            vm.dashboardScriptName = "/" +  vm.scriptName;
-            vm.switchStatus = false;
-            httpClient
-                 .get("UIComponents/dashboardBuilder/backend/api/loadScripts", {})
-                 .then(
-                 function(data, response) {
-                   if(data && data.documents){
-                         vm.customDahboards = data.documents;
-                         vm.dashboardCounter = parseInt(data.aggregate.pageScope.value) + 1;
-                   }else{
-                     console.log("No data found");
-                   }
-                 },
-                 function(err) {
-                   console
-                     .log(
-                     "reject published promise",
-                     err);
-                 });
-          }
-          vm.trustSrc = function(src) {
-            return $sce.trustAsResourceUrl(src);
-          }
-          vm.addCustomDashboard = function(){
-              vm.showDashboard = true;
-              vm.switchStatus = true;
-              vm.scriptName = vm.mainScriptName;
-              vm.scriptName += "_" + vm.dashboardCounter;
-              vm.dashboardScriptName = login.baseURL + vm.scriptName;
-          }
-          vm.showCustomDashboard = function(scriptName){
-               vm.showDashboard = true;
-               vm.scriptName = scriptName;
-               vm.switchStatus = false;
-               vm.dashboardScriptName = "/" + vm.scriptName;
-          }
-          vm.homeCallback = function(data){
-              if(data && data.documents){
-                vm.customDahboards = data.documents;
-                vm.dashboardCounter = parseInt(data.aggregate.pageScope.value) + 1;
-              }else{
-                console.log("No data found");
-              }
-          }
-          vm.deleteDashboard = function(path){
-                 console.log(name, path);
-              var params = {
-                "path" : path,
-                "name" : name
-              }
-              
-              vm = this;
-              httpClient
-               .get("UIComponents/dashboardBuilder/backend/api/deleteDashboard", params)
-               .then(
-               function(data, response) {
-                   console.log("success");
-                   for(var i = 0; i < vm.customDahboards.length; i++){
-                     if(vm.customDahboards[i].path == data){
-                       vm.customDahboards.splice(i, 1);
-                       break;
-                     }
-                   }
-               },
-               function(err) {
-                 console
-                   .log(
-                   "reject published promise",
-                   err);
-               });
-            }
-           
-            vm.renameDashboard = function(name, path){
-              console.log(name, path);
-              var params = {
-                "path" : path,
-                "name" : name
-              }
-              httpClient
-               .get("UIComponents/dashboardBuilder/backend/api/renameDashboard", params)
-               .then(
-               function(data, response) {
-                   console.log("success");
-               },
-               function(err) {
-                 console
-                   .log(
-                   "reject published promise",
-                   err);
-               });
-            }
-          
       });
   
   

@@ -612,6 +612,10 @@ angular
         if(this.widget) {
           this.addWidget(this.widget)
         }
+        
+        $scope.$on('gridster-item-initialized', function(item) { 
+         console.log("gridster-item-initialized");
+        })
 
       
         $scope.$on("resize_widget", function(event, data) {
@@ -622,6 +626,11 @@ angular
                 var h = data.wdg.height();
                 var w = data.wdg.width()
                 data.element.options["gauge-radius"] = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
+              	self.updateWidget(data.element.options)
+              }
+              if(self.widget.type == "scriptr-grid") {
+                var h = data.wdg.height();
+                data.element.options["grid-height"] = h - 110;
               	self.updateWidget(data.element.options)
               }
             }
