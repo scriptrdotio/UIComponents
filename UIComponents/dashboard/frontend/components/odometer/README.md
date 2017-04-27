@@ -16,8 +16,6 @@
   
 ## Getting started:
 
-  Include angular JS with angular-odometer.js in your application, as well as the odometer.js and the default theme CSS file
-
   Include angular JS
   
   ```html
