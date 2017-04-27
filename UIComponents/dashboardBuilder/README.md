@@ -27,7 +27,7 @@ You can change the Dashboard Builder options using the "UIComponents/dashboardBu
 The available options are:
 
 
-| Option        | Default value   | Description   | Example  |  Required
+| Option        | Default value   | Description   | Example  |  Required |
 | ------------- |:-------------:|:-------------:|:-------------:|:-------------:|
 
   load-tree     | false	 | If set to true the Tree will automatically load | true  | NO
