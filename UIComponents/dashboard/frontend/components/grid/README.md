@@ -107,6 +107,40 @@ The expected params sent from the grid are:
 If action param is sent, the api should first check the action type (add, edit, delete) and serve the request.
 In case action param is not sent the api should return the expected data to the grid.
 
+Example:
+ ```javascript
+  if(action){
+     if(action == "add"){
+       // TODO    
+     }else if(action == "edit"){
+       // TODO 
+     }else if(action == "delete){
+       // TODO
+     }
+  }else{
+   return  {
+		"count": "500",
+		"documents": [
+			{
+				"key": "C91918B97B1EAA7A97D8435611452666",
+				"name": "Toyota",
+				"model": "Celica",
+				"price": "35000"
+			},
+			{
+				"key": "DC2BEB691E480C22886AEC708D5A19A5",
+				"name": "Ford",
+				"model": "Mondeo",
+				"price": "32000"
+			}
+			]
+     }
+  }
+ 
+ 
+```
+
+
 ## Publishing data:
 
 If a msg-tag is passed, the grid will subscribe to a channel filtered with this message tag.
