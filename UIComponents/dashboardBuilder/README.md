@@ -32,5 +32,7 @@ The available options are:
 | Option        | Default value   | Description   | Type | Required   |
 | ------------- |:-------------:|:-------------:|:-------------:|:----------|
   load-tree     | false	 | If set to true the Tree will automatically load | true  | NO
+   tree-search-criteria  | null | A criteria should be passed for the tree to automatically load | "model.Car"  | required if load-tree is true
+  devices-model     | null	 | Name of the API to get data . | "modules/devicemodels/api/getSensors"  | NO
 
  
