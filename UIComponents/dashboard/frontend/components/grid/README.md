@@ -85,7 +85,7 @@
   on-cell-value-changed | null | function to be called on cell editing |   | NO
   on-selection-changed | null | function to be called on cell selection |   | NO
   transport |  'wss'     | 	Method used to call api (can take "https" or "wss").	 |   | NO
-  msg-tag   | null      | 	Subscribe to socket messages with tag name.		 |   | NO    
+  msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | grid-live  | NO    
   api-params  | null      | 	Api parameters.  					|   | NO
   
   
