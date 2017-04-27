@@ -63,27 +63,27 @@
   
 ## Options:
 
-| Option        | Default value   | Description   |   Required
+| Option        | Default value   | Description   | Example  |  Required
 | ------------- |:-------------:|:-------------:|:-------------:|
-  columns-definition       | undefined  | 	Series of data (Each column in the grid is defined using a column definition). | YES
-  row-data         | undefined     | You pass row data to the grid. | Required if service-api is undefined
-  enableSorting     | true	 |Turn sorting on for the grid. | NO
-  enable-server-side-sorting  | true | Turn on server side filter. | NO
-  enable-client-side-filter     | true	 | turn on client side filter. | NO
-  cell-editable | true | Turn on cell editing | NO
-  grid-height | 500 | Set grid height | NO
-  enable-col-resize       | false    | Enable column resize. | NO
-  row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination" for only non-static data	| NO
-  row-model-selection       | "multiple"    | Set to either 'single' or 'multiple' in case of backend data. 	| NO
-  pagination-page-size       | 50    | 	Number of rows per page.	| NO
-  api       | undefined | Name of the api to call backend data | NO
-  on-format-data | undefined | Callback function to be called after data is returned from backend | NO
-  on-cell-value-changed-script | undefined | Name of the script to be called on cell editing | NO
-  on-cell-value-changed | null | function to be called on cell editing | NO
-  on-selection-changed | null | function to be called on cell selection | NO
-  transport |  'wss'     | 	Method used to call api (can take "https" or "wss").	 | NO
-  msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | NO    
-  api-params  | null      | 	Api parameters.  					| NO
+  columns-definition       | undefined  | 	Series of data (Each column in the grid is defined using a column definition). |  | YES
+  row-data         | undefined     | You pass row data to the grid. |   | Required if service-api is undefined
+  enableSorting     | true	 |Turn sorting on for the grid. |   | NO
+  enable-server-side-sorting  | true | Turn on server side filter. |   | NO
+  enable-client-side-filter     | true	 | turn on client side filter. |   | NO
+  cell-editable | true | Turn on cell editing |   | NO
+  grid-height | 500 | Set grid height |   | NO
+  enable-col-resize       | false    | Enable column resize. |   | NO
+  row-model-type       | "virtual"   | 	The supported ways are "virtual" and "pagination" for only non-static data	|   | NO
+  row-model-selection       | "multiple"    | Set to either 'single' or 'multiple' in case of backend data. 	|   | NO
+  pagination-page-size       | 50    | 	Number of rows per page.	|   | NO
+  api       | undefined | Name of the api to call backend data |   | NO
+  on-format-data | undefined | Callback function to be called after data is returned from backend |   | NO
+  on-cell-value-changed-script | undefined | Name of the script to be called on cell editing |   | NO
+  on-cell-value-changed | null | function to be called on cell editing |   | NO
+  on-selection-changed | null | function to be called on cell selection |   | NO
+  transport |  'wss'     | 	Method used to call api (can take "https" or "wss").	 |   | NO
+  msg-tag   | null      | 	Subscribe to socket messages with tag name.		 |   | NO    
+  api-params  | null      | 	Api parameters.  					|   | NO
   
   
 ## Service API Response:
