@@ -89,6 +89,61 @@
   api-params  | null      | 	Api parameters.  					|   | NO
   
   
+## Service API Behaviour:
+
+The expected params sent from the grid are:
+
+ *  @param columnName (name, model, price)
+ *  @param resultsPerPage (50)
+ *  @param pageNumber (2)
+ *  @param sort (asc, desc)
+ *  @param sortType (numeric)
+ *  @param queryFilter (criteira)
+ *  @param queryType (startsWith, endsWith, contains, equals, notEquals)
+ *  @param sortingColumnName (name, model, price)
+ *  @param filterColumnName (name, model, price)
+ *  @param action (add, edit, delete)
+ 
+If action param is sent, the api should first check the action type (add, edit, delete) and serve the request.
+In case action param is not sent the api should return the expected data to the grid.
+
+## Publishing data:
+
+If a msg-tag is passed, the grid will subscribe to a channel filtered with this message tag.
+Hence the api is able to publish data whenever an action is sent.
+
+example:
+ ```javascript
+  if(action){
+     if(action == "add"){
+       // TODO
+      var message = {"result": {result : [{
+				"key": "C91918B97B1EAA7A97D8435611452666",
+				"name": "Ford",
+				"model": "Mondeo",
+				"price": "32000"
+			}], action: "add"}, "id" : "grid"};
+      publish("responseChannel", message);
+     }else if(action == "edit"){
+       // TODO
+      var message = {"result": {result : [{
+				"key": "C91918B97B1EAA7A97D8435611452666",
+				"name": "Toyota",
+				"model": "Celica",
+				"price": "35000"
+			}], action: "edit"}, "id" : "grid"};
+      publish("responseChannel", message);
+     }else if(action == "delete){
+       // TODO
+      var message = {"result": {result : ["485C005C470AE61EAFC93438F45A3AC6","956BF85C765057E98C56C3A87926CD35"], action: "delete"}, "id" : "grid"};
+      publish("responseChannel", message);
+     }
+  }
+ 
+ 
+```
+  
+  
 ## Service API Response:
  
  The expected returned data structure from a service API is as follows:
@@ -98,15 +153,15 @@
 		"documents": [
 			{
 				"key": "C91918B97B1EAA7A97D8435611452666",
-				"name": "car_500",
-				"model": "model_500",
-				"price": "500.0"
+				"name": "Toyota",
+				"model": "Celica",
+				"price": "35000"
 			},
 			{
 				"key": "DC2BEB691E480C22886AEC708D5A19A5",
-				"name": "car_499",
-				"model": "model_499",
-				"price": "499.0"
+				"name": "Ford",
+				"model": "Mondeo",
+				"price": "32000"
 			}
 			]
 }
