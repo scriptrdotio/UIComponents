@@ -98,30 +98,18 @@
 		"documents": [
 			{
 				"key": "C91918B97B1EAA7A97D8435611452666",
-				"versionNumber": "1.0",
 				"name": "car_500",
 				"model": "model_500",
 				"price": "500.0"
 			},
 			{
 				"key": "DC2BEB691E480C22886AEC708D5A19A5",
-				"versionNumber": "1.0",
 				"name": "car_499",
 				"model": "model_499",
 				"price": "499.0"
 			}
 			]
 }
-  ```
- Each field name in the response should be defined in your columns-definition as follows:
- 
- ```javascript
- columns-definition=[
-		     {headerName: "Make", field: "name"},
-		     {headerName: "Model", field: "model"},
-		     {headerName: "Price", field: "price", type: "numeric"}
-	  	   ]
-```
  
 ## Component usage:
 
