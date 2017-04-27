@@ -27,9 +27,14 @@ You can change the Dashboard Builder options using the "UIComponents/dashboardBu
 The available options are:
 
 
-| Option        | Default value   | Description   | Example  |  Required |
-| ------------- |:-------------:|:-------------:|:-------------:|:-------------:|
+## Options:
 
-  load-tree     | false	 | If set to true the Tree will automatically load | true  | NO
+| Option        | Default value   | Description   | Type | Required   |
+| ------------- |:-------------:|:-------------:|:-------------:|:----------|
+  gauge-value     | 75	 | Sets the value of the gauge. | int | NO
+  custom-sectors  | [{color : "#A3CD3B", lo : 0, hi : 25}, { color : "#FF4A43", lo : 25, hi : 100 }] | array of objects with color, hi, lo attributes. | [] of objects | NO
+  value-font-color     | '#999'	 | color of the value text. | string | NO
+  min       | 0    | 	minimum value.		| float | NO
+  max       | 100    | 	maximum value.	| float | NO
 
  
