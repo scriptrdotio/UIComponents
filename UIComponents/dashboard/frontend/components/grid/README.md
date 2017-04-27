@@ -65,7 +65,7 @@
 
 | Option        | Default value   | Description   | Example  |  Required
 | ------------- |:-------------:|:-------------:|:-------------:|:-------------:|
-  columns-definition       | undefined  | 	Series of data (Each column in the grid is defined using a column definition). |  | YES
+  columns-definition       | undefined  | 	Series of data (Each column in the grid is defined using a column definition). | [{headerName: "Make", field: "name"},{headerName: "Model", field: "model"},{headerName: "Price", field: "price", type: "numeric"}] | YES
   row-data         | undefined     | You pass row data to the grid. |   | Required if service-api is undefined
   enableSorting     | true	 |Turn sorting on for the grid. |   | NO
   enable-server-side-sorting  | true | Turn on server side filter. |   | NO
