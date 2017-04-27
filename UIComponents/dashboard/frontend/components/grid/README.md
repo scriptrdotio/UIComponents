@@ -110,7 +110,7 @@
 			}
 			]
 }
- 
+```
 ## Component usage:
 
 scriptr-grid is an element component. you will just have to add it in your html view and add its relevant options.
