@@ -66,7 +66,7 @@ angular
 	"defaults": {
 		"transport": "wss",
 		"msg-tag": "myMessage",
-		"api": "UIComponents/dashboard/frontend/examples/message/message",
+        "text" : "",
         "type": "info"
 	},
     "box": {
@@ -2354,7 +2354,7 @@ angular
 	  "transport": "wss",
       "clustered-view":"true",
       "cluster-zoom": 8,
-      "api": "UIComponents/dashboard/frontend/examples/map/simulatorData" ,
+      "api": "UIComponents/dashboard/frontend/examples/map/simulatorData",
       "sources-info": "{'simulator': {'label': 'Carvoyant'}}",
       "msg-tag": "everyone-main-live"
 	 },
@@ -2440,8 +2440,14 @@ angular
                               
                             ]
                          }
-                         /** "detailed-zoom-min", **/
-                         /**, "tracked-asset"**/
+                          
+                          
+                                 
+                                 
+                                   
+                                    /** "detailed-zoom-min", **/
+                                   
+                                    /**, "tracked-asset"**/
                                     ]
 	                  },
 	                 /** {
@@ -2570,6 +2576,282 @@ angular
 		},
 		"required": []
 	}
-}
+},
+{
+	"name": "grid",
+    "label": "Grid",
+	"class": "scriptr-grid",
+  	"show": true,
+	"defaults": {
+		   "columns-definition" : "[{'headerName': 'Name', 'field': 'name'}, {'headerName': 'Model', 'field': 'model'}, {'headerName': 'Price', 'field': 'price', 'type': 'numeric'}]",
+           "row-data": "[{name: 'Toyota', model: 'Celica', price: 35000},{name: 'Ford', model: 'Mondeo', price: 32000},{name: 'Porsche', model: 'Boxter',price: 72000}]",
+           "enable-sorting":"true",
+        //   "api":'UIComponents/dashboard/frontend/examples/grid/getCarsInfo',
+           "enable-delete-row":'true',
+      //     "row-model-type":'pagination',
+           "grid-height":"300",
+           "enable-add-row":'true',
+           "on-cell-value-changed-script":'UIComponents/dashboard/frontend/examples/grid/editRow',
+           "on-insert-row-script":'UIComponents/dashboard/frontend/examples/grid/addRow',
+           "on-delete-row-script":'UIComponents/dashboard/frontend/examples/grid/removeRow',
+           "cell-editable":'true',
+           "enable-client-side-filter":'true',
+           "enable-server-side-filter":'false' ,
+           "enable-server-side-sorting":'false',
+           "row-model-selection":'multiple',
+           "pagination-page-size":'20',
+           "transport":'wss'
+	},
+    "box": {
+       sizeX: 2,
+       sizeY: 2,
+       minSizeX: 2,
+       minSizeY: 1,
+       maxSizeY: 4
+    },
+    "imgCls": "grid-img",
+	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAlCAYAAADr2wGRAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjcyMDZGOUNFMkQ4MTFFNkFCMDVFNzRFRDY1MTM5NTAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjcyMDZGOUJFMkQ4MTFFNkFCMDVFNzRFRDY1MTM5NTAiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QzI4MzFBMzJFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QzI4MzFBMzNFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zhsgjAAAA1klEQVR42mK8fPnyf4YhDpgYhgEY9cSoJ0Y9MeqJUU+MegIfYAHiQoZRMAqoAhhl92Q0kKl3wmOXGR9ADKAZBUBKgAwzFgDNeAA1IwFIKZCbJ+rJ9MQCIP4AZYM8IU+GGQeA+AGUDfKE/WgRO+qJUU+MemLUE6OeoEUD8CCZen8gsU8gVVqkgA9I7AujDajh0AB0IFPvCWDj7Qe08WYBpDjIMOMCUiPSgMxGJDhP7CfTE4pI+WAFmQ1AR2gjENwqHm0Ajnpi1BOjnhj1xKgnRj2BAwAEGADGZCnIfk5TtQAAAABJRU5ErkJggg==",
+	 "form": [
+	            {
+	                type: "tabs",
+	                tabs: [
+	                  {
+	                    title: "Data",
+	                    items: [
+	                      "transport",
+	                      "msg-tag",
+	                      "api",
+	                      "api-params",
+                          "columns-definition",
+                          "row-data"
+	                   //   "on-format-data"
+	                    ]
+	                  },
+	                  {
+	                    title: "Grid behaviour", 
+	                    items: [
+                              {
+                                "type": "section",
+                                "htmlClass": "row",
+                                "items": [
+                                  {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-6",
+                                    "items": ["pagination-page-size"]
+                                  }
+                                ]
+                              },
+		                      {
+		                      "type": "section",
+		                      "htmlClass": "row",
+		                      "items": [
+		                        {
+		                          "type": "section",
+		                          "htmlClass": "col-xs-6",
+		                          "items": [
+                                    "row-model-type",
+                                    {
+                                    "key": "enable-add-row",
+                                    "type": "radios-inline",
+                                    titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                    },
+                                    {
+                                    "key": "enable-client-side-sorting",
+                                    "type": "radios-inline",
+                                    titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                  },
+                                  {
+                                    "key": "enable-client-side-filter",
+                                    "type": "radios-inline",
+                                    titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                  },
+                                  {
+                                    "key": "cell-editable",
+                                    "type": "radios-inline",
+                                    titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                  },
+                                 ]
+		                        },
+                                 {
+		                          "type": "section",
+		                          "htmlClass": "col-xs-6",
+		                          "items": [
+                                    "row-model-selection",
+                                    {
+                                    "key": "enable-delete-row",
+                                    "type": "radios-inline",
+                                    titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                    },
+                                    {
+                                    "key": "enable-server-side-sorting",
+                                    "type": "radios-inline",
+                                    titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                  },
+                                    {
+                                    "key": "enable-server-side-filter",
+                                    "type": "radios-inline",
+                                    titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                  },
+                                   {
+                                    "key": "enable-col-resize",
+                                    "type": "radios-inline",
+                                    titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                  }]
+		                        }
+		                      ]
+		                    }
+		                    ]
+	                  },
+                {
+                  title: "Box Properties",
+                  items: [
+                   "boxLabel"
+                  ]
+                }
+	                ]
+	              }
+	       ],
+	"schema": {
+		"type": "object",
+		"title": "Schema",
+		"properties": {
+             "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define box title"
+			},
+          "columns-definition": {
+            "title": "Columns definition",
+            "type": "number",
+            "description": "Series of data (Each column in the grid is defined using a column definition).",
+            "x-schema-form": {
+              "type": "textarea",
+              "placeholder":  "[{'headerName': 'Name', 'field': 'name'}, {'headerName': 'Model', 'field': 'model'}, {'headerName': 'Price', 'field': 'price', 'type': 'numeric'}]"
+            }
+          },
+			"row-data": {
+				"title": "Row data",
+				"type": "number",
+				"description": "You pass static data to the grid.",
+              "x-schema-form": {
+                "type": "textarea",
+                "placeholder":  "[{'name': 'Golf', 'model': 'GT', 'price' : '10000'}, {'name': 'BMW', 'model': 'Z3', 'price' : '20000'}]"
+              }
+			},
+            "enable-client-side-sorting": {
+				"title": "Enable client Side Sorting",
+				"type": "number",
+				"description": "Turn on client sorting for the grid."
+			},
+			"enable-server-side-sorting": {
+				"title": "Enable Server Side Sorting",
+				"type": "string",
+				"description": "Turn on server sorting for the grid."
+			},
+          	"enable-client-side-filter": {
+				"title": "Enable Client Side Filter",
+				"type": "string",
+				"description": "Turn on client side filter."
+			},
+          	"enable-server-side-filter": {
+				"title": "Enable Server Side Filter",
+				"type": "string",
+				"description": "Turn on server side filter."
+			},
+          	"enable-add-row": {
+				"title": "Enable Add Row",
+				"type": "string",
+				"description": "Turn on insert row."
+			},
+          	"enable-delete-row": {
+				"title": "Enable Delete Row",
+				"type": "string",
+				"description": "Turn on delete row."
+			},
+          	"cell-editable": {
+				"title": "Cell Editable",
+				"type": "string",
+				"description": "Turn on cell editing."
+			},
+          	"enable-col-resize": {
+				"title": "Enable Column Resize",
+				"type": "string",
+				"description": "Enable column resize."
+			},
+            "row-model-type": {
+				"title": "Row Model Type",
+				"type": "string",
+				"description": "The supported ways are 'virtual' and 'pagination' for only non-static data"
+			},
+            "row-model-selection": {
+				"title": "Row Model Selection",
+				"type": "string",
+				"description": "Set to either 'single' or 'multiple' in case of backend data."
+			},
+            "pagination-page-size": {
+				"title": "Pagination Page Size",
+				"type": "string",
+				"description": "Number of rows per page."
+			},
+            "api": {
+              "title": "Api",
+              "type": "string",
+              "description": "Name of the api to get data.",
+              "x-schema-form": {
+                "placeholder":  "UIComponents/dashboard/frontend/examples/grid/getCarsInfo"
+              }
+            },
+			"on-format-data": {
+				"title": "Format Data",
+				"type": "string",
+				"description": "Callback function to be called after data is returned from backend."
+			},
+			"transport": {
+				"title": "Transport",
+				"type": "string",
+                "enum": ["wss", "https"],
+				"description": "Method used to call api (can take 'http' or 'wss')."
+			},
+			"msg-tag": {
+				"title": "Message Tag",
+				"type": "string",
+				"description": "Subscribe to socket messages with tag name."
+			},
+			"api-params": {
+				"title": "Api Params",
+				"type": "string",
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
+			}
+		},
+		"required": []
+	}
+}      
     
 ]});

@@ -1,27 +1,27 @@
 <div class="filter-bar">
   <div class="{{$ctrl.class}}">
   <form>
-    <div ng-hide= {{$ctrl.enableClientSideFilter}} class="form-group col-xs-12 col-sm-4">
+    <div ng-hide= {{$ctrl.enableClientSideFilter}} class="form-group col-xs-12 col-sm-5">
         <div class="input-group">
-          <div class="input-group-addon">Client filtering</div>
+          <div class="input-group-addon">Client filter</div>
            <input type="text" class="form-control" ng-change="$ctrl.onFilterChanged()" ng-model="$ctrl.quickFilterValue"  placeholder="Type text to filter..." />
        </div>
     </div>   
-    <div ng-hide= {{$ctrl.enableServerSideFilter}} class="form-group col-xs-12 col-sm-4">
+    <div ng-hide= {{$ctrl.enableServerSideFilter}} class="form-group col-xs-12 col-sm-5">
         <div class="input-group">
-          <div class="input-group-addon">Server filtering</div>
+          <div class="input-group-addon">Server filter</div>
 			<input type="text" class="form-control" ng-model="$ctrl.gridOptions.quickFilterText" placeholder="Type text to filter..." />
       </div>
     </div>  
-    <div class="col-xs-12 col-sm-4 text-right">
-      <button ng-hide= {{$ctrl.enableDeleteRow}} ng-click="$ctrl.onRemoveRow()" class="btn btn-danger"><i class="fa fa-close" aria-hidden="true"></i> Delete selected row</button>
-      <button ng-hide= {{$ctrl.enableAddRow}} ng-click="$ctrl.onAddRow()" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Insert row</button>
+    <div class="col-xs-12 col-sm-2 text-right">
+      <button ng-hide= {{$ctrl.enableDeleteRow}} ng-click="$ctrl.onRemoveRow()" class="btn btn-danger mt4" tooltip-placement="top" uib-tooltip="Delete selected row"><i class="fa fa-close" aria-hidden="true"></i></button>
+      <button ng-hide= {{$ctrl.enableAddRow}} ng-click="$ctrl.onAddRow()" class="btn btn-success mt4" tooltip-placement="top" uib-tooltip="Insert row"><i class="fa fa-plus" aria-hidden="true"></i></button>
     </div>
    </form>  
     </div>
 </div>
     
-<div class="col-xs-12" ng-show="$ctrl.showError"><div class="alert alert-danger">{{$ctrl.msg}}</div></div>
+<div class="col-xs-12" ng-show="$ctrl.showError"><div class="alert" ng-class="'alert-' + ( $ctrl.message.type || 'warning')">{{$ctrl.message.content}}</div></div>
 <div class="clearfix"></div>
 <div class="col-xs-12">
   <div ag-grid="$ctrl.gridOptions" class="ag-bootstrap"  ng-style="$ctrl.style"></div>

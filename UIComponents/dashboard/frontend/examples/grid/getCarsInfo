@@ -1,12 +1,37 @@
+/**
+ * Gets data for the grid.
+ * 
+ *  @param columnName
+ *  @param resultsPerPage
+ *  @param pageNumber
+ *  @param sort
+ *  @param sortType
+ *  @param queryFilter
+ *  @param queryType
+ *  @param sortingColumnName
+ *  @param filterColumnName
+ *  @param action
+ * 
+ * @return On success: { "status" : "success" }
+ *         On failure: { "status" : "failure", "errorDetail" : "[error message]" }
+ */
+
 var log = require("log");
 log.setLevel("INFO");
-
-
 var documents = require("document");
 
-
+/* create dummy data
+for(var i = 1; i <= 100; i++){
+  var fields = {};
+  fields["formType"] = "car";
+  fields["name"] = "name_"+i;
+  fields["model"] = "model_"+i;
+  fields["price"] = "price_"+i;
+  documents.save(fields);
+}
+return
+*/
 var params = {};
-
 if(request.body != null){
 	params = request.body;
 }else if(request.parameters.body){
@@ -31,34 +56,80 @@ var queryFilter = params.queryFilter;
 var queryType = params.queryType;
 var sortingColumnName = params.sortingColumnName;
 var filterColumnName = params.filterColumnName;
+var action = params.action;
 
 var results;
 
-var queryParams = {};
-if(sortType == null) sortType = "string"
-var fieldsParams = "name, model, price, formType";
-var queryString = 'formType = "cars"';
-var sortString = (sortingColumnName && sortingColumnName != "" && sortingColumnName != "undefined") ? sortingColumnName+"<"+sortType+":"+sort+">" : null;
+if(action){
+  if(action == "add"){
+    var fieldsToSave = params;
+    fieldsToSave["formType"] = "cars";
+    fieldsToSave["meta.types"] = {
+      "price": "numeric"
+    }
+    var fieldsToSaveResult = documents.save(fieldsToSave);
+    if(fieldsToSaveResult.metadata.status == "failure") {
+      return fieldsToSaveResult.metadata;
+    }else{
+      fieldsToSave["key"] = fieldsToSaveResult.result.document.key;
+      var message = {"result": {result : fieldsToSave, action: "add"}, "id" : "grid"};
+      publish("responseChannel", message);
+      return  {status : fieldsToSaveResult.metadata.status, result : fieldsToSave}
+    }
+  }else if(action == "edit"){
+    var fieldsToSave = params;
+    fieldsToSave["formType"] = "cars";
+    fieldsToSave["meta.types"] = {
+      "price": "numeric"
+    }
+    var fieldsToSaveResult = documents.save(fieldsToSave);
+    if(fieldsToSaveResult.metadata.status == "failure") {
+      return fieldsToSaveResult.metadata;
+    }else{
+      fieldsToSave["key"] = fieldsToSave.key;
+      var message = {"result": {result : fieldsToSave, action: "edit"}, "id" : "grid"};
+      publish("responseChannel", message);
+      return  {status : fieldsToSaveResult.metadata.status, result : fieldsToSave}
+    }
+  }else if(action == "delete"){
+    if(params.keys){
+      var keys = params.keys;
+      for(var i = 0; i < keys.length; i++){
+        documents.delete(keys[i]);
+      }
+    } 
+    var message = {"result": {result : keys, action: "delete"}, "id" : "grid"};
+    publish("responseChannel", message);
+    return  {status : "success"}
+  }
+}else{
+  var queryParams = {};
+  if(sortType == null) sortType = "string"
+  var fieldsParams = "name, model, price, formType";
+  var queryString = 'formType = "cars"';
+  var sortString = (sortingColumnName && sortingColumnName != "" && sortingColumnName != "undefined") ? sortingColumnName+"<"+sortType+":"+sort+">" : null;
 
-queryParams["count"] = "true";
-queryParams["query"] =  queryString;
-queryParams["fields"] =  fieldsParams;
+  queryParams["count"] = "true";
+  queryParams["query"] =  queryString;
+  queryParams["fields"] =  fieldsParams;
 
-if(queryFilter){
-  var filterQuery = (filterColumnName == null)? "and (name like \"" +queryFilter+ "%\" or model like \"" +queryFilter+ "%\" or price like \"" +queryFilter+ "%\")" : "and ("+filterColumnName+"<"+sortType+">" + " like \"" +queryFilter+ "%\")";
-  queryParams["query"] += filterQuery;
+  if(queryFilter){
+    var filterQuery = (filterColumnName == null)? "and (name like \"" +queryFilter+ "%\" or model like \"" +queryFilter+ "%\" or price like \"" +queryFilter+ "%\")" : "and ("+filterColumnName+"<"+sortType+">" + " like \"" +queryFilter+ "%\")";
+    queryParams["query"] += filterQuery;
+  }
+
+  if(sortString){
+    queryParams["sort"] = sortString;
+  }
+  if(resultsPerPage){
+    queryParams["resultsPerPage"] = resultsPerPage;
+  }
+  if(pageNumber){
+    queryParams["pageNumber"] = pageNumber;
+  }
+  log.info(JSON.stringify(queryParams))
+  results = documents.query(queryParams);
+
+  return results.result
 }
 
-if(sortString){
-  queryParams["sort"] = sortString;
-}
-if(resultsPerPage){
-  queryParams["resultsPerPage"] = resultsPerPage;
-}
-if(pageNumber){
-  queryParams["pageNumber"] = pageNumber;
-}
-log.info(JSON.stringify(queryParams))
-results = documents.query(queryParams);
-
-return results.result

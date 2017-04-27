@@ -24,11 +24,11 @@ angular
 
         "cellEditable" : "<?",
         
-        "enableSorting": "<?", // client-side sorting
+        "enableClientSideSorting": "<?", // client-side sorting
 
         "api" : "@", // restApi 
 
-        "onCellValueChangedScript" : "@", // script to  be called after editing a cell
+        "onInsertRowScript" : "@",
         
         "onDeleteRowScript" : "@",
         
@@ -68,11 +68,7 @@ angular
         
         "onFormatData" : "&",
         
-        "removeRowMsgTag" : "@",
-        
         "onCellValueChanged" : "&",
-        
-        "addRowMsgTag" : "@",
         
         "msgTag" : "@",
         
@@ -122,7 +118,7 @@ angular
                     var rowsData = data.documents;
                     var count = parseInt(data.count);
 
-                    params.successCallback(rowsData, count);
+                    params.successCallback(self.cleanRows(rowsData), count);
                     self.gridOptions.api.sizeColumnsToFit();
 
                     // if there's no rows to be shown, disbale the next button
@@ -142,6 +138,30 @@ angular
           }
         }
         
+        this.cleanRows = function(rows){
+          if(!Array.isArray(rows)){
+            rows = [rows];
+          }
+          var fieldExist = false;
+          for(var i = 0; i < rows.length; i++){
+            for(row in rows[i]){
+              if(row != "key"){
+                fieldExist = false;
+                for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
+                  if(row == self.gridOptions.columnDefs[n].field){
+                    fieldExist = true;
+                    break;
+                  }
+                }
+                if(!fieldExist){
+                  delete rows[i][row];
+                }
+              }
+            }
+          }
+          return rows;
+        }
+        
         // Get data from backend
         this._createNewDatasource = function() {
           this.gridOptions.api.setDatasource(this.dataSource);
@@ -158,7 +178,7 @@ angular
         this.$onInit = function() {
           this.gridOptions = {
             angularCompileRows: true,
-            enableSorting: (typeof this.enableSorting != 'undefined')? this.enableSorting : true,
+            enableSorting: (typeof this.enableClientSideSorting != 'undefined')? this.enableClientSideSorting : true,
             enableServerSideSorting : (typeof this.enableServerSideSorting != 'undefined')? this.enableServerSideSorting : true,
             enableServerSideFilter : (typeof this.enableServerSideFilter != 'undefined') ? this.enableServerSideFilter : true,
             enableColResize : (typeof this.enableColResize != 'undefined') ? this.enableColResize : false,
@@ -181,14 +201,21 @@ angular
               	 return self.onSelectionChanged()(self.gridOptions);
               }
             },
-            onCellValueChanged : function(event) {
-               if(self.onCellValueChanged != null && typeof self.onCellValueChanged() == "function"){
-                   return self.onCellValueChanged()(self.gridOptions);
-               }
-               self._saveData(self.onCellValueChangedScript, event);
+            onCellValueChanged : function(event) { // used for adding/editing a row 
                self.oldEditedValue = event.oldValue;
                self.editedColumn = event.colDef.field;
                self.editedChildIndex = event.node.childIndex || event.node.id;
+               if(self.onCellValueChanged != null && typeof self.onCellValueChanged() == "function"){
+                  self.onCellValueChanged()(self.gridOptions);
+               }
+               if(self.gridOptions.rowModelType == "pagination" || self.gridOptions.rowModelType == "virtual"){
+                 if(self.api){
+                   self._saveData(event);
+                 }else{
+                   self.undoChanges();
+                   self.showAlert("danger", "No script defined for cell edit");
+                 }
+               }
             },
             onGridReady : function(event) {
               console.log('the grid is now ready');
@@ -218,32 +245,79 @@ angular
          this.style["clear"] = "left";
          this.style["width"] = "100%";
          this.transport = (this.transport) ? this.transport : "wss";
-         this.removeRowMsgTag = (this.removeRowMsgTag) ? this.removeRowMsgTag : "remove";
-         this.addRowMsgTag = (this.addRowMsgTag) ? this.addRowMsgTag : "add";
          this.enableDeleteRow =  (this.enableDeleteRow == true) ? false : true;
          this.enableAddRow =  (this.enableAddRow == true) ? false : true;
          this.enableClientSideFilter =  (this.enableClientSideFilter == true) ? false : true;
          this.enableServerSideFilter =  (this.enableServerSideFilter == true) ? false : true;
           
-         if(self.removeRowMsgTag){
-           dataService.subscribe(this.onRemoveRowWebSocketCall, self.removeRowMsgTag);
-         }
-         if(self.addRowMsgTag){
-           dataService.subscribe(this.onEditRowWebSocketCall, self.addRowMsgTag);
-         }
          if(self.msgTag){
-           dataService.subscribe(this.addRowWebsocketCall, self.msgTag);
+           dataService.subscribe(this.onWebSocketCall, self.msgTag);
          }
-  
+          
          $scope.$on("updateGridData", function(event, broadcastData) {
             self.broadcastData = broadcastData;
 		 	self._createNewDatasource();
         })
          
         }
+        
+        this.closeAlert = function() {
+          this.show = false;
+        };
 
-        this._saveData = function(onCellValueChangedScript, event){
-          dataService.gridHelper(onCellValueChangedScript, event.data);
+        this.showAlert = function(type, content) {
+           self.message = {
+             "type" : type,
+             "content" : content
+           }
+           self.showError = true;
+           $timeout(function(){
+             self.showError = false;
+           }, 5000);
+        }
+
+        this._saveData = function(event){
+          if(event.data && event.data.key){
+            var params = event.data;
+            params.action = "edit";
+            dataService.gridHelper(self.api, params).then(
+              function(data, response) {
+                if (data && data.status == "success") {
+                   self.showAlert("success", "Row updated successfuly");
+                } else {
+                  self.undoChanges();
+                  if(data && data.errorDetail){
+                    self.showAlert("danger", data.errorDetail);
+                  }else{
+                    self.showAlert("danger", "An error has occured");
+                  }
+                }
+              },
+              function(err) {
+                console.log("reject", err);
+                self.showAlert("danger", "An error has occured");
+              });
+          }else{
+            var params = event.data;
+            params.action = "add";
+            dataService.gridHelper(self.api, event.data).then(
+               function(data, response) {
+                if (data && data.status == "success") {
+				  self.showAlert("success", "Row Added successfuly");
+                } else {
+                  self.undoChanges();
+                  if(data && data.errorDetail){
+                    self.showAlert("danger", data.errorDetail);
+                  }else{
+                    self.showAlert("danger", "An error has occured");
+                  }
+                }
+              },
+              function(err) {
+                console.log("reject", err);
+                self.showAlert("danger", "An error has occured");
+              });
+          }
         }
 
         this.onAddRow = function(){
@@ -264,117 +338,139 @@ angular
           });
         }
         
-         this.addRowWebsocketCall = function(data){
-           var newRow = {};
-           var data = data.result;
-          // Create a json object to save new row fields 
-           for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
-              for(row in data){
-                if(typeof self.gridOptions.columnDefs[n].field != "undefined"){
-                  if(self.gridOptions.columnDefs[n].field == row){
-                     newRow[self.gridOptions.columnDefs[n].field] = data[row];
-                     break;
-                  }else{
+        this.onRemoveRow = function(key) {
+          if(self.gridOptions.rowModelType == "pagination" || self.gridOptions.rowModelType == "virtual"){
+            if(self.api){
+              var selectedNodes = self.gridOptions.api.getSelectedNodes();
+              var selectedKeys = [];
+              for(var i = 0; i < selectedNodes.length; i++){
+                selectedKeys.push(selectedNodes[i].data.key);
+              }
+              if(selectedKeys.length > 0){
+                dataService.gridHelper(self.api, {keys : selectedKeys, action: "delete"}).then(
+                  function(data, response) {
+                    if (data && data.status == "success") {
+                      var selectedNodes = self.gridOptions.api.getSelectedNodes();
+                      self.gridOptions.api.removeItems(selectedNodes);
+                      self.showAlert("success", "Row deleted successfuly");
+                    } else {
+                      if(data && data.errorDetail){
+                        self.showAlert("danger", data.errorDetail);
+                      }else{
+                        self.showAlert("danger", "An error has occured");
+                      }
+                    }
+                  },
+                  function(err) {
+                    console.log("reject", err);
+                    self.showAlert("danger", "An error has occured");
+                  });
+              }
+            }else{
+ 				self.showAlert("danger", "No script defined for delete row");
+            }
+          }else{
+            var selectedNodes = self.gridOptions.api.getSelectedNodes();
+            self.gridOptions.api.removeItems(selectedNodes);
+          }
+        }
+        
+        
+        this.onWebSocketCall = function(data){
+          if(data && data.action){
+            if(data.action == "add"){
+              var newRow = {};
+              var data = data.result;
+              // Create a json object to save new row fields 
+              for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
+                for(row in data){
+                  if(typeof self.gridOptions.columnDefs[n].field != "undefined"){
+                    if(self.gridOptions.columnDefs[n].field == row){
+                      newRow[self.gridOptions.columnDefs[n].field] = data[row];
+                      break;
+                    }else{
                       newRow[self.gridOptions.columnDefs[n].field] = "";
+                    }
                   }
                 }
               }
-           }
-
-           self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
-        }
-        
-         this.onEditRowWebSocketCall = function(data) {
-          if(data && data.result){
-             var fields = data.result;
-            
-             var rowKey = fields.key || fields["apsdb.documentKey"];
-             if(self.gridOptions.rowModelType == "pagination"){ 
+              var firstRow = self.gridOptions.api.getRenderedNodes()[0];
+              if(!firstRow.data.key){
+                firstRow.data.key = data.key;
+              }else{
+                newRow["key"] = data.key;
+                self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
+              }
+            }else if(data.action == "edit"){
+              var fields = data.result;
+              var rowKey = fields.key || fields["apsdb.documentKey"];
+              // Searches for the edited row and updates it
+              if(self.gridOptions.rowModelType == "pagination"){ 
                 self.gridOptions.api.forEachNode(function(node) {
                   if (node.data.key == rowKey) {
                     var index = node.childIndex;
                     var model = self.gridOptions.api.getModel();
                     var node = [ model.getRow(index) ][0];
-                    node.data = fields;
+                    node.data = self.cleanRows(fields)[0];
+                    node.data.key = rowKey;
                     self.gridOptions.api.refreshView();
                   }
                 });
-               var firstRow = self.gridOptions.api.getRenderedNodes()[0];
-               if(!firstRow.data.key){
-                   firstRow.data.key = rowKey;
-               }
-             }else{
-               var firstRow = self.gridOptions.api.getRenderedNodes()[0];
-               if(!firstRow.data.key){
-                   firstRow.data.key = rowKey;
-               }
-               self.gridOptions.api.refreshVirtualPageCache();
-             }
+                var firstRow = self.gridOptions.api.getRenderedNodes()[0];
+                if(!firstRow.data.key){
+                  firstRow.data.key = rowKey;
+                }
+              }else{
+                self.gridOptions.api.refreshVirtualPageCache();
+              }
+            }else if(data.action == "delete"){
+              var keys = data.result;
+              if(self.gridOptions.rowModelType == "pagination"){ 
+                for(var i = 0; i < keys.length; i++){ 
+                  self.gridOptions.api.forEachNode(function(node) {
+                    if (node.data.key == keys[i]) {
+                      var index = node.childIndex;
+                      var model = self.gridOptions.api.getModel();
+                      var node = [ model.getRow(index) ];
+                      self.gridOptions.api.removeItems(node);
+                    }
+                  });
+                }
+              }else{
+                self.gridOptions.api.refreshVirtualPageCache();
+              }
+            }
           }else{
-             if(self.oldEditedValue){
-               self.gridOptions.api.forEachNode(function(node) {
-                  if (node.childIndex == self.editedChildIndex || node.id == self.editedChildIndex) {
-                      node.setSelected(true, true);
-                  }
-                });
-               var selectedNode = self.gridOptions.api.getSelectedNodes()[0];
-               selectedNode.data[self.editedColumn] = self.oldEditedValue;
-               self.gridOptions.api.refreshView();
-             }else{
-               self.gridOptions.api.forEachNode(function(node) {
-                  if (node.childIndex == 0 || node.id == 0) {
-                      node.setSelected(true, true);
-                  }
-                });
-               var selectedNode = self.gridOptions.api.getSelectedNodes();
-               self.gridOptions.api.removeItems(selectedNode);
-             }
-             self.msg="an error has occurred";
-             self.showError = true;
-             $timeout(function(){
-                self.showError = false;
-             }, 5000);
+            if(data && data.errorDetail){
+              self.showAlert("danger", data.errorDetail);
+            }else{
+              self.showAlert("danger", "An error has occured");
+            }
           }
-        }
-
-        // remove a specific row upon WebSocket call
-        this.onRemoveRow = function(key) {
-          var selectedNodes = self.gridOptions.api.getSelectedNodes();
-          if(self.gridOptions.rowModelType == "normal"){
-            self.gridOptions.api.removeItems(selectedNodes);
-          }
-          var selectedKeys = [];
-          for(var i = 0; i < selectedNodes.length; i++){
-            selectedKeys.push(selectedNodes[i].data.key);
-          }
-          
-          dataService.gridHelper(self.onDeleteRowScript, {keys : selectedKeys});
         }
         
-         // remove rows upon WebSocket call
-        this.onRemoveRowWebSocketCall = function(data) {
-          if(data && data.result){
-             var keys = data.result;
-             if(self.gridOptions.rowModelType == "pagination"){ 
-               for(var i = 0; i < keys.length; i++){ 
-                self.gridOptions.api.forEachNode(function(node) {
-                  if (node.data.key == keys[i]) {
-                    var index = node.childIndex;
-                    var model = self.gridOptions.api.getModel();
-                    var node = [ model.getRow(index) ];
-                    self.gridOptions.api.removeItems(node);
-                  }
-                });
-               }
-             }else{
-               self.gridOptions.api.refreshVirtualPageCache();
-             }
-          }else{
-             self.msg="an error has occurred";
-             self.showError = true;
-             $timeout(function(){
-                self.showError = false;
-             }, 5000);
+        this.undoChanges = function(data){
+          if(self.oldEditedValue){ // undo field rename
+            self.gridOptions.api.forEachNode(function(node) {
+              if (node.childIndex == self.editedChildIndex || node.id == self.editedChildIndex) {
+                node.setSelected(true, true);
+              }
+            });
+            var selectedNode = self.gridOptions.api.getSelectedNodes()[0];
+            selectedNode.data[self.editedColumn] = self.oldEditedValue;
+            self.gridOptions.api.refreshView();
+          }else{ // undo insert row
+            self.gridOptions.api.forEachNode(function(node) {
+              if(self.gridOptions.rowModelType == "pagination"){
+                if (node.childIndex == 0) {
+                  node.setSelected(true, true);
+                  var selectedNode = self.gridOptions.api.getSelectedNodes();
+                  self.gridOptions.api.removeItems(selectedNode);
+                }
+              }else{
+                self.gridOptions.api.refreshVirtualPageCache();
+              }
+            });
           }
         }
         
@@ -462,7 +558,7 @@ angular
       }
       
       
-      this.getGridData = function(api, params, transport, formatterFnc, msgTag) {
+      this.getGridData = function(api, params, transport, formatterFnc) {
         
         var d = $q.defer(); 
         var self = this;

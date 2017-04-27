@@ -51,23 +51,19 @@
           {headerName: "Name", field: "name"},
           {headerName: "Model", field: "model"},
           {headerName: "Price", field: "price", type: "numeric"}]' 
-           enable-sorting='true'
-           row-data = '[
-              {name: "Toyota", model: "Celica", price: 35000},
-              {name: "Ford", model: "Mondeo", price: 32000},
-              {name: "Porsche", model: "Boxter", price: 72000}
-           ]'
-           enable-delete-row='false'
+           api='UIComponents/dashboard/frontend/examples/grid/getCarsInfo'
+           msg-tag="grid"   
+           enable-delete-row='true'
+           row-model-type='pagination'
            grid-height="500"
-           enable-add-row='false'
-           on-cell-value-changed-script='UIComponents/dashboard/frontend/examples/grid/addRow'
-           on-delete-row-script='UIComponents/dashboard/frontend/examples/grid/removeRow'
+           enable-add-row='true'
            cell-editable='true'
-           enable-client-side-filter='false'
-           enable-server-side-filter='false' 
+           enable-client-side-filter='true'
+           enable-server-side-filter='true' 
+           enable-client-side-sorting='true'
            enable-server-side-sorting='false'
-           row-model-selection='single'
-           pagination-page-size='5'
+           row-model-selection='multiple'
+           pagination-page-size='50'
            on-selection-changed="vm.test"
            on-cell-value-changed="vm.test2"    
            transport='wss'>

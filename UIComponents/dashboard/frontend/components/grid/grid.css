@@ -2,10 +2,11 @@
 /*** filter ***/
 .filter-bar {padding: 4px 0; background: #f6f6f6; display: inline-block; width: 100%; margin-bottom: 8px; font-family: "Josefin Sans",sans-serif;}
 .filter-bar .form-group {margin-bottom: 5px;}
-
+.filter-bar .tooltip-inner {min-width:85px; }
+.filter-bar .mt4 {margin-top: 4px;}
 
 /*** Grid ***/
-.ag-bootstrap {font-family: "Josefin Sans",sans-serif!important;}
+.ag-bootstrap {font-family: "Josefin Sans",sans-serif!important; text-align: left;}
 .ag-bootstrap .ag-body {background-color: #fff!important;}
 .ag-bootstrap .ag-header-cell-label {padding: 2px 2px!important;}
 .ag-bootstrap .ag-header {border-bottom: 2px solid #ddd!important;}
@@ -28,3 +29,5 @@
 .ag-bootstrap .ag-filter-apply-panel button:hover {background: #eee;}
 .ag-bootstrap .ag-cell-focus {border: 2px solid #5099a2;}
 .ag-bootstrap .ag-paging-button {}
+
+
