@@ -1,0 +1,33 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/publisher/publisherComponent.js"></script>
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    <script>
+      angular.module('myApp', ["WsClient", "Publisher"]);
+      angular.module('myApp').config(wssConfig);
+
+      angular.module('myApp').controller('testCtrl', function($scope) {
+        var vm = this;
+        vm.callback = function(data){
+          console.log("data formatter");
+          return data;
+        }
+      });
+
+    </script>
+  </head>
+  <body>
+    <div>
+      <scriptr-publisher
+                         msg-tag="publishData"
+                         onFormatData="vm.callback">
+      </scriptr-publisher>
+
+    </div>
+  </body>
+</html>
