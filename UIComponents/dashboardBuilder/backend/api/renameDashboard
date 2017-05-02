@@ -18,23 +18,58 @@ if(typeof params == 'string' && params != null){
 }
 
 var path = params.path;
-var newName = params.name;
+var newName = params.newName;
 
-var queryParams = {};
-var queryString = 'formType = "customDashboards" and path = "' + path + '"';
-
-queryParams["fields"] =  "*";
-queryParams["query"] =  queryString;
-
-var dashDoc = document.query(queryParams);
-if(dashDoc.metadata.status == "failure") {
-   return {status : "failure", errorDetails : "an error has occured when quering energyLatestData doc ", errorMsg: dashDoc};
+var newPath;
+if(path.indexOf("/") != -1){
+    var array = path.split("/");
+    var oldName = array[array.length - 1];
+    newPath =  path.replace(oldName, newName);
+}else{
+    newPath = newName;
 }
-var docs = dashDoc.result.documents
+var data = {};
+data["apsdb.update"] = true;
+data["apsdb.scriptName"] = path;
+data["apsdb.newScriptName"] = newPath;
 
-if(docs.length == 1){
-   var result = document.update({key: docs[0].key, name: newName});
-   return result.result
+var response = apsdb.callApi("SaveScript", data, null);
+if(response.metadata.status == "failure") {
+   return response.metadata;
+}else{
+    
+    var queryParams = {};
+    queryParams["fields"] =  "*";
+    queryParams["query"] =  'formType = "customDashboards" and path = "' + path + '"';
+
+    var dashDoc = document.query(queryParams);
+    if(dashDoc.metadata.status == "failure") {
+       return {status : "failure", errorDetails : "an error has occured when quering energyLatestData doc ", errorMsg: dashDoc};
+    }
+    var docs = dashDoc.result.documents
+    if(docs.length == 1){
+       var result = document.update({key: docs[0].key, name: newName, path : newPath});
+       if(result.metadata.status == "failure") {
+           return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: result};
+       }else{
+           var customDashboardsParams = {};
+           customDashboardsParams["fields"] =  "*";
+           customDashboardsParams["query"] =  'formType = "customDashboards"';
+
+           var customDashboardsResult = document.query(customDashboardsParams);
+           if(customDashboardsResult.metadata.status == "failure") {
+               return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: customDashboardsResult};
+           }
+           var message = {"result": customDashboardsResult.result, "id" : "homeCustomDashboard"};
+           publish("responseChannel", message);
+           customDashboardsResult.result = "success"
+    	   return customDashboardsResult.result;
+       }
+    }else{
+        return {status : "failure", errorDetails : "found more than one customDashboards documents"}
+    }
+    
+
 }
 
 

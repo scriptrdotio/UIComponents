@@ -196,6 +196,16 @@ li.dashboard-edit-btn {padding-top: 3px; border: 1px solid #eee; background: #f5
 .editable-click:hover, a.editable-click:hover {text-decoration: none;color: #ff8c00;border-bottom-color: #ff8c00;}
 .editable-wrap .editable-input {height: 28px;}
 
+.edit-name {
+    margin-top: 6px;
+    margin-left: 7px;
+    font-size: 18px;
+}
+
+.back-to-panel {
+   margin-left: 12px;
+}
+
 
 
 

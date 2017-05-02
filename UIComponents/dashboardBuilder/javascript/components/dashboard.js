@@ -43,38 +43,31 @@ angular
       
       this.wsClient = wsClient;
       var self = this;
-      this.show = false;
-      this.isEdit = false;
             
       this.$onInit = function() {
+        self.custom = (typeof this.custom != 'undefined')? this.custom : false,
+        self.saveScriptApi = "UIComponents/dashboardBuilder/backend/api/saveDashboard",
+        self.showTree = (typeof this.showTree != 'undefined')? this.showTree : true,  
+        self.loading = true;  
+        self.showPanelMsg = false;  
         
-        this.custom = (typeof this.custom != 'undefined')? this.custom : false,
-        this.plugInScriptName = (typeof this.plugInScriptName != 'undefined')? this.plugInScriptName : "dashboard",  
-        this.saveScriptApi = "UIComponents/dashboardBuilder/backend/api/saveDashboard",
-          
-        this.showTree = (typeof this.showTree != 'undefined')? this.showTree : true,  
-          
-          
-        this.dashboardCounter = 1;
-        this.mainScriptName = this.plugInScriptName;
-        this.scriptName = this.plugInScriptName;
-        this.scriptName += "_" + this.dashboardCounter;
-        this.showDashboard = false;
-        this.dashboardScriptName = "/" +  this.scriptName;
-        this.switchStatus = false;
-        self = this;
         httpClient
           .get("UIComponents/dashboardBuilder/backend/api/loadScripts", {})
           .then(
           function(data, response) {
             if(data && data.documents){
               self.customDashboards = data.documents;
-              self.dashboardCounter = parseInt(data.aggregate.pageScope.value) + 1;
+              self.loading = false;
+              if(data.documents.length == 0){
+                  self.noDashboards = true;
+              }  
             }else{
               console.log("No data found");
+              self.loading = false;  
             }
           },
           function(err) {
+            self.loading = false;    
             console
               .log(
               "reject published promise",
@@ -216,25 +209,13 @@ angular
          }
       }
       
-      this.checkForSavedScript = function(){
-        if(this.savedScript){
-          return true;
-        }else{
-          this.switchStatus = true;
-          self.showAlert("danger", "Please save your dashboard first.");
-        }
-      } 
-
       this.trustSrc = function(src) {
         return $sce.trustAsResourceUrl(src);
       }
       this.addCustomDashboard = function(){
         this.showDashboard = true;
-        this.switchStatus = true;
-        this.scriptName = this.mainScriptName;
-        this.scriptName += "_" + this.dashboardCounter;
-        this.dashboardScriptName =  "/" + this.scriptName;
         self.savedScript = null;
+        this.switchStatus = true;
         this.model.scriptName = null;
         self.isEdit = false;
         this.dashboard.widgets = [];
@@ -249,7 +230,11 @@ angular
       this.homeCallback = function(data){
         if(data && data.documents){
           self.customDashboards = data.documents;
-          self.dashboardCounter = parseInt(data.aggregate.pageScope.value) + 1;
+          if(data.documents.length == 0){
+              self.noDashboards = true;
+          }else{
+              self.noDashboards = false;
+          } 
         }else{
           console.log("No data found");
         }
@@ -267,14 +252,10 @@ angular
           .then(
           function(data, response) {
             console.log("success");
-            for(var i = 0; i < self.customDashboards.length; i++){
-              if(self.customDahboards[i].path == data){
-                self.customDahboards.splice(i, 1);
-                break;
-              }
-            }
+            self.showMsg("success", "The dashboard has been deleted successfully.");
           },
           function(err) {
+       //     self.showMsg("failure", err.data.response.metadata.errorDetail);   
             console
               .log(
               "reject published promise",
@@ -282,24 +263,42 @@ angular
           });
       }
 
-      this.renameDashboard = function(name, path){
-        console.log(name, path);
-        var params = {
-          "path" : path,
-          "name" : name
-        }
-        httpClient
-          .get("UIComponents/dashboardBuilder/backend/api/renameDashboard", params)
-          .then(
-          function(data, response) {
-            console.log("success");
-          },
-          function(err) {
-            console
-              .log(
-              "reject published promise",
-              err);
-          });
+      this.renameDashboard = function(newName, path){
+          
+         var array = path.split("/");
+         var oldName = array[array.length - 1]; 
+          
+         if(oldName != newName) {
+             console.log(name, path);
+            var params = {
+              "path" : path,
+              "newName" : newName
+            }
+            var self = this;
+            httpClient
+              .get("UIComponents/dashboardBuilder/backend/api/renameDashboard", params)
+              .then(
+              function(data, response) {
+                if(data){
+                    console.log("success");
+                    self.showMsg("success", "The dashboard has been renamed successfully.");
+                }else{
+                    if(data && data.errorDetail){
+                        self.showMsg("danger", data.errorDetail);
+                    }else{
+                        self.showMsg("danger", "An error has occured");
+                    }
+                }
+              },
+              function(err) {
+                self.showMsg("danger", err.data.response.metadata.errorDetail);
+                console
+                  .log(
+                  "reject published promise",
+                  err);
+              });
+         }
+          
       }
           
       this.viewDasboard = function() {
@@ -317,6 +316,19 @@ angular
            "content": content
          }
          this.show = true
+      }
+      
+      this.closeMsg = function() {
+          this.showPanelMsg = false;
+      };
+
+      this.showMsg = function(type, content) {
+          this.closeMsg(); 
+          this.message = {
+              "type": type,
+              "content": content
+          }
+          this.showPanelMsg = true;
       }
       
       this.getEditorValue = function() {
@@ -507,7 +519,7 @@ angular
         $scope.$broadcast('schemaFormValidate');
 
         // Then we check if the form is valid
-        if (form.$valid || custom) {
+        if (form.$valid) {
           var data = {};
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
@@ -519,7 +531,7 @@ angular
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
-          scriptData["scriptName"] =  this.model.scriptName || this.scriptName;
+          scriptData["scriptName"] =  this.model.scriptName;
           scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
           if(self.isEdit) {
             scriptData["update"] = true;
@@ -528,7 +540,6 @@ angular
             scriptData["previousScriptName"]  = self.savedScript;
           }
           scriptData["custom"] = this.custom;
-          scriptData["dashboardCounter"] = this.dashboardCounter;
           scriptrService.saveScript(scriptData, self.saveScriptApi).then(
             function(data, response) {
                console.log("resolve", data)

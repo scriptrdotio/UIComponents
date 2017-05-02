@@ -55,14 +55,12 @@ data["apsdb.content"] = JSON.stringify({
 
 
 var response = apsdb.callApi("SaveFile", data, null);
-
 if(response.metadata.status == "failure") {
    return response.metadata;
-} else if(custom && !params["update"]) {
+} else if(custom) {
   
   var fields = {};
   var name = script_name;
-  var counter = params["dashboardCounter"];
   if(script_name.indexOf("/") != -1){
      var array = script_name.split("/");
      name = array[array.length - 1];
@@ -70,23 +68,33 @@ if(response.metadata.status == "failure") {
   fields["formType"] = "customDashboards";
   fields["path"] = script_name;
   fields["name"] = name;
-  fields["counter"] = counter;
   
   fields["meta.types"] = {
         "counter": "numeric"
-    }
-  var saveFieldsResult = documents.save(fields);
+  }
+  if(params["update"]){ // update the document
+    var path = previous_script_name;
+ 	var queryParams = {};
+    var queryString = 'formType = "customDashboards" and path ="' + previous_script_name + '"';
+    queryParams["fields"] =  "*";
+    queryParams["query"] =  queryString;
 
+    var queryResults = documents.query(queryParams);
+    if(queryResults.metadata.status == "failure") {
+      return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: queryResults};
+    } else{
+      fields["key"] = queryResults.result.documents[0].key
+    }
+  }
+  var saveFieldsResult = documents.save(fields);
   if(saveFieldsResult.metadata.status == "failure") {
      return saveFieldsResult.metadata;
   } else {
- 
     var queryParams = {};
     var queryString = 'formType = "customDashboards"';
 
     queryParams["fields"] =  "*";
     queryParams["query"] =  queryString;
-    queryParams["aggregateExpression"] = "max($counter)";
 
     var results;
     results = documents.query(queryParams);

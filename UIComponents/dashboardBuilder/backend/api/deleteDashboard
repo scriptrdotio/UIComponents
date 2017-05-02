@@ -1,5 +1,4 @@
 var document = require("document");
-
 var params = {};
 
 if(request.body != null){
@@ -17,7 +16,6 @@ if(typeof params == 'string' && params != null){
     }
 }
 
-
 var publishResponse = function(channel, data, request, id) {
    var message = {"result": data};
    if(request.body && request.body.id) {
@@ -30,12 +28,10 @@ var publishResponse = function(channel, data, request, id) {
 }
 
 var path = params.path;
-
- var queryParams = {};
-    var queryString = 'formType = "customDashboards" and path ="' + path + '"';
-
-    queryParams["fields"] =  "*";
-    queryParams["query"] =  queryString;
+var queryParams = {};
+var queryString = 'formType = "customDashboards" and path ="' + path + '"';
+queryParams["fields"] =  "*";
+queryParams["query"] =  queryString;
 
 
 var results;
@@ -44,18 +40,14 @@ if(results.metadata.status == "failure") {
   return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: results};
 }
 
-
 var deleteResult =  document.delete(results.result.documents[0].key);
 apsdb.callApi("DeleteFile", {"apsdb.name": path}, {});
-
-
 
 var counterQueryParams = {};
 var counterQueryString = 'formType = "customDashboards"';
 
 counterQueryParams["fields"] =  "*";
 counterQueryParams["query"] =  counterQueryString;
-counterQueryParams["aggregateExpression"] = "max($counter)";
 
 var counterResults;
 counterResults = document.query(counterQueryParams);
@@ -64,15 +56,7 @@ if(counterResults.metadata.status == "failure") {
 }
 publishResponse("responseChannel", counterResults.result, request, "homeCustomDashboard");
 
-
 return path;
-
-
-
-
-
-
-
 
 function toHex(input){
   try { hexcase } catch(e) { hexcase=0; }
