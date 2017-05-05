@@ -67,8 +67,9 @@ angular
          
          this.onFilterChanged = function() {
            console.log("submit");
-           this.searching = true;
            if(this.searchValue != null && this.searchValue != ""){
+                this.searchValue = this.treeSearchCriteria; 
+                this.searching = true;
         	   initDataService(this.transport, this.searchValue);
            }
         }
@@ -109,6 +110,7 @@ angular
                         self.consumeData(data)
                       },
                       function(err) {
+                        self.consumeData();  
                         console
                           .log(
                           "reject published promise",
