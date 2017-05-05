@@ -60,6 +60,7 @@ angular
            this.transport = (this.transport) ? this.transport : "wss";
            
            if(this.loadTree){
+             this.searchValue = this.treeSearchCriteria;    
              this.searching = true;
              initDataService(this.transport, this.searchValue);
            }
