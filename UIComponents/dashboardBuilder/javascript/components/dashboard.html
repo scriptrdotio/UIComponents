@@ -1,21 +1,16 @@
 <div ng-if="$ctrl.custom">
-  <div ng-if="$ctrl.showDashboard && !$ctrl.switchStatus">
-    <div class="col-xs-12 col-sm-4">
-      <div class="dashboard-toolbar">
-        <ul>
-          <li ng-click="$ctrl.showDashboard = false"><a href="javasscript:void(0);"><i class="fa fa-angle-double-left"></i> Back to dashboard panel</a></li>
-          </div>
-      </div>
-      <div class="col-xs-12 col-sm-8 pull-right">
-        <ul class="pull-right">
-          <li class="dashboard-edit-btn"><span><i class="fa fa-pencil" aria-hidden="true"></i> Edit dashboard</span>
-            <toggle-switch
-                           ng-model="$ctrl.switchStatus"
-                           class="switch-success switch-mini">
-            </toggle-switch>
-          </li>
-        </ul>        
-      </div>
+    <div ng-if="$ctrl.showDashboard && !$ctrl.switchStatus">
+        <div class="col-xs-12 dashboard-toolbar">
+            <ul>
+                <li ng-click="$ctrl.showDashboard = false"><a href="javasscript:void(0);" class="btn btn-info btn-sm"><i class="fa fa-arrow-circle-left"></i> Back to dashboard panel</a></li>
+                <li class="dashboard-edit-btn pull-right"><span>Edit dashboard</span>
+                    <toggle-switch
+                                   ng-model="$ctrl.switchStatus"
+                                   class="switch-success switch-mini">
+                    </toggle-switch>
+                </li>
+            </ul>
+        </div>
     </div>
     <div ng-if="!$ctrl.showDashboard" class="container">
       <div ng-click="$ctrl.addCustomDashboard()" class="col-xs-12 mb20">
@@ -27,7 +22,9 @@
           <div><button type="button" class="btn btn-warning add-btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</button></div>
         </div>
       </div>
-      <div ng-if="$ctrl.showPanelMsg && !$ctrl.showDashboard" class="col-xs-12 mb20" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')  + ' m10'" close="$ctrl.closeMsg()" dismiss-on-timeout="5000">{{$ctrl.message.content}}</div>
+        <div ng-if="$ctrl.showPanelMsg && !$ctrl.showDashboard" class="col-xs-12">
+            <div uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')" close="$ctrl.closeMsg()" dismiss-on-timeout="10000">{{$ctrl.message.content}}</div>
+        </div>  
       <span class="col-xs-12 col-sm-4 mb20" ng-show="$ctrl.noDashboards">No Dashboards created.</span>    
       <div class="text-center loading" ng-show="$ctrl.loading"><i class="fa fa-spinner fa-spin fa-3x"></i></div> 
       <div ng-repeat="dashboard in $ctrl.customDashboards track by $index" class="col-xs-12 col-sm-4 mb20 custom-dashboard-box">
@@ -78,11 +75,12 @@
       <!-- begin page header -->
       <div class="page-header col-xs-12">
            <div ng-if="$ctrl.show" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')  + ' m10'" close="$ctrl.closeAlert()" dismiss-on-timeout="5000">{{$ctrl.message.content}}</div>
-           <div ng-if="$ctrl.custom" ng-click="$ctrl.showDashboard = false"><a class="back-to-panel" href="javasscript:void(0);"><i class="fa fa-angle-double-left"></i> Back to dashboard panel</a></div>   
            <form name="scriptForm" ng-submit="$ctrl.saveDashboard(scriptForm)">
             <div class="form-group col-xs-12 col-sm-6">
               <div class="row">
-                <div class="col-xs-12 col-sm-10 pdl10 pdr0"><div ng-if="!$ctrl.isInIde" sf-options="$ctrl.frmGlobalOptions" sf-schema="$ctrl.schema" sf-form="$ctrl.form" sf-model="$ctrl.model" ></div>
+                                             <div ng-if="$ctrl.custom" ng-click="$ctrl.showDashboard = false" class="col-xs-12 col-sm-2 pdr0"><a class="back-to-panel btn-block btn btn-info" href="javasscript:void(0);"><i class="fa fa-arrow-circle-left"></i> Back</a></div>   
+
+                <div class="col-xs-12 col-sm-8 pdl10 pdr0"><div ng-if="!$ctrl.isInIde" sf-options="$ctrl.frmGlobalOptions" sf-schema="$ctrl.schema" sf-form="$ctrl.form" sf-model="$ctrl.model" ></div>
                 </div>
                 <div class="col-xs-12 col-sm-2 pdl0"><button class="btn-sm  btn btn-warning ml5 btn-block"  type="submit" ng-if="!$ctrl.isInIde"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button></div>
               </div>
