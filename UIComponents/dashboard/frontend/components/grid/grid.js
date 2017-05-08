@@ -1,5 +1,5 @@
 agGrid.initialiseAgGridWithAngular1(angular);
-angular.module('Grid', ['agGrid']);
+angular.module('Grid', ['agGrid', 'ui.bootstrap']);
 
 angular
   .module("Grid")
@@ -78,7 +78,7 @@ angular
       },
 
       templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
-      controller : function($scope, $window, $timeout, dataService) {
+      controller : function($scope, $window, $uibModal, $timeout, dataService) {
 
         var self = this;
         
@@ -337,6 +337,21 @@ angular
               charPress: self.gridOptions.columnDefs[0].field
           });
         }
+        
+        
+       this.openConfirmationPopUp = function(){
+           var modalInstance = $uibModal.open({
+               controller: 'PopupCont',
+               templateUrl: '/UIComponents/dashboard/frontend/components/grid/popup.html',
+               resolve: {
+                   grid: function () {
+                       return self;
+                   }
+               }
+           });
+       } 
+        
+        
         
         this.onRemoveRow = function(key) {
           if(self.gridOptions.rowModelType == "pagination" || self.gridOptions.rowModelType == "virtual"){
@@ -621,3 +636,21 @@ angular
     }
       
 });
+
+
+angular.module('Grid').controller('PopupCont', ['$scope','$uibModalInstance',function ($scope, $uibModalInstance) {
+            $scope.close = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+             $scope.onRemoveRow = function () {
+                console.log("deleting..");
+                this.$resolve.grid.onRemoveRow();
+                $uibModalInstance.dismiss('cancel'); 
+            };
+            
+            
+        }]);
+
+
+
+

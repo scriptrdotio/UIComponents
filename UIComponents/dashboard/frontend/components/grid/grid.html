@@ -14,7 +14,7 @@
       </div>
     </div>  
     <div class="col-xs-12 col-sm-2 text-right">
-      <button ng-hide= {{$ctrl.enableDeleteRow}} ng-click="$ctrl.onRemoveRow()" class="btn btn-danger mt4" tooltip-placement="top" uib-tooltip="Delete selected row"><i class="fa fa-close" aria-hidden="true"></i></button>
+      <button ng-hide= {{$ctrl.enableDeleteRow}} ng-click="$ctrl.openConfirmationPopUp()" class="btn btn-danger mt4" tooltip-placement="top" uib-tooltip="Delete selected row"><i class="fa fa-close" aria-hidden="true"></i></button>
       <button ng-hide= {{$ctrl.enableAddRow}} ng-click="$ctrl.onAddRow()" class="btn btn-success mt4" tooltip-placement="top" uib-tooltip="Insert row"><i class="fa fa-plus" aria-hidden="true"></i></button>
     </div>
    </form>  
