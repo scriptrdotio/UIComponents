@@ -252,7 +252,7 @@ angular
           .then(
           function(data, response) {
             console.log("success");
-            self.showMsg("success", "The dashboard has been deleted successfully.");
+      //      self.showMsg("success", "The dashboard has been deleted successfully.");
           },
           function(err) {
        //     self.showMsg("failure", err.data.response.metadata.errorDetail);   
@@ -261,6 +261,24 @@ angular
               "reject published promise",
               err);
           });
+      }
+      
+      this.deleteDashboardPopUp = function(path, name){
+        var modalInstance = $uibModal.open({
+               controller: 'PopupCont',
+               templateUrl: '/UIComponents/dashboardBuilder/javascript/components/deletePopup.html',
+               resolve: {
+                   dashboard: function () {
+                       return self;
+                   },
+                   path: function () {
+                       return path;
+                   },
+                   name: function () {
+                       return name;
+                   }
+               }
+           });  
       }
 
       this.renameDashboard = function(newName, path){
@@ -279,7 +297,7 @@ angular
               .get("UIComponents/dashboardBuilder/backend/api/renameDashboard", params)
               .then(
               function(data, response) {
-                if(data){
+                if(data == "success"){
                     console.log("success");
                     self.showMsg("success", "The dashboard has been renamed successfully.");
                 }else{
@@ -302,7 +320,11 @@ angular
       }
           
       this.viewDasboard = function() {
-         $window.open("/"+this.savedScript);
+         if(this.scriptName){
+              $window.open("/"+this.savedScript); 
+         }else{
+             self.showAlert("danger", "Please save your dashboard before viewing it");
+         }
       };
       
       this.closeAlert = function() {
@@ -810,3 +832,19 @@ angular
       };
     }
 });
+
+angular.module('DashboardBuilder').controller('PopupCont', ['$scope','$uibModalInstance',function ($scope, $uibModalInstance) {
+       
+            $scope.name =  $scope.$resolve.name;
+      
+            $scope.close = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+             $scope.ondeleteDashboard = function () {
+                this.$resolve.dashboard.deleteDashboard(this.$resolve.path);
+                $uibModalInstance.dismiss('cancel'); 
+            };
+            
+            
+        }]);
+
