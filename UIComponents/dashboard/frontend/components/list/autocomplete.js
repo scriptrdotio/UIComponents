@@ -3,8 +3,17 @@ angular
   .component(
   'scriptrAutocomplete',
   {
+      
     bindings : {
         "id": "@",
+        
+        "objects" : "<?",
+        
+        "hideObjects": "<?",
+        
+        "listSelectedObject" : "<?",
+        
+        "defaultSetObject" : "<?",
       
 		"placeholder": "@",	//Placeholder text for the search field.
       
@@ -75,7 +84,7 @@ angular
       
     },
     templateUrl: "/UIComponents/dashboard/frontend/components/list/autocomplete.html",
-    controller: function(wsClient, httpClient) {
+    controller: function($scope,wsClient, httpClient) {
       
          var self = this;
       
@@ -86,8 +95,26 @@ angular
            this.textSearching = (typeof this.textSearching != 'undefined') ? this.textSearching : false;
            
            this.transport = (this.transport) ? this.transport : "wss";
-           
-           initDataService(this.transport);
+             
+           this.objects = (this.objects) ? this.objects : []; 
+            
+           if(this.listSelectedObject && this.objects.length > 0 && !self.api){
+                $scope.$broadcast('angucomplete-alt:setData', self.id, this.localData);
+                $scope.$broadcast('angucomplete-alt:setSelectedObjects', self.id, this.objects);
+           } 
+             
+             
+           if(self.api){
+               self.showList = false;
+               initDataService(this.transport);
+           }  
+         }
+         
+         self.addObjectToList = function(obj){
+             $scope.$broadcast('angucomplete-alt:addObjectToList', self.id, obj);
+             if(this.objects.length == 0 && typeof this.defaultSetObject != 'undefined'){
+                 this.objects = JSON.parse(JSON.stringify(this.defaultSetObject));
+             }
          }
          
          var initDataService = function(transport) {
@@ -121,10 +148,15 @@ angular
          }
          
          this.consumeData = function(data, response) {
+           self.showList = true;  
            if(typeof self.onFormatData() == "function"){
              data = self.onFormatData()(data);
            }
-           this.localData = data;
+           this.localData = data;  
+           if(this.listSelectedObject && this.objects.length > 0){
+                $scope.$broadcast('angucomplete-alt:setData', self.id, this.localData);
+                $scope.$broadcast('angucomplete-alt:setSelectedObjects', self.id, this.objects);
+           }  
          }
     }
 });

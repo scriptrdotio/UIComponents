@@ -1,33 +1,48 @@
 <div>
-  <angucomplete-alt 
-                    id="{{$ctrl.id}}"
-                    placeholder="{{$ctrl.placeholder}}"
-                    pause="{{$ctrl.pause}}"
-                    selected-object="$ctrl.selectedObject"
-                    local-data="$ctrl.localData"
-                    search-fields="{{$ctrl.searchFields}}"
-                    title-field="{{$ctrl.titleField}}"
-                    description-field="{{$ctrl.descriptionField}}"
-                    image-field="{{$ctrl.imageField}}"
-                    minlength="{{$ctrl.minlength}}"
-                    input-class="{{$ctrl.inputClass}}"
-                    match-class="{{$ctrl.matchClass}}"
-                    maxlength= "{{$ctrl.maxlength}}"	
-                    selected-object-data= "$ctrl.selectedObjectData"	
-                    input-name= "{{$ctrl.inputName}}"
-                    clear-selected= "{{$ctrl.clearSelected}}"
-                    override-suggestions= "{{$ctrl.overrideSuggestions}}"	
-                    field-required= "$ctrl.fieldRequired"
-                    field-required-class= "{{$ctrl.fieldRequiredClass}}"	
-                    initial-value= "$ctrl.initialValue"	
-                    input-changed= "$ctrl.inputChanged"
-                    auto-match= "$ctrl.autoMatch"
-                    focus-in= "$ctrl.focusIn"	
-                    focus-out= "$ctrl.focusOut"	
-                    disable-input= "$ctrl.disableInput"	
-                    focus-first= "$ctrl.focusFirst"	
-                    field-tabindex= "{{$ctrl.fieldTabindex}}"
-                    text-searching= "{{$ctrl.textSearching}}"	
-                    text-no-results= "{{$ctrl.textNoResults}}"
-                    />
+    <span ng-show="$ctrl.showList" ng-hide="$ctrl.hideObjects" class="script-wrap"  ng-if="$ctrl.listSelectedObject" ng-repeat="obj in $ctrl.objects track by $index">
+        <span style="position: relative;">
+            <span class="script-text" uib-tooltip="{{obj[$ctrl.titleField]}}" tooltip-placement="bottom"><i class="mr5 text-primary {{obj.icon}}"></i> {{obj[$ctrl.titleField]}}</span>
+            <a ng-if="obj[$ctrl.titleField] != 'nobody'" href="javascript:void(0);" ng-click="$ctrl.addObjectToList(obj)" uib-tooltip="Remove" tooltip-placement="right"><i class="fa fa-close"></i></a>
+        </span>
+    </span>  
+    <div class="clearfix"></div>
+    
+    <div class="text-center loading" ng-show="!$ctrl.showList"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
+
+    <angucomplete-alt ng-show="$ctrl.showList"
+                      id="{{$ctrl.id}}"
+                      placeholder="{{$ctrl.placeholder}}"
+                      default-set-object="$ctrl.defaultSetObject"
+                      pause="{{$ctrl.pause}}"
+                      hide-objects="$ctrl.hideObjects"
+                      list-selected-object="$ctrl.listSelectedObject"
+                      objects="$ctrl.objects"
+                      selected-object="$ctrl.selectedObject"
+                      local-data="$ctrl.localData"
+                      image-field="{{$ctrl.imageField}}"
+                      search-fields="{{$ctrl.searchFields}}"
+                      title-field="{{$ctrl.titleField}}"
+                      description-field="{{$ctrl.descriptionField}}"
+                      image-field="{{$ctrl.imageField}}"
+                      minlength="{{$ctrl.minlength}}"
+                      input-class="{{$ctrl.inputClass}}"
+                      match-class="{{$ctrl.matchClass}}"
+                      maxlength= "{{$ctrl.maxlength}}"	
+                      selected-object-data= "$ctrl.selectedObjectData"	
+                      input-name= "{{$ctrl.inputName}}"
+                      clear-selected= "{{$ctrl.clearSelected}}"
+                      override-suggestions= "{{$ctrl.overrideSuggestions}}"	
+                      field-required= "$ctrl.fieldRequired"
+                      field-required-class= "{{$ctrl.fieldRequiredClass}}"	
+                      initial-value= "$ctrl.initialValue"	
+                      input-changed= "$ctrl.inputChanged"
+                      auto-match= "$ctrl.autoMatch"
+                      focus-in= "$ctrl.focusIn"	
+                      focus-out= "$ctrl.focusOut"	
+                      disable-input= "$ctrl.disableInput"	
+                      focus-first= "$ctrl.focusFirst"	
+                      field-tabindex= "{{$ctrl.fieldTabindex}}"
+                      text-searching= "{{$ctrl.textSearching}}"	
+                      text-no-results= "{{$ctrl.textNoResults}}"
+                      />
 </div>

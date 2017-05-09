@@ -1,0 +1,26 @@
+
+/*** acl restrictions ***/
+.acl-wrapper {padding: 5px;}
+.acl-btn a {display: inline-block; padding: 2px 5px; position: relative; background: #efefef; border: 1px solid #ddd; border-radius: 4px;}
+
+.acl-btn i {display: none; position: absolute; right: -3px; top: -7px;}
+.acl-btn.locked .acl-icon-locked {display: block;}
+.acl-btn.unlocked .acl-icon-unlocked {display: block;}
+
+
+.mt10 {margin-top: 10px;}
+.italic {font-style: italic;}
+.fnt12 {font-size: 12px;}
+.acl-controls .angucomplete-dropdown {width: 96%;}
+.acl-controls .angucomplete-image {width: 24px; height: 24px;}
+.acl-controls .loading {margin-bottom: 15px;}
+.acl-controls .modal-body {background: #eee;}
+.acl-controls .angucomplete-holder {margin-top: 12px; padding-top: 20px; clear: both;}
+
+.red {
+    color: #f00 !important;
+}
+
+.light-green {
+    color: #8cc68d;
+}

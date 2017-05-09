@@ -1,7 +1,3 @@
-.angucomplete-holder {
-    position: relative;
-}
-
 .angucomplete-dropdown {
     border-color: #ececec;
     border-width: 1px;
@@ -15,6 +11,8 @@
     /*top: 32px;
     left: 0px;
     */
+    overflow-y: auto;
+    max-height: 600px; // your preference
     margin-top: -6px;
     background-color: #ffffff;
 }
@@ -65,3 +63,46 @@
     height: 34px;
     width: 34px;
 }
+
+
+/*** acl listing ***/
+.mr5 {margin-right: 5px;}
+.text-primary {color: #ff8c00 !important;}
+.script-wrap {
+    border: 1px solid #d8d8d8;
+    position: relative;
+    background: #f9f9f9;
+    color: #8c8c8c;
+    display: block;
+    float: left;
+    margin: 0 14px 5px 0;
+    padding: 3px 6px;
+    line-height: 17px;
+    white-space: nowrap;
+}
+
+.script-text {
+    margin-right: 10px;
+    background: #f9f9f9;
+    cursor: default;
+    display: inline-block;
+    max-width: 600px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: auto;
+    width: 120px;
+}
+
+.script-wrap  span i {
+    color: #727272;
+}
+
+.script-wrap a:link, .script-wrap a:visited {
+    float: right;
+    margin-top: 2px;
+}
+
+.script-wrap span .fa-close {
+    float: right;
+}
+

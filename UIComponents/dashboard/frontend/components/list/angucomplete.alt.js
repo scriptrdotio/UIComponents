@@ -68,6 +68,7 @@
       var inputField = elem.find('input');
       var minlength = MIN_LENGTH;
       var searchTimer = null;
+      var removedItems = []; 
       var hideTimer;
       var requiredClassName = REQUIRED_CLASS;
       var responseFormatter;
@@ -80,7 +81,7 @@
       var unbindInitialValue;
       var displaySearching;
       var displayNoResults;
-
+        
       elem.on('mousedown', function(event) {
         if (event.target.id) {
           mousedownOn = event.target.id;
@@ -132,6 +133,53 @@
           handleInputChange(newval);
         }
       });
+        
+      scope.$on('angucomplete-alt:setData', function (event, elementId, data) {
+          scope.localData = data;
+      })
+      
+      scope.$on('angucomplete-alt:getSetObjects', function (event, elementId) {
+          return  scope.objects;
+      })
+        
+      scope.$on('angucomplete-alt:setSelectedObjects', function (event, elementId, objects) {
+          for(var x = 0; x < objects.length; x++){
+              for(var i = 0; i < scope.localData.length; i++){
+                  if(scope.localData[i][scope.titleField] == objects[x][scope.titleField]){
+                      removedItems.push(scope.localData[i]);
+                      scope.localData.splice(i, 1);
+                      break;
+                  }
+              }
+          }
+          scope.objects = JSON.parse(JSON.stringify(removedItems));
+          
+          if(removedItems.length == 0){ //set default object (ex: nobody)
+              scope.objects = JSON.parse(JSON.stringify(scope.defaultSetObject));
+          }else{
+              scope.objects = JSON.parse(JSON.stringify(removedItems));
+          }
+          
+      });  
+        
+      scope.$on('angucomplete-alt:addObjectToList', function (event, elementId, objects) {
+          if(!Array.isArray(objects)) objects = [objects];
+          for(var i = 0; i < removedItems.length; i++){
+            for(var x = 0; x < objects.length; x++){  
+              if(removedItems[i][scope.titleField] == objects[x][scope.titleField]){
+                  scope.localData.push(removedItems[i]);
+                  removedItems.splice(i, 1);
+                  for(var y = 0; y < scope.objects.length; y++){
+                      for(var z = 0; z < objects.length; z++){
+                          if(scope.objects[y][scope.titleField] == objects[z][scope.titleField]){
+                              scope.objects.splice(i, 1);
+                          }
+                      }
+                  }
+              }
+            }
+          } 
+      });  
 
       function handleInputChange(newval, initial) {
         if (newval) {
@@ -168,8 +216,21 @@
         }
         else {
           scope.selectedObject = value;
-        }
-
+        }  
+        if(scope.listSelectedObject){
+           // remove default object (ex: "nobody") from the listing area
+           removeDefaultSetObject(); 
+           // Add the selected object to the listing area
+           scope.objects.push(value.originalObject);
+           // remove the selected object from the list 
+           for(var i = 0; i < scope.localData.length; i++){
+               if(scope.localData[i][scope.titleField] == value.originalObject.code){
+                   removedItems.push(scope.localData[i]);
+                   scope.localData.splice(i, 1);
+                   break;
+               }
+           } 
+        }  
         if (value) {
           handleRequired(true);
         }
@@ -177,6 +238,16 @@
           handleRequired(false);
         }
       }
+        
+      function removeDefaultSetObject(){
+          for(var i = 0; i < scope.objects.length; i++){
+              for(var x = 0; x < scope.defaultSetObject.length; x++){ 
+                  if(scope.objects[i][scope.titleField] == scope.defaultSetObject[x][scope.titleField]){
+                      scope.objects.splice(i, 1);
+                  }
+              }
+          }
+      }  
 
       function callFunctionOrIdentity(fn) {
         return function(data) {
@@ -785,6 +856,10 @@
       require: '^?form',
       scope: {
         selectedObject: '=',
+        listSelectedObject: '=',
+        hideObjects:"=",  
+        objects: '=', 
+        defaultSetObject: '<?',  
         selectedObjectData: '=',
         disableInput: '=',
         initialValue: '=',

@@ -75,9 +75,18 @@
               <div class="row">
                 <div ng-if="$ctrl.custom" ng-click="$ctrl.showDashboard = false" class="col-xs-12 col-sm-4 pdr0"><a class="back-to-panel btn-block btn btn-info" href="javasscript:void(0);"><i class="fa fa-arrow-circle-left"></i> Back to dashboard panel</a></div>   
 
-                <div class="col-xs-12 col-sm-6 pdl10 pdr0"><div ng-if="!$ctrl.isInIde" sf-options="$ctrl.frmGlobalOptions" sf-schema="$ctrl.schema" sf-form="$ctrl.form" sf-model="$ctrl.model" ></div>
-                </div>
-                <div class="col-xs-12 col-sm-2 pdl0"><button class="btn-sm  btn btn-warning ml5 btn-block"  type="submit" ng-if="!$ctrl.isInIde"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button></div>
+                <div class="col-xs-12 col-sm-5 pdl10 pdr0"><div ng-if="!$ctrl.isInIde" sf-options="$ctrl.frmGlobalOptions" sf-schema="$ctrl.schema" sf-form="$ctrl.form" sf-model="$ctrl.model" ></div>
+                  </div>
+                  <div class="col-xs-12 col-sm-2 pdl0 pdr0"><button class="btn-sm  btn btn-warning ml5 btn-block"  type="submit" ng-if="!$ctrl.isInIde"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                  </div>
+                   <div ng-if="$ctrl.savedScript" class="col-xs-12 col-sm-1">
+                      <scriptr-acl
+                                   users="$ctrl.users"
+                                   default-set-object="[{code : 'nobody',icon : 'fa fa-group'}]"
+                                   on-save="$ctrl.onSave"       
+                                   >
+                      </scriptr-acl>
+                  </div>
               </div>
             </div>
             <div class="col-xs-12 col-sm-6 pull-right">

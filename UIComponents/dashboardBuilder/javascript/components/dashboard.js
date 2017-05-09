@@ -39,10 +39,11 @@ angular
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $timeout, $sce, $window, httpClient, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, _) {
+    controller: function($scope, $timeout, $sce, $window, httpClient, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, $q, _) {
       
       this.wsClient = wsClient;
       var self = this;
+      self.acls;  
             
       this.$onInit = function() {
         self.custom = (typeof this.custom != 'undefined')? this.custom : false,
@@ -50,6 +51,68 @@ angular
         self.showTree = (typeof this.showTree != 'undefined')? this.showTree : true,  
         self.loading = true;  
         self.showPanelMsg = false;  
+          
+        self.users = [{
+          code : "anonymous",
+          icon : "fa fa-group"    
+        }];
+          
+        self.onSave = function(acls){
+            /*
+            var d = $q.defer(); 
+            self.testsave().then(
+              function(data, response) {
+                  console.log("success");
+                  d.resolve(data, response);
+              },
+              function(err) {
+                console.log("reject", err);
+                d.reject(err);
+              });
+              return d.promise;
+            */
+            
+            
+            console.log("acl saved");
+            self.acls = acls.join(";");
+            var d = $q.defer(); 
+            self.saveDashboard(null, null, true).then(
+              function(data, response) {
+                  console.log("success");
+                  d.resolve(data, response);
+              },
+              function(err) {
+                console.log("reject", err);
+                d.reject(err);  
+              });
+             return d.promise; 
+              
+        }  
+        
+        this.testsave = function(){
+            
+         var d = $q.defer();    
+         scriptrService.saveScript({}, "getData").then(
+            function(data, response) {
+               d.resolve(data, response)
+               
+            }, function(err) {
+               d.reject(err)
+		  });
+          return d.promise; 
+            
+            
+            /*
+            var d = $q.defer(); 
+            wsClient
+                .call("getData", {}, "acl").then(function(data, response){
+                d.resolve(data, response)
+            }, function(err) {
+                d.reject(err)
+            });
+            return d.promise;
+            */
+        }
         
         httpClient
           .get("UIComponents/dashboardBuilder/backend/api/loadScripts", {})
@@ -318,9 +381,9 @@ angular
          }
           
       }
-          
+      
       this.viewDasboard = function() {
-         if(this.scriptName){
+         if(this.savedScript){
               $window.open("/"+this.savedScript); 
          }else{
              self.showAlert("danger", "Please save your dashboard before viewing it");
@@ -457,7 +520,7 @@ angular
             "schema": wdg.schema,
             "form": wdg.form
           });
-          self.notifyDashboardChange()
+          self.notifyDashboardChange();
         } else {
           //self.showAlert("warning", "Device model attribute \""+ itemLabel + "\" has a no widget representation.")
           return;
@@ -535,13 +598,13 @@ angular
             });
       };
       
-      this.saveDashboard = function(form, custom) {
+      this.saveDashboard = function(form, custom, aclEvent) {
 		console.log("Form submit", form)
         var self = this;
         $scope.$broadcast('schemaFormValidate');
 
         // Then we check if the form is valid
-        if (form.$valid) {
+        if ((form && form.$valid) || aclEvent) {
           var data = {};
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
@@ -562,6 +625,8 @@ angular
             scriptData["previousScriptName"]  = self.savedScript;
           }
           scriptData["custom"] = this.custom;
+          scriptData["acls"] = this.acls;  
+          var d = $q.defer();  
           scriptrService.saveScript(scriptData, self.saveScriptApi).then(
             function(data, response) {
                console.log("resolve", data)
@@ -571,18 +636,31 @@ angular
                  self.isEdit = true;
                  self.savedScript = scriptData["scriptName"];
                  self.showAlert("success", "The dashboard has been saved successfully.");
+                 d.resolve(data, response);  
                }
                
             }, function(err) {
               self.showAlert("danger", err.data.response.metadata.errorDetail);
               console.log("reject", err.data.response.metadata.errorDetail);
+              d.reject(err);  
 		  });
+          return d.promise;   
           //Save data to scriptr
           console.log();        
         }
-        
-        
       }
+     
+      this.setACLs = function(data){
+          this.acls = data.ACL.execute;
+          var array = this.acls.split(";");
+          this.users = [];  
+          for(var i = 0; i < array.length; i++){
+              var obj = {};
+              obj["code"] = array[i];
+              this.users.push(obj);
+          }    
+      } 
+      
      this.postLoadScript = function(scriptName, data) {
        	 var userConfigRegex = /\/\*#\*SCRIPTR_PLUGIN\*#\*(.*\n?.*)\*#\*#\*\//;
      	 if(data) {
@@ -596,6 +674,7 @@ angular
                this.dashboard["widgets"] = this.widgets;
                this.isEdit = true;
                this.savedScript = scriptName;
+               this.setACLs(data);  
              } else {
                this.showAlert("danger", "Invalid dashboard script. Pass another script.")
                console.error("Invalid dashboard script. Pass another script.")

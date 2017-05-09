@@ -1,0 +1,68 @@
+<html ng-app="myApp">
+
+<head>
+    
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/ACL/ACL.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
+    
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/ACL/ACL.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    
+    <link href="/UIComponents/dashboard/frontend/components/list/angucomplete.alt.css" rel="stylesheet">
+    <script src="/UIComponents/dashboard/frontend/components/list/angucomplete.alt.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/list/autocomplete.js"></script>
+</head>  
+  
+<script>
+    var myApp= angular.module("myApp", ["HttpClient", "WsClient", "ACL"])
+    angular.module('myApp').config(httpsConfig);
+
+    angular.module('myApp').controller('testCtrl', function($scope, $q, wsClient) {
+        var vm = this;
+        vm.users = [{
+            code : "anonymous",
+            icon : "fa fa-group"    
+        }];
+        vm.defaultSetObject = [{
+            code : "nobody",
+            icon : "fa fa-group"    
+        }];
+        vm.onSave = function(acls){
+            var d = $q.defer(); 
+            wsClient
+                .call("getData", {}, "acl").then(function(data, response){
+                d.resolve(data, response)
+            }, function(err) {
+                d.reject(err)
+            });
+            return d.promise;
+        }
+        
+    });
+</script>
+  
+<body>
+  <div ng-controller="testCtrl as vm">
+      <scriptr-acl
+            users="vm.users"
+            default-set-object="vm.defaultSetObject"
+            on-save="vm.onSave"       
+                   >
+      </scriptr-acl>
+  </div>
+  
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+
+var results = apsdb.callApi("ListDevices", null, null);
+
+var devices = results.result.devices;
+
+var myDevices = [];
+for(var i = 0; i < devices.length; i++){
+    var obj = {};
+    obj["name"] = devices[i].id[0];
+    obj["code"] = devices[i].id[0];
+    myDevices.push(obj);
+}
+
+return myDevices

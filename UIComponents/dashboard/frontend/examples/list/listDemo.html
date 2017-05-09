@@ -1,9 +1,6 @@
 <!DOCTYPE HTML>
 <html ng-app="myApp">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
-    <title>List</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
     <!-- font awesome.css -->
@@ -35,6 +32,7 @@
     
         myApp.controller('testCtrl', function($scope) {
           var vm = this;
+          vm.users = ["user","admin"];  
           vm.callback = function(data){
             console.log("data formatter");
             return data;
@@ -47,16 +45,23 @@
   
   <body ng-controller="testCtrl as vm">
     <scriptr-autocomplete
+          id="devicesList"                
           placeholder="Search countries"
           pause="400"
-          search-fields="name"
+          search-fields="user"
           selected-object="vm.onSelect"
-          title-field="name"
+          title-field="user"
+          objects="vm.users"                
+          clear-selected="true"                
+          description-field="description"                
+          image-field="pic"
+          list-selected-object="false"                
           minlength="0"
+          text-no-results="No results"                
           text-searching="Searching..."
           transport="https"
           on-format-data="vm.callback"
-          api="UIComponents/dashboard/frontend/examples/list/getCountries"
+          api="UIComponents/dashboard/frontend/examples/list/getDevices"
           input-class="form-control form-control-small">
     </scriptr-autocomplete>
   </body>
