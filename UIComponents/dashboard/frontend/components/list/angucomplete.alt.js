@@ -139,7 +139,7 @@
       })
       
       scope.$on('angucomplete-alt:getSetObjects', function (event, elementId) {
-          return  scope.objects;
+          return  scope;
       })
         
       scope.$on('angucomplete-alt:setSelectedObjects', function (event, elementId, objects) {
@@ -211,13 +211,7 @@
       }
 
       function callOrAssign(value) {
-        if (typeof scope.selectedObject === 'function') {
-          scope.selectedObject(value, scope.selectedObjectData);
-        }
-        else {
-          scope.selectedObject = value;
-        }  
-        if(scope.listSelectedObject){
+         if(scope.listSelectedObject){
            // remove default object (ex: "nobody") from the listing area
            removeDefaultSetObject(); 
            // Add the selected object to the listing area
@@ -230,6 +224,12 @@
                    break;
                }
            } 
+        }   
+        if (typeof scope.selectedObject === 'function') {
+          scope.selectedObject(value, scope.selectedObjectData);
+        }
+        else {
+          scope.selectedObject = value;
         }  
         if (value) {
           handleRequired(true);

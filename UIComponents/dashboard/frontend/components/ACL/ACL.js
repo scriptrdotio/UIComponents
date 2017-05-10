@@ -21,6 +21,7 @@ angular
             
             this.$onInit = function(){
                 console.log("$onInit initialized");
+                self.accessType = (self.users.length == 1 && self.users[0].code == "anonymous") ? "Anonymous access" : "Restricted access";
             } 
             
             this.$postLink = function(){
@@ -35,6 +36,7 @@ angular
                     resolve: {
                         widget: function () {
                             return {
+                                "parent" : self,
                                 "users":  self.users,
                                 "defaultSetObject":  self.defaultSetObject,
                                 "onSave": self.onSave
@@ -65,12 +67,13 @@ angular
     templateUrl: '/UIComponents/dashboard/frontend/components/ACL/myModalContent.html',
     controller: function ($scope, $sce) {
         
-      var self = this;    
+      var self = this;
+      self.listScope;  
         
       this.$onInit = function(){
-         this.users = self.resolve.widget.users;
-         this.defaultSetObject =  self.resolve.widget.defaultSetObject;
-         this.popoverContent = $sce.trustAsHtml('<span style=\'color: #323232;\'><strong>Scriptr.io provides the following predefined groups:</strong><div class=\'mt10 mb5\'><i class=\'fa fa-caret-right text-primary\'></i> authenticated represents anyone with a valid token.</div><div class=\'mb5\'><i class=\'fa fa-caret-right text-primary\'></i> anonymous represents everyone.</div><div class=\'mb5\'><i class=\'fa fa-caret-right text-primary\'></i> nobody represents no one.</div></span>');
+         self.users = self.resolve.widget.users;
+         self.defaultSetObject = self.resolve.widget.defaultSetObject;
+         self.popoverContent = $sce.trustAsHtml('<span style=\'color: #323232;\'><strong>Scriptr.io provides the following predefined groups:</strong><div class=\'mt10 mb5\'><i class=\'fa fa-caret-right text-primary\'></i> authenticated represents anyone with a valid token.</div><div class=\'mb5\'><i class=\'fa fa-caret-right text-primary\'></i> anonymous represents everyone.</div><div class=\'mb5\'><i class=\'fa fa-caret-right text-primary\'></i> nobody represents no one.</div></span>');
       }   
         
       this.onSelect = function(user){
@@ -105,7 +108,6 @@ angular
                }
            }
            $scope.$broadcast('angucomplete-alt:addObjectToList', self.id, objs);
-           
       }
       
       this.closeAlert = function() {
@@ -122,11 +124,14 @@ angular
       }
       
       this.updateFileACL = function(){
-          console.log("updateFileACL");
-          var listScope = $scope.$broadcast('angucomplete-alt:getSetObjects', self.id);
-          var listCtrl = listScope.targetScope.$$childTail.$ctrl;
+          
+          if(!self.listScope){
+             self.listScope = $scope.$broadcast('angucomplete-alt:getSetObjects', self.id); 
+          }
+          var listCtrl = self.listScope.targetScope.$$childTail.$ctrl;
           if(typeof self.resolve.widget.onSave() == "function"){
               var acls = [];
+              if(typeof listCtrl.objects == 'undefined') listCtrl.objects = self.resolve["modalScope"].objects;
               if(listCtrl.objects.length > 0){
                   var objs = listCtrl.objects;
               }else{
@@ -140,6 +145,8 @@ angular
                  function(data, response) {
                      listCtrl.showList = true;
                      self.showAlert("success", "The Access Control List is saved successfully.");
+                     self.resolve.widget.parent.users = listCtrl.objects;
+                     self.resolve.widget.parent.accessType = (listCtrl.objects.length == 1 && listCtrl.objects[0].code == "anonymous") ? "Anonymous access" : "Restricted access";
                      console.log("success");
               },
               function(err) {
