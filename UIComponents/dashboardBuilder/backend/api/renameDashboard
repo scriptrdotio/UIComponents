@@ -44,7 +44,7 @@ if(response.metadata.status == "failure") {
 
     var dashDoc = document.query(queryParams);
     if(dashDoc.metadata.status == "failure") {
-       return {status : "failure", errorDetails : "an error has occured when quering energyLatestData doc ", errorMsg: dashDoc};
+       return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: dashDoc};
     }
     var docs = dashDoc.result.documents
     if(docs.length == 1){

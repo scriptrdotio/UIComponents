@@ -10,7 +10,7 @@ queryParams["aggregateExpression"] = "max($counter)";
 var results;
 results = documents.query(queryParams);
 if(results.metadata.status == "failure") {
-     return {status : "failure", errorDetails : "an error has occured when quering energyLatestData doc ", errorMsg: results};
+     return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: results};
 }
 
 return results.result
