@@ -25,7 +25,7 @@
       <div ng-repeat="dashboard in $ctrl.customDashboards track by $index" class="col-xs-12 col-sm-4 mb20 custom-dashboard-box">
         <div index="{{scriptName = dashboard.path}}" class="box-shadow bg-white">
           <div class="col-xs-12 added-box-title text-left">
-            <div class="pull-left"><h4 onaftersave="$ctrl.renameDashboard(dashboard.name, dashboard.path)"  href="#" editable-text="dashboard.name" e-form="textBtnForm">{{dashboard.name}}</h4></div>
+            <div class="pull-left"><h4 onaftersave="$ctrl.renameDashboard(dashboard.name, dashboard.path)"  href="#" editable-text="dashboard.name" e-form="textBtnForm" uib-tooltip="{{dashboard.path}}" tooltip-placement="bottom">{{dashboard.name}}</h4></div>
               <a title="Edit widget" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible"><i class="edit-name glyphicon glyphicon-pencil"></i></a>
             <div class="pull-right remove-widget">    
               <a title="Remove widget" ng-click="$ctrl.deleteDashboardPopUp(dashboard.path, dashboard.name)"><i class="glyphicon glyphicon-trash"></i></a>
