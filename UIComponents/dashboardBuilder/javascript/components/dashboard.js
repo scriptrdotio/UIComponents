@@ -27,14 +27,12 @@ angular
     bindings : {
       widgets: "<",
       dashboard: "<",
-      wsClient: "<",
       saveScriptApi: "@",
-      treeSearchCriteria : "@",
+      treeSearchCriteria: "@",
       iconExpand: "@",
       iconCollapse: "@",
       loadTree: "<?",
       showTree: "<",
-      plugInScriptName : "@",
       custom: "<",
       devicesModel: "@"
     },
