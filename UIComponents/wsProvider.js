@@ -133,7 +133,8 @@ angular
 			                  console.log("Socket Closed", e);
 			                  close.resolve()
 			                  console.log("Trying to reconnect closed socket.")
-			                  dataStream.reconnect(); // Try to re-open socket
+                              //Try to re-open socket
+			                  dataStream.reconnect(); // TODO: Make it incremental timed retiral based on status code 
 		                  });
 
 		                  dataStream.onError(function(e) {
@@ -209,7 +210,7 @@ angular
 		                     publish : function(message, prefix, overridenPubChannel) {
                                  var publishingChannel = _publishChannel;
                                  if(overridenPubChannel) publishingChannel = overridenPubChannel;
-			                     if (_publishChannel) {
+			                     if (publishingChannel) {
 				                     var defer = $q.defer();
 
 				                     // Pass publisher id
@@ -272,11 +273,10 @@ angular
                                          }
                                     }));
                                     self.setSubscribeChannel(channel);
-                               		dataStream.close(true);
                              },
                             
                              updatePublishingChannel : function(channel){
-                                    self.setSubscribeChannel(channel);
+                                    self.setPublishChannel(channel);
                              },
 
 		                     closeSocket : function(force) {
