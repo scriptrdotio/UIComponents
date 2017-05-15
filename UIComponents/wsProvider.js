@@ -273,6 +273,12 @@ angular
                                          }
                                     }));
                                     self.setSubscribeChannel(channel);
+                                    dataStream.send(JSON.stringify({
+				                     "method" : "Subscribe",
+				                     "params" : {
+					                     "channel" : _subscribeChannel
+				                        }
+				                    }));
                              },
                             
                              updatePublishingChannel : function(channel){
