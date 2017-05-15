@@ -2,12 +2,8 @@ angular.module('DashboardBuilder').service(
   "scriptrService",
   function(httpClient, $cookies) {
     this.saveScript = function(data, api) {
-      if(api && typeof api != 'undefined'){
-        return httpClient.post(api, data);
-      }else{
-        return httpClient.post("UIComponents/dashboardBuilder/backend/api/saveDashboard", data);
-      }
-    };
+        return httpClient.post("UIComponents/dashboardBuilder/backend/api/saveDashboard", data)
+    }
     
     this.getScript = function(data) {
       return httpClient.post(
@@ -27,7 +23,6 @@ angular
     bindings : {
       widgets: "<",
       dashboard: "<",
-      saveScriptApi: "@",
       treeSearchCriteria: "@",
       iconExpand: "@",
       iconCollapse: "@",
@@ -45,7 +40,6 @@ angular
             
       this.$onInit = function() {
         self.custom = (typeof this.custom != 'undefined')? this.custom : false,
-        self.saveScriptApi = "UIComponents/dashboardBuilder/backend/api/saveDashboard",
         self.showTree = (typeof this.showTree != 'undefined')? this.showTree : true,  
         self.loading = true;  
         self.showPanelMsg = false;  
@@ -55,23 +49,7 @@ angular
           icon : "fa fa-group"    
         }];
           
-        self.onSave = function(acls){
-            /*
-            var d = $q.defer(); 
-            self.testsave().then(
-              function(data, response) {
-                  console.log("success");
-                  d.resolve(data, response);
-              },
-              function(err) {
-                console.log("reject", err);
-                d.reject(err);
-              });
-              return d.promise;
-            */
-            
-            
-            console.log("acl saved");
+        self.onACLChange = function(acls){
             self.acls = acls.join(";");
             var d = $q.defer(); 
             self.saveDashboard(null, null, true).then(
@@ -86,31 +64,6 @@ angular
              return d.promise; 
               
         }  
-        
-        this.testsave = function(){
-            
-         var d = $q.defer();    
-         scriptrService.saveScript({}, "getData").then(
-            function(data, response) {
-               d.resolve(data, response)
-               
-            }, function(err) {
-               d.reject(err)
-		  });
-          return d.promise; 
-            
-            
-            /*
-            var d = $q.defer(); 
-            wsClient
-                .call("getData", {}, "acl").then(function(data, response){
-                d.resolve(data, response)
-            }, function(err) {
-                d.reject(err)
-            });
-            return d.promise;
-            */
-        }
         
         httpClient
           .get("UIComponents/dashboardBuilder/backend/api/loadScripts", {})
@@ -625,7 +578,7 @@ angular
           scriptData["custom"] = this.custom;
           scriptData["acls"] = this.acls;  
           var d = $q.defer();  
-          scriptrService.saveScript(scriptData, self.saveScriptApi).then(
+          scriptrService.saveScript(scriptData).then(
             function(data, response) {
                console.log("resolve", data)
                if(data.status == "failure") {
