@@ -2576,7 +2576,8 @@ angular
 		},
 		"required": []
 	}
-},
+}
+/*        
 {
 	"name": "grid",
     "label": "Grid",
@@ -2853,5 +2854,5 @@ angular
 		"required": []
 	}
 }      
-    
+*/    
 ]});
