@@ -47,6 +47,9 @@
      var myApp= angular.module("myApp", ['DashboardBuilder']);
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
+     if(cachedTemplates){
+       angular.module('myApp').run(cachedTemplates);  
+     }
      angular.module('myApp').run(function(editableOptions, editableThemes) {
         editableThemes.bs3.buttonsClass = 'btn-md';
         editableThemes.bs3.submitTpl = '<button type="submit" class="btn btn-warning" title="Submit" aria-label="Submit"><span class="glyphicon glyphicon-ok"></span></button>';
