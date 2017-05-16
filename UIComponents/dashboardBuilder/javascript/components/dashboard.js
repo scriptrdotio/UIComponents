@@ -64,7 +64,7 @@ angular
              return d.promise; 
               
         }  
-        if(custom){
+        if(self.custom){
             httpClient
                 .get("UIComponents/dashboardBuilder/backend/api/loadScripts", {})
                 .then(
