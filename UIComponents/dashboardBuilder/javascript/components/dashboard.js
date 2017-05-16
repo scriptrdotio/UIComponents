@@ -64,29 +64,30 @@ angular
              return d.promise; 
               
         }  
-        
-        httpClient
-          .get("UIComponents/dashboardBuilder/backend/api/loadScripts", {})
-          .then(
-          function(data, response) {
-            if(data && data.documents){
-              self.customDashboards = data.documents;
-              self.loading = false;
-              if(data.documents.length == 0){
-                  self.noDashboards = true;
-              }  
-            }else{
-              console.log("No data found");
-              self.loading = false;  
-            }
-          },
-          function(err) {
-            self.loading = false;    
-            console
-              .log(
-              "reject published promise",
-              err);
-          });  
+        if(custom){
+            httpClient
+                .get("UIComponents/dashboardBuilder/backend/api/loadScripts", {})
+                .then(
+                function(data, response) {
+                    if(data && data.documents){
+                        self.customDashboards = data.documents;
+                        self.loading = false;
+                        if(data.documents.length == 0){
+                            self.noDashboards = true;
+                        }  
+                    }else{
+                        console.log("No data found");
+                        self.loading = false;  
+                    }
+                },
+                function(err) {
+                    self.loading = false;    
+                    console
+                        .log(
+                        "reject published promise",
+                        err);
+                }); 
+        }    
         
         
         this.urlParams = [];
