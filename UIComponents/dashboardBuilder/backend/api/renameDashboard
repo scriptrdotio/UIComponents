@@ -17,21 +17,11 @@ if(typeof params == 'string' && params != null){
     }
 }
 
-var path = params.path;
-var newName = params.newName;
 
-var newPath;
-if(path.indexOf("/") != -1){
-    var array = path.split("/");
-    var oldName = array[array.length - 1];
-    newPath =  path.replace(oldName, newName);
-}else{
-    newPath = newName;
-}
 var data = {};
 data["apsdb.update"] = true;
-data["apsdb.scriptName"] = path;
-data["apsdb.newScriptName"] = newPath;
+data["apsdb.scriptName"] = params.scriptName;
+data["apsdb.newScriptName"] = params.newScriptName;
 
 var response = apsdb.callApi("SaveScript", data, null);
 if(response.metadata.status == "failure") {
@@ -40,7 +30,7 @@ if(response.metadata.status == "failure") {
     
     var queryParams = {};
     queryParams["fields"] =  "*";
-    queryParams["query"] =  'formType = "customDashboards" and path = "' + path + '"';
+    queryParams["query"] =  'formType = "customDashboards" and path = "' + params.scriptName + '"';
 
     var dashDoc = document.query(queryParams);
     if(dashDoc.metadata.status == "failure") {
@@ -48,7 +38,10 @@ if(response.metadata.status == "failure") {
     }
     var docs = dashDoc.result.documents
     if(docs.length == 1){
-       var result = document.update({key: docs[0].key, name: newName, path : newPath});
+       var newScriptName = params.newScriptName;
+       var array = newScriptName.split("/");
+       var label = array[array.length - 1];
+       var result = document.update({key: docs[0].key, label: label, path : newScriptName});
        if(result.metadata.status == "failure") {
            return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: result};
        }else{
@@ -61,8 +54,7 @@ if(response.metadata.status == "failure") {
                return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: customDashboardsResult};
            }
            var message = {"result": customDashboardsResult.result, "id" : "homeCustomDashboard"};
-           publish("responseChannel", message);
-           customDashboardsResult.result = "success"
+           //publish("responseChannel", message);
     	   return customDashboardsResult.result;
        }
     }else{

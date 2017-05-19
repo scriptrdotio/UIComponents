@@ -54,9 +54,9 @@ counterResults = document.query(counterQueryParams);
 if(counterResults.metadata.status == "failure") {
   return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: counterResults};
 }
-publishResponse("responseChannel", counterResults.result, request, "homeCustomDashboard");
+//publishResponse("responseChannel", counterResults.result, "homeCustomDashboard");
 
-return path;
+return counterResults.result;
 
 function toHex(input){
   try { hexcase } catch(e) { hexcase=0; }

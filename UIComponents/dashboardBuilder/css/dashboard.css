@@ -58,7 +58,7 @@ form { margin-bottom: 0;}
 
 
 /*** slick styles ***/
-.slick-container {width: 100%;margin: 0 auto;}
+.slick-container {margin: 0 auto;}
 .slick-item {}
 .slick-slide {height: auto; text-align: center;}
 .slick-slide a[ng-click] {display: block; padding: 7px 0; color: #333;  background: #fdfdfd; box-shadow: 0 0 3px #b7b3b3 inset; cursor: pointer}
@@ -67,6 +67,20 @@ form { margin-bottom: 0;}
 .slick-slide img {margin: 0 auto; display: inline;}
 .slick-label {font-size: 12px;padding-top: 3px;line-height: 2.4em; margin-left: 5px;}
 .slick-prev:before, .slick-next:before {color: #ff8c00;}
+
+.dashboard-config {
+    margin-top: -5px;
+    margin-right: -5px;
+    margin-bottom: -5px;
+    padding-top: 15px;
+    padding-bottom: 16px;
+    margin-bottom: -5px;
+    background: #313131;
+}
+.dashboard-config a{color: #fff; font-size: 22px; cursor: pointer;}
+.dashboard-config a:hover {opacity: 0.8;}
+.dashboard-config a:link, .dashboard-config a:visited {color: #fff; font-size: 22px;}
+.dashboard-config a:first-child {margin-right: 11px;}
 
 /*** Gridtser ***/
 .gridster-item {cursor: move;}

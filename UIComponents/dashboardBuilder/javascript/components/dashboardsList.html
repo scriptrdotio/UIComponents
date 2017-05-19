@@ -1,0 +1,36 @@
+<div>
+    <div class="container">
+      <div class="col-xs-12 mb20">
+        <div class="box-shadow text-white add-dashboard">
+          <div class="col-xs-12 text-center"> 
+            <h5 class="box-title text-uppercase">Add custom dashboard</h5>
+          </div>
+          Create and manage visually your dashboard.
+          <div><a class="btn btn-warning add-btn" ng-href="#/newDashboard"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</a></div>
+        </div>
+      </div>
+        <div ng-if="$ctrl.showPanelMsg" class="col-xs-12">
+            <div uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')" close="$ctrl.closeMsg()" dismiss-on-timeout="5000">{{$ctrl.message.content}}</div>
+        </div>  
+      <span class="col-xs-12 col-sm-4 mb20" ng-show="$ctrl.noDashboards">No Dashboards created.</span>    
+      <div class="text-center loading" ng-show="$ctrl.loading"><i class="fa fa-spinner fa-spin fa-3x"></i></div> 
+      <div ng-repeat="dashboard in $ctrl.customDashboards track by $index" class="col-xs-12 col-sm-4 mb20 custom-dashboard-box">
+        <div index="{{scriptName = dashboard.path}}" class="box-shadow bg-white">
+          <div class="col-xs-12 added-box-title text-left">
+            <div class="pull-left"><h4 onbeforesave="$ctrl.renameDashboard(scriptName, $data)"  href="#" editable-text="dashboard.path" e-form="textBtnForm" uib-tooltip="{{dashboard.path}}" tooltip-placement="bottom">{{dashboard.label}}</h4></div>
+              <a title="Edit widget" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible"><i class="edit-name glyphicon glyphicon-pencil"></i></a>
+            <div class="pull-right remove-widget">    
+              <a title="Remove widget" ng-click="$ctrl.deleteDashboardConfirmation(dashboard.path, dashboard.name)"><i class="glyphicon glyphicon-trash"></i></a>
+            </div>
+          </div>
+          <a ng-href="#/scriptName/{{scriptName}}">
+              <div class="clickable">
+                 <div class="col-xs-12 center-div custom-widget-icon">
+                 <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                 </div>
+              <div class="clearfix"></div>
+            </div>
+            </a>
+      </div>
+    </div>
+</div>

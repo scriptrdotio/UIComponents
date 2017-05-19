@@ -10,6 +10,21 @@ angular.module('DashboardBuilder').service(
         "UIComponents/dashboardBuilder/backend/api/getDashboard", data)
     }
     
+    this.loadDashboards = function(data) {
+        return httpClient.get(
+            "UIComponents/dashboardBuilder/backend/api/loadScripts", {});
+    }
+    
+    this.deleteDashboard = function(data) {
+         return httpClient
+          .get("UIComponents/dashboardBuilder/backend/api/deleteDashboard", data)
+    }
+    
+     this.renameDashboard = function(data) {
+         return httpClient
+          .get("UIComponents/dashboardBuilder/backend/api/renameDashboard", data)
+    }
+    
     this.getToken = function(){
        return $cookies.get("token") || null;
     }
@@ -28,7 +43,6 @@ angular
       iconCollapse: "@",
       loadTree: "<?",
       showTree: "<",
-      custom: "<",
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
@@ -39,7 +53,6 @@ angular
       self.acls;  
             
       this.$onInit = function() {
-        self.custom = (typeof this.custom != 'undefined')? this.custom : false,
         self.showTree = (typeof this.showTree != 'undefined')? this.showTree : true,  
         self.loading = true;  
         self.showPanelMsg = false;  
@@ -52,7 +65,7 @@ angular
         self.onACLChange = function(acls){
             self.acls = acls.join(";");
             var d = $q.defer(); 
-            self.saveDashboard(null, null, true).then(
+            self.saveScript(null, null, true).then(
               function(data, response) {
                   console.log("success");
                   d.resolve(data, response);
@@ -64,31 +77,6 @@ angular
              return d.promise; 
               
         }  
-        if(self.custom){
-            httpClient
-                .get("UIComponents/dashboardBuilder/backend/api/loadScripts", {})
-                .then(
-                function(data, response) {
-                    if(data && data.documents){
-                        self.customDashboards = data.documents;
-                        self.loading = false;
-                        if(data.documents.length == 0){
-                            self.noDashboards = true;
-                        }  
-                    }else{
-                        console.log("No data found");
-                        self.loading = false;  
-                    }
-                },
-                function(err) {
-                    self.loading = false;    
-                    console
-                        .log(
-                        "reject published promise",
-                        err);
-                }); 
-        }    
-        
         
         this.urlParams = [];
         this.transport = angular.copy(config.transport);
@@ -372,12 +360,12 @@ angular
           var data = {};
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
-          data["transport"] = angular.copy(this.transport.defaults)
+          data["transport"] = angular.copy(this.transport.defaults);
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
-          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
+          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"], "settings": data["transport"]});
           return scriptData;
       };
         
@@ -386,6 +374,7 @@ angular
          if(pluginData) {
              this.widgets = pluginData.wdg; //This needs fixing
              this.urlParams = pluginData.urlParams;
+             this.transport.defaults = pluginData.settings;
              this.dashboard["widgets"] = this.widgets;
          }
        }
@@ -536,10 +525,10 @@ angular
             modalInstance.result.then(function (transportModel) {
               console.log("modal-component transport settings data :", transportModel ,"submitted at: " + new Date());
               if(transportModel != "cancel") {
-                if(self.transport.defaults.publishChannel != transportModel.publishChannel){
+                if(self.transport.defaults && self.transport.defaults.publishChannel != transportModel.publishChannel){
                     self.wsClient.updatePublishingChannel(transportModel.publishChannel);
                 }
-                if(self.transport.defaults.subscribeChannel != transportModel.subscribeChannel){
+                if(self.transport.defaults && self.transport.defaults.subscribeChannel != transportModel.subscribeChannel){
                   	self.wsClient.updateSubscriptionChannel(transportModel.subscribeChannel);
                 } 
                 self.transport.defaults = angular.copy(transportModel);
@@ -569,14 +558,14 @@ angular
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
           scriptData["scriptName"] =  this.model.scriptName;
-          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"]});
+          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"], "settings": data["transport"]});
           if(self.isEdit) {
             scriptData["update"] = true;
           }
           if(self.savedScript) {
             scriptData["previousScriptName"]  = self.savedScript;
           }
-          scriptData["custom"] = this.custom;
+          //scriptData["custom"] = this.custom; //TODO MFE: Removed, need to check backend
           scriptData["acls"] = this.acls;  
           var d = $q.defer();  
           scriptrService.saveScript(scriptData).then(
@@ -603,7 +592,7 @@ angular
       }
      
       this.setACLs = function(data){
-          this.acls = data.ACL.read;
+          this.acls = data.ACL.execute;
           var array = this.acls.split(";");
           this.users = [];  
           for(var i = 0; i < array.length; i++){
@@ -620,9 +609,10 @@ angular
            var matches = userConfig.match(userConfigRegex);
            if(userConfig && matches) {
              var pluginContent = JSON.parse(matches[1]);
-             if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "CodeMirrorArbitraryFile"){
+             if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "DashboardBuilder"){
                this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
                this.urlParams = JSON.parse(pluginContent.metadata.plugindata).urlParams;
+               this.transport.defaults = JSON.parse(pluginContent.metadata.plugindata).settings;
                this.dashboard["widgets"] = this.widgets;
                this.isEdit = true;
                this.savedScript = scriptName;
@@ -635,7 +625,7 @@ angular
              this.showAlert("danger", "Invalid dashboard script. Pass another script.")
              console.error("Invalid dashboard script. Pass another script.")
            }
-         } else if(!self.custom){
+         } else {
            this.showAlert("danger", "Invalid dashboard script. Pass another script.")
            console.error("Invalid dashboard script. Pass another script.")
          }
@@ -813,9 +803,9 @@ angular
             if(this.widget.form) {
                this.form =   angular.copy(this.widget.form)
             }
-             if(this.widget.options) {
-              this.model =   angular.copy(this.widget.options)
-             }
+            
+              this.model =  (this.widget.options) ?  angular.copy(this.widget.options) : {}
+            
           }
       };
 
