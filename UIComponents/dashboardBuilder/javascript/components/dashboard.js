@@ -592,7 +592,7 @@ angular
       }
      
       this.setACLs = function(data){
-          this.acls = data.ACL.execute;
+          this.acls = data.ACL.read;
           var array = this.acls.split(";");
           this.users = [];  
           for(var i = 0; i < array.length; i++){
