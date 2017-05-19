@@ -3,7 +3,7 @@ angular
       .provider(
       		'httpClient',
             function httpClientProvider() {
-                var _baseUrl = "https://example.scriptrapps.io";
+                var _baseUrl;
 	            var _token = null;
 	            var _restUrl = "";
 
@@ -18,6 +18,9 @@ angular
 	            };
 
 	            var _buildUrl = function(scriptName) {
+                     if(typeof _baseUrl == 'undefined'){
+                         _baseUrl = "https://" + window.location.hostname;
+                     }
 		            _restUrl = _baseUrl + "/" + scriptName;
 		            console.log(_restUrl)
 	            };
