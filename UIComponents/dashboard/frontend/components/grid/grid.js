@@ -93,7 +93,7 @@ angular
                   var api = self.api
                 }
                 if(self.broadcastData.params != null){
-                    this.apiParams = self.broadcastData.params
+                    self.apiParams = self.broadcastData.params
                 }
                 if(self.broadcastData.transport != null){
                   var transport = self.broadcastData.transport
@@ -184,6 +184,7 @@ angular
             enableColResize : (typeof this.enableColResize != 'undefined') ? this.enableColResize : false,
             enableFilter : (typeof this.enableFilter != 'undefined') ? this.enableFilter : true,
             columnDefs : this.columnsDefinition,
+            editType : 'fullRow',    
             rowData: (this.rowData)? this.rowData : null,
             rowModelType :(this.rowModelType)? this.rowModelType : (this.rowData)? "" : "virtual",
             rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
@@ -201,10 +202,10 @@ angular
               	 return self.onSelectionChanged()(self.gridOptions);
               }
             },
-            onCellValueChanged : function(event) { // used for adding/editing a row 
-               self.oldEditedValue = event.oldValue;
-               self.editedColumn = event.colDef.field;
-               self.editedChildIndex = event.node.childIndex || event.node.id;
+            onRowValueChanged : function(event) { // used for adding/editing a row 
+           //    self.oldEditedValue = event.oldValue;
+           //    self.editedColumn = event.colDef.field;
+           //    self.editedChildIndex = event.node.childIndex || event.node.id;
                if(self.onCellValueChanged != null && typeof self.onCellValueChanged() == "function"){
                   self.onCellValueChanged()(self.gridOptions);
                }
@@ -283,7 +284,7 @@ angular
             dataService.gridHelper(self.api, params).then(
               function(data, response) {
                 if (data && data.status == "success") {
-                   self.showAlert("success", "Row updated successfuly");
+                   self.showAlert("success", "Row(s) updated successfuly");
                 } else {
                   self.undoChanges();
                   if(data && data.errorDetail){
@@ -303,7 +304,7 @@ angular
             dataService.gridHelper(self.api, event.data).then(
                function(data, response) {
                 if (data && data.status == "success") {
-				  self.showAlert("success", "Row Added successfuly");
+				  self.showAlert("success", "Row(s) Added successfuly");
                 } else {
                   self.undoChanges();
                   if(data && data.errorDetail){
@@ -351,8 +352,6 @@ angular
            });
        } 
         
-        
-        
         this.onRemoveRow = function(key) {
           if(self.gridOptions.rowModelType == "pagination" || self.gridOptions.rowModelType == "virtual"){
             if(self.api){
@@ -367,7 +366,7 @@ angular
                     if (data && data.status == "success") {
                       var selectedNodes = self.gridOptions.api.getSelectedNodes();
                       self.gridOptions.api.removeItems(selectedNodes);
-                      self.showAlert("success", "Row deleted successfuly");
+                      self.showAlert("success", "Row(s) deleted successfuly");
                     } else {
                       if(data && data.errorDetail){
                         self.showAlert("danger", data.errorDetail);
@@ -393,49 +392,53 @@ angular
         
         this.onWebSocketCall = function(data){
           if(data && data.action){
-            if(data.action == "add"){
-              var newRow = {};
-              var data = data.result;
-              // Create a json object to save new row fields 
-              for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
-                for(row in data){
-                  if(typeof self.gridOptions.columnDefs[n].field != "undefined"){
-                    if(self.gridOptions.columnDefs[n].field == row){
-                      newRow[self.gridOptions.columnDefs[n].field] = data[row];
-                      break;
-                    }else{
-                      newRow[self.gridOptions.columnDefs[n].field] = "";
-                    }
+              if(data.action == "add"){
+                  var rows = data.result;
+                  for(var i = 0; i < rows.length; i++){  
+                      var newRow = {};
+                      // Create a json object to save new row fields 
+                      for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
+                          for(row in rows[i]){
+                              if(typeof self.gridOptions.columnDefs[n].field != "undefined"){
+                                  if(self.gridOptions.columnDefs[n].field == row){
+                                      newRow[self.gridOptions.columnDefs[n].field] = rows[i][row];
+                                      break;
+                                  }else{
+                                      newRow[self.gridOptions.columnDefs[n].field] = "";
+                                  }
+                              }
+                          }
+                      }
+                      var firstRow = self.gridOptions.api.getRenderedNodes()[0];
+                      if(!firstRow.data.key){
+                          firstRow.data.key = rows[i].key;
+                      }else{
+                          newRow["key"] = rows[i].key;
+                          self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
+                      }
                   }
-                }
-              }
-              var firstRow = self.gridOptions.api.getRenderedNodes()[0];
-              if(!firstRow.data.key){
-                firstRow.data.key = data.key;
-              }else{
-                newRow["key"] = data.key;
-                self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
-              }
-            }else if(data.action == "edit"){
-              var fields = data.result;
-              var rowKey = fields.key || fields["apsdb.documentKey"];
+              }else if(data.action == "edit"){
               // Searches for the edited row and updates it
-              if(self.gridOptions.rowModelType == "pagination"){ 
-                self.gridOptions.api.forEachNode(function(node) {
-                  if (node.data.key == rowKey) {
-                    var index = node.childIndex;
-                    var model = self.gridOptions.api.getModel();
-                    var node = [ model.getRow(index) ][0];
-                    node.data = self.cleanRows(fields)[0];
-                    node.data.key = rowKey;
-                    self.gridOptions.api.refreshView();
-                  }
-                });
-                var firstRow = self.gridOptions.api.getRenderedNodes()[0];
-                if(!firstRow.data.key){
-                  firstRow.data.key = rowKey;
-                }
-              }else{
+                if(self.gridOptions.rowModelType == "pagination"){
+                    var rows = data.result;  
+                    for(var x = 0; x < rows.length; x++){  
+                        var rowKey = rows[x].key;
+                        self.gridOptions.api.forEachNode(function(node) {
+                            if (node.data.key == rowKey) {
+                                var index = node.childIndex;
+                                var model = self.gridOptions.api.getModel();
+                                var node = [ model.getRow(index) ][0];
+                                node.data = self.cleanRows(rows[x])[0];
+                                node.data.key = rowKey;
+                                self.gridOptions.api.refreshView();
+                            }
+                        });
+                        var firstRow = self.gridOptions.api.getRenderedNodes()[0];
+                        if(!firstRow.data.key){
+                            firstRow.data.key = rowKey;
+                        }
+                    }
+                }else{
                 self.gridOptions.api.refreshVirtualPageCache();
               }
             }else if(data.action == "delete"){
