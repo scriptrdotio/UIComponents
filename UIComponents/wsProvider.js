@@ -46,7 +46,7 @@ angular
 	            };
 
 	            var _buildSocketUrl = function() {
-		            _socketUrl = _baseUrl + "/" + _token;
+		            _socketUrl = _baseUrl + ((_token) ? ( "/" + _token) : (""));
 	            }
 
 	            // This creates a new callback ID for a request
