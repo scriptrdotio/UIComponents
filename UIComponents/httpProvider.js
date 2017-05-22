@@ -50,9 +50,12 @@ angular
 
 			                  config["url"] = _restUrl;
 
-			                  config["headers"] = setDefaultObject(
+                              if(_token) {
+                                  config["headers"] = setDefaultObject(
 			                        config["headers"], "Authorization", "Bearer "
 			                              + _token);
+                              }
+			                  
 
 			                  $http(config)
 			                        .then(
