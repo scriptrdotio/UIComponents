@@ -100,7 +100,7 @@
     (function ($) { 
           var myApp= angular.module("myApp", ['DashboardBuilder']);
          
-         $.urlParam = function(name){
+          $.urlParam = function(name){
                     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
                     if (results==null){
                         return null;
@@ -110,27 +110,27 @@
             }
 
           $.getUrlVars = function() {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for(var i = 0; i < hashes.length; i++)
-            {
-              hash = hashes[i].split('=');
-              vars.push(hash[0]);
-              vars[hash[0]] = hash[1];
-            }
-            return vars;
+              var vars = [], hash;
+              var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+              for(var i = 0; i < hashes.length; i++)
+              {
+                  hash = hashes[i].split('=');
+                  vars.push(hash[0]);
+                  vars[hash[0]] = hash[1];
+              }
+              return vars;
           }
-          
-     var wssConfig = ["wsClientProvider",function (wsClientProvider) {
-          wsClientProvider.setToken($.urlParam("access_token"));
-          wsClientProvider.setPublishChannel("requestChannel");
-          wsClientProvider.setSubscribeChannel("responseChannel");
-    }];
 
-    var httpsConfig = ["httpClientProvider",function (httpClientProvider) {
-        httpClientProvider.setBaseUrl("/");
-        httpClientProvider.setToken($.urlParam("access_token"));
-    }]
+         var wssConfig = ["wsClientProvider",function (wsClientProvider) {
+              wsClientProvider.setToken($.urlParam("auth_token"));
+              wsClientProvider.setPublishChannel("requestChannel");
+              wsClientProvider.setSubscribeChannel("responseChannel");
+        }];
+
+        var httpsConfig = ["httpClientProvider",function (httpClientProvider) {
+            httpClientProvider.setBaseUrl("https://"+$.urlParam("subdomain")+".scriptrapps.io");
+            httpClientProvider.setToken($.urlParam("auth_token"));
+        }]
 
 	 angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
