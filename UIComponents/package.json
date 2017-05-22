@@ -17,8 +17,11 @@
     "grunt-angular-templates": "^1.1.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-cssmin": "^1.0.2",
-    "grunt-contrib-uglify": "^2.0.0",
-    "grunt-ng-annotate": "^3.0.0"
+    "grunt-contrib-uglify": "^2.3.0",
+    "grunt-fetch-from-cdn": "^0.1.0",
+    "grunt-ng-annotate": "^3.0.0",
+    "request": "^2.81.0",
+    "require": "^2.4.20"
   },
   "dependencies": {
     "request": "^2.79.0"
