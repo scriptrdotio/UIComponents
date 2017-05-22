@@ -18,9 +18,6 @@ angular
 	            };
 
 	            var _buildUrl = function(scriptName) {
-                     if(typeof _baseUrl == 'undefined'){
-                         _baseUrl = "https://" + window.location.hostname;
-                     }
 		            _restUrl = _baseUrl + "/" + scriptName;
 		            console.log(_restUrl)
 	            };
