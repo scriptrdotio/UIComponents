@@ -3,7 +3,7 @@ angular
       .provider(
       		'httpClient',
             function httpClientProvider() {
-                var _baseUrl;
+                var _baseUrl = "";
 	            var _token = null;
 	            var _restUrl = "";
 
