@@ -16,8 +16,6 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="/modules/login/css/style.css">
     
-    <script src="/UIComponents/dashboardBuilder/javascript/config/config.js"></script>
-    
     <script src="https://code.jquery.com/jquery-1.9.1.min.js" ></script>
     <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
@@ -66,7 +64,7 @@
           return vars;
       }
       var params = getUrlVars();
-      $('#loginForm').loginWidget({redirectTarget: "/"+params.redirectTarget, expiry: login.expiry, anonymousToken: login.anonymousToken});
+      $('#loginForm').loginWidget({redirectTarget: "/"+params.redirectTarget, expiry: 1, anonymousToken: params.anon_token});
     </script>
   </body>
 </html>

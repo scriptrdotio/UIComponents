@@ -553,6 +553,7 @@ angular
          // console.log(JSON.stringify(data["items"]));
           self.transport.defaults.redirectTarget = this.model.scriptName;
           data["transport"] = angular.copy(this.transport.defaults) //MFE: Transport info needs to be retrieved from url or cookie
+          data["anon_token"] = $routeParams.anon_token;
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
@@ -592,7 +593,7 @@ angular
       }
      
       this.setACLs = function(data){
-          this.acls = data.ACL.read;
+          this.acls = data.ACL.execute;
           var array = this.acls.split(";");
           this.users = [];  
           for(var i = 0; i < array.length; i++){
