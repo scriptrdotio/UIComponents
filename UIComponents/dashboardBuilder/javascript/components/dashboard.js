@@ -361,6 +361,7 @@ angular
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
           data["transport"] = angular.copy(this.transport.defaults);
+          data["anon_token"] = $routeParams.anon_token;
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
@@ -553,7 +554,6 @@ angular
          // console.log(JSON.stringify(data["items"]));
           self.transport.defaults.redirectTarget = this.model.scriptName;
           data["transport"] = angular.copy(this.transport.defaults) //MFE: Transport info needs to be retrieved from url or cookie
-          data["anon_token"] = $routeParams.anon_token;
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
