@@ -96,6 +96,160 @@
 <!--script src="/UIComponents/dashboardBuilder/javascript/dashboard.js"></script-->
 <body ng-controller="dashboardCtrl as vm">
      <ng-view></ng-view>
-	 <ng-include src="'/UIComponents/dashboardBuilder/view/dashboardTemplate'"></ng-include>
+	<script type='text/x-handlebars-template' id="handlebar-template">
+&lt;html ng-app=&quot;myApp&quot;&gt;
+&lt;head&gt;
+
+    &lt;link rel=&quot;icon&quot; href=&quot;data:;base64,iVBORw0KGgo=&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;
+    &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;
+
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;//scriptr.local.elementn.com/lib/UIComponents/grunt_lib/css/components.min.css&quot;&gt;
+
+    &lt;script src=&quot;//scriptr.local.elementn.com/lib/UIComponents/grunt_lib/js/template_resources.min.js&quot;&gt;&lt;/script&gt;
+    
+&lt;/head&gt; 
+  
+  
+&lt;style&gt;
+.box {
+	/**border: none!important;**/
+}
+  
+&lt;/style&gt;
+&lt;script&gt;
+
+(function() {
+	
+  if(&quot;{{{transport.requiresLogin}}}&quot; == &quot;Yes&quot;){
+  
+   var scriptName = window.location.pathname.substring(1,window.location.pathname.length )
+   var loginTemplateTarget =&quot;http://scriptr.local.elementn.com/lib/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget=&quot;+scriptName+&quot;&anon_token={{{anon_token}}}&quot;
+
+    var authorization  = $.scriptr.authorization(
+        {
+          onTokenValid: function(){ }, 
+          loginPage: loginTemplateTarget
+        }
+      );
+    }
+  
+  
+   $.urlParam = function(name){
+	     var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+	     if (results==null){
+	         return null;
+	     }else{
+	         return results[1] || 0;
+	     }
+	}
+
+	$.getUrlVars = function() {
+		var vars = [], hash;
+		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&amp;');
+		for(var i = 0; i &lt; hashes.length; i++)
+		{
+			hash = hashes[i].split('=');
+			vars.push(hash[0]);
+			vars[hash[0]] = hash[1];
+		}
+		return vars;
+	}
+	  
+
+      
+    var underscore = angular.module('underscore', []);
+		underscore.factory('_', ['$window', function($window) {		
+  		return $window._; // assumes underscore has already been loaded on the page		
+	}]);
+    
+
+    var wssConfig = [&quot;wsClientProvider&quot;,function (wsClientProvider) {
+   	 	wsClientProvider.setBaseUrl(&quot;wss://&quot; + window.location.host + &quot;/&quot;);   	 
+        wsClientProvider.setToken($.urlParam(&quot;auth_token&quot;));
+        wsClientProvider.setPublishChannel(&quot;{{{transport.publishChannel}}}&quot;);
+        wsClientProvider.setSubscribeChannel(&quot;{{{transport.subscribeChannel}}}&quot;);
+    }];
+
+    var httpsConfig = [&quot;httpClientProvider&quot;,function (httpClientProvider) {
+   	  httpClientProvider.setBaseUrl(&quot;https://&quot; + window.location.host);
+      httpClientProvider.setToken($.urlParam(&quot;auth_token&quot;));
+    }]
+
+     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid'])
+     angular.module('myApp').config(wssConfig);
+     angular.module('myApp').config(httpsConfig);
+     
+     myApp.config(function($interpolateProvider, $locationProvider) {
+        $interpolateProvider.startSymbol('{[{');
+        $interpolateProvider.endSymbol('}]}');
+        $locationProvider.html5Mode({
+          enabled: true,
+          requireBase: false
+        });
+     });
+  
+  
+     myApp.controller('RootCtrl', function($scope, $interpolate, $location) {
+       var vm = this;
+       vm.gridsterOptions = {
+          pushing: false,
+          
+          minRows: 1, // the minimum height of the grid, in rows
+          maxRows: 100,
+          columns: 5, // the width of the grid, in columns
+          colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
+          rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+          margins: [10, 10], // the pixel distance between each widget
+          defaultSizeX: 2, // the default width of a gridster item, if not specifed
+          defaultSizeY: 1, // the default height of a gridster item, if not specified
+          mobileBreakPoint: 1024, // if the screen is not wider that this, remove the grid layout and stack the items
+          minColumns: 1,
+          resizable: {
+            enabled: false
+          },
+          draggable: {
+             enabled: false
+          }
+       };
+       
+        vm.init = function() {
+          {{#each urlParams}}
+           	console.log(&quot;{{this}}&quot;, $location.search()[&quot;{{this}}&quot;])
+            vm.{{this}} = $location.search()[&quot;{{this}}&quot;]
+          {{/each}}
+        }
+     });
+        	
+})();
+  
+&lt;/script&gt;
+
+  &lt;body&gt;
+      &lt;div ng-controller=&quot;RootCtrl as vm&quot; ng-init=&quot;vm.init();&quot;&gt; 
+		&lt;div gridster=&quot;vm.gridsterOptions&quot;&gt;
+          &lt;ul&gt;
+             {{#each items}}
+                &lt;li class=&quot;myItem&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
+                    &lt;div class=&quot;box&quot;&gt;
+                        &lt;div class=&quot;box-content&quot;&gt;
+                          &lt;div  tooltip-placement=&quot;bottom&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot; class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
+                           &lt;{{type}}
+                           	      {{#each this.options}} 
+                                      	{{@key}}='{{this}}'
+                                  {{/each}} 
+                           &gt;&lt;/{{type}}&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/li&gt;
+             {{/each}}
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+  &lt;/body&gt;  
+&lt;/html&gt;
+</script>
+  
+  
 </body>  
 </html>
