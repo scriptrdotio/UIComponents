@@ -203,9 +203,9 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					
-					'grunt_lib/js/dashboardBuilder_resources.min.js': ['build/javascript/dashboardBuilder_resources.js'],
+					'lib/js/dashboardBuilder_resources.min.js': ['build/javascript/dashboardBuilder_resources.js'],
 					
-					'grunt_lib/js/template_resources.min.js': ['build/javascript/template_resources.js']
+					'lib/js/template_resources.min.js': ['build/javascript/template_resources.js']
 		
 				}
 			}
@@ -214,7 +214,7 @@ module.exports = function(grunt) {
 		cssmin: {
 		    css:{
 				src: 'build/css/components.css',
-				dest: 'grunt_lib/css/components.min.css'
+				dest: 'lib/css/components.min.css'
 		    }
 		},
 		
