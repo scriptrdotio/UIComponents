@@ -82,7 +82,7 @@
   if(&quot;{{{transport.requiresLogin}}}&quot; == &quot;Yes&quot;){
   
    var scriptName = window.location.pathname.substring(1,window.location.pathname.length )
-   var loginTemplateTarget =&quot;/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget=&quot;+scriptName+&quot;&anon_token=&quot;+{{{anon_token}}}
+   var loginTemplateTarget =&quot;/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget=&quot;+scriptName+&quot;&anon_token={{{anon_token}}}&quot;
 
     var authorization  = $.scriptr.authorization(
         {
