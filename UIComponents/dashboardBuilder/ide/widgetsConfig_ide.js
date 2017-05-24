@@ -23,7 +23,6 @@ angular
     transport: {
       "label": "Transport configuration",
       "defaults": {
-         "requiresLogin": "No",
          "publishChannel": "requestChannel",
          "subscribeChannel": "responseChannel"
        },
@@ -32,12 +31,6 @@ angular
        	"type": "object",
 		"title": "Schema",
 		"properties": {
-            "requiresLogin": {
-				"title": "Requires Login",
-				"type": "string",
-                "enum": ["Yes", "No"],
-				"description": "Scriptr token."
-			},
 			"publishChannel": {
 				"title": "Publish Channel",
 				"type": "string",

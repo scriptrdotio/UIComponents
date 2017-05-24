@@ -1,102 +1,4 @@
-<html ng-app="myApp">
-<head>
-    <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="//use.fontawesome.com/cb4ba0acea.js"></script>  
-  
-     <!-- CSS -->
-   <link rel="stylesheet" type="text/css" href="/lib/UIComponents/grunt/css/components.min.css"/>
- 
-   <!-- NG material -->
-   <script src="/lib/UIComponents/grunt/js/dashboardBuilder_resources.min.js"></script>
-        
-</head> 
-  
-<script type="text/javascript"> 
-   
-    
-    (function ($) { 
-          var myApp= angular.module("myApp", ['DashboardBuilder']);
-          angular.module('myApp').run(cachedTemplates);  
-
-         $.urlParam = function(name){
-                    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-                    if (results==null){
-                        return null;
-                    }else{
-                        return results[1] || 0;
-                    }
-            }
-
-          $.getUrlVars = function() {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for(var i = 0; i < hashes.length; i++)
-            {
-              hash = hashes[i].split('=');
-              vars.push(hash[0]);
-              vars[hash[0]] = hash[1];
-            }
-            return vars;
-          }
-          
-     var wssConfig = ["wsClientProvider",function (wsClientProvider) {
-          wsClientProvider.setToken($.urlParam("auth_token"));
-          wsClientProvider.setPublishChannel("requestChannel");
-          wsClientProvider.setSubscribeChannel("responseChannel");
-    }];
-
-    var httpsConfig = ["httpClientProvider",function (httpClientProvider) {
-        httpClientProvider.setBaseUrl("https://"+$.urlParam("subdomain")+".scriptrapps.io");
-        httpClientProvider.setToken($.urlParam("auth_token"));
-    }]
-
-	 angular.module('myApp').config(wssConfig);
-     angular.module('myApp').config(httpsConfig);
-     angular.module('myApp').run(function(editableOptions, editableThemes) {
-        editableThemes.bs3.buttonsClass = 'btn-md';
-        editableThemes.bs3.submitTpl = '<button type="submit" class="btn btn-warning" title="Submit" aria-label="Submit"><span class="glyphicon glyphicon-ok"></span></button>';
-        editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-     });
-  
-    
-     angular.module('myApp').config(function($routeProvider){
-           $routeProvider
-            .when("/", {
-            	templateUrl: '/UIComponents/dashboardBuilder/view/dashboardsList.html'
-          	})
-            .when("/dashboardsList", {
-            	templateUrl: '/UIComponents/dashboardBuilder/view/dashboardsList.html'
-          	})
-            .when("/newDashboard",{
-               templateUrl: '/UIComponents/dashboardBuilder/view/dashboard.html'
-            })
-            .when("/scriptrIdeRef/:scriptrIdeRef*", {
-            	templateUrl: '/UIComponents/dashboardBuilder/view/dashboard.html'
-          	})
-          	.when('/scriptName/:scriptName*', {
-              	templateUrl: '/UIComponents/dashboardBuilder/view/dashboard.html',
-             	controller:  'dashboardCtrl',
-              	controllerAs: "vm"
-            })
-           .when('/logout', {
-              	templateUrl: '/UIComponents/dashboardBuilder/view/logout.html'
-            }) 
-            .otherwise({redirectTo:'/'})
-       })
-     
-   	  angular.module('myApp').controller('dashboardCtrl', function($scope, httpClient, $sce, $route, $routeParams) {
-          var vm = this;
-          //vm.user = (atob(document.cookie.split("=")[1]).split(":")[1])
-      });
-}(jQuery));
-  
-</script>
-  
-<!--script src="/UIComponents/dashboardBuilder/javascript/dashboard.js"></script-->
-<body ng-controller="dashboardCtrl as vm">
-     <ng-view></ng-view>
-	<script type='text/x-handlebars-template' id="handlebar-template">
+<script type='text/x-handlebars-template' id="handlebar-template">
 &lt;html ng-app=&quot;myApp&quot;&gt;
 &lt;head&gt;
 
@@ -104,9 +6,9 @@
     &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;
     &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;
 
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;//scriptr.local.elementn.com/lib/UIComponents/grunt/css/components.min.css&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;//{{{staticdomain}}}/lib/UIComponents/build/ide/css//components.min.css&quot;&gt;
 
-    &lt;script src=&quot;//scriptr.local.elementn.com/lib/UIComponents/grunt/js/template_resources.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;//{{{staticdomain}}}/lib/UIComponents/build/ide/js/template_resources.min.js&quot;&gt;&lt;/script&gt;
     
 &lt;/head&gt; 
   
@@ -120,20 +22,6 @@
 &lt;script&gt;
 
 (function() {
-	
-  if(&quot;{{{transport.requiresLogin}}}&quot; == &quot;Yes&quot;){
-  
-   var scriptName = window.location.pathname.substring(1,window.location.pathname.length )
-   var loginTemplateTarget =&quot;http://scriptr.local.elementn.com/lib/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget=&quot;+scriptName+&quot;&anon_token={{{anon_token}}}&quot;
-
-    var authorization  = $.scriptr.authorization(
-        {
-          onTokenValid: function(){ }, 
-          loginPage: loginTemplateTarget
-        }
-      );
-    }
-  
   
    $.urlParam = function(name){
 	     var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
@@ -155,8 +43,6 @@
 		}
 		return vars;
 	}
-	  
-
       
     var underscore = angular.module('underscore', []);
 		underscore.factory('_', ['$window', function($window) {		
@@ -177,6 +63,9 @@
     }]
 
      var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid'])
+     
+     angular.module('myApp').run(cachedTemplates);  
+      
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      
@@ -249,7 +138,3 @@
   &lt;/body&gt;  
 &lt;/html&gt;
 </script>
-  
-  
-</body>  
-</html>

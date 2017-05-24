@@ -361,7 +361,7 @@ angular
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
           data["transport"] = angular.copy(this.transport.defaults);
-          data["anon_token"] = $routeParams.anon_token;
+          data["staticdomain"] = $routeParams.staticdomain;
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
