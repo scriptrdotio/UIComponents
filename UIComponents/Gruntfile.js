@@ -56,15 +56,6 @@ module.exports = function(grunt) {
 	            }
 	         },
 
-	         fetch_goolge_maps : {
-		         all : {
-		            src : [
-		                  'https://maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&libraries=drawing', ],
-		            dest : 'lib/google_maps.js'
-		         }
-
-	         },
-
 	         fetch_ag_grid : {
 		         all : {
 		            src : [
@@ -179,7 +170,6 @@ module.exports = function(grunt) {
 		                     'lib/slick.min.js',
 		                     'lib/underscore-min.js',
 		                     'lib/handlebars.min.js',
-		                     'lib/google_maps.js',
 		                     'lib/angular.min.js',
 		                     'lib/angular-route.min.js',
 		                     'lib/angular-websocket.min.js',
@@ -265,7 +255,6 @@ module.exports = function(grunt) {
 		                     'dashboardBuilder/lib/gridster/angular_gridster.min.js',
 						         'concat/min-safe/displayBox.js',
 						         'concat/min-safe/message.js',
-						         'lib/google_maps.js',
 						         'concat/min-safe/markerClusterer.js',
 						         'lib/ng-map.min.js',
 						         'concat/min-safe/map.js',
@@ -399,7 +388,7 @@ module.exports = function(grunt) {
 	// Run the tasks
 	//grunt.registerTask('default', ['fetchFromCDN']);
 	grunt.registerTask('ide_dashboardBuilder', [ 'fetchFromCDN',
-	      'fetch_goolge_maps', 'fetch_ag_grid', 'ngtemplates', 'ngAnnotate',
+	      'fetch_ag_grid', 'ngtemplates', 'ngAnnotate',
 	      'concat', 'uglify', 'cssmin', 'clean' ]);
 
 };
