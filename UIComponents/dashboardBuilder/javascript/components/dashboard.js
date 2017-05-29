@@ -162,9 +162,12 @@ angular
           resizable: {
             enabled: true,
             handle: '.my-class', // optional selector for resize handle
-            start: function(event, uiWidget, $element) {}, // optional callback fired when resize is started,
+            start: function(event, uiWidget, $element) {
+            	 $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
+            }, // optional callback fired when resize is started,
             resize: function(event, uiWidget, $element) {
                //console.log("resize event called:",event, uiWidget, $element);
+            	  $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when item is resized,
             stop: function(event, uiWidget, $element) {
               console.log("End resize:",event, uiWidget, $element);
@@ -174,8 +177,12 @@ angular
           draggable: {
             enabled: true, // whether dragging items is supported
             handle: '.my-class', // optional selector for resize handle
-            start: function(event, uiWidget, $element) {}, // optional callback fired when drag is started,
-            drag: function(event, uiWidget, $element) {}, // optional callback fired when item is moved,
+            start: function(event, uiWidget, $element) {
+              $scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
+            }, // optional callback fired when drag is started,
+            drag: function(event, uiWidget, $element) {
+            	$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
+            }, // optional callback fired when item is moved,
             stop: function(event, uiWidget, $element) {
               console.log("End drag", event, uiWidget, $element);
               $scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
@@ -477,13 +484,36 @@ angular
       };
       
       this.clear = function() {
-			this.dashboard.widgets = [];
-            this.notifyDashboardChange();
+      	var self = this;
+         var modalInstance = $uibModal.open({
+              animation: true,
+              component: 'confirmationModal',
+        		  size: 'md',
+           	  scope: $scope,
+               resolve: {
+                 data: function () {
+                   return {"title": "Clear Board", "body": "Are you sure you want to empty your dashboard?"};
+                 }
+               }
+             });
+             modalInstance.result.then(function (wdgModel) {
+               if(wdgModel) {
+                  self.clearWidgets();
+               } 
+             }, function () {
+                console.info('modal-component for clearing dashboard update dismissed at: ' + new Date());
+             });
+			
+	  };
+	  
+	  this.clearWidgets = function() {
+		  this.dashboard.widgets = [];
+        this.notifyDashboardChange();
 	  };
       
       this.logout = function() {
         var authorization  = $.scriptr.authorization({loginPage: login.loginTarget});
-		authorization.logout();
+		  authorization.logout();
 	  };
 
       this.addWidget = function(wdg) {
@@ -658,10 +688,50 @@ angular
       var boxSelf = this;
      
       this.remove = function(widget) {
+      	var self = this;
+      	
+      	var modalInstance = $uibModal.open({
+            animation: true,
+            component: 'confirmationModal',
+      		  size: 'md',
+         	  scope: $scope,
+             resolve: {
+               data: function () {
+                 return {"title": "Remove Widget", "body": "Are you sure you want to remove widget from dashboard?"};
+               }
+             }
+           });
+           modalInstance.result.then(function (wdgModel) {
+             if(wdgModel) {
+                self.removeWidget(widget);
+             } 
+           }, function () {
+              console.info('modal-component for removing widget dismissed at: ' + new Date());
+           });
+      	
+      };
+      
+      this.removeWidget = function(widget) {
         this.parent.dashboard.widgets.splice(this.parent.dashboard.widgets.indexOf(widget), 1);
         this.parent.notifyDashboardChange();
       };
       
+      this.resizeWidget = function(data) {
+      	if(self.widget == data.element) {
+            if(self.widget.type == "scriptr-speedometer") {
+              var h = data.wdg.height();
+              var w = data.wdg.width()
+              data.element.options["gauge-radius"] = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
+              self.updateWidget(data.element.options)
+            }
+            if(self.widget.type == "scriptr-grid") {
+              var h = data.wdg.height();
+              data.element.options["grid-height"] = h - 110;
+            	self.updateWidget(data.element.options)
+            }
+          }
+      }
+            
       this.$onInit =  function() {
         var self = this;
         if(this.widget) {
@@ -669,32 +739,31 @@ angular
         }
         
         $scope.$on('gridster-item-initialized', function(item) { 
-         console.log("gridster-item-initialized");
+      	  console.log("gridster-item-initialized");
+      	  $(window).trigger('resize');
         })
-
-      
+        
+        $scope.$on('gridster-item-transition-end', function(item) { 
+         console.log("gridster-item-transition end");
+         $(window).trigger('resize');
+        })
+        
+        $scope.$on('gridster-resized', function() { 
+      	  console.log("gridster-resized");
+      	  $(window).trigger('resize');
+         
+        })
+        
         $scope.$on("resize_widget", function(event, data) {
           	console.log("Widget resize", event, data);
           	$(window).trigger('resize');
-            if(self.widget == data.element) {
-              if(self.widget.type == "scriptr-speedometer") {
-                var h = data.wdg.height();
-                var w = data.wdg.width()
-                data.element.options["gauge-radius"] = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
-              	self.updateWidget(data.element.options)
-              }
-              if(self.widget.type == "scriptr-grid") {
-                var h = data.wdg.height();
-                data.element.options["grid-height"] = h - 110;
-              	self.updateWidget(data.element.options)
-              }
-            }
+            self.resizeWidget(data)
             boxSelf.parent.notifyDashboardChange();
         });
         
          $scope.$on("drag_widget", function(event, data) {
-		  console.log("Widget dragged", event, data);
-          $(window).trigger('resize');
+		       console.log("Widget dragged", event, data);
+             $(window).trigger('resize');
         });
         
        /**
@@ -791,7 +860,9 @@ angular
     controller: function ($scope) {
       this.$onInit = function () {
         this.widget = this.resolve.widget;
+        
         $scope.$broadcast('schemaFormRedraw')
+       
         this.frmGlobalOptions = {
           "destroyStrategy" : "remove",
           "formDefaults": {"feedback": false}
@@ -806,7 +877,6 @@ angular
             }
             
               this.model =  (this.widget.options) ?  angular.copy(this.widget.options) : {}
-            
           }
       };
 
@@ -855,18 +925,28 @@ angular
     }
 });
 
-angular.module('DashboardBuilder').controller('PopupCont', ['$scope','$uibModalInstance',function ($scope, $uibModalInstance) {
-       
-            $scope.name =  $scope.$resolve.name;
-      
-            $scope.close = function () {
-                $uibModalInstance.dismiss('cancel');
-            };
-             $scope.ondeleteDashboard = function () {
-                this.$resolve.dashboard.deleteDashboard(this.$resolve.path);
-                $uibModalInstance.dismiss('cancel'); 
-            };
-            
-            
-        }]);
 
+angular
+  .module('DashboardBuilder')
+  .component('confirmationModal', 
+  {
+    bindings: {
+      resolve: '<',
+      close: '&',
+      dismiss: '&'
+    },
+    templateUrl: '/UIComponents/dashboardBuilder/javascript/components/confirmation.html',
+    controller: function ($scope) {
+      this.$onInit = function () {
+        this.data = this.resolve.data;
+      };
+
+      this.onSubmit = function() {
+          this.close({$value: true});
+      };
+      this.onCancel = function () {
+        this.dismiss({$value: false});
+      };
+
+    }
+});
