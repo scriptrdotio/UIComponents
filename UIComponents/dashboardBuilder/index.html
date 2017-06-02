@@ -55,6 +55,7 @@
     <!-- Directives -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+     <!--script src="/UIComponents/dashboard/frontend/components/chart/morris.js"></script-->
     <script src="/UIComponents/dashboard/frontend/components/chart/angular.morris.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
@@ -164,10 +165,10 @@
   
 <!--script src="/UIComponents/dashboardBuilder/javascript/dashboard.js"></script-->
 <body ng-controller="dashboardCtrl as vm">
-   <header-top user="vm.user" header-items='{
+   <!--header-top user="vm.user" header-items='{
            "appname": "Dashboard Builder",
            "logout": {"route":"#/logout"}
-        }'></header-top>
+        }'></header-top-->
   <div>
      <ng-view></ng-view>
  	 <div ng-include="'/UIComponents/dashboardBuilder/view/dashboardTemplate'"></div>

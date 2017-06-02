@@ -1,4 +1,4 @@
-var anonymousToken = "";
+var anonymousToken = "RTg2MTczN0ZDRQ==";
 
 var login = {
    redirectTarget: "/UIComponents/dashboardBuilder/index.html",

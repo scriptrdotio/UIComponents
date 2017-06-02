@@ -46,7 +46,7 @@ angular
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $timeout, $sce, $window, httpClient, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, $q, _) {
+    controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, $q, _) {
       
       this.wsClient = wsClient;
       var self = this;
@@ -163,11 +163,11 @@ angular
             enabled: true,
             handle: '.my-class', // optional selector for resize handle
             start: function(event, uiWidget, $element) {
-            	 $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
+            	 //$scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when resize is started,
             resize: function(event, uiWidget, $element) {
                //console.log("resize event called:",event, uiWidget, $element);
-            	  $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
+            	 // $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when item is resized,
             stop: function(event, uiWidget, $element) {
               console.log("End resize:",event, uiWidget, $element);
@@ -178,10 +178,10 @@ angular
             enabled: true, // whether dragging items is supported
             handle: '.my-class', // optional selector for resize handle
             start: function(event, uiWidget, $element) {
-              $scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
+              //$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when drag is started,
             drag: function(event, uiWidget, $element) {
-            	$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
+            	//$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when item is moved,
             stop: function(event, uiWidget, $element) {
               console.log("End drag", event, uiWidget, $element);
@@ -189,6 +189,11 @@ angular
             } // optional callback fired when item is finished dragging
           }
         };
+          
+        $scope.$on('gridster-resized', function(event, sizes, gridster) { 
+      	  console.log("gridster-resized");
+          // $(window).trigger('resize');     
+        })
         
         this.widgetsConfig = config.widgets; 
         this.dataLoaded = true;
@@ -716,21 +721,7 @@ angular
         this.parent.notifyDashboardChange();
       };
       
-      this.resizeWidget = function(data) {
-      	if(self.widget == data.element) {
-            if(self.widget.type == "scriptr-speedometer") {
-              var h = data.wdg.height();
-              var w = data.wdg.width()
-              data.element.options["gauge-radius"] = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
-              self.updateWidget(data.element.options)
-            }
-            if(self.widget.type == "scriptr-grid") {
-              var h = data.wdg.height();
-              data.element.options["grid-height"] = h - 110;
-            	self.updateWidget(data.element.options)
-            }
-          }
-      }
+    
             
       this.$onInit =  function() {
         var self = this;
@@ -740,24 +731,31 @@ angular
         
         $scope.$on('gridster-item-initialized', function(item) { 
       	  console.log("gridster-item-initialized");
-      	  $(window).trigger('resize');
+      	 // $(window).trigger('resize');
         })
         
         $scope.$on('gridster-item-transition-end', function(item) { 
          console.log("gridster-item-transition end");
-         $(window).trigger('resize');
+         //$(window).trigger('resize');
         })
         
-        $scope.$on('gridster-resized', function() { 
-      	  console.log("gridster-resized");
-      	  $(window).trigger('resize');
-         
-        })
         
         $scope.$on("resize_widget", function(event, data) {
           	console.log("Widget resize", event, data);
           	$(window).trigger('resize');
-            self.resizeWidget(data)
+            if(self.widget == data.element) {
+             /**   if(self.widget.type == "scriptr-speedometer") {
+                    var h = data.wdg.height();
+                    var w = data.wdg.width()
+                    data.element.options["gauge-radius"] = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
+                    self.updateWidget(data.element.options)
+                }**/
+                if(self.widget.type == "scriptr-grid") {
+                    var h = data.wdg.height();
+                    data.element.options["grid-height"] = h - 110;
+                    self.updateWidget(data.element.options)
+                }
+            }
             boxSelf.parent.notifyDashboardChange();
         });
         
@@ -807,40 +805,29 @@ angular
         
         angular.element($element.find(".box-content")).append( el );
         
-        $scope.$watch('widget', function() {
+        /**$scope.$watch('widget', function() {
           $compile( self.chart )( $scope );
-        }, true)
+        }, true)**/
       };
       
       this.updateWidget =  function(/**event, **/wdgModel) {
         var self = this;
-       
+
         angular.forEach(wdgModel, function(value, key) {
-         /** if(key == "api-params" &&(value instanceof Array)) {
-             var apiParamsOutput = "{";
-            _.each(dmWdg["api-params"], function(item, index) {
-              self.urlParams =  self.urlParams.concat([item]);
-              apiParamsOutput += "\""+item+"\": $eval("+ item + ((index < dmWdg["api-params"].length -1) ? ")," : ")");
-            });
-            apiParamsOutput +="}";
-            self.chart.attr("api-params", "apiParamsOutput");
-          } else { **/
             self.chart.attr(key, value);
-          //}
         }, this);
         
         var mdl = angular.copy(wdgModel);
-       /** try {
-          if(mdl["api-params"] && JSON.parse(mdl["api-params"]) instanceof Array) {
-          		mdl["api-params"]  = apiParamsOutput;
-           }
-        } catch(e){
-           console.log("Not an array")
-        }**/
         
-        this.parent.dashboard.widgets[this.parent.dashboard.widgets.indexOf(this.widget)]["options"] = angular.copy(mdl);
+        var _current = this.parent.dashboard.widgets.indexOf(this.widget)
+        var _new = angular.copy(this.widget);
+        _new["options"] = angular.copy(mdl);
+        //this.parent.dashboard.widgets[this.parent.dashboard.widgets.indexOf(this.widget)]["options"] = 
+        this.parent.dashboard.widgets.splice(_current, 1, _new);
         this.parent.notifyDashboardChange();
-        $compile( self.chart )( $scope );
+      // $compile( self.chart )( $scope );
+          
+       
       };
     }
 })

@@ -35,7 +35,7 @@ form { margin-bottom: 0;}
 
 /*** box ***/
 .box { height: 100%;border: 1px solid #ccc;background-color: #fff;}
-.box-content {padding: 5px; text-align: center;}
+.box-content {padding: 5px; text-align: center; width: 100%; height: 100%;}
 
 /*** Box header ***/
 .box-header {position: relative; z-index: 1; display: inline-block; width: 100%; cursor: default;  background: #f3f3f3; padding: 5px 15px;}
