@@ -152,48 +152,68 @@ angular
           margins: [10, 10], // the pixel distance between each widget
           defaultSizeX: 2, // the default width of a gridster item, if not specifed
           defaultSizeY: 1, // the default height of a gridster item, if not specified
-          mobileBreakPoint: 1024, // if the screen is not wider that this, remove the grid layout and stack the items
+          mobileBreakPoint: 800, // if the screen is not wider that this, remove the grid layout and stack the items
           minColumns: 1, // the minimum columns the grid must have
           //MFE: overriden in each item widget definition
           //minSizeX: 1, // minimum column width of an item
          // maxSizeX: null, // maximum column width of an item
          // minSizeY: 2, // minumum row height of an item
           //maxSizeY: 2, // maximum row height of an item
+            sparse: true,
           resizable: {
             enabled: true,
             handle: '.my-class', // optional selector for resize handle
             start: function(event, uiWidget, $element) {
+                $(window).trigger('resize');
             	 //$scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when resize is started,
             resize: function(event, uiWidget, $element) {
+                $(window).trigger('resize');
                //console.log("resize event called:",event, uiWidget, $element);
-            	 // $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
+               // $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when item is resized,
             stop: function(event, uiWidget, $element) {
               console.log("End resize:",event, uiWidget, $element);
-              $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
+               $timeout( function(){ $(window).trigger('resize')},100);
+             // $scope.$broadcast("resize_widget", {wdg: uiWidget, element: $element})
+              self.notifyDashboardChange();
             } //optional callback fired when item is finished resizing 
           },
           draggable: {
             enabled: true, // whether dragging items is supported
             handle: '.my-class', // optional selector for resize handle
             start: function(event, uiWidget, $element) {
-              //$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
+                $(window).trigger('resize');
+                //$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when drag is started,
             drag: function(event, uiWidget, $element) {
-            	//$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
+                $(window).trigger('resize');
+                //$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when item is moved,
             stop: function(event, uiWidget, $element) {
               console.log("End drag", event, uiWidget, $element);
-              $scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
+                $(window).trigger('resize');
+                 self.notifyDashboardChange();
+              //$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
             } // optional callback fired when item is finished dragging
           }
         };
           
+        $scope.$watch('self.dashboard.widgets', function(items){
+   console.log("one of the items changed")
+}, true);
+          
         $scope.$on('gridster-resized', function(event, sizes, gridster) { 
       	  console.log("gridster-resized");
-          // $(window).trigger('resize');     
+          $(window).trigger('resize');     
         })
+        
+        $scope.$on('gridster-item-initialized', function(item) { 
+      	  console.log("gridster-item-initialized");
+      	  $(window).trigger('resize');
+        })
+        
+
         
         this.widgetsConfig = config.widgets; 
         this.dataLoaded = true;
@@ -212,7 +232,6 @@ angular
                   $window.parent.postMessage([ "editor_save-" + self.scriptrIdeRef, self.getEditorValue()], "*");
                 }
            }	
-          
             if(msg[0] == "set_editor_load_data-"+self.scriptrIdeRef) {
               	self.setEditorValue(JSON.parse(msg[1]))
            }	
@@ -724,32 +743,28 @@ angular
     
             
       this.$onInit =  function() {
+          
+                  $scope.$on('gridster-item-transition-end', function(item) { 
+         console.log("gridster-item-transition end");
+         $(window).trigger('resize');
+        })
+        
+        $scope.$on('gridster-item-resized', function(item) {
+		 	console.log("gridster-item-resized");
+         	$(window).trigger('resize');
+        })
         var self = this;
         if(this.widget) {
           this.addWidget(this.widget)
         }
         
-        $scope.$on('gridster-item-initialized', function(item) { 
-      	  console.log("gridster-item-initialized");
-      	 // $(window).trigger('resize');
-        })
         
-        $scope.$on('gridster-item-transition-end', function(item) { 
-         console.log("gridster-item-transition end");
-         //$(window).trigger('resize');
-        })
         
         
         $scope.$on("resize_widget", function(event, data) {
           	console.log("Widget resize", event, data);
           	$(window).trigger('resize');
             if(self.widget == data.element) {
-             /**   if(self.widget.type == "scriptr-speedometer") {
-                    var h = data.wdg.height();
-                    var w = data.wdg.width()
-                    data.element.options["gauge-radius"] = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
-                    self.updateWidget(data.element.options)
-                }**/
                 if(self.widget.type == "scriptr-grid") {
                     var h = data.wdg.height();
                     data.element.options["grid-height"] = h - 110;
@@ -760,8 +775,9 @@ angular
         });
         
          $scope.$on("drag_widget", function(event, data) {
-		       console.log("Widget dragged", event, data);
-             $(window).trigger('resize');
+		      console.log("Widget dragged", event, data);
+             //$(window).trigger('resize');
+              boxSelf.parent.notifyDashboardChange();
         });
         
        /**

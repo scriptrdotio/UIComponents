@@ -1,1 +1,1 @@
-{"acl":{},"contentType":"text\/html"}
+{"acl":{"read":"scriptr","write":"nobody","execute":"nobody"},"contentType":"text\/html","userConfig":"\/*#*SCRIPTR_PLUGIN*#*{\"metadata\":{\"name\":\"CodeMirrorArbitraryFile\",\"plugindata\":{}}}*#*#*\/"}

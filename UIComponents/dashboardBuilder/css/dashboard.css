@@ -1,4 +1,4 @@
-body {font-family: 'Source Sans Pro', sans-serif; background: #fff;}
+body {font-family: 'Source Sans Pro', sans-serif!important; background: #fff;}
 html {background: #efefef;}
 .pdt10 {padding-top: 10px;}
 .pdb10 {padding-bottom: 10px;}
@@ -19,7 +19,7 @@ html {background: #efefef;}
 }
 
 scriptr-odometer {
-  white-space : normal !important
+  white-space : normal !important;
 }
 
 ul {
@@ -29,6 +29,7 @@ ul {
 form { margin-bottom: 0;}
 .grey-bg {background: #efefef;}
 .dark-grey-bg {background: #e0e0e0;}
+.white-bg {background: #fff !important;}
 
 /*** loading ***/
 .loading {margin: 20px auto;}
@@ -110,11 +111,7 @@ margin: 0;
 }
 
 .help-block {
-    font-size: 75%;
-}
-
-.modal-footer {
-     border-top: none;
+    font-size: 80%;
 }
 
 .gauge {
@@ -225,6 +222,52 @@ li.dashboard-edit-btn:hover {opacity: 0.8;}
 }
 
 
+.modal-body {
+    background: #fafafa;
+    font-size: 0.95em;
+    color: #343434;
+    padding: 15px;
+    word-wrap: break-word; 
+    width: 100%;
+}
+
+.btn-primary {
+color: #fff;
+background-color: #f48220;
+border-color: #e47618;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+color: #fff;
+background-color: #e4710d!important;
+border-color: #e47618!important;
+}
+
+
+.modal-dialog .nav-tabs {padding-top: 0; border: none;}
+.modal-dialog .nav-tabs, .modal-dialog .tab-content {background: #fff;}
+.modal-dialog .tab-content {border: none; padding-top: 20px; color: #343434;}
+.modal-dialog .nav-tabs > li:first-child a {margin-left: 0;}
+.modal-dialog .nav-tabs li {margin-right: 8px;}
+.modal-dialog .nav-tabs a{border: none; color:#fff; background: #000;
+-moz-border-radius:0; -webkit-border-radius: 0; border-radius: 0; text-transform: uppercase;}
+.modal-dialog .nav-tabs > li > a {padding: 5px 10px; font-weight: 600;}
+.modal-dialog .nav-tabs > li > a img {margin-top: -4px; padding-right: 6px;}
+.modal-dialog .nav-tabs > li.active > a,
+.modal-dialog .nav-tabs > li > a:hover, 
+.modal-dialog .nav-tabs > li > a:focus
+{background: #ff8c00; color: #fff; border: none;}
+
+
+.schema-form-select .control-label,
+.schema-form-group .control-label,
+.schema-form-text .control-label,
+.schema-form-radios-inline .control-label{font-size: 13px; color: #343434;}
+.schema-form-select .help-block, 
+.schema-form-group .help-block, 
+.schema-form-text .help-block,
+.schema-form-radios-inline .help-block
+{color: #737373;}
 
 
 

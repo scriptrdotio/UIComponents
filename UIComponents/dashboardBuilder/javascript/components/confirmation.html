@@ -1,10 +1,10 @@
 <div class="modal-header">
-<h3 class="modal-title">{{ $ctrl.data.title }}</h3>
+<h4 class="modal-title">{{ $ctrl.data.title }}</h4>
 </div>
 <div class="modal-body">
  {{ $ctrl.data.body }}
 </div>
 <div class="modal-footer">
-<button type="submit"  ng-click="$ctrl.onSubmit()" class="btn btn-info">Yes</button>
-<button type="reset" class="btn btn-danger" ng-click="$ctrl.onCancel()">No</button>
+<button type="reset" class="btn btn-default" ng-click="$ctrl.onCancel()">No</button>
+<button type="submit"  ng-click="$ctrl.onSubmit()" class="btn btn-primary">Yes</button>
 </div>
