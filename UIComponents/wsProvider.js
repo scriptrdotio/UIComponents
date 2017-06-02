@@ -1,5 +1,10 @@
+var underscore = angular.module('underscore', []);
+underscore.factory('_', ['$window', function($window) {		
+  return $window._; // assumes underscore has already been loaded on the page		
+}]);
+
 angular
-      .module('WsClient', [ 'ngWebSocket', 'ngCookies' ])
+      .module('WsClient', [ 'ngWebSocket', 'ngCookies', 'underscore'])
       .provider(
             'wsClient',
             function wsClientProvider() {
@@ -77,7 +82,8 @@ angular
 	                  "$cookies",
 	                  "$q",
 	                  "$rootScope",
-	                  function wsFactory($websocket, $cookies, $q, $rootScope) {
+                      "_",
+	                  function wsFactory($websocket, $cookies, $q, $rootScope, _) {
 
 		                  // In case we have a cookie with a token, update the token
 		                  if ($cookies.get("token")) {
@@ -192,12 +198,13 @@ angular
 			                     return dataStream.readyState;
 		                     },
 
-		                     subscribe : function(prefix, callback) {
+		                     subscribe : function(prefix, callback, id) {
 			                     if (_subscribeChannel) {
                                      var callback = {
 				                        time : new Date(),
 				                        cb : callback
-				                     }
+				                     };
+                                     if(id) {callback["id"] = id;}
                                      if(!subscribersRegistry[prefix]) {
                                        subscribersRegistry[prefix] = [callback];
                                      } else {
@@ -205,6 +212,30 @@ angular
                                      }
 				                     
 			                     }
+		                     },
+                              
+                            unsubscribe : function(prefix, callback, id) {
+                                if(!prefix) {
+                                    console.log("prefix is mandatory to unsubscribe.")
+                                    return;
+                                }
+                                 console.log("---", subscribersRegistry[prefix])
+			                     if (_subscribeChannel) {
+                                    if(prefix && !callback && !id) {
+                                        subscribersRegistry[prefix] = []
+                                    } else {
+                                        var entry = {}
+                                        if(callback) {
+                                            entry["cb"] = callback;
+                                        }
+                                        if(id) {
+                                            entry["id"] = id;
+                                        }
+                                       subscribersRegistry[prefix] =  _.difference(subscribersRegistry[prefix], _.where(subscribersRegistry[prefix],entry));
+                                    }
+				                     
+			                     }
+                                console.log("+++",subscribersRegistry[prefix])
 		                     },
 
 		                     publish : function(message, prefix, overridenPubChannel) {
