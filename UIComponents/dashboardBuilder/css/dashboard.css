@@ -39,10 +39,11 @@ form { margin-bottom: 0;}
 .box-content {padding: 5px; text-align: center; width: 100%; height: 100%;}
 
 /*** Box header ***/
-.box-header {position: relative; z-index: 1; display: inline-block; width: 100%; cursor: default;  background: #f3f3f3; padding: 5px 15px;}
+.box-header {position: relative; z-index: 1; display: inline-block; width: 100%;  background: #f3f3f3; padding: 5px 15px;}
 .box-header h3 { margin-top: 10px;display: inline-block;}
-.box-header-btns {cursor: pointer;}
-.box-header a:link, .box-header a:visited {color: #ccc;}
+.box-header-btns {cursor: pointer; }
+.box-header a, a:link, .box-header a:visited {color: #ff8c00}
+
 
 .box-label {
     word-break: break-word;
@@ -70,18 +71,24 @@ form { margin-bottom: 0;}
 .slick-prev:before, .slick-next:before {color: #ff8c00;}
 
 .dashboard-config {
-    margin-top: -5px;
+margin-top: -5px;
     margin-right: -5px;
-    margin-bottom: -5px;
     padding-top: 15px;
     padding-bottom: 16px;
     margin-bottom: -5px;
-    background: #313131;
+    background: #ee8300;
+    padding: 17px 4px;
+    border-left: 4px solid #fff;
 }
-.dashboard-config a{color: #fff; font-size: 22px; cursor: pointer;}
+.dashboard-config a {   
+	cursor: pointer;
+    border-radius: 6px;
+    background: #d87702;
+    padding: 5px 9px;
+    color: #fff;
+    }
 .dashboard-config a:hover {opacity: 0.8;}
-.dashboard-config a:link, .dashboard-config a:visited {color: #fff; font-size: 22px;}
-.dashboard-config a:first-child {margin-right: 11px;}
+.dashboard-config a:link, .dashboard-config a:visited {color: #fff; font-size: 14px;}
 
 /*** Gridtser ***/
 .gridster-item {cursor: move;}
@@ -246,12 +253,12 @@ border-color: #e47618!important;
 
 .modal-dialog .nav-tabs {padding-top: 0; border: none;}
 .modal-dialog .nav-tabs, .modal-dialog .tab-content {background: #fff;}
-.modal-dialog .tab-content {border: none; padding-top: 20px; color: #343434;}
+.modal-dialog .tab-content {border: none; padding-top: 15px; color: #343434;}
 .modal-dialog .nav-tabs > li:first-child a {margin-left: 0;}
-.modal-dialog .nav-tabs li {margin-right: 8px;}
+.modal-dialog .nav-tabs li {margin-right: 8px; margin-bottom: 5px;}
 .modal-dialog .nav-tabs a{border: none; color:#fff; background: #000;
 -moz-border-radius:0; -webkit-border-radius: 0; border-radius: 0; text-transform: uppercase;}
-.modal-dialog .nav-tabs > li > a {padding: 5px 10px; font-weight: 600;}
+.modal-dialog .nav-tabs > li > a {padding: 5px 10px; font-size: 0.8em;}
 .modal-dialog .nav-tabs > li > a img {margin-top: -4px; padding-right: 6px;}
 .modal-dialog .nav-tabs > li.active > a,
 .modal-dialog .nav-tabs > li > a:hover, 
@@ -262,12 +269,26 @@ border-color: #e47618!important;
 .schema-form-select .control-label,
 .schema-form-group .control-label,
 .schema-form-text .control-label,
+.schema-form-textarea .control-label,
+.schema-form-number .control-label,
 .schema-form-radios-inline .control-label{font-size: 13px; color: #343434;}
 .schema-form-select .help-block, 
 .schema-form-group .help-block, 
 .schema-form-text .help-block,
-.schema-form-radios-inline .help-block
+.schema-form-radios-inline .help-block,
+.schema-form-textarea .help-block,
+.schema-form-number .help-block
 {color: #737373;}
 
+.has-success .form-control {
+    border-color: #4FCD8A;
+}
+
+
+.gridster-loaded .gridster-preview-holder{
+	background-color:#999;
+	border-color:#666;
+	opacity:0.2
+}
 
 

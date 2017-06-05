@@ -41,12 +41,12 @@ angular
 			"publishChannel": {
 				"title": "Publish Channel",
 				"type": "string",
-				"description": "Publish Channel"
+				"description": "Widgets use the publish channel to publish messages that will be distributed to its subscribers."
 			},
             "subscribeChannel": {
 				"title": "Subscribe Channel",
 				"type": "string",
-				"description": "Subscribe Channel"
+				"description": "Widgets use the subscribe channel to consume the messages published over that channel as a data source."
 			}
         },
         "required": [
@@ -119,7 +119,7 @@ angular
                       {
                         "type": "section",
                         "htmlClass": "col-xs-6",
-                        "items": ["xkey", "ykeys", "units", "ymin", "ymax"]
+                        "items": ["xkey", "ykeys", "ymin", "ymax"]
                       },
                       {
                         "type": "section",
@@ -212,7 +212,16 @@ angular
                                     { value: "false", name: "False" }
                                   ]
                               },
-                               "hide-hover"/*"hover-callback"*/]
+                              {
+	                              type: "radios-inline",
+	                              key: "hide-hover",
+	                              titleMap: [
+                                     { value: "auto", name: "Auto" },
+	                                { value: "false", name: "Never" },
+                                     { value: "always", name: "Always" }
+	                              ]
+	                          }
+                              ]
                           }
                        ]
                     }
@@ -244,12 +253,12 @@ angular
             "boxLabel": {
 				"title": "Box Label",
 				"type": "string",
-				"description": "Define box title"
+				"description": "Define your widget box title."
 			},
 			"data": {
 				"title": "Data",
 				"type": "string",
-				"description": "Data series in case of static data.",
+				"description": "Data to plot in case of static data.This is an array of objects, containing x and y attributes as described by the xkey and ykeys options. The order in which you provide the data is the order in which the bars are displayed. ",
               	"x-schema-form": {
                   "type": "textarea",
                   "placeholder":  "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
@@ -258,22 +267,22 @@ angular
 			"xkey": {
 				"title": "x Key",
 				"type": "string",
-				"description": "The name of the data record attribute that contains x-values."
+				"description": "A string containing the name of the attribute that contains X labels."
 			},
 			"ykeys": {
 				"title": "y Keys",
 				"type": "string",
-				"description": "A list of names of data record attributes that contain y-values."
+				"description": "A list of strings containing names of attributes that contain Y values (one for each series of data to be plotted)."
 			},
 			"labels": {
 				"title": "Labels",
 				"type": "string",
-				"description": "Labels for the ykeys -- will be displayed when you hover over the chart."
+				"description": "A list of strings containing labels for the data series to be plotted (corresponding to the values in the ykeys option)."
 			},
 			"colors": {
 				"title": "Colors",
 				"type": "string",
-				"description": "Specify the color of each graph successively."
+				"description": "Array containing colors for the series bars."
 			},
 			"stacked": {
 				"title": "Stacked",
@@ -283,7 +292,7 @@ angular
 			"hide-hover": {
 				"title": "Hide Hover",
 				"type": "string",
-				"description": "Set to false to always show a hover legend. Set to true or 'auto' to only show the hover legend when the mouse cursor is over the chart. Set to 'always' to never show a hover legend."
+				"description": "Set to false to always show a hover legend. Set to 'auto' to only show the hover legend when the mouse cursor is over the chart. Set to 'always' to never show a hover legend."
 			},
 			"hover-callback": {
 				"title": "Hover Callback",
@@ -374,11 +383,6 @@ angular
 				"type": "string",
 				"description": "Min. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the min y-value is at most [num]. You can use this to create graphs with false origins."
 			},
-			"units": {
-				"title": "Units",
-				"type": "number",
-				"description": "Width of the series lines, in pixels."
-			},
 			"post-units": {
 				"title": "Post Units",
 				"type": "string",
@@ -446,8 +450,8 @@ angular
 		"labels": "[\"Serie A\", \"Serie B\"]",
         "colors": "[\"#CC5464\", \"#38B9D6\"]",
 		"transport": "wss",
-		"api": "UIComponents/dashboard/frontend/examples/chart/getChartData",
-		"msg-tag": "chart"
+		"msg-tag": "chart",
+        "data": '[{"y":2000,"a":64,"b":82},{"y":2003,"a":53,"b":48},{"y":2004,"a":81,"b":58},{"y":2005,"a":68,"b":72},{"y":2008,"a":52,"b":60},{"y":20011,"a":55,"b":30},{"y":2013,"a":79,"b":40}]'
 	},
     "box": {
        sizeX: 2,
@@ -480,7 +484,7 @@ angular
 	                        {
 	                          "type": "section",
 	                          "htmlClass": "col-xs-6",
-	                          "items": ["xkey", "ykeys", "units", "ymin", "ymax"]
+	                          "items": ["xkey", "ykeys", "ymin", "ymax"]
 	                        },
 	                        {
 	                          "type": "section",
@@ -586,7 +590,24 @@ angular
                                           { value: "true", name: "True" },
                                           { value: "false", name: "False" }
                                         ]
-                                     }, /* "hover-callback", */"hide-hover", "behave-like-line"
+                                     }, 
+                                     {
+		                              type: "radios-inline",
+		                              key: "hide-hover",
+		                              titleMap: [
+                                        { value: "auto", name: "Auto" },
+		                                { value: "false", name: "Never" },
+                                        { value: "always", name: "Always" }
+		                              ]
+		                          },
+                                  {
+		                              type: "radios-inline",
+		                              key: "behave-like-line",
+		                              titleMap: [
+		                                { value: "true", name: "True" },
+		                                { value: "false", name: "False" }
+		                              ]
+		                          }
                                   ]
 	                            }
 	                     ]
@@ -619,7 +640,7 @@ angular
             "boxLabel": {
 				"title": "Box Label",
 				"type": "string",
-				"description": "Define box title"
+				"description": "Define your widget box title."
 			},
 			"data": {
 				"title": "Data",
@@ -1008,7 +1029,24 @@ angular
                                 { value: "true", name: "True" },
                                 { value: "false", name: "False" }
                               ]
-                            }, /* "hover-callback", */"hide-hover", "behave-like-line"
+                            }, /* "hover-callback", */
+                            {
+	                              type: "radios-inline",
+	                              key: "hide-hover",
+	                              titleMap: [
+                                   { value: "auto", name: "Auto" },
+	                                { value: "false", name: "Never" },
+                                   { value: "always", name: "Always" }
+	                              ]
+	                          },
+                             {
+	                              type: "radios-inline",
+	                              key: "behave-like-line",
+	                              titleMap: [
+	                                { value: "true", name: "True" },
+	                                { value: "false", name: "False" }
+	                              ]
+	                          }
                           ]
                         }
                       ]
@@ -1041,7 +1079,7 @@ angular
              "boxLabel": {
 				"title": "Box Label",
 				"type": "string",
-				"description": "Define box title"
+				"description": "Define your widget box title."
 			},
 			"data": {
 				"title": "Data",
@@ -1190,7 +1228,7 @@ angular
 			"continuous-line": {
 				"title": "Continous Line",
 				"type": "string",
-				"description": "When set to false (the default), all null and undefined values in a data series will be ignored and lines will be drawn spanning them. When set to true, null values will break the line and undefined values will be spanned. Note that in v0.5.0, this setting will be removed and the behaviour will be to break lines at null values."
+				"description": "When set to false (the default), all null and undefined values in a data series will be ignored and lines will be drawn spanning them. When set to true, null values will break the line and undefined values will be spanned."
 			},
 			"axes": {
 				"title": "Axes",
@@ -1288,8 +1326,8 @@ angular
 		"transport": "wss",
         "data": '[{label: "Drillers", value: 50}, {label: "Cranes",value: 20 }, {label: "Blasters", value: 30 }]',  
         "msg-tag": "donut",
-     	"background-color":"#eee",
-        "label-color":"ff0000",
+     	  "background-color":"#eee",
+        "label-color":"#ff0000",
         "parse-time": "false"
 	},
    "box": {
@@ -1324,7 +1362,11 @@ angular
 	                        {
 	                          "type": "section",
 	                          "htmlClass": "col-xs-6",
-	                          "items": ["colors",  "label-color"]
+	                          "items": ["colors",  {
+	                              type: "string",
+	                              key: "label-color",
+	                              format: "color"
+	                            }]
 	                        },
 	                        {
 	                          "type": "section",
@@ -1383,7 +1425,7 @@ angular
              "boxLabel": {
 				"title": "Box Label",
 				"type": "string",
-				"description": "Define box title"
+				"description": "Define your widget box title."
 			},
 			"data": {
 				"title": "Data",
@@ -1399,7 +1441,7 @@ angular
 			"colors": {
 				"title": "Colors",
 				"type": "string",
-				"description": "Specify the color of each graph successively."
+				"description": "An array of strings containing HTML-style hex colors for each of the donut segments. Note: if there are fewer colors than segments, the colors will cycle back to the start of the array when exhausted."
 			},
 			"label-color": {
 				"title": "Donut Label Color",
@@ -1414,13 +1456,13 @@ angular
 			"donut-formatter": {
 				"title": "Donut Formatter",
 				"type": "string",
-				"description": "Can either be a string for a filter name (eg. 'currency') or a reference to a scope function."
+				"description": "Can either be a string for a filter name (eg. 'currency')."// or a reference to a scope function."
 			},
 			"resize": {
 				"title": "Resize",
 				"type": "string",
-                "default" : "true",
-				"description": "Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default."
+            "default" : "true",
+				"description": "Set to true to enable automatic resizing when the containing element resizes. (default: true). This has a significant performance impact, so is disabled by default."
 			},
 			"api": {
 				"title": "Api",
@@ -1625,7 +1667,7 @@ angular
              "boxLabel": {
 				"title": "Box Label",
 				"type": "string",
-				"description": "Define box title"
+				"description": "Define your widget box title."
 			},
 			"gauge-value": {
 				"title": "Gauge Value",
@@ -1868,7 +1910,7 @@ angular
            "boxLabel": {
 				"title": "Box Label",
 				"type": "string",
-				"description": "Define box title"
+				"description": "Define your widget box title."
 			},
 			"gauge-radius": {
 				"title": "Gauge Radius",
@@ -2150,7 +2192,7 @@ angular
              "boxLabel": {
 				"title": "Box Label",
 				"type": "string",
-				"description": "Define box title"
+				"description": "Define your widget box title."
 			},
 			"odometer-value": {
 				"title": "Odometer Value",
@@ -2270,7 +2312,7 @@ angular
             "boxLabel": {
 				"title": "Box Label",
 				"type": "string",
-				"description": "Define box title"
+				"description": "Define your widget box title."
 			},
 			"value": {
 				"title": "Progressbar Value",
@@ -2371,6 +2413,7 @@ angular
 	                      "msg-tag",
 	                      "api",
 	                      "api-params",
+                          "assets-data"
 	                   //   "on-format-data"
 	                    ]
 	                  },
@@ -2473,7 +2516,7 @@ angular
          "boxLabel": {
 				"title": "Box Label",
 				"type": "string",
-				"description": "Define box title"
+				"description": "Define your widget box title."
 			},
 			"clustered-view": {
 				"title": "Clustered View",
@@ -2528,6 +2571,15 @@ angular
                   "x-schema-form": {
                        "type": "textarea",
                        "placeholder":  "{'stream': {'label': 'Carvoyant', 'url': 'http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png'}}"
+                   }
+         },
+         "assets-data": {
+                "title": "Markers data",
+                "type": "string",
+                "description": "Static markers data",
+                  "x-schema-form": {
+                       "type": "textarea",
+                       "placeholder":  '{ "253812" : { "550153" : [ { "lat" : {"value": "40.84969"}, "long" :{"value": "-73.94168"}, "speed" : { "value" : "8", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "30", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.3", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2818", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "91", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.99", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "61","description" : "Received Signal Strength Indicator" } }, { "lat" :{"value": "40.84919"}, "long" : {"value": "-73.93897000000001"}, "speed": { "value" : "5", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "57", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.4","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2838", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "94", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.15", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55101"}, "make" : { "value" : "Toyota" }, "model" : { "value" : "Tacoma" },"snr" : { "value" : "9", "description" : "Signal to Noise Ratio" },"rssi" : { "value" : "48", "description" : "Received Signal StrengthIndicator" } }, { "lat" : {"value": "40.848600000000005"}, "long" :{"value": "-73.93648"}, "speed" : { "value" : "9", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "76", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.2", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2465", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "97", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.39", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "69","description" : "Received Signal Strength Indicator" } } ], "source" :"simulator", "order" : [ "550153" ] }, "253815" : { "550191" : [ { "lat": {"value": "40.80913"}, "long" : {"value": "-73.90327"}, "speed" : {"value" : "7", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "56", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.2","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2123", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "100", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.45", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55043"}, "make" : { "value" : "Saab" }, "model" : { "value" : "9-3" }, "snr" :{ "value" : "13", "description" : "Signal to Noise Ratio" }, "rssi" : {"value" : "49", "description" : "Received Signal Strength Indicator" }}, { "lat" : {"value": "40.807500000000004"}, "long" : {"value":"-73.90557000000001"}, "speed" : { "value" : "6", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "16", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.7", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "1946", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "95", "description" :"Engine Temperature" }, "voltage" : { "value" : "12.87", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55043" }, "make" : { "value" : "Saab" },"model" : { "value" : "9-3" }, "snr" : { "value" : "13", "description" :"Signal to Noise Ratio" }, "rssi" : { "value" : "59", "description" :"Received Signal Strength Indicator" } } ], "source" : "simulator","order" : [ "550191" ] } }'
                    }
          },
          "path-stroke-opacity":{
@@ -2737,7 +2789,7 @@ angular
              "boxLabel": {
 				"title": "Box Label",
 				"type": "string",
-				"description": "Define box title"
+				"description": "Define your widget box title."
 			},
           "columns-definition": {
             "title": "Columns definition",

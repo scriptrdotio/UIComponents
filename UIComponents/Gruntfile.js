@@ -46,7 +46,7 @@ module.exports = function(grunt) {
 	                     'https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.min.js',
 	                     'https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js',
+	                     //'https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js',
 	                     'https://d3js.org/d3.v4.min.js',
 	                     'https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.min.js',
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
 	         fetch_ag_grid : {
 		         all : {
 		            src : [
-		                  'https://cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36', ],
+		                  'https://cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36'],
 		            dest : 'lib/ag_grid.js'
 		         }
 
@@ -87,6 +87,7 @@ module.exports = function(grunt) {
 		                  'dashboardBuilder/javascript/components/dashboard.html',
 		                  'dashboardBuilder/javascript/components/dashboardsList.html',
 		                  'dashboardBuilder/javascript/components/deletePopup.html',
+		                  'dashboardBuilder/javascript/components/confirmation.html',
 		                  'dashboardBuilder/javascript/components/myModalContent.html',
 		                  'dashboardBuilder/view/dashboard.html',
 		                  'dashboardBuilder/ide/dashboardTemplate_ide',
@@ -138,6 +139,7 @@ module.exports = function(grunt) {
 		               'concat/min-safe/searchBox.js' : [ 'dashboard/frontend/components/searchBox/searchBox.js' ],
 		               'concat/min-safe/httpProvider.js' : [ 'httpProvider.js' ],
 		               'concat/min-safe/wsProvider.js' : [ 'wsProvider.js' ],
+		               'concat/min-safe/morris.js' : [ 'dashboard/frontend/components/chart/morris.js' ],
 		               'concat/min-safe/angular.morris.js' : [ 'dashboard/frontend/components/chart/angular.morris.js' ],
 		               'concat/min-safe/templates.js' : [ 'build/javascript/templates.js' ],
 		               'concat/min-safe/tv4.js' : [ 'dashboardBuilder/lib/schemaForm/tv4.js' ],
@@ -185,7 +187,7 @@ module.exports = function(grunt) {
 		                     'lib/ui-bootstrap-tpls.min.js',
 		                     'concat/min-safe/svg-assets-cache.js',
 		                     'lib/raphael-min.js',
-		                     'lib/morris.min.js',
+		                     'concat/min-safe/morris.js',
 		                     'concat/min-safe/angular.morris.js',
 		                     'lib/justgage.min.js',
 		                     'dashboard/frontend/components/gauge/angular.gauge.min.js',
@@ -231,10 +233,11 @@ module.exports = function(grunt) {
 		                     'lib/jquery.min.js',
 		                     'lib/jquery-ui.min.js',
 		                     'lib/jquery.cookie.min.js',
+		                     'lib/underscore-min.js',
 		                     'lib/angular-route.min.js',
 		                     'concat/min-safe/templates.js',
 		                     'lib/raphael-min.js',
-		                     'lib/morris.min.js',
+		                     'concat/min-safe/morris.js',
 		                     'concat/min-safe/angular.morris.js',
 		                     'lib/justgage.min.js',
 		                     'dashboard/frontend/components/gauge/angular.gauge.min.js',

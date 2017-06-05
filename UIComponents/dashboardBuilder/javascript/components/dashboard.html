@@ -74,8 +74,8 @@
                 </slick>
              </div>
             <div ng-if="$ctrl.isInIde" class="dashboard-config col-xs-1 pull-right text-center">
-                <a ng-click="$ctrl.clear()"><i class="fa fa-eraser" aria-hidden="true"></i></a>
-                <a ng-click="$ctrl.setTransportSettings()"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                <a ng-click="$ctrl.clear()" uib-tooltip="Clear widgets" tooltip-placement="bottom"><i class="fa fa-eraser" aria-hidden="true"></i></a>
+                <a ng-click="$ctrl.setTransportSettings()" uib-tooltip="Settings" tooltip-placement="bottom"><i class="fa fa-cog" aria-hidden="true"></i></a>
             </div>
 	        <div class="clearfix"></div>
           </div>
