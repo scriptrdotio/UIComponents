@@ -32,7 +32,7 @@ angular
 
         },
         templateUrl: '/UIComponents/dashboard/frontend/components/odometer/odometer.html',
-        controller: function(httpClient, wsClient) {
+        controller: function(httpClient, wsClient, $element, $window, $timeout) {
 
            var self = this;
 
@@ -48,11 +48,24 @@ angular
              
              this.style = {};
              this.style["font-size"] = this.size+"em";
+             angular.element($window).on('resize', resize);
+               
+             
 
              this.transport = (this.transport) ? this.transport : "wss";
              this.msgTag = (this.msgTag) ? this.msgTag : null;
 
              initDataService(this.transport);
+           }
+           
+           var resize = function(){
+           		self.style["margin-top"] = ($element.parent().height()/2) - ($element.parent().position().top/2) - ($element.height()/2);
+          }
+           
+           this.$postLink = function() {
+                $timeout(resize,100);
+             	//this.speedoConfig.gaugeRadius = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
+
            }
 
             var initDataService = function(transport) {

@@ -113,15 +113,17 @@ angular
         "hoverCallback": "&?", 
         "dateFormat": "&?",
         "xlabelFormat": "&?", 
-        "ylabelFormat": "&?",
+        "ylabelFormat": "&?"
        
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
-      controller: function(httpClient, wsClient, $timeout) {
+      controller: function(httpClient, wsClient) {
         
          var self = this;
         
          this.$onInit = function() {
+             
+             this.data = (this.data) ? this.data : null;
            
              if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
                this.noResults = true;
@@ -138,19 +140,13 @@ angular
              this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#eee";
          
              this.transport = (this.transport) ? this.transport : "wss";
-		       this.msgTag = (this.msgTag) ? this.msgTag : null;
+		     this.msgTag = (this.msgTag) ? this.msgTag : null;
            
            	 console.log(this.type, this.xlabelAngle)
        }
          
         this.$postLink = function () {
            initDataService(this.transport);
-           if(this.data && !this.api) {
-         	  $timeout(function() {
-                 self.consumeData(self.data);
-               }, 2000)
-           }
-         	  
         }
 
         var initDataService = function(transport) {
@@ -192,10 +188,10 @@ angular
               data = self.onFormatData()(data);
             }
             if(data && data.length > 0 && typeof data == "object"){
-              this.datas = data;
+              this.data = data;
               this.noResults = false;
             }else{
-              this.datas = [];
+              this.data = [];
               this.noResults = true;
             }
           }
