@@ -282,7 +282,7 @@ angular
 			"colors": {
 				"title": "Colors",
 				"type": "string",
-				"description": "Array containing colors for the series bars."
+				"description": "Array containing colors for the series bars. ex: [#eedf00,#cccde0]"
 			},
 			"stacked": {
 				"title": "Stacked",
@@ -310,22 +310,22 @@ angular
 				"description": "Set to false to disable drawing the horizontal grid lines."
 			},
 			"grid-text-color": {
-				"title": "Grid Text Color",
+				"title": "Grid text color",
 				"type": "string",
 				"description": "Set the color of the axis labels (default: #888)."
 			},
 			"grid-text-size": {
-				"title": "Grid Text Size",
+				"title": "Grid text size",
 				"type": "number",
 				"description": "Set the point size of the axis labels (default: 12)."
 			},
 			"grid-text-family": {
-				"title": "Grid Text Family",
+				"title": "Grid text family",
 				"type": "string",
 				"description": "Set the font family of the axis labels (default: sans-serif)."
 			},
 			"grid-text-weight": {
-				"title": "Grid Text Weight",
+				"title": "Grid text weight",
 				"type": "string",
 				"description": "Set the font weight of the axis labels (default: normal)."
 			},
@@ -336,7 +336,7 @@ angular
                 "default": "true",
 			},
 			"parse-time": {
-				"title": "Parse Time",
+				"title": "Parse time",
 				"type": "string",
 				"description": "Set to false to skip time/date parsing for X values, instead treating them as an equally-spaced series."
 			},
@@ -346,7 +346,7 @@ angular
 				"description": "Name of the api to get data."
 			},
 			"api-params": {
-				"title": "Api Params",
+				"title": "Api params",
 				"type": "string",
 				"description": "Api parameters.",
                 "x-schema-form": {
@@ -360,7 +360,7 @@ angular
 				"description": "Method used to call api (can take 'http' or 'wss')."
 			},
 			"msg-tag": {
-				"title": "Message Tag",
+				"title": "Message tag",
 				"type": "string",
 				"description": "Subscribe to socket messages with tag name."
 			},
@@ -374,62 +374,62 @@ angular
                 }
 			},
 			"ymax": {
-				"title": "y Maximum Value",
+				"title": "Y maximum value",
 				"type": "string",
 				"description": "Max. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the max y-value is at least [num]."
 			},
 			"ymin": {
-				"title": "y Minimum Value",
+				"title": "Y minimum value",
 				"type": "string",
 				"description": "Min. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the min y-value is at most [num]. You can use this to create graphs with false origins."
 			},
 			"post-units": {
-				"title": "Post Units",
+				"title": "Post units",
 				"type": "string",
 				"description": "Set to a string value (eg: '%') to add a label suffix all y-labels."
 			},
 			"pre-units": {
-				"title": "Pre Units",
+				"title": "Pre units",
 				"type": "string",
 				"description": "Set to a string value (eg: '$') to add a label prefix all y-labels."
 			},
 			"xlabel-angle": {
-				"title": "x label Angle",
+				"title": "X label angle",
 				"type": "string",
 				"description": "The angle in degrees from horizontal to draw x-axis labels."
 			},
 			"ylabel-format": {
-				"title": "y label Format",
+				"title": "Y label format",
 				"type": "string",
 				"description": "A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; }"
 			},
 			"goals": {
 				"title": "Goals",
 				"type": "string",
-				"description": "A list of y-values to draw as horizontal 'goal' lines on the chart. goals: [1.0, -1.0]"
+				"description": "A list of y-values to draw as horizontal 'goal' lines on the chart. ex: [1.0, -1.0]"
 			},
 			"goal-stroke-width": {
-				"title": "Goal Stroke Width",
+				"title": "Goal stroke width",
 				"type": "number",
 				"description": "Width, in pixels, of the goal lines."
 			},
 			"goal-line-colors": {
-				"title": "Goal Line Colors",
+				"title": "Goal line colors",
 				"type": "string",
-				"description": "Array of color values to use for the goal line colors."
+				"description": "Array of color values to use for the goal line colors. If you list fewer colors here than you have lines in goals, then the values will be cycled."
 			},
 			"events": {
 				"title": "Events",
 				"type": "string",
-				"description": "A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01']"
+				"description": "A list of x-values to draw as vertical 'event' lines on the chart. ex: ['2012-01-01', '2012-02-01']"
 			},
 			"event-stroke-width": {
-				"title": "Event Stroke Width",
+				"title": "Event stroke width",
 				"type": "number",
 				"description": "Width, in pixels, of the event lines."
 			},
 			"event-line-colors": {
-				"title": "Event Line Colors",
+				"title": "Event line colors",
 				"type": "string",
 				"description": "Array of color values to use for the event line colors. If you list fewer colors here than you have lines in events, then the values will be cycled."
 			}
@@ -584,14 +584,6 @@ angular
                                   "htmlClass": "col-xs-6",
                                   "items": [
                                      {
-                                        type: "radios-inline",
-                                        key: "continuous-line",
-                                        titleMap: [
-                                          { value: "true", name: "True" },
-                                          { value: "false", name: "False" }
-                                        ]
-                                     }, 
-                                     {
 		                              type: "radios-inline",
 		                              key: "hide-hover",
 		                              titleMap: [
@@ -637,240 +629,6 @@ angular
 		"type": "object",
 		"title": "Schema",
 		"properties": {
-            "boxLabel": {
-				"title": "Box Label",
-				"type": "string",
-				"description": "Define your widget box title."
-			},
-			"data": {
-				"title": "Data",
-				"type": "string",
-				"description": "Data series in case of static data.",
-                "x-schema-form": {
-                  "type": "textarea",
-                  "placeholder":  "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
-                }
-			},
-			"xkey": {
-				"title": "x Key",
-				"type": "string",
-				"description": "The name of the data record attribute that contains x-values."
-			},
-			"ykeys": {
-				"title": "y Keys",
-				"type": "string",
-				"description": "A list of names of data record attributes that contain y-values."
-			},
-			"labels": {
-				"title": "Labels",
-				"type": "string",
-				"description": "Labels for the ykeys -- will be displayed when you hover over the chart."
-			},
-			"colors": {
-				"title": "Colors",
-				"type": "string",
-				"description": "Specify the color of each graph successively."
-			},
-			"line-width": {
-				"title": "Line Width",
-				"type": "number",
-				"description": "Width of the series lines, in pixels."
-			},
-			"point-size": {
-				"title": "Point Size",
-				"type": "number",
-				"description": "Diameter of the series points, in pixels."
-			},
-			"point-fill-colors": {
-				"title": "Point Fill Colors",
-				"type": "string",
-				"description": "Colors for the series points. By default uses the same values as lineColors."
-			},
-			"point-stroke-colors": {
-				"title": "Point Stroke Colors",
-				"type": "string",
-				"description": "Colors for the outlines of the series points. (#ffffff by default)."
-			},
-			"ymax": {
-				"title": "y Maximum Value",
-				"type": "string",
-				"description": "Max. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the max y-value is at least [num]."
-			},
-			"ymin": {
-				"title": "y Minimum Value",
-				"type": "string",
-				"description": "Min. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the min y-value is at most [num]. You can use this to create graphs with false origins."
-			},
-			"smooth": {
-				"title": "Smooth",
-				"type": "string",
-				"description": "Set to false to disable line smoothing."
-			},
-			"hide-hover": {
-				"title": "Hide Hover",
-				"type": "string",
-				"description": "Set to false to always show a hover legend. Set to true or 'auto' to only show the hover legend when the mouse cursor is over the chart. Set to 'always' to never show a hover legend."
-			},
-			"hover-callback": {
-				"title": "Hover Callback",
-				"type": "string",
-				"description": "Provide a function on this option to generate custom hover legends. The function will be called with the index of the row under the hover legend, the options object passed to the constructor as arguments, a string containing the default generated hover legend content HTML, and an object containing the original data for the row as passed in the data option. hoverCallback: function (index, options, content, row) {return 'sin(' + row.x + ')='+ row.y}"
-			},
-			"parse-time": {
-				"title": "Parse Time",
-				"type": "string",
-				"description": "Set to false to skip time/date parsing for X values, instead treating them as an equally-spaced series."
-			},
-			"units": {
-				"title": "Units",
-				"type": "number",
-				"description": "Width of the series lines, in pixels."
-			},
-			"post-units": {
-				"title": "Post Units",
-				"type": "string",
-				"description": "Set to a string value (eg: '%') to add a label suffix all y-labels."
-			},
-			"pre-units": {
-				"title": "Pre Units",
-				"type": "string",
-				"description": ""
-			},
-			"xlabels": {
-				"title": "x Labels",
-				"type": "string",
-				"description": "Sets the x axis labelling interval. By default the interval will be automatically computed. The following are valid interval strings. 'decade', 'year', 'month', 'week', 'day', 'hour', '30min', '15min', '10min', '5min', 'minute', '30sec', '15sec', '10sec', '5sec', 'second'"
-			},
-			"xlabel-angle": {
-				"title": "x Label Angle",
-				"type": "string",
-				"description": "The angle in degrees from horizontal to draw x-axis labels."
-			},
-			"xlabel-format": {
-				"title": "x Label Format",
-				"type": "string",
-				"description": "A function that accepts Date objects and formats them for display as x-axis labels. Overrides the default formatter chosen by the automatic labeller or the xLabels option. function (x) { return x.toString(); }"
-			},
-			"ylabel-format": {
-				"title": "y Label Format",
-				"type": "string",
-				"description": "A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; }"
-			},
-			"goals": {
-				"title": "Goals",
-				"type": "string",
-				"description": "A list of y-values to draw as horizontal 'goal' lines on the chart. goals: [1.0, -1.0]"
-			},
-			"goal-stroke-width": {
-				"title": "Goal Stroke Width",
-				"type": "number",
-				"description": "Width, in pixels, of the goal lines."
-			},
-			"goal-line-colors": {
-				"title": "Goal Line Colors",
-				"type": "string",
-				"description": "Array of color values to use for the goal line colors. If you list fewer colors here than you have lines in goals, then the values will be cycled."
-			},
-			"events": {
-				"title": "Events",
-				"type": "string",
-				"description": "A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01']"
-			},
-			"event-stroke-width": {
-				"title": "Event Stroke Width",
-				"type": "number",
-				"description": "Width, in pixels, of the event lines."
-			},
-			"event-line-colors": {
-				"title": "Event Line Colors",
-				"type": "string",
-				"description": "Array of color values to use for the event line colors. If you list fewer colors here than you have lines in events, then the values will be cycled."
-			},
-			"continuous-line": {
-				"title": "Continous Line",
-				"type": "string",
-				"description": "When set to false (the default), all null and undefined values in a data series will be ignored and lines will be drawn spanning them. When set to true, null values will break the line and undefined values will be spanned. Note that in v0.5.0, this setting will be removed and the behaviour will be to break lines at null values."
-			},
-			"axes": {
-				"title": "Axes",
-				"type": "string",
-				"description": "Set to false to disable drawing the x and y axes."
-			},
-			"grid": {
-				"title": "Grid",
-				"type": "string",
-				"description": "Set to false to disable drawing the horizontal grid lines."
-			},
-			"grid-text-color": {
-				"title": "Grid Text Color",
-				"type": "string",
-				"description": "Set the color of the axis labels (default: #888)."
-			},
-			"grid-text-size": {
-				"title": "Grid Text Size",
-				"type": "number",
-				"description": "Set the point size of the axis labels (default: 12)."
-			},
-			"grid-text-family": {
-				"title": "Grid Text Family",
-				"type": "string",
-				"description": "Set the font family of the axis labels (default: sans-serif)."
-			},
-			"grid-text-weight": {
-				"title": "Grid Text Weight",
-				"type": "string",
-				"description": "Set the font weight of the axis labels (default: normal)."
-			},
-			"fill-opacity": {
-				"title": "fill Opacity",
-				"type": "number",
-				"description": "Change the opacity of the area fill color. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque)."
-			},
-			"resize": {
-				"title": "Resize",
-				"type": "string",
-                "default" : "true",
-				"description": "Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default."
-			},
-			"behave-like-line": {
-				"title": "Behave Like Line",
-				"type": "string",
-				"description": "Set to true to overlay the areas on top of each other instead of stacking them."
-			},
-			"date-format": {
-				"title": "Date Format",
-				"type": "string",
-				"description": "A function that accepts millisecond timestamps and formats them for display as chart labels. default is function (x) { return new Date(x).toString() }."
-			},
-			"api": {
-				"title": "Api",
-				"type": "string",
-				"description": "Name of the api to get data."
-			},
-			"on-format-data": {
-				"title": "Format Data",
-				"type": "string",
-				"description": "Callback function to be called after data is returned from backend."
-			},
-			"transport": {
-				"title": "Transport",
-				"type": "string",
-                "enum": ["wss", "https"],
-				"description": "Method used to call api (can take 'http' or 'wss')."
-			},
-			"msg-tag": {
-				"title": "Message Tag",
-				"type": "string",
-				"description": "Subscribe to socket messages with tag name."
-			},
-			"api-params": {
-				"title": "Api Params",
-				"type": "string",
-				"description": "Api parameters.",
-                "x-schema-form": {
-                  "placeholder": "Ex: {'id' : '599865'}"
-                }
-			}
 		},
 		"required": [
 			"xkey", "ykeys"
@@ -1022,14 +780,7 @@ angular
                           "type": "section",
                           "htmlClass": "col-xs-6",
                           "items": [
-                            {
-                              type: "radios-inline",
-                              key: "continuous-line",
-                              titleMap: [
-                                { value: "true", name: "True" },
-                                { value: "false", name: "False" }
-                              ]
-                            }, /* "hover-callback", */
+                             /* "hover-callback", */
                             {
 	                              type: "radios-inline",
 	                              key: "hide-hover",
@@ -1076,240 +827,6 @@ angular
 		"type": "object",
 		"title": "Schema",
 		"properties": {
-             "boxLabel": {
-				"title": "Box Label",
-				"type": "string",
-				"description": "Define your widget box title."
-			},
-			"data": {
-				"title": "Data",
-				"type": "string",
-				"description": "Data series in case of static data.",
-                "x-schema-form": {
-                  "type": "textarea",
-                  "placeholder":  "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
-                }
-			},
-			"xkey": {
-				"title": "x Key",
-				"type": "string",
-				"description": "The name of the data record attribute that contains x-values."
-			},
-			"ykeys": {
-				"title": "y Keys",
-				"type": "string",
-				"description": "A list of names of data record attributes that contain y-values."
-			},
-			"labels": {
-				"title": "Labels",
-				"type": "string",
-				"description": "Labels for the ykeys -- will be displayed when you hover over the chart."
-			},
-			"colors": {
-				"title": "Colors",
-				"type": "string",
-				"description": "Specify the color of each graph successively."
-			},
-			"line-width": {
-				"title": "Line Width",
-				"type": "number",
-				"description": "Width of the series lines, in pixels."
-			},
-			"point-size": {
-				"title": "Point Size",
-				"type": "number",
-				"description": "Diameter of the series points, in pixels."
-			},
-			"point-fill-colors": {
-				"title": "Point Fill Colors",
-				"type": "string",
-				"description": "Colors for the series points. By default uses the same values as lineColors."
-			},
-			"point-stroke-colors": {
-				"title": "Point Stroke Colors",
-				"type": "string",
-				"description": "Colors for the outlines of the series points. (#ffffff by default)."
-			},
-			"ymax": {
-				"title": "y Maximum Value",
-				"type": "string",
-				"description": "Max. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the max y-value is at least [num]."
-			},
-			"ymin": {
-				"title": "y Minimum Value",
-				"type": "string",
-				"description": "Min. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the min y-value is at most [num]. You can use this to create graphs with false origins."
-			},
-			"smooth": {
-				"title": "Smooth",
-				"type": "string",
-				"description": "Set to false to disable line smoothing."
-			},
-			"hide-hover": {
-				"title": "Hide Hover",
-				"type": "string",
-				"description": "Set to false to always show a hover legend. Set to true or 'auto' to only show the hover legend when the mouse cursor is over the chart. Set to 'always' to never show a hover legend."
-			},
-			"hover-callback": {
-				"title": "Hover Callback",
-				"type": "string",
-				"description": "Provide a function on this option to generate custom hover legends. The function will be called with the index of the row under the hover legend, the options object passed to the constructor as arguments, a string containing the default generated hover legend content HTML, and an object containing the original data for the row as passed in the data option. hoverCallback: function (index, options, content, row) {return 'sin(' + row.x + ')='+ row.y}"
-			},
-			"parse-time": {
-				"title": "Parse Time",
-				"type": "string",
-				"description": "Set to false to skip time/date parsing for X values, instead treating them as an equally-spaced series."
-			},
-			"units": {
-				"title": "Units",
-				"type": "number",
-				"description": "Width of the series lines, in pixels."
-			},
-			"post-units": {
-				"title": "Post Units",
-				"type": "string",
-				"description": "Set to a string value (eg: '%') to add a label suffix all y-labels."
-			},
-			"pre-units": {
-				"title": "Pre Units",
-				"type": "string",
-				"description": ""
-			},
-			"xlabels": {
-				"title": "x Labels",
-				"type": "string",
-				"description": "Sets the x axis labelling interval. By default the interval will be automatically computed. The following are valid interval strings. 'decade', 'year', 'month', 'week', 'day', 'hour', '30min', '15min', '10min', '5min', 'minute', '30sec', '15sec', '10sec', '5sec', 'second'"
-			},
-			"xlabel-angle": {
-				"title": "x Label Angle",
-				"type": "string",
-				"description": "The angle in degrees from horizontal to draw x-axis labels."
-			},
-			"xlabel-format": {
-				"title": "x Label Format",
-				"type": "string",
-				"description": "A function that accepts Date objects and formats them for display as x-axis labels. Overrides the default formatter chosen by the automatic labeller or the xLabels option. function (x) { return x.toString(); }"
-			},
-			"ylabel-format": {
-				"title": "y Label Format",
-				"type": "string",
-				"description": "A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; }"
-			},
-			"goals": {
-				"title": "Goals",
-				"type": "string",
-				"description": "A list of y-values to draw as horizontal 'goal' lines on the chart. goals: [1.0, -1.0]"
-			},
-			"goal-stroke-width": {
-				"title": "Goal Stroke Width",
-				"type": "number",
-				"description": "Width, in pixels, of the goal lines."
-			},
-			"goal-line-colors": {
-				"title": "Goal Line Colors",
-				"type": "string",
-				"description": "Array of color values to use for the goal line colors. If you list fewer colors here than you have lines in goals, then the values will be cycled."
-			},
-			"events": {
-				"title": "Events",
-				"type": "string",
-				"description": "A list of x-values to draw as vertical 'event' lines on the chart. events: ['2012-01-01', '2012-02-01']"
-			},
-			"event-stroke-width": {
-				"title": "Event Stroke Width",
-				"type": "number",
-				"description": "Width, in pixels, of the event lines."
-			},
-			"event-line-colors": {
-				"title": "Event Line Colors",
-				"type": "string",
-				"description": "Array of color values to use for the event line colors. If you list fewer colors here than you have lines in events, then the values will be cycled."
-			},
-			"continuous-line": {
-				"title": "Continous Line",
-				"type": "string",
-				"description": "When set to false (the default), all null and undefined values in a data series will be ignored and lines will be drawn spanning them. When set to true, null values will break the line and undefined values will be spanned."
-			},
-			"axes": {
-				"title": "Axes",
-				"type": "string",
-				"description": "Set to false to disable drawing the x and y axes."
-			},
-			"grid": {
-				"title": "Grid",
-				"type": "string",
-				"description": "Set to false to disable drawing the horizontal grid lines."
-			},
-			"grid-text-color": {
-				"title": "Grid Text Color",
-				"type": "string",
-				"description": "Set the color of the axis labels (default: #888)."
-			},
-			"grid-text-size": {
-				"title": "Grid Text Size",
-				"type": "number",
-				"description": "Set the point size of the axis labels (default: 12)."
-			},
-			"grid-text-family": {
-				"title": "Grid Text Family",
-				"type": "string",
-				"description": "Set the font family of the axis labels (default: sans-serif)."
-			},
-			"grid-text-weight": {
-				"title": "Grid Text Weight",
-				"type": "string",
-				"description": "Set the font weight of the axis labels (default: normal)."
-			},
-			"fill-opacity": {
-				"title": "Fill Opacity",
-				"type": "number",
-				"description": "Change the opacity of the area fill color. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque)."
-			},
-			"resize": {
-				"title": "Resize",
-				"type": "string",
-                "default" : "true",
-				"description": "Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default."
-			},
-			"behave-like-line": {
-				"title": "Behave Like Line",
-				"type": "string",
-				"description": "Set to true to overlay the areas on top of each other instead of stacking them."
-			},
-			"date-format": {
-				"title": "Date Format",
-				"type": "string",
-				"description": "A function that accepts millisecond timestamps and formats them for display as chart labels. default is function (x) { return new Date(x).toString() }."
-			},
-			"api": {
-				"title": "Api",
-				"type": "string",
-				"description": "Name of the api to get data."
-			},
-			"on-format-data": {
-				"title": "Format Data",
-				"type": "string",
-				"description": "Callback function to be called after data is returned from backend."
-			},
-			"transport": {
-				"title": "Transport",
-				"type": "string",
-                "enum": ["wss", "https"],
-				"description": "Method used to call api (can take 'http' or 'wss')."
-			},
-			"msg-tag": {
-				"title": "Message Tag",
-				"type": "string",
-				"description": "Subscribe to socket messages with tag name."
-			},
-			"api-params": {
-				"title": "Api Params",
-				"type": "string",
-				"description": "Api parameters.",
-                "x-schema-form": {
-                  "placeholder": "Ex: {'id' : '599865'}"
-                }
-			}
 		},
 		"required": [
 			"xkey", "ykeys", "labels"
@@ -2390,6 +1907,8 @@ angular
 	  "transport": "wss",
       "clustered-view":"true",
       "cluster-zoom": 8,
+      "heatmap":"true",
+      "bounce": "true",    
       "api": "UIComponents/dashboard/frontend/examples/map/simulatorData",
       "sources-info": "{'simulator': {'label': 'Carvoyant'}}",
       "msg-tag": "everyone-main-live"
@@ -2437,6 +1956,14 @@ angular
                                       { value: "false", name: "False" }
                                     ]
                                    },
+                                   {
+                                    "key": "heatmap",
+                                    "type": "radios-inline",
+                                     titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                   },
                                    "cluster-zoom",
                                    "clustered-zoom-max",
                                    "detailed-zoom-min",
@@ -2454,6 +1981,14 @@ angular
                                       { value: "false", name: "False" }
                                     ]
                                   },
+                                  {
+                                    "key": "bounce",
+                                    "type": "radios-inline",
+                                    titleMap: [
+                                      { value: "true", name: "True" },
+                                      { value: "false", name: "False" }
+                                    ]
+                                  },  
                                   "focused-marker-zoom",
                                   "path-stroke-opacity",
                                   "path-stroke-weight",
@@ -2528,6 +2063,16 @@ angular
 				"type": "number",
 				"description": "The initial map zoom level when clustered view is true.",
 				"default": 3
+			},
+            "heatmap": {
+				"title": "Heat Map",
+				"type": "string",
+				"description": "Enable/disable heat map."
+			},
+            "bounce": {
+				"title": "Bounce",
+				"type": "string",
+				"description": "Enable/disable bouncing."
 			},
 			"clustered-zoom-max": {
 				"title": "Cluster Zoom Max",
