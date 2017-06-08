@@ -109,6 +109,8 @@ angular
                   "onFormatData" : "&",
                  
                   "heightUnit" : "@",
+                   
+                  "httpsMethod" : "@",
 
                   "counter" : "@", // increase numbers one by one (bool)
                   "width": "@", //  gauge width in % (int)
@@ -190,7 +192,21 @@ angular
 			               });
 		               } else {
 			               if (transport == "https" && self.api) {
+                               if(self.httpsMethod == "post"){
 				               httpClient
+				                     .post(self.api, self.apiParams)
+				                     .then(
+				                           function(data, response) {
+					                           self.consumeData(data)
+				                           },
+				                           function(err) {
+					                           console
+					                                 .log(
+					                                       "reject published promise",
+					                                       err);
+				                           });
+                           }else{
+                               httpClient
 				                     .get(self.api, self.apiParams)
 				                     .then(
 				                           function(data, response) {
@@ -202,6 +218,7 @@ angular
 					                                       "reject published promise",
 					                                       err);
 				                           });
+                           }
 			               }
 		               }
 	               }
