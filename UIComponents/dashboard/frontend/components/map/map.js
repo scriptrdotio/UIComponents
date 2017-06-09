@@ -1,4 +1,4 @@
-angular.module('Map', ['ngMap']);
+angular.module('Map', ['ngMap', 'ToggleSwitch']);
 
 angular
   .module("Map")
@@ -21,6 +21,7 @@ angular
         "summaryIcons": "<?", //MFE: Check what to do with this in dashboard builder
         
         "assetsData": "<?",
+        "heatMapWeight": "@",
       	"api" : "@",
       	"apiParams" : "@",
         "msgTag": "@",
@@ -28,11 +29,12 @@ angular
         "onSelectAsset" : "&",
       
          //TODO the below attributes, currently use without geofence
-        "geofenceManager": "@", //True to show the geofence drawing manage icons or not
+        "geofenceManager": "<?", //True to show the geofence drawing manage icons or not
       	"apiGeofence": "<?",
         "apiGeofenceParams": "<?",
         "msgTagGeofence": "<?",
-      
+        "heatmap" : "<?",
+        "bounce" : "<?",
         "markerInfoWindow": "@" //On marker click show info window
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
@@ -105,6 +107,21 @@ angular
         $scope.$on("mapFoucsOnMarker", function(event, data) {
 			self.focusOnAsset(data)
         });
+        $scope.$on('mapInitialized', function(event, map) {
+              self.map = map;
+              if(self.switchStatus == true){
+                  heatmap = new google.maps.visualization.HeatmapLayer({
+                      data: self.heatMap,
+                      radius: self.heatMapRadius,
+                      opacity: self.heatMapOpacity   
+                  });
+                  heatmap.setMap(self.map);
+              }else{
+                  if(typeof heatmap != 'undefined'){
+                       heatmap.setMap(null);
+                  }
+              }
+          });  
       }
 
       //Load asset Icons per source
@@ -127,6 +144,27 @@ angular
       self.infoWindow = null;
       
       self.dynMarkers = [];
+        
+      // heat map    
+      self.heatMap = [];
+      self.heatMapRadius =  (self.heatMapRadius) ? self.heatMapRadius : 40;
+      self.heatMapOpacity = (self.heatMapOpacity) ? self.heatMapOpacity : 0.8;   
+      self.heatMapGradient = (self.heatMapGradient) ? self.heatMapGradient : [
+            'rgba(0, 255, 255, 0)',
+            'rgba(0, 255, 255, 1)',
+            'rgba(0, 191, 255, 1)',
+            'rgba(0, 127, 255, 1)',
+            'rgba(0, 63, 255, 1)',
+            'rgba(0, 0, 255, 1)',
+            'rgba(0, 0, 223, 1)',
+            'rgba(0, 0, 191, 1)',
+            'rgba(0, 0, 159, 1)',
+            'rgba(0, 0, 127, 1)',
+            'rgba(63, 0, 91, 1)',
+            'rgba(127, 0, 63, 1)',
+            'rgba(191, 0, 31, 1)',
+            'rgba(255, 0, 0, 1)'
+          ];  
       
       
       
@@ -199,6 +237,21 @@ angular
           process(assets)
         }
     };
+        
+   self.activateHeatMap = function(switchStatus){
+       if(switchStatus == true){
+           heatmap = new google.maps.visualization.HeatmapLayer({
+               data: self.heatMap,
+               radius: self.heatMapRadius,
+               opacity: self.heatMapOpacity   
+           });
+           heatmap.setMap(self.map);
+       }else{
+           if(typeof heatmap != 'undefined'){
+               heatmap.setMap(null);
+           }
+       }
+     }   
       
      self.buildClusterer = function(map) {
         self.markerClusterer = new MarkerClusterer(
@@ -250,11 +303,12 @@ angular
           NgMap.getMap({
             id : 'clustered-'+self.$wdgid
           }).then(function(map) {
-            if (map.getZoom() > self.detailedZoomMin) {
-              self.showDetailedMap = true;
-              self.mapcenter = map.getCenter();
-              self.detaileddmapzoom = self.detailedZoomMin;
-            } else {
+              self.map = map;
+              if (map.getZoom() > self.detailedZoomMin) {
+                  self.showDetailedMap = true;
+                  self.mapcenter = map.getCenter();
+                  self.detailedmapzoom = self.detailedZoomMin;
+              } else {
               self.showDetailedMap = false;
               if(self.markerClusterer) 
                 self.markerClusterer.setMap(map);
@@ -270,6 +324,7 @@ angular
           NgMap.getMap({
             id : 'detailed-'+self.$wdgid
           }).then(function(map) {
+            self.map = map;  
             if (map.getZoom() <=  self.clusteredZoomMax) {
               self.showDetailedMap = false;
               self.clusterZoom =  self.clusteredZoomMax;
@@ -423,6 +478,9 @@ angular
       //Add asset marker trip point to asset markers
       self.addMarkerToMap = function(key, newMarker, tripPoint) {
         //Push to assets
+        if(self.bounce && (tripPoint.bounce && (tripPoint.bounce.value == "true" || tripPoint.bounce.value == true))) {
+            newMarker.animation = google.maps.Animation.BOUNCE;
+        }  
         self.assets[key]["markers"].push(newMarker);
         self.assets[key]["path"].push([ tripPoint.lat.value,
                                      tripPoint.long.value ]);
@@ -434,6 +492,10 @@ angular
                                                    tripPoint.long.value);
           var tmp = new google.maps.Marker(dynMkr);
           self.dynMarkers.push(tmp);
+          var heatmap = {};
+          heatmap.location = dynMkr.position;
+          heatmap.weight = (self.heatMapWeight) ? self.heatMapWeight : 40;
+          self.heatMap.push(heatmap);  
         }
       };
 

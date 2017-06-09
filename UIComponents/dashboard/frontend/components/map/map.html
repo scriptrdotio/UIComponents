@@ -1,10 +1,18 @@
 <div style="height: 90%;"> 
-	<section class="map-wrap" ng-if="$ctrl.clusteredView == true || $ctrl.showDetailedMap == false">
-		<ng-map id="{{'clustered-'+$ctrl.$wdgid}}" on-zoom_changed="$ctrl.onClusteredZoomChanged();"
-			single-info-window="true" zoom-to-inlude-markers="true"
-			center="{{$ctrl.mapcenter || $ctrl.defaultCenter}}"
-			zoom="{{$ctrl.clusterZoom}}"> </ng-map>
-	</section>
+    <section class="map-wrap" ng-if="$ctrl.clusteredView == true || $ctrl.showDetailedMap == false">
+        <ng-map id="{{'clustered-'+$ctrl.$wdgid}}" on-zoom_changed="$ctrl.onClusteredZoomChanged();"
+                single-info-window="true" zoom-to-inlude-markers="true"
+                center="{{$ctrl.mapcenter || $ctrl.defaultCenter}}"
+                zoom="{{$ctrl.clusterZoom}}">
+            <heatmap-layer></heatmap-layer>
+        </ng-map>
+          <div  class="heatmap" ng-if="$ctrl.heatmap == true">
+                <h5>Enable Heatmap</h5>
+                  <span>
+                    <scriptr-toggle-switch resize="false" on-switch-change="$ctrl.activateHeatMap" switch-status="$ctrl.switchStatus"class="switch-success switch-small"></scriptr-toggle-switch>
+                  </span>
+        </div>
+    </section>
 	<section class="map-wrap" ng-if="$ctrl.clusteredView == false || $ctrl.showDetailedMap == true">
 		<ng-map id="{{'detailed-'+$ctrl.$wdgid}}" on-zoom_changed="$ctrl.onDetailedZoomChanged();"
 			single-info-window="true" zoom-to-inlude-markers="true"
@@ -27,13 +35,13 @@
 				</shape>
 				<div ng-repeat="marker in asset.markers track by $index">
 					<div ng-if="$ctrl.trackedAsset == null">
-						<marker position="{{marker.position}}" title="{{marker.display}}"
+						<marker position="{{marker.position}}" title="{{marker.display}}" animation={{marker.animation}}
 							icon="{{marker.icon}}"
 							on-click="$ctrl.showAssetInfo(event, marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')">
 						</marker>
 					</div>
 					<div ng-if="$ctrl.trackedAsset !=null">
-						<marker position="{{marker.position}}" title="{{marker.title}}"
+						<marker position="{{marker.position}}" title="{{marker.title}}" animation={{marker.animation}}
 							icon="{{marker.icon}}" clickable="false">
 					</div>
 				</div>
@@ -60,6 +68,7 @@
                </div>
           	</info-window>
 		</div>
+        <heatmap-layer></heatmap-layer>     
 		</ng-map>
           
         <div  class="messages" ng-show="$ctrl.drawingMessages != null">
@@ -67,7 +76,12 @@
               {{$ctrl.drawingMessages}}
             </div>
         </div>
-
+        <div  class="heatmap" ng-if="$ctrl.heatmap == true">
+                <h5>Enable Heatmap</h5>
+                  <span>
+                    <scriptr-toggle-switch resize="false" on-switch-change="$ctrl.activateHeatMap" switch-status="$ctrl.switchStatus"class="switch-success switch-small"></scriptr-toggle-switch>
+                  </span>
+        </div>         
         <div ng-if="$ctrl.geofenceManager == true" class="drawingmanager-buttons">
             <span>
               <a ng-click="$ctrl.removeGeofence()" data-toggle="tooltip" title="Delete geofence" data-placement="bottom"><i class="fa fa-trash" aria-hidden="true"></i></a>
