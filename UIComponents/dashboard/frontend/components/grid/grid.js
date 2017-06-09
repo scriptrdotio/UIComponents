@@ -73,6 +73,8 @@ angular
         "msgTag" : "@",
         
         "class" : "@",
+          
+        "defaultCellRenderer": "&",  
         
         "onGridReady" : "&"
       },
@@ -196,6 +198,7 @@ angular
               },
               suppressFilter: (typeof this.suppressFilter != 'undefined')? this.suppressFilter : false,
               editable : (typeof this.cellEditable != 'undefined')? this.cellEditable : true,
+              cellRenderer : (typeof this.defaultCellRenderer() == 'function')? this.defaultCellRenderer() : null  
             },
             onSelectionChanged: function() {
               if(self.onSelectionChanged != null && typeof self.onSelectionChanged() == "function"){
