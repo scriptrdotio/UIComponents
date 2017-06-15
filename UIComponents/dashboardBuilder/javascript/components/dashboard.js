@@ -509,6 +509,7 @@ angular
       
       this.clear = function() {
       	var self = this;
+      	if(this.dashboard.widgets.length > 0){  
          var modalInstance = $uibModal.open({
               animation: true,
               component: 'confirmationModal',
@@ -527,6 +528,7 @@ angular
              }, function () {
                 console.info('modal-component for clearing dashboard update dismissed at: ' + new Date());
              });
+      	}
 			
 	  };
 	  

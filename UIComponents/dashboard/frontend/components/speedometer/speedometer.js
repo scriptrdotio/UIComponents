@@ -110,10 +110,12 @@ angular
          }
          
         var fn = function(){
+        	
             var h = $element.parent().height();
             var w = $element.parent().width();
             self.gaugeRadius = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
             self.speedoConfig.gaugeRadius = self.gaugeRadius
+            
         }
         
         this.$postLink = function() {

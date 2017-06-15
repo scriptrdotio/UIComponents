@@ -26,6 +26,7 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css',
 	                     'https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.min.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/css/xeditable.min.css',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js',
 	                     'https://code.jquery.com/ui/1.12.0/jquery-ui.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js',
@@ -50,7 +51,8 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js',
 	                     'https://d3js.org/d3.v4.min.js',
 	                     'https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.min.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.1/js/xeditable.min.js'
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.1/js/xeditable.min.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js'
 
 	               ]
 	            }
@@ -83,6 +85,9 @@ module.exports = function(grunt) {
 		                  'dashboard/frontend/components/searchBox/searchBox.html',
 		                  'dashboard/frontend/components/speedometer/speedometer.html',
 		                  'dashboard/frontend/components/message/message.html',
+		                  'dashboard/frontend/components/button/button.html',
+		                  'dashboard/frontend/components/slider/slider.html',
+		                  'dashboard/frontend/components/toggleSwitch/toggle_switch.html',
 		                  'dashboardBuilder/javascript/components/box.html',
 		                  'dashboardBuilder/javascript/components/dashboard.html',
 		                  'dashboardBuilder/javascript/components/dashboardsList.html',
@@ -154,7 +159,10 @@ module.exports = function(grunt) {
 		               'concat/min-safe/message.js' : [ 'dashboard/frontend/components/message/message.js' ],
 		               'concat/min-safe/displayBox.js' : [ 'dashboard/frontend/components/message/displayBox.js' ],
 		               'concat/min-safe/message.js' : [ 'dashboard/frontend/components/message/message.js' ],
-		               'concat/min-safe/svg-assets-cache.js' : [ 'lib/svg-assets-cache.js' ]
+		               'concat/min-safe/toggle_switch.js' : [ 'dashboard/frontend/components/toggleSwitch/toggle_switch.js' ],
+	            	   'concat/min-safe/slider.js' : [ 'dashboard/frontend/components/slider/slider.js' ],
+		               'concat/min-safe/button.js' : [ 'dashboard/frontend/components/button/button.js' ],
+	            	   'concat/min-safe/svg-assets-cache.js' : [ 'lib/svg-assets-cache.js' ]
 
 		            }
 	            }
@@ -202,6 +210,9 @@ module.exports = function(grunt) {
 		                     'lib/xeditable.min.js',
 		                     'lib/ag_grid.js',
 		                     'dashboard/frontend/components/thermometer/thermometer_directive.js',
+		                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js',
+		                     'lib/rzslider.min.js',
+		                     'dashboard/frontend/components/button/angular-promise-buttons.js',
 		                     'concat/min-safe/wsProvider.js',
 		                     'concat/min-safe/httpProvider.js',
 		                     'concat/min-safe/templates.js',
@@ -216,6 +227,9 @@ module.exports = function(grunt) {
 		                     'concat/min-safe/gauge.js',
 		                     'concat/min-safe/displayBox.js',
 		                     'concat/min-safe/message.js',
+		                     'concat/min-safe/toggle_switch.js',
+		                     'concat/min-safe/slider.js',
+		                     'concat/min-safe/button.js',
 		                     'concat/min-safe/map.js',
 		                     'concat/min-safe/grid.js',
 		                     'concat/min-safe/autocomplete.js',
@@ -227,9 +241,9 @@ module.exports = function(grunt) {
 		                     'dashboard/frontend/components/thermometer/thermometer.js',
 		                     'dashboard/frontend/components/progressBar/progressBar.js' ],
 
-		               'build/javascript/template_resources.js' : [
-		               	'lib/underscore-min.js',
-		               	'lib/angular.min.js',
+		                'build/javascript/template_resources.js' : [
+			               	 'lib/underscore-min.js',
+			               	 'lib/angular.min.js',
 		                     'lib/jquery.min.js',
 		                     'lib/jquery-ui.min.js',
 		                     'lib/jquery.cookie.min.js',
@@ -250,19 +264,25 @@ module.exports = function(grunt) {
 		                     'concat/min-safe/odometer.js',
 		                     'lib/angular-cookies.min.js',
 		                     'lib/angular-websocket.min.js',
+		                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js',
+		                     'lib/rzslider.min.js',
+		                     'dashboard/frontend/components/button/angular-promise-buttons.js',
 		                     'concat/min-safe/wsProvider.js',
 		                     'concat/min-safe/httpProvider.js',
 		                     'concat/min-safe/chart.js',
+		                     'concat/min-safe/toggle_switch.js',
+		                     'concat/min-safe/slider.js',
+		                     'concat/min-safe/button.js',
 		                     'lib/ui-bootstrap.min.js',
 		                     'lib/ui-bootstrap-tpls.min.js',
 		                     'dashboardBuilder/lib/gridster/angular_gridster.min.js',
-						         'concat/min-safe/displayBox.js',
-						         'concat/min-safe/message.js',
-						         'concat/min-safe/markerClusterer.js',
-						         'lib/ng-map.min.js',
-						         'concat/min-safe/map.js',
-						         'lib/ag_grid.js',
-						         'concat/min-safe/grid.js'
+					         'concat/min-safe/displayBox.js',
+					         'concat/min-safe/message.js',
+					         'concat/min-safe/markerClusterer.js',
+					         'lib/ng-map.min.js',
+					         'concat/min-safe/map.js',
+					         'lib/ag_grid.js',
+					         'concat/min-safe/grid.js'
 		                     ]
 		            },
 	            },
@@ -282,7 +302,12 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/ACL/ACL.css',
 	                     'dashboard/frontend/components/gauge/gauge.css',
 	                     'dashboard/frontend/components/grid/grid.css',
-	                     'dashboard/frontend/components/list/angucomplete.alt.css' ],
+	                     'dashboard/frontend/components/list/angucomplete.alt.css',
+	                     'dashboard/frontend/components/map/map.css',
+	                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css',
+	                     'lib/rzslider.css',
+	                     'dashboard/frontend/components/button/button.css'
+	                     ],
 	               dest : 'build/css/components.css'
 	            }
 
@@ -316,37 +341,6 @@ module.exports = function(grunt) {
 	var path = require('path');
 	var request = require('request');
 	var async = require('async');
-
-	grunt.registerMultiTask('fetch_goolge_maps', function() {
-		var done = this.async();
-		var options = this.options({
-			separator : '\n',
-		});
-		async.eachSeries(this.files, function(file, next) {
-			var out = '';
-			async.eachSeries(file.orig.src, function(url, nextUrl) {
-				if (grunt.file.exists(url)) {
-					// If a file
-					grunt.log.writeln('Concatenating ' + url);
-					out += grunt.file.read(url) + options.separator;
-					nextUrl();
-				} else {
-					// Otherwise assume a url
-					grunt.log.writeln('Downloading ' + url);
-					request(url).on('data', function(data) {
-						out += data.toString();
-					}).on('end', function() {
-						out += options.separator;
-						nextUrl();
-					});
-				}
-			}, function() {
-				grunt.file.write(file.dest, out);
-				grunt.log.ok('Wrote ' + file.dest + '.');
-				next();
-			});
-		}, done);
-	});
 
 	grunt.registerMultiTask('fetch_ag_grid', function() {
 		var done = this.async();

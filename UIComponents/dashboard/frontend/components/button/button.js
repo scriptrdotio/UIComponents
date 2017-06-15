@@ -8,8 +8,6 @@ angular
 
         bindings : {
             
-            "resize" : "@",
-            
             "size": "@",
             
             "isDisabled": "<?",
@@ -42,7 +40,6 @@ angular
                 
                 this.transport = (this.transport) ? this.transport : "wss";
                 this.msgTag = (this.msgTag) ? this.msgTag : null;
-                this.resize = (typeof this.resize != "undefined") ? this.resize : true;
                 this.type = (this.type) ? this.type : "btn-success";
                 this.size = (this.size) ? this.size : "";
                 
@@ -53,9 +50,7 @@ angular
                 }
 
                 this.style = {};
-                if(this.resize){
-                    angular.element($window).on('resize', resize);
-                }
+                angular.element($window).on('resize', resize);
 
             }
             
@@ -125,9 +120,7 @@ angular
             }
 
             this.$postLink = function() {
-                if(this.resize){
-                    $timeout(resize,100);
-                }
+                $timeout(resize,100);
             }    
         }
     });
