@@ -53,118 +53,14 @@ iframe {width: 100%; height: 100%;}
 
 .m0 {margin: 0!important;}
 
-/*** Side menu ***/
-.side-bar {position: relative;}
-.side-bar .nav li strong {clear: both; display: block;}
-.side-bar .nav>li>a {color: #fff; border-radius: 0;}
-.side-bar .nav>li>a:focus, .side-bar .nav>li>a:hover {text-decoration: none;background-color: rgba(255,255,255,0.2);}
-.side-bar .nav>li.active>a { background-color: rgba(255,255,255,0.2);}
-.nav-pills>li+li {margin-left: 0;}
-
-
-.status {color: #fff; padding: 10px;}
-.status p {font-size: 16px;}
-.status.active {background: #29c778;}
-.status.inactive {background: #f35958;}
-.status.parked {background: #64b5f6;}
-.status.parked .blink {display: none;}
-
-.box-title {color: #9c9c9c; letter-spacing: -1px; padding-left: 10px; display: inline-block; width: 100%;}
-
-/*** page inner 
-.page-inner {min-height: 100vh;}***/
-
 /*** summary icons ***/
 .icon {float: left; width: 55px; height: 40px; margin-right: 10px; padding: 5px; border-radius: 3px; margin-top: 3px;}
 .icon svg {fill: white;}
 .icon-lg {min-height: 64px;}
 
-/** tabs ***/
-.nav-styled {}
-.nav-styled>li a {background: #d8d8d8; color: #222; border-radius: 0; margin: 0 1px;}
-.nav-styled>li.active>a, 
-.nav-styled>li.active>a:focus, 
-.nav-styled>li.active>a:hover {background: #ff8c00;}
-.nav-styled>li>a:focus, .nav-styled>li>a:hover {background: #e4e4e4;}
-
-/*** filter ***/
-.filter-title {border: 1px solid #eee; margin: 0; padding: 10px;}
-
-
-/*** gauge styling ***/
-.c3-chart-arcs .c3-chart-arcs-gauge-unit {fill: #888!important; font-size: 11px!important;}
-.c3-chart-arcs .c3-chart-arcs-gauge-max, .c3-chart-arcs .c3-chart-arcs-gauge-min {fill: #444!important; font-size: 12px!important;}
-.c3-chart-arc .c3-gauge-value {fill: #0194D9!important;}
-
-
-.dial-gauge {width: 250px; height: 230px; margin: 0 auto;}
-.dial-gauge .dialgauge-value {font-weight: bold; font-size: 3.5em;}
-.dial-gauge .dialgauge-unit {font-size: 3em;}
 
 /** map wrap ***/
 .map-wrap {height: 90%;width: 97%;position: absolute;}
-.draggable {background: rgba(0,0,0,0.6); cursor: move; padding-bottom: 20px; padding-top: 15px;}
-.drag-container {overflow: hidden; height: 100vh;}
-.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {width: 100%;}
-.draggable h3 {color: #fff; margin: 0 0 10px 0; font-size: 22px;}
-.logout {border: none; margin-top: 2px; background: #ff8c00;}
-.logout i {font-size: 10px;}
-.logout a:link, .logout a:visited {border: none; color: #fff;}
-.logout:hover, .logout:focus {background: #ffb254;}
-
-
-/*** Customize select box  ***/
-.plain-select  {
-  display:inline-block;
-  vertical-align:middle;
-  position:relative;
-   width: 100%;
-   margin-right: 5px;
-}
-.plain-select select {
-  line-height: 1.6em;
-  height:34px;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  -ms-appearance:none;
-  appearance:none;
-  border-radius:6px;
-  display:block;
-  width:100%;
-  border:1px solid #cccccc;
-  color:#525252;
-  padding:4px 20px 7px 10px;
-  margin:0;
-  -webkit-border-radius:2px;
-  -moz-border-radius:2px;
-  border-radius:2px;
-  background: #fff;
-}
-.ie8 .plain-select select{padding-right:3px}
-.plain-select select:focus {
-  background:#fff;
-  outline:none;
-  box-shadow: 0 0 7px rgba(100,100,100,0.2);
-  border-color:#b0b0b0;
-}
-.plain-select ::-ms-expand {
-display:none;
-}
-.plain-select:after{
-  content:"";
-  position:absolute;
-  z-index:2;
-  right:8px;
-  top:50%;
-  margin-top:-3px;
-  height:0;
-  width:0;
-  border-top:6px solid #ff8c00;
-  border-left:6px solid transparent;
-  border-right:6px solid transparent;
-  pointer-events:none;
-}
-
 
 /*** modal ***/
 .modal-content {border-radius: 0;}
@@ -172,149 +68,11 @@ display:none;
 .index-summary .icon {margin: 0 auto 4px auto; float: none;}
 .index-summary .fnt20 {font-size: 16px;}
 
-/*** blink ***/
-.active.status .blink {
-  animation: blink-animation 1s steps(5, start) infinite;
-  -webkit-animation: blink-animation 1s steps(5, start) infinite;
-}
-
-.inactive.status .blink {
-  animation: blink-animation 1s steps(0, start) infinite;
-  -webkit-animation: blink-animation 1s steps(0, start) infinite;
-}
-
-@keyframes blink-animation {
-  to {
-    visibility: hidden;
-  }
-}
-@-webkit-keyframes blink-animation {
-  to {
-    visibility: hidden;
-  }
-}
-
-
-
-.blink i {
-    margin-right: 1px;
-  	margin-left: 8px;
-    font-size: 9px;
-}
-.active .blink i {
-  color: #7ef57e;
-}
-
-.inactive .blink i {
-  color: #ffbdbc;
-}
-
-/*** Odometer ***/
-.odometer-wrap {font-size: 43px; padding-top: 65px;}
 ng-map {
   width:100%; 
   height:100%;
   /**position: absolute;**/
 }
-
-#dashboard .modal-lg {
-  	width: 100%;
-}
-
-#dashboard .modal-content {
-  	height: calc(100vh - 60px);
-}
-
-#dashboard-iframe {
-  	height: calc(100vh - 150px);
-}
-
-#dashboard .modal-body {
-  	padding: 5px;
-}
-#dashboard .load-middle {
-  	display: table;
-    height: 95%;
-    width: 100%;
-}
-#dashboard .load-Imgmiddle {
- 	vertical-align: middle;
- 	display: table-cell;
-}
-
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
-}
-
-/*** Morris chart svg set to 100% ***/
-#fuelChart svg, 
-#voltageChart svg, 
-#temperatureChart svg, 
-#speedChart svg {width: 100%!important;}
-
-
-/*** media queries ***/
-@media (min-width:320px) and (max-width: 767px) { 
-.border-right {border-bottom: 1px solid #597b92;}
-.page-inner {display: inline-block; width: 100%;}
-.icon-box {margin-top: 10px;}
-.summary.stuck {position: relative!important;}
-.side-bar {position: fixed; width: 100%; z-index: 100;}
-.page-inner {margin-top: 70px;}
-.telecom-icon {width: 10px; height: 20px;}
-.odometer-wrap {font-size: 43px; padding-top: 0; padding-bottom: 30px;}
-.side-bar .nav-pills>li a {padding: 10px 10px;}
-#ticketsiframe {height: calc(100vh - 370px);}  
-#rssiChartLoading, #fuelLoading, #voltageLoading, #temperatureLoading, #speedLoading, #snrChartLoading {padding-bottom: 30px;} 
-}
-
-@media (min-width:767px) and (max-width: 991px) { 
-.tab-content {margin-top: 20px;}
-.summary {height: 95px;}
-.odometer-wrap {font-size: 43px; padding-top: 65px;}
-#ticketsiframe {height: calc(100vh - 200px);} 
-    .icon-box h5 {padding: 4px 0; min-height: 38px;}
-
-}
-
-@media (min-width:768px) {
-.side-bar .nav-pills>li {float: none; text-align: center; width: 80px;}
-.side-bar .nav-pills>li a {padding: 10px 0;}
-.border-right {border-right: 1px solid #597b92;}
-.side-bar {width: 80px;
-    display: block;
-    z-index: 998;
-}
-.side-bar .nav-pills>li i {font-size: 2em;}
-.side-bar .nav-pills {position: fixed; overflow-y: auto;}
-main {display: flex; min-height: 100vh;}
-.side-bar {}
-.page-inner {flex: 1;}
-.status {float: none;}
-  .speed-box .item-wrap {min-height: 209px;}
-.item-wrap {min-height: 250px;}
-.nav-styled>li a {font-size: 16px;}
-.telecom-icon {width: 20px; height: 25px;}
-.dial-gauge {overflow-y: hidden;}
-}
-
-@media (min-width:991px) {
-.summary {min-height: 50px; height: 50px!important;}
-#ticketsiframe {height: calc(100vh - 140px);}
-  .icon-box h5 {padding: 11px 0;}
-	}
-
-
-/*** Listing search ***/
-#searchTextResults {background: #f1f4f9; min-height: 85px; height: calc(100vh - 475px); overflow-y: auto; margin-top: -4px; padding: 0; cursor: default; margin-bottom: 12px;}
-.listing-search {color: #555; padding: 0; margin: 0; list-style: none;}
-.listing-search a {display: block; padding: 4px 12px; color: #666; cursor: pointer;}
-.listing-search a:hover {background: #ddd;}
-.search-text {position: relative; z-index: 1; font-size: 13px;}
-.search-wrap {position: relative;}
-.search-wrap .fa-times {position: absolute; right: 8px; z-index: 1000; font-size: 0.75em; top: 13px; cursor: pointer; color: #999;}
-
-
 
 /** drawing map buttons **/
 .drawingmanager-buttons {
