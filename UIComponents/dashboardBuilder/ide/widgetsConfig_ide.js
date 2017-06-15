@@ -2651,7 +2651,785 @@ angular
 		},
 		"required": []
 	}
-}
+},
+{
+	"name": "toggleSwitch",
+    "label": "Toggle Switch",
+	"class": "scriptr-toggle-switch",
+  	"show": true,
+    "defaults": {
+        "boxLabel":"Toggle Switch",
+        "switch-status":"false",
+        "knob-label":"TV",
+        "on-label":"ON",
+        "off-label":"OFF",
+        "on-switch-change":"vm.onChange",
+        "transport":"wss",
+        "msg-tag":"toggle",        
+        "api":"UIComponents/dashboard/frontend/examples/toggleSwitch/getToggleSwitchVal"      
+    },
+    "box": {
+       sizeX: 1,
+       sizeY: 1,
+       minSizeX: 1,
+       minSizeY: 1,
+       maxSizeY: 1,
+       maxSizeX: 1
+    },
+    "imgCls": "",
+	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0RCQTE1RUU1MUI2MTFFN0FFNDlEMTM4RTRFODYwMkIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0RCQTE1RUQ1MUI2MTFFN0FFNDlEMTM4RTRFODYwMkIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pk9fI0kAAAIXSURBVHja7Jg/SAJxFMe9H2pDQ4PRDZHU1OZkUIu0OESIbqFLZYtEczTYVEO4CVEOkTmktBnR5BItBW5uTYXpoOTg4NA/7PvgFRJWnnE/Ovo9+PI79E4+9+793vueWrvdtlkthM2CoaAVtIJW0P8IWuv2YalUGsQShkLQFDQikakOFaE8lPN4PK0foQG8jCUBDUNN6BKqQjUJwDo0CvmgIegBWgd4uis0YO1YDqBF6AaKrzVOrm9fGrM4dvNpZahw70+ZegNgcWAJQtvQJJSBVgD/+hn6iIFTgE0AdgvHkS5Pg8xKFtoAfMVkeCeWJBQjcEAvfUBzSRwS8Hxtj9YzflTfBWU7APCi2TUDvn0Gj1KpaLzp7qAGMjyHDF/1ANwJ7pWU8RLkgsYFlwBtujiXhG5w4+yYnWlk94n4mDMsuOCbtOn4BoxGZKwQ0yV0llPuZiHBffiSu4TWZ6/3S8j2M7ffKcGDo9rR1voJt01OEOeIZb1HnadQ+Re/U5bES5x1wXPeN2F3XfDgMBp0TUFCr3bweC8K3pVDu66FaZ50RiNr9ljnCLIfyQsGJWOyjWxvGjRGdO6GhCw72YcQZ06w9VsnY4Js0xroEfx9jFckZDnJxokcX0twD0yzk4qd66tRZHwGx8df1Hibv/Oa7Tsowx2+I/NuUa1tTXt4CXiUUAYDhl4CLPW6pf6AVNAKWkEr6D8dbwIMAG8Y3AV944YCAAAAAElFTkSuQmCC",
+	 "form": [
+	            {
+	                type: "tabs",
+	                tabs: [
+	                  {
+	                    title: "Data",
+	                    items: [
+	                      "transport",
+	                      "msg-tag",
+	                      "api",
+	                      "api-params",
+                          "publish-api",
+                          "publish-api-params"  
+	                   //   "on-format-data"
+	                    ]
+	                  },
+                      {
+	                    title: "Toggle Switch behaviour",
+	                    items: [
+	                      {
+	                      "type": "section",
+	                      "htmlClass": "row",
+	                      "items": [
+                              {
+                                  "type": "section",
+                                  "htmlClass": "col-xs-6",
+                                  "items": [{
+                                                "key": "switch-status",
+                                                "type": "radios-inline",
+                                                titleMap: [
+                                                    { value: "true", name: "True" },
+                                                    { value: "false", name: "False" }
+                                                ]
+                                            },
+                                            "on-label", "size"
+                                            ]
+                              },
+		                        {
+		 	                      "type": "section",
+		 	                      "htmlClass": "col-xs-6",
+		 	                      "items": [{
+                                                "key": "is-disabled",
+                                                "type": "radios-inline",
+                                                titleMap: [
+                                                    { value: "true", name: "True" },
+                                                    { value: "false", name: "False" }
+                                                ]
+                                            },"off-label", "type", "knob-label",]
+		 	                    }
+	                        ]
+	                      }
+	                    ]
+	                  },
+                      {
+                        title: "Box Properties",
+                        items: [
+                         "boxLabel"
+                        ]
+                      }
+	                ]
+	              }
+	       ],
+	"schema": {
+		"type": "object",
+		"title": "Schema",
+		"properties": {
+            "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define your widget box title."
+			},
+			"switch-status": {
+				"title": "Toggle Switch Value",
+				"type": "string",
+				"description": "The current value of toggle switch."
+			},
+			"on-label": {
+				"title": "ON Label",
+				"type": "string",
+				"description": "ON Label."
+			},
+            "off-label": {
+				"title": "OFF Label",
+				"type": "string",
+				"description": "OFF Label"
+			},
+			"knob-label": {
+				"title": "Knob Label",
+				"type": "string",
+				"description": "Knob Label."
+			},
+            "is-disabled": {
+                  "title": "Disabled",
+                  "type": "string",
+                  "description": "Set to true to disbale the toggle switch.",
+            },
+          	"type": {
+				"title": "Type",
+				"type": "string",
+                "enum": ["switch-default", "switch-danger", "switch-warning", "switch-success", "switch-info", "switch-primary"],
+				"description": "Choose the type of the Toggle Switch."
+			},
+            "size": {
+				"title": "Size",
+				"type": "string",
+                "enum": ["switch-mini", "switch-small", "switch-large"],
+				"description": "choose the size of the toggle switch."
+			},
+	 		"api": {
+              "title": "Api Data Source",
+              "type": "string",
+              "description": "Name of the api to get data.",
+              "x-schema-form": {
+                "placeholder":  "UIComponents/dashboard/frontend/examples/grid/getCarsInfo"
+              }
+            },
+            "publish-api": {
+              "title": "Publish Api",
+              "type": "string",
+              "description": "Name of the api to publish data.",
+              "x-schema-form": {
+                "placeholder":  "UIComponents/dashboard/frontend/examples/slider/publishSliderVal"
+              }
+            },
+			"on-format-data": {
+				"title": "Format Data",
+				"type": "string",
+				"description": "Callback function to be called after data is returned from backend."
+			},
+			"transport": {
+				"title": "Transport",
+				"type": "string",
+                "enum": ["wss", "https"],
+				"description": "Method used to call api (can take 'http' or 'wss')."
+			},
+			"msg-tag": {
+				"title": "Message Tag",
+				"type": "string",
+				"description": "Subscribe to socket messages with tag name."
+			},
+			"api-params": {
+				"title": "Api Params",
+				"type": "string",
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
+			},
+    		"publish-api-params": {
+				"title": "Publish Api Params",
+				"type": "string",
+				"description": "Publish Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
+			}
+		},
+		"required": []
+	}
+},
+{
+	"name": "slider",
+    "label": "Slider",
+	"class": "scriptr-slider",
+  	"show": true,
+    "defaults": {
+        "transport":"wss",
+      //  "api":"UIComponents/dashboard/frontend/examples/slider/getSliderVal",
+        "publish-api": "UIComponents/dashboard/frontend/examples/slider/publishSliderVal",
+        "boxLabel":"Slider",
+        "min":2,
+        "floor": 0,
+        "min-limit": 1,
+        "max-limit": 9,
+        "ceil": 10,
+        "step": 1,
+        "vertical": false,        
+        "show-ticks":"true"   
+    },
+    "box": {
+       sizeX: 2,
+       sizeY: 1,
+       minSizeX: 1,
+       minSizeY: 1,
+       maxSizeY: 1
+    },
+    "imgCls": "",
+	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDRFNDQ5MDQ1MUI3MTFFNzlBMzVDOTRBMkVCQkU2OUYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDRFNDQ5MDM1MUI3MTFFNzlBMzVDOTRBMkVCQkU2OUYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PhwmJL8AAAHdSURBVHjaYvz//z/DUANMDEMQjDp61NGjjh519KijRx096ugh62hGQgosdlw1BFLNQOwExBxAfA2IpwDxzBMe2gPS2mIh4GB3ILUJiNmQhLWBeDoQmwNx4qAKaaCDOYHUPSCWAPGNhLgZhNlZGI68+szw/e8/mLJAYGhvgHEuXboE8lwFEDsC8X0gbtDT03uEbC5QjR+QygTiv0A8CSi/C01eDEg1AbEGEJ8E4kagmm8ojgYqsgbSLuge2PmFUW3tJ6ZIEDtcXoihQAPsdoabn34wJB6/xwBKF3Ks/6/XiP5bhaTNE4jNkPjvgHgqEMN8qQDE8UjyIGPmAvFTJLEUIJZG4l8B4rVI6veAkscOIOZBD2kOJC9YiiCk1fk4GISAIf725x8GZkYGTaBQPZ6YFALiWgIxnUIgNehAMQyUgEqP/dhUCjAj2MfffIGzQSH9DuhgEBAcmLJnP7XTtB2Q2gLEvFAhUJpuRJIXAFL7gNgQKnQMiN2Aar4iqckBUhOAGBRsP4A4Aii/kegiD0fpAQMLgA7GKD2AlgoCKRNQRgRadgeLPAu05AH5/CRQzT8sauRBKRGIzwPlXw+LcppxtDc+6uhRR486etTRo44edfSoo0cdPerowQEAAgwA9F+Sz6eyRO4AAAAASUVORK5CYII=",
+	 "form": [
+	            {
+	                type: "tabs",
+	                tabs: [
+	                  {
+	                    title: "Data",
+	                    items: [
+	                      "transport",
+	                      "msg-tag",
+	                      "api",
+	                      "api-params",
+                          "publish-api",
+                          "publish-api-params"  
+	                   //   "on-format-data"
+	                    ]
+	                  },
+	                  {
+			                    title: "Slider behaviour",
+			                    items: [
+			                      {
+			                      "type": "section",
+			                      "htmlClass": "row",
+			                      "items": [
+			                        {
+			                          "type": "section",
+			                          "htmlClass": "col-xs-6",
+			                          "items": ["min",  "floor", "min-limit","min-range", "step",  "show-selection-bar-from-value",
+                                                {
+                                                 "key": "show-selection-bar",
+                                                 "type": "radios-inline",
+                                                 titleMap: [
+                                                     { value: "true", name: "True" },
+                                                     { value: "false", name: "False" }
+                                                 ]
+                                                },
+                                                {
+                                                 "key": "show-ticks",
+                                                 "type": "radios-inline",
+                                                 titleMap: [
+                                                     { value: "true", name: "True" },
+                                                     { value: "false", name: "False" }
+                                                 ]  
+                                                },
+                                                {
+			                                        "key": "push-range",
+			                                          "type": "radios-inline",
+			                                          titleMap: [
+			                                            { value: "true", name: "True" },
+			                                            { value: "false", name: "False" }
+			                                          ]
+			                                        }, 
+                                                	{
+			                                        "key": "draggable-range",
+			                                          "type": "radios-inline",
+			                                          titleMap: [
+			                                            { value: "true", name: "True" },
+			                                            { value: "false", name: "False" }
+			                                          ]
+			                                        },
+                                                 	{
+                                                    "key": "keyboard-support",
+                                                    "type": "radios-inline",
+                                                    titleMap: [
+                                                        { value: "true", name: "True" },
+                                                        { value: "false", name: "False" }
+                                                    ]  
+                                                	},
+                                                	{
+                                                    "key": "log-scale",
+                                                    "type": "radios-inline",
+                                                    titleMap: [
+                                                        { value: "true", name: "True" },
+                                                        { value: "false", name: "False" }
+                                                    ]  
+                                                	},
+                                                	{
+                                                    "key": "is-disabled",
+                                                    "type": "radios-inline",
+                                                    titleMap: [
+                                                        { value: "true", name: "True" },
+                                                        { value: "false", name: "False" }
+                                                    ]  
+                                                	}
+                                              		]
+			                        },
+                                    {
+			                          "type": "section",
+			                          "htmlClass": "col-xs-6",
+			                          "items": ["max","ceil","max-limit","max-range", "precision", "ticks-array", 
+                                               {
+                                                 "key": "show-selection-bar-end",
+                                                 "type": "radios-inline",
+                                                 titleMap: [
+                                                     { value: "true", name: "True" },
+                                                     { value: "false", name: "False" }
+                                                 ]
+                                                },
+                                                {
+                                                 "key": "show-ticks-values",
+                                                 "type": "radios-inline",
+                                                 titleMap: [
+                                                     { value: "true", name: "True" },
+                                                     { value: "false", name: "False" }
+                                                 ]  
+                                                },
+                                                {
+			                                        "key": "draggable-range-only",
+			                                          "type": "radios-inline",
+			                                          titleMap: [
+			                                            { value: "true", name: "True" },
+			                                            { value: "false", name: "False" }
+			                                          ]
+			                                    },
+                                           		{
+                                                 "key": "hide-limit-labels",
+                                                 "type": "radios-inline",
+                                                 titleMap: [
+                                                     { value: "true", name: "True" },
+                                                     { value: "false", name: "False" }
+                                                 ]
+                                                },
+                                               {
+                                                 "key": "no-switching",
+                                                 "type": "radios-inline",
+                                                 titleMap: [
+                                                     { value: "true", name: "True" },
+                                                     { value: "false", name: "False" }
+                                                 ]  
+                                                },
+                                               {
+                                                 "key": "right-to-left",
+                                                 "type": "radios-inline",
+                                                 titleMap: [
+                                                     { value: "true", name: "True" },
+                                                     { value: "false", name: "False" }
+                                                 ]  
+                                                },
+                                                {
+                                                 "key": "read-only",
+                                                 "type": "radios-inline",
+                                                 titleMap: [
+                                                     { value: "true", name: "True" },
+                                                     { value: "false", name: "False" }
+                                                 ]
+                                                },"steps-array",]  
+			                        }  
+			                      ]
+			                    }
+			                 ]
+		                  },
+                      {
+                        title: "Box Properties",
+                        items: [
+                         "boxLabel"
+                        ]
+                      }
+	                ]
+	              }
+	       ],
+	"schema": {
+		"type": "object",
+		"title": "Schema",
+		"properties": {
+            "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define your widget box title."
+			},
+            "min": {
+				"title": "Slider 1",
+				"type": "number",
+				"description": "First Slider Value (defaults to 0)."
+			},
+            "max": {
+				"title": "Slider 2",
+				"type": "number",
+				"description": "Second Slider Value."
+			},
+			"floor": {
+				"title": "Floor",
+				"type": "number",
+				"description": "Minimum value for a slider (defaults to 0)."
+			},
+			"ceil": {
+				"title": "Ceil",
+				"type": "number",
+				"description": "Maximum value for a slider (defaults to rz-slider-modelvalue)."
+			},
+            "step": {
+				"title": "Step",
+				"type": "number",
+				"description": "Step between each value."
+			},
+			"precision": {
+				"title": "Precision",
+				"type": "number",
+				"description": "The precision to display values with. The toFixed() is used internally for this."
+			},
+            
+            "min-limit": {
+                  "title": "Minimum Limit",
+                  "type": "number",
+                  "description": "The minimum value authorized on the slider.",
+            },
+          	"max-limit": {
+				"title": "Maximum Limit",
+				"type": "number",
+				"description": "The maximum value authorized on the slider."
+			},
+			"min-range": {
+				"title": "Minimum Range",
+				"type": "number",
+				"description": "The minimum range authorized on the slider. Applies to range slider only."
+			},
+			"max-range": {
+				"title": "Maximum range",
+				"type": "number",
+				"description": "The maximum range authorized on the slider. Applies to range slider only."
+			},
+			"push-range": {
+				"title": "Push Range",
+				"type": "string",
+				"description": "Set to true to have a push behavior. When the min handle goes above the max, the max is moved as well."
+			},
+            "steps-array": {
+				"title": "Steps Array",
+				"type": "string",
+				"description": "If you want to display a slider with non linear/number steps. Just pass an array with each slider value and that's it; the floor, ceil and step settings of the slider will be computed automatically.They can also be bound to the index of the selected item by setting the bindIndexForStepsArray option to true.",
+                "x-schema-form": {
+                  "placeholder": "Ex: [{value: 'A'},{value: 10, legend: 'Legend for 10'}, new Date(2016, 7, 12),{value: new Date(2016, 7, 12), legend: 'Legend for 10'} ]"
+                }
+			},
+			"bind-index-for-steps-array": {
+				"title": "Bind Index For Steps Array",
+				"type": "string",
+				"description": "Set to true to bind the index of the selected item to rz-slider-model and rz-slider-high. (This was the default behavior prior to 4.0)."
+			},
+			"draggable-range": {
+				"title": "Draggable Range",
+				"type": "string",
+				"description": "When set to true and using a range slider, the range can be dragged by the selection bar."
+			},
+            "draggable-range-only": {
+				"title": "Draggable Range Only",
+				"type": "string",
+				"description": "Same as draggableRange but the slider range can't be changed."
+			},
+			"show-selection-bar": {
+				"title": "Show Selection Bar",
+				"type": "string",
+				"description": "Set to true to always show the selection bar before the slider handle."
+			},
+            "show-selection-bar-end": {
+                  "title": "Show Selection Bar End",
+                  "type": "string",
+                  "description": "Set to true to always show the selection bar after the slider handle.",
+            },
+          	"show-selection-bar-from-value": {
+				"title": "Show Selection Bar From Value",
+				"type": "number",
+				"description": "Set a number to draw the selection bar between this value and the slider handle."
+			},
+            "hide-limit-labels": {
+				"title": "Hide Limit Labels",
+				"type": "string",
+				"description": "Set to true to hide min / max labels"
+			},
+			"auto-hide-limit-labels": {
+				"title": "Auto Hide Limit Labels",
+				"type": "string",
+				"description": "Set to false to disable the auto-hiding behavior of the limit labels."
+			},
+            "read-only": {
+				"title": "Read Only",
+				"type": "string",
+				"description": "Set to true to make the slider read-only."
+			},
+			"is-disabled": {
+				"title": "Disabled",
+				"type": "string",
+				"description": "Set to true to disable the slider."
+			},
+			"interval": {
+				"title": "Interval",
+				"type": "number",
+				"description": "The number of milliseconds to wait between two updates of the slider."
+			},
+            "show-ticks": {
+				"title": "Show Ticks",
+				"type": "string",
+				"description": "Set to true to display a tick for each step of the slider."
+			},
+			"show-ticks-values": {
+				"title": "Show Ticks Values",
+				"type": "string",
+				"description": "Set to true to display a tick and the step value for each step of the slider."
+			},
+            "ticks-array": {
+                "title": "Ticks Array",
+                "type": "string",
+                "description": "Use to display ticks at specific positions. The array contains the index of the ticks that should be displayed.",
+                "x-schema-form": {
+                    "placeholder":  " [0, 1, 5] "
+                }
+            },
+          	"scale": {
+				"title": "Scale",
+				"type": "number",
+				"description": "If you display the slider in an element that uses transform: scale(0.5), set the scale value to 2 so that the slider is rendered properly and the events are handled correctly."
+			},
+			"enforce-step": {
+				"title": "Enforce Step",
+				"type": "number",
+				"description": "Set to true to force the value to be rounded to the step, even when modified from the outside.. When set to false, if the model values are modified from outside the slider, they are not rounded and can be between two steps."
+			},
+			"enforce-range": {
+				"title": "Enforce Range",
+				"type": "string",
+				"description": "Set to true to round the Slider 1 and Slider 2 to the slider range even when modified from outside the slider."
+			},
+			"no-switching": {
+				"title": "No Switching",
+				"type": "string",
+				"description": "Set to true to prevent to user from switching the min and max handles. Applies to range slider only."
+			},
+            "only-bind-handles": {
+				"title": "Only Bind Handles",
+				"type": "string",
+				"description": "Set to true to only bind events on slider handles."
+			},
+			"bound-pointer-labels": {
+				"title": "Bound Pointer Labels",
+				"type": "string",
+				"description": "Set to true to keep the slider labels inside the slider bounds."
+			},
+			"merge-range-labes-if-same": {
+				"title": "Merge Range Labels If Same",
+				"type": "string",
+				"description": "Set to true to merge the range labels if they are the same. For instance, if min and max are 50, the label will be '50 - 50' if mergeRangeLabelsIfSame: false, else '50'."
+			},
+            "right-to-left": {
+				"title": "Right To Left",
+				"type": "string",
+				"description": "Set to true to show graphs right to left."
+			},
+			"vertical": {
+				"title": "Vertical",
+				"type": "string",
+				"description": "Set to true to display the slider vertically. The slider will take the full height of its parent. Changing this value at runtime is not currently supported."
+			},
+            "keyboard-support": {
+                  "title": "Keyboard Support",
+                  "type": "string",
+                  "description": "Handles are focusable (on click or with tab) and can be modified using keyboard controls.",
+            },
+          	"log-scale": {
+				"title": "Log Scale",
+				"type": "string",
+				"description": "Set to true to use a logarithmic scale to display the slider."
+			},
+			"selection-bar-gradient": {
+				"title": "Selection Bar Gradient",
+				"type": "string",
+				"description": "Use to display the selection bar as a gradient. The given object must contain from and to properties which are colors."
+			},
+			"aria-label": {
+				"title": "Aria Label",
+				"type": "string",
+				"description": "Use to add a label directly to the slider(s) for accessibility. Adds the aria-label attribute."
+			},
+            "aria-label-high": {
+				"title": "Aria Label High ",
+				"type": "string",
+				"description": "Use to add a label directly to the slider(s) for accessibility. Adds the aria-label attribute."
+			},
+            "api": {
+              "title": "Api Data Source",
+              "type": "string",
+              "description": "Name of the api to get data.",
+              "x-schema-form": {
+                "placeholder":  "UIComponents/dashboard/frontend/examples/grid/getCarsInfo"
+              }
+            },
+            "publish-api": {
+              "title": "Publish Api",
+              "type": "string",
+              "description": "Name of the api to publish data.",
+              "x-schema-form": {
+                "placeholder":  "UIComponents/dashboard/frontend/examples/slider/publishSliderVal"
+              }
+            },
+			"on-format-data": {
+				"title": "Format Data",
+				"type": "string",
+				"description": "Callback function to be called after data is returned from backend."
+			},
+			"transport": {
+				"title": "Transport",
+				"type": "string",
+                "enum": ["wss", "https"],
+				"description": "Method used to call api (can take 'http' or 'wss')."
+			},
+			"msg-tag": {
+				"title": "Message Tag",
+				"type": "string",
+				"description": "Subscribe to socket messages with tag name."
+			},
+			"api-params": {
+				"title": "Api Params",
+				"type": "string",
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
+			},
+    		"publish-api-params": {
+				"title": "Publish Api Params",
+				"type": "string",
+				"description": "Publish Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
+			}
+		},
+		"required": ["ceil"]
+	}
+},
+{
+	"name": "button",
+    "label": "Button",
+	"class": "scriptr-button",
+  	"show": true,
+    "defaults": {
+        "transport" : "https",
+        "boxLabel":"Button",
+        "type":"btn-success",
+        "size":"small",
+        "label" : "Refresh data",
+        "api":"UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"      
+    },
+    "box": {
+       sizeX: 1,
+       sizeY: 1,
+       minSizeX: 1,
+       minSizeY: 1,
+       maxSizeY: 1,
+       maxSizeX: 1
+    },
+    "imgCls": "",
+	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTM1MEZDOUE1MUI4MTFFNzg0MDZBODMxOUZDNUVGN0IiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTM1MEZDOTk1MUI4MTFFNzg0MDZBODMxOUZDNUVGN0IiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pg1w0C8AAAHySURBVHja7Jc9SMNAFMfvbEVRcBVEHYqzOujgILWI4mIHdRArWZSCIE4WcdFVtKOg4CAtVhwEP0AUQbHipIvi4iQIzg5+QimN/yvPEtokSjH1Infw66XpNfzy8u7dheu6ztzWypgLm5JW0kpagubNHUV5PT43gF9CzyQYZdP6Y36kY5IKM/KKmaVHQPKsCJhJc8mluaoeSlpJF9cS4NRt0j4eYd3om8Ea+HCDdIe+xFohfgvC+C5W3RnwIHtOT+QKbYQ9gUUcNoEhcF5Uwc69bkV5Gp8eB6TfQB1kn81+xJNoQTcFQqDC5joZ7D08+ZHedSjS1UCzjFqE3YAxHDaAA5vr7BTu8lj2j2KiiIlT9YvSlZQiy9/lP+ilJ5M2nH8HJ2CyID04d2brgcffh+4QdCGiSYsxQXTb4EjkOsalTMeRaykm4jG4N05IkzYCykHcSrik1QMSGXSrYAARrbUYptHT2MSYHlmW8fXs7Gds3JASfhCmG0tRCbwAezjf+aOS51ROGyTj9AbiA22UNjXiNQrSCRojCsAduMa54F/m9FdbAY1gnoSF3JbIY8iGaMwclb59KSJNkbxE1w6ugMjdVyENhqlG94NZRHnBrnp4S7yrFHVY5OsZxF7oRjRaiQfthM2XcbWfVtJKWkn/e+lPAQYAoEWDWxM/8JkAAAAASUVORK5CYII=",
+	 "form": [
+	            {
+	                type: "tabs",
+	                tabs: [
+	                  {
+	                    title: "Data",
+	                    items: [
+	                      "transport",
+	                      "api",
+	                      "api-params"
+	                   //   "on-format-data"
+	                    ]
+	                  },
+                      {
+	                    title: "Button behaviour",
+	                    items: [
+	                      {
+	                      "type": "section",
+	                      "htmlClass": "row",
+	                      "items": [
+                              {
+                                  "type": "section",
+                                  "htmlClass": "col-xs-6",
+                                  "items": [
+                                            "type", "size"
+                                            ]
+                              },
+		                        {
+		 	                      "type": "section",
+		 	                      "htmlClass": "col-xs-6",
+		 	                      "items": [{
+                                                "key": "is-disabled",
+                                                "type": "radios-inline",
+                                                titleMap: [
+                                                    { value: "true", name: "True" },
+                                                    { value: "false", name: "False" }
+                                                ]
+                                            }]
+		 	                    }
+	                        ]
+	                      }
+	                    ]
+	                  },
+                      {
+                        title: "Box Properties",
+                        items: [
+                         "boxLabel"
+                        ]
+                      }
+	                ]
+	              }
+	       ],
+	"schema": {
+		"type": "object",
+		"title": "Schema",
+		"properties": {
+            "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define your widget box title."
+			},
+            "is-disabled": {
+                  "title": "Disabled",
+                  "type": "string",
+                  "description": "Set to true to disbale the Button.",
+            },
+          	"type": {
+				"title": "Type",
+				"type": "string",
+                "enum": ["btn-default", "btn-danger", "btn-warning", "btn-success", "btn-info", "btn-primary"],
+				"description": "Choose the type of the Button."
+			},
+            "size": {
+				"title": "Size",
+				"type": "string",
+                "enum": ["small", "large"],
+				"description": "choose the size of the Button."
+			},
+	 		"api": {
+              "title": "Api Data Source",
+              "type": "string",
+              "description": "Name of the api to get data.",
+              "x-schema-form": {
+                "placeholder":  "UIComponents/dashboard/frontend/examples/grid/getCarsInfo"
+              }
+            },
+			"on-format-data": {
+				"title": "Format Data",
+				"type": "string",
+				"description": "Callback function to be called after data is returned from backend."
+			},
+			"transport": {
+				"title": "Transport",
+				"type": "string",
+                "enum": ["wss", "https"],
+				"description": "Method used to call api (can take 'http' or 'wss')."
+			},
+			"msg-tag": {
+				"title": "Message Tag",
+				"type": "string",
+				"description": "Subscribe to socket messages with tag name."
+			},
+			"api-params": {
+				"title": "Api Params",
+				"type": "string",
+				"description": "Api parameters.",
+                "x-schema-form": {
+                  "placeholder": "Ex: {'id' : '599865'}"
+                }
+			}
+		},
+		"required": []
+	}
+}        
 /*        
 {
 	"name": "grid",
