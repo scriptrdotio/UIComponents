@@ -1,0 +1,89 @@
+<html ng-app="myApp">
+
+<head>
+  
+    <link href="//cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.css" media="all" rel="stylesheet" type="text/css">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/slider/slider.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+</head>  
+  
+<script>
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Slider"])
+  
+      angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.min = "0";
+          vm.max = "5"
+          vm.options = {
+              floor: 0,
+              ceil: 450,
+              step: 10,
+              showTicks: true,
+              minLimit: 0,
+              maxLimit: 8,
+              showSelectionBar: true,
+              selectionBarGradient: {
+                  from: 'white',
+                  to: '#FC0'
+              },
+              getSelectionBarColor: function(value) {
+                  if (value <= 3)
+                      return 'red';
+                  if (value <= 6)
+                      return 'orange';
+                  if (value <= 9)
+                      return 'yellow';
+                  return '#2AE02A';
+              },
+              vertical: false,
+              stepsArray: [
+                  {value: 1, legend: 'Very poor'},
+                  {value: 2},
+                  {value: 3, legend: 'Fair'},
+                  {value: 4},
+                  {value: 5, legend: 'Average'},
+                  {value: 6},
+                  {value: 7, legend: 'Good'},
+                  {value: 8},
+                  {value: 9, legend: 'Excellent'}
+              ]
+          }
+          vm.getSelectionBarColor = function(value){
+               if (value <= 3)
+                      return 'red';
+                  if (value <= 6)
+                      return 'orange';
+                  if (value <= 9)
+                      return 'yellow';
+                  return '#2AE02A';
+          }
+          vm.update = function(sliderId, modelValue, highValue, pointerType){
+              console.log("debug");
+          }
+      });
+</script>
+  
+  <body>
+        <scriptr-slider
+                min=5        
+                floor="0"
+                ceil="10" 
+                show-selection-bar="false"        
+                show-selection-bar-end="true"
+                     
+                >
+        </scriptr-slider>
+    </div>
+
+  </body>
+
+</html>
