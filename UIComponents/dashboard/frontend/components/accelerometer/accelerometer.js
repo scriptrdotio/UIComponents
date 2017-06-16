@@ -19,9 +19,14 @@ angular
         
         var self = this;
           
-           this.$onInit = function() {
-               initDataService(this.transport)
-           }
+        this.$onInit = function() {
+              if(this.data) {
+                if(this.data.x) this.xLine = "scaleX("+Math.round(this.data.x)+")";
+           		if(this.data.y) this.yLine = "scaleY("+Math.round(this.data.y)+")";
+            	if(this.data.z) this.angle = "rotateZ("+ Math.round(this.data.z) + "deg )"; 
+              }
+              initDataService(this.transport);
+        }
         var initDataService = function(transport) {
             if (transport == "wss") {
               wsClient.onReady.then(function() {
