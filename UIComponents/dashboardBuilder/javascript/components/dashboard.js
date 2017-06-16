@@ -65,7 +65,7 @@ angular
         self.onACLChange = function(acls){
             self.acls = acls.join(";");
             var d = $q.defer(); 
-            self.saveScript(null, null, true).then(
+            self.saveDashboard(null, null, true).then(
               function(data, response) {
                   console.log("success");
                   d.resolve(data, response);
@@ -509,7 +509,7 @@ angular
       
       this.clear = function() {
       	var self = this;
-      	if(this.dashboard.widgets.length > 0){  
+        if(this.dashboard.widgets.length > 0){  
          var modalInstance = $uibModal.open({
               animation: true,
               component: 'confirmationModal',
@@ -528,7 +528,7 @@ angular
              }, function () {
                 console.info('modal-component for clearing dashboard update dismissed at: ' + new Date());
              });
-      	}
+        }
 			
 	  };
 	  
