@@ -1908,7 +1908,8 @@ angular
       "clustered-view":"true",
       "cluster-zoom": 8,
       "heatmap":"true",
-      "bounce": "true",    
+      "bounce": "true",  
+      "resize": "false",  
       "api": "UIComponents/dashboard/frontend/examples/map/simulatorData",
       "sources-info": "{'simulator': {'label': 'Carvoyant'}}",
       "msg-tag": "everyone-main-live"

@@ -81,7 +81,9 @@ angular
                    }
                    
                    var resize = function(){
-                       self.style["margin-top"] = ($element.parent().height()/2) - ($element.parent().position().top/2) - ($element.height()/2);
+                       if(self.resize){
+                           self.style["margin-top"] = ($element.parent().height()/2) - ($element.parent().position().top/2) - ($element.height()/2);
+                       }
                    }
 
                    this.$postLink = function() {
