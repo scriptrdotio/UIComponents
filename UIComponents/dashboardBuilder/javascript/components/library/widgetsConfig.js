@@ -2954,8 +2954,8 @@ angular
     "defaults": {
     },
     "box": {
-       sizeX: 2,
-       sizeY: 2,
+       sizeX: 1,
+       sizeY: 1,
        minSizeX: 1,
        minSizeY: 1
     },
