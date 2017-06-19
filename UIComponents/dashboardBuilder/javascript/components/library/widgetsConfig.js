@@ -2945,7 +2945,59 @@ angular
 		},
 		"required": []
 	}
-}
+},
+{
+	"name": "iframe",
+    "label": "IFrame",
+	"class": "scriptr-iframe",
+  	"show": true,
+    "defaults": {
+    },
+    "box": {
+       sizeX: 2,
+       sizeY: 2,
+       minSizeX: 1,
+       minSizeY: 1
+    },
+    "imgCls": "",
+	"imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTM1MEZDOUE1MUI4MTFFNzg0MDZBODMxOUZDNUVGN0IiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTM1MEZDOTk1MUI4MTFFNzg0MDZBODMxOUZDNUVGN0IiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pg1w0C8AAAHySURBVHja7Jc9SMNAFMfvbEVRcBVEHYqzOujgILWI4mIHdRArWZSCIE4WcdFVtKOg4CAtVhwEP0AUQbHipIvi4iQIzg5+QimN/yvPEtokSjH1Infw66XpNfzy8u7dheu6ztzWypgLm5JW0kpagubNHUV5PT43gF9CzyQYZdP6Y36kY5IKM/KKmaVHQPKsCJhJc8mluaoeSlpJF9cS4NRt0j4eYd3om8Ea+HCDdIe+xFohfgvC+C5W3RnwIHtOT+QKbYQ9gUUcNoEhcF5Uwc69bkV5Gp8eB6TfQB1kn81+xJNoQTcFQqDC5joZ7D08+ZHedSjS1UCzjFqE3YAxHDaAA5vr7BTu8lj2j2KiiIlT9YvSlZQiy9/lP+ilJ5M2nH8HJ2CyID04d2brgcffh+4QdCGiSYsxQXTb4EjkOsalTMeRaykm4jG4N05IkzYCykHcSrik1QMSGXSrYAARrbUYptHT2MSYHlmW8fXs7Gds3JASfhCmG0tRCbwAezjf+aOS51ROGyTj9AbiA22UNjXiNQrSCRojCsAduMa54F/m9FdbAY1gnoSF3JbIY8iGaMwclb59KSJNkbxE1w6ugMjdVyENhqlG94NZRHnBrnp4S7yrFHVY5OsZxF7oRjRaiQfthM2XcbWfVtJKWkn/e+lPAQYAoEWDWxM/8JkAAAAASUVORK5CYII=",
+	 "form": [
+	            {
+	                type: "tabs",
+	                tabs: [
+	                  {
+	                    title: "Data",
+	                    items: [
+	                      "link"
+	                    ]
+	                  },
+                      {
+                        title: "Box Properties",
+                        items: [
+                         "boxLabel"
+                        ]
+                      }
+	                ]
+	              }
+	       ],
+	"schema": {
+		"type": "object",
+		"title": "Schema",
+		"properties": {
+            "boxLabel": {
+				"title": "Box Label",
+				"type": "string",
+				"description": "Define your widget box title."
+			},
+            "link": {
+                  "title": "Link or URL",
+                  "type": "string",
+                  "description": "Enter Link or URL.",
+            }
+		},
+		"required": []
+	}
+}        
 /*        
 {
 	"name": "grid",
