@@ -85,6 +85,7 @@ module.exports = function(grunt) {
 		                  'dashboard/frontend/components/searchBox/searchBox.html',
 		                  'dashboard/frontend/components/speedometer/speedometer.html',
 		                  'dashboard/frontend/components/message/message.html',
+                          'dashboard/frontend/components/accelerometer/accelerometer.html',
 		                  'dashboard/frontend/components/button/button.html',
 		                  'dashboard/frontend/components/slider/slider.html',
 		                  'dashboard/frontend/components/toggleSwitch/toggle_switch.html',
@@ -162,6 +163,7 @@ module.exports = function(grunt) {
 		               'concat/min-safe/toggle_switch.js' : [ 'dashboard/frontend/components/toggleSwitch/toggle_switch.js' ],
 	            	   'concat/min-safe/slider.js' : [ 'dashboard/frontend/components/slider/slider.js' ],
 		               'concat/min-safe/button.js' : [ 'dashboard/frontend/components/button/button.js' ],
+                       'concat/min-safe/accelerometer.js' : [ 'dashboard/frontend/components/accelerometer/accelerometer.js' ], 
 	            	   'concat/min-safe/svg-assets-cache.js' : [ 'lib/svg-assets-cache.js' ]
 
 		            }
@@ -227,6 +229,7 @@ module.exports = function(grunt) {
 		                     'concat/min-safe/gauge.js',
 		                     'concat/min-safe/displayBox.js',
 		                     'concat/min-safe/message.js',
+                             'concat/min-safe/accelerometer.js',
 		                     'concat/min-safe/toggle_switch.js',
 		                     'concat/min-safe/slider.js',
 		                     'concat/min-safe/button.js',
@@ -278,6 +281,7 @@ module.exports = function(grunt) {
 		                     'dashboardBuilder/lib/gridster/angular_gridster.min.js',
 					         'concat/min-safe/displayBox.js',
 					         'concat/min-safe/message.js',
+                             'concat/min-safe/accelerometer.js',
 					         'concat/min-safe/markerClusterer.js',
 					         'lib/ng-map.min.js',
 					         'concat/min-safe/map.js',
@@ -306,6 +310,7 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/map/map.css',
 	                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css',
 	                     'lib/rzslider.css',
+                         'dashboard/frontend/components/accelerometer/accelerometer.css',
 	                     'dashboard/frontend/components/button/button.css'
 	                     ],
 	               dest : 'build/css/components.css'
