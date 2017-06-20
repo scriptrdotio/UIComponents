@@ -1,5 +1,17 @@
-return {
-    "x":-15,
-    "y":10,
-    "z":970
-}
+var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+
+var x = Math.floor((Math.random() * 100) + 1) * plusOrMinus;
+var y = Math.floor((Math.random() * 100) + 1) * plusOrMinus;
+var z = Math.floor((Math.random() * 360));
+
+var data = {};
+
+data.x = x;
+data.y = y;
+data.z = z;
+
+var message = {"result": data, "id": "accelerometer"}
+publish("responseChannel", message);
+
+return data
+

@@ -21,8 +21,14 @@ angular
           
         this.$onInit = function() {
               if(this.data) {
-                if(this.data.x) this.xLine = "scaleX("+Math.round(this.data.x)+")";
-           		if(this.data.y) this.yLine = "scaleY("+Math.round(this.data.y)+")";
+                if(this.data.x){
+                    this.data.x = (this.data.x > 20) ? 20 : (this.data.x < -20) ? -20 : this.data.x; 
+                    this.xLine = "scaleX("+Math.round(this.data.x)+")";
+                } 
+           		if(this.data.y){
+                     this.data.y = (this.data.y > 20) ? 20 : (this.data.y < -20) ? -20 : this.data.y; 
+                     this.yLine = "scaleY("+Math.round(this.data.y)+")";
+                } 
             	if(this.data.z) this.angle = "rotateZ("+ Math.round(this.data.z) + "deg )"; 
               }
               initDataService(this.transport);
@@ -66,6 +72,10 @@ angular
            //var obj = { x: data["Acc_X"], y: data["Acc_Y"], z: data["Acc_Z"]}
            // var obj = {x: 10, y: 100, z: 30}
            //console.log(obj)
+              
+            data.x = (data.x > 20) ? 20 : (data.x < -20) ? -20 : data.x; 
+            data.y = (data.y > 20) ? 20 : (data.y < -20) ? -20 : data.y;   
+              
             this.xLine = "scaleX("+Math.round(data.x)+")";
             this.yLine = "scaleY("+Math.round(data.y)+")";
             this.angle = "rotateZ("+ Math.round(data.z) + "deg )"; 

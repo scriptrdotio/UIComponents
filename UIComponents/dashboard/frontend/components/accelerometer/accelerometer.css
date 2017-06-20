@@ -60,19 +60,19 @@
 }
 .guideX {
 	position:absolute;
-	top:0px;
+	top:40px;
 	left:-1px;
 	width: 50%;
-	height:100%;
+	height:91%;
 	border-right: 1px solid red;
 }
  
 .guideY {
 	position:absolute;
-	width:100%;
+	width:95%;
 	height:50%;
 	top:-1px;
-    left: 0px;
+    left: 15px;
 	border-bottom: 1px solid green;
 }
  
