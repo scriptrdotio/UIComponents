@@ -55,6 +55,7 @@ angular
                        this.disabled = (typeof this.isDisabled != "undefined") ? this.isDisabled : false;
                        this.type = (typeof this.type != "undefined") ? this.type : "switch-success";
                        this.size = (typeof this.size != "undefined") ? this.size : "switch-large";
+                       this.resize = (typeof this.resize != "undefined") ? this.resize : true;
                        
                        this.class = this.type + " " + this.size;
                        
