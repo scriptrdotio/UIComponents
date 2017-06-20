@@ -87,9 +87,11 @@
     &lt;script src=&quot;//rawgit.com/johannesjo/angular-promise-buttons/master/dist/angular-promise-buttons.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/button/button.js&quot;&gt;&lt;/script&gt;
     
+    &lt;link href=&quot;/UIComponents/dashboard/frontend/components/IFrame/IFrame.css&quot; media=&quot;all&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/IFrame/IFrame.js&quot;&gt;&lt;/script&gt;
     
-    
-    
+    &lt;link rel=&quot;stylesheet&quot;  href=&quot;/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.css&quot;/&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.js&quot;&gt;&lt;/script&gt;
     
 &lt;/head&gt; 
   
@@ -159,7 +161,7 @@
       httpClientProvider.setToken($.urlParam(&quot;auth_token&quot;));
     }]
 
-     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button'])
+     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer'])
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      
