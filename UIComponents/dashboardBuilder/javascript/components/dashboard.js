@@ -406,8 +406,16 @@ angular
          if(pluginData) {
              this.widgets = pluginData.wdg; //This needs fixing
              this.urlParams = pluginData.urlParams;
-             this.transport.defaults = pluginData.settings;
              this.dashboard["widgets"] = this.widgets;
+             this.transport.defaults = pluginData.settings;
+             
+             // update default channels if applicable
+             if(pluginData.settings.publishChannel != "requestChannel"){
+                 self.wsClient.updatePublishingChannel(pluginData.settings.publishChannel);
+             }
+             if(pluginData.settings.subscribeChannel != "responseChannel"){
+                 self.wsClient.updateSubscriptionChannel(pluginData.settings.subscribeChannel);
+             } 
          }
        }
        
