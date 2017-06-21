@@ -23,6 +23,8 @@
   
   <script src="/UIComponents/httpProvider.js"></script>
   <script src="/UIComponents/wsProvider.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   
   <script src="/UIComponents/dashboard/frontend/components/grid/grid.js"></script>
   <script src="/UIComponents/config/scriptrTransport.js"></script>
@@ -109,6 +111,10 @@
               console.log(e);
             }
            };
+           vm.defaultCellRenderer = function(params){
+                    return '<span class="ag-cell-inner" tooltip-placement="auto" uib-tooltip="Delete selected row">value: '+params.value+'</span>'
+               
+           }
    });
 </script>
 <body>
@@ -116,8 +122,10 @@
  <scriptr-grid
            columns-definition= "vm.colDef" 
            row-model-type='pagination'
+           enable-col-resize='true'    
            enable-sorting='true'
            cell-editable='true'
+           default-cell-renderer="vm.defaultCellRenderer"    
            enable-client-filter='true'
            enable-server-side-filter='false' 
            enable-server-side-sorting='false'
