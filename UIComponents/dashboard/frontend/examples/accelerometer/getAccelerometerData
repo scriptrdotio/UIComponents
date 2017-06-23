@@ -14,4 +14,3 @@ var message = {"result": data, "id": "accelerometer"}
 publish("responseChannel", message);
 
 return data
-

@@ -36,7 +36,7 @@ angular
                    
                   "onSwitchChange" : "&", 
                    
-                  "publishApi": "@",   
+                  "publishApiParams": "<?",   
                  
                   "onFormatData" : "&"
 
@@ -64,11 +64,24 @@ angular
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
                        
                        this.style = {};
-                       angular.element($window).on('resize', resize);
+                       angular.element($window).on('resize', function() {
+                           if (self.timeoutId != null) {
+                           	$timeout.cancel(self.timeoutId);
+                         	}
+                        	 return self.timeoutId = $timeout(self.resize, 100);
+                        });
 
 		               initDataService(this.api, self.apiParams, this.transport);
 
 	               }
+                   
+                   this.$onDestroy = function() {
+                       console.log("destory toggle switch")
+                       angular.element($window).off('resize');
+                       if(self.msgTag){
+                           wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
+                       }
+                   }
                    
                    this.publishData = function(){
                        if(typeof this.onSwitchChange() == "function"){
@@ -78,25 +91,31 @@ angular
                            self.publishApiParams = {};
                        }
                        self.publishApiParams["value"] = this.switchStatus;
-                       initDataService(self.publishApi, self.publishApiParams, self.transport);
+                       initDataService(self.api, self.publishApiParams, self.transport);
                    }
                    
-                   var resize = function(){
-                       if(self.resize){
-                           self.style["margin-top"] = ($element.parent().height()/2) - ($element.parent().position().top/2) - ($element.height()/2);
-                       }
-                   }
-
-                   this.$postLink = function() {
-                       $timeout(resize,100);
-                   }    
+                   self.resize = function(){
+                       self.timeoutId = null;
+                  		self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
+                 }
+                  
+                  this.$postLink = function() {
+                       $timeout(self.resize,100);
+                       if (self.timeoutId != null) {
+                       	$timeout.cancel(self.timeoutId);
+                     	}
+                    	self.timeoutId = $timeout(self.resize, 100);
+                  }   
+                  
+                  
 
 	                var initDataService = function(api, params, transport) {
 		               if (transport == "wss") {
 			               wsClient.onReady.then(function() {
 				               // Subscribe to socket messages with id chart
-                               
-				               wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);
+                               if(self.msgTag){
+                                 wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
+                               }
 				               if(api) {
                                   wsClient.call(api, params, self.msgTag)
                                    .then(

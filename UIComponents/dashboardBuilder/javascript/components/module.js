@@ -1,6 +1,6 @@
-var underscore = angular.module('underscore', []);
-underscore.factory('_', ['$window', function($window) {		
+var underscore = angular.module("underscore", []);
+underscore.factory("_", ["$window", function($window) {		
   return $window._; // assumes underscore has already been loaded on the page		
 }]);
 
-angular.module('DashboardBuilder', ['underscore', "Accelerometer", "IFrame", "Button", "Slider", "ToggleSwitch", "ACL", "Grid", "Map", "Message", "xeditable", 'ui.bootstrap', 'ngRoute', 'schemaForm', 'slickCarousel', 'ngAnimate', 'ngSanitize', "WsClient", "HttpClient", "Chart", 'gridster','DashboardBuilder', 'Gauge', 'Speedometer', 'Odometer', 'SearchBox', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache', 'Thermometer', 'ProgressBar']);
+angular.module("DashboardBuilder", ["underscore", "schemaForm", "Accelerometer", "IFrame", "Button", "Slider", "ToggleSwitch", "ACL", "Grid", "Map", "Message", "xeditable", "ui.bootstrap", "ngRoute", "slickCarousel", "ngAnimate", "ngSanitize", "WsClient", "HttpClient", "Chart", "gridster","DashboardBuilder", "Gauge", "Speedometer", "Odometer", "SearchBox", "ngMaterial", "ngMessages", "material.svgAssetsCache", "Thermometer", "ProgressBar", "angularSpectrumColorpicker", "angular-underscore/filters", "pascalprecht.translate", "ui.select"]);

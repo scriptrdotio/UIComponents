@@ -28,7 +28,7 @@ angular
 
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
-               controller : function(httpClient, wsClient) {
+               controller : function($scope, httpClient, wsClient) {
 
 	               var self = this;
 
@@ -42,12 +42,21 @@ angular
 		               initDataService(this.transport);
 
 	               }
+                   
+                   this.$onDestroy = function() {
+                       console.log("destory Thermometer")
+                       if(self.msgTag){
+                           wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
+                       }
+                   }
 
 	               var initDataService = function(transport) {
 		               if (transport == "wss") {
 			               wsClient.onReady.then(function() {
 				               // Subscribe to socket messages with id chart
-				               wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
+				               if(self.msgTag){
+                                 wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
+                               }
 				               if(self.api) {
                                   wsClient.call(self.api, self.apiParams, self.msgTag)
                                    .then(function(data, response) {

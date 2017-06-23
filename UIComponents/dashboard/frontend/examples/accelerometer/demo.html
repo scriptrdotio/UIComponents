@@ -14,7 +14,7 @@
   
     <script src="/UIComponents/config/scriptrTransport.js"></script>
     
-    <link rel="stylesheet"  href="/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.css"/>
+     <link rel="stylesheet"  href="/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.css"/>
     <script src="/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.js"></script>
 </head>  
   
@@ -35,10 +35,7 @@
 <body ng-app="myApp">
   
   <div ng-controller="testCtrl as vm" style="width: 200px; height: 200px;">
-      <scriptr-accelerometer
-                             transport="wss"
-                             msg-tag="accelerometer"
-                             api="UIComponents/dashboard/frontend/examples/accelerometer/getAccelerometerData"
+      <scriptr-accelerometer transport="https" api="UIComponents/dashboard/frontend/examples/accelerometer/getAccelerometerData"
       </scriptr-accelerometer>
   </div>
   

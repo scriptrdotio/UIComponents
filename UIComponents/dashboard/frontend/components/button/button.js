@@ -50,16 +50,21 @@ angular
                 }
 
                 this.style = {};
-                angular.element($window).on('resize', resize);
+                angular.element($window).on('resize', function() {
+                    if (self.timeoutId != null) {
+                    	$timeout.cancel(self.timeoutId);
+                  	}
+                 	 return self.timeoutId = $timeout(self.resize, 100);
+                 });
 
             }
             
             self.call = function (api, transport, params)
             {
-                var defer = $q.defer();
-                if (transport == "wss") {
-                    wsClient.onReady.then(function() {
-                        if(api) {
+                if(api) {
+                    var defer = $q.defer();
+                    if (transport == "wss") {
+                        wsClient.onReady.then(function() {
                             wsClient.call(api, params, self.msgTag)
                                 .then(
                                 function(data, response) {
@@ -69,58 +74,67 @@ angular
                                     console.log( "reject published promise", err);
                                     defer.resolve({ msg: 'ERROR' });
                                 });
-                        }
 
-                    });
-                } else {
-                    if (transport == "https" && api) {
-                        if(self.httpsMethod == "post"){
-                            httpClient
-                                .post(api, params)
-                                .then(
-                                function(data, response) {
-                                   defer.resolve({ msg: 'SUCCESS' });
-                                },
-                                function(err) {
-                                    defer.resolve({ msg: 'ERROR' });
-                                    console
-                                        .log(
-                                        "reject published promise",
-                                        err);
-                                });
-                        }else{
-                            httpClient
-                                .get(api, params)
-                                .then(
-                                function(data, response) {
-                                    defer.resolve({ msg: 'SUCCESS' });
-                                },
-                                function(err) {
-                                    defer.resolve({ msg: 'ERROR' });
-                                    console
-                                        .log(
-                                        "reject published promise",
-                                        err);
-                                });
+                        });
+                    } else {
+                        if (transport == "https" && api) {
+                            if(self.httpsMethod == "post"){
+                                httpClient
+                                    .post(api, params)
+                                    .then(
+                                    function(data, response) {
+                                        defer.resolve({ msg: 'SUCCESS' });
+                                    },
+                                    function(err) {
+                                        defer.resolve({ msg: 'ERROR' });
+                                        console
+                                            .log(
+                                            "reject published promise",
+                                            err);
+                                    });
+                            }else{
+                                httpClient
+                                    .get(api, params)
+                                    .then(
+                                    function(data, response) {
+                                        defer.resolve({ msg: 'SUCCESS' });
+                                    },
+                                    function(err) {
+                                        defer.resolve({ msg: 'ERROR' });
+                                        console
+                                            .log(
+                                            "reject published promise",
+                                            err);
+                                    });
+                            }
                         }
                     }
+                    return defer.promise;
                 }
-                return defer.promise;
+            }
+            
+            this.$onDestroy = function() {
+                angular.element($window).off('resize');
             }
             
             self.success = function () {
                 if(typeof this.onButtonclick() == "function"){
                     this.onButtonclick()(self);
                 } 
-                self.successPromise = self.call(self.api, self.transport, self.params);
+                self.successPromise = self.call(self.api, self.transport, self.apiParams);
             };
 
-            var resize = function(){
-                self.style["margin-top"] = ($element.parent().height()/2) - ($element.parent().position().top/2) - ($element.height()/2);
-            }
-
-            this.$postLink = function() {
-                $timeout(resize,100);
-            }    
+            self.resize = function(){
+                self.timeoutId = null;
+           		self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
+          }
+           
+           this.$postLink = function() {
+                $timeout(self.resize,100);
+                if (self.timeoutId != null) {
+                	$timeout.cancel(self.timeoutId);
+              	}
+             	self.timeoutId = $timeout(self.resize, 100);
+           }     
         }
     });

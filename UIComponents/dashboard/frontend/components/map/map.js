@@ -21,6 +21,8 @@ angular
         "summaryIcons": "<?", //MFE: Check what to do with this in dashboard builder
         
         "assetsData": "<?",
+        "data": "<?",
+        
         "heatMapWeight": "@",
       	"api" : "@",
       	"apiParams" : "@",
@@ -123,6 +125,13 @@ angular
               }
           });  
       }
+      
+      this.$onDestroy = function() {
+          if(self.msgTag){
+              wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
+          }
+          console.log("destory Map")
+      }
 
       //Load asset Icons per source
       var sourcesInfo = null;
@@ -185,7 +194,7 @@ angular
                   });
               }
               if(self.msgTag) {
-            	 wsClient.subscribe(self.msgTag, self.processAssets)
+            	 wsClient.subscribe(self.msgTag, self.processAssets, $scope.$id)
               }
               
           });
@@ -193,6 +202,9 @@ angular
           if(self.assetsData) {
           	 console.log("static assets data", self.assetsData);
              self.processAssets(self.assetsData);
+          } else if(self.data) {
+         	 console.log("static assets data", self.data);
+             self.processAssets(self.data);
           }
        
       };

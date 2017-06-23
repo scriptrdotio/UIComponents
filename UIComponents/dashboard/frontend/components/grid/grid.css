@@ -1,7 +1,7 @@
 :focus {outline: 0!important;}
 /*** filter ***/
 .filter-bar {padding: 4px 0; background: #f6f6f6; display: inline-block; width: 100%; margin-bottom: 8px; font-family: "Josefin Sans",sans-serif;}
-.filter-bar .form-group {margin-bottom: 5px;}
+.filter-bar .form-group {margin-bottom: 0;}
 .filter-bar .tooltip-inner {min-width:85px; }
 .filter-bar .mt4 {margin-top: 4px;}
 
@@ -27,7 +27,39 @@
 .ag-bootstrap .ag-filter-apply-panel {background: #fff;}
 .ag-bootstrap .ag-filter-apply-panel button {display: block; background: #e6e6e6; border: 1px solid #bbb; width: 100%;}
 .ag-bootstrap .ag-filter-apply-panel button:hover {background: #eee;}
-.ag-bootstrap .ag-cell-focus {border: 2px solid #5099a2;}
+.ag-bootstrap .ag-cell-focus {border: 2px solid #ff8c00!important;}
+.ag-bootstrap .ag-row-selected {background-color: #ffc278!important;}
 .ag-bootstrap .ag-paging-button {}
+.ag-bootstrap .ag-header-icon {fill: #ff8c00!important;}
+
+.ag-cell {overflow: visible!important;}
+
+.ag-cell-inner {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.filter-bar .btn-default {    
+    background-color: #fff;
+    background-image: none;
+}
+
+.filter-bar .btn-warning {    
+    color: #fff;
+    background-color: #f48220;
+    border-color: #e47618;
+    background-image: none;
+}
+
+.filter-bar .btn-warning:hover, 
+.filter-bar .btn-warning:focus, 
+.filter-bar .btn-warning:active, 
+.filter-bar .btn-warning.active, 
+.filter-bar .open > .dropdown-toggle.btn-warning {
+    background-color: #e4710d;
+    border-color: #e47618;
+}
 
 

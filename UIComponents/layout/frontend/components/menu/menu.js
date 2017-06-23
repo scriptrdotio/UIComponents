@@ -4,7 +4,8 @@ angular
             'menu',
             {
                bindings : {
-	               menuItems : '<menuItems'
+	               menuItems : '<menuItems',
+                   onMenuItemClick : "&"
                },
                templateUrl : '/UIComponents/layout/frontend/components/menu/menu.html',
                controller : function($scope, _, $timeout, $location, $route) {
@@ -28,7 +29,7 @@ angular
                      
                        $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
                          console.log("next", next);
-                         if(next) {
+                         if(next.$$route) {
                             console.log("current", next.$$route);
                             
                          	this.currentRoute =  "#"+next.$$route.originalPath;
@@ -56,7 +57,9 @@ angular
                   }
 
 	               this.route = function(item, event, column, colIndex, liIndex, routingBased) {
-                     
+                       if(typeof self.onMenuItemClick(item) == "function"){
+                           self.onMenuItemClick()(item);
+                       }
                       var subOpened = false;
                      
                      if(routingBased){

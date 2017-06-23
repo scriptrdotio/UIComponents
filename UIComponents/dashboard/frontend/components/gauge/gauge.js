@@ -28,11 +28,12 @@ angular
 
                   "hideValue" : "@", // hide value text (bool)
 
-                  "hideInnerShadow" : "@", // hide inner shadow
+                  "showInnerShadow" : "<?", // show inner shadow
 
                   "gaugeColor" : "@", // background color of gauge element (string)
 
                   "gaugeValue" : "<?", //value to show (float)
+                  "data" : "<?",
                   
                   "customSectors": "<?", // array of objects with color, hi, lo attributes ([ of object])
 
@@ -48,21 +49,23 @@ angular
 
                   "refreshAnimationType" : "@", // type of refresh animation (linear, >, <, <>, bounce) (string)
                  
-                  "title" : "@", // gauge title text
+                   /** Title removed in latest justgage revision 1.2.9
+                 /** "title" : "@", // gauge title text
                  
                   "titleFontColor" : "@", // color of the title text
                  
                   "titleFontFamily" : "@", // font-family of the title text
                  
-                  "titlePosition" : "@", // "above" or "below" the gauge
+                  "titlePosition" : "@", // "above" or "below" the gauge 
+                  "titleMinFontSize" : "@", // absolute minimum font size for the title
+                  **/ 
                  
                   "valueFontFamily" : "@", // font-family of the value text (string)
                  
                   "relativeGaugeSize" : "@", // true if the gauge has to grow with the container (bool)
                  
                   "valueMinFontSize" : "@", // absolute minimum font size for the value (int)
-                 
-                  "titleMinFontSize" : "@", // absolute minimum font size for the title
+                  
                  
                   "hideMinMax" : "@",
                  
@@ -104,13 +107,11 @@ angular
                  
                   "onAnimationEnd" : "&", // function applied after animation is done (func)
                  
-                  "pointer" : "@", // show value pointer
+                  "pointer" : "<?", // show value pointer
                  
                   "onFormatData" : "&",
                  
                   "heightUnit" : "@",
-                   
-                  "httpsMethod" : "@",
 
                   "counter" : "@", // increase numbers one by one (bool)
                   "width": "@", //  gauge width in % (int)
@@ -124,18 +125,22 @@ angular
 	               var self = this;
 
 	               this.$onInit = function() {
-		               this.gaugeValue = (this.gaugeValue) ? this.gaugeValue : 0;
-                       this.heightUnit = (this.heightUnit) ? this.heightUnit : "px";
+	               	
+		             this.gaugeValue = (this.gaugeValue) ? this.gaugeValue : ((this.data) ? this.data : 0 );
+		               
+                     this.heightUnit = (this.heightUnit) ? this.heightUnit : "px";
 		               this.customSectors = (this.customSectors) ? this.customSectors
-		                     : [ {
-		                        color : "#A3CD3B",
-		                        lo : 0,
-		                        hi : 25
-		                     }, {
-		                        color : "#FF4A43",
-		                        lo : 25,
-		                        hi : 100
-		                     } ];
+		                     : {  percents: true,
+                                  ranges: [{
+                                    color : "#A3CD3B",
+                                    lo : 0,
+                                    hi : 25
+                                  },{
+                                    color : "#FF4A43",
+                                    lo : 25,
+                                    hi : 100
+                                  }]
+                                };
 		               this.valueFontColor = (this.valueFontColor) ? this.valueFontColor
 		                     : "#999";
 		               this.min = (this.min) ? this.min : 0;
@@ -146,7 +151,7 @@ angular
 		               this.gaugeColor = (this.gaugeColor) ? this.gaugeColor
 		                     : "#e9e9e9";
 		               this.shadowSize = (this.shadowSize) ? this.shadowSize : 0;
-		               this.label = (this.label) ? this.label : "% full";
+		               this.label = (this.label) ? this.label : "";
 		               this.labelFontColor = (this.labelFontColor) ? this.labelFontColor
 		                     : "#666";
 		               this.startAnimationType = (this.startAnimationType) ? this.startAnimationType
@@ -158,8 +163,8 @@ angular
 		               this.transport = (this.transport) ? this.transport : "wss";
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
                      
-                       this.width = (this.width) ? this.width : 50;
-                       this.height = (this.height) ? this.height : 300;
+                      //this.width = (this.width) ? this.width : 50;
+                      //this.height = (this.height) ? this.height : 300;
 
 		               initDataService(this.transport);
 
@@ -168,15 +173,18 @@ angular
                             
                 this.$onDestroy = function() {
                     console.log("destory gauge")
-                    wsClient.unsubscribe(self.msgTag, null, $scope.$id);
+                    if(self.msgTag){
+                        wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
+                    }
                 }
                   
 	               var initDataService = function(transport) {
 		               if (transport == "wss") {
 			               wsClient.onReady.then(function() {
 				               // Subscribe to socket messages with id chart
-                               
-				               wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);
+				               if(self.msgTag){
+                                 wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
+                               }
 				               if(self.api) {
                                   wsClient.call(self.api, self.apiParams, self.msgTag)
                                    .then(
@@ -192,21 +200,7 @@ angular
 			               });
 		               } else {
 			               if (transport == "https" && self.api) {
-                               if(self.httpsMethod == "post"){
 				               httpClient
-				                     .post(self.api, self.apiParams)
-				                     .then(
-				                           function(data, response) {
-					                           self.consumeData(data)
-				                           },
-				                           function(err) {
-					                           console
-					                                 .log(
-					                                       "reject published promise",
-					                                       err);
-				                           });
-                           }else{
-                               httpClient
 				                     .get(self.api, self.apiParams)
 				                     .then(
 				                           function(data, response) {
@@ -218,7 +212,6 @@ angular
 					                                       "reject published promise",
 					                                       err);
 				                           });
-                           }
 			               }
 		               }
 	               }

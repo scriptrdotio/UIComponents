@@ -1,5 +1,5 @@
 body {font-family: 'Source Sans Pro', sans-serif!important; background: #fff;}
-html {background: #efefef;}
+html {background: #fff;}
 .pdt10 {padding-top: 10px;}
 .pdb10 {padding-bottom: 10px;}
 .pdr10 {padding-right: 10px;}
@@ -23,7 +23,8 @@ scriptr-odometer {
 }
 
 ul {
-    list-style: none;
+    /**list-style: none;**/
+    padding-left: 20px;
 }
 
 form { margin-bottom: 0;}
@@ -36,13 +37,13 @@ form { margin-bottom: 0;}
 
 /*** box ***/
 .box { height: 100%;border: 1px solid #ccc;background-color: #fff;}
-.box-content {padding: 5px; text-align: center; width: 100%; height: 100%;}
+.box-content {position: relative; text-align: center; width: 100%; height: calc(100% - 30px); overflow: hidden;}
 
 /*** Box header ***/
-.box-header {position: relative; z-index: 1; display: inline-block; width: 100%;  background: #f3f3f3; padding: 5px 15px;}
+.box-header {position: relative; z-index: 1; display: inline-block; height:30px; width: 100%;  background: #f3f3f3; padding: 5px 15px;}
 .box-header h3 { margin-top: 10px;display: inline-block;}
 .box-header-btns {cursor: pointer; }
-.box-header a, a:link, .box-header a:visited {color: #ff8c00}
+.box .box-header a, .box .box-header a:link, .box .box-header a:visited {color: #ff8c00}
 
 
 .box-label {
@@ -70,14 +71,12 @@ form { margin-bottom: 0;}
 .slick-label {font-size: 12px;padding-top: 3px;line-height: 2.4em; margin-left: 5px;}
 .slick-prev:before, .slick-next:before {color: #ff8c00;}
 
+
+
+
 .dashboard-config {
-margin-top: -5px;
-    margin-right: -5px;
-    padding-top: 15px;
-    padding-bottom: 16px;
-    margin-bottom: -5px;
     background: #ee8300;
-    padding: 17px 4px;
+    padding: 11px 4px 10px 4px;
     border-left: 4px solid #fff;
 }
 .dashboard-config a {   
@@ -126,8 +125,9 @@ margin: 0;
 }
 
 /*** dashboard builder wrap ***/
-.slick-wrap {min-height: calc(100vh - 44px); background: #fff;}
+.slick-wrap {min-height: calc(100vh - 44px); background: #fff; padding-right: 0;}
 .chart-options-wrap {margin-right: -15px; padding-left: 9px; padding-right: 6px;}
+.slick-container {padding: 3px;}
 
 /***  devices-models-tree ***/
 .devices-models-tree {
@@ -135,7 +135,6 @@ margin: 0;
 }
 .devices-models-tree .button-wrapper {padding: 0;}
 .devices-models-tree ul.abn-tree {margin-top: 10px; max-height: calc(100vh - 55px); overflow-y: auto;}
-
 .devices-models-tree ul.abn-tree li.abn-tree-row a {color: #555;}
 
 .devices-models-tree .nav-pills>li.active>a, 
@@ -145,25 +144,33 @@ margin: 0;
 .devices-models-tree ul.abn-tree i.indented {color: #eca846;}
 .devices-models-tree ul.abn-tree li.active i.indented {color: #fff;}
 
-
+/*
 @media screen and (max-width: 560px) {
-  .slick-slide a[ng-click] {min-height: 55px;}
-  .slick-label {line-height: 1.5em;}
-  .slick-slide img {max-width: 100%;}
-  .slick-label {display: none;}
+  .slick-slide a[ng-click] {width: 40px; height: 35px;}
+  .slick-slide img {width: 54%;}
+  .slick-slide .odometer-img, .slick-slide .gauge-img {width: 60%; padding-top: 4px;}
 }
 
 @media screen and (min-width: 833px) {
-  .slick-slide a[ng-click] {min-height: 44px;}
-  .slick-slide img {width: 19%;}
-  .slick-slide .odometer-img, .slick-slide .gauge-img {width: 28%;}
+  .slick-slide a[ng-click] {width: 40px; height: 35px;}
+  .slick-slide img {width: 54%;}
+  .slick-slide .odometer-img, .slick-slide .gauge-img {width: 60%; padding-top: 4px;}
 }
 
 @media screen and (min-width: 561px) and (max-width: 832px) { 
   .slick-slide img {max-width: 100%;}
   .slick-label {line-height: inherit; display: block;}
   .slick-slide a[ng-click] {min-height: 88px;}
-}
+}*/
+
+/*** to show tooltip on slick list items ***/
+.slick-list {overflow: visible!important;}
+
+/*** slick slide list ***/
+.slick-slide a[ng-click] {width: 40px; height: 35px;}
+.slick-slide img {width: 54%;}
+.slick-slide .odometer-img, .slick-slide .gauge-img {width: 60%; padding-top: 4px;}
+
 
 .builder .box dsp-box div {
     margin-top: 35px;
@@ -271,19 +278,59 @@ border-color: #e47618!important;
 .schema-form-text .control-label,
 .schema-form-textarea .control-label,
 .schema-form-number .control-label,
-.schema-form-radios-inline .control-label{font-size: 13px; color: #343434;}
+.schema-form-radios-inline .control-label,
+.schema-form-section .control-label
+{font-size: 13px; color: #343434;}
 .schema-form-select .help-block, 
 .schema-form-group .help-block, 
 .schema-form-text .help-block,
 .schema-form-radios-inline .help-block,
 .schema-form-textarea .help-block,
-.schema-form-number .help-block
-{color: #737373;}
+.schema-form-number .help-block,
+.schema-form-tabs .tab-content .help-block {color: #737373!important;}
 
 .has-success .form-control {
     border-color: #4FCD8A;
 }
 
+
+.sp-replacer {
+  border: solid 1px #ccc!important;
+  background: #fff!important;
+  width: 100%!important;
+  border-radius: 4px!important;
+}
+
+.sp-dd {
+  float: right!important;
+  color: #ff8c00!important;
+}
+
+.sp-choose, .sp-choose:hover {
+    background-color: #ff8c00!important;
+    background-image: none!important;
+    padding: 4px 8px!important;
+    font-size: 12px!important;
+    color: #fff!important;
+    text-transform: capitalize!important;
+    text-shadow: none!important;
+    border: 1px solid #ff8c00!important;
+}
+
+
+.sp-button-container .sp-cancel, .sp-button-container .sp-cancel:hover {
+    color: #ff8c00!important;
+    text-decoration: underline!important;
+}
+
+.sp-container {
+  background-color: #fff!important;
+  border: solid 1px #ccc!important;
+}
+
+.schema-form-array .clearfix {
+    padding: 0px!important;
+}
 
 .gridster-loaded .gridster-preview-holder{
 	background-color:#999;
@@ -292,3 +339,18 @@ border-color: #e47618!important;
 }
 
 
+.gridster-mobile {
+height: auto !important;
+}
+
+
+/*** Override angular material ***/
+.schema-form-section input[type=search] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+/*** View template of the dashboard ****/
+.dashboard-template .gridster-item {cursor: default;}

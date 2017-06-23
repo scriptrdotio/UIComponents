@@ -62,14 +62,9 @@
               values: ["On hold", "Open", "Escalated", "Closed"]
             }},
             {headerName: "Creation Date", field: "creationDate", editable : false},
-            {headerName: "Click me", editable : false, cellRenderer: function (params) {  
-              return vm.myButtonRenderer(params);
-            }},
-            {headerName: "URI", field: "uri", editable : false, cellRenderer: function (params) {  
-              return vm.myCellRenderer(params);
-            }
-         }]
-        
+            {headerName: "Click me", editable : false},
+            {headerName: "URI", field: "uri", editable : false }
+]
         vm.callback = function(data){
           var ticketsData = [];
           var rows = [];
@@ -111,10 +106,9 @@
               console.log(e);
             }
            };
-           vm.defaultCellRenderer = function(params){
-                    return '<span class="ag-cell-inner" tooltip-placement="auto" uib-tooltip="Delete selected row">value: '+params.value+'</span>'
-               
-           }
+          vm.defaultCellRenderer = function(params){
+              return '<span class="ag-cell-inner" tooltip-placement="auto" uib-tooltip="Delete selected row">value: '+params.value+'</span>'
+          }
    });
 </script>
 <body>

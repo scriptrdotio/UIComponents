@@ -23,10 +23,13 @@
     <link href="/UIComponents/dashboard/frontend/components/list/angucomplete.alt.css" rel="stylesheet">
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/map/map.css">
     <link href="/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css" media="all" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/schemaForm/select.min.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.31/css/colorpicker.min.css" rel="stylesheet">
     <link href="//cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.css" media="all" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/button/button.css">
     <link href="/UIComponents/dashboard/frontend/components/IFrame/IFrame.css" media="all" rel="stylesheet" type="text/css">
     <link rel="stylesheet"  href="/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.css"/>
+    <link href="/UIComponents/dashboardBuilder/lib/schemaForm/spectrum.css" rel="stylesheet">
   
     <!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -51,7 +54,9 @@
     <script src="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-mocks.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/angular-underscore.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/angular-translate.min.js"></script>
+    <script src='/UIComponents/dashboardBuilder/lib/schemaForm/select.min.js'></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>      
@@ -64,7 +69,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/chart/morris.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/chart/angular.morris.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/gauge/justgauge.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js"></script>
   	<script src="//d3js.org/d3.v4.min.js"></script>
@@ -78,16 +83,21 @@
     <script src="/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/button/angular-promise-buttons.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/spectrum.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/angular-spectrum-colorpicker.min.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/tv4.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/objectPath.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/schemaForm.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/bootstrapDecorator.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/bootstrap-colorpicker.min.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/bootstrap-ui-select.min.js"></script>
   
     <!-- Components -->
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.js"></script>
-    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/tv4.js"></script>
-    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/objectPath.js"></script>
-    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/schemaForm.js"></script>
-    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/bootstrapDecorator.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/module.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgetsConfig.js"></script>
@@ -100,7 +110,6 @@
     <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/progressBar/progressBar.js"></script> 
     <script src="/UIComponents/dashboard/frontend/components/map/map.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/grid/grid.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/ACL/ACL.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/list/autocomplete.js"></script>
@@ -119,6 +128,15 @@
 </head> 
   
 <script type="text/javascript"> 
+     Handlebars.registerHelper('json', function(context) {
+          if(typeof context === "object") {
+               console.log("context object", context);
+            return JSON.stringify(context);
+          } else {
+              console.log("context string", context);
+            return context;
+          }
+    });
      var myApp= angular.module("myApp", ['DashboardBuilder', 'Layout']);
      $.urlParam = function(name){
     		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);

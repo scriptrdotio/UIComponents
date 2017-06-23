@@ -23,6 +23,20 @@
 &lt;script&gt;
 
 (function() {
+	
+  if(&quot;{{{transport.requiresLogin}}}&quot; == &quot;Yes&quot;){
+  
+   var scriptName = window.location.pathname.substring(1,window.location.pathname.length )
+   var loginTemplateTarget =&quot;/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget=&quot;+scriptName+&quot;&anon_token={{{anon_token}}}&quot;
+
+    var authorization  = $.scriptr.authorization(
+        {
+          onTokenValid: function(){ }, 
+          loginPage: loginTemplateTarget
+        }
+      );
+    }
+  
   
    $.urlParam = function(name){
 	     var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
@@ -44,6 +58,8 @@
 		}
 		return vars;
 	}
+	  
+
       
     var underscore = angular.module('underscore', []);
 		underscore.factory('_', ['$window', function($window) {		
@@ -63,7 +79,7 @@
       httpClientProvider.setToken($.urlParam(&quot;auth_token&quot;));
     }]
 
-     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'Accelerometer'])
+     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer'])
      
      angular.module('myApp').run(cachedTemplates);  
       
@@ -115,7 +131,7 @@
   
 &lt;/script&gt;
 
-  &lt;body&gt;
+    &lt;body&gt;
       &lt;div ng-controller=&quot;RootCtrl as vm&quot; ng-init=&quot;vm.init();&quot;&gt; 
 		&lt;div gridster=&quot;vm.gridsterOptions&quot;&gt;
           &lt;ul&gt;
@@ -123,12 +139,12 @@
                 &lt;li class=&quot;myItem&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
                     &lt;div class=&quot;box&quot;&gt;
                         &lt;div class=&quot;box-content&quot;&gt;
-                          &lt;div  tooltip-placement=&quot;bottom&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot; class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
-                           &lt;{{type}}
+                          &lt;div  style=&quot;height: 30px;&quot; tooltip-placement=&quot;bottom&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot; class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
+                          &lt;div  style=&quot;height: calc(100% - 30px)&quot; &gt; &lt;{{type}}
                            	      {{#each this.options}} 
-                                      	{{@key}}='{{this}}'
+                                      	{{@key}}= '{{{json this}}}' 
                                   {{/each}} 
-                           &gt;&lt;/{{type}}&gt;
+                           &gt;&lt;/{{type}}&gt; &lt;/div&gt;
                         &lt;/div&gt;
                     &lt;/div&gt;
                 &lt;/li&gt;
@@ -138,4 +154,5 @@
       &lt;/div&gt;
   &lt;/body&gt;  
 &lt;/html&gt;
+ 
 </script>

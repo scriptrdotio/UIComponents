@@ -3,16 +3,17 @@ angular.module('Message', ['angular-scriptrui']);
 angular
   .module('Message')
   .component(
-     'dspBox',
+     'scriptrDisplaybox',
      {
   
       bindings : {
-      	"data": "<?",
+        "data": "@",
         "api": "@",
         "transport" : "@",
         "msgTag" : "@",
         "apiParams" : "<?",
-        "onFormatData" : "&"
+        "onFormatData" : "&",
+        "type":"@"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/message/message.html',
       controller: function(httpClient, wsClient) {
@@ -20,8 +21,8 @@ angular
          var self = this;
           
          this.$onInit = function() {
-            this.data = (this.data) ? JSON.stringify(data) : "Waiting for info...";
-            this.type = (this.type) ? JSON.stringify(type) : "info";
+            this.data = (this.data) ? this.data : "Waiting for info...";
+            this.type = (this.type) ? this.type : "info";
       	 }
          
           this.$postLink = function () {

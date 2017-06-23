@@ -11,6 +11,8 @@
     <script src="https://use.fontawesome.com/3d61d6959e.js"></script>
     <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
     <!-- font awesome.css -->
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
@@ -39,18 +41,13 @@
     
 </script>
     
- <scriptr-grid columns-definition='[
-          {headerName: "Name", field: "name"},
-          {headerName: "Model", field: "model"},
-          {headerName: "Price", field: "price", type: "numeric"}]' 
-           enable-sorting='true'
-           row-data = '[
-              {name: "Toyota", model: "Celica", price: 35000},
-              {name: "Ford", model: "Mondeo", price: 32000},
-              {name: "Porsche", model: "Boxter", price: 72000}
-           ]'
+ <scriptr-grid
+           columns-definition='[{headerName: "Name", field: "name"},{headerName: "Model", field: "model"},{headerName: "Price", field: "price", type: "numeric"}]' 
+           row-data = '[{name: "Toyota", model: "Celica", price: 35000},{name: "Ford", model: "Mondeo", price: 32000},{name: "Porsche", model: "Boxter", price: 72000}]'
+           enable-sorting='true'    
            enable-delete-row='true'
            grid-height="500"
+           row-model-type='pagination'     
            enable-add-row='true'
            on-cell-value-changed-script='UIComponents/dashboard/frontend/examples/grid/addRow'
            on-delete-row-script='UIComponents/dashboard/frontend/examples/grid/removeRow'

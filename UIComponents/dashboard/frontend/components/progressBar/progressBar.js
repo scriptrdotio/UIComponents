@@ -11,6 +11,7 @@ angular
         "onLoad" : "&onLoad",
         
         "value" : "@", // The current value of progress bar.
+        "data": "@",
         
         "type" : "@", // Bootstrap style type. Possible values are 'success', 'info', 'warning', and, 'danger' to use Bootstrap's pre-existing styling, or any desired custom suffix.
         
@@ -36,13 +37,13 @@ angular
         
       },
       templateUrl: '/UIComponents/dashboard/frontend/components/progressBar/progressBar.html',
-      controller: function(httpClient, wsClient) {
+      controller: function($scope, httpClient, wsClient) {
         
          var self = this;
 
          this.$onInit = function() {
            
-           this.value = (this.value) ? this.value : "0";
+           this.value = (this.value) ? this.value : ((this.data) ? this.data : 0 );
            
            this.transport = (this.transport) ? this.transport : "wss";
 		   this.msgTag = (this.msgTag) ? this.msgTag : null;
@@ -54,7 +55,9 @@ angular
             if (transport == "wss") {
               	wsClient.onReady.then(function() {
                 // Subscribe to socket messages with id chart
-                wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
+                    if(self.msgTag){
+                        wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
+                    }
                 if(self.api) {
                   wsClient.call(self.api, self.apiParams, self.msgTag)
                     .then(function(data, response) {
@@ -84,7 +87,14 @@ angular
               }
             }
           }
-
+        
+        
+        this.$onDestroy = function() {
+            console.log("destory Progress bar")
+             if(self.msgTag){
+               wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
+            }
+        }
           this.consumeData = function(data, response) {
              if(typeof self.onFormatData() == "function"){
                data = self.onFormatData()(data);

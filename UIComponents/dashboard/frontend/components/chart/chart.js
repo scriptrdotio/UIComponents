@@ -61,7 +61,7 @@ angular
         
         "labels" : "<?",
         
-        "colors" : "@",
+        "colors" : "<?",
         
         "api": "@",
         
@@ -117,7 +117,7 @@ angular
        
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
-      controller: function(httpClient, wsClient) {
+      controller: function(httpClient, wsClient, $scope, $timeout) {
         
          var self = this;
         
@@ -136,8 +136,8 @@ angular
              this.resize = (this.resize) ? this.resize : true;
              
              // donut config
-             this.labelColor = (this.labelColor) ? this.labelColor : "#FFF";
-             this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#eee";
+             this.labelColor = (this.labelColor) ? this.labelColor : "#eee";
+             this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#fff";
          
              this.transport = (this.transport) ? this.transport : "wss";
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
@@ -145,15 +145,30 @@ angular
            	 console.log(this.type, this.xlabelAngle)
        }
          
-        this.$postLink = function () {
+       this.$postLink = function () {
            initDataService(this.transport);
+           if(this.data && !this.api) {
+         	  $timeout(function() {
+                 self.consumeData(self.data);
+               }, 2000)
+           }
+         	  
         }
 
+        this.$onDestroy = function() {
+            console.log("destory chart", self.msgTag, $scope.$id);
+            if(self.msgTag){
+               wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
+            }
+        }
+        
         var initDataService = function(transport) {
             if (transport == "wss") {
               wsClient.onReady.then(function() {
                 // Subscribe to socket messages with id chart
-                wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
+                if(self.msgTag){
+                    wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
+                }
                 if(self.api) {
                   wsClient.call(self.api, self.apiParams, self.msgTag)
                     .then(
@@ -188,10 +203,10 @@ angular
               data = self.onFormatData()(data);
             }
             if(data && data.length > 0 && typeof data == "object"){
-              this.data = data;
+              this.datas = data;
               this.noResults = false;
             }else{
-              this.data = [];
+              this.datas = [];
               this.noResults = true;
             }
           }

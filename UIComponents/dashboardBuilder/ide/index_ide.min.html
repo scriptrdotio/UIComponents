@@ -17,6 +17,15 @@
    
     
     (function ($) { 
+           Handlebars.registerHelper('json', function(context) {
+          if(typeof context === "object") {
+               console.log("context object", context);
+            return JSON.stringify(context);
+          } else {
+              console.log("context string", context);
+            return context;
+          }
+    });
           var myApp= angular.module("myApp", ['DashboardBuilder']);
           angular.module('myApp').run(cachedTemplates);  
 

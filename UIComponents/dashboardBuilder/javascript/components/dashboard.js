@@ -46,7 +46,7 @@ angular
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, $q, _) {
+    controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, common, config, $uibModal, scriptrService, $route, $routeParams, $q, _) {
       
       this.wsClient = wsClient;
       var self = this;
@@ -65,7 +65,7 @@ angular
         self.onACLChange = function(acls){
             self.acls = acls.join(";");
             var d = $q.defer(); 
-            self.saveDashboard(null, null, true).then(
+            self.saveScript(null, null, true).then(
               function(data, response) {
                   console.log("success");
                   d.resolve(data, response);
@@ -109,7 +109,7 @@ angular
                 },
                 afterChange: function (event, slick, currentSlide, nextSlide) {
                 }
-            } /**,
+            }/**,
           responsive: [
             {
               breakpoint: 1024,
@@ -152,7 +152,7 @@ angular
           margins: [10, 10], // the pixel distance between each widget
           defaultSizeX: 2, // the default width of a gridster item, if not specifed
           defaultSizeY: 1, // the default height of a gridster item, if not specified
-          mobileBreakPoint: 800, // if the screen is not wider that this, remove the grid layout and stack the items
+          mobileBreakPoint: 480, // if the screen is not wider that this, remove the grid layout and stack the items
           minColumns: 1, // the minimum columns the grid must have
           //MFE: overriden in each item widget definition
           //minSizeX: 1, // minimum column width of an item
@@ -216,6 +216,7 @@ angular
 
         
         this.widgetsConfig = config.widgets; 
+        this.widgetsCommon = common;
         this.dataLoaded = true;
         
       };
@@ -406,16 +407,8 @@ angular
          if(pluginData) {
              this.widgets = pluginData.wdg; //This needs fixing
              this.urlParams = pluginData.urlParams;
-             this.dashboard["widgets"] = this.widgets;
              this.transport.defaults = pluginData.settings;
-             
-             // update default channels if applicable
-             if(pluginData.settings.publishChannel != "requestChannel"){
-                 self.wsClient.updatePublishingChannel(pluginData.settings.publishChannel);
-             }
-             if(pluginData.settings.subscribeChannel != "responseChannel"){
-                 self.wsClient.updateSubscriptionChannel(pluginData.settings.subscribeChannel);
-             } 
+             this.dashboard["widgets"] = this.widgets;
          }
        }
        
@@ -449,8 +442,16 @@ angular
           console.log("Widget is", wdg);
           
           if(!wdg) {
-              wdg = config.defaultWidget
+              wdg = _.findWhere(config.widgets, {"name": config.defaultWidget.name});
           }
+          
+          var form = angular.copy(wdg.form);
+          var schema =  angular.copy(wdg.schema);
+         
+          if(wdg.commonData){
+              form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs))
+              schema.properties = merge_options(wdg.schema.properties,common.schemaFields); 
+          }  
             
           var defApiParamsCount = 0;
           if(dmWdg["default-api-params"]){
@@ -498,8 +499,8 @@ angular
             "label": wdg.label,
             "type": wdg.class,
             "options": angular.extend(angular.copy(wdg.defaults), angular.copy(defaults)),
-            "schema": wdg.schema,
-            "form": wdg.form
+            "schema": schema,
+            "form": form
           });
           self.notifyDashboardChange();
         } else {
@@ -517,7 +518,6 @@ angular
       
       this.clear = function() {
       	var self = this;
-        if(this.dashboard.widgets.length > 0){  
          var modalInstance = $uibModal.open({
               animation: true,
               component: 'confirmationModal',
@@ -536,7 +536,6 @@ angular
              }, function () {
                 console.info('modal-component for clearing dashboard update dismissed at: ' + new Date());
              });
-        }
 			
 	  };
 	  
@@ -549,11 +548,30 @@ angular
         var authorization  = $.scriptr.authorization({loginPage: login.loginTarget});
 		  authorization.logout();
 	  };
+        
+      /**
+ * Overwrites obj1's values with obj2's and adds obj2's if non existent in obj1
+ * @param obj1
+ * @param obj2
+ * @returns obj3 a new object based on obj1 and obj2
+ */
+ var merge_options = function(obj1,obj2){
+    var obj3 = {};
+    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+    return obj3;
+}
 
       this.addWidget = function(wdg) {
-          if(wdg.name == "speedometer"){
-            wdg.defaults["gauge-radius"] = 70;
+          
+          var form = angular.copy(wdg.form);
+          var schema =  angular.copy(wdg.schema);
+         
+          if(wdg.commonData){
+              form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs))
+              schema.properties =  merge_options(wdg.schema.properties,common.schemaFields); 
           }
+  
           this.dashboard.widgets.push({
             "name": "New Widget",
             "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
@@ -565,8 +583,8 @@ angular
             "label": wdg.label,
             "type": wdg.class,
             "options": wdg.defaults,
-            "schema": wdg.schema,
-            "form": wdg.form
+            "schema": schema,
+            "form": form
           });
           this.notifyDashboardChange();
       };
@@ -824,7 +842,11 @@ angular
         this.chart = angular.element(document.createElement(widget.type));
         
         angular.forEach(widget.options, function(value, key) {
-          self.chart.attr(key, value);
+         if(angular.isArray(value) || angular.isObject(value)){
+             self.chart.attr(key, JSON.stringify(value));
+         } else {
+             self.chart.attr(key, value);
+         }
         }, this);
         
         var el = $compile( this.chart )( $scope );
@@ -840,7 +862,11 @@ angular
         var self = this;
 
         angular.forEach(wdgModel, function(value, key) {
-            self.chart.attr(key, value);
+           if(angular.isArray(value) || angular.isObject(value)){
+             self.chart.attr(key, JSON.stringify(value));
+         } else {
+             self.chart.attr(key, value);
+         }
         }, this);
         
         var mdl = angular.copy(wdgModel);
@@ -905,7 +931,7 @@ angular
           //do whatever you need to do with your data.
           //$scope.$emit('update_widget', {"model":  this.model});
           console.log("component_form_parent", this.model)
-        }
+        } 
       };
 
       this.onCancel = function (myForm) {

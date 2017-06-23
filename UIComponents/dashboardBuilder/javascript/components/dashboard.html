@@ -51,8 +51,8 @@
       <!-- begin slick wrap -->
     <div class="col-xs-12 pdl0 slick-wrap">
           <!-- begin carousel options -->
-          <div   class="dark-grey-bg pdt5 pdb5 pdr10 chart-options-wrap">
-            <div class="slick-container pdl0" ng-class="!$ctrl.isInIde ? 'col-xs-12' : 'col-xs-11'">
+          <div>
+            <div class="slick-container dark-grey-bg" ng-class="!$ctrl.isInIde ? 'col-xs-12' : 'col-sm-11 col-xs-9'">
                 <slick 
                        settings="$ctrl.slickConfig"
                        infinite="true" 
@@ -64,16 +64,16 @@
                        >
                   <div class="slick-item" ng-repeat="item in $ctrl.widgetsConfig" ng-if="item.show != false">
                      <span >
-                         <a ng-click="$ctrl.addWidget(item)">
+                         <a ng-click="$ctrl.addWidget(item)"  uib-tooltip="{{ item.label }}" tooltip-placement="right">
                            <img ng-if="item.imgSrc" ng-src="{{ item.imgSrc }}" class="{{item.imgCls}}" alt="{{ item.label}}" />
                            <i ng-if="item.iconSrc" class="{{ item.iconSrc }}" aria-hidden="true" alt="{{ item.label}}" /></i>
-                           <span class="slick-label">{{ item.label }}</span>
+                           <!--  span class="slick-label">{{ item.label }}</span -->
                          </a>
                       </span>
                   </div>
                 </slick>
              </div>
-            <div ng-if="$ctrl.isInIde" class="dashboard-config col-xs-1 pull-right text-center">
+            <div ng-if="$ctrl.isInIde" class="dashboard-config col-sm-1 col-xs-3 pull-right text-center">
                 <a ng-click="$ctrl.clear()" uib-tooltip="Clear widgets" tooltip-placement="bottom"><i class="fa fa-eraser" aria-hidden="true"></i></a>
                 <a ng-click="$ctrl.setTransportSettings()" uib-tooltip="Settings" tooltip-placement="bottom"><i class="fa fa-cog" aria-hidden="true"></i></a>
             </div>

@@ -15,7 +15,7 @@ angular
          "onFormatData" : "&"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.html',
-      controller: function(httpClient, wsClient) {
+      controller: function(httpClient, wsClient, $scope) {
         
         var self = this;
           
@@ -37,7 +37,9 @@ angular
             if (transport == "wss") {
               wsClient.onReady.then(function() {
                 // Subscribe to socket messages with id chart
-                wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
+                if(self.msgTag){
+                    wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
+                }
                 if(self.api) {
                   wsClient.call(self.api, self.apiParams, self.msgTag)
                     .then(function(data, response) {
@@ -63,6 +65,13 @@ angular
               }
             }
           }
+        
+         this.$onDestroy = function() {
+         	if(self.msgTag) {
+            	wsClient.unsubscribe(self.msgTag, null, $scope.$id);
+            }
+            console.log("destory accelerometer")
+        }
 
           this.consumeData = function(data, response) {
             if(typeof self.onFormatData() == "function"){

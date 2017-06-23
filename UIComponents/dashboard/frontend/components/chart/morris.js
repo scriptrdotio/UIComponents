@@ -157,7 +157,7 @@ Licensed under the BSD-2-Clause License.
           if (_this.timeoutId != null) {
             window.clearTimeout(_this.timeoutId);
           }
-          return _this.timeoutId = window.setTimeout(_this.resizeHandler, 0);
+          return _this.timeoutId = window.setTimeout(_this.resizeHandler, 100);
         });
       }
       this.el.css('-webkit-tap-highlight-color', 'rgba(0,0,0,0)');
@@ -287,7 +287,14 @@ Licensed under the BSD-2-Clause License.
       this.xmin = this.data[0].x;
       this.xmax = this.data[this.data.length - 1].x;
       this.events = [];
-      if (this.options.events.length > 0) {
+      var validEvents = true;
+      for(var x = 0; x < this.options.events.length; x++){
+          if(this.options.events[x] == null){
+              validEvents = false;
+              break;
+          }
+      }  
+      if (this.options.events.length > 0 && validEvents) {
         if (this.options.parseTime) {
           _ref = this.options.events;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -1225,7 +1232,7 @@ Licensed under the BSD-2-Clause License.
         return this.options.lineColors.call(this, row, sidx, type);
       } else if (type === 'point') {
         return this.options.pointFillColors[sidx % this.options.pointFillColors.length] || this.options.lineColors[sidx % this.options.lineColors.length];
-      } else if (type === 'line') {
+      } else if (type === 'line' || type === 'label') {
         return this.options.lineColors[sidx % this.options.lineColors.length];
       } else {
         return this.options.trendLineColors[sidx % this.options.trendLineColors.length];
@@ -1885,7 +1892,7 @@ Licensed under the BSD-2-Clause License.
           if (_this.timeoutId != null) {
             window.clearTimeout(_this.timeoutId);
           }
-          return _this.timeoutId = window.setTimeout(_this.resizeHandler, 0);
+          return _this.timeoutId = window.setTimeout(_this.resizeHandler, 100);
         });
       }
       this.setData(options.data);

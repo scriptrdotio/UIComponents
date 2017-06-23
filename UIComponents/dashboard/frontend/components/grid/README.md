@@ -93,12 +93,12 @@
 
 The expected params sent from the grid are:
 
- *  @param columnName (name, model, price)
+ *  @param filterColumnName (name, model, price)
  *  @param resultsPerPage (50)
  *  @param pageNumber (2)
  *  @param sort (asc, desc)
  *  @param sortType (numeric)
- *  @param queryFilter (criteira)
+ *  @param queryFilter (criteria)
  *  @param queryType (startsWith, endsWith, contains, equals, notEquals)
  *  @param sortingColumnName (name, model, price)
  *  @param filterColumnName (name, model, price)

@@ -9,6 +9,17 @@
 'use strict';
 
 module.exports = function(grunt) {
+	
+	// define the build project path
+    var projectPath = '/Users/marvettefeghali/Development/workspace/scriptr/'; 
+    
+    var files = {};
+    
+    var dashboardBuilder_resources_path = projectPath + 'lib/UIComponents/build/ide/js/dashboardBuilder_resources.min.js';
+    var template_resources_path = projectPath + 'lib/UIComponents/build/ide/js/template_resources.min.js';
+    
+    files[dashboardBuilder_resources_path] = 'build/javascript/dashboardBuilder_resources.js' ;
+    files[template_resources_path] =  'build/javascript/template_resources.js';
 
 	grunt
 	      .initConfig({
@@ -26,6 +37,7 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css',
 	                     'https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.min.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/css/xeditable.min.css',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.31/css/colorpicker.min.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js',
 	                     'https://code.jquery.com/ui/1.12.0/jquery-ui.min.js',
@@ -47,11 +59,9 @@ module.exports = function(grunt) {
 	                     'https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.min.js',
 	                     'https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js',
-	                     //'https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js',
 	                     'https://d3js.org/d3.v4.min.js',
 	                     'https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.min.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.1/js/xeditable.min.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js'
 
 	               ]
@@ -149,10 +159,6 @@ module.exports = function(grunt) {
 		               'concat/min-safe/morris.js' : [ 'dashboard/frontend/components/chart/morris.js' ],
 		               'concat/min-safe/angular.morris.js' : [ 'dashboard/frontend/components/chart/angular.morris.js' ],
 		               'concat/min-safe/templates.js' : [ 'build/javascript/templates.js' ],
-		               'concat/min-safe/tv4.js' : [ 'dashboardBuilder/lib/schemaForm/tv4.js' ],
-		               'concat/min-safe/objectPath.js' : [ 'dashboardBuilder/lib/schemaForm/objectPath.js' ],
-		               'concat/min-safe/schemaForm.js' : [ 'dashboardBuilder/lib/schemaForm/schemaForm.js' ],
-		               'concat/min-safe/bootstrapDecorator.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrapDecorator.js' ],
 		               'concat/min-safe/widgetsConfig_ide.js' : [ 'dashboardBuilder/ide/widgetsConfig_ide.js' ],
 		               'concat/min-safe/module.js' : [ 'dashboardBuilder/javascript/components/module.js' ],
 		               'concat/min-safe/dashboard.js' : [ 'dashboardBuilder/javascript/components/dashboard.js' ],
@@ -164,9 +170,17 @@ module.exports = function(grunt) {
 		               'concat/min-safe/toggle_switch.js' : [ 'dashboard/frontend/components/toggleSwitch/toggle_switch.js' ],
 	            	   'concat/min-safe/slider.js' : [ 'dashboard/frontend/components/slider/slider.js' ],
 		               'concat/min-safe/button.js' : [ 'dashboard/frontend/components/button/button.js' ],
-                       'concat/min-safe/accelerometer.js' : [ 'dashboard/frontend/components/accelerometer/accelerometer.js' ], 
-                       'concat/min-safe/IFrame.js' : [ 'dashboard/frontend/components/IFrame/IFrame.js' ], 
-	            	   'concat/min-safe/svg-assets-cache.js' : [ 'lib/svg-assets-cache.js' ]
+                     'concat/min-safe/accelerometer.js' : [ 'dashboard/frontend/components/accelerometer/accelerometer.js' ], 
+                     'concat/min-safe/IFrame.js' : [ 'dashboard/frontend/components/IFrame/IFrame.js' ], 
+                      'concat/min-safe/angular-underscore.js' : [ 'dashboardBuilder/lib/schemaForm/angular-underscore.js' ],
+	            	   'concat/min-safe/svg-assets-cache.js' : [ 'lib/svg-assets-cache.js' ],
+	            	   'concat/min-safe/spectrum.js' : [ 'dashboardBuilder/lib/schemaForm/spectrum.js' ],
+	            	   'concat/min-safe/angular-spectrum-colorpicker.min.js' : [ 'dashboardBuilder/lib/schemaForm/angular-spectrum-colorpicker.min.js' ],
+	                   'concat/min-safe/tv4.js' : [ 'dashboardBuilder/lib/schemaForm/tv4.js' ],
+		               'concat/min-safe/objectPath.js' : [ 'dashboardBuilder/lib/schemaForm/objectPath.js' ],
+		               'concat/min-safe/schemaForm.js' : [ 'dashboardBuilder/lib/schemaForm/schemaForm.js' ],
+		               'concat/min-safe/bootstrapDecorator.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrapDecorator.js' ],
+		               'concat/min-safe/bootstrap-colorpicker.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-colorpicker.min.js' ]
 
 		            }
 	            }
@@ -178,60 +192,73 @@ module.exports = function(grunt) {
 		            files : {
 
 		               'build/javascript/dashboardBuilder_resources.js' : [
+		                      //  JQUERY                                            
 		                     'lib/jquery.min.js',
 		                     'lib/jquery-ui.min.js',
 		                     'lib/jquery.cookie.min.js',
 		                     'lib/slick.min.js',
+		                     // Libraries
 		                     'lib/underscore-min.js',
 		                     'lib/handlebars.min.js',
+		                     // NG material
 		                     'lib/angular.min.js',
 		                     'lib/angular-route.min.js',
 		                     'lib/angular-websocket.min.js',
 		                     'lib/angular-cookies.min.js',
+		                     'lib/angular-slick.min.js',
+		                     'dashboardBuilder/lib/gridster/angular_gridster.min.js',
+		                     'lib/angular-animate.min.js',
+		                     'lib/angular-sanitize.min.js',
+		                     'concat/min-safe/angular-underscore.js',
+		                     'dashboardBuilder/lib/schemaForm/angular-translate.min.js',
+		                     'dashboardBuilder/lib/schemaForm/select.min.js',
+		                     'lib/ui-bootstrap.min.js',
+		                     'lib/ui-bootstrap-tpls.min.js',
 		                     'lib/angular-messages.min.js',
 		                     'lib/angular-aria.min.js',
 		                     'lib/angular-material.min.js',
-		                     'dashboardBuilder/lib/gridster/angular_gridster.min.js',
-		                     'lib/angular-slick.min.js',
-		                     'lib/angular-animate.min.js',
-		                     'lib/angular-sanitize.min.js',
-		                     'lib/ui-bootstrap.min.js',
-		                     'lib/ui-bootstrap-tpls.min.js',
 		                     'concat/min-safe/svg-assets-cache.js',
+		                     'concat/min-safe/markerClusterer.js',
+		                     
+		                     // Directives
 		                     'lib/raphael-min.js',
 		                     'concat/min-safe/morris.js',
 		                     'concat/min-safe/angular.morris.js',
-		                     'lib/justgage.min.js',
+		                     'dashboard/frontend/components/gauge/justgauge.js',
 		                     'dashboard/frontend/components/gauge/angular.gauge.min.js',
 		                     'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
 		                     'lib/d3.v4.min.js',
 		                     'dashboard/frontend/components/odometer/odometer.min.js',
 		                     'dashboard/frontend/components/odometer/angular.odometer.min.js',
 		                     'concat/min-safe/abn_tree_directive.js',
-		                     'concat/min-safe/markerClusterer.js',
-		                     'lib/ng-map.min.js',
-		                     'concat/min-safe/angucomplete.alt.js',
-		                     'lib/xeditable.min.js',
-		                     'lib/ag_grid.js',
 		                     'dashboard/frontend/components/thermometer/thermometer_directive.js',
+		                     'lib/ng-map.min.js',
+		                     'lib/ag_grid.js',
+		                     'concat/min-safe/angucomplete.alt.js',
 		                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js',
 		                     'lib/rzslider.min.js',
 		                     'dashboard/frontend/components/button/angular-promise-buttons.js',
+		                     'lib/xeditable.min.js',
+		                     'concat/min-safe/spectrum.js',
+		                     'concat/min-safe/angular-spectrum-colorpicker.min.js',
+		                     'concat/min-safe/tv4.js',
+		                     'concat/min-safe/objectPath.js',
+		                     'concat/min-safe/schemaForm.js',
+		                     'concat/min-safe/bootstrapDecorator.js',
+		                     'concat/min-safe/bootstrap-colorpicker.min.js',
+		                     'dashboardBuilder/lib/schemaForm/bootstrap-ui-select.min.js',
+		                     // Components
 		                     'concat/min-safe/wsProvider.js',
 		                     'concat/min-safe/httpProvider.js',
 		                     'concat/min-safe/templates.js',
 		                     'concat/min-safe/chart.js',
 		                     'concat/min-safe/odometer.js',
-		                     'concat/min-safe/tv4.js',
-		                     'concat/min-safe/objectPath.js',
-		                     'concat/min-safe/schemaForm.js',
-		                     'concat/min-safe/bootstrapDecorator.js',
 		                     'concat/min-safe/speedometer.js',
 		                     'concat/min-safe/searchBox.js',
 		                     'concat/min-safe/gauge.js',
 		                     'concat/min-safe/displayBox.js',
 		                     'concat/min-safe/message.js',
-                             'concat/min-safe/accelerometer.js',
+                           'concat/min-safe/accelerometer.js',
 		                     'concat/min-safe/toggle_switch.js',
 		                     'concat/min-safe/slider.js',
 		                     'concat/min-safe/button.js',
@@ -248,50 +275,91 @@ module.exports = function(grunt) {
 		                     'dashboard/frontend/components/progressBar/progressBar.js' ],
 
 		                'build/javascript/template_resources.js' : [
-			               	 'lib/underscore-min.js',
-			               	 'lib/angular.min.js',
-		                     'lib/jquery.min.js',
-		                     'lib/jquery-ui.min.js',
-		                     'lib/jquery.cookie.min.js',
-		                     'lib/underscore-min.js',
-		                     'lib/angular-route.min.js',
-		                     'concat/min-safe/templates.js',
-		                     'lib/raphael-min.js',
-		                     'concat/min-safe/morris.js',
-		                     'concat/min-safe/angular.morris.js',
-		                     'lib/justgage.min.js',
-		                     'dashboard/frontend/components/gauge/angular.gauge.min.js',
-		                     'concat/min-safe/gauge.js',
-		                     'lib/d3.v4.min.js',
-		                     'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
-		                     'concat/min-safe/speedometer.js',
-		                     'dashboard/frontend/components/odometer/odometer.min.js',
-		                     'dashboard/frontend/components/odometer/angular.odometer.min.js',
-		                     'concat/min-safe/odometer.js',
-		                     'lib/angular-cookies.min.js',
-		                     'lib/angular-websocket.min.js',
-		                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js',
-		                     'lib/rzslider.min.js',
-		                     'dashboard/frontend/components/button/angular-promise-buttons.js',
-		                     'concat/min-safe/wsProvider.js',
-		                     'concat/min-safe/httpProvider.js',
-		                     'concat/min-safe/chart.js',
-		                     'concat/min-safe/toggle_switch.js',
-		                     'concat/min-safe/slider.js',
-		                     'concat/min-safe/button.js',
-		                     'lib/ui-bootstrap.min.js',
-		                     'lib/ui-bootstrap-tpls.min.js',
-		                     'dashboardBuilder/lib/gridster/angular_gridster.min.js',
-					         'concat/min-safe/displayBox.js',
-					         'concat/min-safe/message.js',
-                             'concat/min-safe/accelerometer.js',
-                             'concat/min-safe/IFrame.js',
-					         'concat/min-safe/markerClusterer.js',
-					         'lib/ng-map.min.js',
-					         'concat/min-safe/map.js',
-					         'lib/ag_grid.js',
-					         'concat/min-safe/grid.js'
-		                     ]
+
+		                      //  JQUERY                                            
+		               'lib/jquery.min.js',
+		               'lib/jquery-ui.min.js',
+		               'lib/jquery.cookie.min.js',
+		               /**'lib/slick.min.js',**/
+		               // Libraries
+		               'lib/underscore-min.js',
+		               /**'lib/handlebars.min.js',**/
+		               // NG material
+		               'lib/angular.min.js',
+		               'lib/angular-route.min.js',
+		               'lib/angular-websocket.min.js',
+		               'lib/angular-cookies.min.js',
+		               /**'lib/angular-slick.min.js',**/
+		               'dashboardBuilder/lib/gridster/angular_gridster.min.js',
+		               'lib/angular-animate.min.js',
+		               'lib/angular-sanitize.min.js',
+		               'concat/min-safe/angular-underscore.js',
+		               /**'dashboardBuilder/lib/schemaForm/angular-translate.min.js',
+		               'dashboardBuilder/lib/schemaForm/select.min.js',**/
+		               'lib/ui-bootstrap.min.js',
+		               'lib/ui-bootstrap-tpls.min.js',
+		               'lib/angular-messages.min.js',
+		               'lib/angular-aria.min.js',
+		               'lib/angular-material.min.js',
+		               'concat/min-safe/svg-assets-cache.js',
+		               'concat/min-safe/markerClusterer.js',
+
+		               // Directives
+		               'lib/raphael-min.js',
+		               'concat/min-safe/morris.js',
+		               'concat/min-safe/angular.morris.js',
+		               'dashboard/frontend/components/gauge/justgauge.js',
+		               'dashboard/frontend/components/gauge/angular.gauge.min.js',
+		               'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
+		               'lib/d3.v4.min.js',
+		               'dashboard/frontend/components/odometer/odometer.min.js',
+		               'dashboard/frontend/components/odometer/angular.odometer.min.js',
+		               'concat/min-safe/abn_tree_directive.js',
+		               'dashboard/frontend/components/thermometer/thermometer_directive.js',
+		               'lib/ng-map.min.js',
+		               'lib/ag_grid.js',
+		               'concat/min-safe/angucomplete.alt.js',
+		               'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js',
+		               'lib/rzslider.min.js',
+		               'dashboard/frontend/components/button/angular-promise-buttons.js',
+		               /**
+		               'lib/xeditable.min.js',
+		               'concat/min-safe/spectrum.js',
+		               'concat/min-safe/angular-spectrum-colorpicker.min.js',
+		               'concat/min-safe/tv4.js',
+		               'concat/min-safe/objectPath.js',
+		               'concat/min-safe/schemaForm.js',
+		               'concat/min-safe/bootstrapDecorator.js',
+		               'concat/min-safe/bootstrap-colorpicker.min.js',
+		               'dashboardBuilder/lib/schemaForm/bootstrap-ui-select.min.js',
+		               **/
+		               // Components
+		               'concat/min-safe/wsProvider.js',
+		               'concat/min-safe/httpProvider.js',
+		               'concat/min-safe/templates.js',
+		               'concat/min-safe/chart.js',
+		               'concat/min-safe/odometer.js',
+		               'concat/min-safe/speedometer.js',
+		               'concat/min-safe/searchBox.js',
+		               'concat/min-safe/gauge.js',
+		               'concat/min-safe/displayBox.js',
+		               'concat/min-safe/message.js',
+		               'concat/min-safe/accelerometer.js',
+		               'concat/min-safe/toggle_switch.js',
+		               'concat/min-safe/slider.js',
+		               'concat/min-safe/button.js',
+		               'concat/min-safe/IFrame.js',
+		               'concat/min-safe/map.js',
+		               'concat/min-safe/grid.js',
+		               'concat/min-safe/autocomplete.js',
+		               'concat/min-safe/acl.js',
+		               /**
+		               'concat/min-safe/module.js',
+		               'concat/min-safe/widgetsConfig_ide.js',
+		               'concat/min-safe/dashboardsList.js',
+		               'concat/min-safe/dashboard.js',**/
+		               'dashboard/frontend/components/thermometer/thermometer.js',
+		               'dashboard/frontend/components/progressBar/progressBar.js' ]
 		            },
 	            },
 
@@ -313,10 +381,13 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/list/angucomplete.alt.css',
 	                     'dashboard/frontend/components/map/map.css',
 	                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css',
+	                     'dashboardBuilder/lib/schemaForm/select.min.css',
+	                     'lib/colorpicker.min.css',
 	                     'lib/rzslider.css',
-                         'dashboard/frontend/components/accelerometer/accelerometer.css',
 	                     'dashboard/frontend/components/button/button.css',
-	                     'dashboard/frontend/components/IFrame/IFrame.css'
+	                     'dashboard/frontend/components/IFrame/IFrame.css',
+                         'dashboard/frontend/components/accelerometer/accelerometer.css',
+	                     'dashboardBuilder/lib/schemaForm/spectrum.css'
 	                     ],
 	               dest : 'build/css/components.css'
 	            }
@@ -325,20 +396,14 @@ module.exports = function(grunt) {
 
 	         uglify : {
 		         dist : {
-			         files : {
-
-			            'build/ide/js/dashboardBuilder_resources.min.js' : [ 'build/javascript/dashboardBuilder_resources.js' ],
-
-			            'build/ide/js/template_resources.min.js' : [ 'build/javascript/template_resources.js' ]
-
-			         }
+			         files : files 
 		         }
 	         },
 
 	         cssmin : {
 		         css : {
 		            src : 'build/css/components.css',
-		            dest : 'build/ide/css/components.min.css'
+		            dest : projectPath + 'lib/UIComponents/build/ide/css/components.min.css'
 		         }
 	         },
 
