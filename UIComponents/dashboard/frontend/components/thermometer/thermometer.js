@@ -12,7 +12,7 @@ angular
 
                   "api" : "@",
                  
-                  "percent" : "@",
+                  "percent" : "<?",
                  
                   "size" : "@",
                   
@@ -91,7 +91,7 @@ angular
                        if(typeof this.onFormatData() == "function"){
                          data = this.onFormatData()(data);
                        }
-		               this.percent = data;
+		               this.percent = parseInt(data);
 	               }
                }
             });

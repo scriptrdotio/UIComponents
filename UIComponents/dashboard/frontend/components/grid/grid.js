@@ -88,7 +88,7 @@ angular
       },
 
       templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
-      controller : function($scope, $window, $uibModal, $timeout, dataService) {
+      controller : function($scope, $window, $uibModal, $timeout, wsClient, dataService) {
 
         var self = this;
         
@@ -195,7 +195,7 @@ angular
             columnDefs : this.columnsDefinition,
             editType : 'fullRow',    
             rowData: (this.rowData)? this.rowData : null,
-            rowModelType : (this.api) ? (this.rowModelType)? this.rowModelType : (this.rowData)? "" : "virtual" : "normal",
+            rowModelType : (this.api) ? (this.rowModelType)? this.rowModelType : (this.rowData)? "" : "virtual" : "",
             rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
             paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
             overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> Please wait while your rows are loading</span>',
@@ -216,18 +216,20 @@ angular
            //    self.oldEditedValue = event.oldValue;
            //    self.editedColumn = event.colDef.field;
            //    self.editedChildIndex = event.node.childIndex || event.node.id;
-               if(self.onCellValueChanged != null && typeof self.onCellValueChanged() == "function"){
-                  self.onCellValueChanged()(self.gridOptions);
-               }
-               if(self.gridOptions.rowModelType == "pagination" || self.gridOptions.rowModelType == "virtual"){
-                 if(self.api){
-                   self.gridOptions.api.showLoadingOverlay();  
-                   self._saveData(event);
-                 }else{
-                   self.undoChanges();
-                   self.showAlert("danger", "No script defined for cell edit");
-                 }
-               }
+               if(self.cellEditable){ 
+                    if(self.onCellValueChanged != null && typeof self.onCellValueChanged() == "function"){
+                        self.onCellValueChanged()(self.gridOptions);
+                    }
+                    if(self.gridOptions.rowModelType == "pagination" || self.gridOptions.rowModelType == "virtual"){
+                        if(self.api){
+                            self.gridOptions.api.showLoadingOverlay();  
+                            self._saveData(event);
+                        }else{
+                            self.undoChanges();
+                            self.showAlert("danger", "No script defined for cell edit");
+                        }
+                    }
+                }
             },
             onGridReady : function(event) {
               console.log('the grid is now ready');

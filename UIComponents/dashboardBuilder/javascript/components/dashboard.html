@@ -64,7 +64,7 @@
                        >
                   <div class="slick-item" ng-repeat="item in $ctrl.widgetsConfig" ng-if="item.show != false">
                      <span >
-                         <a ng-click="$ctrl.addWidget(item)"  uib-tooltip="{{ item.label }}" tooltip-placement="right">
+                         <a ng-click="$ctrl.addWidget(item)"  uib-tooltip="{{ item.label }}" tooltip-placement="auto" tooltip-append-to-body="true">
                            <img ng-if="item.imgSrc" ng-src="{{ item.imgSrc }}" class="{{item.imgCls}}" alt="{{ item.label}}" />
                            <i ng-if="item.iconSrc" class="{{ item.iconSrc }}" aria-hidden="true" alt="{{ item.label}}" /></i>
                            <!--  span class="slick-label">{{ item.label }}</span -->

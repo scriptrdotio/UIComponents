@@ -123,7 +123,12 @@ angular
 					                        if(ready) {
 						                        ready.resolve();
 					                        }
-				                        }
+                                        } if(data.status == "failure" && data.statusCode == "429") {
+                                            if($("body").find(".alert-transport").length == 0) {
+                                            $("body").append("<div class=\"alert alert-danger alert-dismissable alert-transport\" style=\"position: absolute; z-index: 1000; top: 0; width: 600px; left: 30%; text-align: center\">You have reached you requests rate limit. For more info check the <a href=\"https://www.scriptr.io/documentation#documentation-ratelimitingRateLimiting\" target=\"blank\">documentation.</a><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button></div>")
+                                            }
+                                         	console.error("You have reached your requests rate limit. For more info check the documentation. https://www.scriptr.io/documentation#documentation-ratelimitingRateLimiting")   
+                                        }
                                         msg["data"] = data;
 				                        callbackHandler(data);
 				                        subscriberHandler(data);

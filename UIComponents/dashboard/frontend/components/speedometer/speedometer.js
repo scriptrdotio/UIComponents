@@ -135,6 +135,9 @@ angular
       		  }
       		  self.renderGauge();
       		  $scope.$watch(function( $scope ) {
+                    if($scope.$ctrl.needleVal){
+                      self.speedoConfig.needleVal = $scope.$ctrl.needleVal;
+                    }
 	                 return(JSON.stringify(self.speedoConfig));
 	               },function(newVal){
 	               self.renderGauge()

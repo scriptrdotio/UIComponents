@@ -84,14 +84,16 @@ angular
                    }
                    
                    this.publishData = function(){
-                       if(typeof this.onSwitchChange() == "function"){
-                           this.onSwitchChange()(self.switchStatus);
-                       } 
-                       if(typeof self.publishApiParams == 'undefined'){
-                           self.publishApiParams = {};
+                       if(!this.isDisabled){
+                           if(typeof this.onSwitchChange() == "function"){
+                               this.onSwitchChange()(self.switchStatus);
+                           } 
+                           if(typeof self.publishApiParams == 'undefined'){
+                               self.publishApiParams = {};
+                           }
+                           self.publishApiParams["value"] = this.switchStatus;
+                           initDataService(self.api, self.publishApiParams, self.transport);  
                        }
-                       self.publishApiParams["value"] = this.switchStatus;
-                       initDataService(self.api, self.publishApiParams, self.transport);
                    }
                    
                    self.resize = function(){
@@ -166,8 +168,13 @@ angular
                        if(typeof this.onFormatData() == "function"){
                          data = this.onFormatData()(data);
                        }
-                       if(data == true || data == false || data == "true" || data == "false"){
+                       var status = data.status;
+                       var disabled = data.disabled;
+                       if(status == true || status == false || status == "true" || status == "false"){
                            this.switchStatus = data;
+                       }
+                       if(typeof disabled != 'undefined'){
+                         this.isDisabled = disabled;
                        }
 	               }
                }

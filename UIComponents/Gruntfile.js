@@ -42,6 +42,7 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js',
 	                     'https://code.jquery.com/ui/1.12.0/jquery-ui.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js',
+	                     'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
 	                     'https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js',
@@ -196,6 +197,7 @@ module.exports = function(grunt) {
 		                     'lib/jquery.min.js',
 		                     'lib/jquery-ui.min.js',
 		                     'lib/jquery.cookie.min.js',
+		                     'lib/bootstrap.min.js',
 		                     'lib/slick.min.js',
 		                     // Libraries
 		                     'lib/underscore-min.js',
@@ -280,6 +282,7 @@ module.exports = function(grunt) {
 		               'lib/jquery.min.js',
 		               'lib/jquery-ui.min.js',
 		               'lib/jquery.cookie.min.js',
+		               'lib/bootstrap.min.js',
 		               /**'lib/slick.min.js',**/
 		               // Libraries
 		               'lib/underscore-min.js',

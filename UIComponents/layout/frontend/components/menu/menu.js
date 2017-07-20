@@ -38,6 +38,9 @@ angular
                            angularEvent.preventDefault();
                          }
  					   });
+                       $scope.$on('menu:openMenuBasedOnRoute', function(data){
+                           self.openMenuBasedOnRoute();
+                       })
 	               };
                  
                   this.openMenuBasedOnRoute = function(){
@@ -65,6 +68,7 @@ angular
                      if(routingBased){
                        
                        console.log("routing based");
+                       this.collaspsedCols = [];    
                        this.getPreviousCollapsedCols(column);
                        this.collaspsedCols.push(column);
                        this.collaspsedCols.sort();

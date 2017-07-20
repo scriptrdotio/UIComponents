@@ -125,6 +125,7 @@ angular
              
              this.data = (this.data) ? this.data : null;
            
+             if(this.data) this.wait == true;
              if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
                this.noResults = true;
              }
@@ -140,13 +141,17 @@ angular
              this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#fff";
          
              this.transport = (this.transport) ? this.transport : "wss";
-		     this.msgTag = (this.msgTag) ? this.msgTag : null;
+             this.msgTag = (this.msgTag) ? this.msgTag : null;
            
            	 console.log(this.type, this.xlabelAngle)
        }
          
        this.$postLink = function () {
            initDataService(this.transport);
+           if(this.data) {
+         	  $(window).trigger('resize');
+         	  this.wait == false;
+           }
            if(this.data && !this.api) {
          	  $timeout(function() {
                  self.consumeData(self.data);
@@ -203,10 +208,10 @@ angular
               data = self.onFormatData()(data);
             }
             if(data && data.length > 0 && typeof data == "object"){
-              this.datas = data;
+              this.data = data;
               this.noResults = false;
             }else{
-              this.datas = [];
+              this.data = [];
               this.noResults = true;
             }
           }

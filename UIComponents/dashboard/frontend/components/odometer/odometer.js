@@ -48,7 +48,7 @@ angular
              this.odometerOptions = this.config;
              this.odometerValue = (this.odometerValue) ? this.odometerValue : ((this.data) ? this.data : 0 );
              this.size = (this.size) ? this.size : 1;
-             this.enableResize = (typeof this.enableResize != 'undefined') ? this.enableResize : "true";  
+             this.enableResize = (typeof this.enableResize != 'undefined') ? this.enableResize : true;  
              
              this.style = {};
              this.style["font-size"] = this.size+"em";
@@ -68,7 +68,7 @@ angular
            
            self.resize = function(){
                 self.timeoutId = null;
-                if(this.enableResize){
+                if(self.enableResize){
                   self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);  
                 }
           }
