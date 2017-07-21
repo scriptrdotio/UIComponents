@@ -1,8 +1,8 @@
-  <div class="text-center loading" ng-hide="$ctrl.data || $ctrl.wait"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
+  <div class="text-center loading" ng-hide="$ctrl.datas"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
   <div class="padder10"><div ng-show="$ctrl.noResults" class="alert alert-danger">No data to display</div></div>
-  <div ng-if="$ctrl.data">
+  <div ng-if="$ctrl.datas">
     <div ng-if="$ctrl.type == 'line'" style="height: 85%; width: 100%"
-         line-data='$ctrl.data'
+         line-data='$ctrl.datas'
          line-xkey= {{$ctrl.xkey}}
          line-ykeys='$ctrl.ykeys'
          line-labels='$ctrl.labels'
@@ -44,7 +44,7 @@
     </div>
 
     <div ng-if="$ctrl.type == 'bar'"  style="height: 85%; width: 100%"
-         bar-data='$ctrl.data'
+         bar-data='$ctrl.datas'
          bar-x= {{$ctrl.xkey}}
          bar-y='$ctrl.ykeys'
          bar-labels='$ctrl.labels'
@@ -78,7 +78,7 @@
     <div ng-if="$ctrl.type == 'area'" style="height: 85%; width: 100%"
          area-chart 
          line-colors='$ctrl.colors'
-         area-data='$ctrl.data'
+         area-data='$ctrl.datas'
          area-xkey={{$ctrl.xkey}}
          area-ykeys='$ctrl.ykeys'
          area-labels='$ctrl.labels'
@@ -119,7 +119,7 @@
     </div>
 
     <div ng-if="$ctrl.type == 'donut'" style="height: 85%; width: 100%"
-         donut-data='$ctrl.data'
+         donut-data='$ctrl.datas'
          donut-label-color= '$ctrl.labelColor' 
          donut-background-color='$ctrl.backgroundColor' 
          donut-colors='$ctrl.colors' 

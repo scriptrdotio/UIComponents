@@ -123,9 +123,6 @@ angular
         
          this.$onInit = function() {
              
-             this.data = (this.data) ? this.data : null;
-           
-             if(this.data) this.wait == true;
              if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
                this.noResults = true;
              }
@@ -141,22 +138,34 @@ angular
              this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#fff";
          
              this.transport = (this.transport) ? this.transport : "wss";
-             this.msgTag = (this.msgTag) ? this.msgTag : null;
+		     this.msgTag = (this.msgTag) ? this.msgTag : null;
            
            	 console.log(this.type, this.xlabelAngle)
        }
          
-       this.$postLink = function () {
+         this.$postLink = function () {
            initDataService(this.transport);
-           if(this.data) {
-         	  $(window).trigger('resize');
-         	  this.wait == false;
-           }
+           // apply 2 seconds delay for static data  
            if(this.data && !this.api) {
+              self.timeout = false; 
          	  $timeout(function() {
                  self.consumeData(self.data);
                }, 2000)
+           }else{
+               self.timeout = true;
            }
+           // set datas info when data is changed  
+           $scope.$watch(function( $scope ) {
+               // wait for the timeout
+               if(($scope.$ctrl.data && self.timeout == true)){
+                  return $scope.$ctrl.data
+               }
+           },function(newVal){
+               if(newVal){
+                   self.datas = newVal;
+                   self.noResults = false;
+               }
+           });
          	  
         }
 
@@ -204,14 +213,15 @@ angular
           }
 
           this.consumeData = function(data, response) {
+            self.timeout = true;   
             if(typeof self.onFormatData() == "function"){
               data = self.onFormatData()(data);
             }
             if(data && data.length > 0 && typeof data == "object"){
-              this.data = data;
+              this.datas = data;
               this.noResults = false;
             }else{
-              this.data = [];
+              this.datas = [];
               this.noResults = true;
             }
           }
