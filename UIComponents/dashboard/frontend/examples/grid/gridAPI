@@ -72,9 +72,9 @@ if(action){
       return fieldsToSaveResult.metadata;
     }else{
       fieldsToSave["key"] = fieldsToSaveResult.result.document.key;
-      var message = {"result": {result : fieldsToSave, action: "add"}, "id" : "grid"};
+      var message = {"result": {result : [fieldsToSave], action: "add"}, "id" : "grid"};
       publish("responseChannel", message);
-      return  {status : fieldsToSaveResult.metadata.status, result : fieldsToSave}
+      return  {result : [fieldsToSave], action: "add"}
     }
   }else if(action == "edit"){
     var fieldsToSave = params;
@@ -87,9 +87,9 @@ if(action){
       return fieldsToSaveResult.metadata;
     }else{
       fieldsToSave["key"] = fieldsToSave.key;
-      var message = {"result": {result : fieldsToSave, action: "edit"}, "id" : "grid"};
+      var message = {"result": {result : [fieldsToSave], action: "edit"}, "id" : "grid"};
       publish("responseChannel", message);
-      return  {status : fieldsToSaveResult.metadata.status, result : fieldsToSave}
+      return  {result : [fieldsToSave], action: "edit"}
     }
   }else if(action == "delete"){
     if(params.keys){
@@ -100,7 +100,7 @@ if(action){
     } 
     var message = {"result": {result : keys, action: "delete"}, "id" : "grid"};
     publish("responseChannel", message);
-    return  {status : "success"}
+    return  {result : keys, action: "delete"}
   }
 }else{
   var queryParams = {};
