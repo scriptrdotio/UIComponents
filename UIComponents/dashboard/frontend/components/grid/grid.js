@@ -280,7 +280,7 @@ angular
          this.enableServerSideFilter =  (this.enableServerSideFilter == true) ? false : true;
           
          if(self.msgTag){
-           dataService.subscribe(this.onWebSocketCall, self.msgTag, $scope);
+           dataService.subscribe(this.onServerCall, self.msgTag, $scope);
          }
           
          $scope.$on("updateGridData", function(event, broadcastData) {
@@ -317,8 +317,9 @@ angular
             dataService.gridHelper(self.api, params).then(
               function(data, response) {
                 self.gridOptions.api.hideOverlay();  
-                if (data && data.status == "success") {
+                if (data && data.result) {
             //       self.showAlert("success", "Row(s) updated successfuly");
+                     self.onServerCall(data);
                 } else {
                   self.undoChanges();
                   if(data && data.errorDetail){
@@ -344,8 +345,9 @@ angular
             dataService.gridHelper(self.api, event.data).then(
                function(data, response) {
                 self.gridOptions.api.hideOverlay();   
-                if (data && data.status == "success") {
+                if (data && data.result) {
 			//	  self.showAlert("success", "Row(s) Added successfuly");
+                    self.onServerCall(data);
                 } else {
                   self.undoChanges();
                   if(data && data.errorDetail){
@@ -415,10 +417,11 @@ angular
                 dataService.gridHelper(self.api, params).then(
                   function(data, response) {
                     self.gridOptions.api.hideOverlay();     
-                    if (data && data.status == "success") {
+                    if (data && data.result) {
                       var selectedNodes = self.gridOptions.api.getSelectedNodes();
                       self.gridOptions.api.removeItems(selectedNodes);
                  //     self.showAlert("success", "Row(s) deleted successfuly");
+                        self.onServerCall(data);
                     } else {
                       if(data && data.errorDetail){
                         self.showAlert("danger", data.errorDetail);
@@ -443,7 +446,7 @@ angular
         }
         
         
-        this.onWebSocketCall = function(data){
+        this.onServerCall = function(data){
           if(data && data.action){
               if(data.action == "add"){
                   var rows = data.result;
@@ -465,7 +468,7 @@ angular
                       var firstRow = self.gridOptions.api.getRenderedNodes()[0];
                       if(!firstRow.data.key){
                           firstRow.data.key = rows[i].key;
-                      }else{
+                      }else if(firstRow.data.key != rows[i].key){
                           newRow["key"] = rows[i].key;
                           self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
                       }
