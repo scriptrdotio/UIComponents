@@ -1,14 +1,14 @@
 <div class="filter-bar">
   <div class="{{$ctrl.class}}">
   <form>
-    <div ng-hide= {{$ctrl.enableClientSideFilter}} class="form-group col-xs-12 col-sm-4 pdr0">
+    <div ng-show= "$ctrl.enableClientSideFilter && $ctrl.mode == 'normal'" class="form-group col-xs-12 col-sm-4 pdr0">
         <div class="form-group">
            <input type="text" class="form-control" ng-change="$ctrl.onFilterChanged()" ng-model="$ctrl.quickFilterValue"  placeholder="Client filter" />
        </div>
     </div>   
-    <div ng-hide= {{$ctrl.enableServerSideFilter}} class="form-group col-xs-12 col-sm-4 pdr0">
+    <div ng-show= "$ctrl.enableServerSideFilter && $ctrl.mode == 'infinite'" class="form-group col-xs-12 col-sm-4 pdr0">
         <div class="form-group">
-			<input type="text" class="form-control" ng-model="$ctrl.gridOptions.quickFilterText" placeholder="Server filter" />
+			<input type="text" class="form-control" ng-change="$ctrl.onServerFilterChanged()" ng-model="$ctrl.serverFilterText" placeholder="Server filter" />
       </div>
     </div>  
     <div class="col-xs-12 col-sm-4 pull-right text-right">
