@@ -329,7 +329,7 @@ angular
                     dataService.gridHelper(self.api, params).then(
                         function(data, response) {
                             self.gridOptions.api.hideOverlay();  
-                            if (data && data.result) {
+                            if (data && data.result == "success") {
                                 //       self.showAlert("success", "Row(s) updated successfuly");
                                 self.onServerCall(data);
                             } else {
@@ -357,7 +357,7 @@ angular
                     dataService.gridHelper(self.api, event.data).then(
                         function(data, response) {
                             self.gridOptions.api.hideOverlay();   
-                            if (data && data.result) {
+                            if (data && data.result == "success") {
                                 //	  self.showAlert("success", "Row(s) Added successfuly");
                                 self.onServerCall(data);
 
@@ -427,8 +427,7 @@ angular
                             dataService.gridHelper(self.api, params).then(
                                 function(data, response) {
                                     self.gridOptions.api.hideOverlay();     
-                                    if (data && data.result) {
-                                        var selectedNodes = self.gridOptions.api.getSelectedNodes();
+                                    if (data && data.result == "success") {
                                         //     self.showAlert("success", "Row(s) deleted successfuly");
                                         self.onServerCall(data);
                                     } else {
