@@ -2,647 +2,647 @@ agGrid.initialiseAgGridWithAngular1(angular);
 angular.module('Grid', ['agGrid', 'ui.bootstrap']);
 
 angular
-  .module("Grid")
-  .component(
+    .module("Grid")
+    .component(
     'scriptrGrid',
     {
-      bindings : {
+        bindings : {
 
-        "onLoad" : "&onLoad",
+            "onLoad" : "&onLoad",
 
-        "columnsDefinition" : "<columnsDefinition",
+            "columnsDefinition" : "<columnsDefinition",
 
-        "enableServerSideSorting" : "<?", // Note that Client side sorting & filtering does not make sense in virtual paging and is just not supported, only Server side sorting & filtering is supported
+            "enableServerSideSorting" : "<?", // Note that Client side sorting & filtering does not make sense in virtual paging and is just not supported, only Server side sorting & filtering is supported
 
-        "enableServerSideFilter" : "<?",
+            "enableServerSideFilter" : "<?",
 
-        "enableColResize" : "<?",
-          
-        "pagination" : "@",  
-        
-        "enableDeleteRow" : "<?",
-          
-        "fixedHeight" : "<?",  
-        
-        "enableAddRow" : "<?",
+            "enableColResize" : "<?",
 
-        "cellEditable" : "<?",
-        
-        "enableClientSideSorting": "<?", // client-side sorting
+            "pagination" : "@",  
 
-        "api" : "@", // restApi 
+            "enableDeleteRow" : "<?",
 
-        "onInsertRowScript" : "@",
-        
-        "onDeleteRowScript" : "@",
-        
-        "transport" : "@", //"http" or "wss" or "publish"
+            "fixedHeight" : "<?",  
 
-        "enableClientSideFilter" : "<?",
+            "enableAddRow" : "<?",
 
-        "rowModelType" : "@", // rowModelType can be set to "pagination" or "virtual" (infinite scrolling)
+            "cellEditable" : "<?",
 
-        "rowModelSelection" : "@", //"multiple" or "single"
+            "enableClientSideSorting": "<?", // client-side sorting
 
-        "rowDeselection" : "<?",
-        
-        "onSelectionChanged": "&?",
-        
-        "rowData" : "<?",
-        
-        "suppressFilter": "<?",
-        
-        "gridHeight" : "@",
+            "api" : "@", // restApi 
 
-        /** pagination properties **/
-        "paginationPageSize" : "<?", // In virtual paging context means how big each page in our page cache will be, default is 100
+            "onInsertRowScript" : "@",
 
-        /** virtual paging properties **/
-        "paginationOverflowSize" : "<?", // how many extra blank rows to display to the user at the end of the dataset, which sets the vertical scroll and then allows the grid to request viewing more rows of data. default is 1, ie show 1 row.
+            "onDeleteRowScript" : "@",
 
-         /** virtual paging properties **/
-        "maxConcurrentDatasourceRequests" : "<?", // how many server side requests to send at a time. if user is scrolling lots, then the requests are throttled down 
+            "transport" : "@", //"http" or "wss" or "publish"
 
-        /** virtual paging properties **/
-        "paginationInitialRowCount" : "<?",// how many rows to initially show in the grid. having 1 shows a blank row, so it looks like the grid is loading from the users perspective (as we have a spinner in the first col)
+            "enableClientSideFilter" : "<?",
 
-         /** virtual paging properties **/
-        "maxPagesInCache" : "<?", // how many pages to store in cache. default is undefined, which allows an infinite sized cache, pages are never purged. this should be set for large data to stop your browser from getting full of data
-        "apiParams" : "<?",
-          
-        "deleteParams": "<?",
-          
-        "addParams": "<?",
-          
-        "editParams": "<?",  
-        
-        "onFormatData" : "&",
-        
-        "onCellValueChanged" : "&",
-          
-        "onCellClicked" : "&",  
-        
-        "msgTag" : "@",
-        
-        "class" : "@",
-          
-        "defaultCellRenderer": "&",  
-        
-        "onGridReady" : "&"
-      },
+            "rowModelType" : "@", // rowModelType can be set to "pagination" or "virtual" (infinite scrolling)
 
-      templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
-      controller : function($scope, $window, $uibModal, $timeout, wsClient, dataService) {
+            "rowModelSelection" : "@", //"multiple" or "single"
 
-        var self = this;
-        
-        self.broadcastData = null;
-        
-        this.dataSource = {
-          getRows : function(params) {
-            if(self.broadcastData != null){
-                if(self.broadcastData.api != null){
-                  var api = self.broadcastData.api
-                }else{
-                  var api = self.api
-                }
-                if(self.broadcastData.params != null){
-                    self.apiParams = self.broadcastData.params
-                }
-                if(self.broadcastData.transport != null){
-                  var transport = self.broadcastData.transport
-                }else{
-                  var transport = self.transport
-                }
-              }else{
-                var api = self.api;
-                var apiParams = APIParams;
-                var transport = self.transport;
-              }
-              var APIParams = self.buildParams(params)
-              var tmp = null;
-              if(typeof self.onFormatData() == "function"){
-                  tmp = function(data){ 
-                  return self.onFormatData()(data); // Or we can have it as self.onFormatData({"data":data}) and pass it in the on-format-update as: vm.callback(data)
-                }
-              }
-              dataService.getGridData(api, APIParams, transport, tmp).then(
-                function(data, response) {
-                  if (data && data.documents) {
-                    var rowsData = data.documents;
-                    var count = parseInt(data.count);
+            "rowDeselection" : "<?",
 
-                    var cleanedRows = self.cleanRows(rowsData);  
-                    params.successCallback(cleanedRows, count);
-                    self.gridOptions.api.sizeColumnsToFit();
+            "onSelectionChanged": "&?",
 
-                    // if there's no rows to be shown, disbale the next button
-                    if(cleanedRows == null || cleanedRows.length == 0){
-                      self.gridOptions.api.showNoRowsOverlay();  
-                      var el = angular.element( document.querySelector( '#btNext' ) );
-                      el.attr('disabled', 'true');
+            "rowData" : "<?",
+
+            "suppressFilter": "<?",
+
+            "gridHeight" : "@",
+
+            /** pagination properties **/
+            "paginationPageSize" : "<?", // In virtual paging context means how big each page in our page cache will be, default is 100
+
+            /** virtual paging properties **/
+            "paginationOverflowSize" : "<?", // how many extra blank rows to display to the user at the end of the dataset, which sets the vertical scroll and then allows the grid to request viewing more rows of data. default is 1, ie show 1 row.
+
+            /** virtual paging properties **/
+            "maxConcurrentDatasourceRequests" : "<?", // how many server side requests to send at a time. if user is scrolling lots, then the requests are throttled down 
+
+            /** virtual paging properties **/
+            "paginationInitialRowCount" : "<?",// how many rows to initially show in the grid. having 1 shows a blank row, so it looks like the grid is loading from the users perspective (as we have a spinner in the first col)
+
+            /** virtual paging properties **/
+            "maxPagesInCache" : "<?", // how many pages to store in cache. default is undefined, which allows an infinite sized cache, pages are never purged. this should be set for large data to stop your browser from getting full of data
+            "apiParams" : "<?",
+
+            "deleteParams": "<?",
+
+            "addParams": "<?",
+
+            "editParams": "<?",  
+
+            "onFormatData" : "&",
+
+            "onCellValueChanged" : "&",
+
+            "onCellClicked" : "&",  
+
+            "msgTag" : "@",
+
+            "class" : "@",
+
+            "defaultCellRenderer": "&",  
+
+            "onGridReady" : "&"
+        },
+
+        templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
+        controller : function($scope, $window, $uibModal, $timeout, wsClient, dataService) {
+
+            var self = this;
+
+            self.broadcastData = null;
+
+            this.dataSource = {
+                getRows : function(params) {
+                    if(self.broadcastData != null){
+                        if(self.broadcastData.api != null){
+                            var api = self.broadcastData.api
+                            }else{
+                                var api = self.api
+                                }
+                        if(self.broadcastData.params != null){
+                            self.apiParams = self.broadcastData.params
+                        }
+                        if(self.broadcastData.transport != null){
+                            var transport = self.broadcastData.transport
+                            }else{
+                                var transport = self.transport
+                                }
                     }else{
-                        self.gridOptions.api.hideOverlay();
+                        var api = self.api;
+                        var apiParams = APIParams;
+                        var transport = self.transport;
                     }
-                  } else {
-                    params.failCallback();
-                    self.gridOptions.api.showNoRowsOverlay();
-                  }
-                }, function(err) {
-                  console.log("reject", err);
-                });
-          }
-        }
-        
-        this.$onDestroy = function() {
-             if(self.msgTag){
-               wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
-            }
-            console.log("destory Grid")
-        }
-        
-        this.cleanRows = function(rows){
-          if(!Array.isArray(rows)){
-            rows = [rows];
-          }
-          var fieldExist = false;
-          for(var i = 0; i < rows.length; i++){
-            for(row in rows[i]){
-              if(row != "key"){
-                fieldExist = false;
-                for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
-                  if(row == self.gridOptions.columnDefs[n].field){
-                    fieldExist = true;
-                    break;
-                  }
-                }
-                if(!fieldExist){
-                  delete rows[i][row];
-                }
-              }
-            }
-          }
-          return rows;
-        }
-        
-        // Get data from backend
-        this._createNewDatasource = function() {
-          this.gridOptions.api.setDatasource(this.dataSource);
-        }
-        
-        this.$onInit = function() {
-          this.gridOptions = {
-            angularCompileRows: true,
-            enableSorting: (typeof this.enableClientSideSorting != 'undefined')? this.enableClientSideSorting : true,
-            enableServerSideSorting : (typeof this.enableServerSideSorting != 'undefined')? this.enableServerSideSorting : true,
-            enableServerSideFilter : (typeof this.enableServerSideFilter != 'undefined') ? this.enableServerSideFilter : true,
-            enableColResize : (typeof this.enableColResize != 'undefined') ? this.enableColResize : false,
-            enableFilter : true,
-            columnDefs : this.columnsDefinition,
-            editType : 'fullRow',    
-            pagination: (typeof this.pagination != "undefined") ? this.pagination : false,  
-            cacheBlockSize: (this.paginationPageSize) ? this.paginationPageSize : 50,
-            rowData: (this.rowData)? this.rowData : null,
-            rowModelType : (this.api) ? "infinite" : "",
-            rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
-            paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
-            overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> Please wait while your rows are loading</span>',
-            defaultColDef : {
-              filterParams : {
-                apply : true
-              },
-              suppressFilter: (typeof this.suppressFilter != 'undefined')? this.suppressFilter : false,
-              editable : (typeof this.cellEditable != 'undefined')? this.cellEditable : true,
-              cellRenderer : (typeof this.defaultCellRenderer() == 'function')? this.defaultCellRenderer() : null  
-            },
-            onSelectionChanged: function() {
-              if(self.onSelectionChanged != null && typeof self.onSelectionChanged() == "function"){
-              	 return self.onSelectionChanged()(self.gridOptions);
-              }
-            },
-            onCellClicked: function() {
-              if(self.onCellClicked != null && typeof self.onCellClicked() == "function"){
-              	 return self.onCellClicked()(self.gridOptions);
-              }
-            },
-            onRowValueChanged : function(event) { // used for adding/editing a row 
-           //    self.oldEditedValue = event.oldValue;
-           //    self.editedColumn = event.colDef.field;
-           //    self.editedChildIndex = event.node.childIndex || event.node.id;
-               if(self.cellEditable){ 
-                    if(self.onCellValueChanged != null && typeof self.onCellValueChanged() == "function"){
-                        self.onCellValueChanged()(self.gridOptions);
+                    var APIParams = self.buildParams(params)
+                    var tmp = null;
+                    if(typeof self.onFormatData() == "function"){
+                        tmp = function(data){ 
+                            return self.onFormatData()(data); // Or we can have it as self.onFormatData({"data":data}) and pass it in the on-format-update as: vm.callback(data)
+                        }
                     }
-                    if(self.gridOptions.rowModelType == "infinite"){
-                        if(self.api){
-                            self.gridOptions.api.showLoadingOverlay();  
-                            self._saveData(event);
-                        }else{
-                            self.undoChanges();
-                            self.showAlert("danger", "No script defined for cell edit");
+                    dataService.getGridData(api, APIParams, transport, tmp).then(
+                        function(data, response) {
+                            if (data && data.documents) {
+                                var rowsData = data.documents;
+                                var count = parseInt(data.count);
+
+                                var cleanedRows = self.cleanRows(rowsData);  
+                                params.successCallback(cleanedRows, count);
+                                self.gridOptions.api.sizeColumnsToFit();
+
+                                // if there's no rows to be shown, disbale the next button
+                                if(cleanedRows == null || cleanedRows.length == 0){
+                                    self.gridOptions.api.showNoRowsOverlay();  
+                                    var el = angular.element( document.querySelector( '#btNext' ) );
+                                    el.attr('disabled', 'true');
+                                }else{
+                                    self.gridOptions.api.hideOverlay();
+                                }
+                            } else {
+                                params.failCallback();
+                                self.gridOptions.api.showNoRowsOverlay();
+                            }
+                        }, function(err) {
+                            console.log("reject", err);
+                        });
+                }
+            }
+
+            this.$onDestroy = function() {
+                if(self.msgTag){
+                    wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
+                }
+                console.log("destory Grid")
+            }
+
+            this.cleanRows = function(rows){
+                if(!Array.isArray(rows)){
+                    rows = [rows];
+                }
+                var fieldExist = false;
+                for(var i = 0; i < rows.length; i++){
+                    for(row in rows[i]){
+                        if(row != "key"){
+                            fieldExist = false;
+                            for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
+                                if(row == self.gridOptions.columnDefs[n].field){
+                                    fieldExist = true;
+                                    break;
+                                }
+                            }
+                            if(!fieldExist){
+                                delete rows[i][row];
+                            }
                         }
                     }
                 }
-            },
-            onGridReady : function(event) {
-              console.log('the grid is now ready');
-              if(typeof self.onGridReady() == "function"){
-             	 self.onGridReady()(self);
-              }
-              // set "Contains" in the column drop down filter to "StartWith" as it is not supported in document query 
-              event.api.filterManager.availableFilters.text.CONTAINS = "startsWith";
-              if(typeof self.rowData == 'undefined' || self.rowData == null || (self.rowData && self.rowData.length ==0)){
-                 if(self.api){
-             	 	self._createNewDatasource();
-                 }else{
-                   event.api.setRowData([]);
-                 }
-              }else{
-                event.api.sizeColumnsToFit();
-              }
-                // set a numeric filter model for each numerical column
-                if(this.columnsDefinition){
-                    for(var i = 0; i < this.columnsDefinition.length; i++){
-                        if(this.columnsDefinition[i].hasOwnProperty("type") && this.columnsDefinition[i]["type"] == "numeric"){
-                            this.columnsDefinition[i].filter = "number";
+                return rows;
+            }
+
+            // Get data from backend
+            this._createNewDatasource = function() {
+                this.gridOptions.api.setDatasource(this.dataSource);
+            }
+
+            this.$onInit = function() {
+                this.gridOptions = {
+                    angularCompileRows: true,
+                    enableSorting: (typeof this.enableClientSideSorting != 'undefined')? this.enableClientSideSorting : true,
+                    enableServerSideSorting : (typeof this.enableServerSideSorting != 'undefined')? this.enableServerSideSorting : true,
+                    enableServerSideFilter : (typeof this.enableServerSideFilter != 'undefined') ? this.enableServerSideFilter : true,
+                    enableColResize : (typeof this.enableColResize != 'undefined') ? this.enableColResize : false,
+                    enableFilter : true,
+                    columnDefs : this.columnsDefinition,
+                    editType : 'fullRow',    
+                    pagination: (typeof this.pagination != "undefined") ? this.pagination : false,  
+                    cacheBlockSize: (this.paginationPageSize) ? this.paginationPageSize : 50,
+                    rowData: (this.rowData)? this.rowData : null,
+                    rowModelType : (this.api) ? "infinite" : "",
+                    rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
+                    paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
+                    overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> Please wait while your rows are loading</span>',
+                    defaultColDef : {
+                        filterParams : {
+                            apply : true
+                        },
+                        suppressFilter: (typeof this.suppressFilter != 'undefined')? this.suppressFilter : false,
+                        editable : (typeof this.cellEditable != 'undefined')? this.cellEditable : true,
+                        cellRenderer : (typeof this.defaultCellRenderer() == 'function')? this.defaultCellRenderer() : null  
+                    },
+                    onSelectionChanged: function() {
+                        if(self.onSelectionChanged != null && typeof self.onSelectionChanged() == "function"){
+                            return self.onSelectionChanged()(self.gridOptions);
+                        }
+                    },
+                    onCellClicked: function() {
+                        if(self.onCellClicked != null && typeof self.onCellClicked() == "function"){
+                            return self.onCellClicked()(self.gridOptions);
+                        }
+                    },
+                    onRowValueChanged : function(event) { // used for adding/editing a row 
+                        //    self.oldEditedValue = event.oldValue;
+                        //    self.editedColumn = event.colDef.field;
+                        //    self.editedChildIndex = event.node.childIndex || event.node.id;
+                        if(self.cellEditable){ 
+                            if(self.onCellValueChanged != null && typeof self.onCellValueChanged() == "function"){
+                                self.onCellValueChanged()(self.gridOptions);
+                            }
+                            if(self.gridOptions.rowModelType == "infinite"){
+                                if(self.api){
+                                    self.gridOptions.api.showLoadingOverlay();  
+                                    self._saveData(event);
+                                }else{
+                                    self.undoChanges();
+                                    self.showAlert("danger", "No script defined for cell edit");
+                                }
+                            }
+                        }
+                    },
+                    onGridReady : function(event) {
+                        console.log('the grid is now ready');
+                        if(typeof self.onGridReady() == "function"){
+                            self.onGridReady()(self);
+                        }
+                        // set "Contains" in the column drop down filter to "StartWith" as it is not supported in document query 
+                        event.api.filterManager.availableFilters.text.CONTAINS = "startsWith";
+                        if(typeof self.rowData == 'undefined' || self.rowData == null || (self.rowData && self.rowData.length ==0)){
+                            if(self.api){
+                                self._createNewDatasource();
+                            }else{
+                                event.api.setRowData([]);
+                            }
+                        }else{
+                            event.api.sizeColumnsToFit();
+                        }
+                        // set a numeric filter model for each numerical column
+                        if(this.columnsDefinition){
+                            for(var i = 0; i < this.columnsDefinition.length; i++){
+                                if(this.columnsDefinition[i].hasOwnProperty("type") && this.columnsDefinition[i]["type"] == "numeric"){
+                                    this.columnsDefinition[i].filter = "number";
+                                }
+                            }  
+                        }else{
+                            //    self.gridOptions.api.showNoRowsOverlay();
+                        }
+                    },
+                    onGridSizeChanged: function(event){
+                        self.gridOptions.api.sizeColumnsToFit();
+                    }
+
+                };
+                this.fixedHeight = (typeof this.fixedHeight != 'undefined') ? this.fixedHeight : true;   
+                this.style = {};   
+                if(this.fixedHeight){
+                    this.gridHeight = (this.gridHeight) ? this.gridHeight : "500";
+                    this.style["height"] = this.gridHeight+"px";
+                    this.style["clear"] = "left";
+                    this.style["width"] = "100%";
+                }else{
+                    this.style["height"] = "77%";
+                }   
+                this.transport = (this.transport) ? this.transport : "wss";
+                this.enableDeleteRow =  (this.enableDeleteRow == true) ? false : true;
+                this.enableAddRow =  (this.enableAddRow == true) ? false : true;
+                this.mode =  (this.gridOptions.rowModelType == 'infinite') ? "infinite" : "normal";
+
+                if(self.msgTag){
+                    dataService.subscribe(this.onServerCall, self.msgTag, $scope);
+                }
+
+                $scope.$on("updateGridData", function(event, broadcastData) {
+                    self.broadcastData = broadcastData;
+                    self._createNewDatasource();
+                })
+
+            }
+
+            this.closeAlert = function() {
+                this.show = false;
+            };
+
+            this.showAlert = function(type, content) {
+                self.message = {
+                    "type" : type,
+                    "content" : content
+                }
+                self.showError = true;
+                $timeout(function(){
+                    self.showError = false;
+                }, 5000);
+            }
+
+            this._saveData = function(event){
+                if(event.data && event.data.key){
+                    var params = event.data;
+                    params.action = "edit";
+                    if(this.editParams){
+                        for(var key in this.editParams){
+                            params[key] = this.editParams[key]
                         }
                     }  
+                    dataService.gridHelper(self.api, params).then(
+                        function(data, response) {
+                            self.gridOptions.api.hideOverlay();  
+                            if (data && data.result) {
+                                //       self.showAlert("success", "Row(s) updated successfuly");
+                                self.onServerCall(data);
+                            } else {
+                                self.undoChanges();
+                                if(data && data.errorDetail){
+                                    self.showAlert("danger", data.errorDetail);
+                                }else{
+                                    self.showAlert("danger", "An error has occured");
+                                }
+                            }
+                        },
+                        function(err) {
+                            self.gridOptions.api.hideOverlay();   
+                            console.log("reject", err);
+                            self.showAlert("danger", "An error has occured");
+                        });
                 }else{
-                //    self.gridOptions.api.showNoRowsOverlay();
-                }
-            },
-            onGridSizeChanged: function(event){
-              self.gridOptions.api.sizeColumnsToFit();
-            }
-
-         };
-         this.fixedHeight = (typeof this.fixedHeight != 'undefined') ? this.fixedHeight : true;   
-         this.style = {};   
-         if(this.fixedHeight){
-             this.gridHeight = (this.gridHeight) ? this.gridHeight : "500";
-             this.style["height"] = this.gridHeight+"px";
-             this.style["clear"] = "left";
-             this.style["width"] = "100%";
-         }else{
-             this.style["height"] = "77%";
-         }   
-         this.transport = (this.transport) ? this.transport : "wss";
-         this.enableDeleteRow =  (this.enableDeleteRow == true) ? false : true;
-         this.enableAddRow =  (this.enableAddRow == true) ? false : true;
-         this.mode =  (this.gridOptions.rowModelType == 'infinite') ? "infinite" : "normal";
-          
-         if(self.msgTag){
-           dataService.subscribe(this.onServerCall, self.msgTag, $scope);
-         }
-          
-         $scope.$on("updateGridData", function(event, broadcastData) {
-            self.broadcastData = broadcastData;
-		 	self._createNewDatasource();
-        })
-         
-        }
-        
-        this.closeAlert = function() {
-          this.show = false;
-        };
-
-        this.showAlert = function(type, content) {
-           self.message = {
-             "type" : type,
-             "content" : content
-           }
-           self.showError = true;
-           $timeout(function(){
-             self.showError = false;
-           }, 5000);
-        }
-
-        this._saveData = function(event){
-          if(event.data && event.data.key){
-            var params = event.data;
-            params.action = "edit";
-            if(this.editParams){
-                for(var key in this.editParams){
-                    params[key] = this.editParams[key]
-                }
-            }  
-            dataService.gridHelper(self.api, params).then(
-              function(data, response) {
-                self.gridOptions.api.hideOverlay();  
-                if (data && data.result) {
-            //       self.showAlert("success", "Row(s) updated successfuly");
-                     self.onServerCall(data);
-                } else {
-                  self.undoChanges();
-                  if(data && data.errorDetail){
-                    self.showAlert("danger", data.errorDetail);
-                  }else{
-                    self.showAlert("danger", "An error has occured");
-                  }
-                }
-              },
-              function(err) {
-                self.gridOptions.api.hideOverlay();   
-                console.log("reject", err);
-                self.showAlert("danger", "An error has occured");
-              });
-          }else{
-            var params = event.data;
-            params.action = "add";
-            if(this.addParams){
-                for(var key in this.addParams){
-                    params[key] = this.addParams[key]
-                }
-            }   
-            dataService.gridHelper(self.api, event.data).then(
-               function(data, response) {
-                self.gridOptions.api.hideOverlay();   
-                if (data && data.result) {
-			//	  self.showAlert("success", "Row(s) Added successfuly");
-                    self.onServerCall(data);
-                    
-                } else {
-                  self.undoChanges();
-                  if(data && data.errorDetail){
-                    self.showAlert("danger", data.errorDetail);
-                  }else{
-                    self.showAlert("danger", "An error has occured");
-                  }
-                }
-              },
-              function(err) {
-                self.gridOptions.api.hideOverlay();   
-                console.log("reject", err);
-                self.showAlert("danger", "An error has occured");
-              });
-          }
-        }
-
-        this.onAddRow = function(){
-            var newRow = {};
-            // Create a json object to save new row fields 
-            for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
-                newRow[self.gridOptions.columnDefs[n].field] = "";
-            }
-            self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
-            self.gridOptions.api.setFocusedCell(0, self.gridOptions.columnDefs[0].field);
-            self.gridOptions.api.startEditingCell({
-                rowIndex: 0,
-                colKey: self.gridOptions.columnDefs[0].field,
-                charPress: self.gridOptions.columnDefs[0].field
-            });
-        }
-        
-        this.openConfirmationPopUp = function(){
-            if(self.gridOptions.api.getSelectedNodes().length > 0){
-                var modalInstance = $uibModal.open({
-                     animation: true,
-            		 component: 'deleteConfirmation',
-      		  		 size: 'md',
-                     resolve: {
-                        grid: function () {
-                            return self;
+                    var params = event.data;
+                    params.action = "add";
+                    if(this.addParams){
+                        for(var key in this.addParams){
+                            params[key] = this.addParams[key]
                         }
-                    }
-                }); 
-            }
-        }
-        
-        this.onRemoveRow = function(key) {
-          if(self.gridOptions.rowModelType == "infinite"){
-            if(self.api){
-              var selectedNodes = self.gridOptions.api.getSelectedNodes();
-              var selectedKeys = [];
-              for(var i = 0; i < selectedNodes.length; i++){
-                selectedKeys.push(selectedNodes[i].data.key);
-              }
-              if(selectedKeys.length > 0){
-                self.gridOptions.api.showLoadingOverlay();   
-                var params = {keys : selectedKeys, action: "delete"}
-                if(this.deleteParams){
-                      for(var key in this.deleteParams){
-                          params[key] = this.deleteParams[key]
-                      }
-                }  
-                dataService.gridHelper(self.api, params).then(
-                  function(data, response) {
-                    self.gridOptions.api.hideOverlay();     
-                    if (data && data.result) {
-                      var selectedNodes = self.gridOptions.api.getSelectedNodes();
-                 //     self.showAlert("success", "Row(s) deleted successfuly");
-                        self.onServerCall(data);
-                    } else {
-                      if(data && data.errorDetail){
-                        self.showAlert("danger", data.errorDetail);
-                      }else{
-                        self.showAlert("danger", "An error has occured");
-                      }
-                    }
-                  },
-                  function(err) {
-                    self.gridOptions.api.hideOverlay();     
-                    console.log("reject", err);
-                    self.showAlert("danger", "An error has occured");
-                  });
-              }
-            }else{
- 				self.showAlert("danger", "No script defined for delete row");
-            }
-          }else{
-            var selectedNodes = self.gridOptions.api.getSelectedNodes();
-            self.gridOptions.api.removeItems(selectedNodes);
-          }
-        }
-        
-        this.onServerCall = function(data){
-          self.gridOptions.api.refreshInfiniteCache();
-        }
-        
-        this.undoChanges = function(data){
-          if(self.oldEditedValue){ // undo field rename
-            self.gridOptions.api.forEachNode(function(node) {
-              if (node.childIndex == self.editedChildIndex || node.id == self.editedChildIndex) {
-                node.setSelected(true, true);
-              }
-            });
-            var selectedNode = self.gridOptions.api.getSelectedNodes()[0];
-            selectedNode.data[self.editedColumn] = self.oldEditedValue;
-            self.gridOptions.api.refreshView();
-          }else{ // undo insert row
-            self.gridOptions.api.forEachNode(function(node) {
-              if(self.gridOptions.rowModelType == "pagination"){
-                if (node.childIndex == 0) {
-                  node.setSelected(true, true);
-                  var selectedNode = self.gridOptions.api.getSelectedNodes();
-                  self.gridOptions.api.removeItems(selectedNode);
-                }
-              }else{
-                self.gridOptions.api.refreshInfiniteCache();
-              }
-            });
-          }
-        }
-        
-        this.onFilterChanged = function() {
-          this.gridOptions.enableServerSideFilter = false;
-          this.gridOptions.api.setQuickFilter(this.quickFilterValue);
-          this.gridOptions.enableServerSideFilter = true;
-        }
-        
-         this.onServerFilterChanged = function() {
-             self._createNewDatasource();
-        }
+                    }   
+                    dataService.gridHelper(self.api, event.data).then(
+                        function(data, response) {
+                            self.gridOptions.api.hideOverlay();   
+                            if (data && data.result) {
+                                //	  self.showAlert("success", "Row(s) Added successfuly");
+                                self.onServerCall(data);
 
-        this.buildParams = function(params) {
-          var queryFilter = self.serverFilterText;
-          var columnName = null;
-          var type = null;
-          var pageNumber = params.endRow / this.gridOptions.paginationPageSize;
-          if (params.sortModel && params.sortModel.length > 0) {
-            var sort = params.sortModel[0].sort;
-            var sortingColumnName = params.sortModel[0].colId;
-            type = (this.gridOptions.api.getColumnDef(sortingColumnName).type) ? this.gridOptions.api.getColumnDef(sortingColumnName).type : null;
-          }
-          if (params.filterModel) {
-            for (p in params.filterModel) {
-              queryFilter = params.filterModel[p].filter;
-              var queryType = params.filterModel[p].type;
-              var filterColumnName = p;
-              type = (this.gridOptions.api
-                      .getColumnDef(filterColumnName).type) ? this.gridOptions.api
-                .getColumnDef(filterColumnName).type
-              : null;
+                            } else {
+                                self.undoChanges();
+                                if(data && data.errorDetail){
+                                    self.showAlert("danger", data.errorDetail);
+                                }else{
+                                    self.showAlert("danger", "An error has occured");
+                                }
+                            }
+                        },
+                        function(err) {
+                            self.gridOptions.api.hideOverlay();   
+                            console.log("reject", err);
+                            self.showAlert("danger", "An error has occured");
+                        });
+                }
             }
-          }
-          var APIParams = {
-            "resultsPerPage" : this.gridOptions.paginationPageSize,
-            "pageNumber" : pageNumber
-          }
-          if (sortingColumnName) {
-            APIParams["sortingColumnName"] = sortingColumnName;
-          }
-          if (filterColumnName) {
-            APIParams["filterColumnName"] = filterColumnName;
-          }
-          if (sort) {
-            APIParams["sort"] = sort;
-          }
-          if (type) {
-            APIParams["sortType"] = type;
-          }
-          if (queryFilter) {
-            APIParams["queryFilter"] = queryFilter;
-          }
-          if (queryType) {
-            APIParams["queryType"] = queryType;
-          }
-          APIParams["startRow"] = params.startRow;
-          APIParams["endRow"] = params.endRow;
-          if(this.apiParams){
-            for(var param in this.apiParams){
-                 APIParams[param] = this.apiParams[param];
+
+            this.onAddRow = function(){
+                var newRow = {};
+                // Create a json object to save new row fields 
+                for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
+                    newRow[self.gridOptions.columnDefs[n].field] = "";
+                }
+                self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
+                self.gridOptions.api.setFocusedCell(0, self.gridOptions.columnDefs[0].field);
+                self.gridOptions.api.startEditingCell({
+                    rowIndex: 0,
+                    colKey: self.gridOptions.columnDefs[0].field,
+                    charPress: self.gridOptions.columnDefs[0].field
+                });
             }
-          }
-          return APIParams;
+
+            this.openConfirmationPopUp = function(){
+                if(self.gridOptions.api.getSelectedNodes().length > 0){
+                    var modalInstance = $uibModal.open({
+                        animation: true,
+                        component: 'deleteConfirmation',
+                        size: 'md',
+                        resolve: {
+                            grid: function () {
+                                return self;
+                            }
+                        }
+                    }); 
+                }
+            }
+
+            this.onRemoveRow = function(key) {
+                if(self.gridOptions.rowModelType == "infinite"){
+                    if(self.api){
+                        var selectedNodes = self.gridOptions.api.getSelectedNodes();
+                        var selectedKeys = [];
+                        for(var i = 0; i < selectedNodes.length; i++){
+                            selectedKeys.push(selectedNodes[i].data.key);
+                        }
+                        if(selectedKeys.length > 0){
+                            self.gridOptions.api.showLoadingOverlay();   
+                            var params = {keys : selectedKeys, action: "delete"}
+                            if(this.deleteParams){
+                                for(var key in this.deleteParams){
+                                    params[key] = this.deleteParams[key]
+                                }
+                            }  
+                            dataService.gridHelper(self.api, params).then(
+                                function(data, response) {
+                                    self.gridOptions.api.hideOverlay();     
+                                    if (data && data.result) {
+                                        var selectedNodes = self.gridOptions.api.getSelectedNodes();
+                                        //     self.showAlert("success", "Row(s) deleted successfuly");
+                                        self.onServerCall(data);
+                                    } else {
+                                        if(data && data.errorDetail){
+                                            self.showAlert("danger", data.errorDetail);
+                                        }else{
+                                            self.showAlert("danger", "An error has occured");
+                                        }
+                                    }
+                                },
+                                function(err) {
+                                    self.gridOptions.api.hideOverlay();     
+                                    console.log("reject", err);
+                                    self.showAlert("danger", "An error has occured");
+                                });
+                        }
+                    }else{
+                        self.showAlert("danger", "No script defined for delete row");
+                    }
+                }else{
+                    var selectedNodes = self.gridOptions.api.getSelectedNodes();
+                    self.gridOptions.api.removeItems(selectedNodes);
+                }
+            }
+
+            this.onServerCall = function(data){
+                self.gridOptions.api.refreshInfiniteCache();
+            }
+
+            this.undoChanges = function(data){
+                if(self.oldEditedValue){ // undo field rename
+                    self.gridOptions.api.forEachNode(function(node) {
+                        if (node.childIndex == self.editedChildIndex || node.id == self.editedChildIndex) {
+                            node.setSelected(true, true);
+                        }
+                    });
+                    var selectedNode = self.gridOptions.api.getSelectedNodes()[0];
+                    selectedNode.data[self.editedColumn] = self.oldEditedValue;
+                    self.gridOptions.api.refreshView();
+                }else{ // undo insert row
+                    self.gridOptions.api.forEachNode(function(node) {
+                        if(self.gridOptions.rowModelType == "pagination"){
+                            if (node.childIndex == 0) {
+                                node.setSelected(true, true);
+                                var selectedNode = self.gridOptions.api.getSelectedNodes();
+                                self.gridOptions.api.removeItems(selectedNode);
+                            }
+                        }else{
+                            self.gridOptions.api.refreshInfiniteCache();
+                        }
+                    });
+                }
+            }
+
+            this.onFilterChanged = function() {
+                this.gridOptions.enableServerSideFilter = false;
+                this.gridOptions.api.setQuickFilter(this.quickFilterValue);
+                this.gridOptions.enableServerSideFilter = true;
+            }
+
+            this.onServerFilterChanged = function() {
+                self._createNewDatasource();
+            }
+
+            this.buildParams = function(params) {
+                var queryFilter = self.serverFilterText;
+                var columnName = null;
+                var type = null;
+                var pageNumber = params.endRow / this.gridOptions.paginationPageSize;
+                if (params.sortModel && params.sortModel.length > 0) {
+                    var sort = params.sortModel[0].sort;
+                    var sortingColumnName = params.sortModel[0].colId;
+                    type = (this.gridOptions.api.getColumnDef(sortingColumnName).type) ? this.gridOptions.api.getColumnDef(sortingColumnName).type : null;
+                }
+                if (params.filterModel) {
+                    for (p in params.filterModel) {
+                        queryFilter = params.filterModel[p].filter;
+                        var queryType = params.filterModel[p].type;
+                        var filterColumnName = p;
+                        type = (this.gridOptions.api
+                                .getColumnDef(filterColumnName).type) ? this.gridOptions.api
+                            .getColumnDef(filterColumnName).type
+                        : null;
+                    }
+                }
+                var APIParams = {
+                    "resultsPerPage" : this.gridOptions.paginationPageSize,
+                    "pageNumber" : pageNumber
+                }
+                if (sortingColumnName) {
+                    APIParams["sortingColumnName"] = sortingColumnName;
+                }
+                if (filterColumnName) {
+                    APIParams["filterColumnName"] = filterColumnName;
+                }
+                if (sort) {
+                    APIParams["sort"] = sort;
+                }
+                if (type) {
+                    APIParams["sortType"] = type;
+                }
+                if (queryFilter) {
+                    APIParams["queryFilter"] = queryFilter;
+                }
+                if (queryType) {
+                    APIParams["queryType"] = queryType;
+                }
+                APIParams["startRow"] = params.startRow;
+                APIParams["endRow"] = params.endRow;
+                if(this.apiParams){
+                    for(var param in this.apiParams){
+                        APIParams[param] = this.apiParams[param];
+                    }
+                }
+                return APIParams;
+            }
+
         }
-        
-      }
     });
 
-  angular
+angular
     .module('Grid')
     .service("dataService", function(httpClient, wsClient, $q) {
-      
-      this.subscribe = function(callback, tag, $scope){
+
+    this.subscribe = function(callback, tag, $scope){
         wsClient.onReady.then(function() {
-          wsClient.subscribe(tag, callback.bind(self), $scope.$id);
+            wsClient.subscribe(tag, callback.bind(self), $scope.$id);
         });
-      }
-    
-      this.gridHelper = function(api, params){
+    }
+
+    this.gridHelper = function(api, params){
         var d = $q.defer(); 
         wsClient
-          .call(api, params, "grid").then(function(data, response){
-          d.resolve(data, response)
+            .call(api, params, "grid").then(function(data, response){
+            d.resolve(data, response)
         }, function(err) {
-          d.reject(err)
+            d.reject(err)
         });
         return d.promise;
-      }
-      
-      
-      this.getGridData = function(api, params, transport, formatterFnc) {
-        
+    }
+
+
+    this.getGridData = function(api, params, transport, formatterFnc) {
+
         var d = $q.defer(); 
         var self = this;
         if(transport == "https"){
-          httpClient
-            .get(api, params).then(function(data, response){
-              if(formatterFnc /**Check if function also*/){
-                data = formatterFnc(data);
-              }
-              if(data && data.documents){
-                var data = {"documents": data.documents, "count": data.count}
-                d.resolve(data, response)
-              }else{
-                d.resolve(null, response)
-              }
-          }, function(err) {
-            d.resolve(null);
-            d.reject(err);
-          });
-          return d.promise;
-       } else if(transport == "wss"){
-             if(api && typeof api != 'undefined'){
-                wsClient.onReady.then(function() {
-                  wsClient
-                    .call(api, params, "grid").then(function(data, response) {
-                     if(formatterFnc /**Check if function also*/){
-                        data = formatterFnc(data);
-                      }
-                      if(data && data.documents){
-                          var data = {"documents": data.documents, "count": data.count}
-                          d.resolve(data, response)
-                      }else{
-                          d.resolve(null, response)
-                      }
-                    }, function(err) {
-                      d.resolve(null);
-                      d.reject(err);
-                    }
-                  ); 
-                }); 
-                return d.promise;
-             }else{
-                wsClient.onReady.then(function() {
-                wsClient.publish(params, "publish").then(function(data, response) {
-                  if(data && data.documents){
+            httpClient
+                .get(api, params).then(function(data, response){
+                if(formatterFnc /**Check if function also*/){
+                    data = formatterFnc(data);
+                }
+                if(data && data.documents){
                     var data = {"documents": data.documents, "count": data.count}
                     d.resolve(data, response)
-                  }else{
-                    d.resolve(null, response);
-                  }
-                }, function(err) {
-                    d.resolve(null);
-                    d.reject(err);
-                  }
-                );
-              }); 
-              return d.promise;
-          }
-      }
+                }else{
+                    d.resolve(null, response)
+                }
+            }, function(err) {
+                d.resolve(null);
+                d.reject(err);
+            });
+            return d.promise;
+        } else if(transport == "wss"){
+            if(api && typeof api != 'undefined'){
+                wsClient.onReady.then(function() {
+                    wsClient
+                        .call(api, params, "grid").then(function(data, response) {
+                        if(formatterFnc /**Check if function also*/){
+                            data = formatterFnc(data);
+                        }
+                        if(data && data.documents){
+                            var data = {"documents": data.documents, "count": data.count}
+                            d.resolve(data, response)
+                        }else{
+                            d.resolve(null, response)
+                        }
+                    }, function(err) {
+                        d.resolve(null);
+                        d.reject(err);
+                    }
+                                                       ); 
+                }); 
+                return d.promise;
+            }else{
+                wsClient.onReady.then(function() {
+                    wsClient.publish(params, "publish").then(function(data, response) {
+                        if(data && data.documents){
+                            var data = {"documents": data.documents, "count": data.count}
+                            d.resolve(data, response)
+                        }else{
+                            d.resolve(null, response);
+                        }
+                    }, function(err) {
+                        d.resolve(null);
+                        d.reject(err);
+                    }
+                                                            );
+                }); 
+                return d.promise;
+            }
+        }
     }
-      
+
 });
 
 angular
-  .module('Grid')
-  .component('deleteConfirmation', 
-  {
+    .module('Grid')
+    .component('deleteConfirmation', 
+               {
     bindings: {
-      resolve: '<',
-      close: '&',
-      dismiss: '&'
+        resolve: '<',
+        close: '&',
+        dismiss: '&'
     },
     templateUrl:  '/UIComponents/dashboard/frontend/components/grid/popup.html',
     controller: function ($scope) {
