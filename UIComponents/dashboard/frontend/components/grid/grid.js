@@ -18,8 +18,6 @@ angular
 
             "enableColResize" : "<?",
 
-            "pagination" : "@",  
-
             "enableDeleteRow" : "<?",
 
             "fixedHeight" : "<?",  
@@ -80,8 +78,6 @@ angular
 
             "onCellValueChanged" : "&",
 
-            "onCellClicked" : "&",  
-
             "msgTag" : "@",
 
             "class" : "@",
@@ -132,21 +128,19 @@ angular
                                 var rowsData = data.documents;
                                 var count = parseInt(data.count);
 
-                                var cleanedRows = self.cleanRows(rowsData);  
-                                params.successCallback(cleanedRows, count);
+                                params.successCallback(self.cleanRows(rowsData), count);
                                 self.gridOptions.api.sizeColumnsToFit();
 
                                 // if there's no rows to be shown, disbale the next button
-                                if(cleanedRows == null || cleanedRows.length == 0){
-                                    self.gridOptions.api.showNoRowsOverlay();  
+                                if(rowsData == null || rowsData.length == 0){
                                     var el = angular.element( document.querySelector( '#btNext' ) );
                                     el.attr('disabled', 'true');
-                                }else{
-                                    self.gridOptions.api.hideOverlay();
                                 }
                             } else {
                                 params.failCallback();
-                                self.gridOptions.api.showNoRowsOverlay();
+                                if(self.gridOptions.rowModelType == "virtual"){
+                                    self.gridOptions.api.showNoRowsOverlay();
+                                }
                             }
                         }, function(err) {
                             console.log("reject", err);
@@ -197,13 +191,11 @@ angular
                     enableServerSideSorting : (typeof this.enableServerSideSorting != 'undefined')? this.enableServerSideSorting : true,
                     enableServerSideFilter : (typeof this.enableServerSideFilter != 'undefined') ? this.enableServerSideFilter : true,
                     enableColResize : (typeof this.enableColResize != 'undefined') ? this.enableColResize : false,
-                    enableFilter : true,
+                    enableFilter : (typeof this.enableFilter != 'undefined') ? this.enableFilter : true,
                     columnDefs : this.columnsDefinition,
                     editType : 'fullRow',    
-                    pagination: (typeof this.pagination != "undefined") ? this.pagination : false,  
-                    cacheBlockSize: (this.paginationPageSize) ? this.paginationPageSize : 50,
                     rowData: (this.rowData)? this.rowData : null,
-                    rowModelType : (this.api) ? "infinite" : "",
+                    rowModelType : (this.api) ? (this.rowModelType)? this.rowModelType : (this.rowData)? "" : "virtual" : "",
                     rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
                     paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
                     overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> Please wait while your rows are loading</span>',
@@ -220,11 +212,6 @@ angular
                             return self.onSelectionChanged()(self.gridOptions);
                         }
                     },
-                    onCellClicked: function() {
-                        if(self.onCellClicked != null && typeof self.onCellClicked() == "function"){
-                            return self.onCellClicked()(self.gridOptions);
-                        }
-                    },
                     onRowValueChanged : function(event) { // used for adding/editing a row 
                         //    self.oldEditedValue = event.oldValue;
                         //    self.editedColumn = event.colDef.field;
@@ -233,7 +220,7 @@ angular
                             if(self.onCellValueChanged != null && typeof self.onCellValueChanged() == "function"){
                                 self.onCellValueChanged()(self.gridOptions);
                             }
-                            if(self.gridOptions.rowModelType == "infinite"){
+                            if(self.gridOptions.rowModelType == "pagination" || self.gridOptions.rowModelType == "virtual"){
                                 if(self.api){
                                     self.gridOptions.api.showLoadingOverlay();  
                                     self._saveData(event);
@@ -289,7 +276,8 @@ angular
                 this.transport = (this.transport) ? this.transport : "wss";
                 this.enableDeleteRow =  (this.enableDeleteRow == true) ? false : true;
                 this.enableAddRow =  (this.enableAddRow == true) ? false : true;
-                this.mode =  (this.gridOptions.rowModelType == 'infinite') ? "infinite" : "normal";
+                this.enableClientSideFilter =  (this.enableClientSideFilter == true) ? false : true;
+                this.enableServerSideFilter =  (this.enableServerSideFilter == true) ? false : true;
 
                 if(self.msgTag){
                     dataService.subscribe(this.onServerCall, self.msgTag, $scope);
@@ -329,7 +317,7 @@ angular
                     dataService.gridHelper(self.api, params).then(
                         function(data, response) {
                             self.gridOptions.api.hideOverlay();  
-                            if (data && data.result == "success") {
+                            if (data && data.result) {
                                 //       self.showAlert("success", "Row(s) updated successfuly");
                                 self.onServerCall(data);
                             } else {
@@ -357,10 +345,9 @@ angular
                     dataService.gridHelper(self.api, event.data).then(
                         function(data, response) {
                             self.gridOptions.api.hideOverlay();   
-                            if (data && data.result == "success") {
+                            if (data && data.result) {
                                 //	  self.showAlert("success", "Row(s) Added successfuly");
                                 self.onServerCall(data);
-
                             } else {
                                 self.undoChanges();
                                 if(data && data.errorDetail){
@@ -380,12 +367,15 @@ angular
 
             this.onAddRow = function(){
                 var newRow = {};
+
                 // Create a json object to save new row fields 
                 for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
                     newRow[self.gridOptions.columnDefs[n].field] = "";
                 }
+
                 self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
                 self.gridOptions.api.setFocusedCell(0, self.gridOptions.columnDefs[0].field);
+
                 self.gridOptions.api.startEditingCell({
                     rowIndex: 0,
                     colKey: self.gridOptions.columnDefs[0].field,
@@ -409,7 +399,7 @@ angular
             }
 
             this.onRemoveRow = function(key) {
-                if(self.gridOptions.rowModelType == "infinite"){
+                if(self.gridOptions.rowModelType == "pagination" || self.gridOptions.rowModelType == "virtual"){
                     if(self.api){
                         var selectedNodes = self.gridOptions.api.getSelectedNodes();
                         var selectedKeys = [];
@@ -427,7 +417,9 @@ angular
                             dataService.gridHelper(self.api, params).then(
                                 function(data, response) {
                                     self.gridOptions.api.hideOverlay();     
-                                    if (data && data.result == "success") {
+                                    if (data && data.result) {
+                                        var selectedNodes = self.gridOptions.api.getSelectedNodes();
+                                        self.gridOptions.api.removeItems(selectedNodes);
                                         //     self.showAlert("success", "Row(s) deleted successfuly");
                                         self.onServerCall(data);
                                     } else {
@@ -453,8 +445,82 @@ angular
                 }
             }
 
+
             this.onServerCall = function(data){
-                self.gridOptions.api.refreshInfiniteCache();
+                if(data && data.action){
+                    if(data.action == "add"){
+                        var rows = data.result;
+                        for(var i = 0; i < rows.length; i++){  
+                            var newRow = {};
+                            // Create a json object to save new row fields 
+                            for (var n = 0; n < self.gridOptions.columnDefs.length; n++){
+                                for(row in rows[i]){
+                                    if(typeof self.gridOptions.columnDefs[n].field != "undefined"){
+                                        if(self.gridOptions.columnDefs[n].field == row){
+                                            newRow[self.gridOptions.columnDefs[n].field] = rows[i][row];
+                                            break;
+                                        }else{
+                                            newRow[self.gridOptions.columnDefs[n].field] = "";
+                                        }
+                                    }
+                                }
+                            }
+                            var firstRow = self.gridOptions.api.getRenderedNodes()[0];
+                            if(!firstRow.data.key){
+                                firstRow.data.key = rows[i].key;
+                            }else if(firstRow.data.key != rows[i].key){
+                                newRow["key"] = rows[i].key;
+                                self.gridOptions.api.insertItemsAtIndex(0, [newRow]);
+                            }
+                        }
+                    }else if(data.action == "edit"){
+                        // Searches for the edited row and updates it
+                        if(self.gridOptions.rowModelType == "pagination"){
+                            var rows = data.result;  
+                            for(var x = 0; x < rows.length; x++){  
+                                var rowKey = rows[x].key;
+                                self.gridOptions.api.forEachNode(function(node) {
+                                    if (node.data.key == rowKey) {
+                                        var index = node.childIndex;
+                                        var model = self.gridOptions.api.getModel();
+                                        var node = [ model.getRow(index) ][0];
+                                        node.data = self.cleanRows(rows[x])[0];
+                                        node.data.key = rowKey;
+                                        self.gridOptions.api.refreshView();
+                                    }
+                                });
+                                var firstRow = self.gridOptions.api.getRenderedNodes()[0];
+                                if(!firstRow.data.key){
+                                    firstRow.data.key = rowKey;
+                                }
+                            }
+                        }else{
+                            self.gridOptions.api.refreshVirtualPageCache();
+                        }
+                    }else if(data.action == "delete"){
+                        var keys = data.result;
+                        if(self.gridOptions.rowModelType == "pagination"){ 
+                            for(var i = 0; i < keys.length; i++){ 
+                                self.gridOptions.api.forEachNode(function(node) {
+                                    if (node.data.key == keys[i]) {
+                                        var index = node.childIndex;
+                                        var model = self.gridOptions.api.getModel();
+                                        var node = [ model.getRow(index) ];
+                                        self.gridOptions.api.removeItems(node);
+                                    }
+                                });
+                            }
+                        }else{
+                            self.gridOptions.api.refreshVirtualPageCache();
+                        }
+                    }
+                }else{
+                    if(data && data.errorDetail){
+                        self.showAlert("danger", data.errorDetail);
+                    }else{
+                        self.showAlert("danger", "An error has occured");
+                    }
+                }
             }
 
             this.undoChanges = function(data){
@@ -476,7 +542,7 @@ angular
                                 self.gridOptions.api.removeItems(selectedNode);
                             }
                         }else{
-                            self.gridOptions.api.refreshInfiniteCache();
+                            self.gridOptions.api.refreshVirtualPageCache();
                         }
                     });
                 }
@@ -488,12 +554,8 @@ angular
                 this.gridOptions.enableServerSideFilter = true;
             }
 
-            this.onServerFilterChanged = function() {
-                self._createNewDatasource();
-            }
-
             this.buildParams = function(params) {
-                var queryFilter = self.serverFilterText;
+                var queryFilter = this.gridOptions.quickFilterText;
                 var columnName = null;
                 var type = null;
                 var pageNumber = params.endRow / this.gridOptions.paginationPageSize;
@@ -580,7 +642,7 @@ angular
                 if(formatterFnc /**Check if function also*/){
                     data = formatterFnc(data);
                 }
-                if(data && data.documents){
+                if(data && data.documents && data.documents.length != 0){
                     var data = {"documents": data.documents, "count": data.count}
                     d.resolve(data, response)
                 }else{
@@ -599,7 +661,7 @@ angular
                         if(formatterFnc /**Check if function also*/){
                             data = formatterFnc(data);
                         }
-                        if(data && data.documents){
+                        if(data && data.documents && data.documents.length != 0){
                             var data = {"documents": data.documents, "count": data.count}
                             d.resolve(data, response)
                         }else{
@@ -615,7 +677,7 @@ angular
             }else{
                 wsClient.onReady.then(function() {
                     wsClient.publish(params, "publish").then(function(data, response) {
-                        if(data && data.documents){
+                        if(data && data.documents && data.documents.length != 0){
                             var data = {"documents": data.documents, "count": data.count}
                             d.resolve(data, response)
                         }else{
@@ -655,7 +717,3 @@ angular
         };
     }
 });
-
-
-
-
