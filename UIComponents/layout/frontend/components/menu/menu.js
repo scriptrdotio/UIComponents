@@ -41,6 +41,9 @@ angular
                        $scope.$on('menu:openMenuBasedOnRoute', function(data){
                            self.openMenuBasedOnRoute();
                        })
+                       $scope.$on('menu:setSelectedMenu', function(data, colIndex, liIndex){
+                           self.addActiveClass(colIndex, liIndex);
+                       })
 	               };
                  
                   this.openMenuBasedOnRoute = function(){
