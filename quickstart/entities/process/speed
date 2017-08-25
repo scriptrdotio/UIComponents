@@ -1,0 +1,110 @@
+/**
+ * Calculate the speed of an asset based on its current and previous location + time to move from the latter to the fomer
+ * Persist data into a document (update the document if already existing)
+ * @function calculateSpeed 
+ * @return {Number} speed (-1 if no speed, i.e. first time)
+ */
+var documents = require("document");
+var momentlib = require("/modules/momentjs/moment.min.js");
+var geo = require("../../lib/geolib"); 
+var aggregates = require("../../lib/aggregates");
+
+var geolib = new geo.Geolib();
+
+function calculateSpeed(x) {
+  var geolib = new geo.Geolib();
+  var speed = -1;
+  
+ /*
+  * START Calculate crow fly speed of asset, based on previous position/time and current position/time 
+  */
+
+  var speedUnit = "kmh";
+
+  var key = "phone_" + x.deviceId;
+  var params = {
+    "key":key, 
+    "latitude" : x.latitude,
+    "longitude" : x.longitude, 
+    "time" : "" + x.timestamp,
+    "deviceId": x.deviceId,
+    "timestamp":""+x.timestamp,
+    "formtype": x.formtype,
+    "meta.types":{}
+  }
+  
+  var result = documents.get(key);
+  if(result.metadata.status == "failure"){
+    if(!(result.metadata.errorCode == "DOCUMENT_NOT_FOUND")){
+      log.error("Error while getting data " + JSON.stringify(result));
+      return "ERROR";
+    }    
+  }else{  
+    var previousValue = result.result;
+    var obj = null;
+    //Check if already stored a previous asset info
+    if(previousValue) {
+      speed = geolib.getSpeed(
+        {latitude: parseFloat(previousValue.latitude), longitude: parseFloat(previousValue.longitude), time: parseFloat(previousValue.timestamp)},
+        {latitude: parseFloat(x.latitude), longitude: parseFloat(x.longitude), time: parseFloat(x.timestamp)},
+        {unit: speedUnit });
+        obj = {speed: speed, unit: "km/h" , time: {start:  previousValue.timestamp , end: x.timestamp }};
+      if (speed) {
+        params["speed"] = obj.speed;
+        params["meta.types"]["speed"] = "numeric";
+        params["unit"] = obj.unit;
+        params["startTime"] =  "" + obj.time.start;
+        params["endTime"] = "" + obj.time.end;
+      }
+    }
+
+    /*
+     * END Calculate crow fly speed of asset, based on previous position/time and current position/time
+     */
+  }
+  
+  // create a new document
+  log.info("Saving " + JSON.stringify(params));
+  result = documents.save(params);
+  if (result.metadata.status == "failure"){
+
+    log.error("Error while saving asset data " +  JSON.stringify(result));
+    return "ERROR";
+  }
+      
+  return speed;
+}
+
+/**
+ * Calculate average speed of an asset and persist this values into a document
+ * @function calculateAvgSpeed
+ * @param {String} assetId: identifier of the asset
+ * @param {Number} currentSpeed: lasted obtained value for the asset's speed
+ * @return {Number} average speed
+ */
+function calculateAvgSpeed(assetId, currentSpeed) {
+    
+  var MAX_SAMPLES = 10;
+  log.info("Start Calculating Average Speed." + currentSpeed + " " + assetId)
+  // the function that knows how to calculate avg speed based on a list of speed values
+  var calcAggregatesFunction = function(list) {
+
+    var sum = 0;
+    for (var i = 0; list && i < list.length; i++) {
+      sum += list[i];    
+    }
+
+    return {
+      "average" : (list && list.length > 0 ? sum / list.length : sum)
+    }
+  }
+
+  var avgSpeed = -1;
+  if (currentSpeed) {
+    
+    aggregates.addDataPoint(assetId, currentSpeed, MAX_SAMPLES, calcAggregatesFunction);
+    avgSpeed = aggregates.getAggregates(assetId).average;  
+  } 
+  
+  return avgSpeed;
+}

@@ -1,0 +1,66 @@
+var document = require("document");
+var calcSpeed = require("../entities/process/speed");
+/**
+ * @function save
+ * @param {Object} data: data as received from device
+ * @return {String} device id
+ */
+function save(data) {
+    var result = document.save(data);
+    if (result.metadata.status == "failure"){
+        log.error("Error while saving asset data " +  JSON.stringify(result));
+        return "ERROR";
+    }
+    log.info("Saved Document: ", JSON.stringify(result));
+}
+/**
+ * @function calculate speed and average speed for device
+ * @param {Object} data: data as received from device
+ * @return {String} device id
+ */
+function processLocation(data) {
+    /*
+     * Start calculate current speed and average speed
+ 	 */
+    log.info("Start Calculating Speed.")
+    var speed = calcSpeed.calculateSpeed(data);
+    log.info("Speed "+speed)
+    if (speed != -1  && speed != "ERROR") {      
+        //calculate average speed
+        calcSpeed.calculateAvgSpeed(data.deviceId, speed)
+    };
+    log.info("End Calculating Speed.")
+    /*
+     * End calculate current speed and average speed
+ 	 */
+    return data.deviceId;
+}
+function publishAcceleration(data) {
+    log.info(JSON.stringify(data))
+    if(data["formtype"] == "acceleration") {
+        var res = {"x": data.accelerationX, "y": data.accelerationY, "z": data.accelerationZ};
+        var accelerometerId = data["formtype"]+"_"+data.deviceId
+        publish("responseChannel", {"id": accelerometerId, "result": res});
+    }
+}
+function publishPosition(deviceId) {
+    var res = {};
+    var result = document.get("phone_"+deviceId);
+    if(result.metadata.status == "failure"){
+        if(result.metadata.errorCode == "DOCUMENT_NOT_FOUND"){
+            log.error("Error while getting data " + JSON.stringify(result));
+            return "ERROR";
+        }    
+    }else{ 
+        var data = result.result
+        res[data.deviceId] = {"trip0": [{"lat": {"value": parseFloat(data.latitude)}, "long": {"value": parseFloat(data.longitude) }, "speed" : {
+            "value" : data.speed,
+            "description" : "kmh"}}], "source" : "simulator", "order" : [ "trip0" ]}
+        log.info("res "+JSON.stringify(res))
+        publish("responseChannel", {"id": data["formtype"], "result": res});
+        
+        var speedoId = "speedometer"+"_"+ data.deviceId
+        //Publish live speed
+        publish("responseChannel", {"id": speedoId, "result": parseFloat(data.speed) * 1000});
+    }
+}

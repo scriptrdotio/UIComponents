@@ -1,0 +1,186 @@
+<html ng-app="myApp">
+<head>
+
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+
+    <link rel="stylesheet" href="//www.scriptr.io/lib/UIComponents/build/ide/css//components.min.css">
+    
+    <script src="//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&libraries=drawing,visualization"></script>
+    <script src="//www.scriptr.io/lib/UIComponents/build/ide/js/template_resources.min.js"></script>
+    
+</head> 
+  
+<script>
+
+(function() {  
+   $.urlParam = function(name){
+	     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	     if (results==null){
+	         return null;
+	     }else{
+	         return results[1] || 0;
+	     }
+	}
+
+	$.getUrlVars = function() {
+		var vars = [], hash;
+		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for(var i = 0; i < hashes.length; i++)
+		{
+			hash = hashes[i].split('=');
+			vars.push(hash[0]);
+			vars[hash[0]] = hash[1];
+		}
+		return vars;
+	}
+	  
+
+      
+    var underscore = angular.module('underscore', []);
+		underscore.factory('_', ['$window', function($window) {		
+  		return $window._; // assumes underscore has already been loaded on the page		
+	}]);
+    
+
+    var wssConfig = ["wsClientProvider",function (wsClientProvider) {
+   	 	wsClientProvider.setBaseUrl("wss://" + window.location.host + "/");   	 
+        wsClientProvider.setToken($.urlParam("auth_token"));
+        wsClientProvider.setPublishChannel("requestChannel");
+        wsClientProvider.setSubscribeChannel("responseChannel");
+    }];
+
+    var httpsConfig = ["httpClientProvider",function (httpClientProvider) {
+   	  httpClientProvider.setBaseUrl("https://" + window.location.host);
+      httpClientProvider.setToken($.urlParam("auth_token"));
+    }]
+
+     var myApp= angular.module("myApp", ["underscore" , "WsClient", "HttpClient", "Chart", 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer'])
+     
+     angular.module('myApp').run(cachedTemplates);  
+      
+     angular.module('myApp').config(wssConfig);
+     angular.module('myApp').config(httpsConfig);
+     
+     myApp.config(function($interpolateProvider, $locationProvider) {
+        $interpolateProvider.startSymbol('{[{');
+        $interpolateProvider.endSymbol('}]}');
+        $locationProvider.html5Mode({
+          enabled: true,
+          requireBase: false
+        });
+     });
+  
+  
+     myApp.controller('RootCtrl', function($scope, $interpolate, $location) {
+       var vm = this;
+       vm.gridsterOptions = {
+          pushing: false,
+          
+          minRows: 1, // the minimum height of the grid, in rows
+          maxRows: 100,
+          columns: 5, // the width of the grid, in columns
+          colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
+          rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+          margins: [10, 10], // the pixel distance between each widget
+          defaultSizeX: 2, // the default width of a gridster item, if not specifed
+          defaultSizeY: 1, // the default height of a gridster item, if not specified
+          mobileBreakPoint: 1024, // if the screen is not wider that this, remove the grid layout and stack the items
+          minColumns: 1,
+          resizable: {
+            enabled: false
+          },
+          draggable: {
+             enabled: false
+          }
+       };
+       
+        vm.init = function() {
+        }
+     });
+        	
+})();
+  
+</script>
+
+    <body>
+      <div ng-controller="RootCtrl as vm" ng-init="vm.init();"> 
+		<div gridster="vm.gridsterOptions">
+          <ul>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 0 , row: 0 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Device Acceleration" class="box-label">Device Acceleration</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-accelerometer
+                                      	transport= 'wss' 
+                                      	msg-tag= 'acceleration_1366242365' 
+                                      	boxLabel= 'Device Acceleration' 
+                                      	http-method= 'GET' 
+                           ></scriptr-accelerometer> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 2 , row: 0 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Device Position" class="box-label">Device Position</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-map
+                                      	transport= 'wss' 
+                                      	boxLabel= 'Device Position' 
+                                      	clustered-view= 'false' 
+                                      	cluster-zoom= '8' 
+                                      	heatmap= 'true' 
+                                      	bounce= 'true' 
+                                      	resize= 'false' 
+                                      	data= '' 
+                                      	sources-info= '{"simulator": {"label": "Carvoyant"}}' 
+                                      	msg-tag= 'position' 
+                                      	clustered-zoom-max= '11' 
+                                      	detailed-zoom-min= '0' 
+                                      	max-asset-points= '0' 
+                                      	marker-info-window= 'false' 
+                                      	default-center= '' 
+                                      	path-stroke-opacity= '0' 
+                                      	path-stroke-weight= '1' 
+                                      	http-method= 'GET' 
+                                      	focused-marker-zoom= '3' 
+                           ></scriptr-map> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 4 , row: 0 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Speedometer" class="box-label">Speedometer</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-speedometer
+                                      	transport= 'https' 
+                                      	boxLabel= 'Speedometer' 
+                                      	data= '20' 
+                                      	msg-tag= 'speedometer' 
+                                      	min-value= '0' 
+                                      	max-value= '1000' 
+                                      	tick-space-min-val= '20' 
+                                      	tick-space-maj-val= '100' 
+                                      	tick-col-maj= '#C64DFF' 
+                                      	tick-col-min= '#999999' 
+                                      	outer-edge-col= '#f4f4f4' 
+                                      	pivot-col= '#434a54' 
+                                      	inner-col= '#fff' 
+                                      	units-label-col= '#C64DFF' 
+                                      	tick-label-col= '#656D78' 
+                                      	needle-col= '#C64DFF' 
+                                      	default-fonts= 'Source Sans Pro' 
+                                      	http-method= 'GET' 
+                                      	api= 'quickstart/api/getLiveSpeed' 
+                                      	api-params= '{"deviceId": "2504326744"}' 
+                                      	gauge-units= 'mh' 
+                           ></scriptr-speedometer> </div>
+                        </div>
+                    </div>
+                </li>
+          </ul>
+        </div>
+      </div>
+  </body>  
+</html>

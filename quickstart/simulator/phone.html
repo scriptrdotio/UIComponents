@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <title>Device Simulator</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fingerprintjs/0.5.3/fingerprint.min.js"></script>
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script>
+        var myApp = angular.module('myApp', ["WsClient"]);
+        myApp.config(["wsClientProvider",function (wsClientProvider) {
+            wsClientProvider.setToken("");
+            wsClientProvider.setPublishChannel("requestChannel");
+            wsClientProvider.setSubscribeChannel("responseChannel");
+        }]);
+        
+        
+        myApp.controller('simulatorCtrl', function($scope, $controller, $window, wsClient, $interval) {
+            var vm = this;
+            vm.fingerprint = new Fingerprint().get();
+            vm.init = function() {
+                wsClient.onReady.then(function() {
+                    vm.watchPosition();
+                    vm.watchMotion();
+                    vm.watchOrientation();
+                });
+            };
+            
+            wsClient.onClose.then(function(error) {
+                console.log("websocket closed ");
+            });
+            
+            vm.position = {};
+            vm.orientation = {};
+            vm.acceleration = {};
+            
+            vm.watchMotion = function() {
+                var message = document.getElementById("devicemotion"); 
+                var handleMotionEvent = function(event) {
+                    var x = event.accelerationIncludingGravity.x;
+                    var y = event.accelerationIncludingGravity.y;
+                    var z = event.accelerationIncludingGravity.z;
+                    vm.acceleration = {"accelerationX": x, "accelerationY": y, "accelerationZ": z, "timestamp": new Date().getTime()};
+                }
+                
+                var publishAcceleration = function() {
+                    message.innerHTML = JSON.stringify(vm.acceleration)
+                    if(vm.acceleration) {
+                        vm.acceleration["formtype"] = "acceleration";
+                        vm.acceleration["deviceId"] = vm.fingerprint;
+                        wsClient.publish(angular.copy(vm.acceleration), "acceleration").then(
+                            function(data, response) {
+                                vm.callData =  JSON.stringify(data)
+                                console.log("resolve call promise on key 'acceleration'", data)
+                            },
+                            function(err) {
+                                vm.callError = JSON.stringify(error)
+                                console.log("reject call promise on key 'acceleration'", err);
+                            }
+                        );
+                    }
+                }
+                
+                 if (!$window.DeviceMotionEvent) {
+                    console.log('Motion not supported.');
+                    message.innerHTML = 'Motion not supported.'
+                } else {
+                    $window.addEventListener("devicemotion", handleMotionEvent, true);
+                    $interval(publishAcceleration, 1000);
+                }
+                
+            }
+            
+            vm.watchOrientation = function() {
+                var message = document.getElementById("deviceorientation"); 
+                var handleOrientationChangeEvent = function(event) {
+                    var alpha = event.alpha;
+                    var beta = event.beta;
+                    var gamma = event.gamma;
+                    var absolute = event.absolute;
+                    vm.orientation = {"alpha": alpha, "beta": beta, "gamma": gamma, "absolute": absolute, "timestamp": new Date().getTime()};
+                }
+                
+                var publishOrientation = function(){
+                    message.innerHTML = JSON.stringify(vm.orientation)
+                    if(vm.orientation) {
+                        vm.orientation["formtype"] = "orientation";
+                        vm.orientation["deviceId"] = vm.fingerprint;
+                        wsClient.publish(angular.copy(vm.orientation), "orientation").then(
+                            function(data, response) {
+                                vm.callData =  JSON.stringify(data)
+                                console.log("resolve call promise on key 'acceleration'", data)
+                            },
+                            function(err) {
+                                vm.callError = JSON.stringify(error)
+                                console.log("reject call promise on key 'acceleration'", err);
+                            }
+                    	); 
+                    }
+                	
+                }
+                if (!$window.DeviceOrientationEvent) {
+                    console.log('Orientation not supported.');
+                    message.innerHTML = 'Orientation not supported.'
+                } else {
+                	$window.addEventListener("deviceorientation", handleOrientationChangeEvent, true);
+                    //$interval(publishOrientation, 1000);
+                }
+            }
+            
+            vm.positionWatcherId = null
+            vm.watchPosition = function() {
+                var options = {
+                    enableHighAccuracy: false,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+                var message = document.getElementById("location");
+                var handlePositionEvent = function (position) {
+                    vm.position = {
+                        			"accuracy": position.coords.accuracy, 
+                                    "altitude": position.coords.altitude, 
+                                    "altitudeAccuracy": position.coords.altitudeAccuracy, 
+                                    "heading": position.coords.heading, 
+                                    "latitude": position.coords.latitude, 
+                                    "longitude": position.coords.longitude, 
+                                    "speed": position.coords.speed,
+                        			"timestamp": position.timestamp
+                                   }
+                    
+                    publishPosition()
+                }
+                var publishPosition = function(){
+                    message.innerHTML = JSON.stringify(vm.position)
+                    if(vm.position) {
+                        vm.position["formtype"] = "position";
+                        vm.position["deviceId"] = "" + vm.fingerprint;
+                        wsClient.publish(angular.copy(vm.position), "position").then(
+                            function(data, response) {
+                                vm.callData =  JSON.stringify(data)
+                                console.log("resolve call promise on key 'position'", data)
+                            },
+                            function(err) {
+                                vm.callError = JSON.stringify(error)
+                                console.log("reject call promise on key 'position'", err);
+                            }
+                        ); 
+                    }
+                };
+                
+                if (!$window.navigator.geolocation) {
+                    console.log('Geolocation not supported.');
+                } else {
+                    vm.positionWatcherId = $window.navigator.geolocation.watchPosition(
+                        handlePositionEvent,
+                        function (err) {console.log(error)}
+                        ,options);
+                    
+                     //$interval(publishPosition, 5000);
+                }
+            }
+            
+            $window.addEventListener("compassneedscalibration", function(event) {
+                  alert('Your compass needs calibrating! Wave your device in a figure-eight motion');
+                  event.preventDefault();
+              }, true);
+        });
+       
+    </script>
+    <body ng-app="myApp">  
+        <div ng-controller="simulatorCtrl as vm" ng-init="vm.init()">
+            <div class="alert alert-info"> Your device Id: <div id="deviceId">{{ vm.fingerprint || 'Device id unknown'}}</div></div>
+            <div class="alert alert-success" id="deviceorientation">{{ vm.orientation || 'Orientation unknown'}}</div>
+            <div class="alert alert-success" id="devicemotion">{{ vm.acceleration || 'Acceleration unknown'}}</div>
+            <div class="alert alert-success"id="location">{{ vm.position || 'Location unknown'}}</div>
+            
+            <div class="alert alert-danger">Check your device data charted and analysed on you scriptr quickstart/dashboard/index.html</div>
+           
+        </div>
+        
+    </body>
+</html>

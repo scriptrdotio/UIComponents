@@ -1,0 +1,78 @@
+// Import the document module
+var documents = require("document");
+
+var AGGREGATE_PREFIX = "aggregate"
+
+function log(obj) {
+   console.log(JSON.stringify(obj))   
+}
+
+function addDataPoint(assetName, point, samples, calcAggregatesFunction) {
+    var fields = {
+      "asset": assetName,
+      "meta.types": {
+        "points": "text"
+      }      
+    }
+        
+    var points = []
+
+    // Fetch the asset if it exists
+    var d = documents.query({"query":'asset="'+assetName+'"', "fields":"*"})
+    
+    if (d.result.documents.length!=0) {
+      	// assign the key so we save in the same document
+        fields.key = d.result.documents[0].key
+        
+        // unpack the points JSON string into an array
+        if (typeof(d.result.documents[0].points) != "undefined") 
+          points = JSON.parse(d.result.documents[0].points); else points = []
+    }
+
+    // remove the 1st element in the array and add new point
+  	if (points.length>=samples) points.shift()
+	points.push(point)
+
+  	fields.points = JSON.stringify(points)
+
+    // Run aggregate function if it exists
+    if (typeof calcAggregatesFunction === 'function') {
+      var aggregates = calcAggregatesFunction(points)
+      
+      // store the aggregates into the document 
+      //	so we could use scriptr documents query capabilities on those metrics
+      for (var k in aggregates) {
+        fields[AGGREGATE_PREFIX+"-"+k] = aggregates[k]
+      }
+    }
+  
+ 	return documents.save(fields)
+}
+
+
+function getAggregates(assetName) {
+  var d = documents.query({"query":'asset="'+assetName+'"', "fields":"*"}).result.documents[0]
+
+  var aggregates = {}
+  for (var key in d) {
+    if (key.indexOf(AGGREGATE_PREFIX)==0) aggregates[key.split('-')[1]]=d[key]
+  }
+  return aggregates
+}
+
+function getDataPoints(assetName) {
+  var d = documents.query({"query":'asset="'+assetName+'"', "fields":"*"}).result.documents[0]
+  return JSON.parse(d.points)
+}
+
+function deleteAsset(assetName) {
+  var d = documents.query({"query":'asset="'+assetName+'"', "fields":"*"})
+
+  for (var i=0; i<d.result.documents.length; i++) {
+    var key = d.result.documents[i].key
+    documents.delete(key)
+  }  
+}
+
+
+

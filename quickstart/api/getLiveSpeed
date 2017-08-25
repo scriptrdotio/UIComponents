@@ -1,0 +1,33 @@
+var document = require("document")
+
+// read data from request rawBody or body property
+var data = request.body ? request.body : (request.rawBody ? request.rawBody : request.parameters);
+
+var params = {};
+if(request.body != null){
+	params = request.body;
+}else if(request.parameters.body){
+	params = request.parameters.body;
+} else {
+  params = request.parameters;
+}
+if(typeof params == 'string' && params != null){
+  	try{
+    	params = JSON.parse(params);   
+    }catch(e){
+      	return "INVALID OR MISSING PARAMETER";
+    }
+}
+
+if(params && params.deviceId) {
+    var result = document.get("phone_"+params.deviceId);
+    if(result.metadata.status == "failure"){
+        if(result.metadata.errorCode == "DOCUMENT_NOT_FOUND"){
+            log.error("Error while getting data " + JSON.stringify(result));
+            return "Device data is not available.";
+        }    
+    }
+    return  parseFloat(result.result.speed) * 1000;
+} else {
+    return "Parameter deviceId is required.";
+}

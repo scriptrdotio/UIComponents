@@ -1,0 +1,25 @@
+/**
+ * This script is subscribed to the "requestChannel" to which the simulator application running on your mobile is publishing data
+ * Once the current script receives the payload, it parses it and saves the data using an instance of DeviceManager
+ */ 
+
+var log = require("log"); log.setLevel("info");
+var deviceManager = require("/quickstart/entities/devicemanager");
+
+// read data from request rawBody or body property
+var data = request.body ? request.body : request.rawBody;
+
+log.info("/quickstart/api/subscriber received the following payload \n" + JSON.stringify(data));
+
+try {
+    if(data["formtype"] == "acceleration") {
+         deviceManager.publishAcceleration(data);
+    }
+    if(data["formtype"] == "position") {
+       var deviceId = deviceManager.processLocation(data);
+       deviceManager.publishPosition(deviceId)
+    }
+    return null;
+}catch(exception) {
+	return exception;    
+}
