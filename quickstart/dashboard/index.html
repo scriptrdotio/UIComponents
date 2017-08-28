@@ -111,23 +111,23 @@
                 <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 0 , row: 0 }'>
                     <div class="box">
                         <div class="box-content">
-                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Device Acceleration" class="box-label">Device Acceleration</div>
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Acceleration" class="box-label">Acceleration</div>
                           <div  style="height: calc(100% - 30px)" > <scriptr-accelerometer
                                       	transport= 'wss' 
                                       	msg-tag= 'acceleration_1366242365' 
-                                      	boxLabel= 'Device Acceleration' 
+                                      	boxLabel= 'Acceleration' 
                                       	http-method= 'GET' 
                            ></scriptr-accelerometer> </div>
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 2, sizeY: 2, col: 2 , row: 0 }'>
+                <li class="myItem" gridster-item='{sizeX: 3, sizeY: 2, col: 2 , row: 0 }'>
                     <div class="box">
                         <div class="box-content">
-                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Device Position" class="box-label">Device Position</div>
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Location" class="box-label">Location</div>
                           <div  style="height: calc(100% - 30px)" > <scriptr-map
                                       	transport= 'wss' 
-                                      	boxLabel= 'Device Position' 
+                                      	boxLabel= 'Location' 
                                       	clustered-view= 'false' 
                                       	cluster-zoom= '8' 
                                       	heatmap= 'true' 
@@ -149,19 +149,19 @@
                         </div>
                     </div>
                 </li>
-                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 4 , row: 0 }'>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 4 , row: 2 }'>
                     <div class="box">
                         <div class="box-content">
-                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Speedometer" class="box-label">Speedometer</div>
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Average Speed" class="box-label">Average Speed</div>
                           <div  style="height: calc(100% - 30px)" > <scriptr-speedometer
-                                      	transport= 'https' 
-                                      	boxLabel= 'Speedometer' 
+                                      	transport= 'wss' 
+                                      	boxLabel= 'Average Speed' 
                                       	data= '20' 
-                                      	msg-tag= 'speedometer' 
+                                      	msg-tag= 'speedometer_average_1366242365' 
                                       	min-value= '0' 
-                                      	max-value= '1000' 
-                                      	tick-space-min-val= '20' 
-                                      	tick-space-maj-val= '100' 
+                                      	max-value= '10000' 
+                                      	tick-space-min-val= '200' 
+                                      	tick-space-maj-val= '1000' 
                                       	tick-col-maj= '#C64DFF' 
                                       	tick-col-min= '#999999' 
                                       	outer-edge-col= '#f4f4f4' 
@@ -172,9 +172,82 @@
                                       	needle-col= '#C64DFF' 
                                       	default-fonts= 'Source Sans Pro' 
                                       	http-method= 'GET' 
+                                      	api= 'quickstart/api/getLiveAverageSpeed' 
+                                      	api-params= '{"deviceId": "1366242365"}' 
+                                      	gauge-units= 'meter/hr' 
+                           ></scriptr-speedometer> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 4, sizeY: 2, col: 0 , row: 2 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Line Chart" class="box-label">Line Chart</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-chart
+                                      	type= 'line' 
+                                      	boxLabel= 'Line Chart' 
+                                      	xkey= 'timestamp' 
+                                      	ykeys= '["speed"]' 
+                                      	labels= '["Speed"]' 
+                                      	colors= '["#FCC717","#38B9D6"]' 
+                                      	transport= 'wss' 
+                                      	msg-tag= 'linechart_1366242365' 
+                                      	data= '[{"y": 2006, "a": 2, "b": 3 }, { "y": 2007, "a": 82, "b": 68 }, { "y": 2009, "a": 70, "b": 99 }, { "y":2010, "a": 30, "b": 64 }, { "y": 2011, "a": 72, "b":100 }, { "y": 2012, "a": 81, "b": 81 }, { "y": 2013,"a": 52, "b": 39 } ]' 
+                                      	grid-text-family= 'Source Sans Pro' 
+                                      	line-width= '3' 
+                                      	point-size= '4' 
+                                      	point-stroke-colors= '["#fff"]' 
+                                      	ymax= 'auto' 
+                                      	ymin= 'auto 0' 
+                                      	smooth= 'true' 
+                                      	hide-hover= 'false' 
+                                      	parse-time= 'true' 
+                                      	xlabels= 'auto' 
+                                      	xlabel-angle= '0' 
+                                      	goal-stroke-width= '1' 
+                                      	goal-line-colors= '["#666633","#999966","#cc6666","#663333"]' 
+                                      	event-stroke-width= '1' 
+                                      	event-line-colors= '["#005a04","#ccffbb","#3a5f0b","#005502"]' 
+                                      	axes= 'true' 
+                                      	grid= 'true' 
+                                      	grid-text-color= '#888' 
+                                      	grid-text-size= '12' 
+                                      	grid-text-weight= 'normal' 
+                                      	http-method= 'GET' 
+                                      	point-fill-colors= '[null]' 
+                                      	goals= '[null]' 
+                                      	events= '[null]' 
+                                      	pre-units= '' 
+                                      	post-units= 'meter/hr' 
+                           ></scriptr-chart> </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="myItem" gridster-item='{sizeX: 1, sizeY: 1, col: 4 , row: 3 }'>
+                    <div class="box">
+                        <div class="box-content">
+                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Speed" class="box-label">Speed</div>
+                          <div  style="height: calc(100% - 30px)" > <scriptr-speedometer
+                                      	transport= 'wss' 
+                                      	boxLabel= 'Speed' 
+                                      	data= '45' 
+                                      	msg-tag= 'speedometer_speed_1366242365' 
+                                      	min-value= '0' 
+                                      	max-value= '10000' 
+                                      	tick-space-min-val= '200' 
+                                      	tick-space-maj-val= '1000' 
+                                      	tick-col-maj= 'rgb(148, 189, 125)' 
+                                      	tick-col-min= '#999999' 
+                                      	outer-edge-col= '#f4f4f4' 
+                                      	pivot-col= 'rgb(138, 226, 52)' 
+                                      	inner-col= '#fff' 
+                                      	units-label-col= 'rgb(148, 189, 125)' 
+                                      	tick-label-col= '#656D78' 
+                                      	needle-col= 'rgb(148, 189, 125)' 
+                                      	default-fonts= 'Source Sans Pro' 
+                                      	http-method= 'GET' 
                                       	api= 'quickstart/api/getLiveSpeed' 
-                                      	api-params= '{"deviceId": "2504326744"}' 
-                                      	gauge-units= 'mh' 
+                                      	api-params= '{"deviceId":"1366242365"}' 
                            ></scriptr-speedometer> </div>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 var document = require("document");
 var calcSpeed = require("../entities/process/speed");
+var aggregates = require("../lib/aggregates");
 /**
  * @function save
  * @param {Object} data: data as received from device
@@ -27,7 +28,7 @@ function processLocation(data) {
     log.info("Speed "+speed)
     if (speed != -1  && speed != "ERROR") {      
         //calculate average speed
-        calcSpeed.calculateAvgSpeed(data.deviceId, speed)
+        calcSpeed.calculateAvgSpeed(data.deviceId, speed, data.timestamp)
     };
     log.info("End Calculating Speed.")
     /*
@@ -56,11 +57,22 @@ function publishPosition(deviceId) {
         res[data.deviceId] = {"trip0": [{"lat": {"value": parseFloat(data.latitude)}, "long": {"value": parseFloat(data.longitude) }, "speed" : {
             "value" : data.speed,
             "description" : "kmh"}}], "source" : "simulator", "order" : [ "trip0" ]}
-        log.info("res "+JSON.stringify(res))
+        //Publish new location data for device
         publish("responseChannel", {"id": data["formtype"], "result": res});
         
-        var speedoId = "speedometer"+"_"+ data.deviceId
-        //Publish live speed
-        publish("responseChannel", {"id": speedoId, "result": parseFloat(data.speed) * 1000});
+        //Publish device calculated speed
+         var speedId = "speedometer_speed_"+"_"+ data.deviceId
+         publish("responseChannel", {"id": speedId, "result": parseFloat(data.speed)});
+        
+        var deviceAggregates =  aggregates.getAggregates(data.deviceId); 
+        var avgSpeedId = "speedometer_average_speed_"+"_"+ data.deviceId
+        //Publish average speed whenever calculated
+        publish("responseChannel", {"id": avgSpeedId, "result": parseFloat(deviceAggregates.average) * 1000});
+        
+        
+        var deviceDataPoints =  aggregates.getDataPoints(data.deviceId);
+        var lineChartId = "linechart_speed_"+ data.deviceId;
+        //publish new registered speed point
+        publish("responseChannel", {"id": lineChartId, "result": deviceDataPoints});
     }
 }

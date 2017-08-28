@@ -1,0 +1,28 @@
+var aggregates = require("../lib/aggregates");
+
+// read data from request rawBody or body property
+var data = request.body ? request.body : (request.rawBody ? request.rawBody : request.parameters);
+
+var params = {};
+if(request.body != null){
+	params = request.body;
+}else if(request.parameters.body){
+	params = request.parameters.body;
+} else {
+  params = request.parameters;
+}
+if(typeof params == 'string' && params != null){
+  	try{
+    	params = JSON.parse(params);   
+    }catch(e){
+      	return "INVALID OR MISSING PARAMETER";
+    }
+}
+
+if(params && params.deviceId) {
+    var deviceAggregates =  aggregates.getAggregates(params.deviceId); 
+    var speedoId = "speedometer_average"+"_"+ params.deviceId;
+    return parseFloat(deviceAggregates.average) * 1000;
+} else {
+    return "Parameter deviceId is required.";
+}

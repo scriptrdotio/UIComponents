@@ -4,16 +4,20 @@
     <title>Device Simulator</title>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/quickstart/simulator/style.css" />
+	<link href="//fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fingerprintjs/0.5.3/fingerprint.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+    
     <script>
         var myApp = angular.module('myApp', ["WsClient"]);
         myApp.config(["wsClientProvider",function (wsClientProvider) {
-            wsClientProvider.setToken("");
+            wsClientProvider.setToken("VDFBMkMzMThDRQ==");
             wsClientProvider.setPublishChannel("requestChannel");
             wsClientProvider.setSubscribeChannel("responseChannel");
         }]);
@@ -52,7 +56,9 @@
                     if(vm.acceleration) {
                         vm.acceleration["formtype"] = "acceleration";
                         vm.acceleration["deviceId"] = vm.fingerprint;
-                        wsClient.publish(angular.copy(vm.acceleration), "acceleration").then(
+                        //Temporary use call instead of publish, it can be publish
+                        //wsClient.publish(angular.copy(vm.acceleration), "acceleration").then(
+                        wsClient.call("quickstart/api/subscriber", angular.copy(vm.acceleration), "acceleration").then(
                             function(data, response) {
                                 vm.callData =  JSON.stringify(data)
                                 console.log("resolve call promise on key 'acceleration'", data)
@@ -90,7 +96,9 @@
                     if(vm.orientation) {
                         vm.orientation["formtype"] = "orientation";
                         vm.orientation["deviceId"] = vm.fingerprint;
-                        wsClient.publish(angular.copy(vm.orientation), "orientation").then(
+                        //Temporary use call instead of publish, it can be replaced by publish
+                        //wsClient.publish(angular.copy(vm.orientation), "orientation").then(
+                        wsClient.call("quickstart/api/subscriber", angular.copy(vm.orientation), "orientation").then(
                             function(data, response) {
                                 vm.callData =  JSON.stringify(data)
                                 console.log("resolve call promise on key 'acceleration'", data)
@@ -139,7 +147,9 @@
                     if(vm.position) {
                         vm.position["formtype"] = "position";
                         vm.position["deviceId"] = "" + vm.fingerprint;
-                        wsClient.publish(angular.copy(vm.position), "position").then(
+                        //Temporary use call instead of publish, it can be replaced by publish
+                        //wsClient.publish(angular.copy(vm.position), "orientation").then(
+                        wsClient.call("quickstart/api/subscriber", angular.copy(vm.position), "position").then(
                             function(data, response) {
                                 vm.callData =  JSON.stringify(data)
                                 console.log("resolve call promise on key 'position'", data)
@@ -173,12 +183,27 @@
     </script>
     <body ng-app="myApp">  
         <div ng-controller="simulatorCtrl as vm" ng-init="vm.init()">
-            <div class="alert alert-info"> Your device Id: <div id="deviceId">{{ vm.fingerprint || 'Device id unknown'}}</div></div>
-            <div class="alert alert-success" id="deviceorientation">{{ vm.orientation || 'Orientation unknown'}}</div>
-            <div class="alert alert-success" id="devicemotion">{{ vm.acceleration || 'Acceleration unknown'}}</div>
-            <div class="alert alert-success"id="location">{{ vm.position || 'Location unknown'}}</div>
             
-            <div class="alert alert-danger">Check your device data charted and analysed on you scriptr quickstart/dashboard/index.html</div>
+            <div class="col-xs-12 text-center mt20">
+                <div class="finger-print-box text-center">
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84.18 89.92"><path class="cls-1" d="M32.49,90.84a2,2,0,0,1-.9-3.8c3.1-1.5,7.4-5.9,8.8-7.4a2,2,0,0,1,3,2.6c-0.2.3-5.6,6.2-10,8.3A1.61,1.61,0,0,1,32.49,90.84Zm14.9-14.1c0.3-.3,6.9-8.1,4.8-28.1a2,2,0,0,0-4,.4c1.9,17.9-3.7,24.9-3.8,25a2,2,0,0,0,.2,2.8,2.35,2.35,0,0,0,1.3.5A2,2,0,0,0,47.39,76.74Zm0,16.8a50.59,50.59,0,0,0,11-23.1,2,2,0,0,0-4-.6,46.57,46.57,0,0,1-10,21.1,2,2,0,0,0,.2,2.8A1.95,1.95,0,0,0,47.39,93.54Zm8.9,0.9c0.5-.6,13.3-14.7,12.3-40.3a2,2,0,1,0-4,.2c0.9,23.7-11.1,37.2-11.3,37.3a2,2,0,0,0,.1,2.8,1.87,1.87,0,0,0,1.4.5A1.65,1.65,0,0,0,56.29,94.44Zm10.9-3c0.4-.5,9.7-11.4,8.7-43.5a28.94,28.94,0,0,0-5.7-16.7c-5.1-6.7-14.7-13.4-31.7-7.1a2,2,0,0,0,1.4,3.8c11.9-4.4,21-2.5,27.2,5.7A25.5,25.5,0,0,1,72,48.14c1,30.2-7.6,40.6-7.7,40.8a2,2,0,0,0,.2,2.8,2.35,2.35,0,0,0,1.3.5A2.85,2.85,0,0,0,67.19,91.44Zm-43-7.2c8.2-3.9,12-6.2,16.4-11.2,4.8-5.4,4.8-13.4,4.8-13.8V45.14a5.78,5.78,0,0,1,1-3,5.27,5.27,0,0,1,2.9-1.9,5.33,5.33,0,0,1,2.5-.2,4.23,4.23,0,0,1,2.6,1.2,6.83,6.83,0,0,1,2.5,5.5v10.8a2,2,0,0,0,4,0V46.64a10.89,10.89,0,0,0-3.9-8.5,8.83,8.83,0,0,0-4.5-2,8.2,8.2,0,0,0-4.4.3,8.87,8.87,0,0,0-5,3.5,10.86,10.86,0,0,0-1.7,5.2v14.1c0,0.1,0,6.8-3.8,11.1-4.1,4.6-7.2,6.5-15.1,10.3a2.14,2.14,0,0,0-1,2.7A2.05,2.05,0,0,0,24.19,84.24Zm-7.3-6.9a35.68,35.68,0,0,0,7.8-3.4,19.42,19.42,0,0,0,9.7-14.4c0-.4.1-0.8,0.1-1.2v-9.8a17.2,17.2,0,0,1,5-12.4,14.59,14.59,0,0,1,5.8-3.5,17.84,17.84,0,0,1,9.3.4c6,1.9,9.1,5.8,10,12.7v1.4a2,2,0,0,0,2,2h0a2,2,0,0,0,2-2,13.43,13.43,0,0,0-.1-1.9c-1.1-8.5-5.2-13.7-12.8-16.1a21.9,21.9,0,0,0-11.6-.4,18,18,0,0,0-7.5,4.4,21.21,21.21,0,0,0-6.2,15.3v9.7a2.77,2.77,0,0,1-.1.9,15.22,15.22,0,0,1-7.7,11.4,32.06,32.06,0,0,1-6.9,3h0a2,2,0,0,0-1.4,2.5,1.93,1.93,0,0,0,1.9,1.5A2.25,2.25,0,0,1,16.89,77.34Zm-4.5-6.9,9.1-4.3a9.84,9.84,0,0,0,4.6-4.4c1.5-2.8,1.5-7.3,1.5-7.8a2,2,0,0,0-2-2h0a2,2,0,0,0-2,2,15.51,15.51,0,0,1-1.1,5.9,6.93,6.93,0,0,1-2.9,2.7l-9,4.3a2.14,2.14,0,0,0-1,2.7,2,2,0,0,0,1.8,1.1C11.79,70.54,12.09,70.54,12.39,70.44Zm5.1-9.5a7.12,7.12,0,0,0,2.3-5.3v-0.2c0-.2-1.8-15.1,3.7-23.1l0.1-.1c0.5-.9,13.3-21.7,38.4-12.2a2,2,0,0,0,1.4-3.8c-27.5-10.5-42.3,12.3-43.2,13.8-6.1,8.8-4.6,23.8-4.4,25.6a2.87,2.87,0,0,1-.9,2.3,4.74,4.74,0,0,1-3.2.8,2,2,0,1,0-.4,4h0.8A8.07,8.07,0,0,0,17.49,60.94Zm8.4-11a1.93,1.93,0,0,0,1.8-2.1,20.31,20.31,0,0,1,7.9-17.4,2,2,0,1,0-2.3-3.3c-0.4.3-10.6,7.7-9.5,21a2,2,0,0,0,2,1.8h0.1Zm-15.4,6.2a1.88,1.88,0,0,0,1.7-2.2c0-.2-2-16.4,4.4-25.3a2.15,2.15,0,0,0-.4-2.8,2.15,2.15,0,0,0-2.8.4c-7.4,10.3-5.2,27.5-5.1,28.2a2,2,0,0,0,2,1.7C10.29,56.24,10.39,56.14,10.49,56.14Zm80.4,18.1c2.6-27.8.2-37.6,0-38.7-3.3-15.4-16.9-23.2-18.2-23.9a44.19,44.19,0,0,0-25.5-6.5c-18.9,1-30.2,16-30.7,16.6a2,2,0,1,0,3.2,2.4c0.1-.1,10.7-14.1,27.8-15,0.1,0,12.4-.9,23.2,6l0.1,0.1c0.1,0,13.2,7.1,16.2,21.2v0.1c0,0.1,2.5,9.3-.1,37.3a2,2,0,0,0,1.8,2.2h0.2A2,2,0,0,0,90.89,74.24Zm-12.4,11.7c0.3-.5,6.9-11.9,5.7-38.1,0-.8-0.3-19.1-13.8-27.9a2,2,0,0,0-2.2,3.4c11.6,7.7,12,24.5,12,24.7,1.1,24.9-5.1,35.8-5.2,36a2,2,0,0,0,.7,2.7,1.93,1.93,0,0,0,1,.3A3.07,3.07,0,0,0,78.49,85.94Z" transform="translate(-7.91 -5.04)"/></svg></div>
+            	<h3>Your device Id:</h3> <h1 class="bold text-orange mt5" id="deviceId">{{ vm.fingerprint || 'Device id unknown'}}</h1>
+            </div>
+            <div class="col-xs-12 hide" id="deviceorientation">{{ vm.orientation || 'Orientation unknown'}}</div>
+            <div class="col-xs-6 mt20">
+                <div class="bg-box">
+                    <h3 class="text-uppercase bold text-white box-title"><i class="fa fa-dashboard mr5" aria-hidden="true"></i> Device Acceleration</h3>
+                	<pre id="devicemotion">{{ vm.acceleration || 'Acceleration unknown'}}</pre>
+                </div>
+            </div>
+            <div class="col-xs-6 mt20">
+                <div class="bg-box">
+                    <h3 class="text-uppercase bold text-white box-title"><i class="fa fa-map-marker mr5" aria-hidden="true"></i> Device Location</h3>
+                	<pre id="location">{{ vm.position || 'Location unknown'}}</pre>
+                </div>
+            </div>
+            
+            <div class="col-xs-12 text-muted mt10"><i class="fa fa-info-circle" aria-hidden="true"></i> Check your device data charted and analysed on you scriptr quickstart/dashboard/index.html</div>
            
         </div>
         

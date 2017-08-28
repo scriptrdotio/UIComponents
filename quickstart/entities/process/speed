@@ -82,7 +82,7 @@ function calculateSpeed(x) {
  * @param {Number} currentSpeed: lasted obtained value for the asset's speed
  * @return {Number} average speed
  */
-function calculateAvgSpeed(assetId, currentSpeed) {
+function calculateAvgSpeed(assetId, currentSpeed, timestamp) {
     
   var MAX_SAMPLES = 10;
   log.info("Start Calculating Average Speed." + currentSpeed + " " + assetId)
@@ -91,7 +91,7 @@ function calculateAvgSpeed(assetId, currentSpeed) {
 
     var sum = 0;
     for (var i = 0; list && i < list.length; i++) {
-      sum += list[i];    
+      sum += list[i].speed;    
     }
 
     return {
@@ -102,7 +102,7 @@ function calculateAvgSpeed(assetId, currentSpeed) {
   var avgSpeed = -1;
   if (currentSpeed) {
     
-    aggregates.addDataPoint(assetId, currentSpeed, MAX_SAMPLES, calcAggregatesFunction);
+    aggregates.addDataPoint(assetId, {"speed": currentSpeed, "timestamp": timestamp}, MAX_SAMPLES, calcAggregatesFunction);
     avgSpeed = aggregates.getAggregates(assetId).average;  
   } 
   

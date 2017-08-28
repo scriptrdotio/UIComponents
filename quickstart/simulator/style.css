@@ -1,0 +1,13 @@
+body {font-family: 'Montserrat', sans-serif; font-size: 24px;}
+.finger-print-box {width: 230px; height: 230px; padding: 9px 17px; margin: 0 auto;  background: #fff; border-radius: 50%; box-shadow: 0 0 20px #d6d6d6;}
+.cls-1{fill:#ff8c00;}
+.mr5 {margin-right: 5px;}
+.mt20 {margin-top: 20px;}
+.mt20 {margin-top: 20px;}
+.mt5 {margin-top: 5px;}
+.bold {font-weight: 700;}
+.text-orange {color: #ff8c00;}
+.text-white {color: #fff;}
+.bg-box {background: #323232;}
+pre {white-space: pre-wrap; word-break: keep-all; border: none; border-radius: 0; font-size: 22px; min-height: 240px;}
+.box-title {margin: 0; padding: 10px;}
