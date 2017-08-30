@@ -103,6 +103,13 @@
             vm.{{this}} = $location.search()[&quot;{{this}}&quot;]
           {{/each}}
         }
+        {{#each items}}
+           	{{#if this.formatFunction}}   
+                vm.{{this.formatFunction}} = function(data){
+                  {{this.formatFunctionValue}}
+                }
+           	{{/if}} 
+        {{/each}}
      });
         	
 })();
@@ -119,9 +126,12 @@
                         &lt;div class=&quot;box-content&quot;&gt;
                           &lt;div  style=&quot;height: 30px;&quot; tooltip-placement=&quot;bottom&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot; class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
                           &lt;div  style=&quot;height: calc(100% - 30px)&quot; &gt; &lt;{{type}}
-                           	      {{#each this.options}} 
-                                      	{{@key}}= '{{{json this}}}' 
-                                  {{/each}} 
+                           	      {{#buildAttr this.options }}
+                                        {{this}}
+                                  {{/buildAttr}}
+                                  {{#if this.formatFunction}}   
+                                  		on-format-data='vm.{{this.formatFunction}}'
+                                  {{/if}} 
                            &gt;&lt;/{{type}}&gt; &lt;/div&gt;
                         &lt;/div&gt;
                     &lt;/div&gt;

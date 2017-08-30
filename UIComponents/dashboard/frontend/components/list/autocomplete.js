@@ -103,9 +103,6 @@ angular
                 $scope.$broadcast('angucomplete-alt:setSelectedObjects', self.id, this.objects);
            } 
              
-           if(self.msgTag){
-               wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);
-           }  
              
            if(self.api){
                self.showList = false;
@@ -123,10 +120,14 @@ angular
          var initDataService = function(transport) {
            if (transport == "wss") {
              wsClient.onReady.then(function() {
+               // Subscribe to socket messages with id chart
+               wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
+               if(self.api) {
                  wsClient.call(self.api, self.apiParams, self.msgTag)
                    .then(function(data, response) {
                    self.consumeData(data)
                  });
+               }
              });
            }else {
                 if (transport == "https" && self.api) {

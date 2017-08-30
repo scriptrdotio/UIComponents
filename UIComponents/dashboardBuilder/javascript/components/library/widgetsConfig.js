@@ -44,9 +44,25 @@ angular
                            "items" : [ {
                               "type" : "section",
                               "htmlClass" : "col-xs-12",
-                              "items" : [ {
-	                              "key" : "data"
-                              } // ,"on-format-data"
+                              "items" : [
+                                  {
+	                              	"key" : "data"
+                              	  },
+                                  {
+                                      "key" : "on-format-data",
+                                      "type": "codemirror",
+                                      "codemirrorOptions": {
+                                          value: "return",
+                                          styleActiveLine: true,
+                                          lineNumbers: false,
+                                          lineWrapping: true,
+                                          autoCloseBrackets: true,
+                                          matchBrackets: true,
+                                          theme: "neo",
+                                          mode: "javascript",
+                                          readOnly: false
+                                      }
+                                  }
                               ]
                            } ]
                         },
@@ -125,12 +141,9 @@ angular
                   },
                   "on-format-data" : {
                      "title" : "Format data",
+                     "default" : "return data;",
                      "type" : "string",
-                     "description" : "Callback function to be called after data is returned from backend.",
-                     "x-schema-form" : {
-                        "type" : "textarea",
-                        "placeholder" : "Enter you format data function"
-                     }
+                     "description" : "Callback function to be called after data is returned from backend."
                   }
                }
 
@@ -204,7 +217,8 @@ angular
                            "labels" : "[\"Serie A\", \"Serie B\"]",
                            "colors" : [ "#7ed38c", "#dd7ca7" ],
                            "transport" : "wss",
-                           "api" : "UIComponents/dashboard/frontend/examples/chart/getChartData",
+                           "on-format-data": "return data;",  
+                       //    "api" : "UIComponents/dashboard/frontend/examples/chart/getChartData",
                            "msg-tag" : "chart",
                            "data" : '[{"y":"2006","a":88,"b":20},{"y":"2007","a":30,"b":34},{"y":"2008","a":90,"b":42},{"y":"2009","a":89,"b":59},{"y":"2010","a":43,"b":61},{"y":"2011","a":85,"b":69},{"y":"2012","a":29,"b":65}]',
                            "grid-text-family" : "Source Sans Pro"
@@ -612,6 +626,7 @@ angular
                         "show" : true,
                         "defaults" : {
                            "type" : "area",
+                           "on-format-data": "return data;",
                            "boxLabel" : "Area Chart",
                            "xkey" : "y",
                            "ykeys" : "[\"a\", \"b\"]",
@@ -1235,13 +1250,14 @@ angular
                         "show" : true,
                         "defaults" : {
                            "type" : "line",
+                           "on-format-data": "return data;", 
                            "boxLabel" : "Line Chart",
                            "xkey" : "y",
                            "ykeys" : "[\"a\", \"b\"]",
                            "labels" : "[\"Serie A\", \"Serie B\"]",
                            "colors" : [ "#FCC717", "#38B9D6" ],
                            "transport" : "wss",
-                           "api" : "UIComponents/dashboard/frontend/examples/chart/getChartData",
+                        //   "api" : "UIComponents/dashboard/frontend/examples/chart/getChartData",
                            "msg-tag" : "chart",
                            "data" : '[{"y": 2006, "a": 2, "b": 3 }, { "y": 2007, "a": 82, "b": 68 }, { "y": 2009, "a": 70, "b": 99 }, { "y":2010, "a": 30, "b": 64 }, { "y": 2011, "a": 72, "b":100 }, { "y": 2012, "a": 81, "b": 81 }, { "y": 2013,"a": 52, "b": 39 } ]',
                            "grid-text-family" : "Source Sans Pro"
@@ -1813,6 +1829,7 @@ angular
                         "show" : true,
                         "defaults" : {
                            "type" : "donut",
+                           "on-format-data": "return data;", 
                            "boxLabel" : "Donut Chart",
                            "transport" : "wss",
                            "data" : '[{label: "Drillers", value: 50}, {label: "Cranes",value: 20 }, {label: "Blasters", value: 30 }]',
@@ -1919,10 +1936,11 @@ angular
                         "show" : true,
                         "defaults" : {
                            "transport" : "wss",
+                           "on-format-data": "return data;", 
                            "boxLabel" : "Gauge",
                            "msg-tag" : "gauge",
-                           "data" : 30,
-                        // "api" : "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"
+                        //   "data" : 30,
+                           "api" : "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"
                         },
                         "box" : {
                            sizeX : 1,
@@ -2760,9 +2778,10 @@ angular
                         "defaults" : {
                            "transport" : "wss",
                            "boxLabel" : "Speedometer",
+                           "on-format-data": "return data;", 
                            "data" : 45,
                            "msg-tag" : "speedometer"
-                        // ,"api" : "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal"
+                     //     ,"api" : "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal"
                         },
                         "box" : {
                            sizeX : 1,
@@ -3000,7 +3019,8 @@ angular
                         "defaults" : {
                            "transport" : "wss",
                            "msg-tag" : "thermometer",
-                           "api" : "UIComponents/dashboard/frontend/examples/thermometer/getThermometerValue",
+                           "on-format-data": "return data;", 
+                       //    "api" : "UIComponents/dashboard/frontend/examples/thermometer/getThermometerValue",
                            "height" : 220,
                         },
                         "box" : {
@@ -3069,6 +3089,7 @@ angular
                            "data" : 28022017,
                            // "api" : "UIComponents/dashboard/frontend/examples/odometer/getOdometerVal",
                            "animation" : "count",
+                           "on-format-data": "return data;", 
                            "duration" : "1000",
                            "size" : "2"
                         },
@@ -3134,9 +3155,10 @@ angular
                         "defaults" : {
                            "transport" : "wss",
                            "msg-tag" : "progressbar",
-                           "api" : "UIComponents/dashboard/frontend/examples/progressBar/getProgressBarVal",
+                       //    "api" : "UIComponents/dashboard/frontend/examples/progressBar/getProgressBarVal",
                            "value" : "20",
                            "animate" : "true",
+                           "on-format-data": "return data;", 
                            "title" : "Progress bar",
                            "class" : "progress-striped active"
                         },
@@ -3223,6 +3245,7 @@ angular
                         "commonData" : true,
                         "show" : true,
                         "defaults" : {
+                           "on-format-data": "return data;", 
                            "transport" : "wss",
                            "boxLabel" : "Map",
                            "clustered-view" : "true",
@@ -3467,8 +3490,8 @@ angular
                         "defaults" : {
                            "transport" : "wss",
                            "msg-tag" : "accelerometer",
-                           "boxLabel": "Accelerometer",
-                           "api" : "UIComponents/dashboard/frontend/examples/accelerometer/getAccelerometerData"
+                           "on-format-data": "return data;" 
+                      //     ,"api" : "UIComponents/dashboard/frontend/examples/accelerometer/getAccelerometerData"
                         },
                         "box" : {
                            sizeX : 2,
@@ -3516,7 +3539,7 @@ angular
                         "class" : "scriptr-grid",
                         "show" : true,
                         "defaults" : {
-                           "columns-definition" : '[{headerName: "Name", field: "name"},{headerName: "Model", field: "model"},{headerName: "Price", field: "price", type: "numeric"}]',
+                           "columns-definition" : '[{headerName: "Name", field: "name"},{headerName: "Model", field: "model"},{headerName: "Price", field: "price"}]',
                            "row-data" : '[{name: "Toyota", model: "Celica", price: 35000},{name: "Ford", model: "Mondeo", price: 32000},{name: "Porsche", model: "Boxter", price: 72000}]',
                            "enable-sorting" : "true",
                            // "api":'UIComponents/dashboard/frontend/examples/grid/gridAPI',
@@ -3527,7 +3550,7 @@ angular
                            "fixed-height" : "false",
                            "enable-add-row" : 'true',
                            "msg-tag" : "grid",
-
+						   "on-format-data": "return data;",	
                            "cell-editable" : 'true',
                            "enable-client-side-filter" : 'true',
                            "enable-server-side-filter" : 'false',
@@ -3633,7 +3656,21 @@ angular
                                              "items" : [ {
                                                 "type" : "section",
                                                 "htmlClass" : "col-xs-6",
-                                                "items" : [ "pagination-page-size" ]
+                                                "items" : [ 
+                                                          {
+                                                               "key" : "pagination",
+                                                               "type" : "radios-inline",
+                                                               titleMap : [
+                                                                     {
+                                                                        value : "true",
+                                                                        name : "True"
+                                                                     },
+                                                                     {
+                                                                        value : "false",
+                                                                        name : "False"
+                                                                     } ]
+                                                            }
+                                                ]
                                              } ]
                                           },
                                           {
@@ -3644,7 +3681,7 @@ angular
                                                       "type" : "section",
                                                       "htmlClass" : "col-xs-6",
                                                       "items" : [
-                                                            "row-model-type",
+                                                            "row-model-selection",
                                                             {
                                                                "key" : "enable-client-side-sorting",
                                                                "type" : "radios-inline",
@@ -3728,7 +3765,7 @@ angular
                                                       "type" : "section",
                                                       "htmlClass" : "col-xs-6",
                                                       "items" : [
-                                                            "row-model-selection",
+                                                            "pagination-page-size",
                                                             {
                                                                "key" : "enable-server-side-sorting",
                                                                "type" : "radios-inline",
@@ -3739,7 +3776,7 @@ angular
                                                                      },
                                                                      {
                                                                         value : "false",
-                                                                        name : "Fralse"
+                                                                        name : "False"
                                                                      } ]
                                                             },
                                                             {
@@ -3852,11 +3889,16 @@ angular
                                  "type" : "string",
                                  "description" : "Enable column resize."
                               },
+                              "pagination" : {
+                                 "title" : "Enable Pagination",
+                                 "type" : "string",
+                                 "description" : "Enable Pagination."
+                              }, 
                               "row-model-type" : {
                                  "title" : "Row Model Type",
                                  "type" : "string",
                                  "description" : "The supported ways are 'virtual' and 'pagination' for only non-static data",
-                                 "default" : "Source Sans Pro",
+                                 "default" : "pagination",
                                  "format" : 'uiselect',
                                  "placeholder" : " ",
                                  "items" : [ {
@@ -3964,6 +4006,7 @@ angular
                            "knob-label" : "TV",
                            "on-label" : "ON",
                            "off-label" : "OFF",
+                           "on-format-data": "return data;", 
                            "on-switch-change" : "vm.onChange",
                            "transport" : "wss",
                            "msg-tag" : "toggle"
@@ -4209,6 +4252,7 @@ angular
                            "boxLabel" : "Slider",
                            "min" : 2,
                            "floor" : 0,
+                           "on-format-data": "return data;", 
                            "min-limit" : 1,
                            "max-limit" : 9,
                            "ceil" : 10,
@@ -5030,6 +5074,7 @@ angular
                         "commonData" : true,
                         "show" : false,
                         "defaults" : {
+                           "on-format-data": "return data;", 
                            "transport" : "wss",
                            "boxLabel" : "Text",
                            "msg-tag" : "text",

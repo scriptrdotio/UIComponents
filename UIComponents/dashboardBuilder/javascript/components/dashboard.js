@@ -51,6 +51,7 @@ angular
       this.wsClient = wsClient;
       var self = this;
       self.acls;  
+      self.counter = 0;  
             
       this.$onInit = function() {
         self.showTree = (typeof this.showTree != 'undefined')? this.showTree : true,  
@@ -191,7 +192,7 @@ angular
                 //$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when item is moved,
             stop: function(event, uiWidget, $element) {
-              console.log("End drag", event, uiWidget, $element);
+               //console.log("End drag", event, uiWidget, $element);
                 $(window).trigger('resize');
                  self.notifyDashboardChange();
               //$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
@@ -200,16 +201,16 @@ angular
         };
           
         $scope.$watch('self.dashboard.widgets', function(items){
-   console.log("one of the items changed")
+   //console.log("one of the items changed")
 }, true);
           
         $scope.$on('gridster-resized', function(event, sizes, gridster) { 
-      	  console.log("gridster-resized");
+      	  //console.log("gridster-resized");
           $(window).trigger('resize');     
         })
         
         $scope.$on('gridster-item-initialized', function(item) { 
-      	  console.log("gridster-item-initialized");
+      	  //console.log("gridster-item-initialized");
       	  $(window).trigger('resize');
         })
         
@@ -573,7 +574,7 @@ angular
           }
   
           this.dashboard.widgets.push({
-            "name": "New Widget",
+            "name": wdg.name,
             "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
             "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
             "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
@@ -738,7 +739,7 @@ angular
     controller: function($scope, $compile, $element, $uibModal) {
       
       var boxSelf = this;
-     
+        
       this.remove = function(widget) {
       	var self = this;
       	
@@ -764,21 +765,19 @@ angular
       };
       
       this.removeWidget = function(widget) {
+        delete this[widget["formatFunction"]];
         this.parent.dashboard.widgets.splice(this.parent.dashboard.widgets.indexOf(widget), 1);
         this.parent.notifyDashboardChange();
       };
       
-    
-            
       this.$onInit =  function() {
-          
-                  $scope.$on('gridster-item-transition-end', function(item) { 
-         console.log("gridster-item-transition end");
+         $scope.$on('gridster-item-transition-end', function(item) { 
+         	//console.log("gridster-item-transition end");
          $(window).trigger('resize');
         })
         
         $scope.$on('gridster-item-resized', function(item) {
-		 	console.log("gridster-item-resized");
+		 	//console.log("gridster-item-resized");
          	$(window).trigger('resize');
         })
         var self = this;
@@ -786,11 +785,8 @@ angular
           this.addWidget(this.widget)
         }
         
-        
-        
-        
         $scope.$on("resize_widget", function(event, data) {
-          	console.log("Widget resize", event, data);
+          	//console.log("Widget resize", event, data);
           	$(window).trigger('resize');
             if(self.widget == data.element) {
                 if(self.widget.type == "scriptr-grid") {
@@ -803,7 +799,7 @@ angular
         });
         
          $scope.$on("drag_widget", function(event, data) {
-		      console.log("Widget dragged", event, data);
+		      //console.log("Widget dragged", event, data);
              //$(window).trigger('resize');
               boxSelf.parent.notifyDashboardChange();
         });
@@ -836,19 +832,31 @@ angular
                console.info('modal-component for widget update dismissed at: ' + new Date());
             });
       };
-      
+        
       this.addWidget = function(widget) {
         var self = this;
         this.chart = angular.element(document.createElement(widget.type));
-        
+
         angular.forEach(widget.options, function(value, key) {
          if(angular.isArray(value) || angular.isObject(value)){
              self.chart.attr(key, JSON.stringify(value));
+         } else if(key == "on-format-data") {
+             if(!this.parent.dashboard.counter){
+                this.parent.dashboard.counter = 0; 
+             }
+             this.parent.dashboard.counter += 1;
+             var counter = this.parent.dashboard.counter;
+             var functionName = (widget.name+ "FormatData"+counter);
+             self[functionName] = new Function('data', value);
+             widget["formatFunction"] = functionName;
+             widget["formatFunctionValue"] = value;
+          //   delete widget.options["on-format-data"];
+             self.chart.attr("on-format-data", ("$ctrl."+functionName))
          } else {
              self.chart.attr(key, value);
          }
         }, this);
-        
+ 
         var el = $compile( this.chart )( $scope );
         
         angular.element($element.find(".box-content")).append( el );
@@ -864,7 +872,12 @@ angular
         angular.forEach(wdgModel, function(value, key) {
            if(angular.isArray(value) || angular.isObject(value)){
              self.chart.attr(key, JSON.stringify(value));
-         } else {
+         } else if(key == "on-format-data") {
+             //var functionName = (self.widget.name+ "FormatData");
+             self[self.widget["formatFunction"]] = new Function('data', value);
+             self[self.widget["formatFunctionValue"]] = value;
+             self.chart.attr("on-format-data", ("$ctrl."+self.widget["formatFunction"]))
+         }  else {
              self.chart.attr(key, value);
          }
         }, this);

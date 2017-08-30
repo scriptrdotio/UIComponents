@@ -68,7 +68,7 @@
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/map/map.js&quot;&gt;&lt;/script&gt;
     
     
-    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ag-grid/10.0.0/ag-grid.js?ignore=notused36&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/grid/grid.js&quot;&gt;&lt;/script&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/grid/grid.css&quot;&gt;
     
@@ -141,9 +141,7 @@
 		}
 		return vars;
 	}
-	  
-
-      
+    
     var underscore = angular.module('underscore', []);
 		underscore.factory('_', ['$window', function($window) {		
   		return $window._; // assumes underscore has already been loaded on the page		
@@ -205,6 +203,13 @@
             vm.{{this}} = $location.search()[&quot;{{this}}&quot;]
           {{/each}}
         }
+        {{#each items}}
+           	{{#if this.formatFunction}}   
+                vm.{{this.formatFunction}} = function(data){
+                  {{this.formatFunctionValue}}
+                }
+           	{{/if}} 
+        {{/each}}
      });
         	
 })();
@@ -221,9 +226,12 @@
                         &lt;div class=&quot;box-content&quot;&gt;
                           &lt;div  style=&quot;height: 30px;&quot; tooltip-placement=&quot;bottom&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot; class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
                           &lt;div  style=&quot;height: calc(100% - 30px)&quot; &gt;  &lt;{{type}}
-                           	      {{#each this.options}} 
-                                      	{{@key}}= '{{{json this}}}' 
-                                  {{/each}} 
+                                    {{#buildAttr this.options }}
+                                        {{this}}
+                                    {{/buildAttr}}
+                                    {{#if this.formatFunction}}   
+                                  		on-format-data='vm.{{this.formatFunction}}'
+                                    {{/if}} 
                            &gt;&lt;/{{type}}&gt; &lt;/div&gt;
                         &lt;/div&gt;
                     &lt;/div&gt;

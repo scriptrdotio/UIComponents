@@ -211,6 +211,7 @@ angular
 
       //Call when receiving a new asset, or a set of assets
       self.processAssets = function(data) {
+        self.dynMarkers = [];  
         var assets = data;
        // var id = data.id;
         var process = function(assets) {
@@ -571,6 +572,8 @@ angular
             self.onSelectAsset()(assetKey);
         }
         self.selectedAsset = assetKey;
+        console.log("selectedAsset", self.selectedAsset)
+        console.log("markerInfoWindow", self.markerInfoWindow)
         self.showDetailedMap = true;
         if (self.infoWindow != null) {
           self.infoWindow.close();
@@ -588,8 +591,12 @@ angular
 
       //Show asset info in an info window
       self.showAssetInfo = function(event, marker, assetKey, tripKey, id) {
+      	
+        console.log("Show assetInfo assetKey", assetKey)
+        self.selectedAsset = assetKey;
         self.focusOnAsset(assetKey);
         var markerEl = this;
+        console.log("self.$wdgid", self.$wdgid);
         NgMap.getMap({
           id : 'detailed-'+self.$wdgid //TODO: MAke id parametrable or change selector if possible
         }).then(
@@ -600,18 +607,20 @@ angular
                 "id" : id
               })**/
             var infoWindow = "infoWindowTemplate_"+ $scope.$parent.marker.source;
-            
+            console.log("Info window", infoWindow)
+            console.log("self.markerInfoWindow", self.markerInfoWindow)
+            console.log("$scope.map.infoWindows", map.infoWindows)
             $scope.map = map;
             if(self.markerInfoWindow) {
                 if($scope.map.infoWindows[infoWindow]) {
                  	$scope.map.showInfoWindow(event, infoWindow, markerEl);
                  	//Keep track of opened info window
-                 	self.infoWindow = map.infoWindows[infoWindow];
+                 	self.infoWindow = $scope.map.infoWindows[infoWindow];
               } else {
                     $scope.marker = marker;
                 	var infoWindow = 'infoWindowTemplate_default_'+self.$wdgid
                 	$scope.map.showInfoWindow(event, infoWindow, markerEl);
-                	self.infoWindow = map.infoWindows[infoWindow];
+                	self.infoWindow = $scope.map.infoWindows[infoWindow];
               }
            }
 

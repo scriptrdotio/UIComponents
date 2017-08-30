@@ -168,6 +168,11 @@ angular
                          	}
                         	 return self.timeoutId = $timeout(self.resize, 100);
                         });
+                       
+                       $timeout(function() {
+                          $scope.$broadcast('reCalcViewDimensions');
+                          $scope.$broadcast('rzSliderForceRender');
+                       }, 2000)
 
 		               initDataService(this.api, self.apiParams, this.transport);
 
