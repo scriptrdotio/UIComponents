@@ -77,7 +77,7 @@ module.exports = function(grunt) {
 	         fetch_ag_grid : {
 		         all : {
 		            src : [
-		                  'https://cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36'],
+		                  'https://cdnjs.cloudflare.com/ajax/libs/ag-grid/12.0.0/ag-grid.js?ignore=notused36'],
 		            dest : 'lib/ag_grid.js'
 		         }
 
@@ -255,6 +255,7 @@ module.exports = function(grunt) {
 		                     'concat/min-safe/bootstrap-colorpicker.min.js',
 		                     'dashboardBuilder/lib/schemaForm/bootstrap-ui-select.min.js',
 		                     'dashboardBuilder/lib/schemaForm/bootstrap-ui-codemirror.min.js',
+                             'dashboardBuilder/lib/schemaForm/autorefresh.js',
 		                     // Components
 		                     'concat/min-safe/wsProvider.js',
 		                     'concat/min-safe/httpProvider.js',

@@ -54,13 +54,14 @@ angular
                                       "codemirrorOptions": {
                                           value: "return",
                                           styleActiveLine: true,
-                                          lineNumbers: false,
+                                          lineNumbers: true,
                                           lineWrapping: true,
                                           autoCloseBrackets: true,
                                           matchBrackets: true,
                                           theme: "neo",
                                           mode: "javascript",
-                                          readOnly: false
+                                          readOnly: false,
+                                          autoRefresh: true
                                       }
                                   }
                               ]

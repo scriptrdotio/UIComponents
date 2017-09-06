@@ -354,3 +354,7 @@ height: auto !important;
 
 /*** View template of the dashboard ****/
 .dashboard-template .gridster-item {cursor: default;}
+
+.CodeMirror {
+    border: 1px solid #ddd;
+}

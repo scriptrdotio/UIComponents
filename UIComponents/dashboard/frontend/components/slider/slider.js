@@ -170,7 +170,7 @@ angular
                         });
                        
                        $timeout(function() {
-                          $scope.$broadcast('reCalcViewDimensions');
+                         // $scope.$broadcast('reCalcViewDimensions');
                           $scope.$broadcast('rzSliderForceRender');
                        }, 2000)
 

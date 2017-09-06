@@ -11,7 +11,7 @@
     &lt;script src=&quot;//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;//code.jquery.com/ui/1.12.0/jquery-ui.js&quot;&gt;&lt;/script&gt;
  	&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js&quot; &gt;&lt;/script&gt;
-    &lt;script src=&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script src=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js&quot; &gt;&lt;/script&gt;
     
     &lt;!-- Adding Angular --&gt;
     &lt;script src=&quot;//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js&quot;&gt;&lt;/script&gt;
