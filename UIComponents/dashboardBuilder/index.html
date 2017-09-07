@@ -145,20 +145,23 @@
               console.log("context string", context);
             return context;
           }
-    });
+    }); 
     */
     Handlebars.registerHelper('buildAttr', function(options, block) {
-        var accum = '';
-        for(option in options){
-            if(option == 'on-format-data') continue;
-            if(typeof options[option] == 'object'){
-                options[option] = JSON.stringify(options[option]);
+            var accum = '';
+            for(option in options){
+                var temp = null;
+                if(option == 'on-format-data') continue;
+                if(typeof options[option] == 'object'){
+                    temp = JSON.stringify(options[option]);
+                } else {
+                    temp = options[option]
+                }
+                accum += "\t\t\t\t\t\t\t\t\t\t" + option + "=" + "'" + temp +"'\n";
             }
-            accum += "\t\t\t\t\t\t\t\t\t\t" + option + "=" + "'" +options[option] +"'\n";
-        }
 
-        return accum;
-    });
+            return accum;
+        });
      var myApp= angular.module("myApp", ['DashboardBuilder', 'Layout']);
      $.urlParam = function(name){
     		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);

@@ -206,7 +206,7 @@
         {{#each items}}
            	{{#if this.formatFunction}}   
                 vm.{{this.formatFunction}} = function(data){
-                  {{this.formatFunctionValue}}
+                  {{{this.formatFunctionValue}}}
                 }
            	{{/if}} 
         {{/each}}

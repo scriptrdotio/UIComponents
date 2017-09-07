@@ -409,7 +409,7 @@ angular
              this.widgets = pluginData.wdg; //This needs fixing
              this.urlParams = pluginData.urlParams;
              this.transport.defaults = pluginData.settings;
-             this.dashboard["widgets"] = this.widgets;
+             this.dashboard["widgets"] = JSON.parse(this.widgets);
          }
        }
        
