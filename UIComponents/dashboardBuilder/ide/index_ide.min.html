@@ -20,11 +20,14 @@
         Handlebars.registerHelper('buildAttr', function(options, block) {
             var accum = '';
             for(option in options){
+                var temp = null;
                 if(option == 'on-format-data') continue;
                 if(typeof options[option] == 'object'){
-                    options[option] = JSON.stringify(options[option]);
+                    temp = JSON.stringify(options[option]);
+                } else {
+                    temp = options[option]
                 }
-                accum += "\t\t\t\t\t\t\t\t\t\t" + option + "=" + "'" +options[option] +"'\n";
+                accum += "\t\t\t\t\t\t\t\t\t\t" + option + "=" + "'" + temp +"'\n";
             }
 
             return accum;
