@@ -1,0 +1,19 @@
+<div ng-include="'/resources/html/views/dashboard/summary.html'"></div>
+ <scriptr-grid columns-definition='vm.logsColDef' 
+           api='locks/api/getLatestLocksStates'
+           enable-delete-row='false'
+           row-model-type='virtual'
+           row-height='30'    
+           pagination="false"    
+           enable-add-row='false'
+           cell-editable='false'
+           suppress-filter="true"    
+           enable-client-side-filter='false'
+           enable-server-side-filter='false' 
+           enable-client-side-sorting='false'
+           enable-server-side-sorting='false'
+           row-model-selection='multiple'
+           pagination-page-size='50'
+           on-format-data="vm.logsFormatData"    
+           transport='https'>
+  </scriptr-grid>

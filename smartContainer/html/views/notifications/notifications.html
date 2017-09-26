@@ -1,0 +1,19 @@
+<div class="text-center loading" ng-hide="vm.emails || vm.mobiles"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
+<div ng-show="vm.emails || vm.mobiles" class="generic-box">
+    <div class="box-height">
+        <tags-input ng-model="vm.emails" placeholder="email addresses" allowed-tags-pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"></tags-input>
+        <tags-input ng-model="vm.mobiles" placeholder="mobile numbers" allowed-tags-pattern="[0-9-+s()]*$"></tags-input>
+    </div>
+    <div class="mt10">
+        <scriptr-button
+                        type="btn-success btn-default btn-sm"
+                        is-disabled="false"
+                        on-buttonclick="vm.buildParams"    
+                        transport="https"    
+                        label="save"
+                        api-params="vm.params"   
+                        api="nucleo/api/updateNotificationsSettings"
+                        >
+        </scriptr-button>
+    </div>
+</div>

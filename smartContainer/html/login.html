@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>  
+  <head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Log In | scriptr.io</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
+    <link rel="shortcut icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico" type="image/png" />
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type ='text/css' />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css' rel='stylesheet' type ='text/css' />
+    <link href='//fonts.googleapis.com/css?family=Raleway:300,800' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/modules/login/css/style.css">
+    
+    
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js" ></script>
+    <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+    <script src="/modules/login/widgets/login.js"> </script>
+    <script src="/modules/login/widgets/authorization.js"> </script>
+    
+    <!-- the needed config -->
+    <script  src="/smartContainer/javascript/config.js"></script>
+    
+  </head>
+  <body>
+    <!-- begin header with company logo -->
+    <header class="text-center">
+      <img src="https://blog.scriptr.io/wp-content/uploads/2014/11/logo.png" />
+    </header>
+    <!-- begin page title -->    
+    <h1 class="text-center lead-title"><b>Login</b></h1>
+    <div class="header-strips-one"></div>
+    <!-- begin form -->      
+    <div class="container">
+      <div class="col-sm-5 col-md-4 col-xs-9 form-wrap">
+        <form id="loginForm">
+          <div id="errorMessage" class="error alert alert-danger hide"></div>
+          <div class="form-group">
+            <input class="form-control" id="id" name="id" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+          </div>
+          <button id="submitBtn"  class="btn btn-default btn-block text-uppercase" >Login</button>
+          <div id="loadingDiv" class="text-center" style="display:none"> <i class="fa fa-spinner fa-spin fa-2x fa-fws"></i></div>
+        </form>
+      </div>
+    </div>
+    <!-- end form  -->
+    <script type="text/javascript">	
+      $('#loginForm').loginWidget({redirectTarget: login.redirectTarget,expiry: login.expiry,anonymousToken: login.anonymousToken});
+    </script>
+  </body>
+</html>
