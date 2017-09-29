@@ -15,7 +15,7 @@ angular
       	"focusedMarkerZoom": "<?", //Zoom level when focusing on a single marker
         "pathStrokeOpacity": "@",
         "pathStrokeWeight": "@",
-        "maxAssetPoints": "@", // Number of tracked positions per asset per map instance, do not set if infinite
+        "maxAssetPoints": "<?", // Number of tracked positions per asset per map instance, do not set if infinite
         "defaultCenter": "@", //Map default center, "lat,long"
         "trackedAsset": "@",
         "summaryIcons": "<?", //MFE: Check what to do with this in dashboard builder
@@ -211,7 +211,6 @@ angular
 
       //Call when receiving a new asset, or a set of assets
       self.processAssets = function(data) {
-        self.dynMarkers = [];  
         var assets = data;
        // var id = data.id;
         var process = function(assets) {
@@ -380,6 +379,7 @@ angular
         var tripsOrder = trips.order;
 
         // Loop on asset trips
+       if(tripsOrder){      
         for (var t = tripsOrder.length - 1; t >= 0; t--) {
           var tripKey = tripsOrder[t];
           if (trips.hasOwnProperty(tripKey)) {
@@ -452,7 +452,26 @@ angular
                                                   tripFillColor);
                 }
               }
-
+              
+              if(tripPoint.state){
+                if(tripPoint.state.value == "UNLOCKED") {
+                    tripMarker.icon = self.sourcesInfo[assetSource]["unlocked"];
+                    tripMarker.availableEvent = "Lock";
+                    tripMarker.eventClass = "btn-danger";
+                    tripMarker.iconstate= self.summaryIcons.idUNLOCKED;
+                } else if(tripPoint.state.value == "LOCKED") {
+                    tripMarker.icon = self.sourcesInfo[assetSource]["locked"];
+                    tripMarker.availableEvent = "Unlock";
+                    tripMarker.eventClass = "btn-success";
+                    tripMarker.iconstate= self.summaryIcons.idLOCKED;
+                }  
+                if(tripPoint.tampered.value) {
+                    tripMarker.icon = self.sourcesInfo[assetSource]["tampered"];
+                    tripMarker.animation = google.maps.Animation.BOUNCE;
+					tripPoint["bounce"] = {};
+                    tripPoint["bounce"]["value"] = true;
+                }    
+              }  
               self.controlVehicleTrips(key); //TODO: MFE maybe this won't be needed anymore
 
               self.addMarkerToMap(key, tripMarker, tripPoint);
@@ -464,6 +483,7 @@ angular
             } //End looping on asset's trip's points
           }// End check for Availble tripKey in trips
         }//End looping on asset's trips
+       }// End condition
         self.addAssetToSourceList(assetSource, key, tripMarker.display);
       };
 
@@ -489,34 +509,38 @@ angular
       };
 
       //Add asset marker trip point to asset markers
-      self.addMarkerToMap = function(key, newMarker, tripPoint) {
-        //Push to assets
-        if(self.bounce && (tripPoint.bounce && (tripPoint.bounce.value == "true" || tripPoint.bounce.value == true))) {
-            newMarker.animation = google.maps.Animation.BOUNCE;
-        }  
-        self.assets[key]["markers"].push(newMarker);
-        self.assets[key]["path"].push([ tripPoint.lat.value,
-                                     tripPoint.long.value ]);
-        if (!self.trackedAsset) {
-          //Keep track for clusterer view as a marker Object not as JSON
-          var dynMkr = angular.copy(newMarker, {});
-          dynMkr.position = new google.maps.LatLng(tripPoint.lat.value
-                                                   ,
-                                                   tripPoint.long.value);
-          var tmp = new google.maps.Marker(dynMkr);
-          self.dynMarkers.push(tmp);
-          var heatmap = {};
-          heatmap.location = dynMkr.position;
-          heatmap.weight = (self.heatMapWeight) ? self.heatMapWeight : 40;
-          self.heatMap.push(heatmap);  
-        }
-      };
+        self.addMarkerToMap = function(key, newMarker, tripPoint) {
+            //Push to assets
+            if(self.bounce && (tripPoint.bounce && (tripPoint.bounce.value == "true" || tripPoint.bounce.value == true))) {
+                newMarker.animation = google.maps.Animation.BOUNCE;
+            }  
+            
+                self.assets[key]["markers"].push(newMarker);
+                self.assets[key]["path"].push([ tripPoint.lat.value, tripPoint.long.value ]);
+            
+            	if(self.selectedAsset == key) {
+                    $scope.$parent.marker = newMarker
+                   // $scope.$apply()
+                }
+			if (!self.trackedAsset) {  
+                //Keep track for clusterer view as a marker Object not as JSON
+                var dynMkr = angular.copy(newMarker, {});
+                dynMkr.position = new google.maps.LatLng(tripPoint.lat.value, tripPoint.long.value);
+                var tmp = new google.maps.Marker(dynMkr);
+                self.dynMarkers.push(tmp);
+                var heatmap = {};
+                heatmap.location = dynMkr.position;
+                heatmap.weight = (self.heatMapWeight) ? self.heatMapWeight : 40;
+                self.heatMap.push(heatmap);  
+            }
+        };
 
       //Control the asset markers trip points limits if maxAssetPoints defined, remove first pushed marker when limit reached
       self.controlVehicleTrips = function(key) {
         if(self.maxAssetPoints) {
-          if (self.assets[key]["markers"].length > self.maxAssetPoints) {
+          if (self.assets[key]["markers"].length >= self.maxAssetPoints) {
           	self.assets[key]["markers"].shift();
+            self.assets[key]["path"].shift();
           }
         }
       };
@@ -567,9 +591,9 @@ angular
       //Focus on asset when selected from list box, on when clicked on its marker on map
       //Close all info windows, redraw map with only asset trips tracked
       //If all assets are selected redraw all assets
-      self.focusOnAsset = function(assetKey) {
+      self.focusOnAsset = function(assetKey, marker) {
         if(self.onSelectAsset && typeof self.onSelectAsset() == "function"){
-            self.onSelectAsset()(assetKey);
+            self.onSelectAsset()(marker);
         }
         self.selectedAsset = assetKey;
         console.log("selectedAsset", self.selectedAsset)
@@ -594,7 +618,7 @@ angular
       	
         console.log("Show assetInfo assetKey", assetKey)
         self.selectedAsset = assetKey;
-        self.focusOnAsset(assetKey);
+        self.focusOnAsset(assetKey, marker);
         var markerEl = this;
         console.log("self.$wdgid", self.$wdgid);
         NgMap.getMap({
