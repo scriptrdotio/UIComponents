@@ -55,7 +55,7 @@ angular
                  }
                    $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
                          console.log("next", next);
-                         if(next.$$route) {
+                         if(next && next.$$route) {
                             console.log("current", next.$$route);
                          	this.currentRoute =  "#"+next.$$route.originalPath;
                             var list = document.getElementsByTagName("a");
