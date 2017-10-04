@@ -4059,7 +4059,24 @@ angular
                                                    {
                                                       "type" : "section",
                                                       "htmlClass" : "col-xs-6",
-                                                      "items" : [ "api" ]
+                                                      "items" :  [
+                                                          "api",
+                                                          {
+                                                          "key" : "on-format-data",
+                                                          "type": "codemirror",
+                                                          "codemirrorOptions": {
+                                                              value: "return",
+                                                              styleActiveLine: true,
+                                                              lineNumbers: true,
+                                                              lineWrapping: true,
+                                                              autoCloseBrackets: true,
+                                                              matchBrackets: true,
+                                                              theme: "neo",
+                                                              mode: "javascript",
+                                                              readOnly: false,
+                                                              autoRefresh: true
+                                                          }
+                                                      }]
                                                    },
                                                    {
                                                       "type" : "section",
@@ -4229,6 +4246,12 @@ angular
 	                                 "placeholder" : "Ex: {'id' : '599865'}"
                                  }
                               },
+                              "on-format-data" : {
+                                   "title" : "Format data",
+                                   "default" : "return data;",
+                                   "type" : "string",
+                                   "description" : "Callback function to be called after data is returned from backend."
+                               }, 
                               "publish-api-params" : {
                                  "title" : "Publish Api Params",
                                  "type" : "string",
@@ -4306,7 +4329,24 @@ angular
                                                    {
                                                       "type" : "section",
                                                       "htmlClass" : "col-xs-6",
-                                                      "items" : [ "api" ]
+                                                      "items" : [
+                                                          "api",
+                                                          {
+                                                          "key" : "on-format-data",
+                                                          "type": "codemirror",
+                                                          "codemirrorOptions": {
+                                                              value: "return",
+                                                              styleActiveLine: true,
+                                                              lineNumbers: true,
+                                                              lineWrapping: true,
+                                                              autoCloseBrackets: true,
+                                                              matchBrackets: true,
+                                                              theme: "neo",
+                                                              mode: "javascript",
+                                                              readOnly: false,
+                                                              autoRefresh: true
+                                                          }
+                                                      }]
                                                    },
                                                    {
                                                       "type" : "section",
@@ -4798,6 +4838,12 @@ angular
                                      "label" : "POST"
                                  } ]
                              },
+                               "on-format-data" : {
+                                   "title" : "Format data",
+                                   "default" : "return data;",
+                                   "type" : "string",
+                                   "description" : "Callback function to be called after data is returned from backend."
+                               },
                               "transport" : {
                                  "title" : "Transport",
                                  "type" : "string",

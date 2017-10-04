@@ -118,7 +118,7 @@ angular
             }
             
             self.success = function () {
-                if(typeof this.onButtonclick == "function"){
+                if(typeof this.onButtonclick() == "function"){
                     this.onButtonclick()(self);
                 } 
                 self.successPromise = self.call(self.api, self.transport, self.apiParams);

@@ -183,9 +183,6 @@ angular
               if(self.api) {
            		    self.apiParams =  (self.apiParams) ? self.apiParams : {};
              	   	wsClient.call(self.api, self.apiParams).then(function(data, response) {
-                      if(self.onFormatData && typeof self.onFormatData() == "function"){
-                        data = self.onFormatData()(data);
-                      }
                     self.processAssets(data);
                     console.log("api call "+ self.api +" response returned", data)
                   }, function(err) {
@@ -211,6 +208,9 @@ angular
 
       //Call when receiving a new asset, or a set of assets
       self.processAssets = function(data) {
+        if(self.onFormatData && typeof self.onFormatData() == "function"){
+           data = self.onFormatData()(data);
+        }
         var assets = data;
        // var id = data.id;
         var process = function(assets) {
