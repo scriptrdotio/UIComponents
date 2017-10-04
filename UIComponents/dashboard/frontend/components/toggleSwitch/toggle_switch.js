@@ -31,6 +31,8 @@ angular
                   "isDisabled" : "<?",
 
                   "msgTag" : "@",
+                   
+                  "transport": "@",    
 
                   "apiParams" : "<?",
                    
@@ -168,13 +170,18 @@ angular
                        if(typeof this.onFormatData() == "function"){
                          data = this.onFormatData()(data);
                        }
-                       var status = data.status;
-                       var disabled = data.disabled;
-                       if(status == true || status == false || status == "true" || status == "false"){
-                           this.switchStatus = data;
+                       var status;
+                       if(typeof data == "string" || typeof data == "boolean"){
+                           status = data;
+                       }else{
+                           status = data.status;
                        }
-                       if(typeof disabled != 'undefined'){
-                         this.isDisabled = disabled;
+                       if(status == true || status == false || status == "true" || status == "false"){
+                           this.switchStatus = status;
+                       }
+                       if(data && data.disabled){
+                           var disabled = data.disabled;
+                           this.isDisabled = disabled;
                        }
 	               }
                }
