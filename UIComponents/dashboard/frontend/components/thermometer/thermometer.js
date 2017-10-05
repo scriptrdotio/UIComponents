@@ -12,9 +12,19 @@ angular
 
                   "api" : "@",
                  
-                  "percent" : "<?",
+                  "value" : "<?",
                  
                   "size" : "@",
+                   
+                  "sectors" : "<?", 
+                   
+                  "ticks": "<?", 
+                   
+                  "percent": "@", 
+                   
+                  "max" : "<?", 
+                   
+                  "unit" : "@",
                   
                   "height" : "@",
 
@@ -34,7 +44,22 @@ angular
 
 	               this.$onInit = function() {
                      
-                       this.percent = (this.percent) ? this.percent : 0;
+                       this.value = (this.value) ? (this.value > 100) ? 100 : this.value : 0;
+                       
+                       this.unit = (this.unit) ? this.unit : "°C";
+                       
+                       this.max = (this.max) ? this.max : 150;
+                       
+                       this.sectors = (this.sectors) ? this.sectors : [0, 25, 50, 75, 100];
+                       this.ticks = [];
+                       for(var i = 0; i < this.sectors.length; i++){
+                           if(this.sectors[i] < this.max){
+                               var obj = {};
+                               obj["tick"] = this.sectors[i];
+                               obj["percent"] = parseInt(this.sectors[i] * 100 / this.max);
+                               this.ticks.push(obj);
+                           }
+                       }
                      
                        this.transport = (this.transport) ? this.transport : "wss";
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
@@ -42,7 +67,18 @@ angular
 		               initDataService(this.transport);
 
 	               }
-                   
+                   this.$postLink = function () {
+                       $scope.$watch(function( $scope ) {
+                           if(($scope.$ctrl.value)){
+                               return $scope.$ctrl.value
+                           }
+                       },function(newVal){
+                           if(newVal){
+                               newVal = (newVal > $scope.$ctrl.max) ? $scope.$ctrl.max : newVal;
+                               self.percent = parseInt(newVal * 100 / $scope.$ctrl.max);
+                           }
+                       });
+                   }
                    this.$onDestroy = function() {
                        console.log("destory Thermometer")
                        if(self.msgTag){
@@ -91,7 +127,7 @@ angular
                        if(typeof this.onFormatData() == "function"){
                          data = this.onFormatData()(data);
                        }
-		               this.percent = parseInt(data);
+		               this.value = parseInt(data);
 	               }
                }
             });

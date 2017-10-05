@@ -7,7 +7,12 @@ angular.module('angularThermometer',[]).directive('tgThermometerVertical', funct
           scope: {            
                size: '@',
                height: '@', 
-               percent: '@' 
+               ticks: "<?",
+               percent: "@",
+               max: "@",
+               value: '@',
+               unit: '@',
+               sectors: "<?"
           },
           templateUrl: '/UIComponents/dashboard/frontend/components/thermometer/tg_thermometer_vertical.html'
 	}

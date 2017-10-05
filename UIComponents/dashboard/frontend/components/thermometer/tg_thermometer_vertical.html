@@ -3,16 +3,13 @@
 	<div class="draw-b"></div>
 	<div class="meter">
 		<div class="statistics">
-			<div class="percent percent-a">100%</div>
-			<div class="percent percent-b">75%</div>
-			<div class="percent percent-c">50%</div>
-			<div class="percent percent-d">25%</div>
-			<div class="percent percent-e">0%</div>
+			<div class="percent" style="bottom: calc({{val.percent}}% - 2px);" ng-repeat="val in ticks track by $index">{{val.tick}}{{unit}}</div>
+            <div class="percent" style="bottom: calc({max}}% - 2px);">{{max}}{{unit}}</div>
 		</div>
 		<div style="height: {{percent}}%" class="mercury">
-			<div class="percent-current">{{percent}}%</div>
+			<div class="percent-current">{{value}}{{unit}}</div>
 			<div class="mask">
-				<div class="bg-color" style="height: calc({{height}}px - 57px);"></div>
+				<div class="bg-color" style="height: calc( {{height}}px - 57px );"></div>
 			</div>
 		</div>
 	</div>

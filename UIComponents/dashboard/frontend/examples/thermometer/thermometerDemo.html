@@ -6,6 +6,8 @@
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/thermometer/style.css">
   
@@ -25,30 +27,27 @@
             console.log("data formatter");
             return data;
           }
+          vm.value = 30;
+          vm.changeValue = function(){
+            vm.value = Math.floor((Math.random() * 100) + 5); 
+          }
       });
 </script>
   
 <body>
   
   <div ng-controller="testCtrl as vm" >
+      <button ng-click="vm.changeValue()" class="btn btn-default btn-sm">Change value</button>
      <div class="centered">
-
        <div class="col-xs-12 col-sm-6 mb10"> 
            <scriptr-thermometer
-                         percent="36"  
-                         height="220"
+                         value="vm.value"  
+                         sectors="[0, 25, 50, 75, 100]"       
+                         max="150"    
+                         unit="°F"       
+                         height="500"
               >
-           <scriptr-thermometer>  
-      </div>
-         
-      <div class="col-xs-12 col-sm-6 mb10"> 
-         <scriptr-thermometer
-                       percent="10"  
-                       api="UIComponents/dashboard/frontend/examples/thermometer/getThermometerValue"      
-                       size="small"       
-                       height="120"
-            >
-         <scriptr-thermometer>  
+           </scriptr-thermometer>  
       </div>
 
 	</div>
