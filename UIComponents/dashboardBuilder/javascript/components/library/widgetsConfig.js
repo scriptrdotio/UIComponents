@@ -3091,7 +3091,7 @@ angular
                            // "api" : "UIComponents/dashboard/frontend/examples/odometer/getOdometerVal",
                            "animation" : "count",
                            "on-format-data": "return data;", 
-                           "duration" : "1000",
+                           "duration" : 1000,
                            "size" : "2"
                         },
                         "box" : {
