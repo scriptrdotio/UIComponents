@@ -17,6 +17,8 @@ angular
             "enableServerSideSorting" : "<?", // Note that Client side sorting & filtering does not make sense in virtual paging and is just not supported, only Server side sorting & filtering is supported
 
             "enableServerSideFilter" : "<?",
+            
+            "refreshOnEdit": "<?",
 
             "enableColResize" : "<?",
 
@@ -293,6 +295,7 @@ angular
                 }else{
                     this.style["height"] = "77%";
                 }   
+                this.refreshOnEdit = (typeof this.refreshOnEdit != "undefined") ? this.refreshOnEdit : false;
                 this.transport = (this.transport) ? this.transport : "wss";
                 this.enableDeleteRow =  (this.enableDeleteRow == true) ? false : true;
                 this.enableAddRow =  (this.enableAddRow == true) ? false : true;
@@ -336,9 +339,11 @@ angular
                     dataService.gridHelper(self.api, params).then(
                         function(data, response) {
                             self.gridOptions.api.hideOverlay();  
-                            if (data && data.result == "success") {
+                            if (data && (data.result == "success" || data.status == "success")) {
                                 //       self.showAlert("success", "Row(s) updated successfuly");
-                                self.onServerCall(data);
+                                if(self.refreshOnEdit){
+                                     self.onServerCall(data);
+                                }
                             } else {
                                 self.undoChanges();
                                 if(data && data.errorDetail){
@@ -364,9 +369,11 @@ angular
                     dataService.gridHelper(self.api, event.data).then(
                         function(data, response) {
                             self.gridOptions.api.hideOverlay();   
-                            if (data && data.result == "success") {
+                            if (data && (data.result == "success" || data.status == "success")) {
                                 //	  self.showAlert("success", "Row(s) Added successfuly");
-                                self.onServerCall(data);
+                                if(self.refreshOnEdit){
+                                     self.onServerCall(data);
+                                }
 
                             } else {
                                 self.undoChanges();
@@ -434,7 +441,7 @@ angular
                             dataService.gridHelper(self.api, params).then(
                                 function(data, response) {
                                     self.gridOptions.api.hideOverlay();     
-                                    if (data && data.result == "success") {
+                                    if (data && (data.result == "success" || data.status == "success")) {
                                         //     self.showAlert("success", "Row(s) deleted successfuly");
                                         self.onServerCall(data);
                                     } else {
@@ -475,17 +482,7 @@ angular
                     selectedNode.data[self.editedColumn] = self.oldEditedValue;
                     self.gridOptions.api.refreshView();
                 }else{ // undo insert row
-                    self.gridOptions.api.forEachNode(function(node) {
-                        if(self.gridOptions.rowModelType == "pagination"){
-                            if (node.childIndex == 0) {
-                                node.setSelected(true, true);
-                                var selectedNode = self.gridOptions.api.getSelectedNodes();
-                                self.gridOptions.api.removeItems(selectedNode);
-                            }
-                        }else{
-                            self.gridOptions.api.refreshInfiniteCache();
-                        }
-                    });
+                    self.gridOptions.api.refreshInfiniteCache();
                 }
             }
 
@@ -567,8 +564,8 @@ angular
 
     this.gridHelper = function(api, params){
         var d = $q.defer(); 
-        wsClient
-            .call(api, params, "grid").then(function(data, response){
+        httpClient
+            .get(api, params, "grid").then(function(data, response){
             d.resolve(data, response)
         }, function(err) {
             d.reject(err)
