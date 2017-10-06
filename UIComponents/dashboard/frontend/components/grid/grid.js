@@ -12,7 +12,7 @@ angular
 
             "columnsDefinition" : "<columnsDefinition",
             
-            "rowHeight": "@",
+            "rowHeight": "<?",
 
             "enableServerSideSorting" : "<?", // Note that Client side sorting & filtering does not make sense in virtual paging and is just not supported, only Server side sorting & filtering is supported
 
