@@ -70,7 +70,7 @@ angular
           }
         
          if(!self.trackedAsset) {
-           self.showDetaithisdMap = false;
+           self.showDetailedMap = false;
          } else {
            self.showDetailedMap = true;
            self.clusteredView = false;
