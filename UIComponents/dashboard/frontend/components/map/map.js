@@ -7,12 +7,12 @@ angular
   {
     transclude: true,
     bindings : { //TODO bind an id to use with ngMap in case we need to put multiple maps on page
-      	"sourcesInfo": "<?",
-      	"clusteredView": "<?", //boolean, if we render a cluster view for conglomerate markers or not
+       "sourcesInfo": "<?",
+       "clusteredView": "<?", //boolean, if we render a cluster view for conglomerate markers or not
         "clusteredZoomMax": "<?", //Max zoom of map where cluster view is rendered
         "clusterZoom": "<?", //The zoom of map when clusteredView is true and clustered map is rendered
         "detailedZoomMin" : "<?", //Ignored with clusteredView = true, set when no cluster view
-      	"focusedMarkerZoom": "<?", //Zoom level when focusing on a single marker
+        "focusedMarkerZoom": "<?", //Zoom level when focusing on a single marker
         "pathStrokeOpacity": "@",
         "pathStrokeWeight": "@",
         "maxAssetPoints": "<?", // Number of tracked positions per asset per map instance, do not set if infinite
@@ -37,7 +37,7 @@ angular
         "msgTagGeofence": "<?",
         "heatmap" : "<?",
         "bounce" : "<?",
-        "markerInfoWindow": "@" //On marker click show info window
+        "markerInfoWindow": "<?" //On marker click show info window
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
     
@@ -104,7 +104,7 @@ angular
          self.sourcesInfo = self.sourcesInfo;//mapConstants.sourceAssetIcon;
         
         
-        self.markerInfoWindow = (self.markerInfoWindow) ? self.markerInfoWindow : true;
+        self.markerInfoWindow = (typeof self.markerInfoWindow != "undefined") ? self.markerInfoWindow : true;
         
         $scope.$on("mapFoucsOnMarker", function(event, data) {
 			self.focusOnAsset(data)
@@ -113,7 +113,7 @@ angular
               self.map = map;
               if(self.switchStatus == true){
                   heatmap = new google.maps.visualization.HeatmapLayer({
-                      data: self.heatMap,
+                      data: _.toArray(self.heatMap),
                       radius: self.heatMapRadius,
                       opacity: self.heatMapOpacity   
                   });
@@ -152,10 +152,10 @@ angular
       
       self.infoWindow = null;
       
-      self.dynMarkers = [];
+      self.dynMarkers = {}//[];
         
       // heat map    
-      self.heatMap = [];
+      self.heatMap = {};
       self.heatMapRadius =  (self.heatMapRadius) ? self.heatMapRadius : 40;
       self.heatMapOpacity = (self.heatMapOpacity) ? self.heatMapOpacity : 0.8;   
       self.heatMapGradient = (self.heatMapGradient) ? self.heatMapGradient : [
@@ -253,7 +253,7 @@ angular
    self.activateHeatMap = function(switchStatus){
        if(switchStatus == true){
            heatmap = new google.maps.visualization.HeatmapLayer({
-               data: self.heatMap,
+               data: _.toArray(self.heatMap),
                radius: self.heatMapRadius,
                opacity: self.heatMapOpacity   
            });
@@ -268,7 +268,7 @@ angular
      self.buildClusterer = function(map) {
         self.markerClusterer = new MarkerClusterer(
           map,
-          self.dynMarkers,
+          _.toArray(self.dynMarkers),
           {
             maxZoom :  self.clusteredZoomMax,
             imagePath : 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m',
@@ -300,7 +300,7 @@ angular
           console.log("Render clusterer.")
           self.markerClusterer.resetViewport(true);
           self.markerClusterer.clearMarkers();
-          self.markerClusterer.addMarkers(self.dynMarkers, false);
+          self.markerClusterer.addMarkers( _.toArray(self.dynMarkers), false);
           self.markerClusterer.repaint();
       };
 
@@ -361,6 +361,7 @@ angular
         var key = assetSource + "_" + assetId;
 
         // console.log("asset: " + key + " -> " + assets[key]);
+        var isNewAsset = false;
         //Latest Marker for this asset on map
         var prevLatestMarker = null;
         if (!self.assets[key]) { //No assets with this key alreat drawn on map
@@ -456,12 +457,12 @@ angular
               if(tripPoint.state){
                 if(tripPoint.state.value == "UNLOCKED") {
                     tripMarker.icon = self.sourcesInfo[assetSource]["unlocked"];
-                    tripMarker.availableEvent = "Lock";
+                    tripMarker.availableEvent = "Close door";
                     tripMarker.eventClass = "btn-danger";
                     tripMarker.iconstate= self.summaryIcons.idUNLOCKED;
                 } else if(tripPoint.state.value == "LOCKED") {
                     tripMarker.icon = self.sourcesInfo[assetSource]["locked"];
-                    tripMarker.availableEvent = "Unlock";
+                    tripMarker.availableEvent = "Open door";
                     tripMarker.eventClass = "btn-success";
                     tripMarker.iconstate= self.summaryIcons.idLOCKED;
                 }  
@@ -527,11 +528,11 @@ angular
                 var dynMkr = angular.copy(newMarker, {});
                 dynMkr.position = new google.maps.LatLng(tripPoint.lat.value, tripPoint.long.value);
                 var tmp = new google.maps.Marker(dynMkr);
-                self.dynMarkers.push(tmp);
+                self.dynMarkers[key] = tmp;
                 var heatmap = {};
                 heatmap.location = dynMkr.position;
                 heatmap.weight = (self.heatMapWeight) ? self.heatMapWeight : 40;
-                self.heatMap.push(heatmap);  
+                self.heatMap[key] = heatmap;  
             }
         };
 
