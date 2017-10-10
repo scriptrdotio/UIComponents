@@ -28,6 +28,7 @@ angular
       	"apiParams" : "@",
         "msgTag": "@",
       	"onFormatData" : "&",
+        "setMarkerIcon" : "&",
         "onSelectAsset" : "&",
       
          //TODO the below attributes, currently use without geofence
@@ -454,25 +455,10 @@ angular
                 }
               }
               
-              if(tripPoint.state){
-                if(tripPoint.state.value == "UNLOCKED") {
-                    tripMarker.icon = self.sourcesInfo[assetSource]["unlocked"];
-                    tripMarker.availableEvent = "Close door";
-                    tripMarker.eventClass = "btn-danger";
-                    tripMarker.iconstate= self.summaryIcons.idUNLOCKED;
-                } else if(tripPoint.state.value == "LOCKED") {
-                    tripMarker.icon = self.sourcesInfo[assetSource]["locked"];
-                    tripMarker.availableEvent = "Open door";
-                    tripMarker.eventClass = "btn-success";
-                    tripMarker.iconstate= self.summaryIcons.idLOCKED;
-                }  
-                if(tripPoint.tampered.value) {
-                    tripMarker.icon = self.sourcesInfo[assetSource]["tampered"];
-                    tripMarker.animation = google.maps.Animation.BOUNCE;
-					tripPoint["bounce"] = {};
-                    tripPoint["bounce"]["value"] = true;
-                }    
-              }  
+             if(self.setMarkerIcon && typeof self.setMarkerIcon() == "function"){
+                  tripMarker = self.setMarkerIcon()(tripPoint, tripMarker);
+             }
+              
               self.controlVehicleTrips(key); //TODO: MFE maybe this won't be needed anymore
 
               self.addMarkerToMap(key, tripMarker, tripPoint);
