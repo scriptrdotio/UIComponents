@@ -9,8 +9,14 @@
 		<div style="height: {{percent}}%" class="mercury">
 			<div class="percent-current">{{value}}{{unit}}</div>
 			<div class="mask">
-				<div class="bg-color" style="height: calc( {{height}}px - 57px );"></div>
+				<div class="bg-color" style="height: calc( {{height}}px - 57px ); background: linear-gradient({{cols}});"></div>
 			</div>
 		</div>
 	</div>
 </div>
+
+
+<style>
+    .tg-thermometer .draw-b:before {background-color: {{colors[colors.length-1]}};}
+    .tg-thermometer .draw-b:after {background-color: {{colors[colors.length-1]}};}
+</style>

@@ -29,7 +29,7 @@
           }
           vm.value = 30;
           vm.changeValue = function(){
-            vm.value = Math.floor((Math.random() * 100) + 5); 
+            vm.value = Math.floor((Math.random() * 100) + 100); 
           }
       });
 </script>
@@ -42,8 +42,9 @@
        <div class="col-xs-12 col-sm-6 mb10"> 
            <scriptr-thermometer
                          value="vm.value"  
-                         sectors="[0, 25, 50, 75, 100]"       
-                         max="150"    
+                         sectors="[-20, 0, 25, 50, 75, 100, 150, 200]"       
+                         max="200"    
+                         colors= '["#2196F3", "#000000", "#F44336", "#2196F3", "#000000", "#F44336","#2196F3", "#000000", "#F44336", "#2196F3", "#000000", "#F44336"]'        
                          unit="°F"       
                          height="500"
               >

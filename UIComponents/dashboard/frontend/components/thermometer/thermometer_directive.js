@@ -9,7 +9,9 @@ angular.module('angularThermometer',[]).directive('tgThermometerVertical', funct
                height: '@', 
                ticks: "<?",
                percent: "@",
+               colors: "<?",
                max: "@",
+               cols: "@",
                value: '@',
                unit: '@',
                sectors: "<?"
