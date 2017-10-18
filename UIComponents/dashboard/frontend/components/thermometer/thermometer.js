@@ -52,13 +52,13 @@ angular
                        
                        this.unit = (this.unit) ? this.unit : "°C";
                        
-                       this.max = (this.max) ? this.max : 150;
+                       this.max = (this.max) ? this.max : 100;
                        
                        this.colors = (this.colors) ? this.colors : ["#2196F3", "#8BC34A", "#F44336"];
                        
                        this.cols = this.colors.toString();
                        
-                       this.sectors = (this.sectors) ? this.sectors : [0, 25, 50, 75, 100, 120];
+                       this.sectors = (this.sectors) ? this.sectors : [0, 25, 50, 75, 100];
                        this.ticks = [];
                        for(var i = 0; i < this.sectors.length; i++){
                            if(this.sectors[i] < this.max && this.sectors[i] >= 0){
