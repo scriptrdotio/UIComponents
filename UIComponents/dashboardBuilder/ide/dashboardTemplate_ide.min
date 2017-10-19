@@ -57,7 +57,7 @@
       httpClientProvider.setToken($.urlParam(&quot;auth_token&quot;));
     }]
 
-     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer'])
+     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer'])
      
      angular.module('myApp').run(cachedTemplates);  
       
@@ -106,7 +106,7 @@
         {{#each items}}
            	{{#if this.formatFunction}}   
                 vm.{{this.formatFunction}} = function(data){
-                  {{{this.formatFunctionValue}}}
+                  {{this.formatFunctionValue}}
                 }
            	{{/if}} 
         {{/each}}
