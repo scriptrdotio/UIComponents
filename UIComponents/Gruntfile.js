@@ -11,7 +11,7 @@
 module.exports = function(grunt) {
 	
 	// define the build project path
-    var projectPath = '/Users/marvettefeghali/Development/workspace/scriptr/'; 
+    var projectPath = 'C:/scriptrWorkspace/scriptr/'; 
     
     var files = {};
     
@@ -187,7 +187,9 @@ module.exports = function(grunt) {
 		               'concat/min-safe/schemaForm.js' : [ 'dashboardBuilder/lib/schemaForm/schemaForm.js' ],
 		               'concat/min-safe/bootstrapDecorator.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrapDecorator.js' ],
 		               'concat/min-safe/bootstrap-colorpicker.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-colorpicker.min.js' ],
-		               'concat/min-safe/ui-codemirror.js' : [ 'dashboardBuilder/lib/codemirror/js/mode/ui-codemirror.js' ]
+		               'concat/min-safe/ui-codemirror.js' : [ 'dashboardBuilder/lib/codemirror/js/mode/ui-codemirror.js' ],
+                       'concat/min-safe/thermometer_directive.js' : [ 'dashboard/frontend/components/thermometer/thermometer_directive.js' ],
+		               'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/components/thermometer/thermometer.js' ] 
 		            }
 	            }
 	         },
@@ -237,7 +239,7 @@ module.exports = function(grunt) {
 		                     'dashboard/frontend/components/odometer/odometer.min.js',
 		                     'dashboard/frontend/components/odometer/angular.odometer.min.js',
 		                     'concat/min-safe/abn_tree_directive.js',
-		                     'dashboard/frontend/components/thermometer/thermometer_directive.js',
+		                     'concat/min-safe/thermometer_directive.js',
 		                     'lib/ng-map.min.js',
 		                     'lib/ag_grid.js',
 		                     'concat/min-safe/angucomplete.alt.js',
@@ -280,7 +282,7 @@ module.exports = function(grunt) {
 		                     'concat/min-safe/widgetsConfig.js',
 		                     'concat/min-safe/dashboardsList.js',
 		                     'concat/min-safe/dashboard.js',
-		                     'dashboard/frontend/components/thermometer/thermometer.js',
+		                     'concat/min-safe/thermometer.js',
 		                     'dashboard/frontend/components/progressBar/progressBar.js' ],
 		                     
 		                     dest : 'build/javascript/dashboardBuilder_resources.js'
