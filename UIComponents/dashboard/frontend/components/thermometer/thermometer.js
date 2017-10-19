@@ -90,11 +90,16 @@ angular
                    
                    self.resize = function(){
                        self.timeoutId = null;
-                       self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
+                       self.style["margin-top"] = 10;
                        self.style["margin-left"] = ($element.parent().outerWidth(true)/2) - 50;
                    }
                    
                    this.$postLink = function () {
+                       $timeout(self.resize,100);
+                       if (self.timeoutId != null) {
+                           $timeout.cancel(self.timeoutId);
+                       }
+                       self.timeoutId = $timeout(self.resize, 100);
                        $scope.$watch(function( $scope ) {
                            if(($scope.$ctrl.value)){
                                return $scope.$ctrl.value
