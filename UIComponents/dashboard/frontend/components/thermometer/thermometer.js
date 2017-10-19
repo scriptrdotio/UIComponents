@@ -13,6 +13,8 @@ angular
                   "api" : "@",
                  
                   "value" : "<?",
+                   
+                  "data" : "<?",
                  
                   "size" : "@",
                    
@@ -42,17 +44,19 @@ angular
 
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
-               controller : function($scope, httpClient, wsClient) {
+               controller : function($scope, $window, $element, $timeout, httpClient, wsClient) {
 
 	               var self = this;
 
 	               this.$onInit = function() {
                      
-                       this.value = (this.value) ? (this.value > 100) ? 100 : this.value : 0;
+                       this.value = (this.value) ? (this.value > 100) ? 100 : this.value : ((this.data) ? this.data : 0 );
                        
                        this.unit = (this.unit) ? this.unit : "°C";
                        
                        this.max = (this.max) ? this.max : 100;
+                       
+                       this.height = (this.height) ? this.height+"px" : "92%",
                        
                        this.colors = (this.colors) ? this.colors : ["#2196F3", "#8BC34A", "#F44336"];
                        
@@ -71,10 +75,25 @@ angular
                      
                        this.transport = (this.transport) ? this.transport : "wss";
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
+                       
+                       this.style = {};
+                       angular.element($window).on('resize', function() {
+                           if (self.timeoutId != null) {
+                               $timeout.cancel(self.timeoutId);
+                           }
+                           return self.timeoutId = $timeout(self.resize, 100);
+                       });
 
 		               initDataService(this.transport);
 
 	               }
+                   
+                   self.resize = function(){
+                       self.timeoutId = null;
+                       self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
+                       self.style["margin-left"] = ($element.parent().outerWidth(true)/2) - 50;
+                   }
+                   
                    this.$postLink = function () {
                        $scope.$watch(function( $scope ) {
                            if(($scope.$ctrl.value)){
