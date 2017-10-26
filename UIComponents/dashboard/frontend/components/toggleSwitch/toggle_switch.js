@@ -16,8 +16,6 @@ angular
                    
                   "class" : "@", 
                    
-                  "resize": "<?",
-
                   "api" : "@",
                  
                   "switchStatus" : "<?",
@@ -31,14 +29,14 @@ angular
                   "isDisabled" : "<?",
 
                   "msgTag" : "@",
-                   
-                  "transport": "@",    
 
                   "apiParams" : "<?",
                    
                   "onSwitchChange" : "&", 
                    
-                  "publishApiParams": "<?",   
+                  "publishApiParams": "<?",  
+                   
+                  "enableResize": "<?",
                  
                   "onFormatData" : "&"
 
@@ -57,7 +55,7 @@ angular
                        this.disabled = (typeof this.isDisabled != "undefined") ? this.isDisabled : false;
                        this.type = (typeof this.type != "undefined") ? this.type : "switch-success";
                        this.size = (typeof this.size != "undefined") ? this.size : "switch-large";
-                       this.resize = (typeof this.resize != "undefined") ? this.resize : true;
+                       this.enableResize = (typeof this.enableResize != "undefined") ? this.enableResize : true;
                        
                        this.class = this.type + " " + this.size;
                        
@@ -99,9 +97,11 @@ angular
                    }
                    
                    self.resize = function(){
-                       self.timeoutId = null;
-                  		self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
-                 }
+                       if(this.enableResize){
+                           self.timeoutId = null;
+                           self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
+                       }
+                   }
                   
                   this.$postLink = function() {
                        $timeout(self.resize,100);
@@ -170,18 +170,13 @@ angular
                        if(typeof this.onFormatData() == "function"){
                          data = this.onFormatData()(data);
                        }
-                       var status;
-                       if(typeof data == "string" || typeof data == "boolean"){
-                           status = data;
-                       }else{
-                           status = data.status;
-                       }
+                       var status = data.status;
+                       var disabled = data.disabled;
                        if(status == true || status == false || status == "true" || status == "false"){
-                           this.switchStatus = status;
+                           this.switchStatus = data;
                        }
-                       if(data && data.disabled){
-                           var disabled = data.disabled;
-                           this.isDisabled = disabled;
+                       if(typeof disabled != 'undefined'){
+                         this.isDisabled = disabled;
                        }
 	               }
                }

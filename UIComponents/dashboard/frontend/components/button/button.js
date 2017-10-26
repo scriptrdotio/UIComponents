@@ -10,8 +10,10 @@ angular
             
             "size": "@",
             
+            "enableResize" : "<?",
+            
             "isDisabled": "<?",
-
+            
             "label" : "@",
             
             "type" : "@",
@@ -42,6 +44,7 @@ angular
                 this.msgTag = (this.msgTag) ? this.msgTag : null;
                 this.type = (this.type) ? this.type : "btn-success";
                 this.size = (this.size) ? this.size : "";
+                this.enableResize = (typeof this.enableResize != 'undefined') ? this.enableResize : true;  
                 
                 this.class = this.type + " " + this.size;
                 
@@ -125,8 +128,10 @@ angular
             };
 
             self.resize = function(){
-                self.timeoutId = null;
-           		self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
+                if(this.enableResize){
+                    self.timeoutId = null;
+           			self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
+                }
           }
            
            this.$postLink = function() {

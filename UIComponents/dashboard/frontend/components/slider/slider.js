@@ -74,6 +74,8 @@ angular
                    
                 "publishApi": "@",   
                    
+                "enableResize" : "<?",   
+                   
                 "api": "@",   
                    
                 "transport": "@",   
@@ -160,6 +162,7 @@ angular
                        
                        this.transport = (this.transport) ? this.transport : "wss";
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
+                       this.enableResize = (typeof this.enableResize != 'undefined') ? this.enableResize : true;
                        
                        this.style = {};
                        angular.element($window).on('resize', function() {
@@ -170,7 +173,7 @@ angular
                         });
                        
                        $timeout(function() {
-                         // $scope.$broadcast('reCalcViewDimensions');
+                          $scope.$broadcast('reCalcViewDimensions');
                           $scope.$broadcast('rzSliderForceRender');
                        }, 2000)
 
@@ -201,9 +204,11 @@ angular
                    }
                    
                    self.resize = function(){
-                       self.timeoutId = null;
-                  		self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
-                 }
+                       if(this.enableResize){
+                           self.timeoutId = null;
+                           self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
+                       }
+                   }
                   
                   this.$postLink = function() {
                        $timeout(self.resize,100);
