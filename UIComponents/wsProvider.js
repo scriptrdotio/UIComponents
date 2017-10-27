@@ -38,11 +38,14 @@ angular
 		            _publishChannel = textString;
 	            };
 
-	            this.setSubscribeChannel = function(textString) {
-		            _subscribeChannel = textString;
+	            this.setSubscribeChannel = function(textString) { //Or array
+                    console.log(textString)
+                    _subscribeChannel = textString;
 	            };
+                
+                
               
-                this.getSubscribeChannel = function(textString) {
+                this.getSubscribeChannel = function() {
 		           return _subscribeChannel;
 	            };
 
@@ -102,14 +105,7 @@ angular
 
 		                  // On open of the socket connection, if subscribeChannel available subscribe to read messages received on this channel
 		                  dataStream.onOpen(function() {
-			                  if (_subscribeChannel) {
-				                  dataStream.send(JSON.stringify({
-				                     "method" : "Subscribe",
-				                     "params" : {
-					                     "channel" : _subscribeChannel
-				                     }
-				                  }));
-			                  }
+			                	subscribe(_subscribeChannel)
 		                  });
 
 		                  // Whenever a message is received over socket pass it to the callbackHandler to execute callbacks if any
@@ -152,6 +148,50 @@ angular
 			                  console.log("Socket Error", e);
 			                  error.resolve();
 		                  });
+                          
+                          var subscribe = function(channels) {
+                              if (channels) {
+                               if(typeof channels == "string") {
+                                  dataStream.send(JSON.stringify({
+				                     "method" : "Subscribe",
+				                     "params" : {
+					                     "channel" : channels
+				                     }
+				                  }));
+                               } else if(channels.constructor.name == "Array") {
+                                   for(var i =0; i < channels.length; i++) {
+                                     dataStream.send(JSON.stringify({
+				                     "method" : "Subscribe",
+				                     "params" : {
+					                     "channel" : channels[i]
+				                     }
+				                  }));
+                                 } 
+                               }
+			                  }
+                          }
+                          
+                          var unsubscribe = function(channels) {
+                              if (channels) {
+                               if(typeof channels == "string") {
+                                  dataStream.send(JSON.stringify({
+				                     "method" : "Unsubscribe",
+				                     "params" : {
+					                     "channel" : channels
+				                     }
+				                  }));
+                               } else if(channels.constructor.name == "Array") {
+                                   for(var i =0; i < channels.length; i++) {
+                                     dataStream.send(JSON.stringify({
+				                     "method" : "Unscubscribe",
+				                     "params" : {
+					                     "channel" : channels[i]
+				                     }
+				                  }));
+                                 } 
+                               }
+			                  }
+                          }
 
 		                  // Check if message received has a registered callback in our registry
 		                  var callbackHandler = function(data) {
@@ -302,19 +342,9 @@ angular
 		                     },
                             
                              updateSubscriptionChannel : function(channel){
-                                    dataStream.send(JSON.stringify({
-                                         "method" : "Unsubscribe",
-                                         "params" : {
-                                             "channel" : self.getSubscribeChannel()
-                                         }
-                                    }));
-                                    self.setSubscribeChannel(channel);
-                                    dataStream.send(JSON.stringify({
-				                     "method" : "Subscribe",
-				                     "params" : {
-					                     "channel" : _subscribeChannel
-				                        }
-				                    }));
+                                 unsubscribe(self.getSubscribeChannel())   
+                                 self.setSubscribeChannel(channel);
+                                 subscribe(channel)
                              },
                             
                              updatePublishingChannel : function(channel){
