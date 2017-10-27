@@ -5,7 +5,6 @@ angular
             {
                bindings : {
 	               menuItems : '<menuItems',
-                   role: "@",
                    user: '<?',
                    onMenuItemClick : "&"
                },
@@ -65,10 +64,16 @@ angular
                   }
                   
                   this.inGroup = function(roles){
+                      var groups = self.user.groups;
+                      if (self.user.groups == null) {
+                          groups = [];
+                      } else if (typeof self.user.groups == 'string') {
+                            groups = [ self.user.groups ];
+                      }
                       var inRole = false;
                       if(roles){
                           for(var i = 0; i < roles.length; i++){
-                              if(self.user.groups == roles[i]){
+                              if(groups.indexOf(roles[i]) > -1){
                                   inRole = true;
                                   break
                               }
