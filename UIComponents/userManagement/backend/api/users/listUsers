@@ -1,7 +1,7 @@
 var aclEvaluator = require("../../lib/AclEvaluator");
 var errorHandler = require("../../lib/ErrorHandler");
-
 var errorHandler = new errorHandler.ErrorHandler();
+var userModule = require("user");
 
 var config = require("../../config").config;
 var log = require("log")
@@ -13,7 +13,6 @@ var userManagementGroups = config.userManagementGroups;
 
 //Check if user has rights to access the userManagement Module
 var aclEvaluator = new aclEvaluator.AclEvaluator();
-
 //Check permissions
 //user needs to be an admin or in userManagement Group
 var hasPermission = aclEvaluator.hasPermissions(request.user, userManagementGroups)
@@ -23,13 +22,12 @@ if(!hasPermission) {
 }
 
 var users =[];
-var response = apsdb.callApi("ListDevices", {}, null);
-  
+var response = userModule.query({"query": "", "fields":"*", "sort":"creationDate<date:DESC>"})
 
 if(response.metadata.status == "failure") {
    return response.metadata;
 } else {
-  return response.result.devices;
+  return response.result.users;
 }
 
 

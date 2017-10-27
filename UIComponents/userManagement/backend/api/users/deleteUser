@@ -1,10 +1,11 @@
 var aclEvaluator = require("../../lib/AclEvaluator");
 var paramsEvaluator = require("../../lib/ParamsEvaluator");
 var errorHandler = require("../../lib/ErrorHandler");
+var userModule = require("user");
 
 var errorHandler = new errorHandler.ErrorHandler();
 
-var config = require("../config").config;
+var config = require("../../config").config;
 var log = require("log")
 log.setLevel("INFO");
 
@@ -29,7 +30,7 @@ if(!hasAllRequiredParams.success) {
 log.info(JSON.stringify(request.body))
 var params = paramsEvaluator.buildParams(request.body, requiredParams, []);
 
-var response = apsdb.callApi("DeleteDevice", params, null);
+var response = userModule.delete(params["id"])//apsdb.callApi("DeleteDevice", params, null);
 
 if(response.metadata.status == "failure") {
    return response.metadata;

@@ -5,6 +5,8 @@ var errorHandler = require("../../lib/ErrorHandler");
 
 var errorHandler = new errorHandler.ErrorHandler();
 
+var deviceModule = require("device");
+
 var config = require("../../config").config;
 var log = require("log")
 log.setLevel("INFO");
@@ -37,24 +39,12 @@ var params = paramsEvaluator.buildParams(request.body, requiredParams, optionalP
 //TODO: putting the password hardcoded
 params["password"] = "demo"
 log.info(JSON.stringify(params))
-var response = apsdb.callApi("SaveDevice", params, null);
+var response = deviceModule.save(params);//apsdb.callApi("SaveDevice", params, null);
 
 if(response.metadata.status == "failure") {
    return response.metadata;
 } else {
-  //Need to generate a token
-  //This won't be needed when new apis are rolled out especially that now it is 
-  //response = apsdb.callApi("GenerateToken", {"apsws.id": params["id"], "apsdb.runAs": params["id"]}, null); 
-  if(response.metadata.status == "failure") {
-   return response.metadata;
-  } else {
-    response = apsdb.callApi("GetDevice", {"id": request.body.id}, null);
-    if(response.metadata.status == "failure") {
-       return response.metadata;
-    } else {
       return response.result.device;
-    }
-  }
 }
 
 

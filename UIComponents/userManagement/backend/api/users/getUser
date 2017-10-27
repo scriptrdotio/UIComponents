@@ -1,8 +1,8 @@
 var aclEvaluator = require("../../lib/AclEvaluator");
 var paramsEvaluator = require("../../lib/ParamsEvaluator");
 var errorHandler = require("../../lib/ErrorHandler");
-
 var errorHandler = new errorHandler.ErrorHandler();
+var userModule = require("user");
 
 var config = require("../../config").config;
 
@@ -29,12 +29,12 @@ if(!hasAllRequiredParams.success) {
   return errorHandler.buildError("missing_parameter", "Parameter \""+hasAllRequiredParams.param+ "\" is required.");
 }
 var users =[];
-var response = apsdb.callApi("GetDevice", {"id": request.parameters.id}, null);
+var response = userModule.get(request.parameters.id)
 
 if(response.metadata.status == "failure") {
    return response.metadata;
 } else {
-  return response.result.device;
+  return response.result;
 }
 
 

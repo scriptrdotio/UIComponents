@@ -2,7 +2,7 @@ var _ = require("/modules/underscore/underscore.js")._;
 var aclEvaluator = require("../../lib/AclEvaluator");
 var paramsEvaluator = require("../../lib/ParamsEvaluator");
 var errorHandler = require("../../lib/ErrorHandler");
-
+var userModule = require("user");
 var errorHandler = new errorHandler.ErrorHandler();
 
 var config = require("../../config").config;
@@ -22,7 +22,7 @@ if(!hasPermission) {
 }
 
 var requiredParams = ["id", "name"];
-var optionalParams = ["apsdb.update", "description", "groups"];
+var optionalParams = ["apsdb.update", "description", "groups", "password"];
 
 //Check if required params
 var paramsEvaluator = new paramsEvaluator.ParamsEvaluator();
@@ -31,32 +31,18 @@ if(!hasAllRequiredParams.success) {
   return errorHandler.buildError("missing_parameter", "Parameter \""+hasAllRequiredParams.param+ "\" is required.");
 }
 
-log.info(JSON.stringify(request.body))
-var params = paramsEvaluator.buildParams(request.body, requiredParams, optionalParams);
 
-//TODO: putting the password hardcoded
-params["password"] = "demo"
+var params = paramsEvaluator.buildParams(request.body, requiredParams, optionalParams);
 log.info(JSON.stringify(params))
-var response = apsdb.callApi("SaveDevice", params, null);
+//TODO: putting the password hardcoded
+//params["password"] = "demo"
+log.info(JSON.stringify(params))
+var response = userModule.save(params);//apsdb.callApi("SaveDevice", params, null);
 
 if(response.metadata.status == "failure") {
    return response.metadata;
 } else {
-  //Need to generate a token
-  //This won't be needed when new apis are rolled out especially that now it is 
-  //response = apsdb.callApi("GenerateToken", {"apsws.id": params["id"], "apsdb.runAs": params["id"]}, null); 
-  if(response.metadata.status == "failure") {
-   return response.metadata;
-  } else {
-    response = apsdb.callApi("GetDevice", {"id": request.body.id}, null);
-    if(response.metadata.status == "failure") {
-       return response.metadata;
-    } else {
-      return response.result.device;
-    }
-  }
-  
-  
+  return {};
 }
 
 
