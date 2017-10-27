@@ -1,18 +1,18 @@
 <div>
-  <div id="{{colIndex = $index}}" ng-class="{'side-bar sm level-bg-{{$index}}' : col.class == 'sm', 'side-bar md level-bg-{{$index}}' : col.class == 'md'}" ng-repeat="col in $ctrl.cols track by $index">
-    <ul class="nav nav-pills" ng-if="$ctrl.currentRoute">
-      <li ng-if="col.class == 'sm'" tooltip-placement="right" tooltip-append-to-body="true" uib-tooltip="{{item.label}}" index="{{liIndex = $index}}" ng-repeat="item in $ctrl.menuItems[col.key] track by $index" ng-class="(item.route == $ctrl.currentRoute) ? 'active' : ''">
-        <a href="{{item.route}}/{{$ctrl.lockId.value}}" ng-click="$ctrl.route(item, $event, col.key, colIndex, liIndex)">
-          <i aria-hidden="true" class="{{item.iconClass}}"></i><strong>{{item.label}}</strong>
-          <i ng-show="item.sub" aria-hidden="true" class="fa fa-angle-right sub-menu-indicator"></i>
-        </a>
-      </li>
-      <li ng-if="col.class == 'md'" index="{{liIndex = $index}}" ng-repeat="item in $ctrl.menuItems[col.key] track by $index" class="tool-tip" ng-class="(item.route == $ctrl.currentRoute) ? 'active' : ''">
-        <a href="{{item.route}}/{{$ctrl.lockId.value}}" ng-click="$ctrl.route(item, $event, col.key, colIndex, liIndex)">
-          <i aria-hidden="true" class="{{item.iconClass}}"></i><strong>{{item.label}}</strong>
-          <i ng-show="item.sub" aria-hidden="true" class="fa fa-angle-right sub-menu-indicator"></i>
-        </a>
-      </li>
-    </ul>
-  </div>
+    <div id="{{colIndex = $index}}" ng-class="{'side-bar sm level-bg-{{$index}}' : col.class == 'sm', 'side-bar md level-bg-{{$index}}' : col.class == 'md'}" ng-repeat="col in $ctrl.cols track by $index">
+        <ul class="nav nav-pills" ng-if="$ctrl.currentRoute">
+            <li ng-if="col.class == 'sm' && ($ctrl.inGroup(item.role) || !item.role)" tooltip-placement="right" tooltip-append-to-body="true" uib-tooltip="{{item.label}}" index="{{liIndex = $index}}" ng-repeat="item in $ctrl.menuItems[col.key] track by $index" ng-class="(item.route == $ctrl.currentRoute) ? 'active' : ''">
+                <a href="{{item.route}}/{{$ctrl.lockId.value}}" ng-click="$ctrl.route(item, $event, col.key, colIndex, liIndex)">
+                    <i aria-hidden="true" class="{{item.iconClass}}"></i><strong>{{item.label}}</strong>
+                    <i ng-show="item.sub" aria-hidden="true" class="fa fa-angle-right sub-menu-indicator"></i>
+                </a>
+            </li>
+            <li ng-if="col.class == 'md' && ($ctrl.inGroup(item.role) || !item.role)" index="{{liIndex = $index}}" ng-repeat="item in $ctrl.menuItems[col.key] track by $index" class="tool-tip" ng-class="(item.route == $ctrl.currentRoute) ? 'active' : ''">
+                <a href="{{item.route}}/{{$ctrl.lockId.value}}" ng-click="$ctrl.route(item, $event, col.key, colIndex, liIndex)">
+                    <i aria-hidden="true" class="{{item.iconClass}}"></i><strong>{{item.label}}</strong>
+                    <i ng-show="item.sub" aria-hidden="true" class="fa fa-angle-right sub-menu-indicator"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

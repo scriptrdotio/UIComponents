@@ -5,6 +5,8 @@ angular
             {
                bindings : {
 	               menuItems : '<menuItems',
+                   role: "@",
+                   user: '<?',
                    onMenuItemClick : "&"
                },
                templateUrl : '/UIComponents/layout/frontend/components/menu/menu.html',
@@ -60,6 +62,21 @@ angular
                         }
                       }
                     }
+                  }
+                  
+                  this.inGroup = function(roles){
+                      var inRole = false;
+                      if(roles){
+                          for(var i = 0; i < roles.length; i++){
+                              if(self.user.groups == roles[i]){
+                                  inRole = true;
+                                  break
+                              }
+                          } 
+                      }else{
+                          inRole = true;
+                      }
+                      return inRole;
                   }
 
 	               this.route = function(item, event, column, colIndex, liIndex, routingBased) {
