@@ -4352,6 +4352,7 @@ angular
                            // "publish-api" : "UIComponents/dashboard/frontend/examples/slider/publishSliderVal",
                            "boxLabel" : "Slider",
                            "min" : 2,
+                           "enable-resize": true, 
                            "floor" : 0,
                            "on-format-data": "return data;", 
                            "min-limit" : 1,
@@ -4961,6 +4962,7 @@ angular
                            "transport" : "https",
                            "boxLabel" : "Button",
                            "type" : "btn-success",
+                           "enable-resize": true,  
                            "size" : "small",
                            "label" : "Refresh data"
                         // ,"api" : "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"
