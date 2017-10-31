@@ -53,6 +53,28 @@ angular
                            }
                        }
                  }
+                   
+                   this.inGroup = function(roles){
+                       var groups = self.user.groups;
+                       if (self.user.groups == null) {
+                           groups = [];
+                       } else if (typeof self.user.groups == 'string') {
+                           groups = [ self.user.groups ];
+                       }
+                       var inRole = false;
+                       if(roles){
+                           for(var i = 0; i < roles.length; i++){
+                               if(groups.indexOf(roles[i]) > -1){
+                                   inRole = true;
+                                   break
+                               }
+                           } 
+                       }else{
+                           inRole = true;
+                       }
+                       return inRole;
+                   }
+                    
                    $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
                          console.log("next", next);
                          if(next && next.$$route && next.$$route.originalPath != "") {
