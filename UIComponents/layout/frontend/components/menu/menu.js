@@ -39,13 +39,20 @@ angular
                            angularEvent.preventDefault();
                          }
  					   });
-                       $scope.$on('menu:openMenuBasedOnRoute', function(data){
-                           self.openMenuBasedOnRoute();
-                       })
-                       $scope.$on('menu:setSelectedMenu', function(data, colIndex, liIndex){
-                           self.addActiveClass(colIndex, liIndex);
-                       })
 	               };
+                   
+                   this.$postLink = function () {
+                       $scope.$watch(function( $scope ) {
+                           if(($scope.$ctrl.currentRoute)){
+                               return $scope.$ctrl.currentRoute
+                           }
+                       },function(newVal){
+                           if(newVal){
+                              if(newVal == "#/") self.currentRoute = this.menuItems[this.menuItems.mainMenu][0].route;
+                              self.openMenuBasedOnRoute();
+                           }
+                       });
+                   }
                  
                   this.openMenuBasedOnRoute = function(){
                     for(menu in this.menuItems){
@@ -64,84 +71,124 @@ angular
                   }
                   
                   this.inGroup = function(roles){
-                      var groups = self.user.groups;
-                      if (self.user.groups == null) {
-                          groups = [];
-                      } else if (typeof self.user.groups == 'string') {
-                            groups = [ self.user.groups ];
+                      if(self.user && self.user.groups){
+                          var groups = self.user.groups;
+                          if (self.user.groups == null) {
+                              groups = [];
+                          } else if (typeof self.user.groups == 'string') {
+                              groups = [ self.user.groups ];
+                          }
+                          var inRole = false;
+                          if(roles){
+                              for(var i = 0; i < roles.length; i++){
+                                  if(groups.indexOf(roles[i]) > -1){
+                                      inRole = true;
+                                      break
+                                  }
+                              } 
+                          }else{
+                              inRole = true;
+                          }
+                          return inRole; 
                       }
-                      var inRole = false;
-                      if(roles){
-                          for(var i = 0; i < roles.length; i++){
-                              if(groups.indexOf(roles[i]) > -1){
-                                  inRole = true;
-                                  break
-                              }
-                          } 
-                      }else{
-                          inRole = true;
-                      }
-                      return inRole;
                   }
 
-	               this.route = function(item, event, column, colIndex, liIndex, routingBased) {
-                       if(typeof self.onMenuItemClick() == "function"){
-                           self.onMenuItemClick()(item);
-                       }
+                  this.route = function(item, event, column, colIndex, liIndex, routingBased) {
+                      if(typeof self.onMenuItemClick() == "function"){
+                          self.onMenuItemClick()(item);
+                      }
                       var subOpened = false;
-                     
-                     if(routingBased){
-                       
-                       console.log("routing based");
-                       this.collaspsedCols = [];    
-                       this.getPreviousCollapsedCols(column);
-                       this.collaspsedCols.push(column);
-                       this.collaspsedCols.sort();
-                       
-                       for(var x = 0; x < this.collaspsedCols.length; x++){
-                         if(this.collaspsedCols[x] != this.menuItems.mainMenu){
-                            this.cols.push({
-                             key : this.collaspsedCols[x],
-                             class: 'md'
-                           });
-                         }
-                       }
-                       
-                       // change classes
-                       this.modifyColClasses();
-                       
-                     }else if (typeof item.sub != undefined && item.sub != null) {
-                        
-                         // close all columns after colIndex;
-                         this.cols = this.cols.splice(0, colIndex + 1);
 
-                         // check if sub menu already opened
-                         for(var i = 0; i < this.cols.length; i++){
-                           if(this.cols[i].key == item.sub){
-                             subOpened = true;
+                      if(routingBased){
+
+                          console.log("routing based");
+                          this.collaspsedCols = [];    
+                          this.getPreviousCollapsedCols(column);
+                          this.collaspsedCols.push(column);
+                          this.collaspsedCols.sort();
+                          
+                          for(var x = 0; x < this.collaspsedCols.length; x++){
+                              if(this.collaspsedCols[x] != this.menuItems.mainMenu){
+                                  if(this.collaspsedCols[x] != this.cols[x].key && !this.isColOpen()){
+                                      this.cols.push({
+                                          key : this.collaspsedCols[x],
+                                          class: 'md'
+                                      }); 
+                                  } 
+                              }
+                          }
+                          
+                          if(this.getSelectedColIndex() > -1){
+                             this.cols = this.cols.splice(0, this.getSelectedColIndex() + 1); 
+                          }
+                          // change classes
+                          this.modifyColClasses();
+                          // update active class of selected element
+                      //    this.addActiveClass(colIndex, liIndex);
+
+                      }else if (typeof item.sub != undefined && item.sub != null) {
+
+                          // close all columns after colIndex;
+                          this.cols = this.cols.splice(0, colIndex + 1);
+
+                          // check if sub menu already opened
+                          for(var i = 0; i < this.cols.length; i++){
+                              if(this.cols[i].key == item.sub){
+                                  subOpened = true;
+                              }
+                          }
+                          // open column
+                          if(!subOpened){
+                              this.cols.push({
+                                  key : item.sub,
+                                  class: 'md'
+                              });
+                          }
+                          // change classes
+                          this.modifyColClasses();
+                          // update active class of selected element
+                          this.addActiveClass(colIndex, liIndex);
+
+                      } else {
+                          // close all columns after colIndex;
+                          this.cols = this.cols.splice(0, colIndex + 1);
+                          //change classes
+                          this.modifyColClasses();
+                          // update active class of selected element
+                          this.addActiveClass(colIndex, liIndex);
+                      }
+                  };
+                   
+                   this.getSelectedColIndex = function(){
+                       for(var i = 0 ; i < this.cols.length; i++){
+                           if(this.isCurrentRouteInColIndex(this.cols[i].key)){
+                               return i;
                            }
-                         }
-                         // open column
-                         if(!subOpened){
-                           this.cols.push({
-                             key : item.sub,
-                             class: 'md'
-                           });
-                         }
-                         // change classes
-                         this.modifyColClasses();
-                         // update active class of selected element
-                         this.addActiveClass(colIndex, liIndex);
-                        
-		               } else {
-                         // close all columns after colIndex;
-                         this.cols = this.cols.splice(0, colIndex + 1);
-                         //change classes
-                         this.modifyColClasses();
-                         // update active class of selected element
-                         this.addActiveClass(colIndex, liIndex);
-		               }
-	               };
+                       }
+                       return -1;
+                   }
+                   
+                   this.isCurrentRouteInColIndex = function(menu){
+                       for(var i = 0; i < this.menuItems[menu].length; i++){
+                           if(this.menuItems[menu][i].route == self.currentRoute){
+                               return true
+                           }
+                       }
+                       return false;
+                   }
+                   
+                   this.isColOpen = function(){
+                       var isColOpen = false;
+                       for(var x = 0; x < this.collaspsedCols.length; x++){
+                           for(var y = 0; y < this.cols.length; y++){
+                               if(this.collaspsedCols[x] == this.cols[y].key){
+                                  isColOpen = true;
+                                  break;
+                               }
+                           }
+                       }
+                       return isColOpen;
+                   }
                  
                    this.getPreviousCollapsedCols = function(col){
                      
