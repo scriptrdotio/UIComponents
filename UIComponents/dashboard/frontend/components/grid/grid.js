@@ -289,7 +289,7 @@ angular
                 this.style = {};   
                 if(this.fixedHeight){
                     this.gridHeight = (this.gridHeight) ? this.gridHeight : "500";
-                    this.style["height"] = this.gridHeight+"px";
+                    this.style["height"] = this.gridHeight;
                     this.style["clear"] = "left";
                     this.style["width"] = "100%";
                 }else{
