@@ -8,7 +8,7 @@
                 </a>
             </li>
             <li ng-if="col.class == 'md' && ($ctrl.inGroup(item.roles) || !item.roles)" index="{{liIndex = $index}}" ng-repeat="item in $ctrl.menuItems[col.key] track by $index" class="tool-tip" ng-class="(item.route == $ctrl.currentRoute) ? 'active' : ''">
-                <a href="{{item.route}}/{{$ctrl.lockId.value}}" ng-click="$ctrl.route(item, $event, col.key, colIndex, liIndex)">
+                <a href="{{item.route}}/{{$ctrl.lockId.value}}" ng-click="$ctrl.route(item, $event, col.key, colIndex, liIndex)"  title="{{item.label}}">
                     <i aria-hidden="true" class="{{item.iconClass}}"></i><strong>{{item.label}}</strong>
                     <i ng-show="item.sub" aria-hidden="true" class="fa fa-angle-right sub-menu-indicator"></i>
                 </a>

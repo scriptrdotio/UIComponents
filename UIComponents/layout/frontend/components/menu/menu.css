@@ -31,7 +31,7 @@ body {font-family: 'Josefin Sans', sans-serif; background: #f1f4f9;}
 .side-bar.md {width: 200px;}
 .side-bar.md .nav-pills>li {width: 200px;}
 .side-bar.md .nav-pills>li strong {display: inline;}
-.side-bar.md .nav-pills>li a {text-indent: 8px;}
+.side-bar.md .nav-pills>li a {text-indent: 8px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis;}
   
 .side-bar .nav-pills>li i {font-size: 1.2em; margin-right: 5px;}
 /*.side-bar .nav-pills {position: fixed; overflow-y: auto;}*/
