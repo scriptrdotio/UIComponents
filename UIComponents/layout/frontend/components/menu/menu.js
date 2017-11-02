@@ -1,234 +1,246 @@
 angular
-      .module('Layout')
-      .component(
-            'menu',
-            {
-               bindings : {
-	               menuItems : '<menuItems',
-                   user: '<?',
-                   onMenuItemClick : "&"
-               },
-               templateUrl : '/UIComponents/layout/frontend/components/menu/menu.html',
-               controller : function($scope, _, $timeout, $location, $route) {
-	               var self = this;
-                 
-                   this.collaspsedCols = [];
-                 
-	               this.$onInit = function() {
-                       this.cols = [];
-		               this.cols.push({
-                         "key" : this.menuItems.mainMenu,
-		                 "class" : "md"
-                       });
-                     
-                       if($route.current && $route.current.$$route) {
-                         this.currentRoute =  "#"+$route.current.$$route.originalPath;
-                         this.openMenuBasedOnRoute();
-                       }else{
-                         this.currentRoute = this.menuItems[this.menuItems.mainMenu][0].route;
-                       }
-                     
-                       $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
-                         console.log("next", next);
-                         if(next && next.$$route) {
-                            console.log("current", next.$$route);
-                            
-                         	self.currentRoute =  "#"+next.$$route.originalPath;
-                         } else {
-                           console.log("Missing route definition");
-                           angularEvent.preventDefault();
-                         }
- 					   });
-	               };
-                   
-                   this.$postLink = function () {
-                       $scope.$watch(function( $scope ) {
-                           if(($scope.$ctrl.currentRoute)){
-                               return $scope.$ctrl.currentRoute
-                           }
-                       },function(newVal){
-                           if(newVal){
-                              if(newVal == "#/") self.currentRoute = this.menuItems[this.menuItems.mainMenu][0].route;
-                              self.openMenuBasedOnRoute();
-                           }
-                       });
-                   }
-                 
-                  this.openMenuBasedOnRoute = function(){
-                    for(menu in this.menuItems){
-                      if(menu != "mainMenu"){
-                        for(var i = 0; i <= this.menuItems[menu].length; i++){
-                          for(row in this.menuItems[menu][i]){
-                            if(this.menuItems[menu][i].route == self.currentRoute){
-                               this.menuItems[menu][i].active = "true";
-                               this.route(this.menuItems[menu][i], null, menu, null, null, true);
-                               return;
-                            }
-                          }
-                        }
-                      }
+    .module('Layout')
+    .component(
+    'menu',
+    {
+        bindings : {
+            menuItems : '<menuItems',
+            user: '<?',
+            onMenuItemClick : "&"
+        },
+        templateUrl : '/UIComponents/layout/frontend/components/menu/menu.html',
+        controller : function($scope, _, $timeout, $location, $route) {
+            var self = this;
+
+            this.collaspsedCols = [];
+
+            this.$onInit = function() {
+                this.cols = [];
+                this.cols.push({
+                    "key" : this.menuItems.mainMenu,
+                    "class" : "md"
+                });
+
+                if($route.current && $route.current.$$route) {
+                    this.currentRoute =  "#"+$route.current.$$route.originalPath;
+                }else{
+                    this.currentRoute = this.menuItems[this.menuItems.mainMenu][0].route;
+                }
+
+                $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
+                    console.log("next", next);
+                    if(next && next.$$route) {
+                        console.log("current", next.$$route);
+
+                        self.currentRoute =  "#"+next.$$route.originalPath;
+                    } else {
+                        console.log("Missing route definition");
+                        angularEvent.preventDefault();
                     }
-                  }
-                  
-                  this.inGroup = function(roles){
-                      if(self.user && self.user.groups){
-                          var groups = self.user.groups;
-                          if (self.user.groups == null) {
-                              groups = [];
-                          } else if (typeof self.user.groups == 'string') {
-                              groups = [ self.user.groups ];
-                          }
-                          var inRole = false;
-                          if(roles){
-                              for(var i = 0; i < roles.length; i++){
-                                  if(groups.indexOf(roles[i]) > -1){
-                                      inRole = true;
-                                      break
-                                  }
-                              } 
-                          }else{
-                              inRole = true;
-                          }
-                          return inRole; 
-                      }
-                  }
+                });
+            };
 
-                  this.route = function(item, event, column, colIndex, liIndex, routingBased) {
-                      if(typeof self.onMenuItemClick() == "function"){
-                          self.onMenuItemClick()(item);
-                      }
-                      var subOpened = false;
+            this.$postLink = function () {
+                $scope.$watch(function( $scope ) {
+                    if(($scope.$ctrl.currentRoute)){
+                        return $scope.$ctrl.currentRoute
+                    }
+                },function(newVal){
+                    if(newVal){
+                        if(newVal == "#/") self.currentRoute = this.menuItems[this.menuItems.mainMenu][0].route;
+                        self.openMenuBasedOnRoute();
+                    }
+                });
+            }
 
-                      if(routingBased){
-
-                          console.log("routing based");
-                          this.collaspsedCols = [];    
-                          this.getPreviousCollapsedCols(column);
-                          this.collaspsedCols.push(column);
-                          this.collaspsedCols.sort();
-                          
-                          for(var x = 0; x < this.collaspsedCols.length; x++){
-                              if(this.collaspsedCols[x] != this.menuItems.mainMenu){
-                                  if(this.collaspsedCols[x] != this.cols[x].key && !this.isColOpen()){
-                                      this.cols.push({
-                                          key : this.collaspsedCols[x],
-                                          class: 'md'
-                                      }); 
-                                  } 
-                              }
-                          }
-                          
-                          if(this.getSelectedColIndex() > -1){
-                             this.cols = this.cols.splice(0, this.getSelectedColIndex() + 1); 
-                          }
-                          // change classes
-                          this.modifyColClasses();
-                          // update active class of selected element
-                      //    this.addActiveClass(colIndex, liIndex);
-
-                      }else if (typeof item.sub != undefined && item.sub != null) {
-
-                          // close all columns after colIndex;
-                          this.cols = this.cols.splice(0, colIndex + 1);
-
-                          // check if sub menu already opened
-                          for(var i = 0; i < this.cols.length; i++){
-                              if(this.cols[i].key == item.sub){
-                                  subOpened = true;
-                              }
-                          }
-                          // open column
-                          if(!subOpened){
-                              this.cols.push({
-                                  key : item.sub,
-                                  class: 'md'
-                              });
-                          }
-                          // change classes
-                          this.modifyColClasses();
-                          // update active class of selected element
-                          this.addActiveClass(colIndex, liIndex);
-
-                      } else {
-                          // close all columns after colIndex;
-                          this.cols = this.cols.splice(0, colIndex + 1);
-                          //change classes
-                          this.modifyColClasses();
-                          // update active class of selected element
-                          this.addActiveClass(colIndex, liIndex);
-                      }
-                  };
-                   
-                   this.getSelectedColIndex = function(){
-                       for(var i = 0 ; i < this.cols.length; i++){
-                           if(this.isCurrentRouteInColIndex(this.cols[i].key)){
-                               return i;
-                           }
-                       }
-                       return -1;
-                   }
-                   
-                   this.isCurrentRouteInColIndex = function(menu){
-                       for(var i = 0; i < this.menuItems[menu].length; i++){
-                           if(this.menuItems[menu][i].route == self.currentRoute){
-                               return true
-                           }
-                       }
-                       return false;
-                   }
-                   
-                   this.isColOpen = function(){
-                       var isColOpen = false;
-                       for(var x = 0; x < this.collaspsedCols.length; x++){
-                           for(var y = 0; y < this.cols.length; y++){
-                               if(this.collaspsedCols[x] == this.cols[y].key){
-                                  isColOpen = true;
-                                  break;
-                               }
-                           }
-                       }
-                       return isColOpen;
-                   }
-                 
-                   this.getPreviousCollapsedCols = function(col){
-                     
-                     for(menu in this.menuItems){
-                       if(menu != "mainMenu"){
-                         for(var i = 0; i <= this.menuItems[menu].length; i++){
-                           for(row in this.menuItems[menu][i]){
-                            if(this.menuItems[menu][i].sub == col){
-                              if(menu != this.menuItems.mainMenu){
-                              	this.collaspsedCols.push(menu);
-                              }
-                              this.getPreviousCollapsedCols(menu);
-                              break;
+            this.openMenuBasedOnRoute = function(){
+                for(menu in this.menuItems){
+                    if(menu != "mainMenu"){
+                        for(var i = 0; i <= this.menuItems[menu].length; i++){
+                            for(row in this.menuItems[menu][i]){
+                                if(this.menuItems[menu][i].route == self.currentRoute){
+                                    this.menuItems[menu][i].active = "true";
+                                    this.route(this.menuItems[menu][i], null, menu, null, null, true);
+                                    return;
+                                }
                             }
-                          }
-                         }
-                       }
-                     }
-                     
-                   }
-                 
-                   this.modifyColClasses = function(){
-                       for(var i = 0; i < this.cols.length; i++){
-                         if(i == this.cols.length - 1){
-                           this.cols[i].class = 'md'
-                         }else{
-                           this.cols[i].class = 'sm'
-                         }
-                       }
-                   }
-                   
-                   this.addActiveClass = function(colIndex, liIndex){
-                      var list = document.getElementById(colIndex).getElementsByTagName("li");
-                       for (var i = 0; i < list.length; i++){
-                           if(list[i].getAttribute("index") == liIndex.toString()){
-                             list[i].className = list[i].className = "active";
-                           }else{
-                              list[i].className = list[i].className = "";
-                           }
-                       }
-                   }
-               }
-            });
+                        }
+                    }
+                }
+            }
+
+            this.inGroup = function(roles){
+                if(self.user && self.user.groups){
+                    var groups = self.user.groups;
+                    if (self.user.groups == null) {
+                        groups = [];
+                    } else if (typeof self.user.groups == 'string') {
+                        groups = [ self.user.groups ];
+                    }
+                    var inRole = false;
+                    if(roles){
+                        for(var i = 0; i < roles.length; i++){
+                            if(groups.indexOf(roles[i]) > -1){
+                                inRole = true;
+                                break
+                            }
+                        } 
+                    }else{
+                        inRole = true;
+                    }
+                    return inRole; 
+                }
+            }
+
+            this.route = function(item, event, column, colIndex, liIndex, routingBased) {
+                if(typeof self.onMenuItemClick() == "function"){
+                    self.onMenuItemClick()(item);
+                }
+                var subOpened = false;
+
+                if(routingBased){
+
+                    console.log("routing based");
+                    this.collaspsedCols = [];    
+                    this.getPreviousCollapsedCols(column);
+                    this.collaspsedCols.push(column);
+                    this.collaspsedCols.sort();
+
+                    for(var x = 0; x < this.collaspsedCols.length; x++){
+                        if(this.collaspsedCols[x] != this.menuItems.mainMenu){
+                            if(this.collaspsedCols[x] != this.cols[x].key && !this.isColOpen()){
+                                this.cols.push({
+                                    key : this.collaspsedCols[x],
+                                    class: 'md'
+                                }); 
+                            } 
+                        }
+                    }
+                    var columnRowIndex = this.getSelectedColIndex();
+                    if(columnRowIndex > -1){
+                        this.cols = this.cols.splice(0, columnRowIndex + 1); 
+                    }
+                    // change classes
+                    this.modifyColClasses();
+                    // update active class of selected element
+                    this.addActiveClass(this.cols.length -1, this.getSelectedRowInCol(this.cols[this.cols.length -1].key));
+
+                }else if (typeof item.sub != undefined && item.sub != null) {
+
+                    // close all columns after colIndex;
+                    this.cols = this.cols.splice(0, colIndex + 1);
+
+                    // check if sub menu already opened
+                    for(var i = 0; i < this.cols.length; i++){
+                        if(this.cols[i].key == item.sub){
+                            subOpened = true;
+                        }
+                    }
+                    // open column
+                    if(!subOpened){
+                        this.cols.push({
+                            key : item.sub,
+                            class: 'md'
+                        });
+                    }
+                    // change classes
+                    this.modifyColClasses();
+                    // update active class of selected element
+                    this.addActiveClass(colIndex, liIndex);
+
+                } else {
+                    // close all columns after colIndex;
+                    this.cols = this.cols.splice(0, colIndex + 1);
+                    //change classes
+                    this.modifyColClasses();
+                    // update active class of selected element
+                    this.addActiveClass(colIndex, liIndex);
+                }
+            };
+
+            this.getSelectedColIndex = function(){
+                for(var i = 0 ; i < this.cols.length; i++){
+                    if(this.isCurrentRouteInColIndex(this.cols[i].key)){
+                        return i;
+                    }
+                }
+                return -1;
+            }
+            
+            this.getSelectedRowInCol = function(menu){
+               for(var i = 0; i < this.menuItems[menu].length; i++){
+                    if(this.menuItems[menu][i].route == self.currentRoute){
+                        return i
+                    }
+                }  
+            }
+
+            this.isCurrentRouteInColIndex = function(menu){
+                for(var i = 0; i < this.menuItems[menu].length; i++){
+                    if(this.menuItems[menu][i].route == self.currentRoute){
+                        return true
+                    }
+                }
+                return false;
+            }
+
+            this.isColOpen = function(){
+                var isColOpen = false;
+                for(var x = 0; x < this.collaspsedCols.length; x++){
+                    for(var y = 0; y < this.cols.length; y++){
+                        if(this.collaspsedCols[x] == this.cols[y].key){
+                            isColOpen = true;
+                            break;
+                        }
+                    }
+                }
+                return isColOpen;
+            }
+
+            this.getPreviousCollapsedCols = function(col){
+
+                for(menu in this.menuItems){
+                    if(menu != "mainMenu"){
+                        for(var i = 0; i <= this.menuItems[menu].length; i++){
+                            for(row in this.menuItems[menu][i]){
+                                if(this.menuItems[menu][i].sub == col){
+                                    if(menu != this.menuItems.mainMenu){
+                                        this.collaspsedCols.push(menu);
+                                    }
+                                    this.getPreviousCollapsedCols(menu);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            this.modifyColClasses = function(){
+                for(var i = 0; i < this.cols.length; i++){
+                    if(i == this.cols.length - 1){
+                        this.cols[i].class = 'md'
+                    }else{
+                        this.cols[i].class = 'sm'
+                    }
+                }
+            }
+
+            this.addActiveClass = function(colIndex, liIndex){
+                var col = document.getElementById(colIndex);
+                if(col){
+                    var list = col.getElementsByTagName("li");
+                    for (var i = 0; i < list.length; i++){
+                        if(list[i].getAttribute("index") == liIndex.toString()){
+                            list[i].className = "active";
+                        }else{
+                            list[i].className = "";
+                        }
+                    }
+                }
+
+
+            }
+        }
+    });
