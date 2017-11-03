@@ -15,11 +15,7 @@ angular
             this.collaspsedCols = [];
 
             this.$onInit = function() {
-                this.cols = [];
-                this.cols.push({
-                    "key" : this.menuItems.mainMenu,
-                    "class" : "md"
-                });
+                this.initializeDefaultMenu();
 
                 if($route.current && $route.current.$$route) {
                     this.currentRoute =  "#"+$route.current.$$route.originalPath;
@@ -97,28 +93,24 @@ angular
                     self.onMenuItemClick()(item);
                 }
                 var subOpened = false;
-
                 if(routingBased){
-
-                    console.log("routing based");
+                    
                     this.collaspsedCols = [];    
                     this.getPreviousCollapsedCols(column);
                     this.collaspsedCols.push(column);
                     this.collaspsedCols.sort();
 
+                    this.initializeDefaultMenu();
+
                     for(var x = 0; x < this.collaspsedCols.length; x++){
                         if(this.collaspsedCols[x] != this.menuItems.mainMenu){
-                            if(this.collaspsedCols[x] != this.cols[x].key && !this.isColOpen()){
+                            if(this.collaspsedCols[x] != this.cols[x].key){
                                 this.cols.push({
                                     key : this.collaspsedCols[x],
                                     class: 'md'
                                 }); 
                             } 
                         }
-                    }
-                    var columnRowIndex = this.getSelectedColIndex();
-                    if(columnRowIndex > -1){
-                        this.cols = this.cols.splice(0, columnRowIndex + 1); 
                     }
                     // change classes
                     this.modifyColClasses();
@@ -158,43 +150,20 @@ angular
                 }
             };
 
-            this.getSelectedColIndex = function(){
-                for(var i = 0 ; i < this.cols.length; i++){
-                    if(this.isCurrentRouteInColIndex(this.cols[i].key)){
-                        return i;
-                    }
-                }
-                return -1;
+            this.initializeDefaultMenu = function(){
+                this.cols = [];
+                this.cols.push({
+                    "key" : this.menuItems.mainMenu,
+                    "class" : "md"
+                });
             }
-            
+
             this.getSelectedRowInCol = function(menu){
-               for(var i = 0; i < this.menuItems[menu].length; i++){
+                for(var i = 0; i < this.menuItems[menu].length; i++){
                     if(this.menuItems[menu][i].route == self.currentRoute){
                         return i
                     }
                 }  
-            }
-
-            this.isCurrentRouteInColIndex = function(menu){
-                for(var i = 0; i < this.menuItems[menu].length; i++){
-                    if(this.menuItems[menu][i].route == self.currentRoute){
-                        return true
-                    }
-                }
-                return false;
-            }
-
-            this.isColOpen = function(){
-                var isColOpen = false;
-                for(var x = 0; x < this.collaspsedCols.length; x++){
-                    for(var y = 0; y < this.cols.length; y++){
-                        if(this.collaspsedCols[x] == this.cols[y].key){
-                            isColOpen = true;
-                            break;
-                        }
-                    }
-                }
-                return isColOpen;
             }
 
             this.getPreviousCollapsedCols = function(col){
