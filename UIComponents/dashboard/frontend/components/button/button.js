@@ -19,6 +19,10 @@ angular
             "type" : "@",
             
             "onButtonclick" : "&",
+            
+            "onSuccess": "&",
+            
+            "onFailure": "&",
 
             "api": "@",   
 
@@ -71,10 +75,16 @@ angular
                             wsClient.call(api, params, self.msgTag)
                                 .then(
                                 function(data, response) {
+                                    if(typeof self.onSuccess() == "function"){
+                                        self.onSuccess()(self);
+                                    }
                                     defer.resolve({ msg: 'SUCCESS' });
                                 },
                                 function(err) {
                                     console.log( "reject published promise", err);
+                                    if(typeof self.onFailure() == "function"){
+                                        self.onFailure()(self);
+                                    }
                                     defer.resolve({ msg: 'ERROR' });
                                 });
 
@@ -86,9 +96,15 @@ angular
                                     .post(api, params)
                                     .then(
                                     function(data, response) {
+                                        if(typeof self.onSuccess() == "function"){
+                                            self.onSuccess()(self);
+                                        }
                                         defer.resolve({ msg: 'SUCCESS' });
                                     },
                                     function(err) {
+                                        if(typeof self.onFailure() == "function"){
+                                            self.onFailure()(self);
+                                        }
                                         defer.resolve({ msg: 'ERROR' });
                                         console
                                             .log(
@@ -100,9 +116,15 @@ angular
                                     .get(api, params)
                                     .then(
                                     function(data, response) {
+                                        if(typeof self.onSuccess() == "function"){
+                                            self.onSuccess()(self);
+                                        }
                                         defer.resolve({ msg: 'SUCCESS' });
                                     },
                                     function(err) {
+                                        if(typeof self.onFailure() == "function"){
+                                            self.onFailure()(self);
+                                        }
                                         defer.resolve({ msg: 'ERROR' });
                                         console
                                             .log(
