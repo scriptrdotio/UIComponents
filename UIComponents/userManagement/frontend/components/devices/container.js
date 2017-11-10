@@ -13,5 +13,9 @@ angular.module('Management').component('devicesContainer', {
      	$scope.$on('addDevice', function(event, data) {
 		   $scope.$broadcast('loadDeviceDetails', {});
 	   });
+       
+        $scope.$on('deviceAdded', function(event, data) {
+		   $scope.$broadcast('reloadDevicesList', {});
+	   });
    }
 });

@@ -27,6 +27,17 @@ angular
 			               self.isUpdate = false;
 			               self.device = {};
 		               }
+                       
+                       $scope.$on("loadDeviceDetails", function(event, data) {
+		               if (data.id) {
+			               self.loadDevice(data.id);
+		               } else {
+			               self.device = {};
+			               self.update = false;
+			               self.originalDevice = angular.copy(this.device);
+		               }
+
+	               })
 	               };
 
 	               this.generateToken = function(id) {
@@ -34,14 +45,14 @@ angular
 		                     function(data, response) {
 			                     self.isLoading = false;
 			                     if (data.status == "failure") {
-				                     self.message = data.errorDetail
+				                      self.setAlert(data.errorDetail, "danger")
 			                     } else {
 				                     self.token = data;
 			                     }
 			                     console.log("resolve", data)
 		                     }, function(err) {
 			                     self.isLoading = false;
-			                     self.message = JSON.stringify(err)
+			                     self.setAlert(JSON.stringify(err), "danger")
 			                     console.log("reject", err);
 		                     });
 	               }
@@ -51,14 +62,14 @@ angular
 		                     function(data, response) {
 			                     self.isLoading = false;
 			                     if (data.status == "failure") {
-				                     self.message = data.errorDetail
+				                      self.setAlert(data.errorDetail, "danger")
 			                     } else {
 				                     self.token = data;
 			                     }
 			                     console.log("resolve", data)
 		                     }, function(err) {
 			                     self.isLoading = false;
-			                     self.message = JSON.stringify(err)
+			                     self.setAlert(JSON.stringify(err), "danger")
 			                     console.log("reject", err);
 		                     });
 	               }
@@ -70,7 +81,7 @@ angular
 			                           function(data, response) {
 				                           self.isLoading = false;
 				                           if (data.status == "failure") {
-					                           self.message = data.errorDetail
+					                            self.setAlert(data.errorDetail, "danger")
 				                           } else {
 					                           if (data.token) {
 						                           self.token = data.token["apsdb.authToken"]
@@ -90,7 +101,7 @@ angular
 				                           console.log("resolve", data)
 			                           }, function(err) {
 				                           self.isLoading = false;
-				                           self.message = JSON.stringify(err)
+				                           self.setAlert(JSON.stringify(err), "danger")
 				                           console.log("reject", err);
 			                           });
 		               } else {
@@ -109,14 +120,16 @@ angular
 		                     function(data, response) {
 			                     self.isLoading = false;
 			                     if (data.status == "failure") {
-				                     self.message = data.errorDetail
+				                      self.setAlert(data.errorDetail, "danger")
 			                     } else {
-				                     self.message = "Device updated successfully."
+                                     var message = "Device updated successfully."
+                                     self.setAlert(message, "success")
+				                     $scope.$emit('deviceAdded');
 			                     }
 			                     console.log("resolve", data)
 		                     }, function(err) {
 			                     self.isLoading = false;
-			                     self.message = JSON.stringify(err)
+			                     self.setAlert(JSON.stringify(err), "danger")
 			                     console.log("reject", err);
 		                     });
 	               }
@@ -138,14 +151,14 @@ angular
 		               managementService.listGroups().then(
 		                     function(data, response) {
 			                     if (data.status == "failure") {
-				                     self.message = data.errorDetail
+				                      self.setAlert(data.errorDetail, "danger")
 			                     } else {
 				                     self.groups = data;
 			                     }
 			                     console.log("resolve", data)
 		                     }, function(err) {
 			                     self.isLoading = false;
-			                     self.message = JSON.stringify(err)
+			                     self.setAlert(JSON.stringify(err), "danger")
 			                     console.log("reject", err);
 		                     });
 	               }
@@ -153,16 +166,14 @@ angular
 	               this.isDeviceChanged = function() {
 		               return !angular.equals(this.device, self.originalDevice);
 	               }
+                   
+                   this.setAlert = function(message, type) {
+                       self.message = {"content": message, "type": type};
+                   }
+                   this.closeAlert = function() {
+                       self.message = null;
+                   }
 
-	               $scope.$on("loadDeviceDetails", function(event, data) {
-		               if (data.id) {
-			               self.loadDevice(data.id);
-		               } else {
-			               self.device = {};
-			               self.update = false;
-			               self.originalDevice = angular.copy(this.device);
-		               }
-
-	               })
+	               
                }
             });
