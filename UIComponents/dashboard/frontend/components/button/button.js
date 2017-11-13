@@ -52,10 +52,6 @@ angular
                 
                 this.class = this.type + " " + this.size;
                 
-                if(this.isDisabled == true){
-                    this.class += " is-disabled";
-                }
-
                 this.style = {};
                 angular.element($window).on('resize', function() {
                     if (self.timeoutId != null) {
