@@ -41,7 +41,7 @@ angular
                   "onFormatData" : "&"
 
                },
-               templateUrl : '/UIComponents/dashboard/frontend/components/toggleSwitch/toggle_switch.html',
+               templateUrl : '/UIComponents/dashboard/frontend/UIComponents/Components/toggleSwitch/toggle_switch.html',
                controller : function($scope, $element, $window, $timeout, httpClient, wsClient) {
 
 	               var self = this;

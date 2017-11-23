@@ -6,7 +6,7 @@
     &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;
     &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;
 
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/build/external/css/components.min.css&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/build/external/css/UIComponents/Components.min.css&quot;&gt;
     
     &lt;!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. --&gt;
     &lt;script src=&quot;/UIComponents/build/external/js/external_jquery_resources.min.js&quot;&gt;&lt;/script&gt;
@@ -26,7 +26,7 @@
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ag-grid/12.0.0/ag-grid.js?ignore=notused36&quot;&gt;&lt;/script&gt;
   
     &lt;!-- Components --&gt;
-    &lt;script src=&quot;/UIComponents/build/external/js/components.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/external/js/UIComponents/Components.min.js&quot;&gt;&lt;/script&gt;
     
 &lt;/head&gt; 
   

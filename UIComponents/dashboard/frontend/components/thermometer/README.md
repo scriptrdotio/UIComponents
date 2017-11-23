@@ -33,14 +33,14 @@
   Include  thermometer.css
    
   ```html
-    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/thermometer/style.css">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/UIComponents/Components/thermometer/style.css">
   ```
      
   Include thermometer directive and component
   
   ```html
-    <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer.js"></script>
+    <script src="/UIComponents/dashboard/frontend/UIComponents/Components/thermometer/thermometer_directive.js"></script>
+    <script src="/UIComponents/dashboard/frontend/UIComponents/Components/thermometer/thermometer.js"></script>
    ```
   
   Include wsProvider and httpProvider for calling backend API's

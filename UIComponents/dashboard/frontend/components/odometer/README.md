@@ -26,14 +26,14 @@
   Include Odometer modules
    
   ```html
-  <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.min.js"></script>
-  <script src="/UIComponents/dashboard/frontend/components/odometer/angular.odometer.min.js"></script>
-  <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.js"></script>
+  <script src="/UIComponents/dashboard/frontend/UIComponents/Components/odometer/odometer.min.js"></script>
+  <script src="/UIComponents/dashboard/frontend/UIComponents/Components/odometer/angular.odometer.min.js"></script>
+  <script src="/UIComponents/dashboard/frontend/UIComponents/Components/odometer/odometer.js"></script>
   ```
   
   Include a default theme CSS
   ```html
-  <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/odometer/odometer.car.css">
+  <link rel="stylesheet" href="/UIComponents/dashboard/frontend/UIComponents/Components/odometer/odometer.car.css">
   ```
   
   Include wsProvider and httpProvider for calling backend API's

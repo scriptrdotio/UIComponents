@@ -37,8 +37,8 @@
   Include abn_tree_directive.js and abn_tree.css
   
   ```html
-   <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/searchBox/abn_tree.css">
-    <script src="/UIComponents/dashboard/frontend/components/searchBox/abn_tree_directive.js"></script>
+   <link rel="stylesheet" href="/UIComponents/dashboard/frontend/UIComponents/Components/searchBox/abn_tree.css">
+    <script src="/UIComponents/dashboard/frontend/UIComponents/Components/searchBox/abn_tree_directive.js"></script>
    ```
   
   Include wsProvider and httpProvider for calling backend API's
@@ -57,7 +57,7 @@
   Include searchBox.js as a component
   
   ```html
-    <script src="/UIComponents/dashboard/frontend/components/searchBox/searchBox.js"></script>
+    <script src="/UIComponents/dashboard/frontend/UIComponents/Components/searchBox/searchBox.js"></script>
   ```
   
   Add "WsClient", "HttpClient", "SearchBox" to your app module's dependency

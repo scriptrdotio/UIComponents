@@ -7,7 +7,7 @@ angular.module('Management')
     onDelete: '&',
     onUpdate: '&'
   },
-  templateUrl: '/UIComponents/userManagement/frontend/components/users/usersList.html',
+  templateUrl: '/UIComponents/userManagement/frontend/UIComponents/Components/users/usersList.html',
   controller: function($scope, _ , managementService){
     var self = this;
     self.isLoading = true;

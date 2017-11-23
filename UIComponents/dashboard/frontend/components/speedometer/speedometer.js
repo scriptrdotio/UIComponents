@@ -56,7 +56,7 @@ angular
         "onFormatData" : "&"
         
       },
-      templateUrl: '/UIComponents/dashboard/frontend/components/speedometer/speedometer.html',
+      templateUrl: '/UIComponents/dashboard/frontend/UIComponents/Components/speedometer/speedometer.html',
       controller: function(httpClient, wsClient, $element, $window, $scope, $compile, $timeout) {
         
          var self = this;

@@ -14,7 +14,7 @@ angular
             "onSave" : "&"
 
         },
-        templateUrl: '/UIComponents/dashboard/frontend/components/ACL/ACL.html',
+        templateUrl: '/UIComponents/dashboard/frontend/UIComponents/Components/ACL/ACL.html',
         controller: function($uibModal) {
             
             var self = this;
@@ -64,7 +64,7 @@ angular
       close: '&',
       dismiss: '&'
     },
-    templateUrl: '/UIComponents/dashboard/frontend/components/ACL/myModalContent.html',
+    templateUrl: '/UIComponents/dashboard/frontend/UIComponents/Components/ACL/myModalContent.html',
     controller: function ($scope, $sce) {
         
       var self = this;

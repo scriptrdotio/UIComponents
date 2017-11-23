@@ -8,7 +8,7 @@ angular
             user: '<?',
             onMenuItemClick : "&"
         },
-        templateUrl : '/UIComponents/layout/frontend/components/menu/menu.html',
+        templateUrl : '/UIComponents/layout/frontend/UIComponents/Components/menu/menu.html',
         controller : function($scope, _, $timeout, $location, $route) {
             var self = this;
 

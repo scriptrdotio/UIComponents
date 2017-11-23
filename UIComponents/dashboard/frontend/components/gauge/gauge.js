@@ -119,7 +119,7 @@ angular
                  
 
                },
-               templateUrl : '/UIComponents/dashboard/frontend/components/gauge/gauge.html',
+               templateUrl : '/UIComponents/dashboard/frontend/UIComponents/Components/gauge/gauge.html',
                controller : function($scope, httpClient, wsClient) {
 
 	               var self = this;

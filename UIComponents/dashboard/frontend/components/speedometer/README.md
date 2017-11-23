@@ -29,8 +29,8 @@
    
   ```html
   <script src="https://d3js.org/d3.v4.min.js"></script>  
-  <script src="/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js"></script>
-  <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
+  <script src="/UIComponents/dashboard/frontend/UIComponents/Components/speedometer/angular.metergauge.min.js"></script>
+  <script src="/UIComponents/dashboard/frontend/UIComponents/Components/speedometer/speedometer.js"></script>
   ```
   
   Include wsProvider and httpProvider for calling backend API's

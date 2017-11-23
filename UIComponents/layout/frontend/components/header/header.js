@@ -10,7 +10,7 @@ angular
                    user: '<?',
                    onHeaderItemClick : "&"
                },
-               templateUrl : '/UIComponents/layout/frontend/components/header/header.html',
+               templateUrl : '/UIComponents/layout/frontend/UIComponents/Components/header/header.html',
                controller : function($scope, $route, defaultLogo) {
                    var self = this;
 	               this.$onInit = function() {

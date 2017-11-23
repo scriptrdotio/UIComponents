@@ -45,7 +45,7 @@ angular
       showTree: "<",
       devicesModel: "@"
     },
-    templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
+    templateUrl: '/UIComponents/dashboardBuilder/javascript/UIComponents/Components/dashboard.html',
     controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, common, config, $uibModal, scriptrService, $route, $routeParams, $q, _) {
       
       this.wsClient = wsClient;
@@ -302,7 +302,7 @@ angular
       this.deleteDashboardPopUp = function(path, name){
         var modalInstance = $uibModal.open({
                controller: 'PopupCont',
-               templateUrl: '/UIComponents/dashboardBuilder/javascript/components/deletePopup.html',
+               templateUrl: '/UIComponents/dashboardBuilder/javascript/UIComponents/Components/deletePopup.html',
                resolve: {
                    dashboard: function () {
                        return self;
@@ -735,7 +735,7 @@ angular
     bindings : {
       "widget": "<"
     },
-    templateUrl: '/UIComponents/dashboardBuilder/javascript/components/box.html',
+    templateUrl: '/UIComponents/dashboardBuilder/javascript/UIComponents/Components/box.html',
     controller: function($scope, $compile, $element, $uibModal) {
       
       var boxSelf = this;
@@ -908,7 +908,7 @@ angular
       close: '&',
       dismiss: '&'
     },
-    templateUrl: '/UIComponents/dashboardBuilder/javascript/components/myModalContent.html',
+    templateUrl: '/UIComponents/dashboardBuilder/javascript/UIComponents/Components/myModalContent.html',
     controller: function ($scope) {
       this.$onInit = function () {
         this.widget = this.resolve.widget;
@@ -964,7 +964,7 @@ angular
   {
   	bindings: {
     },
-    templateUrl: '/UIComponents/dashboardBuilder/javascript/components/sideToolbar.html',
+    templateUrl: '/UIComponents/dashboardBuilder/javascript/UIComponents/Components/sideToolbar.html',
     controller: function ($scope, $mdSidenav) {
       this.close = function () {
         // Component lookup should always be available since we are not using `ng-if`
@@ -987,7 +987,7 @@ angular
       close: '&',
       dismiss: '&'
     },
-    templateUrl: '/UIComponents/dashboardBuilder/javascript/components/confirmation.html',
+    templateUrl: '/UIComponents/dashboardBuilder/javascript/UIComponents/Components/confirmation.html',
     controller: function ($scope) {
       this.$onInit = function () {
         this.data = this.resolve.data;
