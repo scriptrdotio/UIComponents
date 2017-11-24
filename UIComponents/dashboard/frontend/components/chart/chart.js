@@ -116,7 +116,7 @@ angular
         "ylabelFormat": "&?"
        
       },
-      templateUrl:'/UIComponents/dashboard/frontend/UIComponents/Components/chart/chart.html',
+      templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
       controller: function(httpClient, wsClient, $scope, $timeout) {
         
          var self = this;

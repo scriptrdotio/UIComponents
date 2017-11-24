@@ -34,7 +34,7 @@ angular
           "onFormatData" : "&"
 
         },
-        templateUrl: '/UIComponents/dashboard/frontend/UIComponents/Components/odometer/odometer.html',
+        templateUrl: '/UIComponents/dashboard/frontend/components/odometer/odometer.html',
         controller: function($scope, httpClient, wsClient, $element, $window, $timeout) {
 
            var self = this;

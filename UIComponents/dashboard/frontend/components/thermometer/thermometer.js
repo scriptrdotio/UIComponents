@@ -43,7 +43,7 @@ angular
                   "onFormatData" : "&"
 
                },
-               templateUrl : '/UIComponents/dashboard/frontend/UIComponents/Components/thermometer/thermometer.html',
+               templateUrl : '/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
                controller : function($scope, $window, $element, $timeout, httpClient, wsClient) {
 
 	               var self = this;

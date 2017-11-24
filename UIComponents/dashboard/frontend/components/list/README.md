@@ -35,8 +35,8 @@
   Include List module
    
   ```html
-     <script src="/UIComponents/dashboard/frontend/UIComponents/Components/list/angucomplete.alt.js"></script>
-     <script src="/UIComponents/dashboard/frontend/UIComponents/Components/list/autocomplete.js"></script>
+     <script src="/UIComponents/dashboard/frontend/components/list/angucomplete.alt.js"></script>
+     <script src="/UIComponents/dashboard/frontend/components/list/autocomplete.js"></script>
   ```
 
   Include wsProvider and httpProvider for calling backend API's

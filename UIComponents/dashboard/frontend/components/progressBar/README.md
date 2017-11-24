@@ -47,7 +47,7 @@
   ```html
    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
-   <script src="/UIComponents/dashboard/frontend/UIComponents/Components/progressBar/progressBar.js"></script>
+   <script src="/UIComponents/dashboard/frontend/components/progressBar/progressBar.js"></script>
    ```
   
   Include wsProvider and httpProvider for calling backend API's

@@ -36,7 +36,7 @@ angular
         "onFormatData" : "&" // Callback function to be called after data is returned from backend 
         
       },
-      templateUrl: '/UIComponents/dashboard/frontend/UIComponents/Components/progressBar/progressBar.html',
+      templateUrl: '/UIComponents/dashboard/frontend/components/progressBar/progressBar.html',
       controller: function($scope, httpClient, wsClient) {
         
          var self = this;

@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
-    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/UIComponents/Components/map/map.css">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/map/map.css">
   ```
 
   Include underscore and angular JS
@@ -56,9 +56,9 @@
   ```html
     <script src="//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&libraries=drawing"></script>
     <script src="//rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js"></script>
-    <script src="/UIComponents/dashboard/frontend/UIComponents/Components/map/map.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/map/map.js"></script>
     <script src="/UIComponents/dashboard/frontend/examples/map/simulatorConstants.js"></script>
-    <script src="/UIComponents/dashboard/frontend/UIComponents/Components/map/markerClusterer.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/map/markerClusterer.js"></script>
     
   ```
   

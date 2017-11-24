@@ -14,7 +14,7 @@ angular
 		 "apiParams" : "<?",
          "onFormatData" : "&"
       },
-      templateUrl:'/UIComponents/dashboard/frontend/UIComponents/Components/accelerometer/accelerometer.html',
+      templateUrl:'/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.html',
       controller: function(httpClient, wsClient, $scope) {
         
         var self = this;

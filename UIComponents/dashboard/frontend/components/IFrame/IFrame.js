@@ -11,7 +11,7 @@ angular
             link : "@"
 
         },
-        templateUrl : '/UIComponents/dashboard/frontend/UIComponents/Components/IFrame/IFrame.html',
+        templateUrl : '/UIComponents/dashboard/frontend/components/IFrame/IFrame.html',
         controller : function($scope, $sce, $q, $element, $window, $timeout) {
 
             var self = this;

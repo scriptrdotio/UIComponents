@@ -40,7 +40,7 @@ angular
         "bounce" : "<?",
         "markerInfoWindow": "<?" //On marker click show info window
     },
-    templateUrl : '/UIComponents/dashboard/frontend/UIComponents/Components/map/map.html',
+    templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
     
     controller : function($scope, $rootElement, $location, $sce,
                            $compile, $timeout, $interval, $controller, NgMap,

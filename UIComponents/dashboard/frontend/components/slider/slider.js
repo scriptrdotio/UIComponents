@@ -91,7 +91,7 @@ angular
                  
 
                },
-               templateUrl : '/UIComponents/dashboard/frontend/UIComponents/Components/slider/slider.html',
+               templateUrl : '/UIComponents/dashboard/frontend/components/slider/slider.html',
                controller : function($scope, $element, $window, $timeout, httpClient, wsClient) {
 
 	               var self = this;

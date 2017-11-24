@@ -16,7 +16,7 @@ angular.module('angularThermometer',[]).directive('tgThermometerVertical', funct
                unit: '@',
                sectors: "<?"
           },
-          templateUrl: '/UIComponents/dashboard/frontend/UIComponents/Components/thermometer/tg_thermometer_vertical.html'
+          templateUrl: '/UIComponents/dashboard/frontend/components/thermometer/tg_thermometer_vertical.html'
 	}
 
 });

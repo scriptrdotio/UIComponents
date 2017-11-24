@@ -30,8 +30,8 @@
   ```html
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
-    <script src="/UIComponents/dashboard/frontend/UIComponents/Components/gauge/angular.gauge.min.js"></script>
-    <script src="/UIComponents/dashboard/frontend/UIComponents/Components/gauge/gauge.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
   ```
   
   Include wsProvider and httpProvider for calling backend API's

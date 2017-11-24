@@ -95,7 +95,7 @@ angular
             "onGridReady" : "&"
         },
 
-        templateUrl : '/UIComponents/dashboard/frontend/UIComponents/Components/grid/grid.html',
+        templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
         controller : function($scope, $window, $uibModal, $timeout, wsClient, dataService) {
 
             var self = this;
@@ -647,7 +647,7 @@ angular
         close: '&',
         dismiss: '&'
     },
-    templateUrl:  '/UIComponents/dashboard/frontend/UIComponents/Components/grid/popup.html',
+    templateUrl:  '/UIComponents/dashboard/frontend/components/grid/popup.html',
     controller: function ($scope) {
 
         this.onSubmit = function() {

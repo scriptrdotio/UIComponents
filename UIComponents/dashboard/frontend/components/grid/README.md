@@ -46,7 +46,7 @@
    
   ```html
     <script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36"></script>
-    <script src="/UIComponents/dashboard/frontend/UIComponents/Components/grid/grid.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/grid/grid.js"></script>
   ```
 
   Include scriptrTransport for configuration

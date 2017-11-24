@@ -36,7 +36,7 @@ angular
                   
 
                },
-               templateUrl : '/UIComponents/dashboard/frontend/UIComponents/Components/datetimepicker/datetimepicker.html',
+               templateUrl : '/UIComponents/dashboard/frontend/components/datetimepicker/datetimepicker.html',
                controller : function($scope, $log) {
                  
                   var self = this;

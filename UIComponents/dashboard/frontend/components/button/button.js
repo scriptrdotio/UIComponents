@@ -35,7 +35,7 @@ angular
             "onFormatData" : "&"
 
         },
-        templateUrl : '/UIComponents/dashboard/frontend/UIComponents/Components/button/button.html',
+        templateUrl : '/UIComponents/dashboard/frontend/components/button/button.html',
         controller : function($scope, $q, $element, $window, $timeout, httpClient, wsClient) {
 
             var self = this;

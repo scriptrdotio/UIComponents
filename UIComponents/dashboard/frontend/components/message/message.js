@@ -15,7 +15,7 @@ angular
         "apiParams" : "<?",
         "onFormatData" : "&"
       },
-      templateUrl:'/UIComponents/dashboard/frontend/UIComponents/Components/message/message.html',
+      templateUrl:'/UIComponents/dashboard/frontend/components/message/message.html',
       controller: function(httpClient, wsClient) {
         
          var self = this;

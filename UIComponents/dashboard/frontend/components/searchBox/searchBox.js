@@ -38,7 +38,7 @@ angular
         "onFormatData" : "&"
       
     },
-    templateUrl: "/UIComponents/dashboard/frontend/UIComponents/Components/searchBox/searchBox.html",
+    templateUrl: "/UIComponents/dashboard/frontend/components/searchBox/searchBox.html",
     controller: function(wsClient, httpClient) {
       
          var self = this;

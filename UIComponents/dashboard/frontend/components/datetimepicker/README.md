@@ -30,7 +30,7 @@
    
   ```html
      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/UIComponents/Components/datetimepicker/datetimepicker.css">
+     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/datetimepicker/datetimepicker.css">
   ```
   
   Include  JQuery and Bootstrap.js
@@ -52,10 +52,10 @@
     Include Date Time Picker Modules
   
   ```html
-    <script type="text/javascript" src="/UIComponents/dashboard/frontend/UIComponents/Components/datetimepicker/datetimepicker_directive.js"></script>
+    <script type="text/javascript" src="/UIComponents/dashboard/frontend/components/datetimepicker/datetimepicker_directive.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-datetimepicker/1.1.3/js/datetimepicker.templates.min.js"></script>
-    <script type="text/javascript" src="/UIComponents/dashboard/frontend/UIComponents/Components/datetimepicker/dateTimeInput.js"></script>
-    <script type="text/javascript" src="/UIComponents/dashboard/frontend/UIComponents/Components/datetimepicker/datetimepicker.js"></script>
+    <script type="text/javascript" src="/UIComponents/dashboard/frontend/components/datetimepicker/dateTimeInput.js"></script>
+    <script type="text/javascript" src="/UIComponents/dashboard/frontend/components/datetimepicker/datetimepicker.js"></script>
   ```
   
   Add "DateTimePicker" to your app module's dependency

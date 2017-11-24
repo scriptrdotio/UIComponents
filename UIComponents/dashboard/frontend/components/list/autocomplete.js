@@ -83,7 +83,7 @@ angular
         "onFormatData" : "&"
       
     },
-    templateUrl: "/UIComponents/dashboard/frontend/UIComponents/Components/list/autocomplete.html",
+    templateUrl: "/UIComponents/dashboard/frontend/components/list/autocomplete.html",
     controller: function($scope,wsClient, httpClient) {
       
          var self = this;
