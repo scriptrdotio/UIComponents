@@ -1,0 +1,16 @@
+<scriptr-chart
+               type="area"     
+               ykeys='["a", "b"]'
+               xkey='y'
+               labels='["Serie A", "Serie B"]'    
+               transport="https"
+               msg-tag="chart"
+               xlabel-angle="45"
+               colors='["#cfc"]'
+               point-size="2"   
+               line-width="20"
+               goals="[1.0, -1.0]"
+               api='UIComponents/dashboard/frontend/examples/chart/getChartData'
+               hover-callback="vm.hoverCallback"
+               on-format-data="vm.callback">          
+</scriptr-chart>  
