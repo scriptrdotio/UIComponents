@@ -128,13 +128,13 @@
 <script type='text/x-handlebars-template' id="thermometer-html">
 <div ng-app="myApp" ng-controller="testCtrl as vm" >
 	<scriptr-thermometer
-                      value="vm.value"  
-                      sectors="[0, 25, 50, 75, 100]"       
-                      max="150"    
-                      unit="°F"       
-                      height="500"
-                      on-format-data="vm.callback"
-                      height="220"
+                     value="28"  
+                     sectors="[0, 25, 50, 75, 100]"       
+                     max="100"    
+                     unit="°F"       
+                     height="500px"
+                     on-format-data="vm.callback"
+                     height="220"
                      >
     <scriptr-thermometer> 
     </div>
@@ -287,7 +287,7 @@
 
 <script type='text/x-handlebars-template' id="barChart-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -315,7 +315,7 @@
 
 <script type='text/x-handlebars-template' id="areaChart-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -343,7 +343,7 @@
 
 <script type='text/x-handlebars-template' id="lineChart-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -371,7 +371,7 @@
 
 <script type='text/x-handlebars-template' id="donutChart-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Chart"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -399,7 +399,7 @@
 
 <script type='text/x-handlebars-template' id="gauge-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Gauge"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -427,7 +427,7 @@
 
 <script type='text/x-handlebars-template' id="speedometer-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Speedometer"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -455,7 +455,7 @@
 
 <script type='text/x-handlebars-template' id="thermometer-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Thermometer"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -484,7 +484,7 @@
 
 <script type='text/x-handlebars-template' id="odometer-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Odometer"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -512,7 +512,7 @@
 
 <script type='text/x-handlebars-template' id="accelerometer-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Accelerometer"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -540,7 +540,7 @@
 
 <script type='text/x-handlebars-template' id="progressBar-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "ProgressBar"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -568,7 +568,7 @@
 
 <script type='text/x-handlebars-template' id="map-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Map"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -596,7 +596,7 @@
 
 <script type='text/x-handlebars-template' id="grid-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Grid"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -624,7 +624,7 @@
 
 <script type='text/x-handlebars-template' id="toggleSwitch-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "ToggleSwitch"])
-        
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -652,7 +652,7 @@
 
 <script type='text/x-handlebars-template' id="slider-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Slider"])
-  
+
          /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -680,7 +680,7 @@
 
 <script type='text/x-handlebars-template' id="button-js">
   var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Button"])
-  
+
         /* Set your Scriptr configuration to call your APIs
          var wssConfig = ["wsClientProvider",function (wsClientProvider) {
           wsClientProvider.setToken("TzgzNTA4NkQxOA==");
@@ -696,7 +696,7 @@
          angular.module('myApp').config(wssConfig)
          angular.module('myApp').config(httpsConfig)
         */
-        
+
         angular.module('myApp').controller('testCtrl', function($scope) {
             var vm = this;
             vm.callback = function(data){
