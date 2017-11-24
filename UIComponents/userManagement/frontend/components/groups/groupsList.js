@@ -5,7 +5,7 @@ angular.module('Management')
     groups: '<groups',
     message: '@message'
   },
-  templateUrl: '/UIComponents/userManagement/frontend/UIComponents/Components/groups/groupsList.html',
+  templateUrl: '/UIComponents/userManagement/frontend/components/groups/groupsList.html',
   controller: function($scope, _ , managementService){
     var self = this;
     self.isLoading = true;

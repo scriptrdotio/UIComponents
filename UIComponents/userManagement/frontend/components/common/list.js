@@ -12,7 +12,7 @@ angular.module('Generic', [])
     onSelect: '&?',
     onAdd: '&?'
   },
-  templateUrl: "/UIComponents/userManagement/frontend/UIComponents/Components/common/list.html",
+  templateUrl: "/UIComponents/userManagement/frontend/components/common/list.html",
   controller: function(){
     this.$onInit = function() {
       this.hasAdd = false;
@@ -52,7 +52,7 @@ angular.module('Generic', [])
     hasUpdate: '<hasUpdate',
     hasDelete: '<hasDelete'
   },
-  templateUrl: "/UIComponents/userManagement/frontend/UIComponents/Components/common/item.html",
+  templateUrl: "/UIComponents/userManagement/frontend/components/common/item.html",
   controller: function(){
     this.deleteItem = function(item) {
       this.onDelete({user: item});

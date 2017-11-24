@@ -9,7 +9,7 @@ angular
                   message : '@message',
                   title : '<title'
                },
-               templateUrl : '/UIComponents/userManagement/frontend/UIComponents/Components/devices/deviceDetails.html',
+               templateUrl : '/UIComponents/userManagement/frontend/components/devices/deviceDetails.html',
 
                controller : function($scope, _, managementService) {
 	               var self = this;

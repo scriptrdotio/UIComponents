@@ -4,7 +4,7 @@ angular.module('Management').component('groupDetails', {
       message : '@message',
       title: '<title'
    },
-   templateUrl : '/UIComponents/userManagement/frontend/UIComponents/Components/groups/groupDetails.html',
+   templateUrl : '/UIComponents/userManagement/frontend/components/groups/groupDetails.html',
 
    controller : function($scope, _, managementService) {
 	   var self = this;
