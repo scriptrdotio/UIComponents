@@ -1,10 +1,11 @@
 var wssConfig = ["wsClientProvider",function (wsClientProvider) {
-  wsClientProvider.setToken("RTg2MTczN0ZDRTpzY3JpcHRyOkEzM0UyNDdDQUZCQzYxQjM0NURDM0Y2NDc0OTlGMTIx");
+  wsClientProvider.setBaseUrl("wss://kitchen-sink.scriptrapps.io");  
+  wsClientProvider.setToken("TzgzNTA4NkQxOA==");
   wsClientProvider.setPublishChannel("requestChannel");
   wsClientProvider.setSubscribeChannel("responseChannel");
 }];
 
 var httpsConfig = ["httpClientProvider",function (httpClientProvider) {
-  httpClientProvider.setBaseUrl("https://marv1.scriptrapps.io");
-  httpClientProvider.setToken("RTg2MTczN0ZDRTpzY3JpcHRyOkEzM0UyNDdDQUZCQzYxQjM0NURDM0Y2NDc0OTlGMTIx");
+  httpClientProvider.setBaseUrl("https://kitchen-sink.scriptrapps.io");
+  httpClientProvider.setToken("TzgzNTA4NkQxOA==");
 }]
