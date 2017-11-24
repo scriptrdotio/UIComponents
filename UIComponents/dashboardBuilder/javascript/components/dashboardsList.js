@@ -6,7 +6,7 @@ angular
     bindings : {
       dashboard: "<"
     },
-    templateUrl: '/UIComponents/dashboardBuilder/javascript/UIComponents/Components/dashboardsList.html',
+    templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboardsList.html',
     controller: function($scope, $timeout, $sce, $window, httpClient, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, $q, _) {
       
       this.wsClient = wsClient;
@@ -61,7 +61,7 @@ angular
       this.deleteDashboardConfirmation = function(path, name){
         var modalInstance = $uibModal.open({
                controller: 'PopupCont',
-               templateUrl: '/UIComponents/dashboardBuilder/javascript/UIComponents/Components/deletePopup.html',
+               templateUrl: '/UIComponents/dashboardBuilder/javascript/components/deletePopup.html',
                resolve: {
                    dashboard: function () {
                        return self;
