@@ -45,7 +45,7 @@
   Include Grid module + Component
    
   ```html
-    <script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/6.4.2/ag-grid.js?ignore=notused36"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ag-grid/12.0.0/ag-grid.js?ignore=notused36"></script>
     <script src="/UIComponents/dashboard/frontend/components/grid/grid.js"></script>
   ```
 
