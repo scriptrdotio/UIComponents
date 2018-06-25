@@ -1,0 +1,5 @@
+ <div class="round-btn" ng-class="{'btn-3d': $ctrl.threeDimensional === 'true', 'btn-shadow': $ctrl.threeDimensional === 'true',   'large-btn': $ctrl.size === 'large', 'medium-btn': $ctrl.size === 'medium',  'small-btn': $ctrl.size === 'small' }">
+     <a href="javascript:void(0);">
+         <i class="fas fa-circle text-{{$ctrl.color || 'red'}}" ng-class="{'fa-3x': $ctrl.size === 'large', 'fa-2x': $ctrl.size === 'medium'}"></i>
+     </a>
+</div>

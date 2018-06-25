@@ -1,0 +1,48 @@
+<html ng-app="myApp">
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/StateWidget/lightState.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    
+    <script src="/UIComponents/dashboard/frontend/components/StateWidget/lightState.js"></script>
+  
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+</head>  
+  
+<script>
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "StateWidget"])
+      angular.module('myApp').config(wssConfig);
+      angular.module('myApp').config(httpsConfig);
+  
+      angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          
+          vm.formatData = function(data) {
+              if(data > 20) {
+                  return "blue"
+              }
+              if(data > 50) {
+                  return "green"
+              } else {
+                  return "yellow"
+              }
+          }
+          
+      });
+</script>
+  
+<body> 
+  <div ng-controller="testCtrl as vm" >
+  	<light-state three-dimensional="false" shadow="false" size="medium" api="UIComponents/dashboard/frontend/examples/StateWidget/deviceState"  on-format-data="vm.formatData" transport="wss" msg-tag="motion"></light-state>
+  </div>   
+  
+</body>
+
+</html>

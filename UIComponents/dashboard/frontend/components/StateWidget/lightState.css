@@ -1,0 +1,62 @@
+.text-red {color: #f2978c;}
+.text-green {color: #baeba6;}
+.text-blue {color: #b0d7e8;}
+.text-yellow {color: #f8e578;}
+
+    
+    
+.round-btn {
+  position: relative;
+}
+
+.round-btn a:link, .round-btn a:visited {
+  display: block;
+  text-decoration: none;
+  background-color: #f7f7f7;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  color: #a7a7a7;
+  margin: 20px;
+  position: relative;
+  text-align: center;
+  border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+    
+.btn-shadow a:link, .btn-shadow a:visited {
+    box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+    border: solid 1px transparent;
+}
+
+.btn-3d a:before {
+  content: "";
+  display: block;
+  background: #fff;
+  border-top: 2px solid #ddd;
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  bottom: -18px;
+  right: -18px;
+  z-index: -1;
+  border-radius: 50%;
+  box-shadow: inset 0px 8px 48px #ddd;
+}
+    
+.btn-3d a:active {
+  box-shadow: 0px 3px 4px #aaa inset, 0px 2px 3px #fff;
+}
+
+.btn-3d a:hover {
+  text-decoration: none;
+  color: #555;
+  background: #f5f5f5;
+}
+.small-btn a:link {width: 30px; height: 30px;}
+.medium-btn a:link {width: 62px; height: 62px;}
+.large-btn a:link{width: 144px; height: 144px;}
