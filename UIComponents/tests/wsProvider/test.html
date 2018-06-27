@@ -4,10 +4,14 @@
     <meta charset="utf-8">
     <title>My HTML File</title>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/angular-underscore.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+      
     <body ng-app="myApp">  
       <div ng-controller="testCtrl as vm" ng-init="vm.init()">
         <div>
@@ -61,12 +65,7 @@
     <script>
       var myApp = angular.module('myApp', ["WsClient"]);
       
-      myApp.config(["wsClientProvider",function (wsClientProvider) {
-        wsClientProvider.setToken("UjkyNTI2OTk1RQ==");
-        wsClientProvider.setPublishChannel("requestChannel");
-        wsClientProvider.setSubscribeChannel("responseChannel");
-      }]);
-      
+      angular.module('myApp').config(wssConfig);
       myApp.controller('testCtrl', function($scope, $controller, wsClient) {
         var vm = this;
        
