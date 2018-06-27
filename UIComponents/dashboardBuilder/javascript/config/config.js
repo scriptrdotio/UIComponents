@@ -1,4 +1,4 @@
-var anonymousToken = "RTg2MTczN0ZDRQ==";
+var anonymousToken = "RTZCMTI1RkNCMw==";
 
 var login = {
    redirectTarget: "/UIComponents/dashboardBuilder/index.html",
@@ -8,13 +8,3 @@ var login = {
    anonymousToken: anonymousToken
 };
 
-var wssConfig = ["wsClientProvider",function (wsClientProvider) {
-  wsClientProvider.setToken(anonymousToken);
-  wsClientProvider.setPublishChannel("requestChannel");
-  wsClientProvider.setSubscribeChannel("responseChannel");
-}];
-
-var httpsConfig = ["httpClientProvider",function (httpClientProvider) {
-  httpClientProvider.setBaseUrl("https://marv1.scriptrapps.io");
-  httpClientProvider.setToken(anonymousToken);
-}]
