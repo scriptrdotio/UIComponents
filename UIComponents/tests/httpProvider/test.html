@@ -6,7 +6,9 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
-    <script src="//marv.scriptrapps.io/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+
     <body ng-app="myApp">  
       <div ng-controller="testCtrl as vm" ng-init="vm.init()">
         Data: {{vm.data || 'n/a'}}
@@ -16,10 +18,7 @@
     </body>
     <script>
       var myApp = angular.module('myApp', ["HttpClient"]);
-      myApp.config(["httpClientProvider",function (httpClientProvider) {
-        httpClientProvider.setBaseUrl("https://touta.scriptrapps.io");
-        httpClientProvider.setToken("UjkyNTI2OTk1RQ==");
-      }]);
+      
       myApp.controller('testCtrl', function($scope, $controller, httpClient) {
         var vm = this;
         vm.init = function() {
