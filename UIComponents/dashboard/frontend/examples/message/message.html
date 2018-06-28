@@ -1,6 +1,7 @@
 <html ng-app="myApp">
 <head>
     
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="//use.fontawesome.com/3d61d6959e.js"></script>
   
@@ -13,9 +14,10 @@
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/message/displayBox.js"></script>
   <script src="/UIComponents/dashboard/frontend/components/message/message.js"></script>
-    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    
 </head> 
   
 <script>
@@ -32,7 +34,7 @@
 
 <body>  
   <div ng-controller="testCtrl as vm" >
-    	<dsp-box transport="wss" api="UIComponents/dashboard/frontend/examples/message/getMessage" msg-tag="myMessage" type="info"></dsp-box>
+    	<scriptr-displaybox transport="wss" api="UIComponents/dashboard/frontend/examples/message/getMessage" msg-tag="myMessage" type="info"></scriptr-displaybox>
   </div>
 
 </body>  
