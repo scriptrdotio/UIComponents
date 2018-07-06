@@ -112,7 +112,7 @@ angular
         });
         $scope.$on('mapInitialized', function(event, map) {
               self.map = map;
-              if(self.switchStatus == true){
+              if(self.switchStatus == true && self.heatmap){
                   heatmap = new google.maps.visualization.HeatmapLayer({
                       data: _.toArray(self.heatMap),
                       radius: self.heatMapRadius,
