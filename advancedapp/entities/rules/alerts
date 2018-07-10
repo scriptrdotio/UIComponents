@@ -1,0 +1,60 @@
+//Get payload parameters
+var pl = null;
+var requestBody = request.body;
+if (!requestBody) {
+	pl = request.parameters.payload;
+	pl = JSON.parse(pl);
+} else {
+	pl = requestBody.payload;
+}
+
+//START TABLE DECISION CODE
+function execute(pl) {
+
+var decision = [];
+
+//PRESCRIPT START
+
+//PRESCRIPT END
+
+//RULES EVALUATION START
+if(typeof pl != "object") {
+  return[];
+} else { 
+	  if((pl != null && pl["temperature"] != undefined && pl["temperature"] >35) && isAny("luminosity") && isAny("pressure")){
+       decision.push({ "log": "true","email": "high_temperature" });
+	} 
+	  if(isAny("temperature") && (pl != null && pl["luminosity"] != undefined && pl["luminosity"] >15000) && isAny("pressure")){
+       decision.push({ "log": "true","email": "high_luminosity" });
+	} 
+	  if(isAny("temperature") && isAny("luminosity") && (pl != null && pl["pressure"] != undefined && pl["pressure"] >110000)){
+       decision.push({ "log": "false","email": "high_pressure" });
+	} 
+}
+//RULES EVALUATION END
+
+//POSTSCRIPT START
+//Variable "decision" is the object returned by the decision table execution.
+//Variable "decision" format is [{"action1": "value1", "action2":  "value2"}].
+return decision;
+//POSTSCRIPT END
+
+}
+//Check if value is "in" or is "not in" array
+//return true or false
+function evalArrayOperation(value, operator,  array) {
+	if(operator == "in") {
+		return (array.indexOf(value)>-1);
+	} else {
+		return (array.indexOf(value) == -1) ;
+	} 
+}
+
+//isAny function, when condition expression is not important
+function isAny(param) {
+	return true;
+}
+
+//START_REST_CALL 
+return execute(pl);
+//END_REST_CALL
