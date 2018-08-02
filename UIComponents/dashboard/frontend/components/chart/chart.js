@@ -9,6 +9,23 @@ angular.module('Chart', [ 'angular.morris' ]);
  *
  */
 angular.element(document).ready(function () {
+    
+    
+    Morris.Line.prototype.resizeHandler = function () {
+
+        clearTimeout(this.timeoutId);
+        var chart=this;
+        this.timeoutId = setTimeout(function(){
+            if (chart.el && chart.el.width() > 0 && chart.el.height() > 0) {
+            
+                chart.raphael.setSize(chart.el.width(), chart.el.height()*0.98);
+                chart.redraw();
+            }
+       
+            
+        }, 600);
+        return this;
+    };
     Morris.Donut.prototype.resizeHandler = function () {
         this.timeoutId = null;
         if (this.el && this.el.width() > 0 && this.el.height() > 0) {
@@ -17,6 +34,7 @@ angular.element(document).ready(function () {
         }
         else return null;
     };
+    
     Morris.Donut.prototype.setData = function (data) {
         var row;
         this.data = data;
@@ -35,6 +53,9 @@ angular.element(document).ready(function () {
         }
         else return null;
     };
+    
+    
+    
 });
 
 angular
