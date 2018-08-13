@@ -18,7 +18,7 @@ angular.element(document).ready(function () {
         this.timeoutId = setTimeout(function(){
             if (chart.el && chart.el.width() > 0 && chart.el.height() > 0) {
             
-                chart.raphael.setSize(chart.el.width(), chart.el.height()*0.98);
+                chart.raphael.setSize(chart.el.width(), chart.el.height()-8);
                 chart.redraw();
             }
        
