@@ -220,7 +220,7 @@ angular
                        if(typeof this.onFormatData() == "function"){
                          data = this.onFormatData()(data);
                        }
-                       data = parseInt(data);
+                       data = parseFloat(data);
                        if(typeof data == "number" && data.toString() != "NaN"){
                          data = data;
                        }else{
