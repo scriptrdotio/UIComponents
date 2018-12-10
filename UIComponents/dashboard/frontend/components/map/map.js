@@ -17,7 +17,8 @@ angular
         "pathStrokeWeight": "@",
         "maxAssetPoints": "<?", // Number of tracked positions per asset per map instance, do not set if infinite
         "defaultCenter": "@", //Map default center, "lat,long"
-        "trackedAsset": "@",
+        "trackedAsset": "@", //Show only this asset, not clickable
+        "selectedTrackedAsset": "@", 
         "summaryIcons": "<?", //MFE: Check what to do with this in dashboard builder
         
         "assetsData": "<?",
@@ -97,7 +98,12 @@ angular
         if(!self.focusedMarkerZoom || (self.clusteredView && self.focusedMarkerZoom < self.clusteredZoomMax)) {
            self.focusedMarkerZoom = (self.detailedZoomMin < 18) ? (self.detailedZoomMin + 3) : self.detailedZoomMin;
          } 
-        	
+
+         if(self.selectedTrackedAsset) {
+             self.showDetailedMap = true;
+             self.detailedmapzoom = self.detailedZoomMin
+         }
+          
          //This should be move to a parent component
       	 loadMapData();
          
@@ -124,6 +130,14 @@ angular
                        heatmap.setMap(null);
                   }
               }
+            if(self.selectedTrackedAsset && self.showDetailedMap == true) {
+                 $timeout(function() {
+                 	if(self.selectedTrackedMarker)
+                        self.showAssetInfo(null, self.selectedTrackedMarker, self.selectedTrackedMarker.assetKey, self.selectedTrackedMarker.tripKey, self.selectedTrackedMarker.id)
+                 },1000);
+             }
+              
+
           });  
       }
       
@@ -505,6 +519,11 @@ angular
                 self.assets[key]["markers"].push(newMarker);
                 self.assets[key]["path"].push([ tripPoint.lat.value, tripPoint.long.value ]);
             
+            	
+            	if(self.selectedTrackedAsset == newMarker.assetId) {
+                  	self.selectedTrackedMarker = newMarker;
+              	}
+            	
             	if(self.selectedAsset == key) {
                     $scope.$parent.marker = newMarker
                    // $scope.$apply()
@@ -606,7 +625,7 @@ angular
         console.log("Show assetInfo assetKey", assetKey)
         self.selectedAsset = assetKey;
         self.focusOnAsset(assetKey, marker);
-        var markerEl = this;
+        var markerEl = (event) ? this : null;
         console.log("self.$wdgid", self.$wdgid);
         NgMap.getMap({
           id : 'detailed-'+self.$wdgid //TODO: MAke id parametrable or change selector if possible
@@ -617,6 +636,8 @@ angular
               self.assets[assetKey]["markers"], {
                 "id" : id
               })**/
+            //In case marker wasn't click markerEl = this would be null
+            markerEl = (markerEl) ? markerEl : _.findWhere(map.markers, {data: marker.assetKey})
             var infoWindow = "infoWindowTemplate_"+ $scope.$parent.marker.source;
             console.log("Info window", infoWindow)
             console.log("self.markerInfoWindow", self.markerInfoWindow)

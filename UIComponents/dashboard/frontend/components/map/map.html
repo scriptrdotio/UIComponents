@@ -36,7 +36,7 @@
 				<div ng-repeat="marker in asset.markers track by $index">
 					<div ng-if="$ctrl.trackedAsset == null">
 						<marker position="{{marker.position}}" title="{{marker.display}}" animation={{marker.animation}}
-							icon="{{marker.icon}}"
+							icon="{{marker.icon}}" data="{{marker.assetKey}}"
 							on-click="$ctrl.showAssetInfo(event, marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')">
 						</marker>
 					</div>
