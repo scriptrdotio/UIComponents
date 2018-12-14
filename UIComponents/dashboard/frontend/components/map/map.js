@@ -331,7 +331,7 @@ angular
             id : 'clustered-'+self.$wdgid
           }).then(function(map) {
               self.map = map;
-              if (map.getZoom() > self.detailedZoomMin) {
+              if (map.getZoom() >= self.detailedZoomMin) {
                   self.showDetailedMap = true;
                   self.mapcenter = map.getCenter();
                   self.detailedmapzoom = self.detailedZoomMin;
