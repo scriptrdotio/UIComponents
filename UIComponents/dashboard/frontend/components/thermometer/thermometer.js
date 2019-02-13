@@ -7,6 +7,8 @@ angular
             {
 
                bindings : {
+                   
+                  "availableUnits": "<?",
 
                   "onLoad" : "&onLoad",
 
@@ -16,19 +18,15 @@ angular
                    
                   "data" : "<?",
                  
-                  "size" : "@",
+                  "step" : "<?", 
                    
-                  "sectors" : "<?", 
+                  "customSectors": "<?",
                    
-                  "colors": "<?", 
+                  "outOfRangeColor": "@",
                    
                   "ticks": "<?", 
                    
                   "percent": "@", 
-                   
-                  "cols": "@", 
-                   
-                  "max" : "<?", 
                    
                   "unit" : "@",
                   
@@ -40,39 +38,65 @@ angular
 
                   "apiParams" : "<?",
                  
-                  "onFormatData" : "&"
-
+                  "onFormatData" : "&",
+                   
+                  "fetchDataInterval" : "@"
+                   
+                   
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
-               controller : function($scope, $window, $element, $timeout, httpClient, wsClient) {
+               controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval) {
 
 	               var self = this;
+                   self.showSelectStream = self.api ? false: true;
 
 	               this.$onInit = function() {
-                     
-                       this.value = (this.value) ? (this.value > 100) ? 100 : this.value : ((this.data) ? this.data : 0 );
                        
-                       this.unit = (this.unit) ? this.unit : "°C";
+	               	  this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
+                      this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;
+              
+              		  this.customSectors = (this.customSectors && this.customSectors.length > 0) ? this.customSectors : [{"color": "#005588", "lo": 0, "hi": 30}, {"color": "#aa241d", "lo": 30, "hi": 60}, {"color": "#ffa500", "lo": 60, "hi": 90}];
+
+                       //remove empty objects from the array
+                       if(this.customSectors)
+                      	 	this.customSectors = _.reject(this.customSectors, _.isEmpty);
                        
-                       this.max = (this.max) ? this.max : 100;
+                       this.outOfRangeColor = this.outOfRangeColor ? this.outOfRangeColor : "#5fc100";
                        
-                       this.height = (this.height) ? this.height+"px" : "92%",
+                       this.value = (this.value) ? ((this.value > 100) ? 100 : this.value) : ((this.data) ? this.data : 0 );
                        
-                       this.colors = (this.colors) ? this.colors : ["#2196F3", "#8BC34A", "#F44336"];
+                       this.thermoUnit =  (this.unit) ? this.unit : "°C";
                        
-                       this.cols = this.colors.toString();
+                       this.height = (this.height) ? this.height : "100";
+                                              
+                       this.mercuryColor = this.evaluateColor(this.value);
                        
-                       this.sectors = (this.sectors) ? this.sectors : [0, 25, 50, 75, 100];
+                       this.step = (this.step) ? this.step : "30";
+                       
+                       var lowestTick = this.getLowestTick();
+                       var highestTick = this.getHighestTick();
+                       
+                       var tick = parseInt(lowestTick);
+                       this.sectors = [];
+                       this.sectors.push(tick);
+                       while(tick < highestTick){
+                           tick += parseInt(this.step);
+                           this.sectors.push(tick);
+                       }
+                       
+                       this.sectors = (this.sectors) ? this.sectors : [0, 30, 60, 90];
+                       
+                       this.mercuryMax = _.max(this.sectors);
+                       this.minSectorValue = _.min(this.sectors);
+
                        this.ticks = [];
                        for(var i = 0; i < this.sectors.length; i++){
-                           if(this.sectors[i] < this.max && this.sectors[i] >= 0){
-                               var obj = {};
-                               obj["tick"] = this.sectors[i];
-                               obj["percent"] = parseInt(this.sectors[i] * 100 / this.max);
-                               this.ticks.push(obj);
-                           }
+                           var obj = {};
+                           obj["tick"] = this.sectors[i];
+                           obj["percent"] = (this.sectors[i] - this.minSectorValue) * this.height / (this.mercuryMax - this.minSectorValue);
+                           this.ticks.push(obj);
                        }
-                     
+                       
                        this.transport = (this.transport) ? this.transport : "wss";
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
                        
@@ -81,17 +105,17 @@ angular
                            if (self.timeoutId != null) {
                                $timeout.cancel(self.timeoutId);
                            }
-                           return self.timeoutId = $timeout(self.resize, 100);
+                           return self.timeoutId = $timeout(self.resize, 500);
                        });
-
+                       
 		               initDataService(this.transport);
 
 	               }
                    
                    self.resize = function(){
                        self.timeoutId = null;
-                       self.style["margin-top"] = 10;
-                       self.style["margin-left"] = ($element.parent().outerWidth(true)/2) - 50;
+                       self.style["margin-top"] = !self.noResults ? (($element.parent().outerHeight(true)/2) - $($element.find(".tg-thermometer")).innerHeight()/2) : 0; 
+                       self.style["margin-left"] = !self.noResults ? (($element.parent().outerWidth(true)/2) - 50) : 0;
                    }
                    
                    this.$postLink = function () {
@@ -101,20 +125,22 @@ angular
                        }
                        self.timeoutId = $timeout(self.resize, 100);
                        $scope.$watch(function( $scope ) {
-                           if(($scope.$ctrl.value)){
                                return $scope.$ctrl.value
-                           }
                        },function(newVal){
-                           if(newVal){
-                               newVal = (newVal > $scope.$ctrl.max) ? $scope.$ctrl.max : newVal;
-                               self.percent = parseInt(newVal * 100 / $scope.$ctrl.max);
+                           if(!isNaN(parseFloat(newVal)) && isFinite(newVal)){
+                               newVal = (newVal > $scope.$ctrl.mercuryMax) ? $scope.$ctrl.mercuryMax : newVal;
+                               self.percent = parseInt((newVal - $scope.$ctrl.minSectorValue) * $scope.$ctrl.height / ($scope.$ctrl.mercuryMax - $scope.$ctrl.minSectorValue));
                            }
                        });
                    }
+                   
                    this.$onDestroy = function() {
-                       console.log("destory Thermometer")
                        if(self.msgTag){
                            wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
+                       }
+                       
+                       if(self.refreshTimer){
+                        	$interval.cancel( self.refreshTimer );
                        }
                    }
 
@@ -126,9 +152,17 @@ angular
                                  wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
                                }
 				               if(self.api) {
-                                  wsClient.call(self.api, self.apiParams, self.msgTag)
+                                  wsClient.call(self.api, self._apiParams, self.msgTag)
                                    .then(function(data, response) {
-                                       self.consumeData(data)
+                                      self.showSelectStream = false;
+                                      if(self.fetchDataInterval && !self.refreshTimer) {
+                                            //Assuming this is success
+                                            self.refreshTimer = $interval(
+                                                function(){
+                                                    initDataService.bind(self)(transport)
+                                                }, self.fetchDataInterval * 1000);
+                                        }
+                                      self.consumeData(data)
                                    },
                                     function(err) {
                                       console.log( "reject published promise", err);
@@ -140,7 +174,7 @@ angular
 		               } else {
 			               if (transport == "https" && self.api) {
 				               httpClient
-				                     .get(self.api, self.apiParams)
+				                     .get(self.api, self._apiParams)
 				                     .then(
 				                           function(data, response) {
 					                           self.consumeData(data)
@@ -156,10 +190,33 @@ angular
 	               }
 
 	              this.consumeData = function(data, response) {
-                       if(typeof this.onFormatData() == "function"){
-                         data = this.onFormatData()(data);
-                       }
-		               this.value = parseInt(data);
-	               }
+                      if(typeof this.onFormatData() == "function"){
+                          data = this.onFormatData()(data);
+                      }
+                      if(data != null){
+                          this.noResults = false;
+                          this.value = parseFloat(data);
+                          this.mercuryColor = this.evaluateColor(data);
+                      }else{
+                          this.noResults = true;
+                      }
+                      self.style["margin-top"] = !self.noResults ? (($element.parent().outerHeight(true)/2) - $($element.find(".tg-thermometer")).innerHeight()/2) : 0; 
+                       self.style["margin-left"] = !self.noResults ? (($element.parent().outerWidth(true)/2) - 50) : 0;
+	               },
+                      
+                      
+                   this.evaluateColor = function(data) {
+                     var color = self.outOfRangeColor;
+                     _.some(self.customSectors, function(obj){ if( obj.lo <= data &&  data <= obj.hi) {color = obj.color; return true;} });
+                      return color;
+                   },
+                      
+                   this.getLowestTick = function(){
+                      return _.min(_.pluck(this.customSectors, "lo"));
+                   },
+                      
+                   this.getHighestTick = function(){
+                      return _.max(_.pluck(this.customSectors, "hi"));
+                   }
                }
             });

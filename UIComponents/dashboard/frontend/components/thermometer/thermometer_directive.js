@@ -4,17 +4,14 @@ angular.module('angularThermometer',[]).directive('tgThermometerVertical', funct
 	return {
 		  restrict: 'E',
           require: 'ngModel',
-          scope: {            
-               size: '@',
+          scope: {
                height: '@', 
-               ticks: "<?",
-               percent: "@",
-               colors: "<?",
-               max: "@",
-               cols: "@",
+               ticks: '<?',
+               percent: '@',
                value: '@',
                unit: '@',
-               sectors: "<?"
+               sectors: '<?',
+               mercuryColor: '<?'
           },
           templateUrl: '/UIComponents/dashboard/frontend/components/thermometer/tg_thermometer_vertical.html'
 	}

@@ -1,14 +1,13 @@
 <div ng-style="$ctrl.style">
     <tg-thermometer-vertical
                              value="{{$ctrl.value}}"
-                             size="{{$ctrl.size}}"
-                             unit="{{$ctrl.unit}}"
-                             max="{{$ctrl.max}}"
-                             colors="$ctrl.colors"
+                             unit="{{$ctrl.thermoUnit}}"
                              percent="{{$ctrl.percent}}"
                              sectors="$ctrl.sectors"
                              ticks="$ctrl.ticks"
-                             cols="{{$ctrl.cols}}"
-                             height="{{$ctrl.height}}">
+                             height="{{$ctrl.height}}"
+                             mercury-color="$ctrl.mercuryColor"
+                             ng-show="!$ctrl.noResults">
     </tg-thermometer-vertical>
+	<div class="parent"><div class="alert alert-danger" ng-show="$ctrl.noResults">No data to display</div></div>
 </div>

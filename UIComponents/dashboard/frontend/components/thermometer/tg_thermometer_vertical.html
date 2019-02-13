@@ -1,22 +1,36 @@
-<div style="height: {{height}};" class="tg-thermometer" ng-class="size">
+<div style="height: calc(100% - 30px);" class="tg-thermometer"> 
 	<div class="draw-a"></div>
-	<div class="draw-b"></div>
+	<div class="draw-b">
+        <div style="width: 6px;position: absolute;
+            left: 0;
+            right: 0;
+            width: 10px;
+            top: 0;
+            margin: auto;
+            height: 20px;
+            border-radius: 10px 10px 0 0;background-color: {{mercuryColor}};"></div>
+        <div style="width: 14px;height: 14px; position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%; background-color: {{mercuryColor}};"></div>
+    </div>
 	<div class="meter">
 		<div class="statistics">
 			<div class="percent" style="bottom: calc({{val.percent}}% - 2px);" ng-repeat="val in ticks track by $index">{{val.tick}}{{unit}}</div>
-            <div class="percent" style="bottom: calc({max}}% - 2px);">{{max}}{{unit}}</div>
 		</div>
-		<div style="height: {{percent}}%" class="mercury">
+		<div style="height: {{percent}}%; background-color: {{mercuryColor}}" class="mercury">
 			<div class="percent-current">{{value}}{{unit}}</div>
 			<div class="mask">
-				<div class="bg-color" style="height: calc( {{height}}px - 57px ); background: linear-gradient({{cols}});"></div>
+				<div class="bg-color" style="height: calc({{height}}% - 57px); background: {{mercuryColor}};"></div>
 			</div>
 		</div>
 	</div>
 </div>
 
 
-<style>
-    .tg-thermometer .draw-b:before {background-color: {{colors[colors.length-1]}};}
-    .tg-thermometer .draw-b:after {background-color: {{colors[colors.length-1]}};}
-</style>
+
