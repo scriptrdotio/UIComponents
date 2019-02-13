@@ -107,9 +107,9 @@ angular
                        });
                        
                        if(this.data) 
-                           this.consume(this.data);
+                           this.consumeData(this.data);
                        else 
-                           this.consume("24");
+                           this.consumeData("24");
 		               initDataService(this.transport);
 
 	               }
