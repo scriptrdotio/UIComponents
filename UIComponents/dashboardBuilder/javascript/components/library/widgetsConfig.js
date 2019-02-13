@@ -3012,147 +3012,223 @@ angular
                         }
                      },
                      {
-                        "name" : "thermometer",
-                        "label" : "Thermometer",
-                        "class" : "scriptr-thermometer",
-                        "commonData" : true,
-                        "show" : true,
-                        "defaults" : {
-                           "transport" : "wss",
-                           "msg-tag" : "thermometer",
-                           "on-format-data": "return data;", 
-                           "boxLabel": "Thermometer", 
-                           "sectors" : [0, 25, 50, 100],
-                           "data": "90"
-                        },
-                        "box" : {
-                           sizeX : 1,
-                           sizeY : 1,
-                           minSizeX : 1,
-                           minSizeY : 1,
-                           maxSizeX : 1,
-                           maxSizeY : 2
-                        },
-                        "imgCls" : "",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzgzODQxMTZGNzg1MTFFNjk0MTBGMzg4MzJCMkQ5QjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzgzODQxMTVGNzg1MTFFNjk0MTBGMzg4MzJCMkQ5QjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PoB6+/wAAAIXSURBVHja7JnNK0RRGMbv+I6QLIyIZvgjSInFlPKRyCR2WFiQj60k/wBGEmWyVcNuFjQrC1aytlCiRKFZmRDG8/LcuqahyT3NvVf3rafnfLzn3t/czjm3e8aTTCa1v4bH4/lWj8ViHbA5qAmSCx9DC4FA4NCYZ+aen/dVBQ3gSdhqmrR3KAjwPVtBA9gPO4Py2fVKz6M/QPUAf1QBnaOpiX4DcAgqp0Jsq4RaFd1LGXQN/RyaxRNNiKTMNokqu0HrcQ3Yd73C8rXieyiHzkrkqb4gFqUPtszqjCOgMSUuYL2GH6G508OFdqGzv3s0wrZYHXPK7iFvwDZ393Ch/8tCPOkf9cI6WN2POwH6trig3Zt42WZ5qNAJ0wPAN+nK7kJ0oR0GXZpBTp1toPGaHoaNZJC6yFxroQFRDVtn9R6aT5M2zz6JTYyptfpJT0Fl2tcRWHfFxs4TPGzoD6PtWfqYU6Liu9EsdA/9AHCn8F3Ib+iXcoR9ByljLINuoMsBY/MPi62OfYcpYyyD1se/QL+9sQuZI/FmNfQlXY52jwwLzhj37GtKGWMZdJTeFx8flEOaoPZ1QqqHlIPs60sZYxn0EiQ7Rq7AAO6Oi6+T8rMtypwnjjEVps+nse+OGj5kZb5GOB0kWqABAn9+6OIbMmyXQ3UBX4OKfkiVJzwhwFKx098XsrVNQ12Qj80XnBorAL7Sc81CfwgwAJTrtj6gcXkiAAAAAElFTkSuQmCC",
-                        "form" : [ {
-                           type : "tabs",
-                           tabs : [
-                              {
-                                    title : "Properties",
-                                    items : [
-                                        {
-                                            "type" : "section",
-                                            "htmlClass" : "row",
-                                            "items" : [ {
-                                                "type" : "section",
-                                                "htmlClass" : "col-xs-6",
-                                                "items" : [ "max"]
-                                            },
-                                            {
-                                                "type" : "section",
-                                                "htmlClass" : "col-xs-6",
-                                                "items" : [ "unit",
-                                                           {
-                                                               "key" : "size",
-                                                               "type" : "radios-inline",
-                                                               titleMap : [ {
-                                                                   value : "large",
-                                                                   name : "large"
-                                                               }, {
-                                                                   value : "small",
-                                                                   name : "small"
-                                                               } ]
-                                                           } ]
-                                            } ]
-                                        } ]
-                                 },
-                           	{
-                              title : "Sectors",
-                              items : [
-                                  {
-                                      "type" : "section",
-                                      "htmlClass" : "row",
-                                      "items" : [ {
-                                          "type" : "section",
-                                          "htmlClass" : "col-xs-6",
-                                          "items" : [  {
-                                              "key" : "colors",
-                                              "items" : [ {
-                                                  "key" : "colors[]",
-                                                  "colorFormat" : "hex3"
-                                              } ],
-
-                                              "style" : {
-                                                  "add" : "btn-primary btn-sm pull-left"
-                                              }
-                                          }]
-                                      },
-                                                 {
-                                                     "type" : "section",
-                                                     "htmlClass" : "col-xs-6",
-                                                     "items" : [ "sectors" ]
-                                                 } ]
-                                  },
-                           ]
-                           },                               
-                           {
-                              title : "Box Properties",
-                              items : [ "boxLabel" ]
-                           } ]
-                        } ],
-                        "schema" : {
-                           "type" : "object",
-                           "title" : "Schema",
-                           "properties" : {
-                              "data" : {
-                                 "title" : "Thermometer Value",
-                                 "type" : "string",
-                                 "description" : "Thermometer Value (0 to 100)"
-                              },
-                              "size" : {
-                                 "title" : "Thermometer Size",
-                                 "type" : "string",
-                                 "description" : "Set the size of Thermometer (small)."
-                              },
-                              "height" : {
-                                 "title" : "Height",
-                                 "type" : "number",
-                                 "description" : "Set the height of Thermometer."
-                              },
-                              "max" : {
-                                 "title" : "Maximum value",
-                                 "type" : "number",
-                                 "description" : "Set the maximum value of Thermometer." 
-                              },
-                              "unit" : {
-                                 "title" : "Unit",
-                                 "type" : "string",
-                                 "description" : "Set the unit value of Thermometer." 
-                              },
-                              "colors" : {
-                                 "title" : "Gradient colors",
-                                 "type" : "array",
-                                 "minItems" : 1,
-                                 "items" : {
-                                    "type" : "string",
-                                    "format" : "color"
-                                 },
-                                 "format" : "color",
-                                 "default" : [ "#a9d70b", "#f9c802", "#ff0000" ],
-                                 "description" : "Colors of indicator, from upper to lower."
-                              },
-                              "sectors" : {
-                                 "title" : "Sectors",
-                                 "type" : "array",
-                                 "description" : "Use to display ticks at specific positions. The array contains the index of the ticks that should be displayed",
-                                 "items" : {
-	                                 "type" : "number"
-                                 }
-                              } 
+					    "name" : "thermometer",
+                           "label" : "Thermometer",
+                           "class" : "scriptr-thermometer",
+                           "commonData" : true,
+                           "show" : true,
+                           "defaults" : {
+                              "transport" : "wss",
+                              "on-format-data" : "if(data && data instanceof Array && data[0].value) return data[0].value; else return data;",                     
+                              "schema-for" : "thermometer",
+                              "fetch-data-interval" : 300, // in seconds
+                              "data" : 20,
+                              "value" : 80,
+                              "boxLabel" : "Thermometer",
+                              "boxBorder" : true,
+                              "step" : 40,
+                              "unit" : "°C",
+                              "custom-sectors" : [ {
+                                 "color" : "#005588",
+                                 "lo" : 0,
+                                 "hi" : 40
+                              }, {
+                                 "color" : "#00953c",
+                                 "lo" : 40,
+                                 "hi" : 80
+                              }, {
+                                 "color" : "#ce2029",
+                                 "lo" : 80,
+                                 "hi" : 120
+                              } ]
                            },
-                           "required" : []
-                        }
+                           "box" : {
+                              sizeX : 1,
+                              sizeY : 2,
+                              minSizeX : 1,
+                              minSizeY : 2,
+                              maxSizeX : 5
+                           },
+                           "imgCls" : "",
+                           "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzgzODQxMTZGNzg1MTFFNjk0MTBGMzg4MzJCMkQ5QjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzgzODQxMTVGNzg1MTFFNjk0MTBGMzg4MzJCMkQ5QjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PoB6+/wAAAIXSURBVHja7JnNK0RRGMbv+I6QLIyIZvgjSInFlPKRyCR2WFiQj60k/wBGEmWyVcNuFjQrC1aytlCiRKFZmRDG8/LcuqahyT3NvVf3rafnfLzn3t/czjm3e8aTTCa1v4bH4/lWj8ViHbA5qAmSCx9DC4FA4NCYZ+aen/dVBQ3gSdhqmrR3KAjwPVtBA9gPO4Py2fVKz6M/QPUAf1QBnaOpiX4DcAgqp0Jsq4RaFd1LGXQN/RyaxRNNiKTMNokqu0HrcQ3Yd73C8rXieyiHzkrkqb4gFqUPtszqjCOgMSUuYL2GH6G508OFdqGzv3s0wrZYHXPK7iFvwDZ393Ch/8tCPOkf9cI6WN2POwH6trig3Zt42WZ5qNAJ0wPAN+nK7kJ0oR0GXZpBTp1toPGaHoaNZJC6yFxroQFRDVtn9R6aT5M2zz6JTYyptfpJT0Fl2tcRWHfFxs4TPGzoD6PtWfqYU6Liu9EsdA/9AHCn8F3Ib+iXcoR9ByljLINuoMsBY/MPi62OfYcpYyyD1se/QL+9sQuZI/FmNfQlXY52jwwLzhj37GtKGWMZdJTeFx8flEOaoPZ1QqqHlIPs60sZYxn0EiQ7Rq7AAO6Oi6+T8rMtypwnjjEVps+nse+OGj5kZb5GOB0kWqABAn9+6OIbMmyXQ3UBX4OKfkiVJzwhwFKx098XsrVNQ12Qj80XnBorAL7Sc81CfwgwAJTrtj6gcXkiAAAAAElFTkSuQmCC",
+                           "form" : [ {
+                              type : "tabs",
+                              tabs : [
+                                    {
+                                       title : "Format",
+                                       items : [ {
+                                          "type" : "section",
+                                          "htmlClass" : "row",
+                                          "items" : [
+                                                {
+                                                   "type" : "section",
+                                                   "htmlClass" : "col-xs-12 col-sm-6",
+                                                   "items" : [
+                                                         "unit",
+                                                         {
+                                                            "key" : "out-of-range-color",
+                                                            "colorFormat" : "hex3",
+                                                            "spectrumOptions" : {
+                                                               showInput : true,
+                                                               showAlpha : false,
+                                                               allowEmpty : true,
+                                                               showPalette : true,
+                                                               preferredFormat : 'hex3',
+                                                               palette : [
+                                                                     [ '#fce94f', '#fcaf3e',
+                                                                           '#e9b96e' ],
+                                                                     [ '#8ae234', '#729fcf',
+                                                                           '#ad7fa8' ],
+                                                                     [ '#ef2929', '#888a85',
+                                                                           '#deface' ] ]
+                                                            }
+                                                         } ]
+                                                },
+                                                {
+                                                   "type" : "section",
+                                                   "htmlClass" : "col-xs-12",
+                                                   "items" : [
+                                                         {
+                                                            "type" : "section",
+                                                            "htmlClass" : "",
+                                                            "items" : [ "step" ]
+                                                         },
+                                                         {
+                                                            "type" : "section",
+                                                            "htmlClass" : "",
+                                                            "items" : [ {
+                                                               "key" : "custom-sectors",
+                                                               "title" : "Temperature Level Fill Colors",
+                                                               "items" : [ {
+                                                                  "type" : "section",
+                                                                  "htmlClass" : "row",
+                                                                  "items" : [
+                                                                        {
+                                                                           "type" : "section",
+                                                                           "htmlClass" : "col-xs-4",
+                                                                           "items" : [ {
+                                                                              "key" : "custom-sectors[].color",
+                                                                              "colorFormat" : "hex3",
+                                                                              "spectrumOptions" : {
+                                                                                 showInput : true,
+                                                                                 showAlpha : false,
+                                                                                 allowEmpty : true,
+                                                                                 showPalette : true,
+                                                                                 preferredFormat : 'hex3',
+                                                                                 palette : [
+                                                                                       [
+                                                                                             '#fce94f',
+                                                                                             '#fcaf3e',
+                                                                                             '#e9b96e' ],
+                                                                                       [
+                                                                                             '#8ae234',
+                                                                                             '#729fcf',
+                                                                                             '#ad7fa8' ],
+                                                                                       [
+                                                                                             '#ef2929',
+                                                                                             '#888a85',
+                                                                                             '#deface' ] ]
+                                                                              }
+                                                                           } ]
+                                                                        },
+                                                                        {
+                                                                           "type" : "section",
+                                                                           "htmlClass" : "col-xs-4",
+                                                                           "items" : [ {
+                                                                               "key" : "custom-sectors[].lo"
+                                                                           } ]
+                                                                        },
+                                                                        {
+                                                                           "type" : "section",
+                                                                           "htmlClass" : "col-xs-4",
+                                                                           "items" : [ {
+                                                                               "key" : "custom-sectors[].hi"
+                                                                           } ]
+                                                                        } ]
+                                                               } ]
+                                                            } ]
+                                                         } ]
+                                                } ]
+                                       } ]
+                                    }, {
+                                       title : "Box Properties",
+                                       items : [ "boxLabel" ]
+                                    } ]
+                           } ],
+                           "schema" : {
+                              "type" : "object",
+                              "title" : "Schema",
+                              "properties" : {
+                                 "data" : {
+                                    "title" : "Thermometer Value",
+                                    "type" : "string",
+                                    "description" : "Thermometer Value (0 to 100)"
+                                 },
+                                 "height" : {
+                                    "title" : "Height",
+                                    "type" : "number",
+                                    "description" : "Set the height of Thermometer."
+                                 },
+                                 "unit" : {
+                                    "title" : "Unit",
+                                    "type" : "hidden",
+                                    "default" : "°C",
+                                    "description" : "Set the unit value of Thermometer."
+                                 },
+                                 "out-of-range-color" : {
+                                    "title" : "Out Of Range Color",
+                                    "type" : "string",
+                                    "description" : "Set the default color for out of range values (default: #005588).",
+                                    "format" : "color",
+                                    "default" : "#ffef00",
+                                    "validationMessage" : "Invalid Color"
+                                 },
+                                 "custom-sectors" : {
+                                    "title" : "Custom sectors",
+                                    "type" : "array",
+                                    "items" : {
+                                       "type" : "object",
+                                       "properties" : {
+                                          "color" : {
+                                             "title" : "Color",
+                                             "type" : "string",
+                                             "format" : "color",
+                                             "required" : true,
+                                             "validationMessage" : "Invalid Color"
+                                          },
+                                          "lo" : {
+                                             "title" : "Low",
+                                             "type" : "number",
+                                             "required" : true
+                                          },
+                                          "hi" : {
+                                             "title" : "High",
+                                             "type" : "number",
+                                             "required" : true
+                                          }
+                                       }
+                                    }
+                                 },
+                                 "step" : {
+                                    "title" : "Interval",
+                                    "type" : "number",
+                                    "description" : "Set the interval value between ticks."
+                                 },
+                                 "boxLabel" : {
+                                    "title" : "Box Label",
+                                    "type" : "string",
+                                    "description" : "Define your widget box title.",
+                                    "maxLength" : 40
+                                 },
+                                 "boxBorder" : {
+                                    "title" : "Box Border",
+                                    "type" : "hidden",
+                                    "default" : "true",
+                                    "description" : "Define your widget box border."
+                                 }
+                              },
+                              "required" : []
+                           }
                      },
                      {
                         "name" : "odometer",
