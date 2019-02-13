@@ -14,10 +14,8 @@ angular
 
                   "api" : "@",
                  
-                  "value" : "<?",
-                   
                   "data" : "<?",
-                 
+
                   "step" : "<?", 
                    
                   "customSectors": "<?",
@@ -63,7 +61,7 @@ angular
                        
                        this.outOfRangeColor = this.outOfRangeColor ? this.outOfRangeColor : "#5fc100";
                        
-                       this.value = (this.value) ? ((this.value > 100) ? 100 : this.value) : ((this.data) ? this.data : 0 );
+                       //this.value = (this.value) ? ((this.value > 100) ? 100 : this.value) : ((this.data) ? this.data : 0 );
                        
                        this.thermoUnit =  (this.unit) ? this.unit : "°C";
                        
@@ -108,6 +106,10 @@ angular
                            return self.timeoutId = $timeout(self.resize, 500);
                        });
                        
+                       if(this.data) 
+                           this.consume(this.data);
+                       else 
+                           this.consume("24");
 		               initDataService(this.transport);
 
 	               }

@@ -3023,7 +3023,6 @@ angular
                               "schema-for" : "thermometer",
                               "fetch-data-interval" : 300, // in seconds
                               "data" : 20,
-                              "value" : 80,
                               "boxLabel" : "Thermometer",
                               "boxBorder" : true,
                               "step" : 40,
