@@ -39,7 +39,8 @@ angular
         "msgTagGeofence": "<?",
         "heatmap" : "<?",
         "bounce" : "<?",
-        "markerInfoWindow": "<?" //On marker click show info window
+        "markerInfoWindow": "<?", //On marker click show info window
+        "customDefaultInfoWindow": "@" //id of custom default info window
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
     
@@ -648,6 +649,10 @@ angular
                  	$scope.map.showInfoWindow(event, infoWindow, markerEl);
                  	//Keep track of opened info window
                  	self.infoWindow = $scope.map.infoWindows[infoWindow];
+              } else if(self.customDefaultInfoWindow && $scope.map.infoWindows[self.customDefaultInfoWindow]){
+                 	$scope.map.showInfoWindow(event, self.customDefaultInfoWindow, markerEl);
+                 	//Keep track of opened info window
+                 	self.infoWindow = $scope.map.infoWindows[self.customDefaultInfoWindow];
               } else {
                     $scope.marker = marker;
                 	var infoWindow = 'infoWindowTemplate_default_'+self.$wdgid
