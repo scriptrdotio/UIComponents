@@ -515,18 +515,6 @@ angular
                             //Assuming this is success
                             self.refreshTimer = $interval(
                                 function(){
-                                    if(!self.fetchPeriod || self.fetchPeriod == "past_day") {
-                                        self.delta = true;
-                                        if(self.datas && self.datas.length > 0)
-                                            self._apiParams[self.fetchFromDateParam] = self.datas[self.datas.length-1][0];
-                                        else
-                                            self._apiParams[self.fetchFromDateParam] =  moment().add(-1, 'days').startOf("hour").valueOf()
-                                    } else {
-                                         if(self.fetchPeriod == "past_week")
-                                         	self._apiParams[self.fetchFromDateParam] = moment().add(-7, 'days').valueOf()
-                                    	 if(self.fetchPeriod == "past_month")
-                                             self._apiParams[self.fetchFromDateParam] = moment().add(-30, 'days').valueOf()
-                                    }
                                     initDataService(self.transport)
                                 }, self.fetchDataInterval * 1000);
                         }
