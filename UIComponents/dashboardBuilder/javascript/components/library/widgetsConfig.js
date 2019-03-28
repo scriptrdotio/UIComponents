@@ -203,6 +203,1181 @@ angular
                	"name" : "displaybox"
                },
                widgets : [
+               	   {
+
+                        
+                        "name" : "line",
+                        "label" : "Line Chart",
+                        "class" : "scriptr-dygraphs",
+                        "commonData" : true,
+                        "show" : true,
+                        "defaults" : {
+                            "type" : "line",
+                            "on-format-data": "return data;", 
+                            "data-type": "raw",
+                            "data-format": "dygraphs",
+                            "schema-for": "line",
+                            "aggregation-range": "10",
+                            "fetch-from-date-param": "from_date",
+                            "fetch-to-date-param": "to_date",
+                            "display-metric-param": "display_metric",
+                            "fetch-data-interval": 300, //in seconds
+                            "boxLabel" : "Line Chart",
+                            "boxBorder" : true,
+                            "transport" : "wss",
+                            "data" : "[[1519312895840,10,26,16,20],[1519312896840,11,25,16,20],[1519312897840,10,26,16,20],[1519312898840,11,25,15,20],[1519312899840,10,26,16,21]]",
+                            "grid-text-family" : "Source Sans Pro",
+                            "x1-axis-label-font-size": 12,
+                            "x1-axis-label-width": 60,
+                            "y2-axis-label-width": 95,
+                            "y-axis-label-width": 95,
+                            "y2-axis-label-font-size": 12,
+                            "y-axis-label-font-size": 12,
+                            "independent-ticks": "independent"
+                        },
+                        "box" : {
+                           sizeX : 3,
+                           sizeY : 3,
+                           minSizeX : 2,
+                           minSizeY : 2
+                        },
+                        "imgSrc" : "line-chart.svg",
+                        "form" : [ {
+                           type : "tabs",
+                           tabs : [
+                               {
+                                  title : "Data",
+                                  items : [
+                                         {
+                                             "type" : "section",
+                                             "htmlClass" : "col-xs-12",
+                                             "items" : [{
+                                                 key: "stream",
+                                                 type: "uiselectmultiple",
+                                                 placeholder: "",
+                                                 options: {
+                                                     closeOnSelect: false,
+                                                     groupBy: "dataStream",
+                                                     multiple: "true",
+                                                     callback: "multiSelectCallBack",
+                                                     widgetName:"line",
+                                                     limit: 20/**,
+                                                     limitTo: 50**/
+                                                 },
+                                                 onChange: function(modelValue, form, model) {
+                                                     var defaultColors = [ "#1B1B1B", "#2243B6", "#299617", "#FF3855", "#FFDB00", "#AF6E4D", "#5946B2", "#FF9966", "#FF007C", "#BFAFB2", "#5DADEC", "#A7F432", "#FA5B3D", "#A83731", "#9C51B6", "#EE34D2", "#0A7E8C", "#FFD12A", "#76D7EA", "#84DE02"];
+                                                     
+                                                     var oldColorsMapping = {};
+                                                     var colorsMapping = model["colors-mapping"];
+                                                     for(var c=0; c<colorsMapping.length; c++){
+                                                         if(colorsMapping[c].ykeys)
+                                                         	oldColorsMapping[colorsMapping[c].ykeys] = {"labels": colorsMapping[c].labels, "colors": colorsMapping[c].colors, "axisSelection": colorsMapping[c].axisSelection, "unit": colorsMapping[c].unit, "isScaled": colorsMapping[c].isScaled};
+                                                     }
+                                                     var newMapping = [];
+                                                     for (var i=0; i<modelValue.length; i++){
+                                                         if(oldColorsMapping[modelValue[i].value]){
+                                                              newMapping.push({"ykeys": modelValue[i].value, "labels": oldColorsMapping[modelValue[i].value]["labels"], "colors": oldColorsMapping[modelValue[i].value]["colors"], "axisSelection": oldColorsMapping[modelValue[i].value]["axisSelection"], "unit": oldColorsMapping[modelValue[i].value]["unit"], "isScaled": oldColorsMapping[modelValue[i].value]["isScaled"]});
+                                                         }else{
+                                                             for(var t=0; t<defaultColors.length; t++){
+                                                                var selectedColorFound = false;
+                                                                var currentColor = defaultColors[t];
+                                                                for(var h=0; h<newMapping.length; h++){
+                                                                    var newMappingColor = newMapping[h].colors;
+                                                                    if(newMappingColor == currentColor){
+                                                                        selectedColorFound = true;
+                                                                        break;
+                                                                    }
+                                                                }
+                                                                if(!selectedColorFound){
+                                                                    break;
+                                                                }
+                                                            }
+                                                             var selectedStreamValue = _.findWhere(_.findWhere(JSON.parse(window.localStorage["dataStream"]), {logger_sn: modelValue[i]["value"].split("-")[0]}).sensors,{"selectedStreamValue": modelValue[i]["value"]});
+                                                             /*var currentUnit = "";
+                                                             if(model["display-metric-value"]){
+                                                                 currentUnit = selectedStreamValue["selectedStreamUnits"][model["display-metric-value"]];
+                                                             }*/
+                                                         	newMapping.push({"ykeys": modelValue[i].value, "labels": modelValue[i].name, "colors": !selectedColorFound ? defaultColors[t] : defaultColors[0], "axisSelection": "y", "unit": selectedStreamValue["selectedStreamUnits"], "isScaled":selectedStreamValue["is_scaled"]});    
+                                                         }
+                                                     }
+                                                     if(newMapping.length == 0)
+                                                         newMapping = [{}];
+                                                     model["colors-mapping"] = newMapping;
+                                                     var legendMappingValue = '["x",';
+                                                     var legendLabelsValue = '["X",';
+                                                     for (var i=0; i<modelValue.length; i++){
+                                                         legendMappingValue += "'y'" + ((i < modelValue.length - 1)?' , ':'');
+                                                         legendLabelsValue += '"' + (modelValue[i].name).replace(/'/g, "\\\'").replace(/"/g, "\\\"").replace(/=/g, "\\\=").replace(/\+/g, "\\\+").replace(/~/g, "\\\~") + '"' + ((i < modelValue.length - 1)?' , ':'');
+                                                     }
+                                                     model["legend-labels"] = legendLabelsValue + "]";
+                                                     model["legend-Mapping"] = legendMappingValue + "]";
+                                                     
+                                                     //Remove static data
+                                                     if(modelValue.length > 0) {
+                                                        delete model["data"];
+                                                     }
+                                                     
+                                                     
+                                                     if(modelValue && modelValue.length > 0) {
+                                                         for(var t=0; t < modelValue.length; t++){
+                                                             var selectedStreamValue = _.findWhere(_.findWhere(JSON.parse(window.localStorage["dataStream"]), {logger_sn: modelValue[t]["value"].split("-")[0]}).sensors,{"selectedStreamValue": modelValue[t]["value"]});
+                                                             model["available-units"] = {
+                                                                 "si" : selectedStreamValue["si_unit"],
+                                                                 "us":  selectedStreamValue["us_unit"],
+                                                                 "scaled": selectedStreamValue["scaled_unit"]
+                                                             }
+                                                             if(selectedStreamValue["is_scaled"])
+                                                                 model["is-scaled"] = "true";
+                                                             else
+                                                                 model["is-scaled"] = "false";
+                                                             break;
+                                                         }
+                                                 	 } 
+                                                 }
+                                             }]
+                                         },
+                                      {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-12",
+                                          "items" : [ {
+                                              "key":"aggregation-range", 
+                                              "type": "strapselect",
+                                              "placeholder" : "Select the aggregation range for the streams data you are charting.",
+                                              "titleMap" : [ {
+                                                  "value" : "10",
+                                                  "name" : "10 minutes"
+                                              },{
+                                                  "value" : "30",
+                                                  "name" : "30 minutes"
+                                              },{
+                                                  "value" : "60",
+                                                  "name" : "1 hour"
+                                              },{
+                                                  "value" : "1440",
+                                                  "name" : "1 day"
+                                              }]
+                                          } ]
+                                      }
+                                  ]
+                               },
+                               {
+                                    title : "X",
+                                    items : [ {
+                                       "type" : "section",
+                                       "htmlClass" : "row",
+                                       "items" : [ {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-12",
+                                          "items" : [ /*{
+                                             type : "radios-inline",
+                                             key : "draw-x1-axis",
+                                             titleMap : [ {
+                                                value : "true",
+                                                name : "True"
+                                             }, {
+                                                value : "false",
+                                                name : "False"
+                                             } ]
+                                          },*/ "x1-axis-label", "x1-axis-label-font-size" ] 
+                                       },
+                                       {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-12",
+                                          "items" : [ {"key": "x1-axis-line-color",
+                                                      "colorFormat" : "hex3",
+                                                       "spectrumOptions": {showInput: true,
+                                                                           showAlpha: false,
+                                                                           allowEmpty: true,
+                                                                           showPalette: true,
+                                                                           preferredFormat: 'hex3',
+                                                                           palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                     ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                     ['#ef2929', '#888a85', '#deface']]}}, 
+                                                     {
+                                                      "key":"x1-axis-line-width", 
+                                                      "step" : "1"
+                                                     }/*, 
+                                                     "x1-axis-label-width"*/ ] 
+                                       }           
+                                      ]
+                                    } ]
+                                 },
+                               {
+                                    title : "Y",
+                                    items : [ {
+                                       "type" : "section",
+                                       "htmlClass" : "row",
+                                       "items" : [ {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-12",
+                                          "items" : [ /*{
+                                             type : "radios-inline",
+                                             key : "draw-y-axis",
+                                             titleMap : [ {
+                                                value : "true",
+                                                name : "True"
+                                             }, {
+                                                value : "false",
+                                                name : "False"
+                                             } ]
+                                          },*/ "y-axis-label","y-axis-label-font-size"/*, "y-axis-label-width"*/
+                                         ]
+                                       },
+                                                 {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-12",
+                                          "items" : [ {"key": "y-axis-line-color",
+                                                      "colorFormat" : "hex3",
+                                                       "spectrumOptions": {showInput: true,
+                                                                           showAlpha: false,
+                                                                           allowEmpty: true,
+                                                                           showPalette: true,
+                                                                           preferredFormat: 'hex3',
+                                                                           palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                     ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                     ['#ef2929', '#888a85', '#deface']]}
+                                                      },
+                                                     {
+                                                      "key":"y-axis-line-width", 
+                                                      "step" : "1"
+                                                     },
+                                          {
+                                             type : "radios-inline",
+                                             key : "y-axis-include-zero",
+                                             titleMap : [ {
+                                                value : "true",
+                                                name : "Yes"
+                                             }, {
+                                                value : "false",
+                                                name : "No"
+                                             } ]
+                                          },
+                                          /*{
+                                             type : "radios-inline",
+                                             key : "y-axis-labels-kmb",
+                                             titleMap : [ {
+                                                value : "true",
+                                                name : "True"
+                                             }, {
+                                                value : "false",
+                                                name : "False"
+                                             } ]
+                                          }*/ ]
+                                       }]
+                                    }
+                                   ]
+                                 },
+                               {
+                                    title : "Y2",
+                                    items : [ {
+                                       "type" : "section",
+                                       "htmlClass" : "row",
+                                       "items" : [ {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-12",
+                                          "items" : [ {
+                                             type : "radios-inline",
+                                             key : "draw-y2-axis",
+                                             titleMap : [ {
+                                                value : "true",
+                                                name : "Yes"
+                                             }, {
+                                                value : "false",
+                                                name : "No"
+                                             } ]
+                                          }, "y2-axis-label", "y2-axis-label-font-size"/*, "y2-axis-label-width"*/
+                                          ]
+                                       },
+                                      {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-12",
+                                          "items" : [ {"key": "y2-axis-line-color",
+                                                      "colorFormat" : "hex3",
+                                                       "spectrumOptions": {showInput: true,
+                                                                           showAlpha: false,
+                                                                           allowEmpty: true,
+                                                                           showPalette: true,
+                                                                           preferredFormat: 'hex3',
+                                                                           palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                     ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                     ['#ef2929', '#888a85', '#deface']]}
+                                                      }, 
+                                                     {
+                                                      "key":"y2-axis-line-width", 
+                                                      "step" : "1"
+                                                     },
+                                          {  
+                                             type : "radios-inline",
+                                             key : "y2-axis-include-zero",
+                                             titleMap : [ {
+                                                value : "true",
+                                                name : "Yes"
+                                             }, {
+                                                value : "false",
+                                                name : "No"
+                                             } ]
+                                          }/*,
+                                          {
+                                             type : "radios-inline",
+                                             key : "y2-axis-labels-kmb",
+                                             titleMap : [ {
+                                                value : "true",
+                                                name : "True"
+                                             }, {
+                                                value : "false",
+                                                name : "False"
+                                             } ]
+                                          }*/]
+                                       } ]
+                                    }]
+                                 },
+                               
+                               {
+                                    title : "Legend",
+                                    items : [  
+                                        
+                                        			/*{
+                                                         type : "radios-inline",
+                                                         key : "show-legend",
+                                                         titleMap : [ {
+                                                            value : "true",
+                                                            name : "True"
+                                                         }, {
+                                                            value : "false",
+                                                            name : "False"
+                                                         }
+                                                         ]
+                                                      },*/
+                                        
+                                        {
+                                                 
+                                                 "type" : "section",
+                                                 "htmlClass" : "",
+                                                 "items" : [  {
+                                                     "key" : "colors-mapping",
+                                                     "title" : "Legend Details",
+                                                     "add": null,
+                                                     "remove": null,
+                                                     "items" : [ {
+                                                        "type" : "section",
+                                                        "htmlClass" : "row",
+                                                        "items" : [
+                                                         
+                                                         {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key" : "colors-mapping[].ykeys",
+                                                                     "title" : "Channel"
+                                                                 } ]
+                                                             },
+                                                             {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key" : "colors-mapping[].labels",
+                                                                     "title" : "Legend Label"
+                                                                 } ]
+                                                             },
+                                                            {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key" : "colors-mapping[].colors",
+                                                                     "title" : "Color",
+                                                                     "colorFormat" : "hex3",
+                                                                     "spectrumOptions": {showInput: true,
+                                                                                         showAlpha: false,
+                                                                                         allowEmpty: true,
+                                                                                         showPalette: true,
+                                                                                         preferredFormat: 'hex3',
+                                                                                         palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                                   ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                                   ['#ef2929', '#888a85', '#deface']]}
+                                                                 } ]
+                                                             },
+                                                            {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key": "colors-mapping[].axisSelection",
+                                                                     "title" : "Legend Axis",
+                                                                     "notitle" : false,
+                                                                     "type": "strapselect",
+                                                                     "titleMap" : [ {
+                                                                         "value" : "y",
+                                                                         "name" : "Y"
+                                                                     }, {
+                                                                         "value" : "y2",
+                                                                         "name" : "Y2"
+                                                                     }]
+                                                                 }]
+                                                             }]
+			                                            }]
+                                                 }]
+                                             }
+                                            ]
+                                 },
+                               {
+                                    title : "Grid",
+                                    items : [ {
+                                       "type" : "section",
+                                       "htmlClass" : "row",
+                                       "items" : [ {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-4",
+                                          "items" : [ {
+                                             type : "radios-inline",
+                                             key : "x1-draw-grid",
+                                             titleMap : [ {
+                                                value : "true",
+                                                name : "Yes"
+                                             }, {
+                                                value : "false",
+                                                name : "No"
+                                             } ]
+                                          },{"key": "x1-grid-line-color",
+                                             "colorFormat" : "hex3",
+                                             "spectrumOptions": {showInput: true,
+                                                                 showAlpha: false,
+                                                                 allowEmpty: true,
+                                                                 showPalette: true,
+                                                                 preferredFormat: 'hex3',
+                                                                 palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                           ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                           ['#ef2929', '#888a85', '#deface']]}
+                                            }, 
+                                                     {
+                                                         "key":"x1-grid-line-width", 
+                                                         "step" : "1"
+                                                     }
+                                          ]
+                                       },
+                                        {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-4",
+                                          "items" : [ {
+                                             type : "radios-inline",
+                                             key : "y-draw-grid",
+                                             titleMap : [ {
+                                                value : "true",
+                                                name : "Yes"
+                                             }, {
+                                                value : "false",
+                                                name : "No"
+                                             } ]
+                                          }, {"key":"y-grid-line-color",
+                                              "colorFormat" : "hex3",
+                                              "spectrumOptions": {showInput: true,
+                                                                  showAlpha: false,
+                                                                  allowEmpty: true,
+                                                                  showPalette: true,
+                                                                  preferredFormat: 'hex3',
+                                                                  palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                            ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                            ['#ef2929', '#888a85', '#deface']]}
+                                             }, 
+                                                     {
+                                                         "key":"y-grid-line-width", 
+                                                         "step" : "1"
+                                                     }
+                                                     
+                                         ]
+                                       },
+                                        {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-4",
+                                          "items" : [ 
+                                          {
+                                             type : "radios-inline",
+                                             key : "y2-draw-grid",
+                                             titleMap : [ {
+                                                value : "true",
+                                                name : "Yes"
+                                             }, {
+                                                value : "false",
+                                                name : "No"
+                                             } ]
+                                          },{"key": "y2-grid-line-color",
+                                             "colorFormat" : "hex3",
+                                             "spectrumOptions": {showInput: true,
+                                                                 showAlpha: false,
+                                                                 allowEmpty: true,
+                                                                 showPalette: true,
+                                                                 preferredFormat: 'hex3',
+                                                                 palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                           ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                           ['#ef2929', '#888a85', '#deface']]}
+                                            }, 
+                                                  {
+                                                         "key":"y2-grid-line-width", 
+                                                         "step" : "1"
+                                                     }
+                                          
+                                          ]
+                                       }/*,
+                                        {
+                                          "type" : "section",
+                                          "htmlClass" : "col-xs-12",
+                                          "items" : [ {
+                                              "key": "independent-ticks",
+                                              "notitle" : false,
+                                              "type": "strapselect",
+                                              "titleMap" : [{
+                                                  "value" : "y-primary",
+                                                  "name" : "Ticks are aligned. Y is primary"
+                                              },
+                                                            {
+                                                                "value" : "y2-primary",
+                                                                "name" : "Ticks are aligned. Y2 is primary"
+                                                            },
+                                                            {
+                                                                "value" : "independent",
+                                                                "name" : "Ticks are not aligned"
+                                                            }]
+                                          }]
+                                        }*/
+                                                 ]
+                                    } ]
+                                 },{
+                                     title : "Slider",
+                                     items : [ {
+                                         "type" : "section",
+                                         "htmlClass" : "row",
+                                         "items" : [
+                                             {
+                                                 "type" : "section",
+                                                 "htmlClass" : "col-xs-12",
+                                                 "items" : [ {
+                                                     type : "radios-inline",
+                                                     key : "show-range-selector",
+                                                     titleMap : [ {
+                                                         value : "true",
+                                                         name : "Yes"
+                                                     }, {
+                                                         value : "false",
+                                                         name : "No"
+                                                     }
+                                                                ]
+                                                 }, /*"range-selector-alpha", "range-selector-background-line-width", 
+                                                            {"key": "range-selector-background-stroke-color",
+                                                             "colorFormat" : "hex3",
+                                                             "spectrumOptions": {showInput: true,
+                                                                                 showAlpha: false,
+                                                                                 allowEmpty: true,
+                                                                                 showPalette: true,
+                                                                                 preferredFormat: 'hex3',
+                                                                                 palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                           ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                           ['#ef2929', '#888a85', '#deface']]}
+                                                            },*/ "range-selector-foreground-line-width" ]
+                                             },
+                                             {
+                                                 "type" : "section",
+                                                 "htmlClass" : "col-xs-12",
+                                                 "items" : [{"key": "range-selector-foreground-stroke-color",
+                                                            "colorFormat" : "hex3",
+                                                             "spectrumOptions": {showInput: true,
+                                                                                 showAlpha: false,
+                                                                                 allowEmpty: true,
+                                                                                 showPalette: true,
+                                                                                 preferredFormat: 'hex3',
+                                                                                 palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                           ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                           ['#ef2929', '#888a85', '#deface']]}
+                                                            }, "range-selector-height", 
+                                                            {"key": "range-selector-plot-fill-color",
+                                                             "colorFormat" : "hex3",
+                                                             "spectrumOptions": {showInput: true,
+                                                                                 showAlpha: false,
+                                                                                 allowEmpty: true,
+                                                                                 showPalette: true,
+                                                                                 preferredFormat: 'hex3',
+                                                                                 palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                           ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                           ['#ef2929', '#888a85', '#deface']]}}, 
+                                                            /*{"key": "range-selector-plot-fill-gradient-color",
+                                                             "colorFormat" : "hex3",
+                                                             "spectrumOptions": {showInput: true,
+                                                                                 showAlpha: false,
+                                                                                 allowEmpty: true,
+                                                                                 showPalette: true,
+                                                                                 preferredFormat: 'hex3',
+                                                                                 palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                           ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                           ['#ef2929', '#888a85', '#deface']]}
+                                                            }, 
+                                                            {
+                                                                 "key":"range-selector-plot-line-width", 
+                                                                 "step" : "0.1"
+                                                             }, {"key": "range-selector-plot-stroke-color",
+                                                                "colorFormat" : "hex3",
+                                                                 "spectrumOptions": {showInput: true,
+                                                                                     showAlpha: false,
+                                                                                     allowEmpty: true,
+                                                                                     showPalette: true,
+                                                                                     preferredFormat: 'hex3',
+                                                                                     palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                               ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                               ['#ef2929', '#888a85', '#deface']]}}*/]
+                                             } ]
+                                     } ]
+                                 },
+                                 {
+                                    title : "Goals",
+                                    items : [ {
+                                       "type" : "section",
+                                       "htmlClass" : "row",
+                                       "items" : [
+                                             {
+                                                "type" : "section",
+                                                "htmlClass" : "col-xs-12",
+                                                "items" : [  {
+                                                    "key" : "custom-goals",
+                                                    "startEmpty": true,
+                                                    "title" : "Fill Colors & Goals",
+                                                    "items" : [ {
+                                                        "type" : "section",
+                                                        "htmlClass" : "row",
+                                                        "items" : [
+                                                            {
+                                                                "type" : "section",
+                                                                "htmlClass" : "col-xs-6",
+                                                                "items" : [ {
+                                                                    "key" : "custom-goals[].goal-line-colors",
+                                                                    "title" : "Color",
+                                                                    "colorFormat" : "hex3",
+                                                                    "spectrumOptions": {showInput: true,
+                                                                                        showAlpha: false,
+                                                                                        allowEmpty: true,
+                                                                                        showPalette: true,
+                                                                                        preferredFormat: 'hex3',
+                                                                                        palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                                  ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                                  ['#ef2929', '#888a85', '#deface']]}
+                                                                } ]
+                                                            },
+                                                            {
+                                                                "type" : "section",
+                                                                "htmlClass" : "col-xs-6",
+                                                                "items" : [ {
+                                                                    "key" : "custom-goals[].goals",
+                                                                    "title" : "Goal",
+                                                                    "onFieldLoad": function(modelValue, form, model) {
+                                                                                 if(!isNaN(modelValue) && model["default-metric-value"] && model["default-metric-value"] != model["display-metric-value"]) {
+                                                                                       if(model["available-units"] && model["is-scaled"] == "false") {
+                                                                                           var from_unit = model["available-units"][model["default-metric-value"]];
+                                                                                           var to_unit = model["available-units"][model["display-metric-value"]];
+                                                                                           if(from_unit !== to_unit) {
+                                                                                            model[form.key[0]][form.key[1]][form.key[2]] =  getConversionFunction(from_unit, to_unit)(model[form.key[0]][form.key[1]][form.key[2]])
+                                                                                       }
+                                                                                   }
+                                                                                 }
+                                                                               }
+                                                                } ]
+                                                            }
+                                                            ]
+                                                    }]
+                                                }]
+                                            }  
+                                       ]
+                                    } ]
+                                 },
+                               /*{
+                                    title : "Events",
+                                    items : [ {
+                                       "type" : "section",
+                                       "htmlClass" : "row",
+                                       "items" : [
+                                             {
+                                                "type" : "section",
+                                                "htmlClass" : "col-xs-6",
+                                                "items" : [ "events"]
+                                             },
+                                             {
+                                                "type" : "section",
+                                                "htmlClass" : "col-xs-6",
+                                                "items" : [
+                                                      {
+                                                   "key" : "event-line-colors",
+                                                   "items" : [ {
+                                                      "key" : "event-line-colors[]",
+                                                      "colorFormat" : "hex3"
+                                                   } ]
+                                                } ]
+                                             }  ]
+                                    } ]
+                                 },*/
+                               {
+                                    title : "Box Properties",
+                                    items : [ "boxLabel" ]
+                                 }
+                              ]
+                        } ],
+                        "schema" : {
+                           "required" : [ "stream"],
+                           "type" : "object",
+                           "title" : "Schema",
+                           "properties" : {
+                               "show-legend" : {
+                                 "title" : "Show Legend",
+                                 "default" : "true",
+                                 "type" : "string",
+                                 "description" : ""
+                              },
+                              "stream" : {
+                                 "title" : "Channels",
+                                 "type" : "array",
+                                 "items": {
+                                     "type" : "object",
+                                     "properties": {
+                                         "label": {
+                                             "type": "string",
+                                             "title": "Channel"
+                                         }
+                                     }
+                                  },
+                                 "validationMessage": "Required.",
+                                 "description" : "",
+                                 "placeholder" : " "
+                              },
+                              "legend-position" : {
+                                 "title" : "Legend Position ",
+                                 "type" : "string",
+                                 "default" : "bottom",
+                                 "description" : "Determines the legend position relative to the graph.",
+                                 "placeholder" : " "
+                              },
+                              "draw-x1-axis" : {
+                                 "title" : "Draw X-axis",
+                                 "type" : "string",
+                                 "default" : "true",
+                                 "description" : "Determines whether to draw the X-axis. Setting this to false also prevents x-axis ticks from being drawn and reclaims the space for the chart grid/lines."
+                              },
+                              "draw-y-axis" : {
+                                 "title" : "Draw Y-axis",
+                                 "type" : "string",
+                                 "default" : "true",
+                                 "description" : "Determines whether to draw the Y-axis. Setting this to false also prevents y-axis ticks from being drawn and reclaims the space for the chart grid/lines."
+                              },
+                              "draw-y2-axis" : {
+                                 "title" : "Draw Y2-axis",
+                                 "type" : "string",
+                                 "default" : "false",
+                                 "description" : "When turned off this prevents the y2-axis from being drawn and reclaims the space for the grid lines."
+                              },
+                               
+                               "colors-mapping" : {
+                                  "title" : "Colors",
+                                    "type" : "array",
+                                    "default": [],
+                                    "description" : "",
+                                    "items" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                          "colors" : {
+                                              "title" : "Colors",
+                                              "type" : "string",
+                                              "format" : "color",
+                                              "validationMessage": "Invalid Color"
+                                          },
+                                          "labels" : {
+                                              "title": "Labels",
+                                              "type" : "string"
+                                          },
+                                          "ykeys" : {
+                                              "title": "Channel",
+                                              "readonly": true,
+                                              "type" : "string"
+                                          },
+                                          "axisSelection" : {
+                                              "title" : "Legend Axis",
+                                              "type" : "string",
+                                              "placeholder" : " "
+                              			  }
+                                      }
+                                  }
+                              },
+                               
+                               "custom-goals" : {
+                                  "title" : "Goals",
+                                    "type" : "array",
+                                   "default": [{"goal-line-colors": "#f0f0f0", "goals": ""}],
+                                    "description" : "Color: Color of goal line.<br/>Goal: Y value to draw as horizontal 'goal' line.",
+                                    "items" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                          "goal-line-colors" : {
+                                              "title" : "Colors",
+                                              "type" : "string",
+                                              "format" : "color",
+                                              "validationMessage": "Invalid Color",
+                                              "default": "#F0F0F0"
+                                          },
+                                          "goals" : {
+                                              "title": "Goals",
+                                              "type" : "number",
+                                               "default": 0
+                                          }
+                                      }
+                                  }
+                              },
+                              "events" : {
+                                 "title" : "Events",
+                                 "type" : "array",
+                                 "default" : ['2010-02-02'],
+                                 "description" : "List of x-values to draw as vertical 'event' lines on the chart.",
+                                 "items" : {
+                                   "type" : "string"
+                                 }
+
+                              },
+                              "event-line-colors" : {
+                                 "title" : "Event Line Colors",
+                                 "type" : "array",
+                                 "default" : ["#ffffff"],
+                                 "description" : "List of color values to use for the event line colors.",
+                                 "items" : {
+                                    "format" : "color",
+                                    "type" : "string",
+                                     "validationMessage": "Invalid Color"
+                                 }
+                              },
+                              "colors" : {
+                                 "title" : "Lines' Colors",
+                                 "type" : "array",
+                                 "default" : ["#005588", "#aa241d"],
+                                 "description" : "Array containing colors for the series lines.",
+                                 "items" : {
+                                    "format" : "color",
+                                    "type" : "string",
+                                     "validationMessage": "Invalid Color"
+                                 }
+                              },
+                              "x1-axis-label-font-size" : {
+                                 "title" : "X-axis Label Font Size",
+                                 "type" : "number",
+                                 "default" : 12,
+                                 "description" : "Pixel size of the font for the x-axis label.",
+                                  "minimum" : 8,
+                                  "maximum" : 28
+                              },
+                              "y-axis-label-font-size" : {
+                                 "title" : "Y-axis Label Font Size",
+                                 "type" : "number", 
+                                 "default" : 12,
+                                 "description" : "Pixel size of the font for the y-axis label.",
+                                  "minimum" : 8,
+                                  "maximum" : 28
+                              },
+                              "y2-axis-label-font-size" : {
+                                 "title" : "Y2-axis Label Font Size",
+                                 "type" : "number",
+                                 "default" : 12,
+                                 "description" : "Pixel size of font for the y2-axis label.",
+                                  "minimum" : 8,
+                                  "maximum" : 28
+                              },
+                              "x1-axis-label-width" : {
+                                 "title" : "Axis Label Width",
+                                 "type" : "number",
+                                 "default" : 60,
+                                 "description" : "Width (in pixels) of the axis label width."
+                              },
+                              "y-axis-label-width" : {
+                                 "title" : "Axis Label Width",
+                                 "type" : "number", 
+                                 "default" : 95,
+                                 "description" : "Width (in pixels) of the axis label width. This also controls the width of the y-axis."
+                              },
+                              "y2-axis-label-width" : {
+                                 "title" : "Axis Label Width",
+                                 "type" : "number",
+                                 "default" : 95,
+                                 "description" : "Width (in pixels) of the axis label width. This also controls the width of the y-axis."
+                              },
+                              "x1-axis-line-color" : {
+                                 "title" : "X-axis Line Color",
+                                 "type" : "string",
+                                 "default" : "#000000",
+                                 "format" : "color",
+                                 "description" : "",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "y-axis-line-color" : {
+                                 "title" : "Y-axis Line Color",
+                                 "type" : "string", 
+                                 "default" : "#000000",
+                                 "format" : "color",
+                                 "description" : "",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "y2-axis-line-color" : {
+                                 "title" : "Y2-axis Line Color",
+                                 "type" : "string",
+                                 "default" : "#000000",
+                                 "format" : "color",
+                                 "description" : "",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "x1-axis-line-width" : {
+                                 "title" : "X-axis Line Width",
+                                 "type" : "number",
+                                 "default" : 1,
+                                 "description" : "Pixel thickness of the x-axis line.",
+                                  "minimum" : 1,
+                                  "maximum" : 30
+                              },
+                              "y-axis-line-width" : {
+                                 "title" : "Y-axis Line Width",
+                                 "type" : "number", 
+                                 "default" : 1,
+                                 "description" : "Pixel thickness of the y-axis line.",
+                                  "minimum" : 1,
+                                  "maximum" : 30
+                              },
+                              "y2-axis-line-width" : {
+                                 "title" : "Y2-axis Line Width",
+                                 "type" : "number",
+                                 "default" : 1,
+                                 "description" : "Pixel thickness of the y2-axis line.",
+                                  "minimum" : 1,
+                                  "maximum" : 30
+                              },
+                              "y-axis-include-zero" : {
+                                 "title" : "Include Zero",
+                                 "type" : "string",
+                                 "default" : "false",
+                                 "description" : "Determines if the y-axis will include zero, typically the lowest value. This can be used to avoid exaggerating the variance in the data."
+                              },
+                              "y2-axis-include-zero" : {
+                                 "title" : "Include Zero",
+                                 "type" : "string",
+                                 "default" : "false",
+                                 "description" : "Determines if the y2-axis will include zero, typically the lowest value. This can be used to avoid exaggerating the variance in the data."
+                              },
+                              "y-axis-labels-kmb" : {
+                                 "title" : "Labels KMB",
+                                 "type" : "string",
+                                 "default" : "false",
+                                 "description" : "Show K/M/B for thousands/millions/billions on y-axis."
+                              },
+                              "y2-axis-labels-kmb" : {
+                                 "title" : "Labels KMB",
+                                 "type" : "string",
+                                 "default" : "false",
+                                 "description" : "Show K/M/B for thousands/millions/billions on y-axis."
+                              },
+                              "show-range-selector" : {
+                                 "title" : "Show Slider",
+                                 "type" : "string",
+                                 "default" : "false",
+                                 "description" : ""
+                              },
+                              "range-selector-alpha" : {
+                                 "title" : "Alpha",
+                                 "type" : "number",
+                                 "default" :  0.6,
+                                 "description" : "The transparency of the veil that is drawn over the unselected portions of the slider mini plot. A value of 0 represents full transparency and the unselected portions of the mini plot will appear as normal. A value of 1 represents full opacity and the unselected portions of the mini plot will be hidden."
+                              },
+                              "range-selector-background-line-width" : {
+                                 "title" : "Background Line Width",
+                                 "type" : "number",
+                                 "default" : 1,
+                                 "description" : "The width of the lines below and on both sides of the slider mini plot."
+                              },
+                              "range-selector-background-stroke-color" : {
+                                 "title" : "Background Stroke Color",
+                                 "type" : "string",
+                                 "default" : "#808080",
+                                 "format" : "color",
+                                 "description" : "The color of the lines below and on both sides of the slider mini plot.",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "range-selector-foreground-line-width" : {
+                                 "title" : "Foreground Line Width",
+                                 "type" : "number",
+                                 "default" : 1,
+                                 "description" : "The width of the lines in the interactive layer of the slider.",
+                                  "minimum" : 1,
+                                  "maximum" : 10
+                              },
+                              "range-selector-foreground-stroke-color" : {
+                                 "title" : "Foreground Line Color",
+                                 "type" : "string",
+                                 "default" : "#000000",
+                                 "format" : "color",
+                                 "description" : "The color of the lines in the interactive layer of the slider.",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "range-selector-height" : {
+                                 "title" : "Height",
+                                 "type" : "number",
+                                 "default" : 40,
+                                 "description" : "Pixel height of the slider.",
+                                  "minimum" : 10,
+                                  "maximum" : 100
+                              },
+                              "range-selector-plot-fill-color" : {
+                                 "title" : "Plot Fill Color",
+                                 "type" : "string",
+                                 "default" : "#A7B1C4",
+                                 "format" : "color",
+                                 "description" : "The slider mini plot fill color.",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "range-selector-plot-fill-gradient-color" : {
+                                 "title" : "Plot Fill Gradient Color",
+                                 "type" : "string",
+                                 "default" : "#FFFFFF",
+                                 "format" : "color",
+                                 "description" : "The top color for the slider mini plot fill color gradient.",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "range-selector-plot-line-width" : {
+                                 "title" : "Plot Line Width",
+                                 "type" : "number",
+                                 "default" : 1.5,
+                                 "description" : "The width of the slider mini plot line."
+                              },
+                              "range-selector-plot-stroke-color" : {
+                                 "title" : "Plot Stroke Color",
+                                 "type" : "string",
+                                 "default" : "#808FAB",
+                                 "format" : "color",
+                                 "description" : "The slider mini plot stroke color.",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "x1-draw-grid" : {
+                                 "title" : "Draw X-axis Grid Lines",
+                                 "type" : "string",
+                                 "default" : "true",
+                                 "description" : ""
+                              },
+                              "y-draw-grid" : {
+                                 "title" : "Draw Y-axis Grid Lines",
+                                 "type" : "string",
+                                 "default" : "true",
+                                 "description" : ""
+                              },
+                              "y2-draw-grid" : {
+                                 "title" : "Draw Y2-axis Grid Lines",
+                                 "type" : "string",
+                                 "default" : "false",
+                                 "description" : ""
+                              },
+                              "x1-grid-line-color" : {
+                                 "title" : "X-axis Grid Line Color",
+                                 "type" : "string",
+                                 "default" : "#000000",
+                                 "format" : "color",
+                                 "description" : "",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "y-grid-line-color" : {
+                                 "title" : "Y-axis Grid Line Color",
+                                 "type" : "string",
+                                 "default" : "#000000",
+                                 "format" : "color",
+                                 "description" : "",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "y2-grid-line-color" : {
+                                 "title" : "Y2-axis Grid Line Color",
+                                 "type" : "string",
+                                 "default" : "#000000",
+                                 "format" : "color",
+                                 "description" : "",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "x1-grid-line-width" : {
+                                 "title" : "X-axis Grid Line Width",
+                                 "type" : "number",
+                                 "default" :  1,
+                                 "description" : "Pixel thickness of the x-axis line.",
+                                  "minimum" : 1,
+                                  "maximum" : 30
+                              },
+                              "y-grid-line-width" : {
+                                 "title" : "Y-axis Grid Line Width",
+                                 "type" : "number",
+                                 "default" :  1,
+                                 "description" : "Pixel thickness of the y-axis line.",
+                                  "minimum" : 1,
+                                  "maximum" : 30
+                              },
+                              "y2-grid-line-width" : {
+                                 "title" : "Y2-axis Grid Line Width",
+                                 "type" : "number",
+                                 "default" :  1,
+                                 "description" : "Pixel thickness of the y2-axis line.",
+                                  "minimum" : 1,
+                                  "maximum" : 30
+                              },
+                              "independent-ticks" : {
+                                 "title" : "Y Axes Alignment",
+                                 "type" : "string",
+                                 "default" : "independent",
+                                 "description" : "This option defines whether the y axes should align their ticks or if they should be independent.",
+                                 "placeholder" : " "
+                              },
+                              "data" : {
+                                 "title" : "Data",
+                                 "type" : "string",
+                                 "description" : "Data series in case of static data.",
+                                 "x-schema-form" : {
+                                    "type" : "textarea",
+                                    "placeholder" : "[[\"2009-12-31T22:00:00.000Z\",1,99,1039600.0000000001,1960400],[\"2010-01-01T22:00:00.000Z\",2,98,1078400,1921600]]"
+                                 }
+                              },
+                              "x1-axis-label" : {
+                                 "title" : "X-axis Label",
+                                 "type" : "string",
+                                 "default" : "",
+                                 "description" : "",
+                                  "maxLength" : 40
+                              },
+                              "y-axis-label" : {
+                                 "title" : "Y-axis Label",
+                                 "type" : "string",
+                                 "default" : "",
+                                 "description" : "",
+                                  "maxLength" : 40
+                              },
+                              "y2-axis-label" : {
+                                 "title" : "Y2-axis Label",
+                                 "type" : "string",
+                                 "default" : "",
+                                 "description" : "",
+                                  "maxLength" : 40
+                              },
+                              "legend-labels" : {
+                                 "title" : "Legend Labels",
+                                 "type" : "string",
+                                 "default" : "['X', 'Y1', 'Y2', 'Y3', 'Y4']",
+                                 "description" : "A name for each data series, including the independent (X) series."
+                              },
+                              "legend-Mapping" : {
+                                 "title" : "Legend Mapping",
+                                 "type" : "string",
+                                 "default" : "['x', 'y', 'y', 'y2', 'y2']",
+                                 "description" : "Mapping the legends to their corresponding axis."
+                              },
+                              "boxLabel" : {
+                                 "title" : "Box Label",
+                                 "type" : "string",
+                                 "description" : "Define your widget box title.",
+                                  "maxLength" : 40
+                              },
+                               "boxBorder" : {
+                                 "title" : "Box Border",
+                                 "type" : "hidden",
+                                 "default": "true",
+                                 "description" : "Define your widget box border."
+                              }
+                           }
+                        }
+               	   },
                      {
                         "name" : "bar",
                         "label" : "Bar Chart",
