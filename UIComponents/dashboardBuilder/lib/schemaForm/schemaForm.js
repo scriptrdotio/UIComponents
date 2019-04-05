@@ -1912,9 +1912,9 @@ angular.module('schemaForm').directive('sfChanged', function() {
       if (form && form.onChange) {
         ctrl.$viewChangeListeners.push(function() {
           if (angular.isFunction(form.onChange)) {
-            form.onChange(ctrl.$modelValue, form);
+            form.onChange(ctrl.$modelValue, form, scope.model);
           } else {
-            scope.evalExpr(form.onChange, {'modelValue': ctrl.$modelValue, form: form});
+            scope.evalExpr(form.onChange, {'modelValue': ctrl.$modelValue, form: form, model: scope.model});
           }
         });
       }
@@ -2742,7 +2742,14 @@ angular.module('schemaForm').directive('schemaValidate', ['sfValidator', '$parse
             });
           });
         };
-
+          
+        if (form.onFieldLoad) {
+            if (angular.isFunction(form.onFieldLoad)) {
+                form.onFieldLoad(ngModel.$modelValue, form, scope.model);
+            } else {
+                scope.evalExpr(form.onFieldLoad, {'modelValue': ngModel.$modelValue, form: form, model: scope.model});
+            }
+        }
 
         // Validate against the schema.
 
@@ -2766,7 +2773,7 @@ angular.module('schemaForm').directive('schemaValidate', ['sfValidator', '$parse
               .filter(function(k) { return k.indexOf('tv4-') === 0; })
               .forEach(function(k) { ngModel.$setValidity(k, true); });
 
-          if (!result.valid) {
+          if (!result.valid && !ngModel.$pristine) {
             // it is invalid, return undefined (no model update)
             ngModel.$setValidity('tv4-' + result.error.code, false);
             error = result.error;
