@@ -138,7 +138,7 @@ angular
 
 		                  dataStream.onClose(function(e) {
 			                  console.log("Socket Closed", e);
-			                  close.resolve()
+			                  close.resolve(e)
 			                  console.log("Trying to reconnect closed socket.")
                               //Try to re-open socket
 			                  dataStream.reconnect(); // TODO: Make it incremental timed retiral based on status code 
@@ -342,7 +342,9 @@ angular
 		                     },
                             
                              updateSubscriptionChannel : function(channel){
-                                 unsubscribe(self.getSubscribeChannel())   
+                                 if(self.getSubscribeChannel()){
+                                      unsubscribe(self.getSubscribeChannel())   
+                                 }
                                  self.setSubscribeChannel(channel);
                                  subscribe(channel)
                              },
