@@ -1912,9 +1912,9 @@ angular.module('schemaForm').directive('sfChanged', function() {
       if (form && form.onChange) {
         ctrl.$viewChangeListeners.push(function() {
           if (angular.isFunction(form.onChange)) {
-            form.onChange(ctrl.$modelValue, form, scope.model);
+            form.onChange(ctrl.$modelValue, form, scope.model, scope);
           } else {
-            scope.evalExpr(form.onChange, {'modelValue': ctrl.$modelValue, form: form, model: scope.model});
+            scope.evalExpr(form.onChange, {'modelValue': ctrl.$modelValue, form: form, model: scope.model, scope: scope});
           }
         });
       }

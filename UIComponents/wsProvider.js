@@ -17,6 +17,8 @@ angular
 	            var _token = null;
 	            var _socketUrl = null;
 	            var _socketSession = null;
+	            
+	            var _reconnect = true;
 
 	            // Keep all pending requests here until they get responses
 	            var callbacks = {};
@@ -32,6 +34,10 @@ angular
 	            /** This section for subscribe* */
 	            this.setBaseUrl = function(textString) {
 		            _baseUrl = textString;
+	            };
+	            
+	            this.setReconnect = function(textBoolean) {
+	            	_reconnect = textBoolean;
 	            };
 
 	            this.setPublishChannel = function(textString) {
@@ -141,7 +147,9 @@ angular
 			                  close.resolve(e)
 			                  console.log("Trying to reconnect closed socket.")
                               //Try to re-open socket
-			                  dataStream.reconnect(); // TODO: Make it incremental timed retiral based on status code 
+			                  if(_reconnect) {
+			                  	dataStream.reconnect(); // TODO: Make it incremental timed retiral based on status code
+			                  }
 		                  });
 
 		                  dataStream.onError(function(e) {
@@ -359,7 +367,20 @@ angular
 			                     } else {
 				                     dataStream.close(false);
 			                     }
-		                     },
+		                     }, 
+			                    updateTokenAndReconnect: function() {
+			                  	  
+			                  	  if ($cookies.get("token")) {
+						                  self.setToken($cookies.get("token"));
+					                  }
+			                  	  _buildSocketUrl();
+			                  	  
+			                  	  dataStream.url = _socketUrl;
+			                  	  
+			                  	  dataStream.close();
+			                  	  
+			                  	  dataStream.reconnect();
+			                    },
 
 		                     onReady : ready.promise,
 		                     onError : error.promise,

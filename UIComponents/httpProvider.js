@@ -6,6 +6,8 @@ angular
                 var _baseUrl = "";
 	            var _token = null;
 	            var _restUrl = "";
+	            
+	            var self = this;
 
 	            this.setBaseUrl = function(textString) {
 		            _baseUrl = textString;
@@ -125,6 +127,10 @@ angular
 			                           "application/json");
 
 			                     return httpRequest(scriptName, config);
+		                     },
+		                     
+		                     updateToken: function(token) {
+		                     	self.setToken(token);
 		                     }
 		                  };
 		                  return methods;
