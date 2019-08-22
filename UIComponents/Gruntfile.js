@@ -535,6 +535,14 @@ module.exports = function(grunt) {
 
 	         clean : {
 		         folder : [ 'concat/', 'lib/', 'build/css', 'build/javascript']
+	         },
+	         
+	         less: {
+	         	production: {
+	         	    files: {
+	         	      'dashboardBuilder/css/dashboard.css': 'dashboardBuilder/css/dashboard.less'
+	         	    }
+	         	  }
 	         }
 	      });
 
@@ -582,8 +590,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-angular-templates');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-less');
 
 	// Run the tasks
+	grunt.registerTask('buildCss', ['less:production']);
 	//grunt.registerTask('default', ['fetchFromCDN']);
 	grunt.registerTask('ide_dashboardBuilder', [ 'fetchFromCDN', 'fetch_ag_grid', 'ngtemplates', 'ngAnnotate', 'concat:dashboardBuilder_ide', 'concat:dashboard_template', 'concat:css', 'uglify:dashboardBuilder_ide', 'cssmin:dashboardBuilder_ide']);
 	grunt.registerTask('dashboardBuilder', [ 'fetchFromCDN',
