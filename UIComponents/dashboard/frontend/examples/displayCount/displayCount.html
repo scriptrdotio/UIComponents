@@ -1,0 +1,47 @@
+<html ng-app="myApp">
+<head>
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script
+    <!-- Adding Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+  
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+
+    <script src="/UIComponents/dashboard/frontend/components/displayCount/displayCount.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/displayCount/count.css">
+
+</head> 
+  
+<script>
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "DataService", "Display"])
+    angular.module('myApp').config(wssConfig);
+  	angular.module('myApp').config(httpsConfig);
+  
+    angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          
+      });
+</script>
+
+<body>  
+  <div ng-controller="testCtrl as vm" >
+    	<scriptr-displaycount 
+              transport="wss" 
+              widget-layout="vertical"
+              api="UIComponents/dashboard/frontend/examples/displayCount/getCount">
+        </scriptr-displaycount>
+  </div>
+
+</body>  
+   
+</html>
