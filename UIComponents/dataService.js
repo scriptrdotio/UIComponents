@@ -1,5 +1,5 @@
 angular.module('DataService', []).service(
-    "dataService",
+    "scriptrDataStore",
     function(httpClient, wsClient, $location) {
         
         this.getData = function(transport, api, apiParams, useWindowParams, msgTag,  consumerFnc, fetchDataInterval, id) {

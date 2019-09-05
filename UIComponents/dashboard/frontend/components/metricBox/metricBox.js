@@ -49,7 +49,7 @@ angular
                 "useWindowParams": "@"
             },
             templateUrl: '/UIComponents/dashboard/frontend/components/metricBox/metricBox.html',
-            controller: function ($scope, httpClient, wsClient, $element, $window, $timeout, $interval, $window, dataService) {
+            controller: function ($scope, httpClient, wsClient, $element, $window, $timeout, $interval, $window, scriptrDataStore ) {
 
                 var self = this;
                 self.isLoading = false;
@@ -121,8 +121,8 @@ angular
                 }
 
                 var initDataService = function (transport) {
-                  console.log(dataService);
-                    dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+                  console.log(scriptrDataStore );
+                    scriptrDataStore .getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
 
                     if (self.fetchDataInterval && !self.refreshTimer) {
                         //Assuming this is success
