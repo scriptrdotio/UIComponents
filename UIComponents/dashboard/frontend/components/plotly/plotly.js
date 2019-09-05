@@ -57,7 +57,7 @@ angular
                 "onFormatData" : "&"
             },
             templateUrl : '/UIComponents/dashboard/frontend/components/plotly/plotly.html',
-            controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval,scriptrDataStore) {
+            controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval,dataService) {
 
                 var self = this;
                 this.directions = ["N", "NNE", "ENE", "E", "ESE", "SSE", "S", "SSW", "WSW", "W", "WNW", "NNW"];
@@ -258,13 +258,13 @@ angular
 
                 self.initDataService = function(transport) {
                     console.log("initDataService called")
-                    scriptrDataStore.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+                    dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
 
                     if (self.fetchDataInterval && !self.refreshTimer) {
                         //Assuming this is success
                         self.refreshTimer = $interval(
                             function () {
-                                initDataService(self.transport)
+                                self.initDataService(self.transport)
                             }, self.fetchDataInterval * 1000);
                     }
                 }
