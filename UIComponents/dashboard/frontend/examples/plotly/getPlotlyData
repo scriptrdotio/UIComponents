@@ -29,6 +29,6 @@ var publishResponse = function(channel, data, request) {
    publish(channel, message);
 }
 
-publishResponse("responseChannel", retrievedData, request);
+publishResponse("responseChannel", {data:retrievedData}, request);
 
 return {data:retrievedData};
