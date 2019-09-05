@@ -13,7 +13,7 @@
         </div>
     </div>
     <div  class="plotly-chart-legend" ng-if="$ctrl.showLegend && !$ctrl.noResults">
-        <ul ng-repeat="entry in $ctrl.plotCustomRanges">
+        <ul ng-repeat="entry in $ctrl.plotCustomRanges" style="list-style: none">
             <li>
                 <span><i class="fa fa-square" style="color: {{entry.color}}"></i> {{entry.lo}} - {{entry.hi}} {{$ctrl.speedUnit}}</span>
             </li>
