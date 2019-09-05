@@ -75,3 +75,40 @@
     margin: auto;
     width: 25%;
 }
+
+/*** override Metric box ***/
+
+
+.metric-box-label{
+  width: 100%;
+  text-align: left!important;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 22px;
+}
+.metric-box-action{
+  width: auto;
+}
+.metric-box-head{
+  height: 32px;
+}
+.metric-box-value-unit {
+	display: flex;
+  flex-direction: row;
+}
+.metric-box-icon{
+  width: 100%;
+  text-align: right;
+} 
+.metric-box-icon img{
+  width: 64px;
+	height: 64px;
+} 
+.metric-box-value{
+  font-size: 1.8em;
+  width: auto;
+} 
+.metric-box-unit{
+  font-size: 1.5em;
+  width: auto;
+} 
