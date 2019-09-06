@@ -7,9 +7,7 @@ angular
             {
 
                bindings : {
-                   
-                  "availableUnits": "<?",
-
+                  
                   "onLoad" : "&onLoad",
 
                   "api" : "@",
@@ -38,12 +36,14 @@ angular
                  
                   "onFormatData" : "&",
                    
-                  "fetchDataInterval" : "@"
+                  "fetchDataInterval": "@",
+
+                  "useWindowParams": "@"
                    
                    
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
-               controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval) {
+               controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval, dataService) {
 
 	               var self = this;
                    self.showSelectStream = self.api ? false: true;
@@ -97,6 +97,7 @@ angular
                        
                        this.transport = (this.transport) ? this.transport : "wss";
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
+                       this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
                        
                        this.style = {};
                        angular.element($window).on('resize', function() {
@@ -110,22 +111,23 @@ angular
                            this.consumeData(this.data);
                        else 
                            this.consumeData("24");
+                       
 		               initDataService(this.transport);
 
 	               }
                    
                    self.resize = function(){
                        self.timeoutId = null;
-                       self.style["margin-top"] = !self.noResults ? (($element.parent().outerHeight(true)/2) - $($element.find(".tg-thermometer")).innerHeight()/2) : 0; 
+                       self.style["margin-top"] = (($element.parent().outerHeight(true)/2) - $($element.find(".tg-thermometer")).innerHeight()/2); 
                        self.style["margin-left"] = !self.noResults ? (($element.parent().outerWidth(true)/2) - 50) : 0;
                    }
                    
                    this.$postLink = function () {
-                       $timeout(self.resize,100);
+                       $timeout(self.resize,500);
                        if (self.timeoutId != null) {
                            $timeout.cancel(self.timeoutId);
                        }
-                       self.timeoutId = $timeout(self.resize, 100);
+                       self.timeoutId = $timeout(self.resize, 500);
                        $scope.$watch(function( $scope ) {
                                return $scope.$ctrl.value
                        },function(newVal){
@@ -147,48 +149,15 @@ angular
                    }
 
 	               var initDataService = function(transport) {
-		               if (transport == "wss") {
-			               wsClient.onReady.then(function() {
-				               // Subscribe to socket messages with id chart
-				               if(self.msgTag){
-                                 wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
-                               }
-				               if(self.api) {
-                                  wsClient.call(self.api, self._apiParams, self.msgTag)
-                                   .then(function(data, response) {
-                                      self.showSelectStream = false;
-                                      if(self.fetchDataInterval && !self.refreshTimer) {
-                                            //Assuming this is success
-                                            self.refreshTimer = $interval(
-                                                function(){
-                                                    initDataService.bind(self)(transport)
-                                                }, self.fetchDataInterval * 1000);
-                                        }
-                                      self.consumeData(data)
-                                   },
-                                    function(err) {
-                                      console.log( "reject published promise", err);
-                                      self.consumeData();
-                                    });
-				               }
-				               
-			               });
-		               } else {
-			               if (transport == "https" && self.api) {
-				               httpClient
-				                     .get(self.api, self._apiParams)
-				                     .then(
-				                           function(data, response) {
-					                           self.consumeData(data)
-				                           },
-				                           function(err) {
-					                           console
-					                                 .log(
-					                                       "reject published promise",
-					                                       err);
-				                           });
-			               }
-		               }
+		               	dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+                
+                        if(self.fetchDataInterval && !self.refreshTimer) {
+                            //Assuming this is success
+                            self.refreshTimer = $interval(
+                                function(){
+                                    initDataService(self.transport)
+                                }, self.fetchDataInterval * 1000);
+                        }
 	               }
 
 	              this.consumeData = function(data, response) {

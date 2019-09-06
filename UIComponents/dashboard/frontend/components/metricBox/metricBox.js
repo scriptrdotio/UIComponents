@@ -1,7 +1,7 @@
-angular.module('Display', []);
+angular.module('MetricBox', []);
 
 angular
-    .module('Display')
+    .module('MetricBox')
     .component(
         'scriptrMetricbox',
         {

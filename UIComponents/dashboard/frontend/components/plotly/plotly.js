@@ -1,36 +1,12 @@
-angular.module('plotly', ['angularPlotly']);
+angular.module('Plotly', ['angularPlotly']);
 
 angular
-    .module('plotly')
+    .module('Plotly')
     .component(
         'scriptrPlotly',
         {
 
             bindings : {
-				
-                "fetchPeriod": "@",
-                
-                "displayMetricValue" : "@",
-                   
-        	    "displayMetricParam" : "@",
-                
-                "defaultMetricValue" : "@",
-                   
-                "defaultMetricParam" : "@",
-                   
-                "availableUnits": "<?",
-                
-                "isScaled": "@",
-                
-                "fetchFromDateParam" : "@",
-                
-                "fetchFromDateValue" : "@",
-                
-                "fetchToDateParam" : "@",
-                
-                "fetchToDateValue" : "@",
-                
-                "fetchDataInterval" : "@",
                 
                 "onLoad" : "&onLoad",
 
@@ -54,7 +30,9 @@ angular
 
                 "apiParams" : "<?",
 
-                "onFormatData" : "&"
+                "onFormatData" : "&",
+                
+                "fetchDataInterval" : "@"
             },
             templateUrl : '/UIComponents/dashboard/frontend/components/plotly/plotly.html',
             controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval,dataService) {
@@ -107,7 +85,7 @@ angular
                        	this.runMetricTransformation();
                     }
                     
-                    this.showLegend = this.showLegend ? this.showLegend : "false";
+                    this.showLegend = this.showLegend ? this.showLegend : "true";
                     
                     this.fontSize = this.fontSize ? this.fontSize : "12";
                     this.layout = {
@@ -160,8 +138,45 @@ angular
                         
                     }
                     
-                    self.layout.width = self.style["width"];
-                    self.layout.height =  self.style["height"];
+                    self.layout = {
+                        title: '',
+                        font: {size: self.fontSize},
+						radialaxis: {ticksuffix: '%'},
+                        orientation: 270,
+                     /**   angularaxis: {ticks: "outside", ticksuffix: '%',showticklabels: true, ticklen: 1000, tickmode: "array", tickvals: ['N',
+          'NNE',
+          'NE',
+          'ENE',
+          'E',
+          'ESE',
+          'SE',
+          'SSE',
+          'S',
+          'SSW',
+          'SW',
+          'WSW',
+          'W',
+          'WNW',
+          'NW',
+          'NNW'], ticktext: ['N',
+          'NNE',
+          'NE',
+          'ENE',
+          'E',
+          'ESE',
+          'SE',
+          'SSE',
+          'S',
+          'SSW',
+          'SW',
+          'WSW',
+          'W',
+          'WNW',
+          'NW',
+          'NNW'], nticks: 32}, **/
+                        width: self.style["width"],
+                        height: self.style["height"]
+                    };
                 }
                 
                  this.runMetricTransformation = function() {
