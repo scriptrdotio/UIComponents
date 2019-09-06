@@ -47,43 +47,13 @@ angular
                     console.log("on init started")
                	  this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
                     
-                    if(this.apiParams && this.apiParams.streams && this.apiParams.streams.length < 2)
-                        this.showSelectStream = true;
                     
                     this.plotCustomRanges = (this.customRanges && this.customRanges.length > 0) ? this.customRanges :  [{"color": "#00476b", "lo": 0, "hi": 2}, {"color": "#005487", "lo": 2, "hi": 4}, {"color": "#006699", "lo": 4, "hi": 6}, {"color": "#0082b5", "lo": 6, "hi": 8}, {"color": "#0294c1", "lo": 8, "hi": 10}, {"color": "#06a9ce", "lo": 10, "hi": 20}];
-                    
-                    this.fetchFromDateParam = (this.fetchFromDateParam) ? this.fetchFromDateParam : "from_date";
-                    this.fetchToDateParam = (this.fetchToDateParam) ? this.fetchToDateParam : "to_date";
-
-                    this.fetchToDateValue = (this.fetchToDateValue) ? this.fetchToDateValue : null;
-                    this.fetchFromDateValue = (this.fetchFromDateValue) ? this.fetchFromDateValue : null;
-
-
-                    if(this.fetchFromDateValue) {
-                        this._apiParams[this.fetchFromDateParam] = this.fetchFromDateValue
-                    }
-
-                    if(this.fetchToDateValue) {
-                        this._apiParams[this.fetchToDateParam] = this.fetchToDateValue
-                    }
-                    
-                    this.displayMetricParam = (this.displayMetricParam) ? this.displayMetricParam : "display_metric";
-             
-              		this.displayMetricValue = $rootScope.currentDashboardUnit;//(this.displayMetricValue) ? this.displayMetricValue : null;
-              
-                    this.defaultMetricParam = (this.defaultMetricParam) ? this.defaultMetricParam : "default_metric";
-             
-              		this.defaultMetricValue = (this.defaultMetricValue) ? this.defaultMetricValue : null;
                     
                     this.retrievedData = this.retrievedData ? this.retrievedData : [];
                     
                     this.staticData = angular.copy(this.retrievedData);
                     this.data = angular.copy(this.retrievedData);
-                    
-                    //Run only if we have a default and display metric that do not match
-                    if((!this.isScaled || this.isScaled == "false") && this.defaultMetricValue && this.displayMetricValue && (this.defaultMetricValue != this.displayMetricValue) && (this.availableUnits && Object.keys(this.availableUnits).length >= 2)) {
-                       	this.runMetricTransformation();
-                    }
                     
                     this.showLegend = this.showLegend ? this.showLegend : "true";
                     
@@ -103,11 +73,9 @@ angular
                     this.listOfColors = _.pluck(this.plotCustomRanges, "color");
                     //color corresponding to values greater than the highest value published by user
                     this.listOfColors.push("#10c3e0");
-                    if(!this.isScaled || this.isScaled == "false")
-                        this.speedUnit =  (this.availableUnits) ? this.availableUnits[this.displayMetricValue] : ((this.speedUnit) ? this.speedUnit : "");
-                    else
-                        this.speedUnit =  (this.availableUnits) ? this.availableUnits["scaled"] : ((this.speedUnit) ? this.speedUnit : "");
                     
+                    
+                    this.speedUnit = ((this.speedUnit) ? this.speedUnit : "")
                     this.style = {};
                     angular.element($window).on('resize', self.scheduleResize);
                     console.log("before initDataService");
@@ -178,32 +146,6 @@ angular
                         height: self.style["height"]
                     };
                 }
-                
-                 this.runMetricTransformation = function() {
-                     if(this.defaultMetricValue != "si"){
-                         var from_unit = this.availableUnits["us"];
-                         var to_unit =  this.availableUnits["si"];
-                     }else{
-                         var from_unit = this.availableUnits["si"];
-                         var to_unit =  this.availableUnits["us"];
-                     }    
-
-                     var conversionFunction = getConversionFunction(from_unit, to_unit);
-                     //Transform the low higgh values of sector 
-                     if(this.plotCustomRanges){
-                         for(var x=0; x<this.plotCustomRanges.length; x++){
-                             var lo = this.plotCustomRanges[x].lo;
-                             var hi = this.plotCustomRanges[x].hi;
-
-                             if(typeof conversionFunction == "function"){
-                                 var low = conversionFunction(lo);
-                                 this.plotCustomRanges[x].lo = (Number.isInteger(parseFloat(low)) ? low : parseFloat(low).toFixed(2));
-                                 var high = conversionFunction(hi);
-                                 this.plotCustomRanges[x].hi = (Number.isInteger(parseFloat(high)) ? high : parseFloat(high).toFixed(2));
-                             }
-                         }
-                     }
-                 }
 
                 this.$postLink = function () {
                     if (self.timeoutId != null) {
@@ -215,6 +157,13 @@ angular
                     },function(newData){
                         self.retrievedData = newData;
                     });
+                    
+                    if(this.retrievedData) {
+                        self.timeout = false; 
+                        $timeout(function() {
+                            self.consumeData(self.retrievedData);
+                        }, 2000)
+                    }
                 }
                 
                 this.$onDestroy = function() {
@@ -284,10 +233,10 @@ angular
                         self.totalSpeeds += speedsArrays[i].length;
                     }
                     
-                    if(self.totalSpeeds == 0)
+                   /**MFE if(self.totalSpeeds == 0)
                         self.noResults = true;
                     else
-                        self.noResults = false;
+                        self.noResults = false; **/
                     
                     //get percentage of each direction per speed range
                     self.speedRangeDirectionObj = {};

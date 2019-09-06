@@ -1,8 +1,5 @@
 <div>
 	<div class="parent"><div class="alert alert-danger" ng-show="$ctrl.noResults">No data to display</div></div>
-    <div ng-show="$ctrl.showSelectStream" class="no-channels">
-        <div class="parent"><p>Please select a channel.</p></div>
-    </div>
     <div  ng-show="!$ctrl.noResults" ng-style="$ctrl.style" class="plotly-chart-wrapper" ng-class="($ctrl.showLegend) ? 'with-legend' : ' ' " >
         <div class="plotly-chart-dimension">
             <angular-plotly

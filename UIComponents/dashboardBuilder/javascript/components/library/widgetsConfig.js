@@ -6814,7 +6814,7 @@ angular
                             "on-format-data": "return data;",
                             "boxLabel": "Wind Rose",
                             "boxBorder" : true,
-                            "retrieved-data": [
+                            "retrieved-data": {"data": [
                                 {"direction": "E", "speeds": [2, 3, 15, 17]},
                                 {"direction": "ESE", "speeds": [24, 8, 4]},
                                 {"direction": "SSE", "speeds": [2.5, 7, 16]},
@@ -6827,7 +6827,7 @@ angular
                                 {"direction": "N", "speeds": [20, 0, 5, 9, 7]},
                                 {"direction": "NNE", "speeds": [1, 0.5, 6.5]},
                                 {"direction": "ENE", "speeds": [3.5, 30, 15]}
-                            ]
+                            ]}
                         },
                         "box" : {
                             sizeX : 2,
@@ -6840,107 +6840,6 @@ angular
                         "form" : [ {
                             type : "tabs",
                             tabs : [
-                            {
-                                   title : "Data",
-                                   items : [
-                                       {
-                                           "type" : "section",
-                                           "htmlClass" : "row",
-                                           "items" : [ {
-                                               "type" : "section",
-                                               "htmlClass" : "col-xs-12",
-                                               "items" : [ {
-                                                   "key": "windDirection",
-                                                   "type": "uiselect",
-                                                   "placeholder": "",
-                                                   "options":{
-                                                       closeOnSelect: true,
-                                                       groupBy: "dataStream",
-                                                       callback: "multiSelectCallBack",
-                                                       widgetName:"plotly",
-                                                       widgetField:"Wind Direction"
-                                                   },
-                                                   onChange: function(modelValue, form, model){
-                                                       var tmp = [];
-                                                       if(modelValue && modelValue != ""){
-                                                           tmp.push(modelValue);
-                                                       }
-
-                                                       if(model["windSpeed"] && ((typeof model["windSpeed"] == "string" &&  model["windSpeed"] != "") || (typeof model["windSpeed"] == "object" &&  model["windSpeed"].length > 0))){
-                                                           if(typeof model["windSpeed"] == "object")
-                                                               tmp.push(model["windSpeed"][0]);
-                                                           else
-                                                               tmp.push(model["windSpeed"]);
-                                                       }
-                                                       model["stream"] = tmp;
-                                                   }
-                                               } ]
-                                           },
-                                                      {
-                                                          "type" : "section",
-                                                          "htmlClass" : "col-xs-12",
-                                                          "items" : [ {
-                                                              "key": "windSpeed",
-                                                              "type": "uiselect",
-                                                              "placeholder": "",
-                                                              "options":{
-                                                                  closeOnSelect: true,
-                                                                  groupBy: "dataStream",
-                                                                  callback: "multiSelectCallBack",
-                                                                  widgetName:"plotly",
-                                                                  widgetField:"Wind Speed"
-                                                              },
-                                                              onChange: function(modelValue, form, model){
-                                                                  var tmp = [];
-                                                                  if(modelValue && modelValue != ""){
-                                                                      var selectedStreamValue = _.findWhere(_.findWhere(JSON.parse(window.localStorage["dataStream"]), {logger_sn: modelValue.split("-")[0]}).sensors,{"selectedStreamValue": modelValue});
-                                                                      model["available-units"] = {
-                                                                          "si" : selectedStreamValue["si_unit"],
-                                                                          "us":  selectedStreamValue["us_unit"],
-                                                                          "scaled": selectedStreamValue["scaled_unit"]
-                                                                      }
-                                                                      if(selectedStreamValue["is_scaled"])
-                                                                          model["is-scaled"] = "true";	
-                                                                      else
-                                                                          model["is-scaled"] = "false";
-                                                                      tmp.push(modelValue);
-                                                                  }
-                                                                  if(model["windDirection"] && ((typeof model["windDirection"] == "string" &&  model["windDirection"] != "") || (typeof model["windDirection"] == "object" &&  model["windDirection"].length > 0))){
-                                                                      if(typeof model["windDirection"] == "object")
-                                                                          tmp.push(model["windDirection"][0]);
-                                                                      else
-                                                                          tmp.push(model["windDirection"]);
-                                                                  }
-                                                                      
-                                                                  model["stream"] = tmp;
-                                                              }
-                                                          } ]
-                                                      },
-                                                     {
-                                                         "type" : "section",
-                                                         "htmlClass" : "col-xs-12",
-                                                         "items" : [ {
-                                                             "key":"aggregation-range", 
-                                                             "type": "strapselect",
-                                                             "placeholder" : "Select the aggregation range for the streams data you are charting.",
-                                                             "titleMap" : [ {
-                                                                 "value" : "10",
-                                                                 "name" : "10 minutes"
-                                                             },{
-                                                                 "value" : "30",
-                                                                 "name" : "30 minutes"
-                                                             },{
-                                                                 "value" : "60",
-                                                                 "name" : "1 hour"
-                                                             },{
-                                                                 "value" : "1440",
-                                                                 "name" : "1 day"
-                                                             }]
-                                                         } ]
-                                                     }]
-                                       },
-                                   ]
-                               },
                                 { 
                                 title : "Format",
                                 items : [
@@ -6948,7 +6847,7 @@ angular
                                     "type" : "section",
                                     "htmlClass" : "row",
                                     "items" : [
-                                    /*{
+                                    {
                                         "type" : "section",
                                         "htmlClass" : "col-xs-12 col-sm-6",
                                         "items" : [ "font-size",
@@ -6965,7 +6864,7 @@ angular
                                                               name : "False"
                                                           } ]
                                                   }]
-                                    },*/
+                                    },
                                     {
                                         "type" : "section",
                                         "htmlClass" : "col-xs-12",
@@ -6997,24 +6896,7 @@ angular
                                                         "type" : "section",
                                                         "htmlClass" : "col-xs-4",
                                                         "items" : [ {
-                                                            "key" : "custom-ranges[].lo",
-                                                            "onFieldLoad": function(modelValue, form, model) {
-                                                                                   if(model["default-metric-value"] && model["default-metric-value"] != model["display-metric-value"]) {
-                                                                                       if(model["available-units"] && model["is-scaled"] == "false") {
-                                                                                           var from_unit = model["available-units"][model["default-metric-value"]];
-                                                                                           var to_unit = model["available-units"][model["display-metric-value"]];
-                                                                                           if(from_unit !== to_unit) {
-                                                                                            model[form.key[0]][form.key[1]][form.key[2]]
- =  getConversionFunction(from_unit, to_unit)(model[form.key[0]][form.key[1]][form.key[2]])
-                                                                                       }
-                                                                                       if(model["unit"] && (model["unit"] != to_unit) ){
-                                                                                       	  model["unit"] = to_unit;    
-                                                                                       }
-                                                                                       
-                                                                                   }
-                                                                                 }
-                                                                                   		
-                                                                               }
+                                                            "key" : "custom-ranges[].lo"
                                                         } ]
                                                     },
                                                     {
@@ -7022,23 +6904,6 @@ angular
                                                         "htmlClass" : "col-xs-4",
                                                         "items" : [ {
                                                             "key" : "custom-ranges[].hi",
-                                                            "onFieldLoad": function(modelValue, form, model) {
-                                                                                   if(model["default-metric-value"] && model["default-metric-value"] != model["display-metric-value"]) {
-                                                                                       if(model["available-units"] && model["is-scaled"] == "false") {
-                                                                                           var from_unit = model["available-units"][model["default-metric-value"]];
-                                                                                           var to_unit = model["available-units"][model["display-metric-value"]];
-                                                                                           if(from_unit !== to_unit) {
-                                                                                            model[form.key[0]][form.key[1]][form.key[2]]
- =  getConversionFunction(from_unit, to_unit)(model[form.key[0]][form.key[1]][form.key[2]])
-                                                                                       }
-                                                                                       if(model["unit"] && (model["unit"] != to_unit) ){
-                                                                                       	  model["unit"] = to_unit;    
-                                                                                       }
-                                                                                       
-                                                                                   }
-                                                                                 }
-                                                                                   		
-                                                                               } 
                                                         } ]
                                                     } ]
                                             }]
@@ -7051,10 +6916,6 @@ angular
                             "type" : "object",
                             "title" : "Schema",
                             "properties" : {
-                                "stream" : {
-                                    "title" : "Stream",
-                                    "type" : "hidden"
-                                },
                                 "windDirection" : {
                                     "title" : "Wind Direction Channel",
                                     "type" : "string",
@@ -7109,7 +6970,7 @@ angular
                                   }
                               }
                             },
-                            "required" : ["stream", "windSpeed", "windDirection"]
+                            "required" : ["windSpeed", "windDirection"]
                         }
                     }
          
