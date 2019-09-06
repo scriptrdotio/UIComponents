@@ -7,12 +7,6 @@ angular
      {
   
       bindings : {
-          "displayMetricValue" : "@",
-          "displayMetricParam" : "@",
-          "defaultMetricValue" : "@",
-          "defaultMetricParam" : "@",
-          "availableUnits": "<?",  
-          "isScaled": "@",
           "onLoad" : "&onLoad",
           "api": "@",
           "transport" : "@",
@@ -79,24 +73,24 @@ angular
           "legendMapping": "<?",
           "customGoals": "<?",
           "colorsMapping": "<?",
-          "fetchFromDateParam" : "@",
-          "fetchFromDateValue" : "@",
-          "fetchToDateParam" : "@",
-          "fetchToDateValue" : "@",
-          "fetchDataInterval" : "@",
-          "fetchPeriod" : "@"
+          "fetchDataInterval": "@",
+          "useWindowParams": "@"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.html',
-      controller: function($rootScope, httpClient, wsClient, $scope, $timeout, $interval, $window) {
+      controller: function($rootScope, httpClient, wsClient, $scope, $timeout, $interval, $window, dataService) {
         
          var self = this;
-          self.showSelectStream = self.api ? false: true;
-        
          this.$onInit = function() {
               this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
              if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
                this.noResults = true;
              }
+             
+             //Set axes options
+           	 this.options = {};
+           	 this.options.axes = {};  
+              //Appending dummy data 
+             this.options.series = {};
              
              
              //Initialize defaults
@@ -104,52 +98,45 @@ angular
              this.drawYAxis = (this.drawYAxis) ? JSON.parse(this.drawYAxis) : true;
              this.drawY2Axis = (this.drawY2Axis) ? JSON.parse(this.drawY2Axis) : true;
 			
-             this.colors = (this.colors) ? this.colors : ["#005588","#aa241d"];  
+             this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];  
 
-             if(this.colorsMapping){
+             if(this.colorsMapping && this.showLegend && this.showLegend == "true"){
                  this.colors = _.pluck(this.colorsMapping, "colors");
-             }
-             if(this.colorsMapping){
-                 this.legendLabels = ['x'];
+                 this.legendLabels = ["x"];
                  this.legendLabels = this.legendLabels.concat(_.pluck(this.colorsMapping, "labels"));
                  
-                 for(var i = 0; i < this.legendLabels.length; i++){
-                     var tmp = [];
-                     for(var j = 0; j < this.legendLabels.length; j++){
-                         if(j != i && this.legendLabels[i] == this.legendLabels[j])
-                             tmp.push(j);
-                     }
-                     for(var j = 1; j <= tmp.length; j++)
-                         this.legendLabels[tmp[j-1]] += "(" + j + ")";
-                 }
-             }
-             if(this.colorsMapping){
-                 this.legendMapping = ['X'];
+                 this.legendMapping = ["X"];
                  this.legendMapping = this.legendMapping.concat(_.pluck(this.colorsMapping, "axisSelection"));
                  this.legendUnitsMapping = _.pluck(this.colorsMapping, "unit");
-                 this.scaledStreams = _.pluck(this.colorsMapping, "isScaled");
-                 if(this.displayMetricValue){
-                     for(var i = 1; i < this.legendLabels.length; i++){
-                         if(this.scaledStreams && this.scaledStreams[i-1]) {
-                             if(this.legendUnitsMapping[i-1]["scaled"] != "")
-                             	this.legendLabels[i] = this.legendLabels[i] + " (" + this.legendUnitsMapping[i-1]["scaled"] + ")";
-                         } else {
-                             if(this.legendUnitsMapping[i-1][this.displayMetricValue] != "")
-                             	this.legendLabels[i] = this.legendLabels[i] + " (" + this.legendUnitsMapping[i-1][this.displayMetricValue] + ")";
-						}
-                    }
+                 for(var i = 1; i < this.legendLabels.length; i++){
+                     if(this.legendUnitsMapping[i-1] && this.legendUnitsMapping[i-1] != "")
+                         this.legendLabels[i] = this.legendLabels[i] + " (" + this.legendUnitsMapping[i-1] + ")";
+                 }
+                  
+                 this.legendLabels = (this.legendLabels) ? this.legendLabels : ["X", "Y1", "Y2", "Y3", "Y4"];   
+                 console.log("labels",  this.legendLabels)
+                 this.legendMapping = (this.legendMapping) ? this.legendMapping : ["x", "y", "y", "y2", "y2"];  
+
+                 for(var v=0; v < this.legendLabels.length; v++){
+                     var labelValue = this.legendLabels[v];
+                     if(v!=0){
+                         if(this.legendMapping[v]=="y2" && this.drawY2Axis){
+                             if(labelValue){
+                                 this.options.series[labelValue] = {"axis":this.legendMapping[v]};
+                             }else{
+                                 this.options.series["Y" + v] = {"axis":this.legendMapping[v]};
+                             }
+                         }
+                     }
                  }
              }
              
-             this.displayMetricParam = (this.displayMetricParam) ? this.displayMetricParam : "display_metric";
+            
              
-             this.displayMetricValue = $rootScope.currentDashboardUnit;//(this.displayMetricValue) ? this.displayMetricValue : null;
-              
-             this.defaultMetricParam = (this.defaultMetricParam) ? this.defaultMetricParam : "default_metric";
              
-             this.defaultMetricValue = (this.defaultMetricValue) ? this.defaultMetricValue : null;
-             
-             if((!this.isScaled || this.isScaled == "false") && this.defaultMetricValue && this.displayMetricValue && (this.defaultMetricValue != this.displayMetricValue) && (this.availableUnits && Object.keys(this.availableUnits).length >= 2)) {					this.runMetricTransformation();
+             //Legend Labels
+             if(this.legendLabels && this.legendLabels!=""){
+	             this.options.labels = this.legendLabels;
              }
              
              this.customGoals = (this.customGoals) ? _.reject(this.customGoals, function(item) {return (item.goals === "" || item.goals == null)}) : [];
@@ -167,7 +154,7 @@ angular
              this.y2AxisLabelsKmb = (this.y2AxisLabelsKmb) ? JSON.parse(this.y2AxisLabelsKmb) : false;
              
              this.x1AxisLabelWidth = (this.x1AxisLabelWidth) ? JSON.parse(this.x1AxisLabelWidth) : 60;
-             this.yAxisLabelWidth = (this.yAxisLabelWidth) ? JSON.parse(this.yAxisLabelWidth) : 50;
+             this.yAxisLabelWidth = (this.yAxisLabelWidth) ? JSON.parse(this.yAxisLabelWidth) : 250;
              this.y2AxisLabelWidth = (this.y2AxisLabelWidth) ? JSON.parse(this.y2AxisLabelWidth) : 50;
 
              this.x1AxisLineColor = (this.x1AxisLineColor) ? this.x1AxisLineColor : "#000000";
@@ -214,12 +201,7 @@ angular
              this.y2GridLineWidth = (this.y2GridLineWidth) ? JSON.parse(this.y2GridLineWidth) : 0.3;                          
              this.xDrawGrid = (this.xDrawGrid) ? JSON.parse(this.xDrawGrid) : true;  
              this.independentTicks = (this.independentTicks) ? this.independentTicks : "y-primary";   
-        
-             this.legendLabels = (this.legendLabels) ? this.legendLabels : ['X', 'Y1', 'Y2', 'Y3', 'Y4'];   
-             this.legendMapping = (this.legendMapping) ? this.legendMapping : ['x', 'y', 'y', 'y2', 'y2'];   
-             //Set axes options
-           	 this.options = {};
-           	 this.options.axes = {};             
+             
              
              //Set Axis Labels
              if(this.x1AxisLabel && this.x1AxisLabel!="")
@@ -229,10 +211,6 @@ angular
              if(this.y2AxisLabel && this.y2AxisLabel!="")
 	             this.options.y2label = this.y2AxisLabel;   
              
-             //Legend Labels
-             if(this.legendLabels && this.legendLabels!=""){
-	             this.options.labels = this.legendLabels;
-             }
              
              this.options.yRangePad = "10"
              //Set x-axis options
@@ -247,38 +225,20 @@ angular
            	 //Format x-axis as date, use default formatting to be comforme to Onset
              this.options.axes.x.independentTicks = true;  
              this.options.axes.x.ticker = Dygraph.dateTicker
-             
-             this.options.xValueParser = function(date) {
-                 if(self.timeZone){
-                     return moment(date).utcOffset(self.timeZone).format("YYYY-MM-DD kk:mm");
+             /**
+                 this.options.xValueParser = function(date) {
+                     if(self.timeZone){
+                         return moment(date).utcOffset(self.timeZone).format("YYYY-MM-DD kk:mm");
+                     }
+                    return moment(date).format("YYYY-MM-DD kk:mm");
                  }
-                return moment(date).format("YYYY-MM-DD kk:mm");
-             }
-             
+           
              this.options.labelsUTC = true;
-             //console.log("TimeZone",self["_apiParams"]["fetchTimeZone"])
-             this.options.offset = moment.tz(self["_apiParams"]["fetchTimeZone"]).utcOffset()
-             //console.log(this.options.offset)
+             **/
              this.options.axes.x.axisLabelFormatter = function(d, gran, opts) {
                  return Dygraph.dateAxisLabelFormatter(new Date(d), gran, opts);
-             } 
+             }   
              
-             if(this.fetchPeriod == "past_day") {
-                 this.options.axes.x.valueFormatter = function(d) {
-                     if(self.timeZone){
-                         return moment(d).utcOffset(self.timeZone).format("HH:mm");
-                     }
-                     return moment(d).format("HH:mm");
-                 }
-             } else {
-                 this.options.axes.x.valueFormatter = function(d) {
-                     if(self.timeZone){
-                         return moment(d).utcOffset(self.timeZone).format("DD MMM");
-                     }
-                     return moment(d).format("DD MMM");
-                 }
-             }
-                 
              
              //Set y-axis options
              this.options.axes.y = {};
@@ -296,6 +256,7 @@ angular
              this.options.axes.y.labelsKMB = JSON.parse(this.yAxisLabelsKmb);      
              
              //Hardcode not passed as param
+             
              var digitsAfterDecimal = 4; 
              this.options.digitsAfterDecimal = digitsAfterDecimal;
              
@@ -308,7 +269,7 @@ angular
              this.options.axes.y.axisLabelFormatter =  function(y) {
                  return formatYAxisValues(y,digitsAfterDecimal)
              }
-
+			
              //Set y2-axis options
              this.options.axes.y2 = {};
              this.options.axes.y2.drawAxis = JSON.parse(this.drawY2Axis);             
@@ -325,9 +286,10 @@ angular
              this.options.axes.y2.labelsKMB = JSON.parse(this.y2AxisLabelsKmb);   
              this.options.axes.y2.ticker = Dygraph.numericLinearTicks
              
+             
              this.options.axes.y2.axisLabelFormatter =  function(y2) {
                   return formatYAxisValues(y2,digitsAfterDecimal)
-             }
+             } 
 
              //Set Range Selector Data
              this.options.showRangeSelector = JSON.parse(this.showRangeSelector);
@@ -386,44 +348,12 @@ angular
              //Usually, when Dygraphs encounters a missing value in a data series, it interprets this as a gap and draws it as such. If, instead, the missing values represents an x-value for which only a different series has data, then you'll want to connect the dots by setting this to true. To explicitly include a gap with this option set, use a value of NaN.
              this.options.connectSeparatedPoints = true;
              
-             //Appending dummy data 
-             this.options.series = {};
-             
-             for(var v=0; v < this.legendLabels.length; v++){
-                 var labelValue = this.legendLabels[v];
-                 if(v!=0){
-	                 if(this.legendMapping[v]=='y2' && this.drawY2Axis){
-                         if(labelValue){
-                             this.options.series[labelValue] = {'axis':this.legendMapping[v]};
-                         }else{
-                             this.options.series['Y' + v] = {'axis':this.legendMapping[v]};
-                         }
-                     }
-                 }
-             }
-             
              
              //this.data = JSON.parse(this.data);
              this.resize = (this.resize) ? this.resize : true;
              this.transport = (this.transport) ? this.transport : "wss";
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
-             
-             
-             
-             this.fetchFromDateParam = (this.fetchFromDateParam) ? this.fetchFromDateParam : "from_date";
-             this.fetchToDateParam = (this.fetchToDateParam) ? this.fetchToDateParam : "to_date";
-             
-             this.fetchToDateValue = (this.fetchToDateValue) ? this.fetchToDateValue : null;
-             this.fetchFromDateValue = (this.fetchFromDateValue) ? this.fetchFromDateValue : null;
-             
-             
-             if(this.fetchFromDateValue) {
-                 this._apiParams[this.fetchFromDateParam] = this.fetchFromDateValue
-             }
-             
-             if(this.fetchToDateValue) {
-                 this._apiParams[this.fetchToDateParam] = this.fetchToDateValue
-             }
+             this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
              
              this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;
 
@@ -441,26 +371,6 @@ angular
              });
            
        }
-         
-         this.runMetricTransformation = function() {
-            if(this.defaultMetricValue != "si"){
-                var from_unit = this.availableUnits["us"];
-                var to_unit =  this.availableUnits["si"];
-            }else{
-                var from_unit = this.availableUnits["si"];
-                var to_unit =  this.availableUnits["us"];
-            }    
-			if(this.customGoals){
-                for(var x=0; x<this.customGoals.length; x++){
-                    var goal = this.customGoals[x].goals;
-                    if(goal != null){
-                        var conversionFunc = getConversionFunction(from_unit, to_unit);
-                        if(typeof conversionFunc != 'undefined')
-                            this.customGoals[x].goals = conversionFunc(goal);
-                    }
-            	}
-            }
-        }
          
          this.$postLink = function () {
            initDataService(this.transport);
@@ -500,47 +410,15 @@ angular
         }
         
         var initDataService = function(transport) {
-            if (transport == "wss") {
-              wsClient.onReady.then(function() {
-                // Subscribe to socket messages with id chart
-                if(self.msgTag){
-                    wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
+           dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+                
+                if(self.fetchDataInterval && !self.refreshTimer) {
+                    //Assuming this is success
+                    self.refreshTimer = $interval(
+                        function(){
+                            initDataService(self.transport)
+                        }, self.fetchDataInterval * 1000);
                 }
-                if(self.api) {
-                  wsClient.call(self.api, self._apiParams, self.msgTag)
-                    .then(
-                    function(data, response) {
-                        self.showSelectStream = false;
-                        if(self.fetchDataInterval && !self.refreshTimer) {
-                            //Assuming this is success
-                            self.refreshTimer = $interval(
-                                function(){
-                                    initDataService(self.transport)
-                                }, self.fetchDataInterval * 1000);
-                        }
-                        self.consumeData(data);
-                  },
-                  function(err) {
-                      console.log( "reject published promise", err);
-                      self.consumeData();
-                    });
-                }
-
-              });
-            } else {
-              if (transport == "https" && self.api) {
-              httpClient
-                  .get(self.api, self._apiParams)
-                  .then(
-                  function(data, response) {
-                    self.consumeData(data)
-                  },
-                  function(err) {
-                    console.log( "reject published promise", err);
-                    self.consumeData();
-                  });
-              }
-            }
           };
           
           

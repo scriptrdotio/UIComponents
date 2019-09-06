@@ -7283,12 +7283,69 @@ throw new Error('Expected number or array but got ' + typeof val + ': ' + val + 
  * @param {!Array} data
  * @return {Object} data with numeric x values.
  * @private
- */Dygraph.prototype.parseArray_ = function(data){ // Peek at the first x value to see if it's numeric.
-if(data.length === 0){console.error("Can't plot empty data set");return null;}if(data[0].length === 0){console.error("Data set cannot contain an empty row");return null;}validateNativeFormat(data);var i;if(this.attr_("labels") === null){console.warn("Using default labels. Set labels explicitly via 'labels' " + "in the options parameter");this.attrs_.labels = ["X"];for(i = 1;i < data[0].length;i++) {this.attrs_.labels.push("Y" + i); // Not user_attrs_.
-}this.attributes_.reparseSeries();}else {var num_labels=this.attr_("labels");if(num_labels.length != data[0].length){console.error("Mismatch between number of labels (" + num_labels + ")" + " and number of columns in array (" + data[0].length + ")");return null;}}if(utils.isDateLike(data[0][0])){ // Some intelligent defaults for a date x-axis.
-this.attrs_.axes.x.valueFormatter = utils.dateValueFormatter;this.attrs_.axes.x.ticker = DygraphTickers.dateTicker;this.attrs_.axes.x.axisLabelFormatter = utils.dateAxisLabelFormatter; // Assume they're all dates.
-var parsedData=utils.clone(data);for(i = 0;i < data.length;i++) {if(parsedData[i].length === 0){console.error("Row " + (1 + i) + " of data is empty");return null;}if(parsedData[i][0] === null || typeof parsedData[i][0].getTime != 'function' || isNaN(parsedData[i][0].getTime())){console.error("x value in row " + (1 + i) + " is not a Date");return null;}parsedData[i][0] = parsedData[i][0].getTime();}return parsedData;}else { // Some intelligent defaults for a numeric x-axis.
-/** @private (shut up, jsdoc!) */this.attrs_.axes.x.valueFormatter = function(x){return x;};this.attrs_.axes.x.ticker = DygraphTickers.numericTicks;this.attrs_.axes.x.axisLabelFormatter = utils.numberAxisLabelFormatter;return data;}}; /**
+ */
+ Dygraph.prototype.parseArray_ = function(data) { // Peek at the first x value to see if it's numeric.
+	if (data.length === 0) {
+		console.error("Can't plot empty data set");
+		return null;
+	}
+	if (data[0].length === 0) {
+		console.error("Data set cannot contain an empty row");
+		return null;
+	}
+	validateNativeFormat(data);
+	var i;
+	if (this.attr_("labels") === null) {
+		console.warn("Using default labels. Set labels explicitly via 'labels' "
+		      + "in the options parameter");
+		this.attrs_.labels = [ "X" ];
+		for (i = 1; i < data[0].length; i++) {
+			this.attrs_.labels.push("Y" + i); // Not user_attrs_.
+		}
+		this.attributes_.reparseSeries();
+	} else {
+		var num_labels = this.attr_("labels");
+		if (num_labels.length != data[0].length) {
+			console.warn("Mismatch between number of labels (" + num_labels + ")"
+			      + " and number of columns in array (" + data[0].length + ")");
+            this.attrs_.labels = num_labels;
+            for(var i = num_labels.length; i < data[0].length; i++) {
+                this.attrs_.labels.push("Y" + i);
+            }
+            this.attributes_.reparseSeries();
+			//return null;
+		}
+	}
+	if (utils.isDateLike(data[0][0])) { // Some intelligent defaults for a date x-axis.
+		this.attrs_.axes.x.valueFormatter = utils.dateValueFormatter;
+		this.attrs_.axes.x.ticker = DygraphTickers.dateTicker;
+		this.attrs_.axes.x.axisLabelFormatter = utils.dateAxisLabelFormatter; // Assume they're all dates.
+		var parsedData = utils.clone(data);
+		for (i = 0; i < data.length; i++) {
+			if (parsedData[i].length === 0) {
+				console.error("Row " + (1 + i) + " of data is empty");
+				return null;
+			}
+			if (parsedData[i][0] === null
+			      || typeof parsedData[i][0].getTime != 'function'
+			      || isNaN(parsedData[i][0].getTime())) {
+				console.error("x value in row " + (1 + i) + " is not a Date");
+				return null;
+			}
+			parsedData[i][0] = parsedData[i][0].getTime();
+		}
+		return parsedData;
+	} else { // Some intelligent defaults for a numeric x-axis.
+		/** @private (shut up, jsdoc!) */
+		this.attrs_.axes.x.valueFormatter = function(x) {
+			return x;
+		};
+		this.attrs_.axes.x.ticker = DygraphTickers.numericTicks;
+		this.attrs_.axes.x.axisLabelFormatter = utils.numberAxisLabelFormatter;
+		return data;
+	}
+};
+ /**
  * Parses a DataTable object from gviz.
  * The data is expected to have a first column that is either a date or a
  * number. All subsequent columns must be numbers. If there is a clear mismatch
@@ -8420,7 +8477,7 @@ var calculateEmWidthInDiv = function calculateEmWidthInDiv(div) {
 };
 
 var escapeHTML = function escapeHTML(str) {
-  return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return (str) ? (str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;")) : "";
 };
 
 Legend.prototype.select = function (e) {

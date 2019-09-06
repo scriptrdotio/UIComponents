@@ -2,23 +2,6 @@
  * Default styles for the dygraphs charting library.
  */
 
-.dygraph-legend {
-  position: absolute;
-  font-size: 14px;
-  z-index: 10;
-  width: 250px;  /* labelsDivWidth */
-  /*
-  dygraphs determines these based on the presence of chart labels.
-  It might make more sense to create a wrapper div around the chart proper.
-  top: 0px;
-  right: 2px;
-  */
-  background: white;
-  line-height: normal;
-  text-align: left;
-  overflow: hidden;
-}
-
 /* styles for a solid line in the legend */
 .dygraph-legend-line {
   display: inline-block;
@@ -125,3 +108,25 @@
     bottom: 0;
     text-align: center;
     width: 100%;}   
+
+
+
+/*** dygraph legend ***/
+.graph.with-legend {right: 100px;}
+
+.dygraphs-legend {background: transparent; width: 100px; text-align: left; float: right; overflow-y: auto; height: calc(100% - 40px); font-size: 12px; color: #000; white-space: normal; word-wrap: break-word;}
+
+
+.dygraphs-legend::-webkit-scrollbar {
+    width: 12px;
+}
+
+.dygraphs-legend::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+
+.dygraphs-legend::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
