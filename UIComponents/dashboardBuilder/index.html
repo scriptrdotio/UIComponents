@@ -33,6 +33,8 @@
     <link href="/UIComponents/dashboardBuilder/lib/schemaForm/spectrum.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/codemirror.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/theme/neo.min.css">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/metricBox/metricBox.css">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/plotly/plotly.css">
   
     <!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -145,6 +147,11 @@
     
     <script src="/UIComponents/dashboardBuilder/javascript/config/config.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/metricBox/metricBox.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/plotly/angular-plotly.js"></script>
+    <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/plotly/plotly.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
     
 </head> 
   
@@ -164,7 +171,7 @@
             var accum = '';
             for(option in options){
                 var temp = null;
-                if(option == 'on-format-data') continue;
+                if(option == 'on-format-data' || option == 'functions') continue;
                 if(typeof options[option] == 'object'){
                     temp = JSON.stringify(options[option]);
                 } else {
@@ -175,7 +182,7 @@
 
             return accum;
         });
-     var myApp= angular.module("myApp", ['DashboardBuilder', 'Layout']);
+     var myApp= angular.module("myApp", ['DashboardBuilder', 'Layout',"plotly",'Display','DataService']);
      $.urlParam = function(name){
     		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     		if (results==null){
@@ -219,6 +226,9 @@
        })
    	  angular.module('myApp').controller('dashboardCtrl', function($scope, httpClient, $sce, $route, $routeParams) {
           var vm = this;
+          vm.onActionClicked=function(tag){
+              alert(tag);
+          }
           //vm.user = (atob(document.cookie.split("=")[1]).split(":")[1])
       });
     
