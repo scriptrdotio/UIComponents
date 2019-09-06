@@ -35,29 +35,44 @@ form { margin-bottom: 0;}
 /*** loading ***/
 .loading {margin: 20px auto;}
 
+
 /*** box ***/
 .box { height: 100%;border: 1px solid #ccc;background-color: #fff;}
-.box-content {position: relative; text-align: center; width: 100%; height: calc(100% - 30px); overflow: hidden;}
+.box-content{position: relative; text-align: center; width: 100%; overflow: hidden; white-space: initial;}
+.box-content-with-header {height: calc(100% - 30px);}
+.box-content-without-header {height: 100%; }
+.box-wrapper-with-border {border: 1px solid #d7d7d7; box-shadow: 0 0 1px #dcdcdc;}
+.box-wrapper-without-border {border: none; box-shadow: none;}
+.box-wrapper-without-border .box {border:none;}
 
 /*** Box header ***/
-.box-header {position: relative; z-index: 1; display: inline-block; height:30px; width: 100%;  background: #f3f3f3; padding: 5px 15px;}
+.box-without-header {position: absolute;}
+.box-with-header {position: relative; background: #f3f3f3;}
+.box-with-header .drag-box {font-size: 17px;}
+.box-header {z-index: 1; display: inline-block; height:30px; width: 100%; padding: 5px 10px;}
 .box-header h3 { margin-top: 10px;display: inline-block;}
-.box-header-btns {cursor: pointer; }
-.box .box-header a, .box .box-header a:link, .box .box-header a:visited {color: #ff8c00}
-
-
+.box .box-header i {width: 100%; height: 100%;}
+.box .box-header a {float: right; text-align: right;}
+.box .box-header a, .box .box-header a:link, .box .box-header a:visited {color: #ff8c00;}
+.box .box-header a:hover, .box .box-header a:active {text-decoratin: none;}
 .box-label {
-    word-break: break-word;
-    max-width: 78%;
-    font-weight: bold;
-    color: #555;
-    text-align: center;
-    margin: 0 auto;
-    text-overflow: ellipsis;
+	transition: width .4s;
     overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
+    font-weight: bold;
+    color: #000;
     cursor: default;
 }
+
+.box .box-header a {cursor: pointer;}   
+.box .box-header a.drag-box {cursor: move; font-size: 17px;}
+.box .box-header-btns {text-align: right;}    
+.box-with-header .box-header-btns a {width: 18px; height: 18px;}
+.box-without-header .box-header-btns a {width: 20px; height: 20px;}
+.box-without-header a {background: #fff; padding: 1px; border-radius: 4px;}
+
+
 
 
 /*** slick styles ***/
@@ -293,6 +308,7 @@ border-color: #e47618!important;
     border-color: #4FCD8A;
 }
 
+.schema-form-array .list-group button.close {position: absolute!important; top: 4px; right: 4px;}
 
 .sp-replacer {
   border: solid 1px #ccc!important;
