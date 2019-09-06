@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/searchBox/abn_tree.css">
     <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css">
     <link rel="stylesheet" href="//cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.css">
-    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/dygraphs/dygraphs-2.1.0.css">
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/odometer/odometer.car.css">
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/thermometer/style.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/css/xeditable.css" rel="stylesheet">
@@ -33,7 +32,12 @@
     <link href="/UIComponents/dashboardBuilder/lib/schemaForm/spectrum.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/codemirror.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/theme/neo.min.css">
-    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/metricBox/metricBox.css">
+  	<link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/dygraphs/dygraphs-2.1.0.css">
+    <link rel="stylesheet" href="/UIComponents/layout/frontend/components/header/header.css">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/displayCount/count.css">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/slider/slider.css">
+    
+      <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/metricBox/metricBox.css">
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/plotly/plotly.css">
   
     <!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. -->
@@ -47,6 +51,11 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/codemirror.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/mode/javascript/javascript.min.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone-with-data.min.js"></script>
+
+    
     <script src="//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&libraries=drawing,visualization"></script>
   
     <!-- Login -->
@@ -111,6 +120,7 @@
     <!-- Components -->
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/speedometer/speedometer.js"></script>
@@ -139,11 +149,10 @@
     <script src="/UIComponents/dashboard/frontend/components/button/button.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/IFrame/IFrame.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/displayCount/displayCount.js"></script>
     
     <script src="/UIComponents/layout/frontend/components/module.js"></script>
     <script src="/UIComponents/layout/frontend/components/header/header.js"></script>
-    <link rel="stylesheet" href="/UIComponents/layout/frontend/components/header/header.css">
-    
     
     <script src="/UIComponents/dashboardBuilder/javascript/config/config.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
@@ -151,7 +160,6 @@
     <script src="/UIComponents/dashboard/frontend/components/plotly/angular-plotly.js"></script>
     <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/plotly/plotly.js"></script>
-    <script src="/UIComponents/dataService.js"></script>
     
 </head> 
   
@@ -167,22 +175,32 @@
           }
     }); 
     */
+    
+    Handlebars.registerHelper('if_eq', function(a, b, opts) {
+        if(a === b) // Or === depending on your needs
+            return opts.fn(this);
+        else
+            return opts.inverse(this);
+    });
     Handlebars.registerHelper('buildAttr', function(options, block) {
             var accum = '';
             for(option in options){
                 var temp = null;
                 if(option == 'on-format-data' || option == 'functions') continue;
+                if(option == 'info-window') continue;
                 if(typeof options[option] == 'object'){
                     temp = JSON.stringify(options[option]);
+                    console.log("option object "+option, temp)
                 } else {
                     temp = options[option]
+                    console.log("option not object "+option, temp)
                 }
                 accum += "\t\t\t\t\t\t\t\t\t\t" + option + "=" + "'" + temp +"'\n";
             }
 
             return accum;
         });
-     var myApp= angular.module("myApp", ['DashboardBuilder', 'Layout',"plotly",'Display','DataService']);
+     var myApp= angular.module("myApp", ['DashboardBuilder', 'Layout']);
      $.urlParam = function(name){
     		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     		if (results==null){
@@ -226,13 +244,10 @@
        })
    	  angular.module('myApp').controller('dashboardCtrl', function($scope, httpClient, $sce, $route, $routeParams) {
           var vm = this;
-          vm.onActionClicked=function(tag){
-              alert(tag);
-          }
           //vm.user = (atob(document.cookie.split("=")[1]).split(":")[1])
       });
     
-    
+    /**
     if(!$.urlParam('scriptrIdeRef')) { //if not in IDE open login
          var authorization  = $.scriptr.authorization(
         {
@@ -240,7 +255,7 @@
           loginPage: login.loginTarget
         }
       )
-    } 
+    } **/
 </script>
   
 <!--script src="/UIComponents/dashboardBuilder/javascript/dashboard.js"></script-->
