@@ -160,10 +160,8 @@ angular
                         
                     }
                     
-                    self.layout.width = 
-                        width: self.style["width"];
-                    self.layout.height = 
-                        width: self.style["height"];
+                    self.layout.width = self.style["width"];
+                    self.layout.height =  self.style["height"];
                 }
                 
                  this.runMetricTransformation = function() {
