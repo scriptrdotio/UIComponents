@@ -107,7 +107,7 @@ angular
                        	this.runMetricTransformation();
                     }
                     
-                    this.showLegend = this.showLegend ? this.showLegend : "true";
+                    this.showLegend = this.showLegend ? this.showLegend : "false";
                     
                     this.fontSize = this.fontSize ? this.fontSize : "12";
                     this.layout = {
@@ -160,45 +160,10 @@ angular
                         
                     }
                     
-                    self.layout = {
-                        title: '',
-                        font: {size: self.fontSize},
-						radialaxis: {ticksuffix: '%'},
-                        orientation: 270,
-                     /**   angularaxis: {ticks: "outside", ticksuffix: '%',showticklabels: true, ticklen: 1000, tickmode: "array", tickvals: ['N',
-          'NNE',
-          'NE',
-          'ENE',
-          'E',
-          'ESE',
-          'SE',
-          'SSE',
-          'S',
-          'SSW',
-          'SW',
-          'WSW',
-          'W',
-          'WNW',
-          'NW',
-          'NNW'], ticktext: ['N',
-          'NNE',
-          'NE',
-          'ENE',
-          'E',
-          'ESE',
-          'SE',
-          'SSE',
-          'S',
-          'SSW',
-          'SW',
-          'WSW',
-          'W',
-          'WNW',
-          'NW',
-          'NNW'], nticks: 32}, **/
-                        width: self.style["width"],
-                        height: self.style["height"]
-                    };
+                    self.layout.width = 
+                        width: self.style["width"];
+                    self.layout.height = 
+                        width: self.style["height"];
                 }
                 
                  this.runMetricTransformation = function() {
