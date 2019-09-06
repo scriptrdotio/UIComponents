@@ -46,7 +46,7 @@ angular
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, common, config, $uibModal, scriptrService, $route, $routeParams, $q, _) {
+    controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, common, config, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle) {
       
       this.wsClient = wsClient;
       var self = this;
@@ -149,7 +149,7 @@ angular
           maxRows: 100,
           columns: 5, // the width of the grid, in columns
           colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
-          rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+          rowHeight: '83', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
           margins: [10, 10], // the pixel distance between each widget
           defaultSizeX: 2, // the default width of a gridster item, if not specifed
           defaultSizeY: 1, // the default height of a gridster item, if not specified
@@ -160,7 +160,7 @@ angular
          // maxSizeX: null, // maximum column width of an item
          // minSizeY: 2, // minumum row height of an item
           //maxSizeY: 2, // maximum row height of an item
-            sparse: true,
+          sparse: true,
           resizable: {
             enabled: true,
             handle: '.my-class', // optional selector for resize handle
@@ -184,16 +184,19 @@ angular
             enabled: true, // whether dragging items is supported
             handle: '.my-class', // optional selector for resize handle
             start: function(event, uiWidget, $element) {
-                $(window).trigger('resize');
+                //$(window).trigger('resize');
+                setTimeout( function(){ $(window).trigger('resize'); window.dispatchEvent(new Event('resize'));},100);
                 //$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when drag is started,
             drag: function(event, uiWidget, $element) {
-                $(window).trigger('resize');
+               // $(window).trigger('resize');
+                setTimeout( function(){ $(window).trigger('resize'); window.dispatchEvent(new Event('resize'));},100);
                 //$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
             }, // optional callback fired when item is moved,
             stop: function(event, uiWidget, $element) {
                //console.log("End drag", event, uiWidget, $element);
-                $(window).trigger('resize');
+                //$(window).trigger('resize');
+                setTimeout( function(){ $(window).trigger('resize'); window.dispatchEvent(new Event('resize'));},100);
                  self.notifyDashboardChange();
               //$scope.$broadcast("drag_widget", {wdg: uiWidget, element: $element})
             } // optional callback fired when item is finished dragging
@@ -450,9 +453,14 @@ angular
           var schema =  angular.copy(wdg.schema);
          
           if(wdg.commonData){
-              form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs))
+              form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs));
               schema.properties = merge_options(wdg.schema.properties,common.schemaFields); 
           }  
+            
+            
+            form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
+            schema.properties = merge_options(wdg.schema.properties,boxStyle.schemaFields); 
+            form[0].selectedTabIndex = 0;
             
           var defApiParamsCount = 0;
           if(dmWdg["default-api-params"]){
@@ -572,6 +580,11 @@ angular
               form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs))
               schema.properties =  merge_options(wdg.schema.properties,common.schemaFields); 
           }
+          
+          
+          form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
+          schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
+          form[0].selectedTabIndex = 0;
   
           this.dashboard.widgets.push({
             "name": wdg.name,
@@ -631,10 +644,13 @@ angular
         // Then we check if the form is valid
         if ((form && form.$valid) || aclEvent) {
           var data = {};
-          data["items"] = angular.copy(this.dashboard.widgets);
+           
+          var tmp = angular.copy(this.dashboard.widgets);
+          data["items"] = _.map(tmp, function(object, index){return _.omit(object, ["form", "schema"] )});
+            
           data["urlParams"] = angular.copy(this.urlParams);
           data["token"] = scriptrService.getToken();
-         // console.log(JSON.stringify(data["items"]));
+
           self.transport.defaults.redirectTarget = this.model.scriptName;
           data["transport"] = angular.copy(this.transport.defaults) //MFE: Transport info needs to be retrieved from url or cookie
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
@@ -694,7 +710,31 @@ angular
            if(userConfig && matches) {
              var pluginContent = JSON.parse(matches[1]);
              if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "DashboardBuilder"){
-               this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
+               this.widgets = [];
+               var widgets = JSON.parse(pluginContent.metadata.plugindata).wdg;
+                _.map(widgets, function(wdg, index) {
+                  var widgetDefinition =  _.findWhere(self.widgetsConfig, {name: wdg.name});
+                   
+                  //MFE: Needs to merge with addWidget, we are repeating logic
+                  var form = angular.copy(widgetDefinition.form);
+                  var schema =  angular.copy(widgetDefinition.schema);
+                  var defaults = angular.copy(widgetDefinition.defaults);
+
+                  if(widgetDefinition.commonData){
+                      form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
+                      schema.properties =  merge_options(schema.properties,common.schemaFields); 
+                  }
+                   
+                   form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
+            	   schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
+                   form[0].selectedTabIndex = 0;
+                   
+                  wdg.form = angular.copy(form);
+                  wdg.schema =  angular.copy(schema);
+                  self.widgets.push(wdg);
+               });  
+               
+              // this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
                this.urlParams = JSON.parse(pluginContent.metadata.plugindata).urlParams;
                this.transport.defaults = JSON.parse(pluginContent.metadata.plugindata).settings;
                this.dashboard["widgets"] = this.widgets;
@@ -711,7 +751,8 @@ angular
            }
          } else {
            this.showAlert("danger", "Invalid dashboard script. Pass another script.")
-           console.error("Invalid dashboard script. Pass another script.")
+           console.error("Invalid dashboard script. Pass another script.");
+           return;
          }
        console.debug("resolve get script "+scriptName+ " :", data) 
      }
@@ -773,12 +814,14 @@ angular
       this.$onInit =  function() {
          $scope.$on('gridster-item-transition-end', function(item) { 
          	//console.log("gridster-item-transition end");
-         $(window).trigger('resize');
+         //$(window).trigger('resize');
+              setTimeout( function(){ $(window).trigger('resize'); window.dispatchEvent(new Event('resize'));},100);
         })
         
         $scope.$on('gridster-item-resized', function(item) {
 		 	//console.log("gridster-item-resized");
-         	$(window).trigger('resize');
+         	//$(window).trigger('resize');
+             setTimeout( function(){ $(window).trigger('resize'); window.dispatchEvent(new Event('resize'));},100);
         })
         var self = this;
         if(this.widget) {
@@ -787,7 +830,8 @@ angular
         
         $scope.$on("resize_widget", function(event, data) {
           	//console.log("Widget resize", event, data);
-          	$(window).trigger('resize');
+          //	$(window).trigger('resize');
+             setTimeout( function(){ $(window).trigger('resize'); window.dispatchEvent(new Event('resize'));},100);
             if(self.widget == data.element) {
                 if(self.widget.type == "scriptr-grid") {
                     var h = data.wdg.height();
@@ -852,6 +896,25 @@ angular
              widget["formatFunctionValue"] = value;
           //   delete widget.options["on-format-data"];
              self.chart.attr("on-format-data", ("$ctrl."+functionName))
+         } else if(key == "on-action-clicked" || key == "on-clicked") {
+             if(!this.parent.dashboard.counter){
+                this.parent.dashboard.counter = 0; 
+             }
+             if(!this.widget.functions) {
+                 widget["functions"] = [];
+             }
+             this.parent.dashboard.counter += 1;
+             var counter = this.parent.dashboard.counter;
+             var functionName = (widget.name+ (key.replace(/-/g, ''))+counter);
+             self[functionName] = new Function('data', value);
+             
+             widget["functions"].push({"name": functionName, "value": value, "attribute": key});
+             self.chart.attr(key, ("vm."+functionName));
+         } else if(key == "info-window") {
+             var infoElement = angular.element(document.createElement("info-window"));
+             infoElement.attr("id", "");
+             infoElement.attr("template", "");
+             infoElement.attr("max-width", "");
          } else {
              self.chart.attr(key, value);
          }
