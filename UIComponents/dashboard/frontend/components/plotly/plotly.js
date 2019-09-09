@@ -93,11 +93,11 @@ angular
                              self.style["height"] = $element.parent()[0].clientHeight;
                     		 self.style["width"] = $element.parent()[0].clientWidth;
                         } else {
-                            //self.style["height"] = $element.parent()[0].clientHeight;
+                            self.style["height"] = $element.parent()[0].clientHeight;
                             console.log($element.find(".plotly-chart-legend"));
                     	//self.style["width"] = $element.parent()[0].clientWidth - $element.find(".plotly-chart-legend").clientHeight - 10;
                         //Might happen due to timeout order
-                            if(self.style["width"] <= 0 ) {
+                            if(!self.style["width"] || self.style["width"] <= 0 ) {
                                 self.style["width"] = $element.parent()[0].clientWidth 
                             }
                         }
@@ -162,7 +162,7 @@ angular
                         self.timeout = false; 
                         $timeout(function() {
                             self.consumeData(self.retrievedData);
-                        }, 2000)
+                        }, 200)
                     }
                 }
                 
