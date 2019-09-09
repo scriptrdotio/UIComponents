@@ -46,7 +46,7 @@ angular
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, common, config, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle) {
+    controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, common, widgetsConfig, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle, dashboardConfig) {
       
       this.wsClient = wsClient;
       var self = this;
@@ -80,7 +80,7 @@ angular
         }  
         
         this.urlParams = [];
-        this.transport = angular.copy(config.transport);
+        this.transport = angular.copy(dashboardConfig.transport);
         this.frmGlobalOptions = {
           "destroyStrategy" : "remove",
           "formDefaults": {"feedback": true}
@@ -88,8 +88,8 @@ angular
         
         this.initializeDashboard();
         
-        this.schema =  angular.copy(config.script.schema)
-        this.form =   angular.copy(config.script.form)
+        this.schema =  angular.copy(dashboardConfig.script.schema)
+        this.form =   angular.copy(dashboardConfig.script.form)
         this.model = {}
         
         this.isInIde =  ($routeParams.scriptrIdeRef) ? true :  false;
@@ -219,7 +219,7 @@ angular
         
 
         
-        this.widgetsConfig = config.widgets; 
+        this.widgetsConfig = widgetsConfig.widgets; 
         this.widgetsCommon = common;
         this.dataLoaded = true;
         
@@ -442,11 +442,11 @@ angular
         
         if(branch[itemLabel] && branch[itemLabel].widget && branch[itemLabel].widget.type) {
           var dmWdg = branch[itemLabel].widget;
-          var wdg = _.findWhere(config.widgets, {"name": dmWdg.type});
+          var wdg = _.findWhere(widgetsConfig.widgets, {"name": dmWdg.type});
           console.log("Widget is", wdg);
           
           if(!wdg) {
-              wdg = _.findWhere(config.widgets, {"name": config.defaultWidget.name});
+              wdg = _.findWhere(widgetsConfig.widgets, {"name": widgetsConfig.defaultWidget.name});
           }
           
           var form = angular.copy(wdg.form);
