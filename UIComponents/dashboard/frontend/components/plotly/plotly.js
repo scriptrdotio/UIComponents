@@ -12,7 +12,7 @@ angular
 
                 "api" : "@",
 
-                "retrievedData" : "<?",
+                "data" : "<?",
                 
                 "customRanges": "<?",
                 
@@ -50,10 +50,10 @@ angular
                     
                     this.plotCustomRanges = (this.customRanges && this.customRanges.length > 0) ? this.customRanges :  [{"color": "#00476b", "lo": 0, "hi": 2}, {"color": "#005487", "lo": 2, "hi": 4}, {"color": "#006699", "lo": 4, "hi": 6}, {"color": "#0082b5", "lo": 6, "hi": 8}, {"color": "#0294c1", "lo": 8, "hi": 10}, {"color": "#06a9ce", "lo": 10, "hi": 20}];
                     
-                    this.retrievedData = this.retrievedData ? this.retrievedData : [];
+                    this.data = this.data ? this.data : [];
                     
-                    this.staticData = angular.copy(this.retrievedData);
-                    this.data = angular.copy(this.retrievedData);
+                    this.staticData = angular.copy(this.data);
+                    this.transformedData = angular.copy(this.data);
                     
                     this.showLegend = this.showLegend ? this.showLegend : "true";
                     
@@ -153,15 +153,15 @@ angular
                     }
                     self.timeoutId = $timeout(self.resize, 100);
                     $scope.$watch(function( $scope ) {
-                        return $scope.$ctrl.retrievedData
+                        return $scope.$ctrl.data
                     },function(newData){
-                        self.retrievedData = newData;
+                        self.data = newData;
                     });
                     
-                    if(this.retrievedData) {
+                    if(this.data) {
                         self.timeout = false; 
                         $timeout(function() {
-                            self.consumeData(self.retrievedData);
+                            self.consumeData(self.data);
                         }, 200)
                     }
                 }
@@ -198,8 +198,8 @@ angular
 
                 this.consumeData = function(data, response) {
                     console.log("consumeData called",data)
-                    if(_.isEqual(this.retrievedData.data, this.staticData))
-                        this.retrievedData = [];
+                    if(_.isEqual(this.data.data, this.staticData))
+                        this.data = [];
                     
                     if(typeof this.onFormatData() == "function"){
                         data = this.onFormatData()(data);
@@ -208,26 +208,26 @@ angular
                     if(data && data.data && data.data.length > 0){
                         if(this.fetchDataInterval && this.fetchDataInterval > 0 && this.retrievedData && this.retrievedData.length > 0 && this.delta) {
                             for(var i = 0; i < data.data.length; i++){
-                               this.retrievedData[i]["speeds"] = this.retrievedData[i]["speeds"].concat(data.data[i]["speeds"]); 
-                               this.retrievedData[i]["dates"] = this.retrievedData[i]["dates"].concat(data.data[i]["dates"]); 
+                               this.data[i]["speeds"] = this.data[i]["speeds"].concat(data.data[i]["speeds"]); 
+                               this.data[i]["dates"] = this.data[i]["dates"].concat(data.data[i]["dates"]); 
                             }
                         } else {
-                            this.retrievedData = data.data;
+                            this.data = data.data;
                         }
                         if(data.latestDate)
                         	this.latestRetrievedDataDate = data.latestDate
                         this.buildWindRoseData();
                     }else{
-                        if((this.api && data.length == 0) && (!this.retrievedData || (this.retrievedData && this.retrievedData.length == 0))) {
-                            this.retrievedData = [];
+                        if((this.api && data.length == 0) && (!this.data || (this.data && this.data.length == 0))) {
+                            this.data = [];
                             this.noResults = true;
                         }
                     }
-                    console.log(this.retrievedData)
+                    console.log(this.data)
                 }
                 
                 this.buildWindRoseData = function(){
-                    var speedsArrays = _.pluck(self.retrievedData, "speeds");
+                    var speedsArrays = _.pluck(self.data, "speeds");
                     self.totalSpeeds = 0;
                     for(var i = 0; i < speedsArrays.length; i++){
                         self.totalSpeeds += speedsArrays[i].length;
@@ -246,9 +246,9 @@ angular
                     
                     self.speedRangeDirectionObj[">=" + self.maxRange] = [];
                     
-                    for(var i = 0; self.retrievedData && i < self.retrievedData.length; i++){
-                        var direction = self.retrievedData[i].direction;
-                        var speeds = self.retrievedData[i].speeds;
+                    for(var i = 0; self.data && i < self.data.length; i++){
+                        var direction = self.data[i].direction;
+                        var speeds = self.data[i].speeds;
                         
                         //get percentage of speeds falling in each range for the current direction
                         for(var j = 0; j < self.plotCustomRanges.length; j++){
@@ -287,7 +287,7 @@ angular
                         }
                     }
                     
-                    self.data = [];
+                    self.transformedData = [];
                     keys = Object.keys(self.speedRangeDirectionObj);
                     for(var i = keys.length - 1; i >= 0; i--){
                         var percentages = _.pluck(self.speedRangeDirectionObj[keys[i]], "percentage");
@@ -301,7 +301,7 @@ angular
                             "type": "area",
                             "showlegend": false//self.showLegend ? (self.showLegend == "true") : true
                         }
-                        self.data.push(tmp);
+                        self.transformedData.push(tmp);
                     }
                 }
             }
