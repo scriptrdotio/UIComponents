@@ -629,6 +629,16 @@ angular
                   	self.wsClient.updateSubscriptionChannel(transportModel.subscribeChannel);
                 } 
                 self.transport.defaults = angular.copy(transportModel);
+                  
+                /**MFE: temporary here, transport need to be renamed to dashboardConfig or dashboardSettings **/
+                var template = document.querySelector('#handlebar-customcss-template').innerText;
+          		var compiledCss = Handlebars.compile(template)(transportModel.style); 
+                
+                var styleElement = angular.element(document.createElement("style"));
+			    styleElement.append(document.createTextNode(compiledCss));
+				styleElement.appendTo(angular.element(document.getElementsByTagName('head')));
+                  
+                  
                 self.notifyDashboardChange();
               }
             }, function () {

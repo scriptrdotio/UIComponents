@@ -1,0 +1,7 @@
+<script type='text/x-handlebars-template' id="handlebar-customcss-template">
+.light .box {
+      {{#if box.background-color }}
+      	background-color: {{box.background-color}}
+      {{/if}}
+}
+</script>
