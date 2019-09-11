@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/button/button.css">
 
 		<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script> 
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-mocks.js"></script>
@@ -18,25 +18,39 @@
         
         <script src="/UIComponents/httpProvider.js"></script>
         <script src="/UIComponents/wsProvider.js"></script>
+        <script src="/UIComponents/dataService.js"></script>
     	<script src="/UIComponents/config/scriptrTransport.js"></script>
     </head>  
 
     <script>
-        angular.module('exampleApp', ['HttpClient', "WsClient", "Button"]);
+        angular.module('exampleApp', ['HttpClient', "WsClient", "Button","DataService"]);
         angular.module('exampleApp').config(httpsConfig);
         angular.module('exampleApp').config(wssConfig);
         angular.module('exampleApp').controller('exampleCtrl', function () {
             var vm = this;
+            vm.params={
+                something:"SOME_THING"
+            }
+            vm.onAPISuccess=function(data){
+                console.log("success ", data._apiResult)
+            }
+            vm.onAPIFailure=function(data){
+                console.log("failure ", data._apiResult)
+            }
         });
     </script>
 
     <body>
         <div ng-controller="exampleCtrl as vm">
             <scriptr-button
-                            type="btn-danger"
+                            type="btn btn-danger"
                             is-disabled="false"
                             label="Test"
-                            api="UIComponents/dashboard/frontend/examples/demo/script"
+                            api="UIComponents/dashboard/frontend/examples/button/demoScript"
+                            transport="https"
+                            api-params="vm.params"
+                            on-success="vm.onAPISuccess"
+                             on-failure="vm.onAPIFailure"
                             >
             </scriptr-button>
         </div>
