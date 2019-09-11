@@ -18,8 +18,6 @@ angular
 	            var _socketUrl = null;
 	            var _socketSession = null;
 	            
-	            var _reconnect = true;
-
 	            // Keep all pending requests here until they get responses
 	            var callbacks = {};
 	            // Create a unique callback ID to map requests to responses
@@ -36,9 +34,6 @@ angular
 		            _baseUrl = textString;
 	            };
 	            
-	            this.setReconnect = function(textBoolean) {
-	            	_reconnect = textBoolean;
-	            };
 
 	            this.setPublishChannel = function(textString) {
 		            _publishChannel = textString;
@@ -108,6 +103,7 @@ angular
 		                  var ready = $q.defer();
 		                  var error = $q.defer();
 		                  var close = $q.defer();
+                          var invalidAuthentication = $q.defer();
 
 		                  // On open of the socket connection, if subscribeChannel available subscribe to read messages received on this channel
 		                  dataStream.onOpen(function() {
@@ -144,12 +140,13 @@ angular
 
 		                  dataStream.onClose(function(e) {
 			                  console.log("Socket Closed", e);
-			                  close.resolve(e)
-			                  console.log("Trying to reconnect closed socket.")
-                              //Try to re-open socket
-			                  if(_reconnect) {
-			                  	dataStream.reconnect(); // TODO: Make it incremental timed retiral based on status code
-			                  }
+			                  close.resolve(e);
+                              if(e.code == "4000" || e.code == "4010") {
+                                 invalidAuthentication.resolve(e);
+                              } else {
+                                   console.log("Trying to reconnect closed socket.")
+                                   dataStream.reconnect(); // TODO: Make it incremental timed retiral based on status code
+                              }
 		                  });
 
 		                  dataStream.onError(function(e) {
@@ -384,8 +381,8 @@ angular
 
 		                     onReady : ready.promise,
 		                     onError : error.promise,
-		                     onClose : close.promise
-
+		                     onClose : close.promise,
+                             onInvalidAuthentication: invalidAuthentication.promise
 		                  };
 
 		                  return methods;
