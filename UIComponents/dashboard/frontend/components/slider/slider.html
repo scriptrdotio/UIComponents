@@ -1,13 +1,13 @@
-<div ng-if="$ctrl.max" ng-style="$ctrl.style">
-    <rzslider 
+<div ng-if="$ctrl.max" ng-style="$ctrl.style" style="display: none;">
+    <rzslider  class="{{$ctrl.theme}}"
               rz-slider-model="$ctrl.min"
               rz-slider-high="$ctrl.max"  
               rz-slider-options="$ctrl.options"  
               >
     </rzslider>
 </div>
-<div ng-if="!$ctrl.max" ng-style="$ctrl.style">    
-    <rzslider 
+<div ng-if="!$ctrl.max" ng-style="$ctrl.style" style="display: none;">    
+    <rzslider  class="{{$ctrl.theme}}"
               rz-slider-model="$ctrl.min"
               rz-slider-options="$ctrl.options"  
               >

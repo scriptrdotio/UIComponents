@@ -1,0 +1,27 @@
+<div class="metric-box" ng-style="{ 'border' : '{{$ctrl.borderSize}}px solid {{$ctrl.borderColor}}','background' : '{{$ctrl.backgroundColor}}' }" >
+	<div ng-if="$ctrl.disabled" id="disabledOverlay"></div>
+	<div class="metric-box-head">
+		<div class="metric-box-action" >
+			<img ng-if='$ctrl.actionIcon!=""' ng-click="actionClicked()" alt="EI" src="{{$ctrl.actionIcon}}" />
+		</div>
+		<div class="metric-box-label" ng-style="{	'font-weight' : '{{$ctrl.labelFontWeight}}', 'font-family' : '{{$ctrl.labelFontFamily}}', 'color' : '{{$ctrl.labelTextColor}}', 'text-align' : '{{$ctrl.labelTextAlignment}}' }">
+				{{$ctrl.label}}
+		</div>
+	</div>
+
+	<div class="metric-box-body">
+		<div class="metric-box-value-unit">
+			<div class="metric-box-value" ng-style="{	'font-weight' : '{{$ctrl.valueFontWeight}}', 'font-family' : '{{$ctrl.valueFontFamily}}', 'color' : '{{$ctrl.valueTextColor}}', 'text-align' : '{{$ctrl.valueTextAlignment}}' }">
+				<div>{{$ctrl.value}}</div>
+
+			</div>
+			<div class="metric-box-unit" ng-style="{ 'font-weight' : '{{$ctrl.unitFontWeight}}', 'font-family' : '{{$ctrl.unitFontFamily}}', 'color' : '{{$ctrl.unitTextColor}}', 'text-align' : '{{$ctrl.unitTextAlignment}}' }">
+					<div>{{$ctrl.unit}}</div>
+			</div>
+		</div>
+
+		<div class="metric-box-icon">
+			 <img alt="EI" src="{{$ctrl.icon}}" />
+		</div>
+	</div>
+</div>

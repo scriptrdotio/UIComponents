@@ -10,6 +10,8 @@ angular
 
                 "onLoad" : "&onLoad",
                    
+                "theme": "@",
+                   
                 "id": "@",   
 
                 "min" : "<?",
@@ -100,6 +102,7 @@ angular
                        
                        this.min = (this.min) ? this.min : null;
                        this.max = (this.max) ? this.max : null;
+                       this.theme = (this.theme) ? this.theme : "";
                        
                        this.options = {}
                        
@@ -204,18 +207,17 @@ angular
                    }
                    
                    self.resize = function(){
-                       if(self.enableResize){
-                           self.timeoutId = null;
-                           self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
-                       }
+                        self.timeoutId = null;
+                        self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($($element.find(".rzslider").parent()).innerHeight()/2);
+                        $($element).children()[0].style.display = ""
                    }
                   
                   this.$postLink = function() {
-                       $timeout(self.resize,100);
+                       $timeout(self.resize,700);
                        if (self.timeoutId != null) {
                        	$timeout.cancel(self.timeoutId);
                      	}
-                    	self.timeoutId = $timeout(self.resize, 100);
+                    	self.timeoutId = $timeout(self.resize, 700);
                   }    
 
                             

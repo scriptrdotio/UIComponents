@@ -53,11 +53,15 @@ angular
         
         "apiParams" : "<?",
         
-        "onFormatData" : "&"
+        "onFormatData" : "&",
+          
+        "fetchDataInterval": "@",
+
+        "useWindowParams": "@"
         
       },
       templateUrl: '/UIComponents/dashboard/frontend/components/speedometer/speedometer.html',
-      controller: function(httpClient, wsClient, $element, $window, $scope, $compile, $timeout) {
+      controller: function(httpClient, wsClient, $element, $window, $scope, $compile, $timeout, $interval, dataService) {
         
          var self = this;
 
@@ -105,6 +109,7 @@ angular
              
              this.transport = (this.transport) ? this.transport : "wss";
              this.msgTag = (this.msgTag) ? this.msgTag : null;
+             this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
          }
          
          
@@ -155,6 +160,10 @@ angular
             if(self.msgTag){
                wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
             }
+            
+            if(self.refreshTimer){
+                  $interval.cancel( self.refreshTimer );
+             }
             console.log("destory speedo")
         }
         
@@ -168,41 +177,15 @@ angular
 
         var initDataService = function(transport) {
             console.log("Gauge Size", self.speedoConfig.gaugeRadius)
-            if (transport == "wss") {
-              	wsClient.onReady.then(function() {
-                // Subscribe to socket messages with id chart
-                if(self.msgTag){
-                    wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
+            dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+                
+                if(self.fetchDataInterval && !self.refreshTimer) {
+                    //Assuming this is success
+                    self.refreshTimer = $interval(
+                        function(){
+                            initDataService(self.transport)
+                        }, self.fetchDataInterval * 1000);
                 }
-                if(self.api) {
-                  wsClient.call(self.api, self.apiParams, self.msgTag)
-                    .then(
-                    function(data, response) {
-                    self.consumeData(data)
-                  },
-                   function(err) {
-                    console.log( "reject published promise", err);
-                    self.consumeData();
-                  });
-                }
-
-              });
-            } else {
-              if (transport == "https" && self.api) {
-                httpClient
-                  .get(self.api, self.apiParams)
-                  .then(
-                  function(data, response) {
-                    self.consumeData(data)
-                  },
-                  function(err) {
-                    console
-                      .log(
-                      "reject published promise",
-                      err);
-                  });
-              }
-            }
           }
 
           this.consumeData = function(data, response) {

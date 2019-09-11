@@ -1,0 +1,60 @@
+<html ng-app="myApp">
+<head>
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script
+    <!-- Adding Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+  
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+
+    <script src="/UIComponents/dashboard/frontend/components/metricBox/metricBox.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/metricBox/metricBox.css">
+
+</head> 
+  
+<script>
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "DataService", "Display"])
+    angular.module('myApp').config(wssConfig);
+  	angular.module('myApp').config(httpsConfig);
+  
+    angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+        vm.metricBoxClicked=function(tag){
+            alert(tag);
+        }
+        vm.value=99;
+          
+      });
+</script>
+
+<body>  
+  <div ng-controller="testCtrl as vm" >
+    	    <scriptr-metricbox 
+              transport="https" 
+             	value="vm.value"
+                                   disabled="!vm.value"
+                            label="Battery"
+                            unit="%"
+                                   icon="https://img.icons8.com/material/24/000000/many-batteries.png"
+                                   action-icon="https://img.icons8.com/material/96/000000/circled-play--v1.png"
+                                   on-action-clicked="vm.metricBoxClicked"
+                                   tag="battery"
+                                   
+                               api="UIComponents/dashboard/frontend/examples/metricBox/getCount"
+                            >
+        </scriptr-metricbox>
+  </div>
+
+</body>  
+   
+</html>

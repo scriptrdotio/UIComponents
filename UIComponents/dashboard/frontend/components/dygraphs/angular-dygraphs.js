@@ -38,9 +38,10 @@ angular.module("angular-dygraphs", [
                     mainDiv.appendChild(div);
                     
                     chartDiv.classList.add("with-legend");
+                    scope.options.labelsDiv = "legend_"+scope.$id;
                 }else {
                     //var legendDiv = document.getElementById("legend_" + scope.$id);
-                    $("#legend_" + scope.$id).remove();
+                    $("#legend_" + scope.$id).hide();
                 }
                 
                 scope.options.labelsSeparateLines = true;
@@ -58,9 +59,9 @@ angular.module("angular-dygraphs", [
                 
                 delete scope.options.legendPosition;
                 
-                scope.options.labelsDiv = "legend_"+scope.$id;
+                
 
-                scope.options.interactionModel = Dygraph.nonInteractiveModel;   
+                //scope.options.interactionModel = Dygraph.nonInteractiveModel;   
 
                 var graph = new Dygraph(chartDiv, scope.data, scope.options);
                // setTimeout( function(){ 
@@ -83,9 +84,9 @@ angular.module("angular-dygraphs", [
                     //resize();
                 }, true);
                 
-                scope.zoomCallback = function(){
+               /** scope.zoomCallback = function(){
                     return;
-                };
+                };**/
 				scope.underlayCallback = function(canvas, area, g){
                     //fill the goals colors
                     var goals = angular.copy(scope.goals);

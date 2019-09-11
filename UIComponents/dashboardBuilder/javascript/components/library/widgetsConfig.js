@@ -1,6 +1,45 @@
 angular
       .module('DashboardBuilder')
       .constant(
+            "boxStyle",
+            {
+                "formTab" : {
+                  title : "Box Properties",
+                  items : ["boxLabel",
+                       {
+                           type : "radios-inline",
+                           key : "boxBorder",
+                           titleMap : [ {
+                               value : "true",
+                               name : "True"
+                           }, {
+                               value : "false",
+                               name : "False"
+                           } ]
+                       }
+                  ]
+                },
+                
+                "schemaFields" : {
+                    "boxLabel" : {
+                        "title" : "Box Label",
+                        "type" : "string",
+                        "description" : "Define your widget box title.",
+                        "maxLength" : 40
+                    },
+                    "boxBorder" : {
+                        "title" : "Box Border",
+                        "type" : "string",
+                        "default": "true",
+                        "description" : "Define your widget box border."
+                    }
+                }
+                
+                     
+            });
+angular
+      .module('DashboardBuilder')
+      .constant(
             "common",
             {
                "formTab" : {
@@ -12,7 +51,17 @@ angular
                            "items" : [ {
                               "type" : "section",
                               "htmlClass" : "col-xs-6",
-                              "items" : [ "transport" ]
+                              "items" : [ {"key": "transport",
+                                            "placeholder" : " ",
+                                             "type" : 'strapselect',
+                                             "titleMap" : [{
+                                                "value" : "wss",
+                                                "name" : "wss"
+                                             }, {
+                                                "value" : "https",
+                                                "name" : "https"
+                                       } ]
+                                   } ]
                            }, {
                               "type" : "section",
                               "htmlClass" : "col-xs-6",
@@ -21,7 +70,13 @@ angular
                                  "condition" : "model.transport=='wss'"
                               }, {
                                  "key" : "http-method",
-                                 "condition" : "model.transport=='https'"
+                                 "condition" : "model.transport=='https'",
+                                 "type" : 'strapselect',
+                                 "placeholder" : " ",
+                                 "titleMap" : [{
+                                    "value" : "GET",
+                                    "name" : "GET"
+                                 }]
                               } ]
                            } ]
                         },
@@ -114,26 +169,11 @@ angular
                      "type" : "string",
                      "description" : "Method to be used when calling the scriptr api over https. Default: GET.",
                      "default" : "GET",
-                     "format" : 'uiselect',
-                     "placeholder" : " ",
-                     "items" : [ {
-                        "value" : "GET",
-                        "label" : "GET"
-                     }]
                   },
                   "transport" : {
                      "title" : "Transport",
                      "type" : "string",
-                     "description" : "Protocol used to call the  scriptr api. Use wss for real time communication whenever your widget needs to update its data live by consuming messages published from scriptr over the subscribe channel defined in settings.",
-                     "format" : 'uiselect',
-                     "placeholder" : " ",
-                     "items" : [ {
-                        "value" : "wss",
-                        "label" : "wss"
-                     }, {
-                        "value" : "https",
-                        "label" : "https"
-                     } ]
+                     "description" : "Protocol used to call the  scriptr api. Use wss for real time communication whenever your widget needs to update its data live by consuming messages published from scriptr over the subscribe channel defined in settings."
                   },
                   "msg-tag" : {
                      "title" : "Message tag",
@@ -153,59 +193,14 @@ angular
 angular
       .module('DashboardBuilder')
       .constant(
-            "config",
-            {
-               script : {
-                  "form" : [ {
-                     "key" : "scriptName",
-                     "notitle" : true,
-                     "placeholder" : "Script name"
-                  } ],
-                  "schema" : {
-                     "type" : "object",
-                     "title" : "Schema",
-                     "properties" : {
-	                     "scriptName" : {
-	                        "type" : "string",
-	                        "fieldHtmlClass" : "script-name-input"
-	                     }
-                     },
-                     "required" : [ "scriptName" ]
-                  }
-               },
-               transport : {
-                  "label" : "Transport configuration",
-                  "defaults" : {
-                     "publishChannel" : "requestChannel",
-                     "subscribeChannel" : "responseChannel"
-                  },
-                  "form" : [ "*" ],
-                  "schema" : {
-                     "type" : "object",
-                     "title" : "Schema",
-                     "properties" : {
-                        "publishChannel" : {
-                           "title" : "Publish channel",
-                           "type" : "string",
-                           "description" : "Widgets use the publish channel to publish messages that will be distributed to its subscribers."
-                        },
-                        "subscribeChannel" : {
-                           "title" : "Subscribe channel",
-                           "type" : "string",
-                           "description" : "Widgets use the subscribe channel to consume the messages published over that channel as a data source."
-                        }
-                     },
-                     "required" : [ "token", "baseUrl", "publishChannel",
-                           "subscribeChannel" ]
-                  }
-               },
-               defaultWidget : {
-               	"name" : "displaybox"
-               },
-               widgets : [
+            "widgetsConfig",
+    		(function() {
+               return    {
+               "defaultWidget" : {
+                	"name" : "displaybox"
+            	},
+               "widgets" : [
                	   {
-
-                        
                         "name" : "line",
                         "label" : "Line Chart",
                         "class" : "scriptr-dygraphs",
@@ -217,9 +212,6 @@ angular
                             "data-type": "raw",
                             "data-format": "dygraphs",
                             "schema-for": "line",
-                            "aggregation-range": "10",
-                            "fetch-from-date-param": "from_date",
-                            "fetch-to-date-param": "to_date",
                             "display-metric-param": "display_metric",
                             "fetch-data-interval": 300, //in seconds
                             "boxLabel" : "Line Chart",
@@ -228,138 +220,25 @@ angular
                             "data" : "[[1519312895840,10,26,16,20],[1519312896840,11,25,16,20],[1519312897840,10,26,16,20],[1519312898840,11,25,15,20],[1519312899840,10,26,16,21]]",
                             "grid-text-family" : "Source Sans Pro",
                             "x1-axis-label-font-size": 12,
-                            "x1-axis-label-width": 60,
-                            "y2-axis-label-width": 95,
-                            "y-axis-label-width": 95,
+                            "x1-axis-label-width": 40,
+                            "y2-axis-label-width": 40,
+                            "y-axis-label-width": 40,
                             "y2-axis-label-font-size": 12,
                             "y-axis-label-font-size": 12,
-                            "independent-ticks": "independent"
+                            "independent-ticks": "independent",
+                            "colors-mapping": [{"labels":"Y1","colors":"##CC546","axisSelection":"y"},{"labels":"Y2","colors":"#FCC717","axisSelection":"y"},{"labels":"Y3","colors":"#38B9D6","axisSelection":"y"},{"labels":"Y4","colors":"#1DBC68","axisSelection":"y"}]
+
                         },
                         "box" : {
                            sizeX : 3,
-                           sizeY : 3,
-                           minSizeX : 2,
+                           sizeY : 4,
+                           minSizeX : 1,
                            minSizeY : 2
                         },
-                        "imgSrc" : "line-chart.svg",
+                        "imgSrc" : "//s3.amazonaws.com/scriptr-cdn/uicomponents/dashboard-builder/images/dygraphs-line.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
-                               {
-                                  title : "Data",
-                                  items : [
-                                         {
-                                             "type" : "section",
-                                             "htmlClass" : "col-xs-12",
-                                             "items" : [{
-                                                 key: "stream",
-                                                 type: "uiselectmultiple",
-                                                 placeholder: "",
-                                                 options: {
-                                                     closeOnSelect: false,
-                                                     groupBy: "dataStream",
-                                                     multiple: "true",
-                                                     callback: "multiSelectCallBack",
-                                                     widgetName:"line",
-                                                     limit: 20/**,
-                                                     limitTo: 50**/
-                                                 },
-                                                 onChange: function(modelValue, form, model) {
-                                                     var defaultColors = [ "#1B1B1B", "#2243B6", "#299617", "#FF3855", "#FFDB00", "#AF6E4D", "#5946B2", "#FF9966", "#FF007C", "#BFAFB2", "#5DADEC", "#A7F432", "#FA5B3D", "#A83731", "#9C51B6", "#EE34D2", "#0A7E8C", "#FFD12A", "#76D7EA", "#84DE02"];
-                                                     
-                                                     var oldColorsMapping = {};
-                                                     var colorsMapping = model["colors-mapping"];
-                                                     for(var c=0; c<colorsMapping.length; c++){
-                                                         if(colorsMapping[c].ykeys)
-                                                         	oldColorsMapping[colorsMapping[c].ykeys] = {"labels": colorsMapping[c].labels, "colors": colorsMapping[c].colors, "axisSelection": colorsMapping[c].axisSelection, "unit": colorsMapping[c].unit, "isScaled": colorsMapping[c].isScaled};
-                                                     }
-                                                     var newMapping = [];
-                                                     for (var i=0; i<modelValue.length; i++){
-                                                         if(oldColorsMapping[modelValue[i].value]){
-                                                              newMapping.push({"ykeys": modelValue[i].value, "labels": oldColorsMapping[modelValue[i].value]["labels"], "colors": oldColorsMapping[modelValue[i].value]["colors"], "axisSelection": oldColorsMapping[modelValue[i].value]["axisSelection"], "unit": oldColorsMapping[modelValue[i].value]["unit"], "isScaled": oldColorsMapping[modelValue[i].value]["isScaled"]});
-                                                         }else{
-                                                             for(var t=0; t<defaultColors.length; t++){
-                                                                var selectedColorFound = false;
-                                                                var currentColor = defaultColors[t];
-                                                                for(var h=0; h<newMapping.length; h++){
-                                                                    var newMappingColor = newMapping[h].colors;
-                                                                    if(newMappingColor == currentColor){
-                                                                        selectedColorFound = true;
-                                                                        break;
-                                                                    }
-                                                                }
-                                                                if(!selectedColorFound){
-                                                                    break;
-                                                                }
-                                                            }
-                                                             var selectedStreamValue = _.findWhere(_.findWhere(JSON.parse(window.localStorage["dataStream"]), {logger_sn: modelValue[i]["value"].split("-")[0]}).sensors,{"selectedStreamValue": modelValue[i]["value"]});
-                                                             /*var currentUnit = "";
-                                                             if(model["display-metric-value"]){
-                                                                 currentUnit = selectedStreamValue["selectedStreamUnits"][model["display-metric-value"]];
-                                                             }*/
-                                                         	newMapping.push({"ykeys": modelValue[i].value, "labels": modelValue[i].name, "colors": !selectedColorFound ? defaultColors[t] : defaultColors[0], "axisSelection": "y", "unit": selectedStreamValue["selectedStreamUnits"], "isScaled":selectedStreamValue["is_scaled"]});    
-                                                         }
-                                                     }
-                                                     if(newMapping.length == 0)
-                                                         newMapping = [{}];
-                                                     model["colors-mapping"] = newMapping;
-                                                     var legendMappingValue = '["x",';
-                                                     var legendLabelsValue = '["X",';
-                                                     for (var i=0; i<modelValue.length; i++){
-                                                         legendMappingValue += "'y'" + ((i < modelValue.length - 1)?' , ':'');
-                                                         legendLabelsValue += '"' + (modelValue[i].name).replace(/'/g, "\\\'").replace(/"/g, "\\\"").replace(/=/g, "\\\=").replace(/\+/g, "\\\+").replace(/~/g, "\\\~") + '"' + ((i < modelValue.length - 1)?' , ':'');
-                                                     }
-                                                     model["legend-labels"] = legendLabelsValue + "]";
-                                                     model["legend-Mapping"] = legendMappingValue + "]";
-                                                     
-                                                     //Remove static data
-                                                     if(modelValue.length > 0) {
-                                                        delete model["data"];
-                                                     }
-                                                     
-                                                     
-                                                     if(modelValue && modelValue.length > 0) {
-                                                         for(var t=0; t < modelValue.length; t++){
-                                                             var selectedStreamValue = _.findWhere(_.findWhere(JSON.parse(window.localStorage["dataStream"]), {logger_sn: modelValue[t]["value"].split("-")[0]}).sensors,{"selectedStreamValue": modelValue[t]["value"]});
-                                                             model["available-units"] = {
-                                                                 "si" : selectedStreamValue["si_unit"],
-                                                                 "us":  selectedStreamValue["us_unit"],
-                                                                 "scaled": selectedStreamValue["scaled_unit"]
-                                                             }
-                                                             if(selectedStreamValue["is_scaled"])
-                                                                 model["is-scaled"] = "true";
-                                                             else
-                                                                 model["is-scaled"] = "false";
-                                                             break;
-                                                         }
-                                                 	 } 
-                                                 }
-                                             }]
-                                         },
-                                      {
-                                          "type" : "section",
-                                          "htmlClass" : "col-xs-12",
-                                          "items" : [ {
-                                              "key":"aggregation-range", 
-                                              "type": "strapselect",
-                                              "placeholder" : "Select the aggregation range for the streams data you are charting.",
-                                              "titleMap" : [ {
-                                                  "value" : "10",
-                                                  "name" : "10 minutes"
-                                              },{
-                                                  "value" : "30",
-                                                  "name" : "30 minutes"
-                                              },{
-                                                  "value" : "60",
-                                                  "name" : "1 hour"
-                                              },{
-                                                  "value" : "1440",
-                                                  "name" : "1 day"
-                                              }]
-                                          } ]
-                                      }
-                                  ]
-                               },
                                {
                                     title : "X",
                                     items : [ {
@@ -368,7 +247,7 @@ angular
                                        "items" : [ {
                                           "type" : "section",
                                           "htmlClass" : "col-xs-12",
-                                          "items" : [ /*{
+                                          "items" : [ {
                                              type : "radios-inline",
                                              key : "draw-x1-axis",
                                              titleMap : [ {
@@ -378,7 +257,7 @@ angular
                                                 value : "false",
                                                 name : "False"
                                              } ]
-                                          },*/ "x1-axis-label", "x1-axis-label-font-size" ] 
+                                          }, "x1-axis-label", "x1-axis-label-font-size" ] 
                                        },
                                        {
                                           "type" : "section",
@@ -396,8 +275,8 @@ angular
                                                      {
                                                       "key":"x1-axis-line-width", 
                                                       "step" : "1"
-                                                     }/*, 
-                                                     "x1-axis-label-width"*/ ] 
+                                                     }, 
+                                                     "x1-axis-label-width" ] 
                                        }           
                                       ]
                                     } ]
@@ -410,7 +289,7 @@ angular
                                        "items" : [ {
                                           "type" : "section",
                                           "htmlClass" : "col-xs-12",
-                                          "items" : [ /*{
+                                          "items" : [ {
                                              type : "radios-inline",
                                              key : "draw-y-axis",
                                              titleMap : [ {
@@ -420,7 +299,7 @@ angular
                                                 value : "false",
                                                 name : "False"
                                              } ]
-                                          },*/ "y-axis-label","y-axis-label-font-size"/*, "y-axis-label-width"*/
+                                          }, "y-axis-label","y-axis-label-font-size", "y-axis-label-width"
                                          ]
                                        },
                                                  {
@@ -452,7 +331,7 @@ angular
                                                 name : "No"
                                              } ]
                                           },
-                                          /*{
+                                          {
                                              type : "radios-inline",
                                              key : "y-axis-labels-kmb",
                                              titleMap : [ {
@@ -462,7 +341,7 @@ angular
                                                 value : "false",
                                                 name : "False"
                                              } ]
-                                          }*/ ]
+                                          } ]
                                        }]
                                     }
                                    ]
@@ -485,7 +364,7 @@ angular
                                                 value : "false",
                                                 name : "No"
                                              } ]
-                                          }, "y2-axis-label", "y2-axis-label-font-size"/*, "y2-axis-label-width"*/
+                                          }, "y2-axis-label", "y2-axis-label-font-size", "y2-axis-label-width"
                                           ]
                                        },
                                       {
@@ -516,7 +395,7 @@ angular
                                                 value : "false",
                                                 name : "No"
                                              } ]
-                                          }/*,
+                                          },
                                           {
                                              type : "radios-inline",
                                              key : "y2-axis-labels-kmb",
@@ -527,7 +406,7 @@ angular
                                                 value : "false",
                                                 name : "False"
                                              } ]
-                                          }*/]
+                                          }]
                                        } ]
                                     }]
                                  },
@@ -535,43 +414,32 @@ angular
                                {
                                     title : "Legend",
                                     items : [  
-                                        
-                                        			/*{
-                                                         type : "radios-inline",
-                                                         key : "show-legend",
-                                                         titleMap : [ {
-                                                            value : "true",
-                                                            name : "True"
-                                                         }, {
-                                                            value : "false",
-                                                            name : "False"
-                                                         }
-                                                         ]
-                                                      },*/
-                                        
+                                       {
+                                           type : "radios-inline",
+                                           key : "show-legend",
+                                           titleMap : [ {
+                                               value : "true",
+                                               name : "True"
+                                           }, {
+                                               value : "false",
+                                               name : "False"
+                                           }]
+                                        },
                                         {
                                                  
                                                  "type" : "section",
                                                  "htmlClass" : "",
                                                  "items" : [  {
+                                                     "condition": "model['show-legend'] =='true'",
                                                      "key" : "colors-mapping",
                                                      "title" : "Legend Details",
-                                                     "add": null,
-                                                     "remove": null,
                                                      "items" : [ {
+                                                        "condition": "model['show-legend'] =='true'",
                                                         "type" : "section",
                                                         "htmlClass" : "row",
                                                         "items" : [
-                                                         
-                                                         {
-                                                                 "type" : "section",
-                                                                 "htmlClass" : "col-xs-6 col-sm-3",
-                                                                 "items" : [ {
-                                                                     "key" : "colors-mapping[].ykeys",
-                                                                     "title" : "Channel"
-                                                                 } ]
-                                                             },
                                                              {
+                                                                 "condition": "model['show-legend'] =='true'",
                                                                  "type" : "section",
                                                                  "htmlClass" : "col-xs-6 col-sm-3",
                                                                  "items" : [ {
@@ -583,6 +451,7 @@ angular
                                                                  "type" : "section",
                                                                  "htmlClass" : "col-xs-6 col-sm-3",
                                                                  "items" : [ {
+                                                                     "condition": "model['show-legend'] =='true'",
                                                                      "key" : "colors-mapping[].colors",
                                                                      "title" : "Color",
                                                                      "colorFormat" : "hex3",
@@ -596,10 +465,20 @@ angular
                                                                                                    ['#ef2929', '#888a85', '#deface']]}
                                                                  } ]
                                                              },
-                                                            {
+                                                        	{
                                                                  "type" : "section",
                                                                  "htmlClass" : "col-xs-6 col-sm-3",
                                                                  "items" : [ {
+                                                                     "condition": "model['show-legend'] =='true'",
+                                                                     "key" : "colors-mapping[].unit",
+                                                                     "title" : "Legend unit"
+                                                                 } ]
+                                                             },
+                                                        	{
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "condition": "model['show-legend'] =='true'",
                                                                      "key": "colors-mapping[].axisSelection",
                                                                      "title" : "Legend Axis",
                                                                      "notitle" : false,
@@ -612,7 +491,8 @@ angular
                                                                          "name" : "Y2"
                                                                      }]
                                                                  }]
-                                                             }]
+                                                             }
+                                                        	]
 			                                            }]
                                                  }]
                                              }
@@ -715,7 +595,7 @@ angular
                                                      }
                                           
                                           ]
-                                       }/*,
+                                       },
                                         {
                                           "type" : "section",
                                           "htmlClass" : "col-xs-12",
@@ -736,7 +616,7 @@ angular
                                                                 "name" : "Ticks are not aligned"
                                                             }]
                                           }]
-                                        }*/
+                                        }
                                                  ]
                                     } ]
                                  },{
@@ -759,7 +639,7 @@ angular
                                                          name : "No"
                                                      }
                                                                 ]
-                                                 }, /*"range-selector-alpha", "range-selector-background-line-width", 
+                                                 }, "range-selector-alpha", "range-selector-background-line-width", 
                                                             {"key": "range-selector-background-stroke-color",
                                                              "colorFormat" : "hex3",
                                                              "spectrumOptions": {showInput: true,
@@ -770,7 +650,7 @@ angular
                                                                                  palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
                                                                                            ['#8ae234', '#729fcf', '#ad7fa8'],
                                                                                            ['#ef2929', '#888a85', '#deface']]}
-                                                            },*/ "range-selector-foreground-line-width" ]
+                                                            }, "range-selector-foreground-line-width" ]
                                              },
                                              {
                                                  "type" : "section",
@@ -796,7 +676,7 @@ angular
                                                                                  palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
                                                                                            ['#8ae234', '#729fcf', '#ad7fa8'],
                                                                                            ['#ef2929', '#888a85', '#deface']]}}, 
-                                                            /*{"key": "range-selector-plot-fill-gradient-color",
+                                                            {"key": "range-selector-plot-fill-gradient-color",
                                                              "colorFormat" : "hex3",
                                                              "spectrumOptions": {showInput: true,
                                                                                  showAlpha: false,
@@ -819,7 +699,7 @@ angular
                                                                                      preferredFormat: 'hex3',
                                                                                      palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
                                                                                                ['#8ae234', '#729fcf', '#ad7fa8'],
-                                                                                               ['#ef2929', '#888a85', '#deface']]}}*/]
+                                                                                               ['#ef2929', '#888a85', '#deface']]}}]
                                              } ]
                                      } ]
                                  },
@@ -883,7 +763,7 @@ angular
                                        ]
                                     } ]
                                  },
-                               /*{
+                                {
                                     title : "Events",
                                     items : [ {
                                        "type" : "section",
@@ -907,15 +787,11 @@ angular
                                                 } ]
                                              }  ]
                                     } ]
-                                 },*/
-                               {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
                                  }
                               ]
                         } ],
                         "schema" : {
-                           "required" : [ "stream"],
+                           "required" : [],
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
@@ -924,22 +800,6 @@ angular
                                  "default" : "true",
                                  "type" : "string",
                                  "description" : ""
-                              },
-                              "stream" : {
-                                 "title" : "Channels",
-                                 "type" : "array",
-                                 "items": {
-                                     "type" : "object",
-                                     "properties": {
-                                         "label": {
-                                             "type": "string",
-                                             "title": "Channel"
-                                         }
-                                     }
-                                  },
-                                 "validationMessage": "Required.",
-                                 "description" : "",
-                                 "placeholder" : " "
                               },
                               "legend-position" : {
                                  "title" : "Legend Position ",
@@ -979,21 +839,23 @@ angular
                                               "title" : "Colors",
                                               "type" : "string",
                                               "format" : "color",
+                                              "default": "#CC5464",
                                               "validationMessage": "Invalid Color"
                                           },
                                           "labels" : {
                                               "title": "Labels",
-                                              "type" : "string"
+                                              "type" : "string",
+                                              "default": "Y1"
                                           },
-                                          "ykeys" : {
-                                              "title": "Channel",
-                                              "readonly": true,
+                                          "unit" : {
+                                              "title": "Units",
                                               "type" : "string"
                                           },
                                           "axisSelection" : {
                                               "title" : "Legend Axis",
                                               "type" : "string",
-                                              "placeholder" : " "
+                                              "placeholder" : " ",
+                                              "default": "y"
                               			  }
                                       }
                                   }
@@ -1046,7 +908,6 @@ angular
                               "colors" : {
                                  "title" : "Lines' Colors",
                                  "type" : "array",
-                                 "default" : ["#005588", "#aa241d"],
                                  "description" : "Array containing colors for the series lines.",
                                  "items" : {
                                     "format" : "color",
@@ -1350,30 +1211,6 @@ angular
                                  "default" : "",
                                  "description" : "",
                                   "maxLength" : 40
-                              },
-                              "legend-labels" : {
-                                 "title" : "Legend Labels",
-                                 "type" : "string",
-                                 "default" : "['X', 'Y1', 'Y2', 'Y3', 'Y4']",
-                                 "description" : "A name for each data series, including the independent (X) series."
-                              },
-                              "legend-Mapping" : {
-                                 "title" : "Legend Mapping",
-                                 "type" : "string",
-                                 "default" : "['x', 'y', 'y', 'y2', 'y2']",
-                                 "description" : "Mapping the legends to their corresponding axis."
-                              },
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title.",
-                                  "maxLength" : 40
-                              },
-                               "boxBorder" : {
-                                 "title" : "Box Border",
-                                 "type" : "hidden",
-                                 "default": "true",
-                                 "description" : "Define your widget box border."
                               }
                            }
                         }
@@ -1400,12 +1237,12 @@ angular
                            "grid-text-family" : "Source Sans Pro"
                         },
                         "box" : {
-                           sizeY : 2,
                            sizeX : 2,
+                           sizeY : 4,
                            minSizeX : 1,
-                           minSizeY : 1
+                           minSizeY : 2
                         },
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAlCAYAAADBa/A+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjIwNzM5ODZDRTIzRjExRTZBNDMxODBDRDVCMkFCNTZGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjIwNzM5ODZERTIzRjExRTZBNDMxODBDRDVCMkFCNTZGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjA3Mzk4NkFFMjNGMTFFNkE0MzE4MENENUIyQUI1NkYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjA3Mzk4NkJFMjNGMTFFNkE0MzE4MENENUIyQUI1NkYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7BUDhKAAABLklEQVR42mJkGCDw+5iYA5Daj08NE8MgBqOOG3UcvQELCbkrAUgp4FFygNXq1YEBcRwQgBxnT0DNgdE0N+o4KqY5YjOOAJASwKPkBzDjvBgQxwFBARDX45E/CMQOo2lu1HEjIrd+fSYo8P8vbj8zMv3nYWB4NTCOe3NWyeDDLSmc8pziH5UZGG4Mg2iFFpr4wBdgofmH2hb//cnKTEy0viegxpHarQ0QeHFUXffNecXRomS0nMMJHm03VPn9iRN3ESHxwYDY8ovqjvvxlpf7+0t+3AZx/RQYWdF6d6UVXgW8Cq9VgNF1YEAc9+WJMF4FHKKfeEZz65BLc8xsf/7jVcH4/xfYF8x/f+FVy/T/B4zGpw5kDsxcgnYPZsBYXl4uMGijlYhWyWiGwAYAAgwAp1xSUMqF7k8AAAAASUVORK5CYII=",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/bar-chart.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
@@ -1561,20 +1398,12 @@ angular
                                                       } ]
                                              } ]
                                     } ]
-                                 }, {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
-                                 } ]
+                                 }]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "data" : {
                                  "title" : "Data",
                                  "type" : "string",
@@ -1815,12 +1644,11 @@ angular
                         },
                         "box" : {
                            sizeX : 2,
-                           sizeY : 2,
+                           sizeY : 4,
                            minSizeX : 1,
-                           minSizeY : 1
-                        // , maxSizeY: 2
+                           minSizeY : 2
                         },
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAlCAYAAADfosCNAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6ODU0QUJEQTNFMjRDMTFFNjg5OTNGRTg1NTI0MkFENEUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6ODU0QUJEQTJFMjRDMTFFNjg5OTNGRTg1NTI0MkFENEUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDMzZDNhZTEtYWE5Ni1iMjRiLWJhZDMtZWFmYjg0ZDNmMzgyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pjz0N0QAAALTSURBVHja7JdPiE1RHMfvnXfnNaPMYpSaV/7MmBmNBePPUwYbNYqQYiEbKxoaK4tnIRSSlSiMlOxENiSzUGQhLLyJjSYLjbERIf8m4T2fH7+b2+3d++6976qj7q8+/V73nPO73/M75/zuebZloM26PbQGdxw2TA6OvLENFXgTWqEMxSaDBU7BATJZsQ0WKEt9R9ps0wWKNRkgcBPuVpBA2vOOAQKvQbNfIG2yyovhnZMgcEGCwVUCfvhHAnO45dAhIu0YQWXgHjgG0+ErXIYzBB9rQOBH2EyMu+7y4lbADO1etiMGXYobgWUBXR7CObjCy77FFLiWMY+0TfblKk2CFUkkg9pwR2DYc8iewFFYD9t0w7v2Fi7KhHjxi5gC5V0rffHCRTJoK+4UFPTRZzgEpwn8Q/u043boNuj2DK/qiZXsjkpBpu92fl8KEChLO6BtVl2RDJgr+0wz5dp12EvQyYAJSZxBFbvRV9oko6MwpM/9AiUJRcgF5OuvSDrLLPbBQU/KX6q4GzEOxWzcLtgJM33NfoGduP46H5U/Iuksm/U8LNCGn3ASDhPwS50TPwdE2D36Vr1FGLcFdsNqeA/rPAL7cH0R5l226XxWA7n2QJaGYE9DxEl9lW3RCy36+D5jXgf0X4j7Tvsz3RqSvc6Ii1N2dIZiUpj3wwXZ6CHi5kEP5H3Nks2aIt0Ja+aLnsMYyRwtJ7IHT4RkollPb3fACRQryCTckx8QY8BTpCNbvTqZ16x1hYjz2mNETtSI06o1sC3BF7TsBIhr0ax1abajmiz5RI0PQq0inSyTOuMe3dS5hDGleE9FKNLxMkmwabj5Wk4avWNKNseJ2aE3mVyD8SwpQYt0WdO6pX+C53oXTCPm70wWUv4bITeYJWlejo36t5iJzERmIjOR5llFivm459ta1Vt5miYxK0kFwqv/YbUtu1Qq9ZsuUpZ7LDs4KdgvAQYAsIQCfa7zz00AAAAASUVORK5CYII=",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/area-chart.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
@@ -2045,22 +1873,12 @@ angular
                                                 } ]
                                              } ]
                                     } ]
-                                 },
-
-                                 {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
-                                 } ]
+                                 }]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "data" : {
                                  "title" : "Data",
                                  "type" : "string",
@@ -2440,12 +2258,11 @@ angular
                         },
                         "box" : {
                            sizeX : 2,
-                           sizeY : 2,
+                           sizeY : 4,
                            minSizeX : 1,
-                           minSizeY : 1
-                        // ,maxSizeY: 2
+                           minSizeY : 2
                         },
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAlCAYAAADBa/A+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkMyODMxQTMyRTIzRjExRTZCN0M2QjYwOTU2Q0U5QzZDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkMyODMxQTMzRTIzRjExRTZCN0M2QjYwOTU2Q0U5QzZDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QzI4MzFBMzBFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QzI4MzFBMzFFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7pqcU1AAACpElEQVR42uyXS2gUQRCGZ8d4kCQSiGIwHkQFCTm45ObBeEhAMIjxEgQfKMIelICIYdmTj5AETS4KCirk4SOHIHrygSGgkeAheFEUUXwcDSii6xMT16+kRppmZw7Znd0+pOGjumdqp/+tmq7uSeRyOc/VlnBBxIzXV4u5CRvhDnSs8DI/fUeC1AmboAK2wV656Iq4inwZdUXcI6Mvab2ST3G52n61x3jXTgYXfQcWQz2mHX7DRfOeC2lNwSK4QdTeOyOOqC1WcdLO2/fLHTlJZx08JWqTrok7FBa1WMWRsmpNW9j9RsxmyMK1kolj4l7MZ/hIvy3E7aDay6Q0WxJxWhoyWuWr4XS+qAZbVFhK44rcnDVuQMxxK8UirAruE7XnpRTXovYPvA0qP0wjMGml9FzBRyYeuh6zFh7wT79F+C3HSCSWyZaE7zDX5LQxCOtgFp5A0z93z1uFz+y8I8fDO3TCW/CYcWWE+1kVNg4jcoHJH2I2wBndCZrUt1bxCknrAcNPItgc8ie2Y3aCRDaFqP9HbPrf4TDdZ9YxqbJQcTPWuBchayxhNcaqyyDkXcizTsAv7V/C7828xTGppCioU3fhFSQ1vWb96oeVMBX1kiPmOkbey3r6qYK+IRAwhNkH93jYFsZL6Q/DDnU5BV+hWyOSxO9F7B84usomddJGJn2t1+U3XdBnRX4An65i1iQ/4ihzQYc9gTBNTQ6k6vdYP6sqdsEMe+eOSmWHl/m2H223rfFU7N+tRG211rUl0EqUJiJS36YLRj5Qrprlo+jitMCOwVYYZbJd5Tzs+YawTj3miLAvcKTcHxe+sQD6dXuRJuMPTojTY84P43qWlM45IQ4hcrzZrTuArNA93kJbaPG0RDqdrnFVnBz4Prkqznc5rX8FGAAWXa+WqoxqjwAAAABJRU5ErkJggg==",
+                        "imgSrc" :"//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/line-chart.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
@@ -2640,20 +2457,12 @@ angular
                                                 } ]
                                              } ]
                                     } ]
-                                 }, {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
-                                 } ]
+                                 }]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "data" : {
                                  "title" : "Data",
                                  "type" : "string",
@@ -3013,11 +2822,11 @@ angular
                         },
                         "box" : {
                            sizeX : 2,
-                           sizeY : 2,
+                           sizeY : 4,
                            minSizeX : 1,
-                           minSizeY : 1
+                           minSizeY : 2
                         },
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAlCAYAAADBa/A+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RTkzNjBBNzJFMkQ2MTFFNkIzQ0Y4MTdBRTNEODBCRUMiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RTkzNjBBNzFFMkQ2MTFFNkIzQ0Y4MTdBRTNEODBCRUMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QzI4MzFBMzJFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QzI4MzFBMzNFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4tt2jHAAAD40lEQVR42rSYXUgVQRTH773eyjAsTZM+VCjsiwpEKTXJtEgf9C0iCiqi6Is+yMc+1J7qwQKxFPShCCnRIKJMibLMUktDgqwQEiFKQ8yiLM28/Y+ONq67e2b3rgf+nKs7u/vbMzNnzozb5/O53G63ywkbaog4AFcMDUJd0HuoCXoA1XsTu4dVnzXCZQcuoabNA7cCWgqFQjOhsvrg1OPwOQa3fYRKoAJA9qnAeS0A0RdsgfZA6VCIpgkXlUVQHpSNCNMHFAJyyOwGjyIYQb2CqqHtOmBk/YrfGQxdguoAGWXW0MtABcFdhna7nLdEqAWAGYhgi6XIAYy6odECWL8NwDDoEQDjlOEAthDuMbTKwosGbUaQurlar4s9OmCz4KqgJRZfQhOiFnoItUK/LUawHIBeLnKF0BobEejD2HkCbYZi8fdsMatvqyYE6Jj8jwl5DlHLgLtvAahHRKuBJk5j+spBg+ScBHcdWsw87wcUjY/rnZCEARaAC2+hGAWoDugUdMsISAcwVHz4WqZpLuDytHCUv24ovIeWp2xAWZ6dAvAlE8FPUGRAQtewPOaOKDw/B1CH7ICNJFV0F9wuptkCKGV8QiBq0XDJzE2VgDrnb+YF4DO4O0yzTfJsTWca/9TOJD+tWGHmjsNtYBoXIWqfHYSrZZL2MhmOWwnKnVxU0bWUoNtNmsyT4SLNkist0FOw8HebXJsuVyWhJg070aW+KYA7Az01uPaBLZmkyDlurflZVL63GU3AuIr/cMMm5VOYa2qsfmxW6tgXKMIj1fdGFoM8GOgkVfPWfTSM1qlOiHZmcG50OGpU9pvtqnpluCbmYYcdhjuqUFiMw1UzjbPQtckOdWkmXBLT7LUMR+sdtwJcA+BcP8FoX1KquIKMwiGP0WwtYm6gMqcKgCF+gFEJH8E0/TNW8Mrpg+C+MTdSodgCwPWK+90gKdoHxQkBZ3fjK0t79Mr0k3D5isGgsucK7dIQ+QEN1HK4baKSoV6JLSy5SAt9MxTF7WcB1zjprESU6nUKA1a2AXFg8xWaJsr8cE0bemYaAFfDPxdnK3p2D2CZY2clE1YFROAv3A5mUdbaDLFbSxEfFa7Thkqys3gxbRn3GjznlzbFTFqyANgJR/TfHc5tp9EzqQC8id8X9HIprnWwO34A0thIE2ucU0bvKgNguNi5VUnXCgB2VfmsBIBUw8WJPalTNp+2BACh4bMTekFg0Am9xuzhoZgkNBZyxS7erg2Jg8XzIq+yh4fKJ5uAnCMg9zOVs57ViL3uG9UbbB27iiPXJLFji3eNHr9S1g+UIkRj9Z1IIRWAarMaZuL6J8AAXG5blin5AbwAAAAASUVORK5CYII=",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/donut-chart.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [ {
@@ -3047,20 +2856,12 @@ angular
                                     } ]
                                  } ]
                               } ]
-                           }, {
-                              title : "Box Properties",
-                              items : [ "boxLabel" ]
-                           } ]
+                           }]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "data" : {
                                  "title" : "Data",
                                  "type" : "string",
@@ -3120,12 +2921,12 @@ angular
                         },
                         "box" : {
                            sizeX : 1,
-                           sizeY : 1,
+                           sizeY : 2,
                            minSizeX : 1,
-                           minSizeY : 1
+                           minSizeY : 2
                         },
                         "imgCls" : "gauge-img",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEoAAAAlCAYAAADlcn/+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzVERDhERDJFN0I2MTFFNjk4RTNDOTE2MDRFNDhGQjgiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzVERDhERDFFN0I2MTFFNjk4RTNDOTE2MDRFNDhGQjgiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MmM0MmUzZDAtZTJjNC1iMjQyLWJjZTItYThjYWQ3ZjkxMzAyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PlCd/HQAAAY7SURBVHja3FprbFRFFL67C6RVKVKtCVpJxVhk2XatBa0/fGIT5CEGw8O0kFaw8VH9YcQqGhSQBg0agqkC1RaRJkBiVOKDtIAvok1FKrXdauMDVMLD2iJYWh7u+p3ut2a83d1u5263207y9czemTt37jfnnDlzbm1GjEtNTU0SRA6QCbiANCAVSAGSTN1PAn8AvwMHgUagAajNzc09Gct522JEziSIe4BpgBuwWxzSCxwAPgJ2gLS6QUsUyLkcYhFQAIzr5/f4GdgEVIC0w4OCKBDkhFgKzAOGxdiyzwPbgFIQ5olLokCQ+JpSYH6sTDpM8QFbZcFA2MG4IAoEjYAooRYlGPFVurh4q0HYuQEjCiSJY64CJhrxXZqAPJB1QHcAuwWSHoGoGwQkGZxjHeccG42iqZUDC43BWd4CiqBdZ/uNKJA0SuIW4BZjcJfPgFkg66+om96z1V+Ngdg1BEiScqt/3WtSokpUzs6mUbu8STu2e0c7jKFTJgMf0kqsEwWSRtDcJn3nS8wCWfVDjKz36Xcta9Qbqrn1M1kdwFHgGOuxMsONlpw5tKkY4tVgbRm2zvq59vYsi7HNbmAv8D3QAud6xrR5SACbDkwAbgamANf2E2HFeH5Zn4kCSW7GSSHVcrytqzHP3ubqw9Yp2lIBbMakfrBwlpTQZDFwSRSJknDhhlBBqS2MX9ofSTCZbuvy5NvbnL2QdRxYJfEXJtIZpbPlhRAP8OiUEiWyRMuzgh13Qvmokkgj7hZfgnOLN9njC304fU34xMPXRYskKRirA1hLU9wQxQj+qYg0CtokWYDmvh5wg2iWZCbz8TLVsfDI0LC7IN6OgjnKQXqCOesQTKNKdbIAJs0SFc6OFUnUsI8hrufGYKUkkIPQGgVtEkfZaCWrkGnr/GCOvX0hJt4+EIERNOtSCSTFMVsYRtbbpSb/zBq11GLqpanBl7hgoEiiZrVCTLeoWTZy0VOjoE2S4z5k6KdvxSdl106d+Fs8hNzQrLHcuXV9lqSV0wI5eFWjFlkgSVQ1P15Iomb9CrHAwhDCxf3BTK/AwqCvg6RqI84KHbyV0KHgf6YHs5vMKFynSDCZDqJ65HYqKytl/KmG/3uefNwUjdtaWFjYaOonZl8EXAX8AqxHn6NK+0MQS7jKZWh7UWm7iBtQJa4vD2KCyfRXukHpjfLdMKBRsyywvioEScMh9hj+j5TFPHY8A3yLttlKv/GG/2Pmc+wjsgHXr2b7bQxaZUF+BFbj2jzlUY8DstOVhdCqtmDbfR/K3arpTdMcRFa9PFgDVleOAZ8CrYx2HwT+BBymib/CF22in2zm6r/M9jmUD8uwrN9HEpNJ1Bo8rzXMPMv5bJ3SzY0dZicm4dYcpALaFO5YskKiXDEVYAO1S0oyX3Q0TbO7L/rIgXklf09HuyTVruDvI2g/xPoYyie5O63t7bjDdJFOccv/S4jN5xj6X2M2h2vEi/nwsm1AtoQOwEw2vUfpUp69n7Je2XWczE1JuQzjBPoeR13IepTEXoDf8oUlEajCc5tDzLVE4x3lmTnyJ1M3uIQ2RZIqEY3dx93nYuAd+izDFOMEgtQTyjUxyXdZXwOsY12uPW34/9ulihvRcprhNyDNHUSrPBaC0Ew7V1Wn7I6w3zkeKQKrfC/wAuv/KP2Gm2T3vdCOnZDLgJuAGUwk7qHPk9TNfJrnYmYrE0mYlTmbi0uIStO8eW8knfCiHcAMQMzoCV5eglWXzOVhk/YYpm38CMcQ8xopJKD+GImTjWSjstBfou1r+qyMENP5QvNd04SoVM2be1VjkJEHqKZ9TKlfyfgn8A9hUyhvV0zRo/o7wIvxrmEYsQy/z1JjpTjowxwmTVVLs+a7pg6zEIi19EKSrOqb4pRRlzDhtLgKNp8SXyIvirZNqIuWrEDdSVPq3lEZYpjLSsZTW/h7H8OK2ZyTBLm1OnMOU1LsRs9/B4ykdMCRn+mlz0/c3RzUlpnM9cjheS5IOKFkLD7nPIooP6F5mcm/Tu4Fnsf955XdrIF+bzvN+aUQYYIk5XS+7iTphgWnIvBNpwHRjnEMEIsYvI2lg/7Ph9HchEzJgd8B3Cn3Bxl2JHfMbepz5JhBAuUQnIFr4Q7nf+u88L8CDAAOWg6lD3k11QAAAABJRU5ErkJggg==",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/gauge.png",
                         "form" : [ {
                            "type" : "tabs",
                            "tabs" : [
@@ -3572,20 +3373,12 @@ angular
                                                       "refresh-animation-time" ]
                                              } ]
                                     } ]
-                                 }, {
-                                    "title" : "Box Properties",
-                                    "items" : [ "boxLabel" ]
                                  } ]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "data" : {
                                  "title" : "Static data",
                                  "type" : "number",
@@ -3961,12 +3754,11 @@ angular
                         },
                         "box" : {
                            sizeX : 1,
-                           sizeY : 1,
+                           sizeY : 2,
                            minSizeX : 1,
-                           minSizeY : 1
-                        // , maxSizeY: 2
+                           minSizeY : 2
                         },
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0U0RkEwQjZFN0I3MTFFNjhGMEZBOEREMDEzMkY1NjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0U0RkEwQjVFN0I3MTFFNjhGMEZBOEREMDEzMkY1NjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MmM0MmUzZDAtZTJjNC1iMjQyLWJjZTItYThjYWQ3ZjkxMzAyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Poq6iGcAAAS7SURBVHjazFhpbA1RFJ432qq1VUtUqK1FSGiUJ2jkWZ7YfpTG1ibULvHDnhA/hPhhDz+IJVWaWqKpNhEifRJCEY9KNSpEiiIhllL6qkFT3+FMnd4+rTfz+p6TfDkz584955szZ87cuTbNgrhcrhZQw4CxwFCgP9ADiAB0oAb4DLwEHgP3gCvAXafTWWM2rs0k2SFQC4C5QBcTLt4Cp4EMkL/frKRBNgFqCzBV859cADaDfKFfSYNsJNR2YKmXObVAMXCNdWnrgsL40Bev936PiV5TlZhQBFtfYDAwhrU3H0eADSD/yTJpEB4BdQbopQw9Aw4DJxHolRy4m7woCSoXmD4sJz1P8dcdKhVYBvRWfD4H5sDf7cY46U0QJufXJWHd81Vr5S5247AfnO9QCTcldD3No/nkh/wJoTjXOa7vpDFxBVQWECrMB9pnX8oNv/fQ3uHQmVFWCpnmkx/yR37FEMXL4vj/Xh6YMA/qhDBROlKRoVw8+p44fsQtLAGP3+fWBR/UKgu5RQ6AjzLEnE6lBrQSl85HzMwmM43JlMF0YXoPOIgwnVAAKHq81PbGm0z0eJ6/g/1p7N/B8QxJZz5/J40LOkKdBULY5KH2BoduZR6RTkTAfDOMeV4i+5H17uZ26mET8TjLvLyXBwYzoNKEaYaR4UAKl8o5YToOHgsakMaFo6EK/nTO2v3OiRNXaUESV37+Ps1mWylMiSB+Qy2PrXU1U1mlRR7LGYcXxhEMwhSX4hMPb/xsnOXhUHV1i1aUgx46hd9kKo+1qMNnASBLH5s99FGijvXVPvhi9dCByeISO7J9x8j0EjFQigtnUfMHTgFJvHILhPTgeBS3H3jMJj5i/BdPG7IcBv0OaM8D63E3u8XdxyHLTwJYGvXigd86qF18SsvczpTpkYJwLX8FZXt6Esh69hIvi3lpzHOkzgt4Q4qR5TfafyTMp1iYxhLpeGG4auGxDgBszcRd8orX+ftvyEMLjgcCB5uJuOTVn0hHC8NTC46p8S+n9QIviPwpklc0dQ+jyLU2rhtHwkpfvhYXbMeLUe1DiVB76sMta56ZFSD7Cae/GOP8W9+Ybh7nqLq2HCIvblFRuVSZvw+o9iHeLSadwsHNEifSm//w+tJglffDOPGMG+Gk9blAhYkSMYSIZ5oslQrJw+OwTxBjNZTpcmMboCYqsi0y88lC7V1Wzol4FIinwO9HH3o1lWwdD9fyOW3F8Add+UzG+eHDUKaYJwElID7FgutYcVymK+3E7oc3vcCLjToU/arFms2HOH5ApG8Kg4O3uqzIo7/Yw3hHytcfAhv/hhni1pU67MQbKlbkQyNjESb80b5LV3kfOr7tL6g7CeNii6Qb2966acLfQnFcAr6lxno6QwzMxCOJsfAyurm/q5LHPxS+lEYn3o3SJE+DdKboyaG8yWili6yGSuad0WzOVjK3Ml9kI9Ba7AwcV39sN0FtE+vqMXgUBUH7sXW5BkEVia82bcFtUH9s92u/N7+Nm8nAxIggEW7Ji/8Q8XLvbLBZg7uohFqhNPSDQUp0mrLOp1/Acq87TBg4D3VImKYFibRck+eAl2wU9Vd5LLRBQ91jMpdMMOQor/Ta8ZZCPfkpwABkBJ8fXRbYywAAAABJRU5ErkJggg==",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/speedometer.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
@@ -4020,20 +3812,12 @@ angular
                                                       "units-label-col" ]
                                              } ]
                                     } ]
-                                 }, {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
                                  } ]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "data" : {
                                  "title" : "Static data",
                                  "type" : "number",
@@ -4218,13 +4002,13 @@ angular
                            },
                            "box" : {
                               sizeX : 1,
-                              sizeY : 2,
+                              sizeY : 3,
                               minSizeX : 1,
-                              minSizeY : 2,
+                              minSizeY : 3,
                               maxSizeX : 5
                            },
                            "imgCls" : "",
-                           "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzgzODQxMTZGNzg1MTFFNjk0MTBGMzg4MzJCMkQ5QjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzgzODQxMTVGNzg1MTFFNjk0MTBGMzg4MzJCMkQ5QjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PoB6+/wAAAIXSURBVHja7JnNK0RRGMbv+I6QLIyIZvgjSInFlPKRyCR2WFiQj60k/wBGEmWyVcNuFjQrC1aytlCiRKFZmRDG8/LcuqahyT3NvVf3rafnfLzn3t/czjm3e8aTTCa1v4bH4/lWj8ViHbA5qAmSCx9DC4FA4NCYZ+aen/dVBQ3gSdhqmrR3KAjwPVtBA9gPO4Py2fVKz6M/QPUAf1QBnaOpiX4DcAgqp0Jsq4RaFd1LGXQN/RyaxRNNiKTMNokqu0HrcQ3Yd73C8rXieyiHzkrkqb4gFqUPtszqjCOgMSUuYL2GH6G508OFdqGzv3s0wrZYHXPK7iFvwDZ393Ch/8tCPOkf9cI6WN2POwH6trig3Zt42WZ5qNAJ0wPAN+nK7kJ0oR0GXZpBTp1toPGaHoaNZJC6yFxroQFRDVtn9R6aT5M2zz6JTYyptfpJT0Fl2tcRWHfFxs4TPGzoD6PtWfqYU6Liu9EsdA/9AHCn8F3Ib+iXcoR9ByljLINuoMsBY/MPi62OfYcpYyyD1se/QL+9sQuZI/FmNfQlXY52jwwLzhj37GtKGWMZdJTeFx8flEOaoPZ1QqqHlIPs60sZYxn0EiQ7Rq7AAO6Oi6+T8rMtypwnjjEVps+nse+OGj5kZb5GOB0kWqABAn9+6OIbMmyXQ3UBX4OKfkiVJzwhwFKx098XsrVNQ12Qj80XnBorAL7Sc81CfwgwAJTrtj6gcXkiAAAAAElFTkSuQmCC",
+                           "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/thermometer.png",
                            "form" : [ {
                               type : "tabs",
                               tabs : [
@@ -4324,9 +4108,6 @@ angular
                                                          } ]
                                                 } ]
                                        } ]
-                                    }, {
-                                       title : "Box Properties",
-                                       items : [ "boxLabel" ]
                                     } ]
                            } ],
                            "schema" : {
@@ -4387,18 +4168,6 @@ angular
                                     "title" : "Interval",
                                     "type" : "number",
                                     "description" : "Set the interval value between ticks."
-                                 },
-                                 "boxLabel" : {
-                                    "title" : "Box Label",
-                                    "type" : "string",
-                                    "description" : "Define your widget box title.",
-                                    "maxLength" : 40
-                                 },
-                                 "boxBorder" : {
-                                    "title" : "Box Border",
-                                    "type" : "hidden",
-                                    "default" : "true",
-                                    "description" : "Define your widget box border."
                                  }
                               },
                               "required" : []
@@ -4418,37 +4187,50 @@ angular
                            // "api" : "UIComponents/dashboard/frontend/examples/odometer/getOdometerVal",
                            "animation" : "count",
                            "on-format-data": "return data;", 
+                            "on-clicked": "return arguments;",
                            "duration" : 1000,
                            "size" : "2"
                         },
                         "box" : {
-                           sizeX : 2,
-                           sizeY : 1,
+                           sizeX : 1,
+                           sizeY : 2,
                            minSizeX : 1,
-                           minSizeY : 1,
-                           maxSizeY : 2
+                           minSizeY : 2
                         },
                         "imgCls" : "odometer-img",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGsAAAAlCAYAAABF7RcQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjA0MzlBMzQxRTdCNjExRTZCREVBQURCRkE1MTI4QTFBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjA0MzlBMzQyRTdCNjExRTZCREVBQURCRkE1MTI4QTFBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDQzOUEzM0ZFN0I2MTFFNkJERUFBREJGQTUxMjhBMUEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDQzOUEzNDBFN0I2MTFFNkJERUFBREJGQTUxMjhBMUEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz75PGiuAAAGNUlEQVR42uxbeWwUVRj/bbdb2i6lpaUnUEoPrAWkHBYhCBpvjPGKMWAkROMZE9SoqPEPE0X/gMQrIWokYEwwKonGKK0RQyReGKRQKCAKrQiLtF2uHtuybdfv62M7+2Z3dneOLWwzv2RC38yb2Xnf77vf4AisxXIA6+nIho3LFWfoeMJBZPEfObY8Ln/CUmyikgbjU2wZJA9Sw87ULLelooWj9UDvGWVcfhuQPl4ZL14LjC1RxjtfB7wHNSSfAdz8kXyuYSUw6FfGBzZLl23LshK9p+Wxu0R77ljVNX+XTFQE2GRZie6T8jivRntubrXq3v9iPt4my0qcPaIiazrgcEaem18b/d64Yla8YDMuqqN/JwJp44QJ97QBHfuA9j1AIGBu4UXzgIwJ8jnvIeB8q8mcaho9ez4JMRiHvpHjkBm07xXrdlx8eFoWUHwN4PlZJTuSWd6Vqnv3JICsjDzgimVAyYLI18tuATqPAY3vAV0eY4vOKgVmr6JFqwz/4CfGyRo3BZh2H1AwWz5/fId1ZF04L4Qe+hvV99O5RopJPWLMRNasgKItEL/f0WyxG8wlbVj0hjZRocKuexlwjTWwYlrEjIfCiTKKzEKg9il67zXhRCUCR76Wx+mk3FevpmSjWHigmY8BE2bIc1q2kkUOWGxZrDkpqbJGsOlzJsPuhY/hl6SUtnwp8Ofn+hY7+Tp6TpUFUrtIOj/PMYKh+cxh4MRPwMRFyrmcSmDJusjzO48D/3xvsM6Khq4TQNOHwKwniYTPgNbvZI2oeZDc4K3KuGCOPrJY86qXyQvJmmRQahQ7MgtkojjjYoULVapEoHkTud1S4WGigV1j47sxU3bj2eDJncCPz0U23aPfqlxQvr5nV1NB7nKLvwcuUFH4sTmhHftB8QjN9KwdLwDnjibeuvp9VBC/KaxMCz4v8PsaYQCGOxjxwNeu4SY7w5Q7/nhIdceka5XxX1sou2w3J7RTfwCHvxAegAU4kmAF+e01WtMS4YrHlQkr51rM8yu9Uz29U6/JdpMZuAt1F3oivDhFfAmCM76WBop7uebehy3/768uXd0VGAT+3S6OYCZooqSxNvKyFumsHYZQfruoPYYWSIvZtyGu7CjpYLL2tI6s7DJRYwXBMefYtjjqNip8K+9Wxq0NIxNXkhDWuMEx2cCcp+XWCseKeIrN6SsBZ5oSdA9vGX1SdmWS55hMpuEUjYK+s5eIrNRMUQBn5MsZY0t97HsL58mFavNGssje0UNSsNtTXCcrsvcAcOhT3R7EHFlsEXWr5VqobTewd33sVJDvnb5CGZ9rFUSF9szGqDaxM4uU610nDWvoiICz27nPKqVIKLgbv/BVYP9GJflIKFks7HnPi+o8CG7i7n6Hirz+OArgbNGKCY1581+Jfs+Um8TBaPpA9PUuR3BriWWTmh49A575sFC4tsYEJhhDru8leb+GLWrXuviIGs3gWmrW4+FE+TpEg1vdEpv5SGTrs8Syhoh6kSyqQjnn+YVc3/ujM93Wi+IFsrcZ6qRsEx0UrrsmLQauehTDXXdOzirupBi22WKyIhHl7xb7WJV3Rb6n2yMq9khdkK0PxAjQlLRc/7Yy5i0SLpbjBW+L8BGKYD03nOTMlefwJqCOFlAYKu6Qx9xy2r9JieHsurMoM5y6VJlTegMV71/G7LLoI4vrqFCihtJStzZRwZZPJLJGApxtVt0TfU7VvfKYFcIoWbwhy0SEghve6mSLuyqlNyolC7vMgtqYctIXsxz2VwBRod6qZ49z+lD4PPZGp3bJ5+LYa9NnWf3dIlDqATc0DbdnBuTf8+tsxhp5X7+Jhq/a63Q0ac9tp2slC0NcdpnFZHG80BMzzII/7dq+yvj9I/2+vH8WCq4dtaD+PMFdlKDU3YZG7ZilUjav9lyfN7zuivEZhE2WtUWWyqX2RHHRPbpzApushHLniN7BCIvR/Tpj1oWuTlvKGhgccEsK7u/pRoprcHjsPZCJrFKFhUDAR/KMzEB6TgrFNLeUTHW3d6rSfMmv8v/PCtgsJAdsN5hkZHlsMSQFPByzuEH3Fh1TbXlYof4uF5xpaRSDBtDf16f94QVlHy63GylOJwb9firGfVE+0mih45n/BRgA2iDYoASd98UAAAAASUVORK5CYII=",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/odometer.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [ {
                               title : "Odometer behaviour",
-                              items : [ "duration", "animation", "size" ]
-                           }, {
-                              title : "Box Properties",
-                              items : [ "boxLabel" ]
-                           } ]
+                              items : [ "duration", "animation", "size" , {
+                                      "key" : "on-clicked",
+                                      "type": "codemirror",
+                                      "codemirrorOptions": {
+                                          value: "return",
+                                          styleActiveLine: true,
+                                          lineNumbers: true,
+                                          lineWrapping: true,
+                                          autoCloseBrackets: true,
+                                          matchBrackets: true,
+                                          theme: "neo",
+                                          mode: "javascript",
+                                          readOnly: false,
+                                          autoRefresh: true
+                                      }
+                                  }]
+                           }]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
+                              "on-clicked" : {
+                     "title" : "onClick",
+                     "default" : "return arguments;",
+                     "type" : "string",
+                     "description" : "Callback function to be called after data is returned from backend."
+                  },
                               "data" : {
                                  "title" : "Static data",
                                  "type" : "number",
@@ -4492,13 +4274,12 @@ angular
                         },
                         "box" : {
                            sizeX : 2,
-                           sizeY : 1,
+                           sizeY : 2,
                            minSizeX : 1,
-                           minSizeY : 1,
-                           maxSizeY : 1
+                           minSizeY : 1
                         },
                         "imgCls" : "",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MzIwMzYyNENGNzg1MTFFNkEwRUNDNjZDRjJCNDk3Q0YiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MzIwMzYyNEJGNzg1MTFFNkEwRUNDNjZDRjJCNDk3Q0YiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PnTLjfAAAAHGSURBVHja7JffK0NhGMe3mRWLbBEXLshc0eHOnbh2Q4miSC1kSpblbyBEWpRtRbI7/Aei3LhQfl65k/zI7581NN+3nlOvpzPjzup569Pznn3O8+57zt5zavZkMmnLtOGwZeCQ0BJaQktoCS2hJbSEltBphrM7etCCGgYJ7fMsUMrOfQNXNM8FRczfgweau0HhH/0deEyzvsoQcFDg+iW/UWaC4zhr+ARN5HzgiHl1MQb5SnD8g/dZ+AtQRb4CHDJ/CapVTpXXqe4wTj4xbVdkvx0lxJpGcc4GzcdAg+Y+QBv8KR1P0eKp/ATz76AV/pyOx0GjRf8Z5Ut829P4wECJscBxNEyS70AJMh+C3yTfgzLIfFDznShDzA/Db2s3jK8/Ar9l+SCiwYOyTvvJHHvAT74WJcIWXMaC0+TrUOaZj8HPkq9BWWB+ET5MXv38UYv1Z6zeHtloUPtwBZRr7hY0o+kV3ov5GsjR/C7opS8sQVkFLs3vgAHyqfr7yReQd7Mb1sd2gnoeXHZM1NtjDhSzC3oGNzTPA17m1UU90TwfeJi/Bi+/7Ld6m+jeHOqmBOzyb1xCS2gJLaEltISW0BJaQv+P8SXAADiWmlqqypMfAAAAAElFTkSuQmCC",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/progress-bar.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [ {
@@ -4514,20 +4295,12 @@ angular
                                     name : "False"
                                  } ]
                               } ]
-                           }, {
-                              title : "Box Properties",
-                              items : [ "boxLabel" ]
                            } ]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "data" : {
                                  "title" : "Progressbar Value",
                                  "type" : "number",
@@ -4581,19 +4354,19 @@ angular
                            "heatmap" : "true",
                            "bounce" : "true",
                            "resize" : "false",
-                           "data" : '{ "253812" : { "550153" : [ { "lat" : {"value": "40.84969"}, "long" :{"value": "-73.94168"}, "bounce": {"value" : "true"}, "speed" : { "value" : "8", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "30", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.3", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2818", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "91", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.99", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "61","description" : "Received Signal Strength Indicator" } }, { "lat" :{"value": "40.84919"}, "long" : {"value": "-73.93897000000001"}, "speed": { "value" : "5", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "57", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.4","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2838", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "94", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.15", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55101"}, "make" : { "value" : "Toyota" }, "model" : { "value" : "Tacoma" },"snr" : { "value" : "9", "description" : "Signal to Noise Ratio" },"rssi" : { "value" : "48", "description" : "Received Signal StrengthIndicator" } }, { "lat" : {"value": "40.848600000000005"}, "long" :{"value": "-73.93648"}, "speed" : { "value" : "9", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "76", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.2", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2465", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "97", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.39", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "69","description" : "Received Signal Strength Indicator" } } ], "source" :"simulator", "order" : [ "550153" ] }, "253815" : { "550191" : [ { "lat": {"value": "40.80913"}, "long" : {"value": "-73.90327"}, "speed" : {"value" : "7", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "56", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.2","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2123", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "100", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.45", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55043"}, "make" : { "value" : "Saab" }, "model" : { "value" : "9-3" }, "snr" :{ "value" : "13", "description" : "Signal to Noise Ratio" }, "rssi" : {"value" : "49", "description" : "Received Signal Strength Indicator" }}, { "lat" : {"value": "40.807500000000004"}, "long" : {"value":"-73.90557000000001"}, "speed" : { "value" : "6", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "16", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.7", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "1946", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "95", "description" :"Engine Temperature" }, "voltage" : { "value" : "12.87", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55043" }, "make" : { "value" : "Saab" },"model" : { "value" : "9-3" }, "snr" : { "value" : "13", "description" :"Signal to Noise Ratio" }, "rssi" : { "value" : "59", "description" :"Received Signal Strength Indicator" } } ], "source" : "simulator","order" : [ "550191" ] } }',
+                           "data" : '{ "253812" : { "550153" : [ { "lat" : {"value": "40.84969"}, "long" :{"value": "-73.94168"}, "bounce": {"value" : "true"}, "speed" : { "value" : "8", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "30", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.3", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2818", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "91", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.99", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "61","description" : "Received Signal Strength Indicator" } }, { "lat" :{"value": "40.84919"}, "long" : {"value": "-73.93897000000001"}, "speed": { "value" : "5", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "57", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.4","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2838", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "94", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.15", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55101"}, "make" : { "value" : "Toyota" }, "model" : { "value" : "Tacoma" },"snr" : { "value" : "9", "description" : "Signal to Noise Ratio" },"rssi" : { "value" : "48", "description" : "Received Signal StrengthIndicator" } }, { "lat" : {"value": "40.848600000000005"}, "long" :{"value": "-73.93648"}, "speed" : { "value" : "9", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "76", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.2", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2465", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "97", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.39", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "69","description" : "Received Signal Strength Indicator" } } ], "source" :"simulator", "order" : [ "550153" ] }, "253815" : { "550191" : [ { "lat": {"value": "40.80913"}, "long" : {"value": "-73.90327"}, "speed" : {"value" : "7", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "56", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.2","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2123", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "100", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.45", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55043"}, "make" : { "value" : "Saab" }, "model" : { "value" : "9-3" }, "snr" :{ "value" : "13", "description" : "Signal to Noise Ratio" }, "rssi" : {"value" : "49", "description" : "Received Signal Strength Indicator" }}, { "lat" : {"value": "40.807500000000004"}, "long" : {"value":"-73.90557000000001"}, "speed" : { "value" : "6", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "16", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.7", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "1946", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "95", "description" :"Engine Temperature" }, "voltage" : { "value" : "12.87", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55043" }, "make" : { "value" : "Saab" },"model" : { "value" : "d9-3" }, "snr" : { "value" : "13", "description" :"Signal to Noise Ratio" }, "rssi" : { "value" : "59", "description" :"Received Signal Strength Indicator" } } ], "source" : "simulator","order" : [ "550191" ] } }',
                            // "api" : "UIComponents/dashboard/frontend/examples/map/simulatorData",
                            "sources-info" : '{"simulator": {"label": "Carvoyant"}}',
                            "msg-tag" : "everyone-main-live"
                         },
                         "box" : {
                            sizeX : 2,
-                           sizeY : 2,
+                           sizeY : 4,
                            minSizeX : 2,
-                           minSizeY : 2
+                           minSizeY : 4
                         },
                         "imgCls" : "",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MkU0NTdGMTJGMUU1MTFFNkJDRDE5REMyQjEzM0VEQzYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MkU0NTdGMTFGMUU1MTFFNkJDRDE5REMyQjEzM0VEQzYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Phrv2GYAAAP1SURBVHja7JlrSFRBFMfnqklWW5qP0NK2KCgqo6DACntpRQ8MAwtK+tBLiygiqCiIDAyjD/Uhn5VFH8oUKYuCMiUqS4JKgojIrdQv+SDDtJe72//ocZu97euuXlfBgT9nd+48fvfMzNmZWcVqtQo5KYoi+jr9qYpIgNkDLYZCoG9QFZQ3bEHjLWf11Gw2Rj2hARsIkw9tdVGMoDcDvt1TaD+hb7rgBphSElSEF/SYRTdoQKyESbUbxeFGoYxdJZSgqeria8jbnrYdoKOX99p5x5gh/CJ3/Rv6phvCXLsfH8xy+as+9TTSUpuHQ9fZAXflhacIvwi7gZiH0RnhM2h0boCxASjByxxHgZAEdVaEz6ARCdpg2mwZlp+OC1o67L5BzdEP0sI1Q6NSFjSpD9jv2eZvcwkzqZgxr6X0CC/7HbYU/VdA8501/F+cjilPpwwrd5oD3a1PzLV4QomOpsOkQKdMI0sXwlbYOgpbL/yNJzEMmAGdrcJSlyksX67I1TdObk+ugX3Xk1GXkKNoiR5UeDXrE2DyYC8CvskBaCTMJg5vczi7HiqEXtAC6/b2TdHZXIYeRwthbpOjBqUP5GFoDFQpL2JvQ56RPAedAGAxbDb0Bkrm2LpcNc1olOIw1JewIA/J3u6aIvCyg3QU5TuFyG1BH2XuoF0txGPQTqiGvwcy5FPoK3QZSpTaIK8eJOdjRHbwgqxkD7pKj6FiLYvFlafb0XkBbAHePg52N89XgvfnMo3QOfoZRtlaJ+3sg1ZAoxxFRygNL2fVAu1RyAPQM4jm7ATosBTOKD/TBTB5uwHmgJPHx/H8rdawpClO00KEsvDRpDFu04jdVmXTNDvtTSzVe5cnp208nQSPVCpexjygoQHYxNtUmr/p+P7R27b609MCPx7VMEtgy3vTTr9CI50B8A8+zQwa6FCKONDEwQQtpBg/qKDFEPQQ9BD0wIAOw84x1tvKAf1FCcgpfKCgNJ726ch7wke6EmzEfg8IaEBRTF5Lew3eU6vPfItYZ1GWrtDyfAYNgHEw2yG6oYlWPX5IBwtoFpehsnRtcASi41lDb6DnovNgDFurBth49uoG2thJj6gNOnpno733nFeE8hl81qQ68bzGYtz14+wKoSfRbco16Dw6eyXBvYaZLbqvaelEs4WPYzNV7b+kutB11O9w88IzuA1qz+DqCsERNJ3p0qBpqrLVfBKnG5bnDE175CDV+e8XQdICA2i1F1PLwE5IB3SsR9B0qY6KCh/j6c2TVNOohQ+3BlVbJo4EhYBt6Yu14fU/AXiBKL5KoGuBKPXNFnSHYe97ehOlO7QEH8Bep/9OaP5RiMoH6Ge9QqYz6L8CDAAxBVRygRGqnQAAAABJRU5ErkJggg==",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/map.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
@@ -4655,7 +4428,8 @@ angular
                                                                         name : "False"
                                                                      } ]
                                                             },
-                                                            {
+                                                           "info-window",
+                                                         {
                                                                "key" : "bounce",
                                                                "type" : "radios-inline",
                                                                titleMap : [
@@ -4698,10 +4472,6 @@ angular
 											 * { title: "Geofence behaviour", items: [ "geofence-manager", "api-geofence", "api-geofence-params", "msg-tag-geofence"] },
 											 *********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
                                  {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
-                                 },
-                                 {
                                     title : "Help",
                                     items : [ {
                                        "type" : "help",
@@ -4713,11 +4483,6 @@ angular
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "clustered-view" : {
                                  "title" : "Clustered View",
                                  "type" : "string",
@@ -4783,6 +4548,11 @@ angular
                                     "placeholder" : "{'stream': {'label': 'Carvoyant', 'url': 'http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png'}}"
                                  }
                               },
+                              "info-window" : {
+                                 "title" : "Info Window Template",
+                                 "type" : "string",
+                                 "description" : "Insert html url for your info window template.",
+                              },
                               "data" : {
                                  "title" : "Markers data",
                                  "type" : "string",
@@ -4823,12 +4593,12 @@ angular
                         },
                         "box" : {
                            sizeX : 2,
-                           sizeY : 2,
+                           sizeY : 4,
                            minSizeX : 2,
-                           minSizeY : 2,
+                           minSizeY : 4,
                         },
                         "imgCls" : "",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTI4ODA3MjA1MjlCMTFFNzhFN0Q4OUFFNTNCQjg5MTYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTI4ODA3MUY1MjlCMTFFNzhFN0Q4OUFFNTNCQjg5MTYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsAn8koAAANsSURBVHja7FjrSxRRHJ2ddd0MAqOHbU8Rkixcem3kqlQilSV+0B4g1caWSYj6ITD8C6QPRSkSZS1thWBphFQWSA9WM7IXK2UUlJW1RUGCkK2ru52f/AyRHuPcO5HghcNhZueec2bm3t/euaZIJKJQM5lMiqz2IG/PWtAtYN3KhtO3ZekOZ1WVcdgmQvv9/llAhjnDuZ6OiemYzsv0iZIQNB5UAOQCi4bmxzybwlwOKufrnoMuATV2u71LxNOkdyIixAxQBbCb5gjQBNwAHoU8F2ZH3gXqEXqLxb3tA84tBzYAWWQFnKGbQfjPeiairtAITObngCnAUeAIAnz6W/VAvzjQAaAU6AV2ol+T4dUDxvtAV4A3QDJMD44M/KdG1wFl1I/7X4VemaETEQa7QCeARiANAV7oGZPc7zwPlUOsKz80hFfQJAKuA9th3CcweVdTWOAy69WwvrzQEKQq4wECQD4C9wsEngaqB14D9ITzWdfDPtKetJveKlCEwF8FqySFJo1caPWyXhHru6WUPNw9/UA19gsMUo1ae8CnFTSdaj18IqLVg8ZfIlBl8L9zFfukyBgem4AQVwwjWyP7ZMkIvQpoxyv7ptW9xRpOfmIJD/EYyiDpt7OfcOgEoFOrucvlKnlsCVf6rGGFmI7H8LQ72U/bRJzfvJ+K/dzRFyyx2FJ7wn2B94M9r7S4pl/8nmIJRqKHj0NWU79v66Q2LX3nmGMTYtUY29NQoPUXP3e/zTy+Y9yup7WUvJegOxhze7UOD9CxEadKvV5vpcaydwq0Bl4LRUseDYskrU+BAi4LqSXpQVUh1hqYWxL7CU/E+4ADT2GyVue0oNqxNKQO8Rj+3knfwX7Coa8BFiDH4KGawz5NMkLfA2gpWWxw6GL2aRMOzeuAw4ATr3CzEWlZ10k+v1t36Fnl0bLUD1TDYKrkwKRXzfoeaUtT3P0ALxvpM7sWRtGSApNOLeu62UfelwsEH/JWwUagDoYxgoGpfx3rFbC+/G9ECJ8FFfJMb4Fxos7A1K+FdQpZ17gdJhicBGUDC4AOBKAP05kaw8bR9dSP+2ez3sRmja5tsXBXtzLgbVCiXHmKGv9z4Si8LSYt9OgNSNDiQV975uDNu+XmDGeFOd3RjHPPEPSjqL4hoUU+bA3dFvsf2kTof9V+CDAAygmYxsVKnggAAAAASUVORK5CYII=",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/accelerometer.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
@@ -4838,10 +4608,7 @@ angular
                                           "api-params", "data",
                                     // "on-format-data"
                                     ]
-                                 }, {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
-                                 } ]
+                                 }]
                         } ],
                         "schema" : {
                            "type" : "object",
@@ -4851,12 +4618,7 @@ angular
                                  "title" : "Data",
                                  "type" : "string",
                                  "description" : "X,Y,Z Value"
-                              },
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
+                              }
                            },
                            "required" : []
                         }
@@ -4889,13 +4651,12 @@ angular
                         },
                         "box" : {
                            sizeX : 2,
-                           sizeY : 2,
+                           sizeY : 4,
                            minSizeX : 2,
-                           minSizeY : 1,
-                           maxSizeY : 4
+                           minSizeY : 2,
                         },
                         "imgCls" : "grid-img",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAlCAYAAADr2wGRAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjcyMDZGOUNFMkQ4MTFFNkFCMDVFNzRFRDY1MTM5NTAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjcyMDZGOUJFMkQ4MTFFNkFCMDVFNzRFRDY1MTM5NTAiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QzI4MzFBMzJFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QzI4MzFBMzNFMjNGMTFFNkI3QzZCNjA5NTZDRTlDNkMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zhsgjAAAA1klEQVR42mK8fPnyf4YhDpgYhgEY9cSoJ0Y9MeqJUU+MegIfYAHiQoZRMAqoAhhl92Q0kKl3wmOXGR9ADKAZBUBKgAwzFgDNeAA1IwFIKZCbJ+rJ9MQCIP4AZYM8IU+GGQeA+AGUDfKE/WgRO+qJUU+MemLUE6OeoEUD8CCZen8gsU8gVVqkgA9I7AujDajh0AB0IFPvCWDj7Qe08WYBpDjIMOMCUiPSgMxGJDhP7CfTE4pI+WAFmQ1AR2gjENwqHm0Ajnpi1BOjnhj1xKgnRj2BAwAEGADGZCnIfk5TtQAAAABJRU5ErkJggg==",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/grid.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
@@ -5139,10 +4900,6 @@ angular
                                           } ]
                                  },
                                  {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
-                                 },
-                                 {
                                     title : "Help",
                                     items : [ {
                                        "type" : "help",
@@ -5154,11 +4911,6 @@ angular
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "columns-definition" : {
                                  "title" : "Columns definition",
                                  "type" : "string",
@@ -5349,7 +5101,7 @@ angular
                            maxSizeX : 1
                         },
                         "imgCls" : "",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0RCQTE1RUU1MUI2MTFFN0FFNDlEMTM4RTRFODYwMkIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0RCQTE1RUQ1MUI2MTFFN0FFNDlEMTM4RTRFODYwMkIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pk9fI0kAAAIXSURBVHja7Jg/SAJxFMe9H2pDQ4PRDZHU1OZkUIu0OESIbqFLZYtEczTYVEO4CVEOkTmktBnR5BItBW5uTYXpoOTg4NA/7PvgFRJWnnE/Ovo9+PI79E4+9+793vueWrvdtlkthM2CoaAVtIJW0P8IWuv2YalUGsQShkLQFDQikakOFaE8lPN4PK0foQG8jCUBDUNN6BKqQjUJwDo0CvmgIegBWgd4uis0YO1YDqBF6AaKrzVOrm9fGrM4dvNpZahw70+ZegNgcWAJQtvQJJSBVgD/+hn6iIFTgE0AdgvHkS5Pg8xKFtoAfMVkeCeWJBQjcEAvfUBzSRwS8Hxtj9YzflTfBWU7APCi2TUDvn0Gj1KpaLzp7qAGMjyHDF/1ANwJ7pWU8RLkgsYFlwBtujiXhG5w4+yYnWlk94n4mDMsuOCbtOn4BoxGZKwQ0yV0llPuZiHBffiSu4TWZ6/3S8j2M7ffKcGDo9rR1voJt01OEOeIZb1HnadQ+Re/U5bES5x1wXPeN2F3XfDgMBp0TUFCr3bweC8K3pVDu66FaZ50RiNr9ljnCLIfyQsGJWOyjWxvGjRGdO6GhCw72YcQZ06w9VsnY4Js0xroEfx9jFckZDnJxokcX0twD0yzk4qd66tRZHwGx8df1Hibv/Oa7Tsowx2+I/NuUa1tTXt4CXiUUAYDhl4CLPW6pf6AVNAKWkEr6D8dbwIMAG8Y3AV944YCAAAAAElFTkSuQmCC",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/toggle-switch.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
@@ -5477,20 +5229,12 @@ angular
                                                       "knob-label", ]
                                              } ]
                                     } ]
-                                 }, {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
                                  } ]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "switch-status" : {
                                  "title" : "Toggle Switch Value",
                                  "type" : "string",
@@ -5610,17 +5354,17 @@ angular
                            "ceil" : 10,
                            "step" : 1,
                            "vertical" : false,
-                           "show-ticks" : "true"
+                           "show-ticks" : "true",
+                           "theme": "scriptr-slider"
                         },
                         "box" : {
                            sizeX : 2,
-                           sizeY : 1,
+                           sizeY : 2,
                            minSizeX : 1,
-                           minSizeY : 1,
-                           maxSizeY : 1
+                           minSizeY : 1
                         },
                         "imgCls" : "",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDRFNDQ5MDQ1MUI3MTFFNzlBMzVDOTRBMkVCQkU2OUYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDRFNDQ5MDM1MUI3MTFFNzlBMzVDOTRBMkVCQkU2OUYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PhwmJL8AAAHdSURBVHjaYvz//z/DUANMDEMQjDp61NGjjh519KijRx096ugh62hGQgosdlw1BFLNQOwExBxAfA2IpwDxzBMe2gPS2mIh4GB3ILUJiNmQhLWBeDoQmwNx4qAKaaCDOYHUPSCWAPGNhLgZhNlZGI68+szw/e8/mLJAYGhvgHEuXboE8lwFEDsC8X0gbtDT03uEbC5QjR+QygTiv0A8CSi/C01eDEg1AbEGEJ8E4kagmm8ojgYqsgbSLuge2PmFUW3tJ6ZIEDtcXoihQAPsdoabn34wJB6/xwBKF3Ks/6/XiP5bhaTNE4jNkPjvgHgqEMN8qQDE8UjyIGPmAvFTJLEUIJZG4l8B4rVI6veAkscOIOZBD2kOJC9YiiCk1fk4GISAIf725x8GZkYGTaBQPZ6YFALiWgIxnUIgNehAMQyUgEqP/dhUCjAj2MfffIGzQSH9DuhgEBAcmLJnP7XTtB2Q2gLEvFAhUJpuRJIXAFL7gNgQKnQMiN2Aar4iqckBUhOAGBRsP4A4Aii/kegiD0fpAQMLgA7GKD2AlgoCKRNQRgRadgeLPAu05AH5/CRQzT8sauRBKRGIzwPlXw+LcppxtDc+6uhRR486etTRo44edfSoo0cdPerowQEAAgwA9F+Sz6eyRO4AAAAASUVORK5CYII=",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/slider.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
@@ -5864,7 +5608,18 @@ angular
                                                             value : "false",
                                                             name : "False"
                                                          } ]
-                                                      } ]
+                                                      },
+                                                	  {
+                                                         "key" : "theme",
+                                                         "type" : "radios-inline",
+                                                         titleMap : [ {
+                                                            value : "",
+                                                            name : "Default"
+                                                         }, {
+                                                            value : "scriptr-slider",
+                                                            name : "Scriptr theme"
+                                                         } ]
+                                                      }]
                                              } ]
                                     } ]
                                  }, {
@@ -5922,20 +5677,12 @@ angular
                                           } ]
                                        } ]
                                     } ]
-                                 }, {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
                                  } ]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "min" : {
                                  "title" : "Slider 1",
                                  "type" : "number",
@@ -6143,6 +5890,11 @@ angular
                                  "type" : "string",
                                  "description" : "Use to add a label directly to the slider(s) for accessibility. Adds the aria-label attribute."
                               },
+                               "theme" : {
+                                 "title" : "Theme",
+                                 "type" : "string",
+                                 "description" : "Select a theme for your slider from the list of available themes."
+                              },
                               "api" : {
                                  "title" : "Api",
                                  "type" : "string",
@@ -6221,12 +5973,10 @@ angular
                            sizeX : 1,
                            sizeY : 1,
                            minSizeX : 1,
-                           minSizeY : 1,
-                           maxSizeY : 1,
-                           maxSizeX : 1
+                           minSizeY : 1
                         },
                         "imgCls" : "",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTM1MEZDOUE1MUI4MTFFNzg0MDZBODMxOUZDNUVGN0IiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTM1MEZDOTk1MUI4MTFFNzg0MDZBODMxOUZDNUVGN0IiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pg1w0C8AAAHySURBVHja7Jc9SMNAFMfvbEVRcBVEHYqzOujgILWI4mIHdRArWZSCIE4WcdFVtKOg4CAtVhwEP0AUQbHipIvi4iQIzg5+QimN/yvPEtokSjH1Infw66XpNfzy8u7dheu6ztzWypgLm5JW0kpagubNHUV5PT43gF9CzyQYZdP6Y36kY5IKM/KKmaVHQPKsCJhJc8mluaoeSlpJF9cS4NRt0j4eYd3om8Ea+HCDdIe+xFohfgvC+C5W3RnwIHtOT+QKbYQ9gUUcNoEhcF5Uwc69bkV5Gp8eB6TfQB1kn81+xJNoQTcFQqDC5joZ7D08+ZHedSjS1UCzjFqE3YAxHDaAA5vr7BTu8lj2j2KiiIlT9YvSlZQiy9/lP+ilJ5M2nH8HJ2CyID04d2brgcffh+4QdCGiSYsxQXTb4EjkOsalTMeRaykm4jG4N05IkzYCykHcSrik1QMSGXSrYAARrbUYptHT2MSYHlmW8fXs7Gds3JASfhCmG0tRCbwAezjf+aOS51ROGyTj9AbiA22UNjXiNQrSCRojCsAduMa54F/m9FdbAY1gnoSF3JbIY8iGaMwclb59KSJNkbxE1w6ugMjdVyENhqlG94NZRHnBrnp4S7yrFHVY5OsZxF7oRjRaiQfthM2XcbWfVtJKWkn/e+lPAQYAoEWDWxM/8JkAAAAASUVORK5CYII=",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/button.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [
@@ -6320,20 +6070,12 @@ angular
                                           } ]
                                        } ]
                                     } ]
-                                 }, {
-                                    title : "Box Properties",
-                                    items : [ "boxLabel" ]
-                                 } ]
+                                 }]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "is-disabled" : {
                                  "title" : "Disabled",
                                  "type" : "string",
@@ -6414,26 +6156,18 @@ angular
                            minSizeY : 1
                         },
                         "imgCls" : "",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RkE2REVDRkM1NEVCMTFFNzg4MjNDNkYyQjhEQjcyNjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RkE2REVDRkI1NEVCMTFFNzg4MjNDNkYyQjhEQjcyNjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pk48GP8AAAIqSURBVHja7JexS8NQEMaT6CjooAVFxcFJBXGqFaci2kq7uPU/UIeiXVpREVRUcHFqceiqUzep1aGKLSgiTtXVwVE72KGCovV7coX0kaA1qXkpffBxeblL8uNyubwnl0olqTxkWZZGU3dzOFyCeiTrxyO0feUZjFVwqieuk3sGHJXEG/OXUwOx8qSZc0bI5qA96MNC0CZoARoiLl3oXrJbeCWHVqcXpVqEOVBxfQ9FJ/5VkLLQ5FAkG45mnfMOvJo+Afgc1UDvi5zpuiqPVSgrAN84tPFb6Bxa3rkALa+tbsqjAW31h2hWTbbDrEO7+EYe7JJpH8RWjh3ClQcyOgN1a7i8UB66YX4WJwQ0bRoSbLHOnWdLy0kohdL4JH+C4q2DJoAorb9DnNsFsT6bonmI4qJGwRWTgN3I5hMX4oFKZWjyu80AV2oEzMY0dA3fc/mEWeDKH4BnfwJGTCfMCJTkfRrgs/+RaS/ZtE6G1TFJLSddl+ZiawodgM6gILK0oxPDSoOB3eq8LXZdkO4TqDk0slSknwZ7YJgHx5z9ZSdUrU4LOEzX++h+tf8QNcCXVe4xqBU61gBeMQpsqOWpwDPQJoAWVTXKMnzKAS/Sgj5jBNjwz4Ue7KfMFVTQrNXlufACxfmNAJuyygPAC7Uwls0umGFoTSMuDhMXcZXXD71DR7bZBCCbFzAtsLe22rkA+K2x3ar3PaITnUAEPmc10BE7lUdWUM4Kri8BBgC569bhyidDOgAAAABJRU5ErkJggg==",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/iframe.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [ {
                               title : "Data",
                               items : [ "link" ]
-                           }, {
-                              title : "Box Properties",
-                              items : [ "boxLabel" ]
                            } ]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "link" : {
                                  "title" : "Link or URL",
                                  "type" : "string",
@@ -6464,26 +6198,18 @@ angular
                            
                         },
                         "imgCls" : "displaybox-img",
-                        "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDY5MEY1QUM1RkU1MTFFNzk3MTJENUY1ODM3OUFFQ0MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDY5MEY1QUI1RkU1MTFFNzk3MTJENUY1ODM3OUFFQ0MiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pmt9N/4AAAHGSURBVHja7JexS8NAFIdbcRBdRBS6KI6iDoqibgVBwaV0cLA4VKGD7SJugpt/gaOTguLuqFURd20HQQu1VFsXsYsOUkWoX+AJZ6gxwYZEuYOPd/fuXfLj8e5yCdZqtYBV6zlOHmKmA+60FxgpT23mzBNWuppsPNgtwUZrhWz30VKfk0VBG5n+DNiHswaJHYOYMq7CsJpxK11ORK/w0I1GKCazC5htk/uL8N+Wh9vtTmyL3VLxg+go5J0Ib/aB6KxpbAi/gDa/Zbps41TxV6bZbCeUwAzdUJ3jNfbTes/KA+EHdU6Vdjui/bARHTctWov+b6J/dXqw2+cxXSb3OYzCFTzDhOJT2yMnyJ4XmU7BLSTkbhyBd5iFTvmqzYkvIjEJWZPyqjziZMu4slYgDcbtLQOLkIRl6WdkzoipyJq4J+XBy29M45J085TOg5FhfNfiK+Hr/W6t5xsRceOYN+igP+i70wNRQ3KHmJTxAGYLdoUdfP0SbsSEZI03p4fyx7EKT8p4DYpwD+vwKnNFia16Klp+j3LKuIApKCGXytyp/iJq0Vq0Fq1Fa9FatP7dstnC3M7c1hNutOio8CfKI+2BLst3fggwAHHJk2PD+/d6AAAAAElFTkSuQmCC",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/display-box.png",
                         "form" : [ {
                            type : "tabs",
                            tabs : [ {
                               title : "Format",
                               items : [ "type" ]
-                           }, {
-                              title : "Box Properties",
-                              items : [ "boxLabel" ]
                            } ]
                         } ],
                         "schema" : {
                            "type" : "object",
                            "title" : "Schema",
                            "properties" : {
-                              "boxLabel" : {
-                                 "title" : "Box Label",
-                                 "type" : "string",
-                                 "description" : "Define your widget box title."
-                              },
                               "data" : {
                                  "title" : "Data",
                                  "type" : "string",
@@ -6516,5 +6242,695 @@ angular
                            },
                            "required" : []
                         }
-                     }]
-            });
+                     },
+               		 {
+                       "name" : "displayData",
+                       "label" : "Display Data",
+                       "class" : "scriptr-displaycount",
+                       "commonData" : true,
+                       "show" : true,
+                       "defaults" : {
+                            "on-format-data": "return data;", 
+                            "transport" : "wss",
+                            "data" : "12",
+                            "message": "Connected Devices",
+                            "fetch-data-interval": 300,
+                            "number-cell-size": "medium"
+                        },
+                       "box" : {
+                           sizeX : 1,
+                           sizeY : 1,
+                           minSizeX : 1,
+                           minSizeY : 1
+                       },
+                       "imgCls" : "connected-img",
+                       "imgSrc" : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAlCAYAAADWSWD3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0MzNkM2FlMS1hYTk2LWIyNGItYmFkMy1lYWZiODRkM2YzODIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDY5MEY1QUM1RkU1MTFFNzk3MTJENUY1ODM3OUFFQ0MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDY5MEY1QUI1RkU1MTFFNzk3MTJENUY1ODM3OUFFQ0MiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQxMWY2ZjctYTU5Zi00NzRiLTgwOWMtZGQ5ZTNhNTZiMTk0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQzM2QzYWUxLWFhOTYtYjI0Yi1iYWQzLWVhZmI4NGQzZjM4MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pmt9N/4AAAHGSURBVHja7JexS8NAFIdbcRBdRBS6KI6iDoqibgVBwaV0cLA4VKGD7SJugpt/gaOTguLuqFURd20HQQu1VFsXsYsOUkWoX+AJZ6gxwYZEuYOPd/fuXfLj8e5yCdZqtYBV6zlOHmKmA+60FxgpT23mzBNWuppsPNgtwUZrhWz30VKfk0VBG5n+DNiHswaJHYOYMq7CsJpxK11ORK/w0I1GKCazC5htk/uL8N+Wh9vtTmyL3VLxg+go5J0Ib/aB6KxpbAi/gDa/Zbps41TxV6bZbCeUwAzdUJ3jNfbTes/KA+EHdU6Vdjui/bARHTctWov+b6J/dXqw2+cxXSb3OYzCFTzDhOJT2yMnyJ4XmU7BLSTkbhyBd5iFTvmqzYkvIjEJWZPyqjziZMu4slYgDcbtLQOLkIRl6WdkzoipyJq4J+XBy29M45J085TOg5FhfNfiK+Hr/W6t5xsRceOYN+igP+i70wNRQ3KHmJTxAGYLdoUdfP0SbsSEZI03p4fyx7EKT8p4DYpwD+vwKnNFia16Klp+j3LKuIApKCGXytyp/iJq0Vq0Fq1Fa9FatP7dstnC3M7c1hNutOio8CfKI+2BLst3fggwAHHJk2PD+/d6AAAAAElFTkSuQmCC",
+                   "form" : [ {
+                           type : "tabs",
+                           tabs : [ {
+                              title : "Format",
+                              items : [ "message",
+                                       {
+                                           "key": "widget-layout",
+                                           "notitle" : false,
+                                           "type": "strapselect",
+                                           "titleMap" : [{
+                                               "value" : "horizontal",
+                                               "name" : "Horizontal"
+                                           },{
+                                               "value" : "vertical",
+                                               "name" : "Vertical"
+                                           }]
+                                       },
+                                       "border-size",
+                                       {"key": "border-color",
+                                        "colorFormat" : "hex3",
+                                        "spectrumOptions": {showInput: true,
+                                                            showAlpha: false,
+                                                            allowEmpty: true,
+                                                            showPalette: true,
+                                                            preferredFormat: 'hex3',
+                                                            palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                      ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                      ['#ef2929', '#888a85', '#deface']]}
+                                       },{
+                                           "key": "number-cell-size",
+                                           "notitle" : false,
+                                           "type": "strapselect",
+                                           "titleMap" : [{
+                                               "value" : "small",
+                                               "name" : "Small"
+                                           },
+                                                         {
+                                                             "value" : "medium",
+                                                             "name" : "Medium"
+                                                         },
+                                                         {
+                                                             "value" : "large",
+                                                             "name" : "Large"
+                                                         },
+                                                         {
+                                                             "value" : "",
+                                                             "name" : "no-width"
+                                                         }]
+                                       },
+                                   {
+                                       "type" : "section",
+                                       "htmlClass" : "col-xs-12 col-sm-6 row",
+                                       "items" : [{
+                                           "key": "number-font-family",
+                                           "notitle" : false,
+                                           "type": "strapselect",
+                                           "titleMap" : [ {
+                                               "value" : "Arial",
+                                               "name" : "Arial"
+                                           }, {
+                                               "value" : "Helvetica",
+                                               "name" : "Helvetica"
+                                           }, {
+                                               "value" : "Times New Roman",
+                                               "name" : "Times New Roman"
+                                           }, {
+                                               "value" : "Courier New",
+                                               "name" : "Courier New"
+                                           }, {
+                                               "value" : "Courier",
+                                               "name" : "Courier"
+                                           }, {
+                                               "value" : "Verdana",
+                                               "name" : "Verdana"
+                                           }, {
+                                               "value" : "Georgia",
+                                               "name" : "Georgia"
+                                           }, {
+                                               "value" : "Palatino",
+                                               "name" : "Palatino"
+                                           }, {
+                                               "value" : "Garamond",
+                                               "label" : "Garamond"
+                                           }, {
+                                               "value" : "Bookman",
+                                               "label" : "Bookman"
+                                           }, {
+                                               "value" : "Comic Sans MS",
+                                               "name" : "Comic Sans MS"
+                                           }, {
+                                               "value" : "Trebuchet MS",
+                                               "name" : "Trebuchet MS"
+                                           }, {
+                                               "value" : "Arial Black",
+                                               "name" : "Arial Black"
+                                           }, {
+                                               "value" : "Impact",
+                                               "name" : "Impact"
+                                           }, {
+                                               "value" : "Sans-Serif",
+                                               "name" : "Sans-Serif"
+                                           }, {
+                                               "value" : "Source Sans Pro",
+                                               "name" : "Source Sans Pro"
+                                           } ]
+                                       },
+                                                  "number-font-size",
+                                                  "number-font-weight",
+                                                  {"key": "number-text-color",
+                                                   "colorFormat" : "hex3",
+                                                   "spectrumOptions": {showInput: true,
+                                                                       showAlpha: false,
+                                                                       allowEmpty: true,
+                                                                       showPalette: true,
+                                                                       preferredFormat: 'hex3',
+                                                                       palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                 ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                 ['#ef2929', '#888a85', '#deface']]}
+                                                  },
+                                                  {"key": "number-background-color",
+                                                   "colorFormat" : "hex3",
+                                                   "spectrumOptions": {showInput: true,
+                                                                       showAlpha: false,
+                                                                       allowEmpty: true,
+                                                                       showPalette: true,
+                                                                       preferredFormat: 'hex3',
+                                                                       palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                 ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                 ['#ef2929', '#888a85', '#deface']]}
+                                                  },
+                                                  {
+                                                      "key": "number-Text-Alignment",
+                                                      "notitle" : false,
+                                                      "type": "strapselect",
+                                                      "titleMap" : [{
+                                                          "value" : "left",
+                                                          "name" : "Left"
+                                                      },
+                                                                    {
+                                                                        "value" : "center",
+                                                                        "name" : "Center"
+                                                                    },
+                                                                    {
+                                                                        "value" : "right",
+                                                                        "name" : "Right"
+                                                                    }]
+                                                  }]
+                                   },
+                                   {
+                                       "type" : "section",
+                                       "htmlClass" : "col-xs-12 col-sm-6 row pull-right",
+                                       "items" : [{
+                                           "key": "message-font-family",
+                                           "notitle" : false,
+                                           "type": "strapselect",
+                                           "titleMap" : [ {
+                                               "value" : "Arial",
+                                               "name" : "Arial"
+                                           }, {
+                                               "value" : "Helvetica",
+                                               "name" : "Helvetica"
+                                           }, {
+                                               "value" : "Times New Roman",
+                                               "name" : "Times New Roman"
+                                           }, {
+                                               "value" : "Courier New",
+                                               "name" : "Courier New"
+                                           }, {
+                                               "value" : "Courier",
+                                               "name" : "Courier"
+                                           }, {
+                                               "value" : "Verdana",
+                                               "name" : "Verdana"
+                                           }, {
+                                               "value" : "Georgia",
+                                               "name" : "Georgia"
+                                           }, {
+                                               "value" : "Palatino",
+                                               "name" : "Palatino"
+                                           }, {
+                                               "value" : "Garamond",
+                                               "name" : "Garamond"
+                                           }, {
+                                               "value" : "Bookman",
+                                               "name" : "Bookman"
+                                           }, {
+                                               "value" : "Comic Sans MS",
+                                               "name" : "Comic Sans MS"
+                                           }, {
+                                               "value" : "Trebuchet MS",
+                                               "name" : "Trebuchet MS"
+                                           }, {
+                                               "value" : "Arial Black",
+                                               "name" : "Arial Black"
+                                           }, {
+                                               "value" : "Impact",
+                                               "name" : "Impact"
+                                           }, {
+                                               "value" : "Sans-Serif",
+                                               "name" : "Sans-Serif"
+                                           }, {
+                                               "value" : "Source Sans Pro",
+                                               "name" : "Source Sans Pro"
+                                           } ]
+                                       },
+                                                  "message-font-size",
+                                                  "message-font-weight",
+                                                  {"key": "message-text-color",
+                                                   "colorFormat" : "hex3",
+                                                   "spectrumOptions": {showInput: true,
+                                                                       showAlpha: false,
+                                                                       allowEmpty: true,
+                                                                       showPalette: true,
+                                                                       preferredFormat: 'hex3',
+                                                                       palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                 ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                 ['#ef2929', '#888a85', '#deface']]}
+                                                  },
+                                                  {"key": "message-background-color",
+                                                   "colorFormat" : "hex3",
+                                                   "spectrumOptions": {showInput: true,
+                                                                       showAlpha: false,
+                                                                       allowEmpty: true,
+                                                                       showPalette: true,
+                                                                       preferredFormat: 'hex3',
+                                                                       palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                 ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                 ['#ef2929', '#888a85', '#deface']]}
+                                                  },
+                                                  {
+                                                      "key": "message-Text-Alignment",
+                                                      "notitle" : false,
+                                                      "type": "strapselect",
+                                                      "titleMap" : [{
+                                                          "value" : "left",
+                                                          "name" : "Left"
+                                                      },
+                                                                    {
+                                                                        "value" : "center",
+                                                                        "name" : "Center"
+                                                                    },
+                                                                    {
+                                                                        "value" : "right",
+                                                                        "name" : "Right"
+                                                                    }]
+                                                  }]
+                                   }
+                              ]
+                               
+                               
+                               
+                           } ]
+                        } ],
+                        "schema" : {
+                           "type" : "object",
+                           "title" : "Schema",
+                           "properties" : {
+                              "widget-layout" : {
+                                 "title" : "Layout",
+                                 "type" : "string",
+                                 "default" : "horizontal",
+                                 "placeholder" : " ",
+                                 "description" : "Define your widget's layout."
+                              },
+                              "number-cell-size" : {
+                                 "title" : "Numbers Cell Size",
+                                 "type" : "string",
+                                 "default" : "medium",
+                                 "placeholder" : " ",
+                                 "description" : "Define your widget's numbers cell size."
+                              },
+                              "message" : {
+                                 "title" : "Message",
+                                 "type" : "string",
+                                 "default" : "Items",
+                                 "description" : "Define your widget message."
+                              },
+                              "number-font-family" : {
+                                 "title" : "Number Font family",
+                                 "type" : "string",
+                                 "description" : "Define your widget number font family.",
+                                 "default" : "Arial",
+                                 "placeholder" : " "
+                              },
+                              "message-font-family" : {
+                                 "title" : "Message Font family",
+                                 "type" : "string",
+                                 "description" : "Define your widget message font family.",
+                                 "default" : "Arial",
+                                 "placeholder" : " "
+                              },
+                              "number-font-size" : {
+                                 "title" : "Number Font Size",
+                                 "type" : "number",
+                                 "default" : 42,
+                                 "description" : "Define your widget number font size."
+                              },
+                               "message-font-size" : {
+                                 "title" : "Message Font Size",
+                                 "type" : "number",
+                                 "default" : 18,
+                                 "description" : "Define your widget message font size."
+                              },
+                              "number-font-weight" : {
+                                 "title" : "Number Font Weight",
+                                 "type" : "number",
+                                 "default" : 600,
+                                 "description" : "Define your widget number font weight."
+                              },
+                              "message-font-weight" : {
+                                 "title" : "Message Font Weight",
+                                 "type" : "number",
+                                 "default" : 600,
+                                 "description" : "Define your widget message font weight."
+                              },
+                              "number-text-color" : {
+                                 "title" : "Number Text Color",
+                                 "type" : "string",
+                                 "description" : "Define your widget number text color.",
+                                 "format" : "color",
+                                 "default" : "#ffffff",
+                                  "validationMessage": "Invalid Color"
+                              },
+                               "message-text-color" : {
+                                 "title" : "Message Text Color",
+                                 "type" : "string",
+                                 "description" : "Define your widget message text color.",
+                                 "format" : "color",
+                                 "default" : "#686868",
+                                   "validationMessage": "Invalid Color"
+                              },
+                              "number-background-color" : {
+                                 "title" : "Number Backgrount Color",
+                                 "type" : "string",
+                                 "description" : "Define your widget number background color.",
+                                 "format" : "color",
+                                 "default" : "#ff8c00",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "message-background-color" : {
+                                 "title" : "Message Backgrount Color",
+                                 "type" : "string",
+                                 "description" : "Define your widget message background color.",
+                                 "format" : "color",
+                                 "default" : "white",
+                                  "validationMessage": "Invalid Color"
+                              },
+                              "message-Text-Alignment" : {
+                                 "title" : "Message Text Alignment",
+                                 "type" : "string",
+                                 "default" : "center",
+                                 "placeholder" : " ",
+                                 "description" : "Define your widget message text alignment."
+                              },
+                              "number-Text-Alignment" : {
+                                 "title" : "Number Text Alignment",
+                                 "type" : "string",
+                                 "default" : "center",
+                                 "placeholder" : " ",
+                                 "description" : "Define your widget number text alignment."
+                              }, 
+                              "border-size" : {
+                                 "title" : "Border Weight",
+                                 "type" : "number",
+                                 "default" : 1,
+                                 "description" : "Define your widget border weight."
+                              },
+                              "border-color" : {
+                                 "title" : "Border Color",
+                                 "type" : "string",
+                                 "description" : "Define your widget border color.",
+                                 "format" : "color",
+                                 "default" : "#d7d7d7",
+                                  "validationMessage": "Invalid Color"
+                              }, 
+                              "data" : {
+                                 "title" : "Count",
+                                 "type" : "string",
+                                 "description" : "Count to display."
+                              }
+                           },
+                           "required" : []
+                        }
+                     },
+                 {
+                        "name": "metricbox",
+                        "label": "Metric Box",
+                        "class": "scriptr-metricbox",
+                        "commonData": true,
+                        "show": true,
+                        "defaults": {
+                            "transport": "wss",
+                            "boxLabel": "Metric Box",
+                            "msg-tag": "metricbox",
+                            "value": 10,
+                            // "api" : "UIComponents/dashboard/frontend/examples/metricbox/getMetric BoxVal",
+                            "animation": "count",
+                            "on-format-data": "return data;",
+                            "unit": "%",
+                            "label": "Battery",
+                            "tag": "battery",
+                            "on-action-clicked":"return ;",
+                            "icon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAAAAmJLR0QA/4ePzL8AAAEWSURBVHja7ds7EoJAEEVRElyLn6UqiOVq1B3oGxNwIX4yqNLMTB2Q7kLrvs6pPtAzJDNJQgghhPQQ3dsVAAAAAAD4bcB+dliq0i22wZeUm6qQH6euzZ9GYa2m3Rv+8EUarZT6tb9rPyIRY7V1IoR1lxmPWhmFy+x/Gp4vAHWY2O82RbddJnJ3yuwBJ1NAaQ+4mgIu7j+soT0PAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAfRcAAAAAAAAAAAAAAAAAAAAAAAAAAAAADBJwMQWc7QGVKcD+6HHITQFzc8BxGnf8vlPVGif20coKEPLEI0q1NQFs3G7RKFWhut/hCblb+8+1kKmMvU3wpq4qtXC4ekIIIeQv8wCzaILmDABsuwAAAABJRU5ErkJggg==",
+                            "action-icon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAQAAAD41aSMAAAAAmJLR0QA/4ePzL8AAANxSURBVHja7dzNTlNRFMXxm9iYtI74cIqTOjDRN3ECgUcBR8oTdESF+Ao+AANq0sRIhZx9MDZxQI2OgQFYJ7RxcJ2IIdBejHjPOt7zX3tOyv7pXrdNaJYRQgghhBBCCCGEEEIIIYQQQgghhBBCyIRYw1Zs0/bsxMaWV3zGdmx7tumWrRHF8g8euLZ9r/zaJ83Qb9iCdPndml+38ySXfzHn9qJbE62/N+veJL38i3l7cF+w/g8P7TPL/zUD3wz+r98GLP7SfLX5oLef43N1fCdgF/h1Fn593FqwB8/En3ymzdn+XBAA12bZU6YVYP0f7yX6tutPZhjg3bGtsOiCKl4qH2CLNRfMy/IB9lhzwf+A3fIBTlhzwRyVD1D9D5xvM6PyAW54CVnFI//9AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4D98Ab5jTwAQvgDL7Yd7Jfm7QwAu/fxTe/bpLgA6gNxyO7QVAJQAueXxNUJiAPE1QnoAkTVCmgARNUK6AJE0QtIAMTRC6gDyRgBA3AgAiBsBAHEjACBuBADEjQCAuBEAEDcCAOJGAEDcCACIGwEAcSMAIG4EAMSNAIC4EQAQNwIA4kYAQNwIAIgbAQBxIwAgbgQAxI0AwD8F8E8B4AQlCEAJKwF8xz2O9/evOsBfXH0A+CiiAgB8GKcEuN3VB0B89QEQX30AxFcfAPHVB0B89QEQX30AxFcfAPHVB0B89QEQX30AxFcfAPHVB0B89QEQX30AxFcfAPHVB0B89QHgK8ukAHxpnxIghqufLkAkVz9NAL66WAjAl3crX4Df9o9iXX4SALEHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKgkwvuklJD2j8gFOWHPBHJUP8J41F8y78gG2WPP0ce3SAdwya54+frF0gF7dvrHoKTO0RoAHMb/BqqdMK8yT8IKds+wJc9qbDfVm5DnrnnD/V4O9G3x9x2+z8Cuz061l4dKfsQFLvzRfbD4LG9+E4Pcc+mYWPv0Z32H5lttOfybTpFtza3aW9pOPXw16+69nf85aNkxy+UNrBXvwLE6v7pdc2/Xs2EaVX/vIjv2ua/vFXj2K5RNCCCGEEEIIIYQQQgghhBBCCCGEEEKiy0+HE82+2OfSFQAAAABJRU5ErkJggg=="
+                        },
+                        "box": {
+                            sizeX: 1,
+                            sizeY: 1,
+                            minSizeX: 1,
+                            minSizeY: 1,
+                            maxSizeY: 2
+                        },
+                        "imgCls": "metricbox-img",
+                        "imgSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGsAAAAlCAYAAABF7RcQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjA0MzlBMzQxRTdCNjExRTZCREVBQURCRkE1MTI4QTFBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjA0MzlBMzQyRTdCNjExRTZCREVBQURCRkE1MTI4QTFBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDQzOUEzM0ZFN0I2MTFFNkJERUFBREJGQTUxMjhBMUEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDQzOUEzNDBFN0I2MTFFNkJERUFBREJGQTUxMjhBMUEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz75PGiuAAAGNUlEQVR42uxbeWwUVRj/bbdb2i6lpaUnUEoPrAWkHBYhCBpvjPGKMWAkROMZE9SoqPEPE0X/gMQrIWokYEwwKonGKK0RQyReGKRQKCAKrQiLtF2uHtuybdfv62M7+2Z3dneOLWwzv2RC38yb2Xnf77vf4AisxXIA6+nIho3LFWfoeMJBZPEfObY8Ln/CUmyikgbjU2wZJA9Sw87ULLelooWj9UDvGWVcfhuQPl4ZL14LjC1RxjtfB7wHNSSfAdz8kXyuYSUw6FfGBzZLl23LshK9p+Wxu0R77ljVNX+XTFQE2GRZie6T8jivRntubrXq3v9iPt4my0qcPaIiazrgcEaem18b/d64Yla8YDMuqqN/JwJp44QJ97QBHfuA9j1AIGBu4UXzgIwJ8jnvIeB8q8mcaho9ez4JMRiHvpHjkBm07xXrdlx8eFoWUHwN4PlZJTuSWd6Vqnv3JICsjDzgimVAyYLI18tuATqPAY3vAV0eY4vOKgVmr6JFqwz/4CfGyRo3BZh2H1AwWz5/fId1ZF04L4Qe+hvV99O5RopJPWLMRNasgKItEL/f0WyxG8wlbVj0hjZRocKuexlwjTWwYlrEjIfCiTKKzEKg9il67zXhRCUCR76Wx+mk3FevpmSjWHigmY8BE2bIc1q2kkUOWGxZrDkpqbJGsOlzJsPuhY/hl6SUtnwp8Ofn+hY7+Tp6TpUFUrtIOj/PMYKh+cxh4MRPwMRFyrmcSmDJusjzO48D/3xvsM6Khq4TQNOHwKwniYTPgNbvZI2oeZDc4K3KuGCOPrJY86qXyQvJmmRQahQ7MgtkojjjYoULVapEoHkTud1S4WGigV1j47sxU3bj2eDJncCPz0U23aPfqlxQvr5nV1NB7nKLvwcuUFH4sTmhHftB8QjN9KwdLwDnjibeuvp9VBC/KaxMCz4v8PsaYQCGOxjxwNeu4SY7w5Q7/nhIdceka5XxX1sou2w3J7RTfwCHvxAegAU4kmAF+e01WtMS4YrHlQkr51rM8yu9Uz29U6/JdpMZuAt1F3oivDhFfAmCM76WBop7uebehy3/768uXd0VGAT+3S6OYCZooqSxNvKyFumsHYZQfruoPYYWSIvZtyGu7CjpYLL2tI6s7DJRYwXBMefYtjjqNip8K+9Wxq0NIxNXkhDWuMEx2cCcp+XWCseKeIrN6SsBZ5oSdA9vGX1SdmWS55hMpuEUjYK+s5eIrNRMUQBn5MsZY0t97HsL58mFavNGssje0UNSsNtTXCcrsvcAcOhT3R7EHFlsEXWr5VqobTewd33sVJDvnb5CGZ9rFUSF9szGqDaxM4uU610nDWvoiICz27nPKqVIKLgbv/BVYP9GJflIKFks7HnPi+o8CG7i7n6Hirz+OArgbNGKCY1581+Jfs+Um8TBaPpA9PUuR3BriWWTmh49A575sFC4tsYEJhhDru8leb+GLWrXuviIGs3gWmrW4+FE+TpEg1vdEpv5SGTrs8Syhoh6kSyqQjnn+YVc3/ujM93Wi+IFsrcZ6qRsEx0UrrsmLQauehTDXXdOzirupBi22WKyIhHl7xb7WJV3Rb6n2yMq9khdkK0PxAjQlLRc/7Yy5i0SLpbjBW+L8BGKYD03nOTMlefwJqCOFlAYKu6Qx9xy2r9JieHsurMoM5y6VJlTegMV71/G7LLoI4vrqFCihtJStzZRwZZPJLJGApxtVt0TfU7VvfKYFcIoWbwhy0SEghve6mSLuyqlNyolC7vMgtqYctIXsxz2VwBRod6qZ49z+lD4PPZGp3bJ5+LYa9NnWf3dIlDqATc0DbdnBuTf8+tsxhp5X7+Jhq/a63Q0ac9tp2slC0NcdpnFZHG80BMzzII/7dq+yvj9I/2+vH8WCq4dtaD+PMFdlKDU3YZG7ZilUjav9lyfN7zuivEZhE2WtUWWyqX2RHHRPbpzApushHLniN7BCIvR/Tpj1oWuTlvKGhgccEsK7u/pRoprcHjsPZCJrFKFhUDAR/KMzEB6TgrFNLeUTHW3d6rSfMmv8v/PCtgsJAdsN5hkZHlsMSQFPByzuEH3Fh1TbXlYof4uF5xpaRSDBtDf16f94QVlHy63GylOJwb9firGfVE+0mih45n/BRgA2iDYoASd98UAAAAASUVORK5CYII=",
+                        "form": [{
+                            type: "tabs",
+                            tabs: [{
+                                title: "Metric Box Extras",
+                                items: ["value", "unit", "label","icon","action-icon","tag",
+                                        {
+                                                        "key": "on-action-clicked",
+                                                        "type": "codemirror",
+                                                        "codemirrorOptions": {
+                                                            value: "return",
+                                                            styleActiveLine: true,
+                                                            lineNumbers: true,
+                                                            lineWrapping: true,
+                                                            autoCloseBrackets: true,
+                                                            matchBrackets: true,
+                                                            theme: "neo",
+                                                            mode: "javascript",
+                                                            readOnly: false,
+                                                            autoRefresh: true
+                                                        }
+                                                    }]
+                            }]
+                        }],
+                        "schema": {
+                            "type": "object",
+                            "title": "Schema",
+                            "properties": {
+                                "value": {
+                                    "title": "Static data",
+                                    "type": "string",
+                                    "description": "Set a static value for Metric Box."
+                                },
+                                "unit": {
+                                    "title": "Unit",
+                                    "type": "string",
+                                    "default": "",
+                                    "description": "Unit."
+                                },
+                                "label": {
+                                    "title": "Label",
+                                    "type": "string",
+                                    "default": "",
+                                    "description": "Label."
+                                },
+                                "tag": {
+                                    "title": "Tag",
+                                    "type": "string",
+                                    "default": "",
+                                    "description": "Tag passed to onActionClicked callback function."
+                                },
+                                "icon": {
+                                    "title": "Icon URL",
+                                    "type": "string",
+                                    "default": "",
+                                    "description": "Icon URL."
+                                },
+                                "on-action-clicked": {
+                                    "title": "OnActionClicked Callback",
+                                    "type": "string",
+                                    "default": "alert(tag)",
+                                    "description": "OnActionClicked Callback called once you click on the top right icon of the widget.",
+
+                                },
+                                "action-icon": {
+                                    "title": "Action Icon URL",
+                                    "type": "string",
+                                    "default": "",
+                                    "description": "Action Icon URL."
+                                }
+                            },
+                            "required": []
+                        }
+                    },
+                    {
+                        "name" : "plotly",
+                        "label" : "Wind Rose",
+                        "class" : "scriptr-plotly",
+                        "commonData" : false,
+                        "show" : true,
+                        "defaults" : {
+                            "transport" : "wss",
+                            "data-type": "raw",
+                            "schema-for": "windrose",
+                            "data-format": "windrose",
+                            "fetch-from-date-param": "from_date",
+                            "fetch-to-date-param": "to_date",
+                            "display-metric-param": "display_metric",
+                            "fetch-data-interval": 300, //in seconds
+                            "on-format-data": "return data;",
+                            "boxLabel": "Wind Rose",
+                            "boxBorder" : true,
+                            "retrieved-data": {"data": [
+                                {"direction": "E", "speeds": [2, 3, 15, 17]},
+                                {"direction": "ESE", "speeds": [24, 8, 4]},
+                                {"direction": "SSE", "speeds": [2.5, 7, 16]},
+                                {"direction": "S", "speeds": [3, 8, 2, 1, 9, 11]},
+                                {"direction": "SSW", "speeds": [13, 3, 7.5, 8]},
+                                {"direction": "WSW", "speeds": [21, 14, 9]},
+                                {"direction": "W", "speeds": [7, 0, 8, 9, 15, 19, 11]},
+                                {"direction": "WNW", "speeds": [4, 17, 21]},
+                                {"direction": "NNW", "speeds": [14, 7]},
+                                {"direction": "N", "speeds": [20, 0, 5, 9, 7]},
+                                {"direction": "NNE", "speeds": [1, 0.5, 6.5]},
+                                {"direction": "ENE", "speeds": [3.5, 30, 15]}
+                            ]}
+                        },
+                        "box" : {
+                            sizeX : 2,
+                            sizeY : 4,
+                            minSizeX: 2,
+                            minSizeY: 4
+                        },
+                        "imgCls" : "",
+                        "imgSrc" : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/wind-rose.svg",
+                        "form" : [ {
+                            type : "tabs",
+                            tabs : [
+                                { 
+                                title : "Format",
+                                items : [
+                                {
+                                    "type" : "section",
+                                    "htmlClass" : "row",
+                                    "items" : [
+                                    {
+                                        "type" : "section",
+                                        "htmlClass" : "col-xs-12 col-sm-6",
+                                        "items" : [ "font-size",
+                                                  {
+                                                      "key" : "show-legend",
+                                                      "type" : "radios-inline",
+                                                      titleMap : [
+                                                          {
+                                                              value : "true",
+                                                              name : "True"
+                                                          },
+                                                          {
+                                                              value : "false",
+                                                              name : "False"
+                                                          } ]
+                                                  }]
+                                    },
+                                    {
+                                        "type" : "section",
+                                        "htmlClass" : "col-xs-12",
+                                        "items" : [  {
+                                            "key" : "custom-ranges",
+                                            "title" : "Fill Colors & Ranges",
+                                            "items" : [ {
+                                                "type" : "section",
+                                                "htmlClass" : "row",
+                                                "items" : [
+                                                    {
+                                                        "type" : "section",
+                                                        "htmlClass" : "col-xs-4",
+                                                        "items" : [ {
+                                                            "key" : "custom-ranges[].color",
+                                                            "title" : "Color",
+                                                            "colorFormat" : "hex3",
+                                                            "spectrumOptions": {showInput: true,
+                                                                                showAlpha: false,
+                                                                                allowEmpty: true,
+                                                                                showPalette: true,
+                                                                                preferredFormat: 'hex3',
+                                                                                palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                          ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                          ['#ef2929', '#888a85', '#deface']]}
+                                                        } ]
+                                                    },
+                                                    {
+                                                        "type" : "section",
+                                                        "htmlClass" : "col-xs-4",
+                                                        "items" : [ {
+                                                            "key" : "custom-ranges[].lo"
+                                                        } ]
+                                                    },
+                                                    {
+                                                        "type" : "section",
+                                                        "htmlClass" : "col-xs-4",
+                                                        "items" : [ {
+                                                            "key" : "custom-ranges[].hi",
+                                                        } ]
+                                                    } ]
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        }],
+                        "schema" : {
+                            "type" : "object",
+                            "title" : "Schema",
+                            "properties" : {
+                                "windDirection" : {
+                                    "title" : "Wind Direction Channel",
+                                    "type" : "string",
+                                    "description" : "",
+                                    "placeholder" : " ",
+                                    "validationMessage": "Required."
+                                },
+                                "windSpeed" : {
+                                    "title" : "Wind Speed Channel",
+                                    "type" : "string",
+                                    "description" : "",
+                                    "placeholder" : " ",
+                                    "validationMessage": "Required."
+                                },
+                                "font-size" : {
+                                    "title" : "Font Size",
+                                    "type" : "number",
+                                    "default": 16,
+                                    "description" : "Set the font size of the wind rose (in px)."
+                                },
+                                "show-legend" : {
+                                    "title" : "Show Legend",
+                                    "type" : "string",
+                                    "default" : "true",
+                                    "description" : "Set visibility of the legend." 
+                                },
+                                "custom-ranges" : {
+                                  "title" : "Custom Ranges",
+                                    "type" : "array",
+                                    "default": [{"color": "#00476b", "lo": 0, "hi": 2}, {"color": "#005487", "lo": 2, "hi": 4}, {"color": "#006699", "lo": 4, "hi": 6}, {"color": "#0082b5", "lo": 6, "hi": 8}, {"color": "#0294c1", "lo": 8, "hi": 10}, {"color": "#06a9ce", "lo": 10, "hi": 20}],
+                                    "items" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                          "color" : {
+                                              "title" : "Sector Color",
+                                              "type" : "string",
+                                              "format" : "color",
+                                              "required": true,
+                                              "validationMessage": "Invalid Color"
+                                          },
+                                          "lo" : {
+                                              "title": "Low",
+                                              "type" : "number",
+                                              "required": true
+                                          },
+                                          "hi" : {
+                                              "title": "High",
+                                              "type" : "number",
+                                              "required": true
+                                          }
+                                      }
+                                  }
+                              }
+                            },
+                            "required" : ["windSpeed", "windDirection"]
+                        }
+                    }
+         
+               ]
+            }
+         }
+     )());

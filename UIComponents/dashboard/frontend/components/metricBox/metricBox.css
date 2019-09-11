@@ -1,0 +1,113 @@
+.metric-box * {
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 600;
+
+}
+
+.metric-box {
+    border: 1px solid;
+    padding: 10px;
+    width: 100%;
+    background: #aaa;
+    position: relative;
+}
+
+#disabledOverlay {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    cursor: not-allowed;
+}
+
+.metric-box-label {
+    width: 50%;
+    padding: 5px;
+}
+
+.metric-box-action {
+    width: 25%;
+}
+
+.metric-box-action img {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.metric-box-head {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.metric-box-body {
+    padding-top: 1px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.metric-box-icon {
+    width: 50%;
+}
+
+.metric-box-icon img {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+}
+
+.metric-box-value {
+    margin: auto;
+    width: 25%;
+}
+
+.metric-box-unit {
+    margin: auto;
+    width: 25%;
+}
+
+/*** override Metric box ***/
+
+
+.metric-box-label{
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 22px;
+}
+.metric-box-action{
+  width: auto;
+}
+.metric-box-head{
+  height: 32px;
+}
+.metric-box-value-unit {
+	display: flex;
+  flex-direction: row;
+}
+.metric-box-icon{
+  width: 100%;
+  text-align: right;
+} 
+.metric-box-icon img{
+  width: 64px;
+	height: 64px;
+} 
+.metric-box-value{
+  font-size: 1.8em;
+  width: auto;
+} 
+.metric-box-unit{
+  font-size: 1.5em;
+  width: auto;
+} 

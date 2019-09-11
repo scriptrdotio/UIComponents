@@ -96,7 +96,7 @@ angular
         },
 
         templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
-        controller : function($scope, $window, $uibModal, $timeout, wsClient, dataService) {
+        controller : function($scope, $window, $uibModal, $timeout, wsClient, dataStore) {
 
             var self = this;
 
@@ -130,7 +130,7 @@ angular
                             return self.onFormatData()(data); // Or we can have it as self.onFormatData({"data":data}) and pass it in the on-format-update as: vm.callback(data)
                         }
                     }
-                    dataService.getGridData(api, APIParams, transport, tmp).then(
+                    dataStore.getGridData(api, APIParams, transport, tmp).then(
                         function(data, response) {
                             if (data && data.documents) {
                                 var rowsData = data.documents;
@@ -302,7 +302,7 @@ angular
                 this.mode =  (this.gridOptions.rowModelType == 'infinite') ? "infinite" : "normal";
 
                 if(self.msgTag){
-                    dataService.subscribe(this.onServerCall, self.msgTag, $scope);
+                    dataStore.subscribe(this.onServerCall, self.msgTag, $scope);
                 }
 
                 $scope.$on("updateGridData", function(event, broadcastData) {
@@ -336,7 +336,7 @@ angular
                             params[key] = this.editParams[key]
                         }
                     }  
-                    dataService.gridHelper(self.api, params).then(
+                    dataStore.gridHelper(self.api, params).then(
                         function(data, response) {
                             self.gridOptions.api.hideOverlay();  
                             if (data && (data.result == "success" || data.status == "success")) {
@@ -366,7 +366,7 @@ angular
                             params[key] = this.addParams[key]
                         }
                     }   
-                    dataService.gridHelper(self.api, event.data).then(
+                    dataStore.gridHelper(self.api, event.data).then(
                         function(data, response) {
                             self.gridOptions.api.hideOverlay();   
                             if (data && (data.result == "success" || data.status == "success")) {
@@ -438,7 +438,7 @@ angular
                                     params[key] = this.deleteParams[key]
                                 }
                             }  
-                            dataService.gridHelper(self.api, params).then(
+                            dataStore.gridHelper(self.api, params).then(
                                 function(data, response) {
                                     self.gridOptions.api.hideOverlay();     
                                     if (data && (data.result == "success" || data.status == "success")) {
@@ -554,7 +554,7 @@ angular
 
 angular
     .module('Grid')
-    .service("dataService", function(httpClient, wsClient, $q) {
+    .service("dataStore", function(httpClient, wsClient, $q) {
 
     this.subscribe = function(callback, tag, $scope){
         wsClient.onReady.then(function() {

@@ -12,10 +12,12 @@ angular
          "transport" : "@",
  		 "msgTag" : "@",
 		 "apiParams" : "<?",
-         "onFormatData" : "&"
+         "onFormatData" : "&",
+         "fetchDataInterval": "@",   
+         "useWindowParams": "@"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.html',
-      controller: function(httpClient, wsClient, $scope) {
+      controller: function(httpClient, wsClient, $scope, $interval, dataService) {
         
         var self = this;
           
@@ -31,44 +33,29 @@ angular
                 } 
             	if(this.data.z) this.angle = "rotateZ("+ Math.round(this.data.z) + "deg )"; 
               }
+            
+              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
               initDataService(this.transport);
         }
         var initDataService = function(transport) {
-            if (transport == "wss") {
-              wsClient.onReady.then(function() {
-                // Subscribe to socket messages with id chart
-                if(self.msgTag){
-                    wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
+            dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+                
+                if(self.fetchDataInterval && !self.refreshTimer) {
+                    //Assuming this is success
+                    self.refreshTimer = $interval(
+                        function(){
+                            initDataService(self.transport)
+                        }, self.fetchDataInterval * 1000);
                 }
-                if(self.api) {
-                  wsClient.call(self.api, self.apiParams, self.msgTag)
-                    .then(function(data, response) {
-                    self.consumeData(data)
-                  });
-                }
-
-              });
-            } else {
-              if (transport == "https" && self.api) {
-              httpClient
-                  .get(self.api, self.apiParams)
-                  .then(
-                  function(data, response) {
-                    self.consumeData(data)
-                  },
-                  function(err) {
-                    console
-                      .log(
-                      "reject published promise",
-                      err);
-                  });
-              }
-            }
           }
         
          this.$onDestroy = function() {
          	if(self.msgTag) {
             	wsClient.unsubscribe(self.msgTag, null, $scope.$id);
+            }
+            
+            if(self.refreshTimer){
+                $interval.cancel( self.refreshTimer );
             }
             console.log("destory accelerometer")
         }

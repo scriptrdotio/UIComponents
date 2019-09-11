@@ -13,12 +13,15 @@
  	&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js&quot; &gt;&lt;/script&gt;
     &lt;script src=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js&quot; &gt;&lt;/script&gt;
     
+    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone-with-data.min.js&quot;&gt;&lt;/script&gt;
     &lt;!-- Adding Angular --&gt;
     &lt;script src=&quot;//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-mocks.js&quot;&gt;&lt;/script&gt;
     
     &lt;script src=&quot;//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js&quot;&gt;&lt;/script&gt;
     
     &lt;!-- Charts used in historical angular.morris --&gt;
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js&quot;&gt;&lt;/script&gt;
@@ -35,7 +38,6 @@
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/gauge/gauge.js&quot;&gt;&lt;/script&gt;
     
-    &lt;script src=&quot;/modules/login/widgets/authorization.js&quot; &gt;&lt;/script&gt;
   
   	&lt;script src=&quot;//d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js&quot;&gt;&lt;/script&gt;
@@ -51,6 +53,7 @@
     &lt;script src=&quot;//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/wsProvider.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/httpProvider.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dataService.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/chart/chart.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;
@@ -68,6 +71,11 @@
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/map/map.js&quot;&gt;&lt;/script&gt;
     
     
+    
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/thermometer/style.css&quot;&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/thermometer/thermometer.js&quot;&gt;&lt;/script&gt;
+    
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ag-grid/10.0.0/ag-grid.js?ignore=notused36&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/grid/grid.js&quot;&gt;&lt;/script&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/grid/grid.css&quot;&gt;
@@ -75,6 +83,13 @@
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/map/map.css&quot;&gt;
     &lt;link href=&quot;/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css&quot; media=&quot;all&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js&quot;&gt;&lt;/script&gt;
+      
+    
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/dygraphs/dygraphs-2.1.0.css&quot;&gt;
+    
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/dygraphs/angular-dygraphs.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.js&quot;&gt;&lt;/script&gt;
     
     &lt;link href=&quot;/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css&quot; media=&quot;all&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js&quot;&gt;&lt;/script&gt;
@@ -82,6 +97,7 @@
     
     &lt;link href=&quot;//cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.css&quot; media=&quot;all&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/slider/slider.css&quot;&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/slider/slider.js&quot;&gt;&lt;/script&gt;
     
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/button/button.css&quot;&gt;
@@ -91,9 +107,26 @@
     &lt;link href=&quot;/UIComponents/dashboard/frontend/components/IFrame/IFrame.css&quot; media=&quot;all&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/IFrame/IFrame.js&quot;&gt;&lt;/script&gt;
     
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/displayCount/count.css&quot;&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/displayCount/displayCount.js&quot;&gt;&lt;/script&gt;
+ 
     &lt;link rel=&quot;stylesheet&quot;  href=&quot;/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.css&quot;/&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.js&quot;&gt;&lt;/script&gt;
     
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/thermometer/style.css&quot;&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/thermometer/thermometer.js&quot;&gt;&lt;/script&gt;
+    
+    
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/plotly/plotly.css&quot;&gt;
+    &lt;script src=&quot;//cdn.plot.ly/plotly-latest.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/angular-plotly.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/plotly.js&quot;&gt;&lt;/script&gt;
+    
+    
+     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/metricBox/metricBox.css&quot;&gt;
+     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/metricBox/metricBox.js&quot;&gt;&lt;/script&gt;
+ 
 &lt;/head&gt; 
   
   
@@ -110,7 +143,7 @@
   if(&quot;{{{transport.requiresLogin}}}&quot; == &quot;Yes&quot;){
   
    var scriptName = window.location.pathname.substring(1,window.location.pathname.length )
-   var loginTemplateTarget =&quot;/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget=&quot;+scriptName+&quot;&anon_token={{{anon_token}}}&quot;
+   var loginTemplateTarget =&quot;/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget=&quot;+scriptName+&quot;&amp;anon_token={{{anon_token}}}&quot;
 
     var authorization  = $.scriptr.authorization(
         {
@@ -160,7 +193,7 @@
       httpClientProvider.setToken($.urlParam(&quot;auth_token&quot;));
     }]
 
-     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer'])
+     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', &quot;ngAnimate&quot;, &quot;ngSanitize&quot;, 'Dygraphs', 'DataService', 'Plotly', 'MetricBox'])
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      
@@ -178,16 +211,15 @@
        var vm = this;
        vm.gridsterOptions = {
           pushing: false,
-          
           minRows: 1, // the minimum height of the grid, in rows
           maxRows: 100,
           columns: 5, // the width of the grid, in columns
           colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
-          rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+          rowHeight: '83', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
           margins: [10, 10], // the pixel distance between each widget
           defaultSizeX: 2, // the default width of a gridster item, if not specifed
           defaultSizeY: 1, // the default height of a gridster item, if not specified
-          mobileBreakPoint: 1024, // if the screen is not wider that this, remove the grid layout and stack the items
+          mobileBreakPoint: 480, // if the screen is not wider that this, remove the grid layout and stack the items
           minColumns: 1,
           resizable: {
             enabled: false
@@ -210,6 +242,16 @@
                 }
            	{{/if}} 
         {{/each}}
+        
+        {{#each items}}
+           	{{#if this.functions}}   
+            	{{#each this.functions}}
+                    vm.{{this.name}} = function(arguments){
+                      {{{this.value}}}
+                    }
+                 {{/each}}
+           	{{/if}} 
+        {{/each}}
      });
         	
 })();
@@ -222,7 +264,7 @@
           &lt;ul&gt;
              {{#each items}}
                 &lt;li class=&quot;myItem&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
-                    &lt;div class=&quot;box&quot;&gt;
+                    &lt;!--  div class=&quot;box&quot;&gt;
                         &lt;div class=&quot;box-content&quot;&gt;
                           &lt;div  style=&quot;height: 30px;&quot; tooltip-placement=&quot;bottom&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot; class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
                           &lt;div  style=&quot;height: calc(100% - 30px)&quot; &gt;  &lt;{{type}}
@@ -234,7 +276,68 @@
                                     {{/if}} 
                            &gt;&lt;/{{type}}&gt; &lt;/div&gt;
                         &lt;/div&gt;
-                    &lt;/div&gt;
+                    &lt;/div--&gt;
+                    
+                    
+                    
+                    &lt;div 
+			  				{{#if_eq this.options.boxBorder 'false'}}
+			  						class='box-wrapper box-wrapper-without-border {{this.options.boxBorder}}'
+		  				     {{else}}
+		  				     	class='box-wrapper box-wrapper-with-border {{this.options.boxBorder}}'
+		  				     {{/if_eq}}
+                             &gt;
+						&lt;div class=&quot;box&quot;&gt;
+						  &lt;div 
+						  			{{#if this.options.boxLabel }}
+						  				{{#if_eq this.options.boxLabel ''}}
+					  						class='box-header col-xs-12 box-without-header'
+					  				     {{else}}
+					  				     	class='box-header col-xs-12 box-with-header'
+					  				     {{/if_eq}}
+						  			{{else}} 
+						  				class='box-header col-xs-12 box-without-header'
+						  			{{/if}}
+						        &gt;
+						    &lt;div class=&quot;box-label&quot;&gt;&lt;span tooltip-append-to-body=&quot;true&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot;&gt;{{this.options.boxLabel}}&lt;/span&gt;&lt;/div&gt;
+						  &lt;/div&gt;
+						  &lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+						  &lt;div 
+	                    			{{#if this.options.boxLabel }}
+						  				{{#if_eq this.options.boxLabel ''}}
+						  						class='box-content box-content-without-header'
+						  				     {{else}}
+						  				     	class='box-content box-content-with-header'
+						  				     {{/if_eq}}
+						  			{{else}} 
+						  					class='box-content box-content-without-header'
+						  			{{/if}}
+						  		&gt;
+						  		&lt;{{type}}
+                                    {{#buildAttr this.options }}
+                                        {{this}}
+                                    {{/buildAttr}}
+                                    {{#if this.formatFunction}}   
+                                  		on-format-data='vm.{{this.formatFunction}}'
+                                    {{/if}} 
+                           		&gt;
+                                
+                                {{#if this.functions}}   
+                                       {{#each this.functions}}
+                                  			{{this.attribute}}='vm.{{this.name}}'
+                                        {{/each}}
+                                    {{/if}} 
+                                    
+                                {{#if this.options.infoWindow}}
+                                &lt;div&gt;
+                                &lt;info-window id="infoWindowTemplate_simulator" template="{{this.options.infoWindow}}"&gt;
+                                 &lt;/info-window&gt;
+                                &lt;/div&gt;
+                                {{/if}}
+                                &lt;/{{type}}&gt;
+						  &lt;/div&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
                 &lt;/li&gt;
              {{/each}}
           &lt;/ul&gt;

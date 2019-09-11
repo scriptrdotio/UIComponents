@@ -117,10 +117,12 @@ angular
                   "width": "@", //  gauge width in % (int)
                   "height": "@", // gauge height in px (int)
                  
+                  "fetchDataInterval": "@",
+          		  "useWindowParams": "@"
 
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/gauge/gauge.html',
-               controller : function($scope, httpClient, wsClient) {
+               controller : function($scope, httpClient, wsClient, $interval, dataService) {
 
 	               var self = this;
 
@@ -162,6 +164,7 @@ angular
 
 		               this.transport = (this.transport) ? this.transport : "wss";
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
+                       this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
                      
                       //this.width = (this.width) ? this.width : 50;
                       //this.height = (this.height) ? this.height : 300;
@@ -172,48 +175,26 @@ angular
                    
                             
                 this.$onDestroy = function() {
-                    console.log("destory gauge")
+                    console.log("destory gauge");
                     if(self.msgTag){
                         wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
                     }
+                    
+                    if(self.refreshTimer){
+                        $interval.cancel( self.refreshTimer );
+                    }
                 }
                   
-	               var initDataService = function(transport) {
-		               if (transport == "wss") {
-			               wsClient.onReady.then(function() {
-				               // Subscribe to socket messages with id chart
-				               if(self.msgTag){
-                                 wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
-                               }
-				               if(self.api) {
-                                  wsClient.call(self.api, self.apiParams, self.msgTag)
-                                   .then(
-                                    function(data, response) {
-                                       self.consumeData(data)
-                                   },
-                                   function(err) {
-                                    console.log( "reject published promise", err);
-                                    self.consumeData();
-                                  });
-				               }
-				               
-			               });
-		               } else {
-			               if (transport == "https" && self.api) {
-				               httpClient
-				                     .get(self.api, self.apiParams)
-				                     .then(
-				                           function(data, response) {
-					                           self.consumeData(data)
-				                           },
-				                           function(err) {
-					                           console
-					                                 .log(
-					                                       "reject published promise",
-					                                       err);
-				                           });
-			               }
-		               }
+	           var initDataService = function(transport) {
+                       dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+
+                            if(self.fetchDataInterval && !self.refreshTimer) {
+                                //Assuming this is success
+                                self.refreshTimer = $interval(
+                                    function(){
+                                        initDataService(self.transport)
+                                    }, self.fetchDataInterval * 1000);
+                            }
 	               }
 
 	              this.consumeData = function(data, response) {
