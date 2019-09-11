@@ -36,7 +36,7 @@ angular
 
         },
         templateUrl : '/UIComponents/dashboard/frontend/components/button/button.html',
-        controller : function($scope, $q, $element, $window, $timeout, httpClient, wsClient) {
+        controller : function($scope, $q, $element, $window, $timeout, httpClient, wsClient,dataService) {
 
             var self = this;
 
@@ -64,74 +64,27 @@ angular
             
             self.call = function (api, transport, params)
             {
-                if(api) {
-                    var defer = $q.defer();
-                    if (transport == "wss") {
-                        wsClient.onReady.then(function() {
-                            wsClient.call(api, params, self.msgTag)
-                                .then(
-                                function(data, response) {
-                                    if(typeof self.onSuccess() == "function"){
-                                        self.onSuccess()(self);
-                                    }
-                                    defer.resolve({ msg: 'SUCCESS' });
-                                },
-                                function(err) {
-                                    console.log( "reject published promise", err);
-                                    if(typeof self.onFailure() == "function"){
-                                        self.onFailure()(self);
-                                    }
-                                    defer.resolve({ msg: 'ERROR' });
-                                });
-
-                        });
-                    } else {
-                        if (transport == "https" && api) {
-                            if(self.httpsMethod == "post"){
-                                httpClient
-                                    .post(api, params)
-                                    .then(
-                                    function(data, response) {
-                                        if(typeof self.onSuccess() == "function"){
-                                            self.onSuccess()(self);
-                                        }
-                                        defer.resolve({ msg: 'SUCCESS' });
-                                    },
-                                    function(err) {
-                                        if(typeof self.onFailure() == "function"){
-                                            self.onFailure()(self);
-                                        }
-                                        defer.resolve({ msg: 'ERROR' });
-                                        console
-                                            .log(
-                                            "reject published promise",
-                                            err);
-                                    });
-                            }else{
-                                httpClient
-                                    .get(api, params)
-                                    .then(
-                                    function(data, response) {
-                                        if(typeof self.onSuccess() == "function"){
-                                            self.onSuccess()(self);
-                                        }
-                                        defer.resolve({ msg: 'SUCCESS' });
-                                    },
-                                    function(err) {
-                                        if(typeof self.onFailure() == "function"){
-                                            self.onFailure()(self);
-                                        }
-                                        defer.resolve({ msg: 'ERROR' });
-                                        console
-                                            .log(
-                                            "reject published promise",
-                                            err);
-                                    });
+                dataService.postData(transport, api, params, false, self.msgTag, null, $scope.$id)
+                .then(
+                    function (data) {
+                        self._apiResult=data;
+                        if (data.msg == 'SUCCESS') {
+                            if (typeof self.onSuccess() == "function") {
+                                
+                                self.onSuccess()(self);
+                            }
+                        } else {
+                            if (typeof self.onFailure() == "function") {
+                                
+                                self.onFailure()(self);
                             }
                         }
+                    }, function (error) {
+                        self._apiResult=null;
+                        console.log("Button.js post data Error ", error)
                     }
-                    return defer.promise;
-                }
+                );
+                
             }
             
             this.$onDestroy = function() {
@@ -142,7 +95,7 @@ angular
                 if(typeof this.onButtonclick() == "function"){
                     this.onButtonclick()(self);
                 } 
-                self.successPromise = self.call(self.api, self.transport, self.apiParams);
+                 self.call(self.api, self.transport, self.apiParams);
             };
 
             self.resize = function(){
