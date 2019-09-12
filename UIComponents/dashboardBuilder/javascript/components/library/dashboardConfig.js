@@ -57,6 +57,39 @@ angular
                             {
                                 "type": "fieldset",
                                 "htmlClass": "col-xs-12",
+                                "title": "Theme",
+                                "key": "style.theme",
+                                "items": [
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "row",
+                                        "items": [{
+                                            "type": "section",
+                                            "htmlClass": "col-xs-6 col-sm-3",
+                                            "items": [
+                                                {
+                                                    "key": "style.theme.colorSchema",
+                                                    "type": "strapselect",
+                                                    "titleMap": [{
+                                                        "value": "light",
+                                                        "name": "Light"
+                                                    }, {
+                                                        "value": "dark",
+                                                        "name": "Dark"
+                                                    }]
+
+                                                }
+                                            ]
+                                        }]
+                                    },
+
+                                    
+                                   
+                                ]
+                            },
+                            {
+                                "type": "fieldset",
+                                "htmlClass": "col-xs-12",
                                 "title": "Box Style",
                                 "key": "style.box",
                                 "items": [
@@ -735,6 +768,19 @@ angular
                 "title": "Style",
                 "type": "object",
                 "properties": {
+                    "theme": {
+                        "title": "Theme",
+                        "type": "object",
+                        "properties": {
+
+                            "colorSchema": {
+                                "title": "Colors",
+                                "type": "string",
+                                "default": "light",
+                            }
+                        }
+
+                    },
                     //".box"
                     "box": {
                         "title": "Box",
