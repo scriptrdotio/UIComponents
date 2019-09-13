@@ -80,7 +80,7 @@ angular
         }  
         
         this.urlParams = [];
-        this.transport = angular.copy(dashboardConfig.transport);
+        this.dashboardSettings = angular.copy(dashboardConfig.settings);
         this.frmGlobalOptions = {
           "destroyStrategy" : "remove",
           "formDefaults": {"feedback": true}
@@ -396,13 +396,13 @@ angular
           var data = {};
           data["items"] = angular.copy(this.dashboard.widgets);
           data["urlParams"] = angular.copy(this.urlParams);
-          data["transport"] = angular.copy(this.transport.defaults);
+          data["dashboardSettings"] = angular.copy(this.dashboardSettings.defaults);
           data["staticdomain"] = $routeParams.staticdomain;
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
-          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"], "settings": data["transport"]});
+          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"], "settings": data["dashboardSettings"]});
           return scriptData;
       };
         
@@ -411,7 +411,7 @@ angular
          if(pluginData) {
              this.widgets = pluginData.wdg; //This needs fixing
              this.urlParams = pluginData.urlParams;
-             this.transport.defaults = pluginData.settings;
+             this.dashboardSettings.defaults = pluginData.settings;
              this.dashboard["widgets"] = this.widgets;
          }
        }
@@ -603,7 +603,7 @@ angular
           this.notifyDashboardChange();
       };
       
-      this.setTransportSettings = function(redirectTarget) {
+      this.setDashboardSettings = function(redirectTarget) {
         var self = this;
         var modalInstance = $uibModal.open({
               animation: true,
@@ -612,37 +612,40 @@ angular
               resolve: {
                 widget: function () {
                   return {
-                    "label":  self.transport.label,
-                    "options": self.transport.defaults,
-                    "schema": self.transport.schema,
-                    "form": self.transport.form};
+                    "label":  self.dashboardSettings.label,
+                    "options": self.dashboardSettings.defaults,
+                    "schema": self.dashboardSettings.schema,
+                    "form": self.dashboardSettings.form};
                 }
               }
             });
-            modalInstance.result.then(function (transportModel) {
-              console.log("modal-component transport settings data :", transportModel ,"submitted at: " + new Date());
-              if(transportModel != "cancel") {
-                if(self.transport.defaults && self.transport.defaults.publishChannel != transportModel.publishChannel){
-                    self.wsClient.updatePublishingChannel(transportModel.publishChannel);
+            modalInstance.result.then(function (dashboardSettingsModel) {
+              console.log("modal-component dashboard settings data :", dashboardSettingsModel ,"submitted at: " + new Date());
+              if(dashboardSettingsModel != "cancel") {
+                if(self.dashboardSettings.defaults && self.dashboardSettings.defaults.publishChannel != dashboardSettingsModel.publishChannel){
+                    self.wsClient.updatePublishingChannel(dashboardSettingsModel.publishChannel);
                 }
-                if(self.transport.defaults && self.transport.defaults.subscribeChannel != transportModel.subscribeChannel){
-                  	self.wsClient.updateSubscriptionChannel(transportModel.subscribeChannel);
+                if(self.dashboardSettings.defaults && self.dashboardSettings.defaults.subscribeChannel != dashboardSettingsModel.subscribeChannel){
+                  	self.wsClient.updateSubscriptionChannel(dashboardSettingsModel.subscribeChannel);
                 } 
-                self.transport.defaults = angular.copy(transportModel);
-                  
-                /**MFE: temporary here, transport need to be renamed to dashboardConfig or dashboardSettings **/
-                var template = document.querySelector('#handlebar-customcss-template').innerText;
-          		var compiledCss = Handlebars.compile(template)(transportModel.style); 
+                var previousTheme = self.dashboardSettings.defaults.theme;
+                if(previousTheme != dashboardSettingsModel.theme)
+                	angular.element(document.getElementsByTagName('body')).switchClass(previousTheme, dashboardSettingsModel.theme)
                 
-                var styleElement = angular.element(document.createElement("style"));
-			    styleElement.append(document.createTextNode(compiledCss));
-				styleElement.appendTo(angular.element(document.getElementsByTagName('head')));
+                self.dashboardSettings.defaults = angular.copy(dashboardSettingsModel);
                   
+                var template = document.querySelector('#handlebar-customcss-template').innerText;
+          		var compiledCss = Handlebars.compile(template)(dashboardSettingsModel); 
+                
+                
+                var styleElement = angular.element(document.querySelector('#dashboardCustomStyle'));
+			    styleElement[0].innerText = compiledCss;
+				//styleElement.appendTo(angular.element(document.getElementsByTagName('head')));
                   
                 self.notifyDashboardChange();
               }
             }, function () {
-              console.log('modal-component transport settings dismissed at: ' + new Date());
+              console.log('modal-component dashboard settings dismissed at: ' + new Date());
             });
       };
       
@@ -661,14 +664,14 @@ angular
           data["urlParams"] = angular.copy(this.urlParams);
           data["token"] = scriptrService.getToken();
 
-          self.transport.defaults.redirectTarget = this.model.scriptName;
-          data["transport"] = angular.copy(this.transport.defaults) //MFE: Transport info needs to be retrieved from url or cookie
+          self.dashboardSettings.defaults.redirectTarget = this.model.scriptName;
+          data["dashboardSettings"] = angular.copy(this.dashboardSettings.defaults) //MFE: dashboardSettings channels info info needs to be retrieved from url or cookie
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
           scriptData["scriptName"] =  this.model.scriptName;
-          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"], "settings": data["transport"]});
+          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"], "settings": data["dashboardSettings"]});
           if(self.isEdit) {
             scriptData["update"] = true;
           }
@@ -746,7 +749,7 @@ angular
                
               // this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
                this.urlParams = JSON.parse(pluginContent.metadata.plugindata).urlParams;
-               this.transport.defaults = JSON.parse(pluginContent.metadata.plugindata).settings;
+               this.dashboardSettings.defaults = JSON.parse(pluginContent.metadata.plugindata).settings;
                this.dashboard["widgets"] = this.widgets;
                this.isEdit = true;
                this.savedScript = scriptName;

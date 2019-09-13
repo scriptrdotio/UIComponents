@@ -75,12 +75,14 @@ form { margin-bottom: 0;}
     background-color: @gray5;
     box-shadow: 2px 2px 12px 0px rgba(51,51,51,0.3);
     .box-header {
-	    position: relative;
+	    position: absolute;
+	    top: 0;
+	    left: 0;
 	    z-index: 1;
 	    display: inline-block;
-	    height: auto;
+	    height: 40px;
 	    width: 100%;
-	    padding: 15px;
+	    padding: 10px 15px;
 	    background: @gray5;
     	.box-header-btns {
     		cursor: pointer;
@@ -111,8 +113,9 @@ form { margin-bottom: 0;}
 		position: relative;
 		text-align: center;
 		width: 100%;
-		height: calc(100% - 30px);
+		height: calc(100% - 40px);
 		overflow: hidden;
+		margin-top: 40px;
 	}
 }
 
@@ -147,8 +150,8 @@ form { margin-bottom: 0;}
 
 /*** Gridtser ***/
 .gridster-item {cursor: move;}
-.gridster-loaded {background: @themeBase;margin: 0;padding: 15px;}
-
+.gridster-loaded {margin: 0;padding: 15px;}
+.dashboardContainer {background: @themeBase; height: 100%;}
 
 /** MFE **/
 .page-header {
@@ -223,7 +226,7 @@ background: @gray3;
 .slick-slide .odometer-img, .slick-slide .gauge-img {width: 60%; padding-top: 4px;}
 
 
-.builder .box dsp-box div {
+.dashboardContainer .box dsp-box div {
     margin-top: 35px;
 }
 
@@ -472,6 +475,12 @@ background: @gray3;
 height: auto !important;
 }
 
+
+/** thermometer **/
+
+.tg-thermometer {
+    height: 90%;
+}
 
 /*** Override angular material ***/
 .schema-form-section input[type=search] {

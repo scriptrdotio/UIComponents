@@ -1,7 +1,131 @@
 <script type='text/x-handlebars-template' id="handlebar-customcss-template">
-.light .box {
-      {{#if box.background-color }}
-      	background-color: {{box.background-color}}
+
+.{{theme}} .dashboardContainer {
+      {{#if_eq style.dashboard.background-type "solid"}}
+      	background-color: {{style.dashboard.background-color}};
+      {{/if_eq}}
+      {{#if_eq style.dashboard.background-type "gradient"}}
+      	background-color: {{style.dashboard.background-gradient}};
+      {{/if_eq}}
+    
+       {{#if_eq style.dashboard.border "true"}}
+      		border: {{style.dashboard.border-width}}px {{style.dashboard.border-style}} {{style.dashboard.border-color}} ;
+      {{/if_eq}}
+      {{#if_eq style.dashboard.border "false"}}
+      		border: none;
+      {{/if_eq}}
+    
+      {{#if style.dashboard.border-radius}}
+    		border-radius: {{style.dashboard.border-radius}}px;
       {{/if}}
+    
+      {{#if_eq style.dashboard.box-shadow "true"}}
+    	box-shadow: 2px 2px 12px 0px {{ style.dashboard.box-shadow-color }};
+      {{/if_eq}}
+    
+       {{#if_eq style.dashboard.box-shadow "false"}}
+      		box-shadow: none;
+      {{/if_eq}}
 }
+
+.{{theme}} .box {
+      {{#if_eq style.box.background-type "solid"}}
+      	background-color: {{style.box.background-color}};
+      {{/if_eq}}
+      {{#if_eq style.box.background-type "gradient"}}
+      	background-color: {{style.box.background-gradient}};
+      {{/if_eq}}
+    
+       {{#if_eq style.box.border "true"}}
+      		border: {{style.box.border-width}}px {{style.box.border-style}} {{style.box.border-color}} ;
+      {{/if_eq}}
+      {{#if_eq style.box.border "false"}}
+      		border: none;
+      {{/if_eq}}
+    
+      {{#if style.box.border-radius}}
+    		border-radius: {{style.box.border-radius}}px;
+      {{/if}}
+    
+      {{#if_eq style.box.box-shadow "true"}}
+    	box-shadow: 2px 2px 12px 0px {{ style.box.box-shadow-color }};
+      {{/if_eq}}
+    
+       {{#if_eq style.box.box-shadow "false"}}
+      		box-shadow: none;
+      {{/if_eq}}
+}
+
+
+.{{theme}} .box .box-content {
+      {{#if_eq style.box-content.background-type "solid"}}
+      	background-color: {{style.box-content.background-color}};
+      {{/if_eq}}
+      {{#if_eq style.box-content.background-type "gradient"}}
+      	background-color: {{style.box-content.background-gradient}};
+      {{/if_eq}}
+    
+      {{#if_eq style.box-content.border "true"}}
+      		border: {{style.box-content.border-width}}px {{style.box-content.border-style}} {{style.box-content.border-color}} ;
+      {{/if_eq}}
+      {{#if_eq style.box-content.border "false"}}
+      		border: none;
+      {{/if_eq}}
+    
+      {{#if style.box.border-radius}}
+    	border-bottom-left-radius: {{style.box.border-radius}}px;
+    	border-bottom-right-radius: {{style.box.border-radius}}px;
+      {{/if}}
+    
+      {{#if style.box-content.border-radius}}
+    		border-radius: {{style.box-content.border-radius}}px;
+      {{/if}}
+}  
+
+.{{theme}} .box .box-header {
+    
+     {{#if_eq style.box-header.background-type "solid"}}
+      	background-color: {{style.box-header.background-color}};
+      {{/if_eq}}
+      {{#if_eq style.box-header.background-type "gradient"}}
+      	background-color: {{style.box-header.background-gradient}};
+      {{/if_eq}}
+    
+    
+      {{#if_eq style.box-header.border "true"}}
+      		border: {{style.box-header.border-width}}px {{style.box-header.border-style}} {{style.box-header.border-color}} ;
+      {{/if_eq}}
+      {{#if_eq style.box-header.border "false"}}
+      		border: none;
+      {{/if_eq}}
+    
+      {{#if style.box.border-radius}}
+    	border-top-left-radius: {{style.box.border-radius}}px;
+    	border-top-right-radius: {{style.box.border-radius}}px;
+      {{/if}}
+    
+      {{#if style.box-header.border-radius}}
+    		border-radius: {{style.box-header.border-radius}}px;
+      {{/if}}
+}  
+
+.{{theme}} .box .box-header .box-label {
+    
+      {{#if style.box-label.display}}
+      	display: {{style.box-label.display}};
+      {{/if}}
+      {{#if style.box-label.color}}
+      	color: {{style.box-label.color}};
+      {{/if}}
+      {{#if style.box-label.font-size}}
+    	font-size: {{style.box-label.font-size}}em;
+      {{/if}}
+      {{#if style.box-label.font-weight}}
+    	font-weight: {{style.box-label.font-weight}};
+      {{/if}}
+      {{#if style.box-label.text-align}}
+    	text-align: {{style.box-label.text-align}};
+      {{/if}}
+    
+} 
 </script>

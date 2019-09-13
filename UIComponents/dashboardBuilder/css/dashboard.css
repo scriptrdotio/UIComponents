@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /****** Less color variables **********/
 /*********** Theming Classes ***********/
 .light {
@@ -21,170 +20,6 @@
   /*** dashboard builder wrap ***/
   /***  devices-models-tree ***/
   /*
-=======
-body {font-family: 'Source Sans Pro', sans-serif!important; background: #fff;}
-html {background: #fff;}
-.pdt10 {padding-top: 10px;}
-.pdb10 {padding-bottom: 10px;}
-.pdr10 {padding-right: 10px;}
-.pdl10 {padding-left: 10px!important;}
-.pdl0 {padding-left: 0!important;}
-.pdr0 {padding-right: 0!important;}
-
-.pdt5 {padding-top: 5px;}
-.pdb5 {padding-bottom: 5px;}
-
-.pdl0 {padding-left: 0px;}
-.ml5 {margin-left: 5px;}
-.m10 {margin: 10px!important;}
-
-.controls {
-    margin-bottom: 20px;
-}
-
-scriptr-odometer {
-  white-space : normal !important;
-}
-
-ul {
-    /**list-style: none;**/
-    padding-left: 20px;
-}
-
-form { margin-bottom: 0;}
-.grey-bg {background: #efefef;}
-.dark-grey-bg {background: #e0e0e0;}
-.white-bg {background: #fff !important;}
-
-/*** loading ***/
-.loading {margin: 20px auto;}
-
-
-/*** box ***/
-.box { height: 100%;border: 1px solid #ccc;background-color: #fff;}
-.box-content{position: relative; text-align: center; width: 100%; overflow: hidden; white-space: initial;}
-.box-content-with-header {height: calc(100% - 30px);}
-.box-content-without-header {height: 100%; }
-.box-wrapper-with-border {border: 1px solid #d7d7d7; box-shadow: 0 0 1px #dcdcdc;}
-.box-wrapper-without-border {border: none; box-shadow: none;}
-.box-wrapper-without-border .box {border:none;}
-
-/*** Box header ***/
-.box-without-header {position: absolute;}
-.box-with-header {position: relative; background: #f3f3f3;}
-.box-with-header .drag-box {font-size: 17px;}
-.box-header {z-index: 1; display: inline-block; height:30px; width: 100%; padding: 5px 10px;}
-.box-header h3 { margin-top: 10px;display: inline-block;}
-.box .box-header i {width: 100%; height: 100%;}
-.box .box-header a {float: right; text-align: right;}
-.box .box-header a, .box .box-header a:link, .box .box-header a:visited {color: #ff8c00;}
-.box .box-header a:hover, .box .box-header a:active {text-decoratin: none;}
-.box-label {
-	transition: width .4s;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-weight: bold;
-    color: #000;
-    cursor: default;
-}
-
-.box .box-header a {cursor: pointer;}   
-.box .box-header a.drag-box {cursor: move; font-size: 17px;}
-.box .box-header-btns {text-align: right;}    
-.box-with-header .box-header-btns a {width: 18px; height: 18px;}
-.box-without-header .box-header-btns a {width: 20px; height: 20px;}
-.box-without-header a {background: #fff; padding: 1px; border-radius: 4px;}
-
-
-
-
-/*** slick styles ***/
-.slick-container {margin: 0 auto;}
-.slick-item {}
-.slick-slide {height: auto; text-align: center;}
-.slick-slide a[ng-click] {display: block; padding: 7px 0; color: #333;  background: #fdfdfd; box-shadow: 0 0 3px #b7b3b3 inset; cursor: pointer}
-.slick-slide a:hover, .slick-slide a:active {background: #f5f5f5; text-decoration: none;} 
-.slick-slide a:focus {outline: 0!important; text-decoration: none;}
-.slick-slide img {margin: 0 auto; display: inline;}
-.slick-label {font-size: 12px;padding-top: 3px;line-height: 2.4em; margin-left: 5px;}
-.slick-prev:before, .slick-next:before {color: #ff8c00;}
-
-
-
-
-.dashboard-config {
-    background: #ee8300;
-    padding: 11px 4px 10px 4px;
-    border-left: 4px solid #fff;
-}
-.dashboard-config a {   
-	cursor: pointer;
-    border-radius: 6px;
-    background: #d87702;
-    padding: 5px 9px;
-    color: #fff;
-    }
-.dashboard-config a:hover {opacity: 0.8;}
-.dashboard-config a:link, .dashboard-config a:visited {color: #fff; font-size: 14px;}
-
-/*** Gridtser ***/
-.gridster-item {cursor: move;}
-.gridster-loaded {background: #fff;}
-
-
-/** MFE **/
-.page-header {
-padding: 5px 0;
-margin: 0;
-  border: none;
-  background: #fff;
-}
-
-.page-header .form-group {margin-bottom: 0;}
-.page-header .form-control {height: 30px; font-size: 13px;}
-.page-header .help-block {display: none;}
-:focus {
-  outline: 0!important;
-}
-
-.btn-warning.focus, .btn-warning:focus {
-  border-color: #eea236
-}
-.script-name-input {
-  
-}
-
-.help-block {
-    font-size: 80%;
-}
-
-.gauge {
-  margin: 0 auto;
-}
-
-/*** dashboard builder wrap ***/
-.slick-wrap {min-height: calc(100vh - 44px); background: #fff; padding-right: 0;}
-.chart-options-wrap {margin-right: -15px; padding-left: 9px; padding-right: 6px;}
-.slick-container {padding: 3px;}
-
-/***  devices-models-tree ***/
-.devices-models-tree {
-  min-height: 100vh;
-}
-.devices-models-tree .button-wrapper {padding: 0;}
-.devices-models-tree ul.abn-tree {margin-top: 10px; max-height: calc(100vh - 55px); overflow-y: auto;}
-.devices-models-tree ul.abn-tree li.abn-tree-row a {color: #555;}
-
-.devices-models-tree .nav-pills>li.active>a, 
-.devices-models-tree .nav-pills>li.active>a:focus, 
-.devices-models-tree .nav-pills>li.active>a:hover {background: #eca846; color: #fff!important;}
-
-.devices-models-tree ul.abn-tree i.indented {color: #eca846;}
-.devices-models-tree ul.abn-tree li.active i.indented {color: #fff;}
-
-/*
->>>>>>> branch 'master' of https://github.com/scriptrdotio/UIComponents
 @media screen and (max-width: 560px) {
   .slick-slide a[ng-click] {width: 40px; height: 35px;}
   .slick-slide img {width: 54%;}
@@ -216,6 +51,7 @@ margin: 0;
   /***
 ***** DATA GRID *****
 ***/
+  /** thermometer **/
   /*** Override angular material ***/
   /*** View template of the dashboard ****/
 }
@@ -290,12 +126,14 @@ margin: 0;
   box-shadow: 2px 2px 12px 0px rgba(51, 51, 51, 0.3);
 }
 .light .box .box-header {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1;
   display: inline-block;
-  height: auto;
+  height: 40px;
   width: 100%;
-  padding: 15px;
+  padding: 10px 15px;
   background: #FFF;
 }
 .light .box .box-header .box-header-btns {
@@ -328,8 +166,9 @@ margin: 0;
   position: relative;
   text-align: center;
   width: 100%;
-  height: calc(100% - 30px);
+  height: calc(100% - 40px);
   overflow: hidden;
+  margin-top: 40px;
 }
 .light .slick-container {
   padding: 10px 10px 0;
@@ -394,9 +233,12 @@ margin: 0;
   cursor: move;
 }
 .light .gridster-loaded {
-  background: #FFF;
   margin: 0;
   padding: 15px;
+}
+.light .dashboardContainer {
+  background: #FFF;
+  height: 100%;
 }
 .light .page-header {
   padding: 10px 0;
@@ -480,7 +322,7 @@ margin: 0;
   width: 60%;
   padding-top: 4px;
 }
-.light .builder .box dsp-box div {
+.light .dashboardContainer .box dsp-box div {
   margin-top: 35px;
 }
 .light .board-menu-base {
@@ -577,7 +419,6 @@ margin: 0;
 .light .dashboard-toolbar .btn-warning {
   background: #ffac47;
 }
-<<<<<<< HEAD
 .light .editable-wrap .editable-controls,
 .light .editable-wrap .editable-error {
   margin-top: 2px;
@@ -759,14 +600,6 @@ margin: 0;
 .light .sp-replacer {
   border: solid 1px #DDD !important;
   background: #FFF !important;
-=======
-
-.schema-form-array .list-group button.close {position: absolute!important; top: 4px; right: 4px;}
-
-.sp-replacer {
-  border: solid 1px #ccc!important;
-  background: #fff!important;
->>>>>>> branch 'master' of https://github.com/scriptrdotio/UIComponents
   width: 100%!important;
   border-radius: 4px!important;
 }
@@ -804,6 +637,9 @@ margin: 0;
 }
 .light .gridster-mobile {
   height: auto !important;
+}
+.light .tg-thermometer {
+  height: 90%;
 }
 .light .schema-form-section input[type=search] {
   -webkit-box-sizing: border-box;
@@ -867,6 +703,7 @@ margin: 0;
   /***
 ***** DATA GRID *****
 ***/
+  /** thermometer **/
   /*** Override angular material ***/
   /*** View template of the dashboard ****/
 }
@@ -941,12 +778,14 @@ margin: 0;
   box-shadow: 2px 2px 12px 0px rgba(51, 51, 51, 0.3);
 }
 .dark .box .box-header {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1;
   display: inline-block;
-  height: auto;
+  height: 40px;
   width: 100%;
-  padding: 15px;
+  padding: 10px 15px;
   background: #2c343a;
 }
 .dark .box .box-header .box-header-btns {
@@ -979,8 +818,9 @@ margin: 0;
   position: relative;
   text-align: center;
   width: 100%;
-  height: calc(100% - 30px);
+  height: calc(100% - 40px);
   overflow: hidden;
+  margin-top: 40px;
 }
 .dark .slick-container {
   padding: 10px 10px 0;
@@ -1045,9 +885,12 @@ margin: 0;
   cursor: move;
 }
 .dark .gridster-loaded {
-  background: #22272b;
   margin: 0;
   padding: 15px;
+}
+.dark .dashboardContainer {
+  background: #22272b;
+  height: 100%;
 }
 .dark .page-header {
   padding: 10px 0;
@@ -1131,7 +974,7 @@ margin: 0;
   width: 60%;
   padding-top: 4px;
 }
-.dark .builder .box dsp-box div {
+.dark .dashboardContainer .box dsp-box div {
   margin-top: 35px;
 }
 .dark .board-menu-base {
@@ -1446,6 +1289,9 @@ margin: 0;
 }
 .dark .gridster-mobile {
   height: auto !important;
+}
+.dark .tg-thermometer {
+  height: 90%;
 }
 .dark .schema-form-section input[type=search] {
   -webkit-box-sizing: border-box;
