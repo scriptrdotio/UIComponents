@@ -11,6 +11,7 @@
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
   
     <script src="/UIComponents/config/scriptrTransport.js"></script>
     
@@ -19,7 +20,7 @@
 </head>  
   
 <script>
-      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Accelerometer"])
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Accelerometer",'DataService',])
       angular.module('myApp').config(wssConfig);
       angular.module('myApp').config(httpsConfig);
   
@@ -29,14 +30,23 @@
             console.log("data formatter");
             return data;
           }
+          vm.accelerometerFormatData2 = function(data){
+                  return data;
+                }
       });
 </script>
   
 <body ng-app="myApp">
   
   <div ng-controller="testCtrl as vm" style="width: 200px; height: 200px;">
-      <scriptr-accelerometer transport="https" api="UIComponents/dashboard/frontend/examples/accelerometer/getAccelerometerData"
-      </scriptr-accelerometer>
+     <scriptr-accelerometer
+										transport='wss'
+										msg-tag='accelerometer'
+										http-method='GET'
+										boxBorder='true'
+										api='UIComponents/dashboard/frontend/examples/accelerometer/getAccelerometerData'
+                                  		on-format-data='vm.accelerometerFormatData2'
+                           		>
   </div>
   
 </body>
