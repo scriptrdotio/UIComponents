@@ -8,6 +8,7 @@
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
   
     <script src="//d3js.org/d3.v4.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js"></script>
@@ -17,7 +18,7 @@
 </head>  
   
 <script>
-      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Speedometer"])
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Speedometer",'DataService'])
       angular.module('myApp').config(wssConfig);
       angular.module('myApp').config(httpsConfig);
   
@@ -27,16 +28,11 @@
             console.log("data formatter");
             return data;
           }
-          vm.value = 30;
-          vm.changeValue = function(){
-            vm.value = Math.floor((Math.random() * 100) + 10); 
-          }
       });
 </script>
   
 <body> 
   <div ng-controller="testCtrl as vm" >
-   <button ng-click="vm.changeValue()" class="btn btn-default btn-sm">Change value</button>
     <div class="col-xs-12 col-sm-6 mb10"> 
       <div class="box-shadow bg-white">
          <scriptr-speedometer

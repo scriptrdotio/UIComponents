@@ -7,6 +7,7 @@
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
   
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/odometer/odometer.car.css">
     <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.min.js"></script>
@@ -17,13 +18,13 @@
 </head>  
   
 <script>
-      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Odometer"])
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Odometer",'DataService',])
       angular.module('myApp').config(wssConfig);
     angular.module('myApp').config(httpsConfig);
   
       angular.module('myApp').controller('testCtrl', function($scope) {
             var vm = this;
-            vm.callback = function(data){
+            vm.odometerFormatData12 = function(data){
               console.log("data formatter");
               return data;
             }
@@ -34,13 +35,19 @@
   <div ng-controller="testCtrl as vm" >
    <div style="padding-top: 65px;">
         <scriptr-odometer
-          transport='wss'
-          api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
-          theme='car'
-          msg-tag='odometer'
-          animation='count'
-          on-format-data="vm.callback"
-          duration='1000'> 
+										transport='wss'
+										boxLabel='Odometer'
+										msg-tag='odometer'
+										data='28022017'
+										animation='count'
+										on-clicked='return arguments;'
+										duration='1000'
+										size='3'
+										http-method='GET'
+										boxBorder='true'
+										api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
+                                  		on-format-data='vm.odometerFormatData12'
+                           		>
         </scriptr-odometer>
     </div>
   </div>
