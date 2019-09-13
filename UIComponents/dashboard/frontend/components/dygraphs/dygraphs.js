@@ -423,7 +423,8 @@ angular
           
           
           this.consumeData = function(data, response) {
-              if(data.timeZone){
+              console.log(data);
+              if(typeof data == "object" && data.timeZone){
                   self.timeZone = data.timeZone;
                   self.options.offset =  data.timeZone;
                   data = data.data;
