@@ -6763,6 +6763,7 @@ angular
                             "data-type": "raw",
                             "schema-for": "windrose",
                             "data-format": "windrose",
+                            "speed-unit":"km/h",
                             "fetch-data-interval": 300, //in seconds
                             "on-format-data": "return data;",
                             "boxLabel": "Wind Rose",
@@ -6802,6 +6803,16 @@ angular
                                                               value : "false",
                                                               name : "False"
                                                           } ]
+                                                  }]
+                                    },
+                                        {
+                                        "type" : "section",
+                                        "htmlClass" : "col-xs-12 col-sm-6",
+                                        "items" : [ "font-size",
+                                                  {
+                                                      "key" : "speed-unit",
+                                                      "type" : "string",
+                                                      
                                                   }]
                                     },
                                     {
@@ -6880,6 +6891,13 @@ angular
                                     "type" : "string",
                                     "default" : "true",
                                     "description" : "Set visibility of the legend." 
+                                },
+                                
+                                "speed-unit" : {
+                                    "title" : "Speed Unit",
+                                    "type" : "string",
+                                    "default" : "km/h",
+                                    "description" : "The Speed unit to be used in the legend." 
                                 },
                                 "custom-ranges" : {
                                   "title" : "Custom Ranges",

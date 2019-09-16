@@ -23,6 +23,7 @@ angular
                 "transport" : "@",
                 
                 "showLegend" : "@",
+                "speedUnit" : "@",
                 
                 "fontSize" : "@",
                 
@@ -39,7 +40,7 @@ angular
 
                 var self = this;
                 this.directions = ["N", "NNE", "ENE", "E", "ESE", "SSE", "S", "SSW", "WSW", "W", "WNW", "NNW"];
-                this.speedUnit = "m/s";
+                this.speedUnit =this.speedUnit ? this.speedUnit: "m/h";
                 this.noResults = false;
                 this.showSelectStream = self.api ? false: true;
 		
