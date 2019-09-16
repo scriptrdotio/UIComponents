@@ -29,7 +29,7 @@ angular
                     },
                     "boxBorder" : {
                         "title" : "Box Border",
-                        "type" : "string",
+                        "type" : "hidden",
                         "default": "true",
                         "description" : "Define your widget box border."
                     }
@@ -6763,13 +6763,9 @@ angular
                             "data-type": "raw",
                             "schema-for": "windrose",
                             "data-format": "windrose",
-                            "fetch-from-date-param": "from_date",
-                            "fetch-to-date-param": "to_date",
-                            "display-metric-param": "display_metric",
                             "fetch-data-interval": 300, //in seconds
                             "on-format-data": "return data;",
                             "boxLabel": "Wind Rose",
-                            "boxBorder" : true,
                             "data": '{"data": [{"direction": "E", "speeds": [2, 3, 15, 17]},{"direction": "ESE", "speeds": [24, 8, 4]},{"direction": "SSE", "speeds": [2.5, 7, 16]},{"direction": "S", "speeds": [3, 8, 2, 1, 9, 11]},{"direction": "SSW", "speeds": [13, 3, 7.5, 8]},{"direction": "WSW", "speeds": [21, 14, 9]},{"direction": "W", "speeds": [7, 0, 8, 9, 15, 19, 11]},{"direction": "WNW", "speeds": [4, 17, 21]},{"direction": "NNW", "speeds": [14, 7]},{"direction": "N", "speeds": [20, 0, 5, 9, 7]},{"direction": "NNE", "speeds": [1, 0.5, 6.5]},{"direction": "ENE", "speeds": [3.5, 30, 15]}]}'
                         },
                         "box" : {
