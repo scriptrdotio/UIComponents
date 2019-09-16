@@ -4186,10 +4186,11 @@ angular
                            "data" : 28022017,
                            // "api" : "UIComponents/dashboard/frontend/examples/odometer/getOdometerVal",
                            "animation" : "count",
+                           "theme": "car",
                            "on-format-data": "return data;", 
-                            "on-clicked": "return arguments;",
+                           "on-clicked": "return arguments;",
                            "duration" : 1000,
-                           "size" : "2"
+                           "size" : 2
                         },
                         "box" : {
                            sizeX : 1,
@@ -4203,7 +4204,40 @@ angular
                            type : "tabs",
                            tabs : [ {
                               title : "Odometer behaviour",
-                              items : [ "duration", "animation", "size" , {
+                              items : [ {
+                                      "key" : "theme",
+                                      "type" : 'strapselect',
+                                      "placeholder" : " ",
+                                      "titleMap" : [{
+                                                      "value" : "default",
+                                                      "name" : "Default"
+                                                  },
+                                                    {
+                                                        "value" : "car",
+                                                        "name" : "Scriptr"
+                                                    },
+                                                   {
+                                                      "value" : "minimal",
+                                                      "name" : "Minimal"
+                                                  },
+                                                    {
+                                                        "value" : "plaza",
+                                                        "name" : "Plaza"
+                                                    },
+                                                   {
+                                                      "value" : "slot-machine",
+                                                      "name" : "Slot machine"
+                                                  },
+                                                    {
+                                                        "value" : "train-station",
+                                                        "name" : "Train station"
+                                                    },
+                                                   {
+                                                      "value" : "digital",
+                                                      "name" : "Digital"
+                                                  }]
+                                  },
+                                      "duration", "animation", "size" , {
                                       "key" : "on-clicked",
                                       "type": "codemirror",
                                       "codemirrorOptions": {
@@ -4251,7 +4285,13 @@ angular
                                  "title" : "Animation",
                                  "type" : "string",
                                  "description" : "Count is a simpler animation method which just increments the value,use it when you're looking for something more subtle."
-                              }
+                              },
+                              "theme" : {
+                                "title" : "Theme",
+                                "type" : "string",
+                                "description" : "Select an odometer theme.",
+                                "default" : "car",
+                            },
                            },
                            "required" : []
                         }
@@ -4588,7 +4628,8 @@ angular
                         "defaults" : {
                            "transport" : "wss",
                            "msg-tag" : "accelerometer",
-                           "on-format-data": "return data;" 
+                           "on-format-data": "return data;",
+                           "boxLabel" : "Accelerometer",
                       //     ,"api" : "UIComponents/dashboard/frontend/examples/accelerometer/getAccelerometerData"
                         },
                         "box" : {

@@ -74,7 +74,7 @@ angular
            self.resize = function(){
                 self.timeoutId = null;
                 if(self.enableResize){
-                  self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);  
+                      self.style["margin-top"] = ($element.parent().outerHeight()/2) - ($element.outerHeight()/2);  
                 }
           }
            
