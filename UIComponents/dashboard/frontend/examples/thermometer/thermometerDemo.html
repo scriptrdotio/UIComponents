@@ -26,8 +26,8 @@
   
       angular.module('myApp').controller('testCtrl', function($scope) {
           var vm = this;
+          vm.value = "20"
           vm.callback = function(data){
-            console.log("data formatter");
             return data;
           }
       });
@@ -36,17 +36,10 @@
 <body>
   
   <div ng-controller="testCtrl as vm" >
-     <div class="centered">
-       <div class="col-xs-12 col-sm-6 mb10"> 
-           <scriptr-thermometer
-                         value="vm.value"  
-                         sectors="[-20, 0, 25, 50, 75, 100, 150, 200]"       
-                         max="200"    
-                         colors= '["#2196F3", "#000000", "#F44336", "#2196F3", "#000000", "#F44336","#2196F3", "#000000", "#F44336", "#2196F3", "#000000", "#F44336"]'        
-                         unit="°F"       
-                         height="500"
-              >
-           </scriptr-thermometer>  
+     <div class="centered" style="border: 1px solid red;">
+       <div class="col-xs-12 col-sm-6 mb10" style="border: 1px solid green; width: 200px"> 
+           <scriptr-thermometer transport="wss" api="UIComponents/dashboard/frontend/examples/thermometer/getThermometerValue" fetch-data-interval="300" data="20" boxlabel="Thermometer" step="10" unit="°C" custom-sectors='[{"color":"#005588","lo":-30,"hi":40},{"color":"#00953c","lo":40,"hi":80},{"color":"#ce2029","lo":80,"hi":120}]'>
+    </scriptr-thermometer>
       </div>
 
 	</div>

@@ -104,30 +104,26 @@ angular
                            if (self.timeoutId != null) {
                                $timeout.cancel(self.timeoutId);
                            }
-                           return self.timeoutId = $timeout(self.resize, 500);
+                           return self.timeoutId = $timeout(self.resize, 100);
                        });
                        
-                       if(this.data) 
-                           this.consumeData(this.data);
-                       else 
-                           this.consumeData("24");
-                       
-		               initDataService(this.transport);
+                       this.consumeData(this.data);
+
+                       initDataService(this.transport);
 
 	               }
                    
                    self.resize = function(){
                        self.timeoutId = null;
-                       self.style["margin-top"] = (($element.parent().outerHeight(true)/2) - $($element.find(".tg-thermometer")).innerHeight()/2); 
-                       self.style["margin-left"] = !self.noResults ? (($element.parent().outerWidth(true)/2) - 50) : 0;
+                       self.style["margin-left"] = (($element.parent().outerWidth(true)/2) - 50);
                    }
                    
                    this.$postLink = function () {
-                       $timeout(self.resize,500);
+                       $timeout(self.resize,100);
                        if (self.timeoutId != null) {
                            $timeout.cancel(self.timeoutId);
                        }
-                       self.timeoutId = $timeout(self.resize, 500);
+                       self.timeoutId = $timeout(self.resize, 100);
                        $scope.$watch(function( $scope ) {
                                return $scope.$ctrl.value
                        },function(newVal){
@@ -171,9 +167,7 @@ angular
                       }else{
                           this.noResults = true;
                       }
-                      self.style["margin-top"] = !self.noResults ? (($element.parent().outerHeight(true)/2) - $($element.find(".tg-thermometer")).innerHeight()/2) : 0; 
-                       self.style["margin-left"] = !self.noResults ? (($element.parent().outerWidth(true)/2) - 50) : 0;
-	               },
+                 },
                       
                       
                    this.evaluateColor = function(data) {

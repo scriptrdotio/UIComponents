@@ -1,13 +1,15 @@
-<div ng-style="$ctrl.style">
-    <tg-thermometer-vertical
-                             value="{{$ctrl.value}}"
-                             unit="{{$ctrl.thermoUnit}}"
-                             percent="{{$ctrl.percent}}"
-                             sectors="$ctrl.sectors"
-                             ticks="$ctrl.ticks"
-                             height="{{$ctrl.height}}"
-                             mercury-color="$ctrl.mercuryColor"
-                             ng-show="!$ctrl.noResults">
-    </tg-thermometer-vertical>
-	<div class="parent"><div class="alert alert-danger" ng-show="$ctrl.noResults">No data to display</div></div>
+<div>
+    <div ng-style="$ctrl.style" class="thermowrapper">
+        <tg-thermometer-vertical
+                                 value="{{$ctrl.value}}"
+                                 unit="{{$ctrl.thermoUnit}}"
+                                 percent="{{$ctrl.percent}}"
+                                 sectors="$ctrl.sectors"
+                                 ticks="$ctrl.ticks"
+                                 height="{{$ctrl.height}}"
+                                 mercury-color="$ctrl.mercuryColor"
+                                 ng-show="!$ctrl.noResults">
+        </tg-thermometer-vertical>
+    </div>
+    <div class="parent"><div class="alert alert-danger" ng-show="$ctrl.noResults">No data to display</div></div>
 </div>
