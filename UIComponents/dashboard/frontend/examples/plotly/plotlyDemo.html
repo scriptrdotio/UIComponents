@@ -132,10 +132,42 @@
   
   
 <style>
-.box {
-	/**border: none!important;**/
-}
   
+
+.light .dashboardContainer {
+    
+    
+    
+    
+}
+
+.light .box {
+    
+    
+    
+    
+}
+
+
+.light .box .box-content {
+    
+    
+    
+}  
+
+.light .box .box-header {
+    
+    
+    
+    
+    
+}  
+
+.light .box .box-header .box-label {
+    
+    
+} 
+
 </style>
 <script>
 
@@ -185,8 +217,8 @@
     var wssConfig = ["wsClientProvider",function (wsClientProvider) {
    	 	wsClientProvider.setBaseUrl("wss://" + window.location.host + "/");   	 
         wsClientProvider.setToken($.urlParam("auth_token"));
-        wsClientProvider.setPublishChannel("");
-        wsClientProvider.setSubscribeChannel("");
+        wsClientProvider.setPublishChannel("requestChannel");
+        wsClientProvider.setSubscribeChannel("responseChannel");
     }];
 
     var httpsConfig = ["httpClientProvider",function (httpClientProvider) {
@@ -210,11 +242,10 @@
   
      myApp.controller('RootCtrl', function($scope, $interpolate, $location) {
        var vm = this;
-      
-       
+
         vm.init = function() {
         }
-                vm.plotlyFormatData2 = function(data){
+                vm.plotlyFormatData1 = function(data){
                   return data;
                 }
         
@@ -224,11 +255,12 @@
   
 </script>
 
-   <body class="dashboard-template">
-      <div ng-controller="RootCtrl as vm" ng-init="vm.init();"> 
-
+   <body class="dashboard-template light">
+      <div ng-controller="RootCtrl as vm" ng-init="vm.init();" class="dashboardContainer"> 
+	
+                    
                     <div 
-		  				     	class='box-wrapper box-wrapper-with-border true'
+		  				     	class='box-wrapper box-wrapper-with-border '
                              >
 						<div class="box">
 						  <div 
@@ -241,20 +273,14 @@
 						  				     	class='box-content box-content-with-header'
 						  		>
 						  		<scriptr-plotly
-										transport='https'
+										transport='wss'
 										data-type='raw'
 										schema-for='windrose'
 										data-format='windrose'
 										fetch-data-interval='300'
 										boxLabel='Wind Rose'
 										data='{"data": [{"direction": "E", "speeds": [2, 3, 15, 17]},{"direction": "ESE", "speeds": [24, 8, 4]},{"direction": "SSE", "speeds": [2.5, 7, 16]},{"direction": "S", "speeds": [3, 8, 2, 1, 9, 11]},{"direction": "SSW", "speeds": [13, 3, 7.5, 8]},{"direction": "WSW", "speeds": [21, 14, 9]},{"direction": "W", "speeds": [7, 0, 8, 9, 15, 19, 11]},{"direction": "WNW", "speeds": [4, 17, 21]},{"direction": "NNW", "speeds": [14, 7]},{"direction": "N", "speeds": [20, 0, 5, 9, 7]},{"direction": "NNE", "speeds": [1, 0.5, 6.5]},{"direction": "ENE", "speeds": [3.5, 30, 15]}]}'
-										font-size='16'
-										show-legend='true'
-										custom-ranges='[{"color":"#00476b","lo":0,"hi":2},{"color":"#005487","lo":2,"hi":4},{"color":"#006699","lo":4,"hi":6},{"color":"#0082b5","lo":6,"hi":8},{"color":"#0294c1","lo":8,"hi":10},{"color":"#06a9ce","lo":10,"hi":20}]'
-										http-method='GET'
-										boxBorder='true'
-										api='UIComponents/dashboard/frontend/examples/plotly/getPlotlyData'
-                                  		on-format-data='vm.plotlyFormatData2'
+                                  		on-format-data='vm.plotlyFormatData1'
                            		>
                                 
                                     
@@ -262,7 +288,7 @@
 						  </div>
 						</div>
 					</div>
-   
+               
       </div>
   </body>  
 </html>

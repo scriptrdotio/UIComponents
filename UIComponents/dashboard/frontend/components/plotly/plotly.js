@@ -78,70 +78,24 @@ angular
                     this.speedUnit = ((this.speedUnit) ? this.speedUnit : "")
                     this.style = {};
                     angular.element($window).on('resize', self.scheduleResize);
-                    console.log("before initDataService");
-                   
+                    
+                    
                     self.initDataService(this.transport);
                 }
                 
                 self.resize = function(){
+                    console.log("resize called")
                     self.timeoutId = null;
-                    if($window.matchMedia($rootScope.mobileBreakPoint).matches) {
-                        self.style["height"] = "300";
-                    	self.style["width"] = $element.parent()[0].clientWidth;
-                    } else {
-                        if(!(self.showLegend != null && self.showLegend == "true")) {
+                    
                              self.style["height"] = $element.parent()[0].clientHeight;
                     		 self.style["width"] = $element.parent()[0].clientWidth;
-                        } else {
-                            self.style["height"] = $element.parent()[0].clientHeight;
-                            console.log($element.find(".plotly-chart-legend"));
-                    	//self.style["width"] = $element.parent()[0].clientWidth - $element.find(".plotly-chart-legend").clientHeight - 10;
-                        //Might happen due to timeout order
-                            if(!self.style["width"] || self.style["width"] <= 0 ) {
-                                self.style["width"] = $element.parent()[0].clientWidth 
-                            }
-                        }
-                     
                         
-                        
-                    }
                     
                     self.layout = {
                         title: '',
                         font: {size: self.fontSize},
 						radialaxis: {ticksuffix: '%'},
                         orientation: 270,
-                     /**   angularaxis: {ticks: "outside", ticksuffix: '%',showticklabels: true, ticklen: 1000, tickmode: "array", tickvals: ['N',
-          'NNE',
-          'NE',
-          'ENE',
-          'E',
-          'ESE',
-          'SE',
-          'SSE',
-          'S',
-          'SSW',
-          'SW',
-          'WSW',
-          'W',
-          'WNW',
-          'NW',
-          'NNW'], ticktext: ['N',
-          'NNE',
-          'NE',
-          'ENE',
-          'E',
-          'ESE',
-          'SE',
-          'SSE',
-          'S',
-          'SSW',
-          'SW',
-          'WSW',
-          'W',
-          'WNW',
-          'NW',
-          'NNW'], nticks: 32}, **/
                         width: self.style["width"],
                         height: self.style["height"]
                     };
@@ -149,9 +103,9 @@ angular
 
                 this.$postLink = function () {
                     if (self.timeoutId != null) {
-                        $timeout.cancel(self.timeoutId);
-                    }
-                    self.timeoutId = $timeout(self.resize, 100);
+                            $timeout.cancel(self.timeoutId);
+                        }
+                    self.timeoutId = $timeout(self.resize, 300);
                     $scope.$watch(function( $scope ) {
                         return $scope.$ctrl.data
                     },function(newData){
@@ -177,6 +131,7 @@ angular
                 }
                 
                 self.scheduleResize = function() {
+                    console.log("scheduleResize called")
                         if (self.timeoutId != null) {
                             $timeout.cancel(self.timeoutId);
                         }
@@ -299,7 +254,7 @@ angular
                             "name": name + " " + self.speedUnit,
                             "marker": {"color": color},
                             "type": "area",
-                            "showlegend": false//self.showLegend ? (self.showLegend == "true") : true
+                            "showlegend": self.showLegend ? (self.showLegend == "true") : true
                         }
                         self.transformedData.push(tmp);
                     }
