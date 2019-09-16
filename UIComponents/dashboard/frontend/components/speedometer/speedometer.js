@@ -127,10 +127,8 @@ angular
         
         this.$postLink = function() {
       	  $timeout(function() {
-      		  console.log("Calc")
       		  if(!self.gaugeRadius) {
       			  self.calculateGaugeRadius();
-      			  console.log("Gauge Size", self.speedoConfig.gaugeRadius)
       			  angular.element($window).on('resize', function() {
                     if (self.timeoutId != null) {
                 		$timeout.cancel(self.timeoutId);
