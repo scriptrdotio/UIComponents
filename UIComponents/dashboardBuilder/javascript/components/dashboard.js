@@ -634,13 +634,9 @@ angular
                 
                 self.dashboardSettings.defaults = angular.copy(dashboardSettingsModel);
                   
-                var template = document.querySelector('#handlebar-customcss-template').innerText;
-          		var compiledCss = Handlebars.compile(template)(dashboardSettingsModel); 
-                
-                
-                var styleElement = angular.element(document.querySelector('#dashboardCustomStyle'));
-			    styleElement[0].innerText = compiledCss;
-				//styleElement.appendTo(angular.element(document.getElementsByTagName('head')));
+               //Generate & apply the custom style
+           	   var compiledCss  = generateCustomStyle(dashboardSettingsModel); 
+               applyCustomStyle(compiledCss);
                   
                 self.notifyDashboardChange();
               }
@@ -648,6 +644,16 @@ angular
               console.log('modal-component dashboard settings dismissed at: ' + new Date());
             });
       };
+        
+      var generateCustomStyle = function(settings) {
+           var template = document.querySelector('#handlebar-customcss-template').innerText;
+           return Handlebars.compile(template)(settings); 
+      }
+      
+      var applyCustomStyle = function (compiledCss) {
+          var styleElement = angular.element(document.querySelector('#dashboardCustomStyle'));
+		  styleElement[0].innerText = compiledCss;
+      }
       
       this.saveDashboard = function(form, custom, aclEvent) {
 		console.log("Form submit", form)
@@ -666,8 +672,13 @@ angular
 
           self.dashboardSettings.defaults.redirectTarget = this.model.scriptName;
           data["dashboardSettings"] = angular.copy(this.dashboardSettings.defaults) //MFE: dashboardSettings channels info info needs to be retrieved from url or cookie
+          
+          //Generate custom Style to pass for the to save template
+          data["compiledCss"] = generateCustomStyle(data["dashboardSettings"])
+          
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
+            
           var scriptData = {}
           scriptData["content"] = unescapedHtml;
           scriptData["scriptName"] =  this.model.scriptName;
@@ -723,6 +734,7 @@ angular
            if(userConfig && matches) {
              var pluginContent = JSON.parse(matches[1]);
              if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "DashboardBuilder"){
+                 
                this.widgets = [];
                var widgets = JSON.parse(pluginContent.metadata.plugindata).wdg;
                 _.map(widgets, function(wdg, index) {
@@ -747,9 +759,14 @@ angular
                   self.widgets.push(wdg);
                });  
                
-              // this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
+               //this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
                this.urlParams = JSON.parse(pluginContent.metadata.plugindata).urlParams;
                this.dashboardSettings.defaults = JSON.parse(pluginContent.metadata.plugindata).settings;
+                 
+               //Generate & apply the custom style
+           	   var compiledCss  = generateCustomStyle(this.dashboardSettings.defaults); 
+               applyCustomStyle(compiledCss);
+                 
                this.dashboard["widgets"] = this.widgets;
                this.isEdit = true;
                this.savedScript = scriptName;

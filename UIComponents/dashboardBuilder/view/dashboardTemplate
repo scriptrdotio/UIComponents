@@ -131,16 +131,13 @@
   
   
 &lt;style&gt;
-.box {
-	/**border: none!important;**/
-}
-  
+  {{compiledCss}}
 &lt;/style&gt;
 &lt;script&gt;
 
 (function() {
 	
-  if(&quot;{{{transport.requiresLogin}}}&quot; == &quot;Yes&quot;){
+  if(&quot;{{{dashboardSettings.requiresLogin}}}&quot; == &quot;Yes&quot;){
   
    var scriptName = window.location.pathname.substring(1,window.location.pathname.length )
    var loginTemplateTarget =&quot;/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget=&quot;+scriptName+&quot;&amp;anon_token={{{anon_token}}}&quot;
@@ -184,8 +181,8 @@
     var wssConfig = [&quot;wsClientProvider&quot;,function (wsClientProvider) {
    	 	wsClientProvider.setBaseUrl(&quot;wss://&quot; + window.location.host + &quot;/&quot;);   	 
         wsClientProvider.setToken($.urlParam(&quot;auth_token&quot;));
-        wsClientProvider.setPublishChannel(&quot;{{{transport.publishChannel}}}&quot;);
-        wsClientProvider.setSubscribeChannel(&quot;{{{transport.subscribeChannel}}}&quot;);
+        wsClientProvider.setPublishChannel(&quot;{{{dashboardSettings.publishChannel}}}&quot;);
+        wsClientProvider.setSubscribeChannel(&quot;{{{dashboardSettings.subscribeChannel}}}&quot;);
     }];
 
     var httpsConfig = [&quot;httpClientProvider&quot;,function (httpClientProvider) {
@@ -258,8 +255,8 @@
   
 &lt;/script&gt;
 
-   &lt;body class=&quot;dashboard-template&quot;&gt;
-      &lt;div ng-controller=&quot;RootCtrl as vm&quot; ng-init=&quot;vm.init();&quot;&gt; 
+   &lt;body class=&quot;dashboard-template {{dashboardSettings.theme}}&quot;&gt;
+      &lt;div ng-controller=&quot;RootCtrl as vm&quot; ng-init=&quot;vm.init();&quot; class=&quot;dashboardContainer&quot;&gt; 
 		&lt;div gridster=&quot;vm.gridsterOptions&quot;&gt;
           &lt;ul&gt;
              {{#each items}}

@@ -41,8 +41,8 @@ angular
                                     "htmlClass": "row",
                                     "items": [
                                         {
-                                              "type" : "help",
-                                              "helpvalue" : "<h5 class='pdr10 pdl10'>Set the communication channels used by the dashboard to send and receive data.</h5><hr/>"
+                                            "type" : "help",
+                                            "helpvalue" : "<h5 class='pdr10 pdl10'>Set the communication channels used by the dashboard to send and receive data.</h5><hr/>"
                                         },
                                         {
                                             "type": "section",
@@ -60,27 +60,26 @@ angular
                                     "type": "section",
                                     "htmlClass": "row",
                                     "items": [
-                                         {
+                                        {
                                             "type": "section",
                                             "htmlClass": "col-xs-12",
                                             "items": [
                                                 {
-                                                     "key" : "theme",
-                                                     "type" : 'strapselect',
-                                                     "placeholder" : " ",
-                                                     "titleMap" : [{
+                                                    "key" : "theme",
+                                                    "type" : 'strapselect',
+                                                    "placeholder" : " ",
+                                                    "titleMap" : [{
                                                         "value" : "light",
                                                         "name" : "Light"
-                                                     },
-                                                     {
-                                                        "value" : "dark",
-                                                        "name" : "Dark"
-                                                     }]
-                                                  }
-                                             ]
-                                         },
+                                                    },
+                                                                  {
+                                                                      "value" : "dark",
+                                                                      "name" : "Dark"
+                                                                  }]
+                                                }
+                                            ]
+                                        },
                                         {
-                                            
                                             "type": "fieldset",
                                             "htmlClass": "col-xs-12",
                                             "title": "Dahsboard",
@@ -91,7 +90,7 @@ angular
                                                     "htmlClass": "row",
                                                     "items": [{
                                                         "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-3",
+                                                        "htmlClass": "col-xs-2 col-sm-2",
                                                         "items": [
                                                             {
                                                                 "key": "style.dashboard.background-type",
@@ -108,7 +107,7 @@ angular
                                                     },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-sm-9",
+                                                                  "htmlClass": "col-xs-9 col-sm-2",
                                                                   "condition": "model.style['dashboard'] ['background-type'] === 'solid'",
                                                                   "items": [
                                                                       {
@@ -128,7 +127,7 @@ angular
                                                               },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-sm-9",
+                                                                  "htmlClass": "col-xs-9 col-sm-9",
                                                                   "condition": "model.style ['dashboard'] ['background-type'] === 'gradient'",
                                                                   "items": [
                                                                       {
@@ -142,7 +141,7 @@ angular
                                                     "htmlClass": "row",
                                                     "items": [{
                                                         "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-3",
+                                                        "htmlClass": "col-xs-2 col-sm-2",
                                                         "items": [
                                                             {
                                                                 "key": "style.dashboard.border",
@@ -157,18 +156,18 @@ angular
                                                             }
                                                         ]
                                                     },
-                                                             {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.dashboard.border-radius",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        }, {
+                                                              {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-xs-6 col-sm2",
+                                                                  "htmlClass": "col-xs-2 col-sm-2",
+                                                                  "items": [
+                                                                      {
+                                                                          "key": "style.dashboard.border-radius",
+                                                                          "type": "number"
+                                                                      }
+                                                                  ]
+                                                              }, {
+                                                                  "type": "section",
+                                                                  "htmlClass": "col-xs-2 col-sm2",
                                                                   "items": [
                                                                       {
                                                                           "key": "style.dashboard.border-style",
@@ -203,7 +202,7 @@ angular
                                                               },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-xs-6 col-sm-2",
+                                                                  "htmlClass": "col-xs-2 col-sm-2",
                                                                   "items": [
                                                                       {
                                                                           "key": "style.dashboard.border-color",
@@ -223,7 +222,7 @@ angular
                                                               },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-xs-6 col-sm-2",
+                                                                  "htmlClass": "col-xs-2 col-sm-2",
                                                                   "items": [
                                                                       {
                                                                           "key": "style.dashboard.border-width",
@@ -240,7 +239,7 @@ angular
                                                     "items": [
                                                         {
                                                             "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-3",
+                                                            "htmlClass": "col-xs-2 col-sm-2",
                                                             "items": [
                                                                 {
                                                                     "key": "style.dashboard.box-shadow",
@@ -277,7 +276,6 @@ angular
                                                     ]
                                                 }
                                             ]
-                                        
                                         },
                                         {
                                             "type": "fieldset",
@@ -290,7 +288,7 @@ angular
                                                     "htmlClass": "row",
                                                     "items": [{
                                                         "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-3",
+                                                        "htmlClass": "col-xs-2 col-sm-2",
                                                         "items": [
                                                             {
                                                                 "key": "style.box.background-type",
@@ -307,7 +305,7 @@ angular
                                                     },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-sm-9",
+                                                                  "htmlClass": "col-xs-9 col-sm-2",
                                                                   "condition": "model.style['box'] ['background-type'] === 'solid'",
                                                                   "items": [
                                                                       {
@@ -327,7 +325,7 @@ angular
                                                               },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-sm-9",
+                                                                  "htmlClass": "col-xs-9 col-sm-9",
                                                                   "condition": "model.style ['box'] ['background-type'] === 'gradient'",
                                                                   "items": [
                                                                       {
@@ -341,7 +339,7 @@ angular
                                                     "htmlClass": "row",
                                                     "items": [{
                                                         "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-3",
+                                                        "htmlClass": "col-xs-2 col-sm-2",
                                                         "items": [
                                                             {
                                                                 "key": "style.box.border",
@@ -356,18 +354,18 @@ angular
                                                             }
                                                         ]
                                                     },
-                                                             {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box.border-radius",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        }, {
+                                                              {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-xs-6 col-sm2",
+                                                                  "htmlClass": "col-xs-2 col-sm-2",
+                                                                  "items": [
+                                                                      {
+                                                                          "key": "style.box.border-radius",
+                                                                          "type": "number"
+                                                                      }
+                                                                  ]
+                                                              }, {
+                                                                  "type": "section",
+                                                                  "htmlClass": "col-xs-2 col-sm2",
                                                                   "items": [
                                                                       {
                                                                           "key": "style.box.border-style",
@@ -402,7 +400,7 @@ angular
                                                               },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-xs-6 col-sm-2",
+                                                                  "htmlClass": "col-xs-2 col-sm-2",
                                                                   "items": [
                                                                       {
                                                                           "key": "style.box.border-color",
@@ -422,7 +420,7 @@ angular
                                                               },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-xs-6 col-sm-2",
+                                                                  "htmlClass": "col-xs-2 col-sm-2",
                                                                   "items": [
                                                                       {
                                                                           "key": "style.box.border-width",
@@ -433,22 +431,19 @@ angular
                                                               }
                                                              ]
                                                 },
-                                                
-                                                 {
+                                                {
                                                     "type": "section",
                                                     "htmlClass": "row",
                                                     "items": [ 
-                                                        
                                                     ]
-                                                 },
-                                                
+                                                },
                                                 {
                                                     "type": "section",
                                                     "htmlClass": "row",
                                                     "items": [
                                                         {
                                                             "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-3",
+                                                            "htmlClass": "col-xs-2 col-sm-2",
                                                             "items": [
                                                                 {
                                                                     "key": "style.box.box-shadow",
@@ -465,7 +460,7 @@ angular
                                                         },
                                                         {
                                                             "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-2",
+                                                            "htmlClass": "col-xs-9 col-sm-2",
                                                             "items": [
                                                                 {
                                                                     "key": "style.box.box-shadow-color",
@@ -489,6 +484,167 @@ angular
                                         {
                                             "type": "fieldset",
                                             "htmlClass": "col-xs-12",
+                                            "title": "Inner Box",
+                                            "key": "style.box-content",
+                                            "items": [
+                                                {
+                                                    "type": "section",
+                                                    "htmlClass": "row",
+                                                    "items": [{
+                                                        "type": "section",
+                                                        "htmlClass": "col-xs-2 col-sm-2",
+                                                        "items": [
+                                                            {
+                                                                "key": "style.box-content.background-type",
+                                                                "type": "strapselect",
+                                                                "titleMap": [{
+                                                                    "value": "solid",
+                                                                    "name": "Solid"
+                                                                }, {
+                                                                    "value": "gradient",
+                                                                    "name": "Gradient"
+                                                                }, {
+                                                                    "value": "transparent",
+                                                                    "name": "Transparent"
+                                                                }]
+                                                            }
+                                                        ]
+                                                    },
+                                                              {
+                                                                  "type": "section",
+                                                                  "htmlClass": "col-xs-9 col-sm-2",
+                                                                  "condition": "model.style ['box-content'] ['background-type'] === 'solid'",
+                                                                  "items": [
+                                                                      {
+                                                                          "key": "style.box-content.background-color",
+                                                                          "colorFormat": "hex3",
+                                                                          "spectrumOptions": {
+                                                                              showInput: true,
+                                                                              showAlpha: true,
+                                                                              allowEmpty: true,
+                                                                              showPalette: true,
+                                                                              preferredFormat: 'hex3',
+                                                                              palette: [['#ff', '##f2f2f2', '#2c343a'],
+                                                                                        ['#000']]
+                                                                          }
+                                                                      }
+                                                                  ]
+                                                              },
+                                                              {
+                                                                  "type": "section",
+                                                                  "htmlClass": "col-xs-9 col-sm-9",
+                                                                  "condition": "model.style ['box-content'] ['background-type'] === 'gradient'",
+                                                                  "items": [
+                                                                      {
+                                                                          "key": "style.box-content.background-gradient",
+                                                                      }
+                                                                  ]
+                                                              }]
+                                                },
+                                                {
+                                                    "type": "section",
+                                                    "htmlClass": "row",
+                                                    "items": [
+                                                        {
+                                                            "type": "section",
+                                                            "htmlClass": "col-xs-2 col-sm-2",
+                                                            "items": [
+                                                                {
+                                                                    "key": "style.box-content.border",
+                                                                    "type": "strapselect",
+                                                                    "titleMap": [{
+                                                                        "value": "true",
+                                                                        "name": "True"
+                                                                    }, {
+                                                                        "value": "false",
+                                                                        "name": "False"
+                                                                    }]
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "section",
+                                                            "htmlClass": "col-xs-2 col-sm-2",
+                                                            "items": [
+                                                                {
+                                                                    "key": "style.box-content.border-radius",
+                                                                    "type": "number"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "section",
+                                                            "htmlClass": "col-xs-2 col-sm-2",
+                                                            "items": [
+                                                                {
+                                                                    "key": "style.box-content.border-style",
+                                                                    "type": "strapselect",
+                                                                    "condition": "model.style['box-content'] ['border'] === 'true'",
+                                                                    "titleMap": [{
+                                                                        "value": "dotted",
+                                                                        "name": "Dotted"
+                                                                    },
+                                                                                 {
+                                                                                     "value": "dashed",
+                                                                                     "name": "Dashed"
+                                                                                 },
+                                                                                 {
+                                                                                     "value": "solid",
+                                                                                     "name": "Solid"
+                                                                                 },
+                                                                                 {
+                                                                                     "value": "double",
+                                                                                     "name": "Double"
+                                                                                 },
+                                                                                 {
+                                                                                     "value": "inset",
+                                                                                     "name": "Inset"
+                                                                                 },
+                                                                                 {
+                                                                                     "value": "outset",
+                                                                                     "name": "Outset"
+                                                                                 }]
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "section",
+                                                            "htmlClass": "col-xs-2 col-sm-2",
+                                                            "items": [
+                                                                {
+                                                                    "key": "style.box-content.border-color",
+                                                                    "condition": "model.style ['box-content'] ['border'] === 'true'",
+                                                                    "colorFormat": "hex3",
+                                                                    "spectrumOptions": {
+                                                                        showInput: true,
+                                                                        showAlpha: true,
+                                                                        allowEmpty: true,
+                                                                        showPalette: true,
+                                                                        preferredFormat: 'hex3',
+                                                                        palette: [['#ff', '##f2f2f2', '#2c343a'],
+                                                                                  ['#000']]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "section",
+                                                            "htmlClass": "col-xs-2 col-sm-2",
+                                                            "items": [
+                                                                {
+                                                                    "key": "style.box-content.border-width",
+                                                                    "condition": "model.style['box-content'] ['border'] === 'true'",
+                                                                    "type": "number"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "fieldset",
+                                            "htmlClass": "col-xs-12",
                                             "title": "Box Header",
                                             "key": "style.box-header",
                                             "items": [
@@ -497,7 +653,7 @@ angular
                                                     "htmlClass": "row",
                                                     "items": [{
                                                         "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-3",
+                                                        "htmlClass": "col-xs-2 col-sm-2",
                                                         "items": [
                                                             {
                                                                 "key": "style.box-header.background-type",
@@ -517,14 +673,14 @@ angular
                                                     },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-sm-9",
+                                                                  "htmlClass": "col-xs-9 col-sm-2",
                                                                   "condition": "model.style ['box-header'] ['background-type'] === 'solid'",
                                                                   "items": [
                                                                       {
                                                                           "key": "style.box-header.background-color",
                                                                           "colorFormat": "hex3",
                                                                           "spectrumOptions": {
-                                                                               showInput: true,
+                                                                              showInput: true,
                                                                               showAlpha: true,
                                                                               allowEmpty: true,
                                                                               showPalette: true,
@@ -537,7 +693,7 @@ angular
                                                               },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-sm-9",
+                                                                  "htmlClass": "col-xs-9 col-sm-9",
                                                                   "condition": "model.style ['box-header'] ['background-type'] === 'gradient'",
                                                                   "items": [
                                                                       {
@@ -551,7 +707,7 @@ angular
                                                     "htmlClass": "row",
                                                     "items": [{
                                                         "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-3",
+                                                        "htmlClass": "col-xs-2 col-sm-2",
                                                         "items": [
                                                             {
                                                                 "key": "style.box-header.border",
@@ -567,27 +723,27 @@ angular
                                                         ]
                                                     },
                                                               {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box-header.border-radius",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        },
+                                                                  "type": "section",
+                                                                  "htmlClass": "col-xs-2 col-sm-2",
+                                                                  "items": [
+                                                                      {
+                                                                          "key": "style.box-header.border-radius",
+                                                                          "type": "number"
+                                                                      }
+                                                                  ]
+                                                              },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-xs-6 col-sm-2",
+                                                                  "htmlClass": "col-xs-2 col-sm-2",
                                                                   "items": [
                                                                       {
                                                                           "key": "style.box-header.border-style",
-                                                                           "condition": "model.style ['box-header'] ['border'] === 'true'",
+                                                                          "condition": "model.style ['box-header'] ['border'] === 'true'",
                                                                           "type": "strapselect",
                                                                           "titleMap": [{
-                                                                                          "value": "dotted",
-                                                                                          "name": "Dotted"
-                                                                          			   },
+                                                                              "value": "dotted",
+                                                                              "name": "Dotted"
+                                                                          },
                                                                                        {
                                                                                            "value": "dashed",
                                                                                            "name": "Dashed"
@@ -613,7 +769,7 @@ angular
                                                               },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-xs-6 col-sm-2",
+                                                                  "htmlClass": "col-xs-2 col-sm-2",
                                                                   "items": [
                                                                       {
                                                                           "key": "style.box-header.border-color",
@@ -633,7 +789,7 @@ angular
                                                               },
                                                               {
                                                                   "type": "section",
-                                                                  "htmlClass": "col-xs-6 col-sm-2",
+                                                                  "htmlClass": "col-xs-2 col-sm-2",
                                                                   "items": [
                                                                       {
                                                                           "condition": "model.style ['box-header'] ['border'] === 'true'",
@@ -723,176 +879,14 @@ angular
                                                         {
                                                             "key": "style.box-label.color",
                                                             "colorFormat": "hex3",
-                                                             showInput: true,
-                                                                              showAlpha: true,
-                                                                              allowEmpty: true,
-                                                                              showPalette: true,
-                                                                              preferredFormat: 'hex3',
-                                                                              palette: [['#ff', '##f2f2f2', '#2c343a'],
-                                                                                        ['#000']]
+                                                            showInput: true,
+                                                            showAlpha: true,
+                                                            allowEmpty: true,
+                                                            showPalette: true,
+                                                            preferredFormat: 'hex3',
+                                                            palette: [['#ff', '##f2f2f2', '#2c343a'],
+                                                                      ['#000']]
                                                         }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "fieldset",
-                                            "htmlClass": "col-xs-12",
-                                            "title": "Inner Box",
-                                            "key": "style.box-content",
-                                            "items": [
-                                                {
-                                                    "type": "section",
-                                                    "htmlClass": "row",
-                                                    "items": [{
-                                                        "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-3",
-                                                        "items": [
-                                                            {
-                                                                "key": "style.box-content.background-type",
-                                                                "type": "strapselect",
-                                                                "titleMap": [{
-                                                                    "value": "solid",
-                                                                    "name": "Solid"
-                                                                }, {
-                                                                    "value": "gradient",
-                                                                    "name": "Gradient"
-                                                                }, {
-                                                                    "value": "transparent",
-                                                                    "name": "Transparent"
-                                                                }]
-                                                            }
-                                                        ]
-                                                    },
-                                                              {
-                                                                  "type": "section",
-                                                                  "htmlClass": "col-sm-9",
-                                                                  "condition": "model.style ['box-content'] ['background-type'] === 'solid'",
-                                                                  "items": [
-                                                                      {
-                                                                          "key": "style.box-content.background-color",
-                                                                          "colorFormat": "hex3",
-                                                                          "spectrumOptions": {
-                                                                               showInput: true,
-                                                                              showAlpha: true,
-                                                                              allowEmpty: true,
-                                                                              showPalette: true,
-                                                                              preferredFormat: 'hex3',
-                                                                              palette: [['#ff', '##f2f2f2', '#2c343a'],
-                                                                                        ['#000']]
-                                                                          }
-                                                                      }
-                                                                  ]
-                                                              },
-                                                              {
-                                                                  "type": "section",
-                                                                  "htmlClass": "col-sm-9",
-                                                                  "condition": "model.style ['box-content'] ['background-type'] === 'gradient'",
-                                                                  "items": [
-                                                                      {
-                                                                          "key": "style.box-content.background-gradient",
-                                                                      }
-                                                                  ]
-                                                              }]
-                                                },
-                                                {
-                                                    "type": "section",
-                                                    "htmlClass": "row",
-                                                    "items": [
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-3",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box-content.border",
-                                                                    "type": "strapselect",
-                                                                    "titleMap": [{
-                                                                        "value": "true",
-                                                                        "name": "True"
-                                                                    }, {
-                                                                        "value": "false",
-                                                                        "name": "False"
-                                                                    }]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box-content.border-radius",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box-content.border-style",
-                                                                    "type": "strapselect",
-                                                                    "condition": "model.style['box-content'] ['border'] === 'true'",
-                                                                    "titleMap": [{
-                                                                        "value": "dotted",
-                                                                        "name": "Dotted"
-                                                                    },
-                                                                                 {
-                                                                                     "value": "dashed",
-                                                                                     "name": "Dashed"
-                                                                                 },
-                                                                                 {
-                                                                                     "value": "solid",
-                                                                                     "name": "Solid"
-                                                                                 },
-                                                                                 {
-                                                                                     "value": "double",
-                                                                                     "name": "Double"
-                                                                                 },
-                                                                                 {
-                                                                                     "value": "inset",
-                                                                                     "name": "Inset"
-                                                                                 },
-                                                                                 {
-                                                                                     "value": "outset",
-                                                                                     "name": "Outset"
-                                                                                 }]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box-content.border-color",
-                                                                    "condition": "model.style ['box-content'] ['border'] === 'true'",
-                                                                    "colorFormat": "hex3",
-                                                                    "spectrumOptions": {
-                                                                        showInput: true,
-                                                                              showAlpha: true,
-                                                                              allowEmpty: true,
-                                                                              showPalette: true,
-                                                                              preferredFormat: 'hex3',
-                                                                              palette: [['#ff', '##f2f2f2', '#2c343a'],
-                                                                                        ['#000']]
-                                                                    }
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-6 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box-content.border-width",
-                                                                    "condition": "model.style['box-content'] ['border'] === 'true'",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        }
-                                                        
                                                     ]
                                                 }
                                             ]
@@ -930,7 +924,6 @@ angular
                             "properties": {
                                 //".box"
                                 "dashboard": {
-                                  	
                                     "title": "Dashboard",
                                     "type": "object",
                                     "properties": {
