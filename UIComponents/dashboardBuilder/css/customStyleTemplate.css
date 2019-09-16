@@ -118,7 +118,7 @@
       	color: {{style.box-label.color}};
       {{/if}}
       {{#if style.box-label.font-size}}
-    	font-size: {{style.box-label.font-size}}em;
+    	font-size: {{style.box-label.font-size}}px;
       {{/if}}
       {{#if style.box-label.font-weight}}
     	font-weight: {{style.box-label.font-weight}};

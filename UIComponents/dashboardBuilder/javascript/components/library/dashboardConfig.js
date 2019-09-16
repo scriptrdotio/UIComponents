@@ -1151,7 +1151,7 @@ angular
                                             "default": "normal",
                                         },
                                         "font-size": {
-                                            "title": "Font size (em)",
+                                            "title": "Font size (px)",
                                             "type": "number",
                                             "default": 1.2,
                                         },
