@@ -638,9 +638,7 @@
 .light .gridster-mobile {
   height: auto !important;
 }
-.light .tg-thermometer {
-  height: 90%;
-}
+
 .light .schema-form-section input[type=search] {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1290,9 +1288,7 @@
 .dark .gridster-mobile {
   height: auto !important;
 }
-.dark .tg-thermometer {
-  height: 90%;
-}
+
 .dark .schema-form-section input[type=search] {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
