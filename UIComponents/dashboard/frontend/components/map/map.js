@@ -31,6 +31,7 @@ angular
       	"onFormatData" : "&",
         "setMarkerIcon" : "&",
         "onSelectAsset" : "&",
+        "clusterStyles" : "@",
       
          //TODO the below attributes, currently use without geofence
         "geofenceManager": "<?", //True to show the geofence drawing manage icons or not
@@ -61,7 +62,7 @@ angular
           self.maxAssetPoints = (self.maxAssetPoints) ? self.maxAssetPoints : 100;
           self.defaultcenter = (self.defaultcenter) ? self.defaultcenter : "40.7053111,-74.258188";
           self.trackedAsset = (self.trackedAsset) ? self.trackedAsset : null;
-        
+          self.clusterStyles = (self.clusterStyles) ? self.clusterStyles : [ ];
         
           self.geofenceManager = (self.geofenceManager) ? self.geofenceManager : false;
         
@@ -282,6 +283,7 @@ angular
      }   
       
      self.buildClusterer = function(map) {
+         console.log(self.clusterStyles);
         self.markerClusterer = new MarkerClusterer(
           map,
           _.toArray(self.dynMarkers),
@@ -290,7 +292,8 @@ angular
             imagePath : 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m',
             minimumClusterSize : -1,
             gridSize : 50,
-            averageCenter : true
+            averageCenter : true,
+              styles:self.clusterStyles
           });
       };
       
