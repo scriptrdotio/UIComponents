@@ -57,6 +57,27 @@
     
       myApp.controller('testCtrl', function($scope, $controller, wsClient, mapConstants, $sce) {
         var vm = this;
+          vm.clusterStyles= [{
+        url: 'https://googlemaps.github.io/js-marker-clusterer/images/heart30.png',
+        height: 30,
+        width: 30,
+        anchor: [4, 0],
+        textColor: '#ff00ff',
+        textSize: 10
+      }, {
+        url: 'https://googlemaps.github.io/js-marker-clusterer/images/heart40.png',
+        height: 40,
+        width: 40,
+        anchor: [8, 0],
+        textColor: '#ff0000',
+        textSize: 11
+      }, {
+        url: 'https://googlemaps.github.io/js-marker-clusterer/images/heart50.png',
+        width: 50,
+        height: 50,
+        anchor: [12, 0],
+        textSize: 12
+      }]
         vm.init = function() {
           	wsClient.onReady.then(function() {});
           	vm.sources = mapConstants.sources;
@@ -884,7 +905,7 @@
   </script>
   <body>
      <div ng-controller="testCtrl as vm" ng-init="vm.init()">
-        <scriptr-map heatmap="true" sources-info="vm.sources" clustered-view="true" detailed-zoom-min="12" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" msg-tag="everyone-main-live" assets-data="vm.locksData" geofence-manager="false">
+        <scriptr-map heatmap="true" sources-info="vm.sources" clustered-view="true" detailed-zoom-min="12" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" msg-tag="everyone-main-live" assets-data="vm.locksData" geofence-manager="false" cluster-styles="vm.clusterStyles">
           <div>
             <info-window id="infoWindowTemplate_simulator" template="info_locks.html" max-width="600">
             </info-window>
