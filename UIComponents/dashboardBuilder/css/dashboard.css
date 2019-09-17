@@ -170,10 +170,10 @@
   overflow: hidden;
   margin-top: 40px;
 }
-.light .box.noHeader .box-header {
+.light .box.box-without-header .box-header {
   display: none;
 }
-.light .box.noHeader .box-content {
+.light .box.box-without-header .box-content {
   height: 100%;
   margin-top: 0;
 }
@@ -831,10 +831,10 @@
   overflow: hidden;
   margin-top: 40px;
 }
-.dark .box.noHeader .box-header {
+.dark .box.box-without-header .box-header {
   display: none;
 }
-.dark .box.noHeader .box-content {
+.dark .box.box-without-header .box-content {
   height: 100%;
   margin-top: 0;
 }
