@@ -31,7 +31,7 @@ angular
       	"onFormatData" : "&",
         "setMarkerIcon" : "&",
         "onSelectAsset" : "&",
-        "clusterStyles" : "@",
+        "clusterStyles" : "<?",
       
          //TODO the below attributes, currently use without geofence
         "geofenceManager": "<?", //True to show the geofence drawing manage icons or not
