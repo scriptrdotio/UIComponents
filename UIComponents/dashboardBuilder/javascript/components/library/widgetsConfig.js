@@ -4393,6 +4393,17 @@ angular
                            "cluster-zoom" : 8,
                            "heatmap" : "true",
                            "bounce" : "true",
+                            "cluster-styles":[{
+
+          url: "https://googlemaps.github.io/js-marker-clusterer/images/m1.png",
+                width: 53,
+                height:53,
+                anchor: [0, 0],
+                textColor: '#ffffff',
+                textSize: 10,
+                iconAnchor: [15, 48]
+          }],
+                            
                            "resize" : "false",
                            "data" : '{ "253812" : { "550153" : [ { "lat" : {"value": "40.84969"}, "long" :{"value": "-73.94168"}, "bounce": {"value" : "true"}, "speed" : { "value" : "8", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "30", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.3", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2818", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "91", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.99", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "61","description" : "Received Signal Strength Indicator" } }, { "lat" :{"value": "40.84919"}, "long" : {"value": "-73.93897000000001"}, "speed": { "value" : "5", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "57", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.4","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2838", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "94", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.15", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55101"}, "make" : { "value" : "Toyota" }, "model" : { "value" : "Tacoma" },"snr" : { "value" : "9", "description" : "Signal to Noise Ratio" },"rssi" : { "value" : "48", "description" : "Received Signal StrengthIndicator" } }, { "lat" : {"value": "40.848600000000005"}, "long" :{"value": "-73.93648"}, "speed" : { "value" : "9", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "76", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.2", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2465", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "97", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.39", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "69","description" : "Received Signal Strength Indicator" } } ], "source" :"simulator", "order" : [ "550153" ] }, "253815" : { "550191" : [ { "lat": {"value": "40.80913"}, "long" : {"value": "-73.90327"}, "speed" : {"value" : "7", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "56", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.2","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2123", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "100", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.45", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55043"}, "make" : { "value" : "Saab" }, "model" : { "value" : "9-3" }, "snr" :{ "value" : "13", "description" : "Signal to Noise Ratio" }, "rssi" : {"value" : "49", "description" : "Received Signal Strength Indicator" }}, { "lat" : {"value": "40.807500000000004"}, "long" : {"value":"-73.90557000000001"}, "speed" : { "value" : "6", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "16", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.7", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "1946", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "95", "description" :"Engine Temperature" }, "voltage" : { "value" : "12.87", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55043" }, "make" : { "value" : "Saab" },"model" : { "value" : "d9-3" }, "snr" : { "value" : "13", "description" :"Signal to Noise Ratio" }, "rssi" : { "value" : "59", "description" :"Received Signal Strength Indicator" } } ], "source" : "simulator","order" : [ "550191" ] } }',
                            // "api" : "UIComponents/dashboard/frontend/examples/map/simulatorData",
@@ -4416,43 +4427,10 @@ angular
                                              "type" : "section",
                                              "htmlClass" : "row",
                                              "items" : [
+                                                   
                                                    {
                                                       "type" : "section",
-                                                      "htmlClass" : "col-xs-6",
-                                                      "items" : [
-                                                            {
-                                                               "key" : "clustered-view",
-                                                               "type" : "radios-inline",
-                                                               titleMap : [
-                                                                     {
-                                                                        value : "true",
-                                                                        name : "True"
-                                                                     },
-                                                                     {
-                                                                        value : "false",
-                                                                        name : "False"
-                                                                     } ]
-                                                            },
-                                                            {
-                                                               "key" : "heatmap",
-                                                               "type" : "radios-inline",
-                                                               titleMap : [
-                                                                     {
-                                                                        value : "true",
-                                                                        name : "True"
-                                                                     },
-                                                                     {
-                                                                        value : "false",
-                                                                        name : "False"
-                                                                     } ]
-                                                            },
-                                                            "cluster-zoom",
-                                                            "clustered-zoom-max",
-                                                            "detailed-zoom-min", ]
-                                                   },
-                                                   {
-                                                      "type" : "section",
-                                                      "htmlClass" : "col-xs-6",
+                                                      "htmlClass" : "col-xs-12",
                                                       "items" : [
                                                          {
                                                                "key" : "bounce",
@@ -4493,6 +4471,142 @@ angular
                                     /** , "tracked-asset"* */
                                     ]
                                  },
+                               {
+                                    title : "Map Clusters",
+                                    items : [
+                                          {
+                                             "type" : "section",
+                                             "htmlClass" : "row",
+                                             "items" : [
+                                                 {
+                                                      "type" : "section",
+                                                      "htmlClass" : "col-xs-12",
+                                                      "items" : [
+                                                            {
+                                                               "key" : "clustered-view",
+                                                               "type" : "radios-inline",
+                                                               titleMap : [
+                                                                     {
+                                                                        value : "true",
+                                                                        name : "True"
+                                                                     },
+                                                                     {
+                                                                        value : "false",
+                                                                        name : "False"
+                                                                     } ]
+                                                            },
+                                                            {
+                                                               "key" : "heatmap",
+                                                               "type" : "radios-inline",
+                                                               titleMap : [
+                                                                     {
+                                                                        value : "true",
+                                                                        name : "True"
+                                                                     },
+                                                                     {
+                                                                        value : "false",
+                                                                        name : "False"
+                                                                     } ]
+                                                            },
+                                                            "cluster-zoom",
+                                                            "clustered-zoom-max",
+                                                            "detailed-zoom-min", ]
+                                                   },
+                                                   {
+                                                      "type" : "section",
+                                                      "htmlClass" : "col-xs-12",
+                                                      "items" : [
+                                                          {
+                                                              "key":"cluster-styles",
+                                                              "title" : "Cluster Styles",
+                                                              "items" : [ {
+                                                        "type" : "section",
+                                                        "htmlClass" : "row",
+                                                        "items" : [
+                                                         
+                                                         {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-4",
+                                                                 "items" : [ {
+                                                                     "key" : "cluster-styles[].url",
+                                                                 } ]
+                                                             },
+                                                 {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-4",
+                                                                 "items" : [ {
+                                                                     "key" : "cluster-styles[].height",
+                                                                 } ]
+                                                             }
+                                                 ,
+                                                 {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-4",
+                                                                 "items" : [ {
+                                                                     "key" : "cluster-styles[].width",
+                                                                 } ]
+                                                             }
+                                                 ,
+                                                 {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-4",
+                                                                 "items" : [ {
+                                                                     "key" : "cluster-styles[].textColor",
+                                                                     "colorFormat" : "hex3",
+                                                                        "spectrumOptions": {showInput: true,
+                                                                                            showAlpha: false,
+                                                                                            allowEmpty: true,
+                                                                                            showPalette: true,
+                                                                                            preferredFormat: 'hex3',
+                                                                                            palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                                                      ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                                                      ['#ef2929', '#888a85', '#deface']]}
+                                                                     
+                                                                 } ]
+                                                             }
+                                                  ,
+                                                 {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-4",
+                                                                 "items" : [ {
+                                                                     "key" : "cluster-styles[].textSize",
+                                                                 } ]
+                                                             }
+                                                  ,
+                                                 {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-4",
+                                                                 "items" : [ {
+                                                                     "key" : "cluster-styles[].backgroundPosition",
+                                                                 } ]
+                                                             }
+                                                  ,
+                                                            {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-6",
+                                                                 "items" : [ {
+                                                                     "key" : "cluster-styles[].anchor",
+                                                                     
+                                                                 } ]
+                                                             },
+                                                 {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-6",
+                                                                 "items" : [ {
+                                                                     "key" : "cluster-styles[].iconAnchor",
+                                                                 } ]
+                                                             }
+                                                 
+                                             ]
+			                                            }]
+                                                          }
+                                                             ]
+                                                   }]
+                                          }
+
+                                    ]
+                                 },
+                               
                                  {
                                     title : "Info Window",
                                     items : [
@@ -4622,6 +4736,60 @@ angular
                                  "type" : "number",
                                  "description" : "The initial map zoom level when clustered view is true.",
                                  "default" : 3
+                              },
+                               "cluster-styles" : {
+                                 "title" : "Cluster Styles",
+                                 "type" : "array",
+                                 "description" : "Used to style the pin clusters icons, for more info see <a href='https://googlemaps.github.io/js-marker-clusterer/docs/reference.html' target='_blank'>this</a> .",
+                                 "default" : [],
+                                   "items" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                          "url" : {
+                                              "title" : "url",
+                                              "type" : "string"
+                                          },
+                                          "height" : {
+                                              "title": "Height",
+                                              "type" : "number"
+                                          },
+                                          "width" : {
+                                              "title": "Width",
+                                              "type" : "number",
+                                          },
+                                          "anchor" : {
+                                              "title" : "Anchor",
+                                               "type": "array",
+                                              "startEmpty": true,
+                                                "items": {
+                                                     "title":"",
+                                                  "type": "number"
+                                                }
+                              			  },
+                                          "textColor" : {
+                                              "title" : "Text Color",
+                                               "type" : "string",
+                                              "format" : "color",
+                              			  },
+                                          "textSize" : {
+                                              "title" : "Text Size (px)",
+                                               "type" : "number"
+                              			  },
+                                          "backgroundPosition" : {
+                                              "title" : "Background Position",
+                                               "type" : "string"
+                              			  },
+                                          "iconAnchor" : {
+                                              "title" : "Icon Anchor",
+                                              "startEmpty": true,
+                                               "type": "array",
+                                                "items": {
+                                                  "title":"",
+                                                  "type": "number"
+                                                }
+                              			  }
+                                      }
+                                  }
                               },
                               "heatmap" : {
                                  "title" : "Heat Map",
