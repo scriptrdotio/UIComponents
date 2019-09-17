@@ -117,6 +117,15 @@ form { margin-bottom: 0;}
 		overflow: hidden;
 		margin-top: 40px;
 	}
+&.noHeader {
+	.box-header {
+    	display: none;
+    }
+    .box-content {
+    	height: 100%;
+        margin-top: 0;
+    }
+}
 }
 
 /*** slick styles ***/
@@ -491,6 +500,12 @@ height: auto !important;
     border: 1px solid @gray3;
 }
 
+/********* Plotly chart *********/
+.plotly-chart-legend {
+    float: none;
+    position: absolute;
+    right: 20px;
+}
 
 }
 

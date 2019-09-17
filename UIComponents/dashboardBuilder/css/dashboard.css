@@ -51,9 +51,9 @@
   /***
 ***** DATA GRID *****
 ***/
-  /** thermometer **/
   /*** Override angular material ***/
   /*** View template of the dashboard ****/
+  /********* Plotly chart *********/
 }
 .light body {
   font-family: 'Source Sans Pro', sans-serif !important;
@@ -169,6 +169,13 @@
   height: calc(100% - 40px);
   overflow: hidden;
   margin-top: 40px;
+}
+.light .box.noHeader .box-header {
+  display: none;
+}
+.light .box.noHeader .box-content {
+  height: 100%;
+  margin-top: 0;
 }
 .light .slick-container {
   padding: 10px 10px 0;
@@ -638,7 +645,6 @@
 .light .gridster-mobile {
   height: auto !important;
 }
-
 .light .schema-form-section input[type=search] {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -649,6 +655,11 @@
 }
 .light .CodeMirror {
   border: 1px solid #DDD;
+}
+.light .plotly-chart-legend {
+  float: none;
+  position: absolute;
+  right: 20px;
 }
 .dark {
   /**#FFF**/
@@ -701,9 +712,9 @@
   /***
 ***** DATA GRID *****
 ***/
-  /** thermometer **/
   /*** Override angular material ***/
   /*** View template of the dashboard ****/
+  /********* Plotly chart *********/
 }
 .dark body {
   font-family: 'Source Sans Pro', sans-serif !important;
@@ -819,6 +830,13 @@
   height: calc(100% - 40px);
   overflow: hidden;
   margin-top: 40px;
+}
+.dark .box.noHeader .box-header {
+  display: none;
+}
+.dark .box.noHeader .box-content {
+  height: 100%;
+  margin-top: 0;
 }
 .dark .slick-container {
   padding: 10px 10px 0;
@@ -1288,7 +1306,6 @@
 .dark .gridster-mobile {
   height: auto !important;
 }
-
 .dark .schema-form-section input[type=search] {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1299,4 +1316,9 @@
 }
 .dark .CodeMirror {
   border: 1px solid #16191c;
+}
+.dark .plotly-chart-legend {
+  float: none;
+  position: absolute;
+  right: 20px;
 }
