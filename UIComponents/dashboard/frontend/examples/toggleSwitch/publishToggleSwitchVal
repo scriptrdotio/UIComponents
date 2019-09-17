@@ -1,7 +1,6 @@
 var log = require("log");
 log.setLevel("INFO"); 
 
-var value =  Math.floor((Math.random() * 100) + 1); 
 
 var requestParams = request.body;
 
@@ -16,6 +15,6 @@ var publishResponse = function(channel, data, request) {
    publish(channel, message);
 }
 
-//publishResponse("responseChannel", "success", request);
+publishResponse("responseChannel", {status:true,disabled:false}, request);
 
 return "success";

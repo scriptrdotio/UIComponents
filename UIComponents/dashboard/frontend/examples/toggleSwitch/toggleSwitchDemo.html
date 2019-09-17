@@ -17,11 +17,13 @@
     
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    
+        <script src="/UIComponents/dataService.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
 </head>  
   
 <script>
-      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "ToggleSwitch"]);
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "ToggleSwitch","DataService"]);
       angular.module('myApp').config(wssConfig);
       angular.module('myApp').config(httpsConfig);
   
@@ -33,6 +35,7 @@
       });
 </script>
   
+    
   <body>
     <div ng-controller="testCtrl as vm">
       <scriptr-toggle-switch
@@ -42,7 +45,7 @@
                      on-label="ON"
                      off-label="OFF"
                      on-switch-change="vm.onChange"
-                     transport="wss"
+                     transport="https"
                      type="switch-danger"        
                      size="switch-mini"
                      msg-tag="toggle"        

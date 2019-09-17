@@ -15,11 +15,13 @@
     
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    
+        <script src="/UIComponents/dataService.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
 </head>  
   
 <script>
-      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Slider"])
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Slider","DataService"])
   
       angular.module('myApp').controller('testCtrl', function($scope) {
           var vm = this;
@@ -81,7 +83,9 @@
                 ceil="10" 
                 show-selection-bar="false"        
                 show-selection-bar-end="true"
-                     
+                    api="UIComponents/dashboard/frontend/examples/slider/getSliderVal"
+                            transport="https"  
+                        
                 >
         </scriptr-slider>
     </div>

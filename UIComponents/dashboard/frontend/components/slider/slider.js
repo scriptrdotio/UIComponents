@@ -94,7 +94,7 @@ angular
 
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/slider/slider.html',
-               controller : function($scope, $element, $window, $timeout, httpClient, wsClient) {
+               controller : function($scope, $element, $window, $timeout, httpClient, wsClient,dataService) {
 
 	               var self = this;
 
@@ -230,56 +230,15 @@ angular
                   }
                   
 	               var initDataService = function(api, params, transport) {
-		               if (transport == "wss") {
-			               wsClient.onReady.then(function() {
-				               // Subscribe to socket messages with id chart
-                               if(self.msgTag){
-                                 wsClient.subscribe(self.msgTag, self.consumeData.bind(self), $scope.$id);  
-                               }
-				               if(api) {
-                                  wsClient.call(api, params, self.msgTag)
-                                   .then(
-                                    function(data, response) {
-                                       self.consumeData(data)
-                                   },
-                                   function(err) {
-                                    console.log( "reject published promise", err);
-                                    self.consumeData();
-                                  });
-				               }
-				               
-			               });
-		               } else {
-			               if (transport == "https" && api) {
-                               if(self.httpsMethod == "post"){
-				               httpClient
-				                     .post(api, params)
-				                     .then(
-				                           function(data, response) {
-					                           self.consumeData(data)
-				                           },
-				                           function(err) {
-					                           console
-					                                 .log(
-					                                       "reject published promise",
-					                                       err);
-				                           });
-                           }else{
-                               httpClient
-				                     .get(api, params)
-				                     .then(
-				                           function(data, response) {
-					                           self.consumeData(data)
-				                           },
-				                           function(err) {
-					                           console
-					                                 .log(
-					                                       "reject published promise",
-					                                       err);
-				                           });
-                           }
-			               }
-		               }
+		                dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+
+                            if(self.fetchDataInterval && !self.refreshTimer) {
+                                //Assuming this is success
+                                self.refreshTimer = $interval(
+                                    function(){
+                                        initDataService(self.transport)
+                                    }, self.fetchDataInterval * 1000);
+                            }
 	               }
 
 	              this.consumeData = function(data, response) {
