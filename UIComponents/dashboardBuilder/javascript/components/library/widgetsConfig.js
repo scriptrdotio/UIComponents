@@ -4421,7 +4421,7 @@ angular
                            type : "tabs",
                            tabs : [
                                  {
-                                    title : "Map behaviour",
+                                    title : "Map marker",
                                     items : [
                                           {
                                              "type" : "section",
