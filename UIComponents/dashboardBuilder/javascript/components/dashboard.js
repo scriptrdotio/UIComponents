@@ -153,14 +153,14 @@ angular
           margins: [10, 10], // the pixel distance between each widget
           defaultSizeX: 2, // the default width of a gridster item, if not specifed
           defaultSizeY: 1, // the default height of a gridster item, if not specified
-          mobileBreakPoint: 480, // if the screen is not wider that this, remove the grid layout and stack the items
+          mobileBreakPoint:480, // if the screen is not wider that this, remove the grid layout and stack the items
           minColumns: 1, // the minimum columns the grid must have
           //MFE: overriden in each item widget definition
           //minSizeX: 1, // minimum column width of an item
          // maxSizeX: null, // maximum column width of an item
          // minSizeY: 2, // minumum row height of an item
           //maxSizeY: 2, // maximum row height of an item
-          sparse: true,
+          sparse: false,
           resizable: {
             enabled: true,
             handle: '.my-class', // optional selector for resize handle
@@ -940,13 +940,31 @@ angular
              
              widget["functions"].push({"name": functionName, "value": value, "attribute": key});
              self.chart.attr(key, ("vm."+functionName));
-         } else if(key == "info-window") {
-             var infoElement = angular.element(document.createElement("info-window"));
-             infoElement.attr("id", "");
-             infoElement.attr("template", "");
-             infoElement.attr("max-width", "");
          } else {
              self.chart.attr(key, value);
+         }
+            
+            
+           if(key == "default-info-window") {
+             this.parent.dashboard.counter += 1;
+             var counter = this.parent.dashboard.counter;
+             var infoElement = angular.element(document.createElement("info-window"));
+             infoElement.attr("id", "defaultInfoWindow-"+counter);
+             infoElement.attr("template", value.template);
+             infoElement.attr("max-width", value["max-width"]);
+             infoElement.attr("max-height", value["max-height"]);
+             self.chart.append(infoElement)
+             self.chart.attr("custom-default-info-window", "defaultInfoWindow-"+counter);
+         }
+          if(key == "source-info-window") {
+             angular.forEach(value, function(v, k) {
+                 var infoElement = angular.element(document.createElement("info-window"));
+                 infoElement.attr("id", "infoWindowTemplate_"+v.source);
+                 infoElement.attr("template", v.template);
+                 infoElement.attr("max-width", v["max-width"]);
+                 infoElement.attr("max-height", v["max-height"]);
+                 self.chart.append(infoElement)
+             });
          }
         }, this);
  

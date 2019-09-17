@@ -4396,7 +4396,6 @@ angular
                            "resize" : "false",
                            "data" : '{ "253812" : { "550153" : [ { "lat" : {"value": "40.84969"}, "long" :{"value": "-73.94168"}, "bounce": {"value" : "true"}, "speed" : { "value" : "8", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "30", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.3", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2818", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "91", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.99", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "61","description" : "Received Signal Strength Indicator" } }, { "lat" :{"value": "40.84919"}, "long" : {"value": "-73.93897000000001"}, "speed": { "value" : "5", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "57", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.4","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2838", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "94", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.15", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55101"}, "make" : { "value" : "Toyota" }, "model" : { "value" : "Tacoma" },"snr" : { "value" : "9", "description" : "Signal to Noise Ratio" },"rssi" : { "value" : "48", "description" : "Received Signal StrengthIndicator" } }, { "lat" : {"value": "40.848600000000005"}, "long" :{"value": "-73.93648"}, "speed" : { "value" : "9", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "76", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.2", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2465", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "97", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.39", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "69","description" : "Received Signal Strength Indicator" } } ], "source" :"simulator", "order" : [ "550153" ] }, "253815" : { "550191" : [ { "lat": {"value": "40.80913"}, "long" : {"value": "-73.90327"}, "speed" : {"value" : "7", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "56", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.2","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2123", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "100", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.45", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55043"}, "make" : { "value" : "Saab" }, "model" : { "value" : "9-3" }, "snr" :{ "value" : "13", "description" : "Signal to Noise Ratio" }, "rssi" : {"value" : "49", "description" : "Received Signal Strength Indicator" }}, { "lat" : {"value": "40.807500000000004"}, "long" : {"value":"-73.90557000000001"}, "speed" : { "value" : "6", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "16", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.7", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "1946", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "95", "description" :"Engine Temperature" }, "voltage" : { "value" : "12.87", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55043" }, "make" : { "value" : "Saab" },"model" : { "value" : "d9-3" }, "snr" : { "value" : "13", "description" :"Signal to Noise Ratio" }, "rssi" : { "value" : "59", "description" :"Received Signal Strength Indicator" } } ], "source" : "simulator","order" : [ "550191" ] } }',
                            // "api" : "UIComponents/dashboard/frontend/examples/map/simulatorData",
-                           "sources-info" : '{"simulator": {"label": "Carvoyant"}}',
                            "msg-tag" : "everyone-main-live"
                         },
                         "box" : {
@@ -4455,20 +4454,6 @@ angular
                                                       "type" : "section",
                                                       "htmlClass" : "col-xs-6",
                                                       "items" : [
-                                                            {
-                                                               "key" : "marker-info-window",
-                                                               "type" : "radios-inline",
-                                                               titleMap : [
-                                                                     {
-                                                                        value : "true",
-                                                                        name : "True"
-                                                                     },
-                                                                     {
-                                                                        value : "false",
-                                                                        name : "False"
-                                                                     } ]
-                                                            },
-                                                           "info-window",
                                                          {
                                                                "key" : "bounce",
                                                                "type" : "radios-inline",
@@ -4508,9 +4493,113 @@ angular
                                     /** , "tracked-asset"* */
                                     ]
                                  },
-                                 /**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+                                 {
+                                    title : "Info Window",
+                                    items : [
+                                         {
+                                                               "key" : "marker-info-window",
+                                                               "type" : "radios-inline",
+                                                               titleMap : [
+                                                                     {
+                                                                        value : "true",
+                                                                        name : "True"
+                                                                     },
+                                                                     {
+                                                                        value : "false",
+                                                                        name : "False"
+                                                                     } ]
+                                                            },
+                                       {
+                                                 
+                                                 "type" : "section",
+                                                 "htmlClass" : "",
+                                                 "items" : [  {
+                                                     "key" : "default-info-window",
+                                                     "condition" : "model['marker-info-window']=='true'",
+                                                     "title" : "Default Info window",
+                                                     "items" : [ {
+                                                        "type" : "section",
+                                                        "htmlClass" : "row",
+                                                        "items" : [
+                                                             {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key" : "default-info-window.template",
+                                                                     "title" : "Template"
+                                                                 } ]
+                                                             },
+                                                            {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key" : "default-info-window.max-width",
+                                                                     "title" : "Max width",
+                                                                 } ]
+                                                             },
+                                                            {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key": "default-info-window.max-height",
+                                                                     "title" : "Max height"
+                                                                 }]
+                                                             }]
+			                                            }]
+                                                 }]
+                                             }, {
+                                                 
+                                                 "type" : "section",
+                                                 "htmlClass" : "",
+                                                 "items" : [  {
+                                                     "key" : "source-info-window",
+                                                     "condition" : "model['marker-info-window']=='true'",
+                                                     "title" : "Info window per source",
+                                                     "items" : [ {
+                                                        "type" : "section",
+                                                        "htmlClass" : "row",
+                                                        "items" : [
+                                                         
+                                                         {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key" : "source-info-window[].source",
+                                                                     "title" : "Source"
+                                                                 } ]
+                                                             },
+                                                             {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key" : "source-info-window[].template",
+                                                                     "title" : "Template"
+                                                                 } ]
+                                                             },
+                                                            {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key" : "source-info-window[].max-width",
+                                                                     "title" : "Max width",
+                                                                 } ]
+                                                             },
+                                                            {
+                                                                 "type" : "section",
+                                                                 "htmlClass" : "col-xs-6 col-sm-3",
+                                                                 "items" : [ {
+                                                                     "key": "source-info-window[].max-height",
+                                                                     "title" : "Max height"
+                                                                 }]
+                                                             }]
+			                                            }]
+                                                 }]
+                                             }
+                                    ]
+                                 },
+                                 /**
 											 * { title: "Geofence behaviour", items: [ "geofence-manager", "api-geofence", "api-geofence-params", "msg-tag-geofence"] },
-											 *********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+											*/
                                  {
                                     title : "Help",
                                     items : [ {
@@ -4582,16 +4671,11 @@ angular
                               "sources-info" : {
                                  "title" : "Sources Info",
                                  "type" : "string",
-                                 "description" : "Sources Info.ex: {'stream': {'label': 'Carvoyant', 'url': 'http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png'}}",
+                                 "description" : "Sources Info.ex: {'stream': {'label': 'Carvoyant',  'icon': { 'url': 'http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png'}}}",
                                  "x-schema-form" : {
                                     "type" : "textarea",
-                                    "placeholder" : "{'stream': {'label': 'Carvoyant', 'url': 'http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png'}}"
+                                    "placeholder" : "{'stream': {'label': 'Carvoyant',  'icon': { 'url': 'http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png'}}}"
                                  }
-                              },
-                              "info-window" : {
-                                 "title" : "Info Window Template",
-                                 "type" : "string",
-                                 "description" : "Insert html url for your info window template.",
                               },
                               "data" : {
                                  "title" : "Markers data",
@@ -4614,6 +4698,55 @@ angular
                                  "type" : "number",
                                  "description" : "Default marker trail stroke weight.",
                                  "default" : 1
+                              },
+                               "default-info-window" : {
+                                  "title" : "Source Info Window",
+                                    "type" : "object",
+                                    "description" : "",
+                                    "items" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                          "template" : {
+                                              "title": "Template",
+                                              "type" : "string"
+                                          },
+                                          "max-width" : {
+                                              "title": "Max width",
+                                              "type" : "number",
+                                          },
+                                          "max-height" : {
+                                              "title" : "Max height",
+                                               "type" : "number"
+                              			  }
+                                      }
+                                  }
+                              },
+							 "source-info-window" : {
+                                  "title" : "Source Info Window",
+                                    "type" : "array",
+                                    "default": [],
+                                    "description" : "",
+                                    "items" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                          "source" : {
+                                              "title" : "Source",
+                                              "type" : "string"
+                                          },
+                                          "template" : {
+                                              "title": "Template",
+                                              "type" : "string"
+                                          },
+                                          "max-width" : {
+                                              "title": "Max width",
+                                              "type" : "number",
+                                          },
+                                          "max-height" : {
+                                              "title" : "Max height",
+                                               "type" : "number"
+                              			  }
+                                      }
+                                  }
                               }
                            },
                            "required" : []
