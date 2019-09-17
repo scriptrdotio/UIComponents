@@ -67,9 +67,9 @@ angular
                                                         "key": "theme",
                                                         "htmlClass": "col-xs-12 col-sm-6",
                                                         "type": 'strapselect',
-                                                        onChange:function(modelValue, form,model) {
-                                                            var defaults={
-                                                                light:{
+                                                        onChange: function (modelValue, form, model) {
+                                                            var defaults = {
+                                                                light: {
                                                                     "dashboard": {
                                                                         "background-type": "solid",
                                                                         "background-image": "",
@@ -125,7 +125,7 @@ angular
                                                                         "color": "#000"
                                                                     }
                                                                 },
-                                                                dark:{
+                                                                dark: {
                                                                     "dashboard": {
                                                                         "background-type": "solid",
                                                                         "background-image": "",
@@ -183,9 +183,9 @@ angular
                                                                 }
                                                             }
 
-                                                            model.style=defaults[modelValue];
-                                                            
-                                                         },
+                                                            model.style = defaults[modelValue];
+
+                                                        },
                                                         "placeholder": " ",
                                                         "titleMap": [{
                                                             "value": "light",
@@ -198,14 +198,14 @@ angular
                                                     },
                                                     {
                                                         "key": "reset",
-                                                        "condition":"false",
+                                                        "condition": "false",
                                                         "htmlClass": "col-xs-12 col-sm-2",
                                                         "type": 'button',
-                                                        onClick:function(modelValue, form) {
-                                                            
-                                                            console.log(modelValue,form);
-                                                         }
-                                                        
+                                                        onClick: function (modelValue, form) {
+
+                                                            console.log(modelValue, form);
+                                                        }
+
                                                     }
                                                 ]
                                             },
@@ -326,100 +326,102 @@ angular
                                                         "type": "section",
                                                         "htmlClass": "row",
                                                         "condition": "false",
-                                                        "items": [{
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.dashboard.border",
-                                                                    "type": "strapselect",
-                                                                    "titleMap": [{
-                                                                        "value": "true",
-                                                                        "name": "True"
-                                                                    }, {
-                                                                        "value": "false",
-                                                                        "name": "False"
-                                                                    }]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "condition": "model.style ['dashboard'] ['border'] === 'true'",
-                                                                    "key": "style.dashboard.border-radius",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        }, {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.dashboard.border-style",
-                                                                    "condition": "model.style ['dashboard'] ['border'] === 'true'",
-                                                                    "type": "strapselect",
-                                                                    "titleMap": [{
-                                                                        "value": "dotted",
-                                                                        "name": "Dotted"
-                                                                    },
+                                                        "items": [
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
                                                                     {
-                                                                        "value": "dashed",
-                                                                        "name": "Dashed"
-                                                                    },
-                                                                    {
-                                                                        "value": "solid",
-                                                                        "name": "Solid"
-                                                                    },
-                                                                    {
-                                                                        "value": "double",
-                                                                        "name": "Double"
-                                                                    },
-                                                                    {
-                                                                        "value": "inset",
-                                                                        "name": "Inset"
-                                                                    },
-                                                                    {
-                                                                        "value": "outset",
-                                                                        "name": "Outset"
-                                                                    }]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.dashboard.border-color",
-                                                                    "condition": "model.style ['dashboard'] ['border'] === 'true'",
-                                                                    "colorFormat": "hex3",
-                                                                    "spectrumOptions": {
-                                                                        showInput: true,
-                                                                        showAlpha: true,
-                                                                        allowEmpty: true,
-                                                                        showPalette: true,
-                                                                        preferredFormat: 'hex3',
-                                                                        palette: [['#ff', '##f2f2f2', '#2c343a'],
-                                                                        ['#000']]
+
+                                                                        "key": "style.dashboard.border-radius",
+                                                                        "type": "number"
                                                                     }
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.dashboard.border-width",
-                                                                    "condition": "model.style ['dashboard'] ['border'] === 'true'",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.dashboard.border",
+                                                                        "type": "strapselect",
+                                                                        "titleMap": [{
+                                                                            "value": "true",
+                                                                            "name": "True"
+                                                                        }, {
+                                                                            "value": "false",
+                                                                            "name": "False"
+                                                                        }]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.dashboard.border-style",
+                                                                        "condition": "model.style ['dashboard'] ['border'] === 'true'",
+                                                                        "type": "strapselect",
+                                                                        "titleMap": [{
+                                                                            "value": "dotted",
+                                                                            "name": "Dotted"
+                                                                        },
+                                                                        {
+                                                                            "value": "dashed",
+                                                                            "name": "Dashed"
+                                                                        },
+                                                                        {
+                                                                            "value": "solid",
+                                                                            "name": "Solid"
+                                                                        },
+                                                                        {
+                                                                            "value": "double",
+                                                                            "name": "Double"
+                                                                        },
+                                                                        {
+                                                                            "value": "inset",
+                                                                            "name": "Inset"
+                                                                        },
+                                                                        {
+                                                                            "value": "outset",
+                                                                            "name": "Outset"
+                                                                        }]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.dashboard.border-color",
+                                                                        "condition": "model.style ['dashboard'] ['border'] === 'true'",
+                                                                        "colorFormat": "hex3",
+                                                                        "spectrumOptions": {
+                                                                            showInput: true,
+                                                                            showAlpha: true,
+                                                                            allowEmpty: true,
+                                                                            showPalette: true,
+                                                                            preferredFormat: 'hex3',
+                                                                            palette: [['#ff', '##f2f2f2', '#2c343a'],
+                                                                            ['#000']]
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.dashboard.border-width",
+                                                                        "condition": "model.style ['dashboard'] ['border'] === 'true'",
+                                                                        "type": "number"
+                                                                    }
+                                                                ]
+                                                            }
                                                         ]
                                                     },
 
@@ -528,99 +530,101 @@ angular
                                                     {
                                                         "type": "section",
                                                         "htmlClass": "row",
-                                                        "items": [{
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box.border",
-                                                                    "type": "strapselect",
-                                                                    "titleMap": [{
-                                                                        "value": "true",
-                                                                        "name": "True"
-                                                                    }, {
-                                                                        "value": "false",
-                                                                        "name": "False"
-                                                                    }]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "condition": "model.style ['box'] ['border'] === 'true'",
-                                                                    "key": "style.box.border-radius",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        }, {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box.border-style",
-                                                                    "condition": "model.style ['box'] ['border'] === 'true'",
-                                                                    "type": "strapselect",
-                                                                    "titleMap": [{
-                                                                        "value": "dotted",
-                                                                        "name": "Dotted"
-                                                                    },
+                                                        "items": [
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
                                                                     {
-                                                                        "value": "dashed",
-                                                                        "name": "Dashed"
-                                                                    },
-                                                                    {
-                                                                        "value": "solid",
-                                                                        "name": "Solid"
-                                                                    },
-                                                                    {
-                                                                        "value": "double",
-                                                                        "name": "Double"
-                                                                    },
-                                                                    {
-                                                                        "value": "inset",
-                                                                        "name": "Inset"
-                                                                    },
-                                                                    {
-                                                                        "value": "outset",
-                                                                        "name": "Outset"
-                                                                    }]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box.border-color",
-                                                                    "condition": "model.style ['box'] ['border'] === 'true'",
-                                                                    "colorFormat": "hex3",
-                                                                    "spectrumOptions": {
-                                                                        showInput: true,
-                                                                        showAlpha: true,
-                                                                        allowEmpty: true,
-                                                                        showPalette: true,
-                                                                        preferredFormat: 'hex3',
-                                                                        palette: [['#ff', '##f2f2f2', '#2c343a'],
-                                                                        ['#000']]
+
+                                                                        "key": "style.box.border-radius",
+                                                                        "type": "number"
                                                                     }
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box.border-width",
-                                                                    "condition": "model.style ['box'] ['border'] === 'true'",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box.border",
+                                                                        "type": "strapselect",
+                                                                        "titleMap": [{
+                                                                            "value": "true",
+                                                                            "name": "True"
+                                                                        }, {
+                                                                            "value": "false",
+                                                                            "name": "False"
+                                                                        }]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box.border-style",
+                                                                        "condition": "model.style ['box'] ['border'] === 'true'",
+                                                                        "type": "strapselect",
+                                                                        "titleMap": [{
+                                                                            "value": "dotted",
+                                                                            "name": "Dotted"
+                                                                        },
+                                                                        {
+                                                                            "value": "dashed",
+                                                                            "name": "Dashed"
+                                                                        },
+                                                                        {
+                                                                            "value": "solid",
+                                                                            "name": "Solid"
+                                                                        },
+                                                                        {
+                                                                            "value": "double",
+                                                                            "name": "Double"
+                                                                        },
+                                                                        {
+                                                                            "value": "inset",
+                                                                            "name": "Inset"
+                                                                        },
+                                                                        {
+                                                                            "value": "outset",
+                                                                            "name": "Outset"
+                                                                        }]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box.border-color",
+                                                                        "condition": "model.style ['box'] ['border'] === 'true'",
+                                                                        "colorFormat": "hex3",
+                                                                        "spectrumOptions": {
+                                                                            showInput: true,
+                                                                            showAlpha: true,
+                                                                            allowEmpty: true,
+                                                                            showPalette: true,
+                                                                            preferredFormat: 'hex3',
+                                                                            palette: [['#ff', '##f2f2f2', '#2c343a'],
+                                                                            ['#000']]
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box.border-width",
+                                                                        "condition": "model.style ['box'] ['border'] === 'true'",
+                                                                        "type": "number"
+                                                                    }
+                                                                ]
+                                                            }
                                                         ]
                                                     },
                                                     {
@@ -743,6 +747,16 @@ angular
                                                                 "htmlClass": "col-xs-2 col-sm-2",
                                                                 "items": [
                                                                     {
+                                                                        "key": "style.box-content.border-radius",
+                                                                        "type": "number"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
+                                                                    {
                                                                         "key": "style.box-content.border",
                                                                         "type": "strapselect",
                                                                         "titleMap": [{
@@ -755,17 +769,7 @@ angular
                                                                     }
                                                                 ]
                                                             },
-                                                            {
-                                                                "type": "section",
-                                                                "htmlClass": "col-xs-2 col-sm-2",
-                                                                "items": [
-                                                                    {
-                                                                        "key": "style.box-content.border-radius",
-                                                                        "condition": "model.style['box-content'] ['border'] === 'true'",
-                                                                        "type": "number"
-                                                                    }
-                                                                ]
-                                                            },
+
                                                             {
                                                                 "type": "section",
                                                                 "htmlClass": "col-xs-2 col-sm-2",
@@ -899,100 +903,100 @@ angular
                                                     {
                                                         "type": "section",
                                                         "htmlClass": "row",
-                                                        "items": [{
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box-header.border",
-                                                                    "type": "strapselect",
-                                                                    "titleMap": [{
-                                                                        "value": "true",
-                                                                        "name": "True"
-                                                                    }, {
-                                                                        "value": "false",
-                                                                        "name": "False"
-                                                                    }]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box-header.border-radius",
-                                                                    "condition": "model.style ['box-header'] ['border'] === 'true'",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box-header.border-style",
-                                                                    "condition": "model.style ['box-header'] ['border'] === 'true'",
-                                                                    "type": "strapselect",
-                                                                    "titleMap": [{
-                                                                        "value": "dotted",
-                                                                        "name": "Dotted"
-                                                                    },
+                                                        "items": [
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
                                                                     {
-                                                                        "value": "dashed",
-                                                                        "name": "Dashed"
-                                                                    },
-                                                                    {
-                                                                        "value": "solid",
-                                                                        "name": "Solid"
-                                                                    },
-                                                                    {
-                                                                        "value": "double",
-                                                                        "name": "Double"
-                                                                    },
-                                                                    {
-                                                                        "value": "inset",
-                                                                        "name": "Inset"
-                                                                    },
-                                                                    {
-                                                                        "value": "outset",
-                                                                        "name": "Outset"
-                                                                    }]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "key": "style.box-header.border-color",
-                                                                    "condition": "model.style ['box-header'] ['border'] === 'true'",
-                                                                    "colorFormat": "hex3",
-                                                                    "spectrumOptions": {
-                                                                        showInput: true,
-                                                                        showAlpha: true,
-                                                                        allowEmpty: true,
-                                                                        showPalette: true,
-                                                                        preferredFormat: 'hex3',
-                                                                        palette: [['#ff', '##f2f2f2', '#2c343a'],
-                                                                        ['#000']]
+                                                                        "key": "style.box-header.border-radius",
+                                                                        "type": "number"
                                                                     }
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "section",
-                                                            "htmlClass": "col-xs-2 col-sm-2",
-                                                            "items": [
-                                                                {
-                                                                    "condition": "model.style ['box-header'] ['border'] === 'true'",
-                                                                    "key": "style.box-header.border-width",
-                                                                    "type": "number"
-                                                                }
-                                                            ]
-                                                        },
+                                                                ]
+                                                            }, {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box-header.border",
+                                                                        "type": "strapselect",
+                                                                        "titleMap": [{
+                                                                            "value": "true",
+                                                                            "name": "True"
+                                                                        }, {
+                                                                            "value": "false",
+                                                                            "name": "False"
+                                                                        }]
+                                                                    }
+                                                                ]
+                                                            },
+
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box-header.border-style",
+                                                                        "condition": "model.style ['box-header'] ['border'] === 'true'",
+                                                                        "type": "strapselect",
+                                                                        "titleMap": [{
+                                                                            "value": "dotted",
+                                                                            "name": "Dotted"
+                                                                        },
+                                                                        {
+                                                                            "value": "dashed",
+                                                                            "name": "Dashed"
+                                                                        },
+                                                                        {
+                                                                            "value": "solid",
+                                                                            "name": "Solid"
+                                                                        },
+                                                                        {
+                                                                            "value": "double",
+                                                                            "name": "Double"
+                                                                        },
+                                                                        {
+                                                                            "value": "inset",
+                                                                            "name": "Inset"
+                                                                        },
+                                                                        {
+                                                                            "value": "outset",
+                                                                            "name": "Outset"
+                                                                        }]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box-header.border-color",
+                                                                        "condition": "model.style ['box-header'] ['border'] === 'true'",
+                                                                        "colorFormat": "hex3",
+                                                                        "spectrumOptions": {
+                                                                            showInput: true,
+                                                                            showAlpha: true,
+                                                                            allowEmpty: true,
+                                                                            showPalette: true,
+                                                                            preferredFormat: 'hex3',
+                                                                            palette: [['#ff', '##f2f2f2', '#2c343a'],
+                                                                            ['#000']]
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-2 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "condition": "model.style ['box-header'] ['border'] === 'true'",
+                                                                        "key": "style.box-header.border-width",
+                                                                        "type": "number"
+                                                                    }
+                                                                ]
+                                                            },
                                                         ]
                                                     }
                                                 ]
@@ -1003,84 +1007,92 @@ angular
                                                 "title": "Header Label",
                                                 "key": "style.box-label",
                                                 "items": [
+
                                                     {
                                                         "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-2",
+                                                        "htmlClass": "row",
                                                         "items": [
+
                                                             {
-                                                                "key": "style.box-label.font-weight",
-                                                                "type": "strapselect",
-                                                                "titleMap": [{
-                                                                    "value": "normal",
-                                                                    "name": "Normal"
-                                                                }, {
-                                                                    "value": "bold",
-                                                                    "name": "Bold"
-                                                                }]
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-2",
-                                                        "items": [
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-6 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box-label.font-weight",
+                                                                        "type": "strapselect",
+                                                                        "titleMap": [{
+                                                                            "value": "normal",
+                                                                            "name": "Normal"
+                                                                        }, {
+                                                                            "value": "bold",
+                                                                            "name": "Bold"
+                                                                        }]
+                                                                    }
+                                                                ]
+                                                            },
                                                             {
-                                                                "key": "style.box-label.text-align",
-                                                                "type": "strapselect",
-                                                                "titleMap": [{
-                                                                    "value": "left",
-                                                                    "name": "Left"
-                                                                }, {
-                                                                    "value": "center",
-                                                                    "name": "Center"
-                                                                }, {
-                                                                    "value": "right",
-                                                                    "name": "Right"
-                                                                }]
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-2",
-                                                        "items": [
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-6 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box-label.text-align",
+                                                                        "type": "strapselect",
+                                                                        "titleMap": [{
+                                                                            "value": "left",
+                                                                            "name": "Left"
+                                                                        }, {
+                                                                            "value": "center",
+                                                                            "name": "Center"
+                                                                        }, {
+                                                                            "value": "right",
+                                                                            "name": "Right"
+                                                                        }]
+                                                                    }
+                                                                ]
+                                                            },
                                                             {
-                                                                "key": "style.box-label.font-size",
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-2",
-                                                        "items": [
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-6 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box-label.font-size",
+                                                                        "type": "number"
+                                                                    }
+                                                                ]
+                                                            },
                                                             {
-                                                                "key": "style.box-label.display",
-                                                                "type": "strapselect",
-                                                                "titleMap": [{
-                                                                    "value": "block",
-                                                                    "name": "Block"
-                                                                }, {
-                                                                    "value": "none",
-                                                                    "name": "None"
-                                                                }]
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "section",
-                                                        "htmlClass": "col-xs-6 col-sm-2",
-                                                        "items": [
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-6 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box-label.display",
+                                                                        "type": "strapselect",
+                                                                        "titleMap": [{
+                                                                            "value": "block",
+                                                                            "name": "Block"
+                                                                        }, {
+                                                                            "value": "none",
+                                                                            "name": "None"
+                                                                        }]
+                                                                    }
+                                                                ]
+                                                            },
                                                             {
-                                                                "key": "style.box-label.color",
-                                                                "colorFormat": "hex3",
-                                                                showInput: true,
-                                                                showAlpha: true,
-                                                                allowEmpty: true,
-                                                                showPalette: true,
-                                                                preferredFormat: 'hex3',
-                                                                palette: [['#ff', '##f2f2f2', '#2c343a'],
-                                                                ['#000']]
+                                                                "type": "section",
+                                                                "htmlClass": "col-xs-6 col-sm-2",
+                                                                "items": [
+                                                                    {
+                                                                        "key": "style.box-label.color",
+                                                                        "colorFormat": "hex3",
+                                                                        showInput: true,
+                                                                        showAlpha: true,
+                                                                        allowEmpty: true,
+                                                                        showPalette: true,
+                                                                        preferredFormat: 'hex3',
+                                                                        palette: [['#ff', '##f2f2f2', '#2c343a'],
+                                                                        ['#000']]
+                                                                    }
+                                                                ]
                                                             }
                                                         ]
                                                     }
