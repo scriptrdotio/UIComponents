@@ -25,6 +25,9 @@ angular
         "data": "<?",
         
         "heatMapWeight": "@",
+        "heatMapRadius": "@",
+        "heatMapOpacity": "@",
+        "heatMapGradient": "<?",
       	"api" : "@",
       	"apiParams" : "@",
         "msgTag": "@",
@@ -124,6 +127,7 @@ angular
                   heatmap = new google.maps.visualization.HeatmapLayer({
                       data: _.toArray(self.heatMap),
                       radius: self.heatMapRadius,
+                      gradient: self.heatMapGradient,
                       opacity: self.heatMapOpacity   
                   });
                   heatmap.setMap(self.map);
@@ -272,6 +276,7 @@ angular
            heatmap = new google.maps.visualization.HeatmapLayer({
                data: _.toArray(self.heatMap),
                radius: self.heatMapRadius,
+               gradient: self.heatMapGradient,
                opacity: self.heatMapOpacity   
            });
            heatmap.setMap(self.map);

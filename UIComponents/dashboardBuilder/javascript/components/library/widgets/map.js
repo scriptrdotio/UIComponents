@@ -22,7 +22,28 @@ const __MAP__ = {
             textSize: 10,
             iconAnchor: [15, 48]
         }],
+        "heat-map-weight": 40,
+        "heat-map-opacity": 0.8,
+        "heat-map-radius": 40,
+        "heat-map-gradient": [
+            'rgba(0, 255, 255, 0)',
+            'rgba(0, 255, 255, 1)',
+            'rgba(0, 191, 255, 1)',
+            'rgba(0, 127, 255, 1)',
+            'rgba(0, 63, 255, 1)',
+            'rgba(0, 0, 255, 1)',
+            'rgba(0, 0, 223, 1)',
+            'rgba(0, 0, 191, 1)',
+            'rgba(0, 0, 159, 1)',
+            'rgba(0, 0, 127, 1)',
+            'rgba(63, 0, 91, 1)',
+            'rgba(127, 0, 63, 1)',
+            'rgba(191, 0, 31, 1)',
+            'rgba(255, 0, 0, 1)'
+        ],
 
+        "sources-info.stream.label": "Carvoyant",
+        "sources-info.stream.icon.url": "http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png",
         "resize": "false",
         "data": '{ "253812" : { "550153" : [ { "lat" : {"value": "40.84969"}, "long" :{"value": "-73.94168"}, "bounce": {"value" : "true"}, "speed" : { "value" : "8", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "30", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.3", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2818", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "91", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.99", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "61","description" : "Received Signal Strength Indicator" } }, { "lat" :{"value": "40.84919"}, "long" : {"value": "-73.93897000000001"}, "speed": { "value" : "5", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "57", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.4","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2838", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "94", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.15", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55101"}, "make" : { "value" : "Toyota" }, "model" : { "value" : "Tacoma" },"snr" : { "value" : "9", "description" : "Signal to Noise Ratio" },"rssi" : { "value" : "48", "description" : "Received Signal StrengthIndicator" } }, { "lat" : {"value": "40.848600000000005"}, "long" :{"value": "-73.93648"}, "speed" : { "value" : "9", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "76", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.2", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2465", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "97", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.39", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "69","description" : "Received Signal Strength Indicator" } } ], "source" :"simulator", "order" : [ "550153" ] }, "253815" : { "550191" : [ { "lat": {"value": "40.80913"}, "long" : {"value": "-73.90327"}, "speed" : {"value" : "7", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "56", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.2","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2123", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "100", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.45", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55043"}, "make" : { "value" : "Saab" }, "model" : { "value" : "9-3" }, "snr" :{ "value" : "13", "description" : "Signal to Noise Ratio" }, "rssi" : {"value" : "49", "description" : "Received Signal Strength Indicator" }}, { "lat" : {"value": "40.807500000000004"}, "long" : {"value":"-73.90557000000001"}, "speed" : { "value" : "6", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "16", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.7", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "1946", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "95", "description" :"Engine Temperature" }, "voltage" : { "value" : "12.87", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55043" }, "make" : { "value" : "Saab" },"model" : { "value" : "d9-3" }, "snr" : { "value" : "13", "description" :"Signal to Noise Ratio" }, "rssi" : { "value" : "59", "description" :"Received Signal Strength Indicator" } } ], "source" : "simulator","order" : [ "550191" ] } }',
         // "api" : "UIComponents/dashboard/frontend/examples/map/simulatorData",
@@ -85,11 +106,29 @@ const __MAP__ = {
                         "type": "section",
                         "htmlClass": "row",
                         "items": [{
-                            "type": "section",
+                            "type": "fieldset",
                             "htmlClass": "col-xs-12",
+                            "key": "sources-info",
                             "items": [
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-6",
+                                    "items": [
 
-                                "sources-info",
+                                        "sources-info.stream.label",
+                                    ]
+                                }
+                                , {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-6",
+                                    "items": [
+
+                                        "sources-info.stream.icon.url",
+                                    ]
+                                }
+
+
+
                             ]
                         }
 
@@ -110,7 +149,7 @@ const __MAP__ = {
                         "items": [
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-12",
+                                "htmlClass": "col-xs-6",
                                 "items": [
                                     {
                                         "key": "clustered-view",
@@ -125,22 +164,17 @@ const __MAP__ = {
                                                 name: "False"
                                             }]
                                     },
-                                    {
-                                        "key": "heatmap",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
-                                    },
-                                    "cluster-zoom",
+                                    "cluster-zoom",]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-6",
+                                "items": [
+
+
                                     "clustered-zoom-max",
-                                    "detailed-zoom-min",]
+                                    "detailed-zoom-min",
+                                ]
                             },
                             {
                                 "type": "section",
@@ -238,7 +272,73 @@ const __MAP__ = {
 
                 ]
             },
+            {
+                title: "Map Heat",
+                items: [
+                    {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-6",
+                                "items": [
+                                    {
+                                        "key": "heatmap",
+                                        "type": "radios-inline",
+                                        titleMap: [
+                                            {
+                                                value: "true",
+                                                name: "True"
+                                            },
+                                            {
+                                                value: "false",
+                                                name: "False"
+                                            }]
+                                    },
+                                    "heat-map-radius",
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-6",
+                                "items": [
 
+
+                                    "heat-map-weight",
+                                    "heat-map-opacity",
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-12",
+                                "items": [
+                                    {
+                                        "key": "heat-map-gradient",
+                                        "items": [
+                                            {
+                                                "key": "heat-map-gradient[]",
+                                                "colorFormat": "rgb",
+                                                "spectrumOptions": {
+                                                    showInput: true,
+                                                    showAlpha: true,
+                                                    allowEmpty: false,
+                                                    showPalette: true,
+                                                    preferredFormat: 'rgb',
+                                                    palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                    ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                    ['#ef2929', '#888a85', '#deface']]
+                                                }
+                                            }
+                                        ]
+                                    }
+
+                                ]
+                            }]
+                    }
+
+                ]
+            },
             {
                 title: "Info Window",
                 items: [
@@ -428,6 +528,31 @@ const __MAP__ = {
                 "type": "string",
                 "description": "Enable/disable heat map."
             },
+            "heat-map-radius": {
+                "title": "Heat Map Radius",
+                "type": "number",
+                "description": ""
+            },
+            "heat-map-weight": {
+                "title": "Heat Map Weight",
+                "type": "number",
+                "description": ""
+            },
+            "heat-map-opacity": {
+                "title": "Heat Map Opacity",
+                "type": "number",
+                "description": ""
+            },
+            "heat-map-gradient": {
+                "title": "Heat Map Gradient",
+                "type": "array",
+                "description": "",
+                "default": [],
+                "items": {
+                    "type": "string",
+                    "format": "color"
+                }
+            },
             "bounce": {
                 "title": "Bounce",
                 "type": "string",
@@ -470,12 +595,34 @@ const __MAP__ = {
             },
             "sources-info": {
                 "title": "Sources Info",
-                "type": "string",
-                "description": "Sources Info.ex: {'stream': {'label': 'Carvoyant',  'icon': { 'url': 'http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png'}}}",
-                "x-schema-form": {
-                    "type": "textarea",
-                    "placeholder": "{'stream': {'label': 'Carvoyant',  'icon': { 'url': 'http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png'}}}"
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "stream": {
+                        "type": "object",
+                        "properties": {
+                            "label": {
+                                "type": "string",
+                                "description": "Sources Info Label",
+                                "title": "Label",
+                            },
+                            "icon": {
+                                "type": "object",
+                                "properties": {
+                                    "url": {
+                                        "type": "string",
+                                        "description": "Sources Info Icon URL",
+                                        "title": "Icon URL",
+
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
                 }
+
             },
             "data": {
                 "title": "Markers data",
