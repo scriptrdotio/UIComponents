@@ -4,7 +4,7 @@
                 single-info-window="true" zoom-to-inlude-markers="true"
                 center="{{$ctrl.mapcenter || $ctrl.defaultCenter}}"
                 zoom="{{$ctrl.clusterZoom}}">
-            <heatmap-layer ng-if="$ctrl.heatmap"></heatmap-layer>
+            <!--heatmap-layer ng-if="$ctrl.heatmap == true"></heatmap-layer-->
         </ng-map>
           <div  class="heatmap" ng-if="$ctrl.heatmap == true">
                 <h5>Enable Heatmap</h5>
@@ -68,7 +68,7 @@
                </div>
           	</info-window>
 		</div>
-        <heatmap-layer ng-if="$ctrl.heatmap"></heatmap-layer>     
+        <!--heatmap-layer ng-if="$ctrl.heatmap == true"></heatmap-layer-->     
 		</ng-map>
           
         <div  class="messages" ng-show="$ctrl.drawingMessages != null">

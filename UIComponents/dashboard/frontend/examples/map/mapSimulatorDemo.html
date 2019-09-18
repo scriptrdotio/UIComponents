@@ -22,6 +22,7 @@
 
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+      <script src="/UIComponents/dataService.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/map/map.js"></script>
     
     <!-- Map widget -->
@@ -33,6 +34,7 @@
     <!-- Used by configuration controller -->
     <script src="/UIComponents/dashboard/frontend/examples/map/simulatorConstants.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/map/markerClusterer.js"></script>
+      
       
     <link href="/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css" media="all" rel="stylesheet" type="text/css">
     <script src="/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js"></script>
@@ -69,7 +71,7 @@
   </script>
   <body>
      <div ng-controller="testCtrl as vm" ng-init="vm.init()">
-        <scriptr-map bounce="true" heatmap="true" default-center="33.888630,35.495480" sources-info="vm.sources" clustered-view="true" cluster-zoom="8" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" api="UIComponents/dashboard/frontend/examples/map/simulatorData" api-params='{"timeframe" : "this_1_years", "limit" : "20"}' msg-tag="everyone-main-live" geofence-manager="false">
+        <scriptr-map bounce="true" heatmap="true"  heat-map-weight="200" default-center="33.888630,35.495480" sources-info="vm.sources" clustered-view="true" cluster-zoom="8" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" api="UIComponents/dashboard/frontend/examples/map/simulatorData" api-params='{"timeframe" : "this_1_years", "limit" : "20"}' msg-tag="everyone-main-live" geofence-manager="false">
           <div>
             <info-window id="infoWindowTemplate_simulator" template="/UIComponents/dashboard/frontend/examples/map/info_simulator.html" max-width="600"></info-window>
             <info-window id="infoWindowTemplate_stream" template="/UIComponents/dashboard/frontend/examples/map/info_stream.html" max-width="300"></info-window>
