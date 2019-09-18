@@ -49,7 +49,7 @@ const __MAP__ = {
 
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-12",
+                                "htmlClass": "col-xs-6",
                                 "items": [
                                     {
                                         "key": "bounce",
@@ -66,9 +66,20 @@ const __MAP__ = {
                                     },
                                     "focused-marker-zoom",
                                     "path-stroke-opacity",
+
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-6",
+                                "items": [
+
                                     "path-stroke-weight",
-                                    "max-asset-points"]
-                            }]
+                                    "max-asset-points",
+                                    "default-center",
+                                ]
+                            }
+                        ]
                     },
                     {
                         "type": "section",
@@ -79,7 +90,7 @@ const __MAP__ = {
                             "items": [
 
                                 "sources-info",
-                                "default-center",]
+                            ]
                         }
 
                         ]
