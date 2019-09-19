@@ -117,10 +117,11 @@
 .light .white-bg {
   background: #FFF !important;
 }
-.light .loading {
+.light d .loading {
   margin: 20px auto;
 }
 .light .box {
+  position: relative;
   height: 100%;
   background-color: #FFF;
   box-shadow: 2px 2px 12px 0px rgba(51, 51, 51, 0.3);
@@ -176,6 +177,12 @@
 .light .box.box-without-header .box-content {
   height: 100%;
   margin-top: 0;
+}
+.light .modal .box {
+  height: 200px;
+  position: fixed;
+  bottom: 35%;
+  width: 15%;
 }
 .light .slick-container {
   padding: 10px 10px 0;
@@ -491,6 +498,9 @@
   background-color: #d6690b !important;
   border-color: #d6690b !important;
 }
+.light .modal-dialog {
+  transform: none!important;
+}
 .light .modal-dialog .modal-content {
   background-color: #FFF;
 }
@@ -778,10 +788,11 @@
 .dark .white-bg {
   background: #22272b !important;
 }
-.dark .loading {
+.dark d .loading {
   margin: 20px auto;
 }
 .dark .box {
+  position: relative;
   height: 100%;
   background-color: #2c343a;
   box-shadow: 2px 2px 12px 0px rgba(51, 51, 51, 0.3);
@@ -837,6 +848,12 @@
 .dark .box.box-without-header .box-content {
   height: 100%;
   margin-top: 0;
+}
+.dark .modal .box {
+  height: 200px;
+  position: fixed;
+  bottom: 35%;
+  width: 15%;
 }
 .dark .slick-container {
   padding: 10px 10px 0;
@@ -1151,6 +1168,9 @@
   color: #22272b;
   background-color: #d6690b !important;
   border-color: #d6690b !important;
+}
+.dark .modal-dialog {
+  transform: none!important;
 }
 .dark .modal-dialog .modal-content {
   background-color: #f2f2f2;

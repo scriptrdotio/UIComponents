@@ -71,6 +71,7 @@ form { margin-bottom: 0;}
 
 /*** box ***/
 .box {
+	position: relative;
     height: 100%;
     background-color: @gray5;
     box-shadow: 2px 2px 12px 0px rgba(51,51,51,0.3);
@@ -126,6 +127,13 @@ form { margin-bottom: 0;}
         margin-top: 0;
     }
 }
+}
+
+.modal .box {
+	height: 200px;
+    position: fixed;
+    bottom: 35%;
+    width: 15%;
 }
 
 /*** slick styles ***/
@@ -319,6 +327,7 @@ background: @gray3;
 ***** MODAL *****
 ***/
 .modal-dialog {
+	 transform: none!important;
 	.modal-content{
 		background-color: @dialogContentBG;
 		.modal-header{
