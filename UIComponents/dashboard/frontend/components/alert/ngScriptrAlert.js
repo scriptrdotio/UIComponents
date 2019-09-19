@@ -2,7 +2,7 @@
  * Display box to show messages
  * Depends on bootstrap CSS.
 **/
-angular.module('angular-scriptrui', []).directive('ngDisplayBox', function() {
+angular.module('angular-scriptrui', []).directive('ngScriptrAlert', function() {
   return {
     restrict: 'E',
     require: 'ngModel',

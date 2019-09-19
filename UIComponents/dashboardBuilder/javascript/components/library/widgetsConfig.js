@@ -25,7 +25,7 @@ angular
                     __SLIDER__,
                     __BUTTON__,
                     __IFRAME__,
-                    __DISPLAY_BOX__,
+                    __ALERT__,
                     __DISPLAY_DATA__,
                     __METRIC_BOX__,
                     __PLOTLY__
