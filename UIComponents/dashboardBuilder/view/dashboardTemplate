@@ -261,55 +261,13 @@
           &lt;ul&gt;
              {{#each items}}
                 &lt;li class=&quot;myItem&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
-                    &lt;!--  div class=&quot;box&quot;&gt;
-                        &lt;div class=&quot;box-content&quot;&gt;
-                          &lt;div  style=&quot;height: 30px;&quot; tooltip-placement=&quot;bottom&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot; class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
-                          &lt;div  style=&quot;height: calc(100% - 30px)&quot; &gt;  &lt;{{type}}
-                                    {{#buildAttr this.options }}
-                                        {{this}}
-                                    {{/buildAttr}}
-                                    {{#if this.formatFunction}}   
-                                  		on-format-data='vm.{{this.formatFunction}}'
-                                    {{/if}} 
-                           &gt;&lt;/{{type}}&gt; &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div--&gt;
                     
-                    
-                    
-                    &lt;div 
-			  				{{#if_eq this.options.boxBorder 'false'}}
-			  						class='box-wrapper box-wrapper-without-border {{this.options.boxBorder}}'
-		  				     {{else}}
-		  				     	class='box-wrapper box-wrapper-with-border {{this.options.boxBorder}}'
-		  				     {{/if_eq}}
-                             &gt;
-						&lt;div class=&quot;box&quot;&gt;
-						  &lt;div 
-						  			{{#if this.options.boxLabel }}
-						  				{{#if_eq this.options.boxLabel ''}}
-					  						class='box-header col-xs-12 box-without-header'
-					  				     {{else}}
-					  				     	class='box-header col-xs-12 box-with-header'
-					  				     {{/if_eq}}
-						  			{{else}} 
-						  				class='box-header col-xs-12 box-without-header'
-						  			{{/if}}
-						        &gt;
-						    &lt;div class=&quot;box-label&quot;&gt;&lt;span tooltip-append-to-body=&quot;true&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot;&gt;{{this.options.boxLabel}}&lt;/span&gt;&lt;/div&gt;
+						&lt;div class=&quot;box {{#if_eq  this.options.box-header "false"}} box-without-header {{/if_eq}}&quot;&gt;
+						  &lt;div class=&quot;box-header&quot;&gt;
+						    &lt;div class=&quot;box-label&quot;&gt;&lt;span tooltip-append-to-body=&quot;true&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot;&gt;{{this.options.boxLabel}} {{this.options.boxHeader}} &lt;/span&gt;&lt;/div&gt;
 						  &lt;/div&gt;
-						  &lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
-						  &lt;div 
-	                    			{{#if this.options.boxLabel }}
-						  				{{#if_eq this.options.boxLabel ''}}
-						  						class='box-content box-content-without-header'
-						  				     {{else}}
-						  				     	class='box-content box-content-with-header'
-						  				     {{/if_eq}}
-						  			{{else}} 
-						  					class='box-content box-content-without-header'
-						  			{{/if}}
-						  		&gt;
+                          &lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+						  &lt;div class=&quot;box-content&quot;&gt;
 						  		&lt;{{type}}
                                     {{#buildAttr this.options }}
                                         {{this}}
@@ -327,14 +285,13 @@
                                     
                                 {{#if this.options.infoWindow}}
                                 &lt;div&gt;
-                                &lt;info-window id="infoWindowTemplate_simulator" template="{{this.options.infoWindow}}"&gt;
+                                &lt;info-window id=&quot;infoWindowTemplate_simulator&quot; template=&quot;{{this.options.infoWindow}}&quot;&gt;
                                  &lt;/info-window&gt;
                                 &lt;/div&gt;
                                 {{/if}}
                                 &lt;/{{type}}&gt;
 						  &lt;/div&gt;
 						&lt;/div&gt;
-					&lt;/div&gt;
                 &lt;/li&gt;
              {{/each}}
           &lt;/ul&gt;
@@ -342,6 +299,5 @@
       &lt;/div&gt;
   &lt;/body&gt;  
 &lt;/html&gt;
-
 </script>
   

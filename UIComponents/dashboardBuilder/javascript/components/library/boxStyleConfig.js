@@ -5,10 +5,10 @@ angular
         {
             "formTab": {
                 title: "Box Properties",
-                items: ["boxLabel",
+                items: ["box-label",
                     {
                         type: "radios-inline",
-                        key: "boxBorder",
+                        key: "box-header",
                         titleMap: [{
                             value: "true",
                             name: "True"
@@ -21,15 +21,15 @@ angular
             },
 
             "schemaFields": {
-                "boxLabel": {
+                "box-label": {
                     "title": "Box Label",
                     "type": "string",
                     "description": "Define your widget box title.",
                     "maxLength": 40
                 },
-                "boxBorder": {
-                    "title": "Box Border",
-                    "type": "hidden",
+                "box-header": {
+                    "title": "Box Header",
+                    "type": "string",
                     "default": "true",
                     "description": "Define your widget box border."
                 }
