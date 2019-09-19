@@ -605,6 +605,9 @@ angular
       
       this.setDashboardSettings = function(redirectTarget) {
         var self = this;
+          
+        var previewTheme  = self.dashboardSettings.defaults.theme;
+        var savedTheme = self.dashboardSettings.defaults.theme;
         var modalInstance = $uibModal.open({
               animation: true,
               component: 'modalComponent',
@@ -615,10 +618,25 @@ angular
                     "label":  self.dashboardSettings.label,
                     "options": self.dashboardSettings.defaults,
                     "schema": self.dashboardSettings.schema,
-                    "form": self.dashboardSettings.form};
+                    "form": self.dashboardSettings.form,
+                    "onFormModelChange": function(modelValue, form, model) {
+                        if(form.key.join(".") === "theme") {
+                            model.style = __defaultsThemeStyles__[modelValue];
+                        }
+                       	var compiledCss  = generateCustomStyle(model); 
+               			applyPreviewCustomStyle(compiledCss);
+                        if(previewTheme != model.theme) {
+                            angular.element(document.getElementsByTagName('body')).switchClass(previewTheme, model.theme);
+                            previewTheme = model.theme;
+                        }
+                        	
+                    }
+                  } 
                 }
               }
             });
+
+          
             modalInstance.result.then(function (dashboardSettingsModel) {
               console.log("modal-component dashboard settings data :", dashboardSettingsModel ,"submitted at: " + new Date());
               if(dashboardSettingsModel != "cancel") {
@@ -628,9 +646,6 @@ angular
                 if(self.dashboardSettings.defaults && self.dashboardSettings.defaults.subscribeChannel != dashboardSettingsModel.subscribeChannel){
                   	self.wsClient.updateSubscriptionChannel(dashboardSettingsModel.subscribeChannel);
                 } 
-                var previousTheme = self.dashboardSettings.defaults.theme;
-                if(previousTheme != dashboardSettingsModel.theme)
-                	angular.element(document.getElementsByTagName('body')).switchClass(previousTheme, dashboardSettingsModel.theme)
                 
                 self.dashboardSettings.defaults = angular.copy(dashboardSettingsModel);
                   
@@ -639,8 +654,15 @@ angular
                applyCustomStyle(compiledCss);
                   
                 self.notifyDashboardChange();
+              } else {
+                  if(previewTheme != savedTheme)
+                	angular.element(document.getElementsByTagName('body')).switchClass(previewTheme, savedTheme);
               }
+              cleanPreviewCustomStyle();
             }, function () {
+              cleanPreviewCustomStyle();
+              if(previewTheme != savedTheme)
+                	angular.element(document.getElementsByTagName('body')).switchClass(previewTheme, savedTheme);
               console.log('modal-component dashboard settings dismissed at: ' + new Date());
             });
       };
@@ -653,6 +675,16 @@ angular
       var applyCustomStyle = function (compiledCss) {
           var styleElement = angular.element(document.querySelector('#dashboardCustomStyle'));
 		  styleElement[0].innerText = compiledCss;
+      }
+      
+      var applyPreviewCustomStyle = function (compiledCss) {
+          var styleElement = angular.element(document.querySelector('#dashboardPreviewCustomStyle'));
+		  styleElement[0].innerText = compiledCss;
+      }
+      
+      var cleanPreviewCustomStyle = function () {
+          var styleElement = angular.element(document.querySelector('#dashboardPreviewCustomStyle'));
+		  styleElement[0].innerText = "";
       }
       
       this.saveDashboard = function(form, custom, aclEvent) {
@@ -1039,7 +1071,12 @@ angular
                this.form =   angular.copy(this.widget.form)
             }
             
-              this.model =  (this.widget.options) ?  angular.copy(this.widget.options) : {}
+            this.model =  (this.widget.options) ?  angular.copy(this.widget.options) : {}
+            
+            if(this.widget.onFormModelChange) {
+                 this.frmGlobalOptions["formDefaults"].onChange = this.widget.onFormModelChange;
+            }
+              
           }
       };
 

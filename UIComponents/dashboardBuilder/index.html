@@ -149,6 +149,7 @@
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/commonsConfig.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/boxStyleConfig.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgetsConfig.js"></script>
+    <script src="/UIComponents/dashboardBuilder/javascript/components/library/defaultThemeModel.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/dashboardConfig.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/dashboardsList.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/dashboard.js"></script>
@@ -188,6 +189,9 @@
     <style id="dashboardCustomStyle">
     </style>
     
+    <style id="dashboardPreviewCustomStyle">
+    </style>
+    
 </head> 
   
 <script type="text/javascript"> 
@@ -204,7 +208,6 @@
     */
     
     Handlebars.registerHelper('if_eq', function(a, b, opts) {
-        console.log(a,b)
         if(a === b) // Or === depending on your needs
             return opts.fn(this);
         else

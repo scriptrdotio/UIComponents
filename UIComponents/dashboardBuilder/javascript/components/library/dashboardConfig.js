@@ -68,127 +68,6 @@ angular
 	                                                   "key" : "theme",
 	                                                   "htmlClass" : "col-xs-12",
 	                                                   "type" : 'strapselect',
-	                                                   onChange : function(
-	                                                         modelValue, form,
-	                                                         model) {
-		                                                   var defaults = {
-		                                                      light : {
-		                                                         "dashboard" : {
-		                                                            "background-type" : "solid",
-		                                                            "background-image" : "",
-		                                                            "background-position" : "center",
-		                                                            "background-repeat" : "no-repeat",
-		                                                            "background-color" : "#FFF",
-		                                                            "background-gradient" : "linear-gradient(45deg, rgba(255,255,255,1) 49%, rgba(192,192,192,1) 100%, rgba(128,128,128,1) 100%);",
-		                                                            "border" : "false",
-		                                                            "border-color" : "#DDD",
-		                                                            "border-style" : "solid",
-		                                                            "border-width" : 1,
-		                                                            "border-radius" : 0,
-		                                                            "box-shadow" : "true",
-		                                                            "box-shadow-color" : "rgba(51, 51, 51, 0.3)"
-		                                                         },
-		                                                         "box" : {
-		                                                            "background-type" : "solid",
-		                                                            "background-color" : "#FFF",
-		                                                            "background-gradient" : "linear-gradient(45deg, rgba(255,255,255,1) 49%, rgba(192,192,192,1) 100%, rgba(128,128,128,1) 100%);",
-		                                                            "border" : "false",
-		                                                            "border-color" : "#DDD",
-		                                                            "border-style" : "solid",
-		                                                            "border-width" : 1,
-		                                                            "border-radius" : 0,
-		                                                            "box-shadow" : "true",
-		                                                            "box-shadow-color" : "rgba(51, 51, 51, 0.3)"
-		                                                         },
-		                                                         "box-header" : {
-		                                                            "background-type" : "solid",
-		                                                            "background-color" : "#FFF",
-		                                                            "background-gradient" : "linear-gradient(45deg, rgba(255,255,255,1) 49%, rgba(192,192,192,1) 100%, rgba(128,128,128,1) 100%);",
-		                                                            "border" : "false",
-		                                                            "border-color" : "#DDD",
-		                                                            "border-style" : "solid",
-		                                                            "border-width" : 1,
-		                                                            "border-radius" : 0
-		                                                         },
-		                                                         "box-content" : {
-		                                                            "background-type" : "solid",
-		                                                            "background-color" : "#FFF",
-		                                                            "background-gradient" : "linear-gradient(45deg, rgba(255,255,255,1) 49%, rgba(192,192,192,1) 100%, rgba(128,128,128,1) 100%);",
-		                                                            "border" : "false",
-		                                                            "border-color" : "#DDD",
-		                                                            "border-style" : "solid",
-		                                                            "border-width" : 1,
-		                                                            "border-radius" : 0
-		                                                         },
-		                                                         "box-label" : {
-		                                                            "font-weight" : "normal",
-		                                                            "font-size" : 1.2,
-		                                                            "text-align" : "center",
-		                                                            "display" : "block",
-		                                                            "color" : "#000"
-		                                                         }
-		                                                      },
-		                                                      dark : {
-		                                                         "dashboard" : {
-		                                                            "background-type" : "solid",
-		                                                            "background-image" : "",
-		                                                            "background-position" : "center",
-		                                                            "background-repeat" : "no-repeat",
-		                                                            "background-color" : "#CCC",
-		                                                            "background-gradient" : "linear-gradient(45deg, rgba(255,255,255,1) 49%, rgba(192,192,192,1) 100%, rgba(128,128,128,1) 100%);",
-		                                                            "border" : "false",
-		                                                            "border-color" : "#111",
-		                                                            "border-style" : "solid",
-		                                                            "border-width" : 1,
-		                                                            "border-radius" : 0,
-		                                                            "box-shadow" : "true",
-		                                                            "box-shadow-color" : "rgba(51, 51, 51, 0.3)"
-		                                                         },
-		                                                         "box" : {
-		                                                            "background-type" : "solid",
-		                                                            "background-color" : "#CCC",
-		                                                            "background-gradient" : "linear-gradient(45deg, rgba(255,255,255,1) 49%, rgba(192,192,192,1) 100%, rgba(128,128,128,1) 100%);",
-		                                                            "border" : "false",
-		                                                            "border-color" : "#DDD",
-		                                                            "border-style" : "solid",
-		                                                            "border-width" : 1,
-		                                                            "border-radius" : 0,
-		                                                            "box-shadow" : "true",
-		                                                            "box-shadow-color" : "rgba(51, 51, 51, 0.3)"
-		                                                         },
-		                                                         "box-header" : {
-		                                                            "background-type" : "solid",
-		                                                            "background-color" : "#CCC",
-		                                                            "background-gradient" : "linear-gradient(45deg, rgba(255,255,255,1) 49%, rgba(192,192,192,1) 100%, rgba(128,128,128,1) 100%);",
-		                                                            "border" : "false",
-		                                                            "border-color" : "#DDD",
-		                                                            "border-style" : "solid",
-		                                                            "border-width" : 1,
-		                                                            "border-radius" : 0
-		                                                         },
-		                                                         "box-content" : {
-		                                                            "background-type" : "solid",
-		                                                            "background-color" : "#CCC",
-		                                                            "background-gradient" : "linear-gradient(45deg, rgba(255,255,255,1) 49%, rgba(192,192,192,1) 100%, rgba(128,128,128,1) 100%);",
-		                                                            "border" : "false",
-		                                                            "border-color" : "#DDD",
-		                                                            "border-style" : "solid",
-		                                                            "border-width" : 1,
-		                                                            "border-radius" : 0
-		                                                         },
-		                                                         "box-label" : {
-		                                                            "font-weight" : "normal",
-		                                                            "font-size" : 1.2,
-		                                                            "text-align" : "center",
-		                                                            "display" : "block",
-		                                                            "color" : "#000"
-		                                                         }
-		                                                      }
-		                                                   }
-
-		                                                   model.style = defaults[modelValue];
-
-	                                                   },
 	                                                   "placeholder" : " ",
 	                                                   "titleMap" : [ {
 	                                                      "value" : "light",
@@ -332,7 +211,6 @@ angular
 	                                                {
 	                                                   "type" : "section",
 	                                                   "htmlClass" : "row",
-	                                                   "condition" : "false",
 	                                                   "items" : [
 	                                                         {
 	                                                            "type" : "section",
@@ -367,7 +245,7 @@ angular
 	                                                            "items" : [ {
 	                                                               "key" : "style.dashboard.border-style",
 	                                                               "condition" : "model.style ['dashboard'] ['border'] === 'true'",
-	                                                               "type" : "strapselect",
+                                                                   "type" : "strapselect",
 	                                                               "titleMap" : [
 	                                                                     {
 	                                                                        "value" : "dotted",

@@ -7,6 +7,7 @@ const __DISPLAY_DATA__ = {
     "defaults": {
         "on-format-data": "return data;",
         "transport": "wss",
+        "box-header": "false",
         "data": "12",
         "message": "Connected Devices",
         "fetch-data-interval": 300,
