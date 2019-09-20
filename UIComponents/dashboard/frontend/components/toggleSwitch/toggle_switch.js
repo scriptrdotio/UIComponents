@@ -1,4 +1,4 @@
-angular.module('ToggleSwitch', ['toggle-switch']);
+angular.module('ToggleSwitch', ['DataService', 'toggle-switch']);
 
 angular
       .module('ToggleSwitch')
@@ -100,7 +100,7 @@ angular
                    self.resize = function(){
                        if(self.enableResize){
                            self.timeoutId = null;
-                           self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
+                          // self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
                        }
                    }
                   

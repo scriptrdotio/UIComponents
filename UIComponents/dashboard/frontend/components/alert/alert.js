@@ -1,13 +1,13 @@
-angular.module('ScriptrAlert', ['angular-scriptrui','DataService']);
+angular.module('Alert', ['angular-scriptrui','DataService']);
 
 angular
-  .module('ScriptrAlert')
+  .module('Alert')
   .component(
      'scriptrAlert',
      {
   
       bindings : {
-        "data": "@",
+        "data": "<?",
         "type": "@",  
         "api": "@",
         "transport" : "@",
@@ -21,8 +21,12 @@ angular
          var self = this;
           
          this.$onInit = function() {
-            this.data = (this.data) ? this.data : "Waiting for info...";
             this.type = (this.type) ? this.type : "info";
+            this.data = (this.data) ? this.data : "Waiting for info...";
+             
+            if(this.data) {
+                this.consumeData(this.data);
+            }
       	 }
          
           this.$postLink = function () {
@@ -40,14 +44,14 @@ angular
             }
             if(typeof data == "object"){  
                 if(data && data.data && typeof data.data == "string"){
-                    this.data = data.data;
+                    this.message = data.data;
                 }  
                 if(data && data.type){
                     this.type = data.type;  
                 }
             }
             if(typeof data == "string"){
-                this.data = data;
+                this.message = data;
             }
         }
         }
