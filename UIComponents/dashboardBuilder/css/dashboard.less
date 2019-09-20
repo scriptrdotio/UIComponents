@@ -47,6 +47,7 @@ html {background: @themeBase;}
 .pdl0 {padding-left: 0px;}
 .ml5 {margin-left: 5px;}
 .m10 {margin: 10px!important;}
+.col-md-p0 {padding: 0;}
 
 .controls {
     margin-bottom: 20px;
@@ -54,11 +55,6 @@ html {background: @themeBase;}
 
 scriptr-odometer {
   white-space : normal !important;
-}
-
-ul {
-    /**list-style: none;**/
-    padding-left: 20px;
 }
 
 form { margin-bottom: 0;}
@@ -203,7 +199,7 @@ background: @gray3;
 .chart-options-wrap {margin-right: -15px; padding-left: 9px; padding-right: 6px;}
 
 /***  devices-models-tree ***/
-.devices-models-tree {min-height: 100vh;background-color: @gray3;}
+.devices-models-tree {min-height: 100vh;background-color: @gray3;padding: 10px 15px;}
 .devices-models-tree .button-wrapper {padding: 0;}
 .devices-models-tree ul.abn-tree {margin-top: 10px; max-height: calc(100vh - 55px); overflow-y: auto;}
 .devices-models-tree ul.abn-tree li.abn-tree-row a {color: @gray2;}
@@ -215,30 +211,11 @@ background: @gray3;
 .devices-models-tree ul.abn-tree i.indented {color: @primaryLighter;}
 .devices-models-tree ul.abn-tree li.active i.indented {color: @themeBase;}
 
-/*
-@media screen and (max-width: 560px) {
-  .slick-slide a[ng-click] {width: 40px; height: 35px;}
-  .slick-slide img {width: 54%;}
-  .slick-slide .odometer-img, .slick-slide .gauge-img {width: 60%; padding-top: 4px;}
-}
-
-@media screen and (min-width: 833px) {
-  .slick-slide a[ng-click] {width: 50px; height: 40px;}
-  .slick-slide img {width: 54%;}
-  .slick-slide .odometer-img, .slick-slide .gauge-img {width: 60%; padding-top: 4px;}
-}
-
-@media screen and (min-width: 561px) and (max-width: 832px) { 
-  .slick-slide img {max-width: 100%;}
-  .slick-label {line-height: inherit; display: block;}
-  .slick-slide a[ng-click] {min-height: 88px;}
-}*/
-
 /*** to show tooltip on slick list items ***/
 .slick-list {overflow: visible!important;}
 
 /*** slick slide list ***/
-.slick-slide a[ng-click] {width: 50px; height: 40px;margin-right: 10px;}
+.slick-slide a[ng-click] {width: 50px; height: 40px;margin-right: -1px;}
 .slick-slide img {width: 54%;}
 .slick-slide .odometer-img, .slick-slide .gauge-img {width: 60%; padding-top: 4px;}
 
@@ -248,7 +225,7 @@ background: @gray3;
 }
 
 .board-menu-base {background-color: @gray3;}
-.left-dashboard {position: relative;float: left;left: auto; transition: all .3s ease-in-out; width: 250px;z-index: 999;background-color: @gray3;}
+.left-dashboard {position: relative;float: left;left: auto; transition: all .3s ease-in-out;z-index: 999;background-color: @gray3;}
 .dashboard-content {transition: width .4s; overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 
 
@@ -305,6 +282,9 @@ background: @gray3;
 /***
 ***** MAIN BUTTON *****
 ***/
+.btn.btn-block {
+	width: auto;
+}
 .btn-primary {
 	background-color: @primaryColor;
 	border-color: @primaryDarker;
@@ -509,15 +489,43 @@ height: auto !important;
     border: 1px solid @gray3;
 }
 
-/********* Plotly chart *********/
+/***
+***** Plotly chart *****
+***/
 .plotly-chart-legend {
     float: none;
     position: absolute;
     right: 20px;
+    text-align: center;
 }
 
-}
 
+/***
+***** Gridster Mobile *****
+***/
+.gridster-mobile .box-content {min-height: 80px;}
+.gridster-mobile .box, .gridster-mobile .box-content, .gridster-mobile.gridster-loaded .gridster-item box, .gridster-mobile.gridster-loaded .gridster-item box .box-wrapper {height: auto;}
+.gridster-mobile .gauge {height: 50%!important;width: 100%;}
+.gridster-mobile scriptr-thermometer>div:first-child {height: 45%;margin-bottom: -22px;}
+
+.gridster-mobile .ag-layout-normal .ag-root {height: 50%;}
+.gridster-mobile .morris-chart-dimension {width: 100%;height: 55%;}
+
+.gridster-mobile .dygraphs-legend {
+	float: none;
+    width: calc(100% - 30px);
+    position: relative;
+    margin: 15px 30px 0;
+    height: auto;
+}
+.gridster-mobile .graph.with-legend {position: relative;}
+
+.gridster-mobile .display-count {height: 20%;}
+
+.gridster-mobile .plotly-chart-legend {height: auto;width: 100%;float: none;text-align: left;margin: 10px;}
+.gridster-mobile .plotly-chart-dimension {width: 100%;height: 55%;}
+
+}
 
 
 /*********** Theming Classes ***********/
