@@ -87,9 +87,25 @@ angular
                 self.resize = function(){
                     console.log("resize called")
                     self.timeoutId = null;
-                    
+                     if($window.matchMedia($rootScope.mobileBreakPoint).matches) {
+                        self.style["height"] = "300";
+                    	self.style["width"] = $element.parent()[0].clientWidth;
+                    } else {
+                        if(!(self.showLegend != null && self.showLegend == "true")) {
                              self.style["height"] = $element.parent()[0].clientHeight;
                     		 self.style["width"] = $element.parent()[0].clientWidth;
+                        } else {
+                            self.style["height"] = $element.parent()[0].clientHeight ;
+                    	self.style["width"] = $element.parent()[0].clientWidth - $element.find(".plotly-chart-legend").outerWidth(true) - 10;
+                        //Might happen due to timeout order
+                            if(self.style["width"] <= 0 ) {
+                                self.style["width"] = $element.parent()[0].clientWidth 
+                            }
+                        }
+                     
+                        
+                        
+                    }
                         
                     
                     self.layout = {
@@ -255,7 +271,7 @@ angular
                             "name": name + " " + self.speedUnit,
                             "marker": {"color": color},
                             "type": "area",
-                            "showlegend": self.showLegend ? (self.showLegend == "true") : true
+                            "showlegend": false//self.showLegend ? (self.showLegend == "true") : true
                         }
                         self.transformedData.push(tmp);
                     }
