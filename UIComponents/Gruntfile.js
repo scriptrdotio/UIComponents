@@ -11,7 +11,7 @@
 module.exports = function(grunt) {
 	
 	// define the build project path
-    var projectPath = 'C:/scriptrWorkspace/scriptr/'; 
+    var projectPath = '/Users/marvettefeghali/git/UIComponents/UIComponents'; 
     
     var files = {};
     
