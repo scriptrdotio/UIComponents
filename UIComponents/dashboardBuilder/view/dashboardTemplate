@@ -61,8 +61,8 @@
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/dashboard.css&quot;&gt;
     &lt;script src=&quot;/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/message/displayBox.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/message/message.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/alert/ngScriptrAlert.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/alert/alert.js&quot;&gt;&lt;/script&gt;
     
    &lt;script src=&quot;//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&amp;libraries=drawing,visualization&quot;&gt;&lt;/script&gt;
    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/map/markerClusterer.js&quot;&gt;&lt;/script&gt;
@@ -190,7 +190,7 @@
       httpClientProvider.setToken($.urlParam(&quot;auth_token&quot;));
     }]
 
-     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', &quot;ngAnimate&quot;, &quot;ngSanitize&quot;, 'Dygraphs', 'DataService', 'Plotly', 'MetricBox'])
+     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', &quot;ngAnimate&quot;, &quot;ngSanitize&quot;, 'Dygraphs', 'DataService', 'Plotly', 'MetricBox', 'Alert'])
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      
@@ -264,7 +264,7 @@
                     
 						&lt;div class=&quot;box {{#if_eq  this.options.box-header "false"}} box-without-header {{/if_eq}}&quot;&gt;
 						  &lt;div class=&quot;box-header&quot;&gt;
-						    &lt;div class=&quot;box-label&quot;&gt;&lt;span tooltip-append-to-body=&quot;true&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot;&gt;{{this.options.boxLabel}} {{this.options.boxHeader}} &lt;/span&gt;&lt;/div&gt;
+						    &lt;div class=&quot;box-label&quot;&gt;&lt;span tooltip-append-to-body=&quot;true&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot;&gt;{{this.options.boxLabel}}&lt;/span&gt;&lt;/div&gt;
 						  &lt;/div&gt;
                           &lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
 						  &lt;div class=&quot;box-content&quot;&gt;
@@ -282,13 +282,21 @@
                                   			{{this.attribute}}='vm.{{this.name}}'
                                         {{/each}}
                                     {{/if}} 
-                                    
-                                {{#if this.options.infoWindow}}
-                                &lt;div&gt;
-                                &lt;info-window id=&quot;infoWindowTemplate_simulator&quot; template=&quot;{{this.options.infoWindow}}&quot;&gt;
+                                   
+ 
+ 
+          
+ 					{{#if this.options.default-info-window}}
+                                &lt;info-window id=&quot;{{this.options.default-info-window.id}}&quot; template=&quot;{{this.options.default-info-window.template}}&quot; max-width=&quot;{{this.options.default-info-window.max-width}}&quot; max-height=&quot;{{this.options.default-info-window.max-height}}&quot;&gt;
                                  &lt;/info-window&gt;
-                                &lt;/div&gt;
-                                {{/if}}
+                    {{/if}}
+                    
+       			{{#if this.options.source-info-window}}
+                    	{{#each this.options.source-info-window}}
+                        		 &lt;info-window id=&quot;infoWindowTemplate_{{this.source}}&quot; template=&quot;{{this.template}}&quot; max-width=&quot;{{this.max-width}}&quot; max-height=&quot;{{this.max-height}}&quot;&gt;
+                                 &lt;/info-window&gt;
+                        {{/each}}
+                    {{/if}}
                                 &lt;/{{type}}&gt;
 						  &lt;/div&gt;
 						&lt;/div&gt;
