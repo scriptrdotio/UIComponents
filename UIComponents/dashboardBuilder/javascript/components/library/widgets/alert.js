@@ -9,14 +9,16 @@ const __ALERT__ = {
         "transport": "wss",
         "boxLabel": "Alert",
         "msg-tag": "alert",
-        "data": "Bla Bla",
-        "type":"info"
+        "data": "{\"data\":\"Contextual Message.\", \"type\": \"INFO\"}",
+        "showHeader": "false",
+        "type":"info",
+        
     },
     "box": {
-        sizeX: 3,
-        sizeY: 2,
+        sizeX: 2,
+        sizeY: 1,
         minSizeX: 2,
-        minSizeY: 2
+        minSizeY: 1
 
     },
     "imgCls": "displaybox-img",
@@ -56,17 +58,17 @@ const __ALERT__ = {
             "data": {
                 "title": "Data",
                 "type": "string",
-                "description": "Text to display.",
+                "description": "Alert to display with can be in one of these 2 formats. Message with its type ex: {\"data\":\"Contextual Message.\", \"type\": \"INFO\"} or just the message ex: \"Contextual Message\"",
                 "x-schema-form": {
                     "type": "textarea",
                     "placeholder": "Front door has been unlocked for the past 5 hours."
                 }
             },
             "type": {
-                "title": "Type",
+                "title": "Default message theme.",
                 "type": "string",
 
-                "description": "Select text theme."
+                "description": "Select the default message theme if not provided by data."
             }
         },
         "required": []

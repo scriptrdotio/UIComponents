@@ -10,7 +10,7 @@ const __MAP__ = {
         "boxLabel": "Map",
         "clustered-view": "true",
         "cluster-zoom": 8,
-        "heatmap": "true",
+        "heatmap": "false",
         "bounce": "true",
         "cluster-styles": [{
 
@@ -359,7 +359,7 @@ const __MAP__ = {
 
                         "type": "section",
                         "htmlClass": "",
-                        "items": [{
+                        "items": ["custom-default-info-window",{
                             "key": "default-info-window",
                             "condition": "model['marker-info-window']=='true'",
                             "title": "Default Info window",
@@ -367,6 +367,15 @@ const __MAP__ = {
                                 "type": "section",
                                 "htmlClass": "row",
                                 "items": [
+                                   {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-6 col-sm-3",
+                                        "items": [{
+                                            "key": "default-info-window.id",
+                                            "title": "Identifier",
+                                            "copyValueTo": ["custom-default-info-window"]
+                                        }]
+                                    },
                                     {
                                         "type": "section",
                                         "htmlClass": "col-xs-6 col-sm-3",
@@ -646,6 +655,11 @@ const __MAP__ = {
                 "description": "Default marker trail stroke weight.",
                 "default": 1
             },
+            
+            "custom-default-info-window":{
+                 "title": "Custom Default Info Windo",
+                 "type": "hidden"
+        	},
             "default-info-window": {
                 "title": "Source Info Window",
                 "type": "object",
@@ -653,6 +667,10 @@ const __MAP__ = {
                 "items": {
                     "type": "object",
                     "properties": {
+                        "id": {
+                            "title": "Id",
+                            "type": "string"
+                        },
                         "template": {
                             "title": "Template",
                             "type": "string"

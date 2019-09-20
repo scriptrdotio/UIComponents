@@ -981,12 +981,11 @@ angular
              this.parent.dashboard.counter += 1;
              var counter = this.parent.dashboard.counter;
              var infoElement = angular.element(document.createElement("info-window"));
-             infoElement.attr("id", "defaultInfoWindow-"+counter);
+             infoElement.attr("id", value.id);
              infoElement.attr("template", value.template);
              infoElement.attr("max-width", value["max-width"]);
              infoElement.attr("max-height", value["max-height"]);
              self.chart.append(infoElement)
-             self.chart.attr("custom-default-info-window", "defaultInfoWindow-"+counter);
          }
           if(key == "source-info-window") {
              angular.forEach(value, function(v, k) {
