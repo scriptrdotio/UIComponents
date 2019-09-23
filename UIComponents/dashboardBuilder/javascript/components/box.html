@@ -1,4 +1,4 @@
-<div class="box" ng-class="{'box-without-header' : ($ctrl.widget.options.boxHeader == 'false') ,  'vertical' : ($ctrl.widget.sizeX == '1')">
+<div class="box" ng-class="{'box-without-header' : ($ctrl.widget.options.boxHeader == 'false') ,  'vertical' : ($ctrl.widget.sizeX == 1)}">
   <div class="box-header-btns pull-right">
       <a title="Remove this widget" ng-click="$ctrl.remove($ctrl.widget)">
           <i class="glyphicon glyphicon-trash"></i>
@@ -6,10 +6,10 @@
       <a title="Configure this widget" ng-if="$ctrl.widget.form" ng-click="$ctrl.openSettings($ctrl.widget)">
         <i class="glyphicon glyphicon-cog"></i>
       </a>
-      <a class="drag-box" title="Drag this widget"><i class="fas fa-arrows-alt"></i></a>
+      <a class="drag-box" title="Drag this widget"><i class="glyphicon glyphicon-move"></i></a>
   </div>
   <div class="box-header">
-    <div class="box-label"><span tooltip-append-to-body="true" uib-tooltip="{{$ctrl.widget.options.boxLabel}}">{{$ctrl.widget.options.boxLabel}} {{$ctrl.widget.sizeX}}</span></div>
+    <div class="box-label"><span tooltip-append-to-body="true" uib-tooltip="{{$ctrl.widget.options.boxLabel}}">{{$ctrl.widget.options.boxLabel}}</span></div>
   </div>
   <div class="clearfix"></div>
   <div class="box-content" ></div>
