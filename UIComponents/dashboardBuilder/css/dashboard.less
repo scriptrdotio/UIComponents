@@ -73,9 +73,11 @@ form { margin-bottom: 0;}
     box-shadow: 2px 2px 12px 0px rgba(51,51,51,0.3);
     .box-header-btns {
 		cursor: pointer;
-		z-index: 2;
-	    position: relative;
-	    padding: 10px;
+	    z-index: 2;
+	    position: absolute;
+	    padding: 10px 0;
+	    right: 0;
+	    width: 72px;
 	    a {
 	    	padding: 0 3px;
 	    	color: @primaryColor;
@@ -92,15 +94,13 @@ form { margin-bottom: 0;}
 	    display: inline-block;
 	    height: 40px;
 	    width: 100%;
-	    padding: 10px 15px;
+	    padding: 10px;
 	    background: @gray5;
 	    .box-label {
 		    word-break: break-word;
-		    max-width: 67%;
+		    width: calc(100% - 65px);
 		    font-weight: bold;
 		    color: @grayBase;
-		    text-align: center;
-		    margin: 0 auto;
 		    text-overflow: ellipsis;
 		    overflow: hidden;
 		    white-space: nowrap;
