@@ -709,6 +709,12 @@
   width: 100%;
   height: 55%;
 }
+.light .gridster-mobile .accelerometer-wrapper {
+  height: 50%;
+}
+.light .gridster-mobile .speedometer-wrapper {
+  height: 50%;
+}
 .dark {
   /**#FFF**/
   /**#000**/
@@ -1417,4 +1423,10 @@
 .dark .gridster-mobile .plotly-chart-dimension {
   width: 100%;
   height: 55%;
+}
+.dark .gridster-mobile .accelerometer-wrapper {
+  height: 50%;
+}
+.dark .gridster-mobile .speedometer-wrapper {
+  height: 50%;
 }
