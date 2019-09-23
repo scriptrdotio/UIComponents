@@ -57,7 +57,7 @@ const __MAP__ = {
         ],
 
         "simple-sources-info": [{
-            "source": "stream",
+            "source": "simulator",
             "label": "Carvoyant",
             "url": "http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png",
         }],
@@ -138,18 +138,7 @@ const __MAP__ = {
                                             "key": "simple-sources-info[].source",
                                             onChange: __onSimpleSourcesInfoChange__,
                                             "title": "Source",
-                                            "type": "strapselect",
-                                            "placeholder": " ",
-                                            titleMap: [
-                                                {
-                                                    value: "stream",
-                                                    name: "Stream"
-                                                },
-                                                {
-                                                    value: "simulator",
-                                                    name: "Simulator"
-                                                }
-                                            ]
+                                            
                                         }]
                                     },
                                     {
