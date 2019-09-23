@@ -23,16 +23,19 @@
 </head> 
   
 <script>
-    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "DataService", "Display"])
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "DataService", "MetricBox"])
     angular.module('myApp').config(wssConfig);
   	angular.module('myApp').config(httpsConfig);
   
     angular.module('myApp').controller('testCtrl', function($scope) {
           var vm = this;
+        vm.activeWidget="";
         vm.metricBoxClicked=function(tag){
-            alert(tag);
+            
+            vm.activeWidget=tag;
         }
-        vm.value=99;
+        vm.value1=99;
+        vm.value2=70;
           
       });
 </script>
@@ -41,8 +44,8 @@
   <div ng-controller="testCtrl as vm" >
     	    <scriptr-metricbox 
               transport="https" 
-             	value="vm.value"
-                                   disabled="!vm.value"
+             	value="vm.value1"
+                                   disabled="!vm.value1"
                             label="Battery"
                             unit="%"
                                    icon="https://img.icons8.com/material/24/000000/many-batteries.png"
@@ -53,6 +56,19 @@
                                api="UIComponents/dashboard/frontend/examples/metricBox/getCount"
                             >
         </scriptr-metricbox>
+      <scriptr-metricbox 
+              transport="https" 
+             	value="vm.value2"
+                                   disabled="!vm.value2"
+                            label="Temperature"
+                            unit="%"
+                                   icon="https://img.icons8.com/material/24/000000/many-batteries.png"
+                                   action-icon="https://img.icons8.com/material/96/000000/circled-play--v1.png"
+                                   on-action-clicked="vm.metricBoxClicked"
+                                   tag="temperature"
+                            >
+        </scriptr-metricbox>
+      <h1>Active Widget is <strong>{{vm.activeWidget}}</strong><h1>
   </div>
 
 </body>  
