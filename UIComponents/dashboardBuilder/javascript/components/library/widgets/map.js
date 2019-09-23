@@ -1,3 +1,18 @@
+const __onSimpleSourcesInfoChange__=function (modelValue, form, model) {
+    var arr = [];
+    model["simple-sources-info"].forEach(function (element) {
+        var x = {};
+        x[element.source] = {
+            label: element.label,
+            icon: {
+                url: element.url
+            }
+        };
+        arr.push(x);
+    });
+    model["sources-info"]=arr;
+};
+
 const __MAP__ = {
     "name": "map",
     "label": "Map",
@@ -42,8 +57,11 @@ const __MAP__ = {
             'rgba(255, 0, 0, 1)'
         ],
 
-        "sources-info.stream.label": "Carvoyant",
-        "sources-info.stream.icon.url": "http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png",
+        "simple-sources-info": [{
+            "source": "stream",
+            "label": "Carvoyant",
+            "url": "http://icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png",
+        }],
         "resize": "false",
         "data": '{ "253812" : { "550153" : [ { "lat" : {"value": "40.84969"}, "long" :{"value": "-73.94168"}, "bounce": {"value" : "true"}, "speed" : { "value" : "8", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "30", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.3", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2818", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "91", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.99", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "61","description" : "Received Signal Strength Indicator" } }, { "lat" :{"value": "40.84919"}, "long" : {"value": "-73.93897000000001"}, "speed": { "value" : "5", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "57", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.4","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2838", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "94", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.15", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55101"}, "make" : { "value" : "Toyota" }, "model" : { "value" : "Tacoma" },"snr" : { "value" : "9", "description" : "Signal to Noise Ratio" },"rssi" : { "value" : "48", "description" : "Received Signal StrengthIndicator" } }, { "lat" : {"value": "40.848600000000005"}, "long" :{"value": "-73.93648"}, "speed" : { "value" : "9", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "76", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.2", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "2465", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "97", "description" :"Engine Temperature" }, "voltage" : { "value" : "13.39", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55101" }, "make" : { "value" : "Toyota" },"model" : { "value" : "Tacoma" }, "snr" : { "value" : "11","description" : "Signal to Noise Ratio" }, "rssi" : { "value" : "69","description" : "Received Signal Strength Indicator" } } ], "source" :"simulator", "order" : [ "550153" ] }, "253815" : { "550191" : [ { "lat": {"value": "40.80913"}, "long" : {"value": "-73.90327"}, "speed" : {"value" : "7", "description" : "Maximum Speed Recorded (since theprevious reading)" }, "fuel" : { "value" : "56", "description" :"Percentage of Fuel Remaining" }, "fuelRate" : { "value" : "1.2","description" : "Rate of Fuel Consumption" }, "rpm" : { "value" :"2123", "description" : "Engine Speed" }, "coolantTemperature" : {"value" : "100", "description" : "Engine Temperature" }, "voltage" : {"value" : "13.45", "description" : "Battery Voltage" }, "status" : {"value" : "RUNNING" }, "address" : {}, "mileage" : { "value" : "55043"}, "make" : { "value" : "Saab" }, "model" : { "value" : "9-3" }, "snr" :{ "value" : "13", "description" : "Signal to Noise Ratio" }, "rssi" : {"value" : "49", "description" : "Received Signal Strength Indicator" }}, { "lat" : {"value": "40.807500000000004"}, "long" : {"value":"-73.90557000000001"}, "speed" : { "value" : "6", "description" :"Maximum Speed Recorded (since the previous reading)" }, "fuel" : {"value" : "16", "description" : "Percentage of Fuel Remaining" },"fuelRate" : { "value" : "1.7", "description" : "Rate of FuelConsumption" }, "rpm" : { "value" : "1946", "description" : "EngineSpeed" }, "coolantTemperature" : { "value" : "95", "description" :"Engine Temperature" }, "voltage" : { "value" : "12.87", "description" :"Battery Voltage" }, "status" : { "value" : "RUNNING" }, "address" : {},"mileage" : { "value" : "55043" }, "make" : { "value" : "Saab" },"model" : { "value" : "d9-3" }, "snr" : { "value" : "13", "description" :"Signal to Noise Ratio" }, "rssi" : { "value" : "59", "description" :"Received Signal Strength Indicator" } } ], "source" : "simulator","order" : [ "550191" ] } }',
         // "api" : "UIComponents/dashboard/frontend/examples/map/simulatorData",
@@ -103,36 +121,59 @@ const __MAP__ = {
                         ]
                     },
                     {
+
                         "type": "section",
-                        "htmlClass": "row",
+                        "htmlClass": "",
                         "items": [{
-                            "type": "fieldset",
-                            "htmlClass": "col-xs-12",
-                            "key": "sources-info",
-                            "items": [
-                                {
-                                    "type": "section",
-                                    "htmlClass": "col-xs-6",
-                                    "items": [
+                            "key": "simple-sources-info",
+                            "title": "Info sources",
+                            "items": [{
+                                "type": "section",
+                                "htmlClass": "row",
+                                "items": [
 
-                                        "sources-info.stream.label",
-                                    ]
-                                }
-                                , {
-                                    "type": "section",
-                                    "htmlClass": "col-xs-6",
-                                    "items": [
-
-                                        "sources-info.stream.icon.url",
-                                    ]
-                                }
-
-
-
-                            ]
-                        }
-
-                        ]
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-6 col-sm-3",
+                                        "items": [{
+                                            "key": "simple-sources-info[].source",
+                                            onChange: __onSimpleSourcesInfoChange__,
+                                            "title": "Source",
+                                            "type": "strapselect",
+                                            "placeholder": " ",
+                                            titleMap: [
+                                                {
+                                                    value: "stream",
+                                                    name: "Stream"
+                                                },
+                                                {
+                                                    value: "simulator",
+                                                    name: "Simulator"
+                                                }
+                                            ]
+                                        }]
+                                    },
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-6 col-sm-3",
+                                        "items": [{
+                                            "key": "simple-sources-info[].label",
+                                            onChange: __onSimpleSourcesInfoChange__,
+                                            "title": "Label"
+                                        }]
+                                    },
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-6 col-sm-6",
+                                        "items": [{
+                                            "key": "simple-sources-info[].url",
+                                            onChange: __onSimpleSourcesInfoChange__,
+                                            "title": "Icon URL",
+                                        }]
+                                    }
+                                ]
+                            }]
+                        }]
                     }
 
                     /** "detailed-zoom-min", * */
@@ -359,7 +400,7 @@ const __MAP__ = {
 
                         "type": "section",
                         "htmlClass": "",
-                        "items": ["custom-default-info-window",{
+                        "items": ["custom-default-info-window", {
                             "key": "default-info-window",
                             "condition": "model['marker-info-window']=='true'",
                             "title": "Default Info window",
@@ -367,7 +408,7 @@ const __MAP__ = {
                                 "type": "section",
                                 "htmlClass": "row",
                                 "items": [
-                                   {
+                                    {
                                         "type": "section",
                                         "htmlClass": "col-xs-6 col-sm-3",
                                         "items": [{
@@ -602,36 +643,34 @@ const __MAP__ = {
                 "description": "Default map center before marker(s) is/are loaded. String format lat,long.",
                 "default": "40.7053111,-74.258188"
             },
-            "sources-info": {
+            "simple-sources-info": {
                 "title": "Sources Info",
-                "type": "object",
+                "type": "array",
+                "default": [],
                 "description": "",
-                "properties": {
-                    "stream": {
-                        "type": "object",
-                        "properties": {
-                            "label": {
-                                "type": "string",
-                                "description": "Sources Info Label",
-                                "title": "Label",
-                            },
-                            "icon": {
-                                "type": "object",
-                                "properties": {
-                                    "url": {
-                                        "type": "string",
-                                        "description": "Sources Info Icon URL",
-                                        "title": "Icon URL",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "source": {
+                            "type": "string",
+                            "description": "Info Source Type",
+                            "title": "Source Type",
+                        },
 
-                                    }
-                                }
+                        "label": {
+                            "type": "string",
+                            "description": "Sources Info Label",
+                            "title": "Label",
+                        },
 
-                            }
+                        "url": {
+                            "type": "string",
+                            "description": "Sources Info Icon URL",
+                            "title": "Icon URL",
+
                         }
-
                     }
                 }
-
             },
             "data": {
                 "title": "Markers data",
@@ -655,11 +694,11 @@ const __MAP__ = {
                 "description": "Default marker trail stroke weight.",
                 "default": 1
             },
-            
-            "custom-default-info-window":{
-                 "title": "Custom Default Info Windo",
-                 "type": "hidden"
-        	},
+
+            "custom-default-info-window": {
+                "title": "Custom Default Info Windo",
+                "type": "hidden"
+            },
             "default-info-window": {
                 "title": "Source Info Window",
                 "type": "object",
