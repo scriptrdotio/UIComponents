@@ -71,6 +71,19 @@ form { margin-bottom: 0;}
     height: 100%;
     background-color: @gray5;
     box-shadow: 2px 2px 12px 0px rgba(51,51,51,0.3);
+    .box-header-btns {
+		cursor: pointer;
+		z-index: 2;
+	    position: relative;
+	    padding: 10px;
+	    a {
+	    	padding: 0 3px;
+	    	color: @primaryColor;
+	    &:hover {
+	    	text-decoration: none;
+	    }
+	    }
+	}
     .box-header {
 	    position: absolute;
 	    top: 0;
@@ -81,12 +94,9 @@ form { margin-bottom: 0;}
 	    width: 100%;
 	    padding: 10px 15px;
 	    background: @gray5;
-    	.box-header-btns {
-    		cursor: pointer;
-    	}
 	    .box-label {
 		    word-break: break-word;
-		    max-width: 78%;
+		    max-width: 67%;
 		    font-weight: bold;
 		    color: @grayBase;
 		    text-align: center;
