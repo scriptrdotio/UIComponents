@@ -1,16 +1,15 @@
 const __onSimpleSourcesInfoChange__=function (modelValue, form, model) {
-    var arr = [];
+    var obj ={};
     model["simple-sources-info"].forEach(function (element) {
-        var x = {};
-        x[element.source] = {
+        
+        obj[element.source] = {
             label: element.label,
             icon: {
                 url: element.url
             }
         };
-        arr.push(x);
     });
-    model["sources-info"]=arr;
+    model["sources-info"]=obj;
 };
 
 const __MAP__ = {
