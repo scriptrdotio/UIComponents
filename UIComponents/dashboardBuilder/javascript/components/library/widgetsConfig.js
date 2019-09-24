@@ -28,7 +28,8 @@ angular
                     __ALERT__,
                     __DISPLAY_DATA__,
                     __METRIC_BOX__,
-                    __PLOTLY__
+                    __WINDROSE__,
+                    __3DSURFACE__
 
                 ]
             }

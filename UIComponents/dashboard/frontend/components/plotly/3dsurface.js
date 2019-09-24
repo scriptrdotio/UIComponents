@@ -50,8 +50,11 @@ angular
                     console.log("on init started",this)
                     self._apiParams = (self.apiParams) ? angular.copy(self.apiParams) : [];
                     self.data = self.data ? self.data : [];
-                    self.width = self.width ? self.width : 500;
-                    self.height = self.height ? self.height :500;
+                    self.width = self.width ? self.width : 400;
+                    self.height = self.height ? self.height :400;
+                    self.options = self.options ? self.options :{
+                         displayModeBar: false 
+                    };
                     self.staticData = angular.copy(self.data);
                     self.transformedData = angular.copy(self.data);
                     angular.element($window).on('resize', self.scheduleResize);
@@ -94,8 +97,8 @@ angular
                 self.resize = function () {
                     console.log("resize called")
                   
-                           // self.layout.width = $element.parent()[0].clientHeight;
-                            //self.layout.height = $element.parent()[0].clientWidth;
+                            self.layout.width = $element.parent()[0].clientHeight;
+                            self.layout.height = $element.parent()[0].clientWidth;
               
 
                 }
