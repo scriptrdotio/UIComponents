@@ -1,7 +1,7 @@
-const __PLOTLY__ = {
-    "name": "plotly",
+const __WINDROSE__ = {
+    "name": "windrose",
     "label": "Wind Rose",
-    "class": "scriptr-plotly",
+    "class": "scriptr-windrose",
     "commonData": true,
     "show": true,
     "defaults": {
