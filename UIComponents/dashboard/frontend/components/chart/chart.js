@@ -136,7 +136,12 @@ angular
         "xlabelFormat": "&?", 
         "ylabelFormat": "&?",     
         "fetchDataInterval": "@",
-        "useWindowParams": "@"
+        "useWindowParams": "@",
+          
+        "showLegend": "@",
+        "legendType": "@" //"hover", "right"
+          
+        
        
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
@@ -164,7 +169,55 @@ angular
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
            
-           	 console.log(this.type, this.xlabelAngle)
+             
+             
+             this.showLegend = (this.showLegend) ? this.showLegend : "true"; //Default is true for backward compatibility
+             this.legendType = (this.legendType) ? this.legendType : "hover";
+             this.hideHover = (this.hideHover) ? this.hideHover : "auto";
+             
+             if(this.showLegend && this.showLegend == "true") {
+                 if(this.legendType && this.legendType == "right") {
+                     this.hideHover = "always";
+                     this.ref = $scope.$id
+                     this.legendStructure = []
+                     for(var i = 0; i < this.ykeys.length; i++) {
+                         var tmp = {}
+                         tmp["key"] = this.ykeys[i];
+                         if(this.labels && this.labels[i]) 
+                             tmp["label"] = this.labels[i];
+                         else
+                             tmp["label"] = this.ykeys[i];
+
+                         if(this.colors && this.colors[i]) 
+                             tmp["color"] = this.colors[i];
+                         this.legendStructure.push(tmp);
+                     }
+                     this.hoverCallback = function (index, options, content, row) {
+                            if(self.datas) {
+                                if(row && row.date){
+                                    $scope.$ctrl.legendDate = row[self.xkey];
+                                }
+                                 _.mapObject(row, function(val, key) {
+                                    var index = _.findIndex($scope.$ctrl.legendStructure, {"key": (self.type != "donut" ? key : val)});
+
+                                    if(index != -1){
+                                        $scope.$ctrl.legendStructure[index]["value"] = (self.type == "donut") ? content : val;
+                                        var element = document.getElementById("value_"+index+"_"+self.ref)
+                                        var dateElement = document.getElementById("date_" + self.ref);
+                                        if(element)
+                                            element.innerHTML = (self.type == "donut") ? content : val;
+                                        if(self.type != "donut" && dateElement)
+                                            dateElement.innerHTML = row[self.xkey];
+                                    }
+                                });
+                            }
+                        }
+                 } else {
+                      if(this.legendType && this.legendType == "hover") {
+                          console.log("Legend type", this.legendType)
+                      }
+                 }
+             } 
        }
          
          this.$postLink = function () {

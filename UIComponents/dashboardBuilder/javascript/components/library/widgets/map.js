@@ -281,6 +281,7 @@ const __MAP__ = {
                                                     "htmlClass": "col-xs-6 col-sm-6",
                                                     "items": [{
                                                         "key": "cluster-styles[].anchor",
+                                                      	 "notitle": true
 
                                                     }]
                                                 },
@@ -289,6 +290,7 @@ const __MAP__ = {
                                                     "htmlClass": "col-xs-6 col-sm-6",
                                                     "items": [{
                                                         "key": "cluster-styles[].iconAnchor",
+                                                        "notitle": true
                                                     }]
                                                 }
 
@@ -532,7 +534,6 @@ const __MAP__ = {
                             "type": "array",
                             "startEmpty": true,
                             "items": {
-                                "title": "",
                                 "type": "number"
                             }
                         },
@@ -554,7 +555,6 @@ const __MAP__ = {
                             "startEmpty": true,
                             "type": "array",
                             "items": {
-                                "title": "",
                                 "type": "number"
                             }
                         }

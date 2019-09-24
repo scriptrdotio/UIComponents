@@ -1974,6 +1974,9 @@ Licensed under the BSD-2-Clause License.
       segment = this.segments[idx];
       segment.select();
       row = this.data[idx];
+      if (typeof this.options.hoverCallback === 'function') {
+          return this.options.hoverCallback(idx, this.options, this.options.formatter(row.value, row), row);
+      }
       return this.setLabels(row.label, this.options.formatter(row.value, row));
     };
 

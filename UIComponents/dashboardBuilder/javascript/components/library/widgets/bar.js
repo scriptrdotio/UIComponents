@@ -79,15 +79,36 @@ const __BAR__ = {
                                     },
                                     {
                                         type: "radios-inline",
+                                        key: "show-legend",
+                                        titleMap: [{
+                                            value: "true",
+                                            name: "True"
+                                        }, {
+                                            value: "false",
+                                            name: "False"
+                                        }]
+                                    },
+                                    {
+                                        type: "radios-inline",
+                                        key: "legend-type",
+                                        condition: "model['show-legend'] =='true'",
+                                        titleMap: [{
+                                            value: "hover",
+                                            name: "Hover"
+                                        }, {
+                                            value: "right",
+                                            name: "Right"
+                                        }]
+                                    },
+                                    {
+                                        type: "radios-inline",
                                         key: "hide-hover",
+                                        condition: "model['show-legend'] =='true' && model['legend-type'] =='hover'",
                                         titleMap: [{
                                             value: "auto",
                                             name: "Auto"
                                         }, {
-                                            value: "false",
-                                            name: "Never"
-                                        }, {
-                                            value: "always",
+                                            value: "never",
                                             name: "Always"
                                         }]
                                     }]
@@ -229,11 +250,21 @@ const __BAR__ = {
                 "default": "false",
                 "description": "Set to true to draw bars stacked vertically."
             },
-            "hide-hover": {
-                "title": "Hide hover",
-                "default": "false",
+            "show-legend": {
+                "title": "Show Legend",
                 "type": "string",
-                "description": "Set to Never to always show a hover legend. Set to 'auto' to only show the hover legend when the mouse cursor is over the chart. Set to 'always' to never show a hover legend."
+                "default": "true",
+            },
+            "legend-type": {
+                "title": "Legend type",
+                "type": "string",
+                "default": "hover",
+            },
+            "hide-hover": {
+                "title": "Hover style",
+                "default": "auto",
+                "type": "string",
+                "description": "Set to 'Always' to always show a hover legend. Set to 'Auto' to only show the hover legend when the mouse cursor is over the chart."
             },
             "hover-callback": {
                 "title": "Hover callback",

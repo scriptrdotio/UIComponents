@@ -66,15 +66,36 @@ const __AREA__ = {
                                     "ymin",
                                     {
                                         type: "radios-inline",
+                                        key: "show-legend",
+                                        titleMap: [{
+                                            value: "true",
+                                            name: "True"
+                                        }, {
+                                            value: "false",
+                                            name: "False"
+                                        }]
+                                    },
+                                    {
+                                        type: "radios-inline",
+                                        key: "legend-type",
+                                        condition: "model['show-legend'] =='true'",
+                                        titleMap: [{
+                                            value: "hover",
+                                            name: "Hover"
+                                        }, {
+                                            value: "right",
+                                            name: "Right"
+                                        }]
+                                    },
+                                    {
+                                        type: "radios-inline",
                                         key: "hide-hover",
+                                        condition: "model['show-legend'] =='true' && model['legend-type'] =='hover'",
                                         titleMap: [{
                                             value: "auto",
                                             name: "Auto"
                                         }, {
-                                            value: "false",
-                                            name: "Never"
-                                        }, {
-                                            value: "always",
+                                            value: "never",
                                             name: "Always"
                                         }]
                                     }]
@@ -337,6 +358,16 @@ const __AREA__ = {
                 "type": "string",
                 "default": "true",
                 "description": "Set to false to disable line smoothing."
+            },
+            "show-legend": {
+                "title": "Show Legend",
+                "type": "string",
+                "default": "true",
+            },
+            "legend-type": {
+                "title": "Legend type",
+                "type": "string",
+                "default": "hover",
             },
             "hide-hover": {
                 "title": "Hide hover",

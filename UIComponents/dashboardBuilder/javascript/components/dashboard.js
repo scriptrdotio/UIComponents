@@ -182,7 +182,7 @@ angular
           },
           draggable: {
             enabled: true, // whether dragging items is supported
-            handle: '.my-class', // optional selector for resize handle
+            handle: '.drag-box',
             start: function(event, uiWidget, $element) {
                 //$(window).trigger('resize');
                 setTimeout( function(){ $(window).trigger('resize'); window.dispatchEvent(new Event('resize'));},100);

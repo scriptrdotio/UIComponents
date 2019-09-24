@@ -1,121 +1,160 @@
   <div class="text-center loading" ng-hide="$ctrl.datas"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
   <div class="padder10"><div ng-show="$ctrl.noResults" class="alert alert-danger">No data to display</div></div>
-  <div ng-if="$ctrl.datas">
-    <div ng-if="$ctrl.type == 'line'" style="height: 85%; width: 100%"
-         line-data='$ctrl.datas'
-         line-xkey= {{$ctrl.xkey}}
-         line-ykeys='$ctrl.ykeys'
-         line-labels='$ctrl.labels'
-         line-colors='$ctrl.colors'
-         line-line-width='$ctrl.lineWidth'
-         line-point-size='$ctrl.pointSize'
-         line-point-fill-colors='$ctrl.pointFillColors'
-         line-point-stroke-colors='$ctrl.pointStrokeColors' 
-         line-ymax='$ctrl.ymax'
-         line-ymin='$ctrl.ymin'
-         line-smooth='$ctrl.smooth'
-		 line-hide-hover='$ctrl.hideHover'
-         line-hover-callback='$ctrl.hoverCallback(index, options, content, row)'
-         line-parse-time ='$ctrl.parseTime'
-         line-units='$ctrl.units'
-         line-post-units='$ctrl.postUnits'
-         line-pre-units='$ctrl.preUnits'
-         line-line-date-format='$ctrl.dateFormat(x)'
-         line-x-labels='$ctrl.xlabels'
-         line-x-label-format='$ctrl.xlabelFormat(x)'
-         line-x-label-angle = '$ctrl.xlabelAngle'
-         line-y-label-format ='$ctrl.ylabelFormat(y)'
-         line-goals='$ctrl.goals'
-         line-goal-stroke-width ='$ctrl.goalStrokeWidth'
-         line-goal-line-colors='$ctrl.goalLineColors'
-         line-events='$ctrl.events'
-         line-event-stroke-width='$ctrl.eventStrokeWidth'
-         line-event-line-colors='$ctrl.eventLineColors'
-         line-continuous-line='$ctrl.continuousLine'
-         line-axes='$ctrl.axes'
-         line-grid='$ctrl.grid'
-         line-grid-text-color='$ctrl.gridTextColor'
-         line-grid-text-size='$ctrl.gridTextSize',
-         line-grid-text-family='$ctrl.gridTextFamily'
-         line-grid-text-weight='$ctrl.gridTextWeight'
-         line-fill-opacity='$ctrl.fillOpacity'
-         line-resize='$ctrl.resize'
-         line-chart>
+  <div ng-if="$ctrl.datas.length > 0">
+     <div ng-if="$ctrl.type == 'line'">
+      	<div class="morris-chart-wrapper" ng-class="($ctrl.showLegend == 'true' && $ctrl.legendType != 'hover') ? 'with-legend' : ' ' ">  
+              <div style="height: 85%; width: 100%"
+                 line-data='$ctrl.datas'
+                 line-xkey= {{$ctrl.xkey}}
+                 line-ykeys='$ctrl.ykeys'
+                 line-labels='$ctrl.labels'
+                 line-colors='$ctrl.colors'
+                 line-line-width='$ctrl.lineWidth'
+                 line-point-size='$ctrl.pointSize'
+                 line-point-fill-colors='$ctrl.pointFillColors'
+                 line-point-stroke-colors='$ctrl.pointStrokeColors' 
+                 line-ymax='$ctrl.ymax'
+                 line-ymin='$ctrl.ymin'
+                 line-smooth='$ctrl.smooth'
+                 line-hide-hover='$ctrl.hideHover'
+                 line-hover-callback='$ctrl.hoverCallback'
+                 line-parse-time ='$ctrl.parseTime'
+                 line-units='$ctrl.units'
+                 line-post-units='$ctrl.postUnits'
+                 line-pre-units='$ctrl.preUnits'
+                 line-line-date-format='$ctrl.dateFormat(x)'
+                 line-x-labels='$ctrl.xlabels'
+                 line-x-label-format='$ctrl.xlabelFormat(x)'
+                 line-x-label-angle = '$ctrl.xlabelAngle'
+                 line-y-label-format ='$ctrl.ylabelFormat(y)'
+                 line-goals='$ctrl.goals'
+                 line-goal-stroke-width ='$ctrl.goalStrokeWidth'
+                 line-goal-line-colors='$ctrl.goalLineColors'
+                 line-events='$ctrl.events'
+                 line-event-stroke-width='$ctrl.eventStrokeWidth'
+                 line-event-line-colors='$ctrl.eventLineColors'
+                 line-continuous-line='$ctrl.continuousLine'
+                 line-axes='$ctrl.axes'
+                 line-grid='$ctrl.grid'
+                 line-grid-text-color='$ctrl.gridTextColor'
+                 line-grid-text-size='$ctrl.gridTextSize',
+                 line-grid-text-family='$ctrl.gridTextFamily'
+                 line-grid-text-weight='$ctrl.gridTextWeight'
+                 line-fill-opacity='$ctrl.fillOpacity'
+                 line-resize='$ctrl.resize'
+                 line-chart>
+            </div>
+      </div>
+      <div class="morris-chart-legend" ng-if="$ctrl.showLegend && $ctrl.legendType != 'hover'">
+            <div id="date_{{$ctrl.ref}}">{{$ctrl.legendDate}}</div>
+            <ul ng-repeat="entry in $ctrl.legendStructure">
+                <li>
+                    <span><i class="fa fa-square" ng-style="{ 'color' : '{{entry.color}}'}"></i> {{entry.label}}</span>
+                    <span  ng-style="{ 'color' : '{{entry.color}}'}" id="value_{{$index}}_{{$ctrl.ref}}">{{entry.value}}</span>
+                </li>
+            </ul>
+        </div>
     </div>
-
-    <div ng-if="$ctrl.type == 'bar'"  style="height: 85%; width: 100%"
-         bar-data='$ctrl.datas'
-         bar-x= {{$ctrl.xkey}}
-         bar-y='$ctrl.ykeys'
-         bar-labels='$ctrl.labels'
-         bar-colors='$ctrl.colors'
-         bar-resize="$ctrl.resize"
-         bar-stacked="$ctrl.stacked"
-         bar-hide-hover='$ctrl.hideHover'
-         bar-hover-callback='$ctrl.hoverCallback(index, options, content, row)'
-         bar-grid='$ctrl.grid'
-         bar-grid-text-color='$ctrl.gridTextColor'
-         bar-grid-text-size='$ctrl.gridTextSize',
-         bar-grid-text-family='$ctrl.gridTextFamily'
-         bar-grid-text-weight='$ctrl.gridTextWeight'
-         bar-axes='$ctrl.axes'
-         bar-ymax='$ctrl.ymax'
-         bar-ymin='$ctrl.ymin'
-         bar-goals='$ctrl.goals'
-         bar-goal-stroke-width ='$ctrl.goalStrokeWidth'
-         bar-goal-line-colors='$ctrl.goalLineColors'
-         bar-x-label-angle = '$ctrl.xlabelAngle'
-         bar-y-label-format='$ctrl.ylabelFormat(y)'
-         bar-parse-time ='$ctrl.parseTime'
-         bar-events='$ctrl.events'
-         bar-event-stroke-width='$ctrl.eventStrokeWidth'
-         bar-event-line-colors='$ctrl.eventLineColors'
-         bar-post-units='$ctrl.postUnits'
-         bar-pre-units='$ctrl.preUnits'
-         bar-chart>
+      
+     <div ng-if="$ctrl.type == 'bar'">
+      	<div class="morris-chart-wrapper" ng-class="($ctrl.showLegend == 'true' && $ctrl.legendType != 'hover') ? 'with-legend' : ' ' ">  
+            <div style="height: 85%; width: 100%"
+                 bar-data='$ctrl.datas'
+                 bar-x= {{$ctrl.xkey}}
+                 bar-y='$ctrl.ykeys'
+                 bar-labels='$ctrl.labels'
+                 bar-colors='$ctrl.colors'
+                 bar-resize="$ctrl.resize"
+                 bar-stacked="$ctrl.stacked"
+                 bar-hide-hover='$ctrl.hideHover'
+                 bar-hover-callback='$ctrl.hoverCallback)'
+                 bar-grid='$ctrl.grid'
+                 bar-grid-text-color='$ctrl.gridTextColor'
+                 bar-grid-text-size='$ctrl.gridTextSize',
+                 bar-grid-text-family='$ctrl.gridTextFamily'
+                 bar-grid-text-weight='$ctrl.gridTextWeight'
+                 bar-axes='$ctrl.axes'
+                 bar-ymax='$ctrl.ymax'
+                 bar-ymin='$ctrl.ymin'
+                 bar-goals='$ctrl.goals'
+                 bar-goal-stroke-width ='$ctrl.goalStrokeWidth'
+                 bar-goal-line-colors='$ctrl.goalLineColors'
+                 bar-x-label-angle = '$ctrl.xlabelAngle'
+                 bar-y-label-format='$ctrl.ylabelFormat(y)'
+                 bar-parse-time ='$ctrl.parseTime'
+                 bar-events='$ctrl.events'
+                 bar-event-stroke-width='$ctrl.eventStrokeWidth'
+                 bar-event-line-colors='$ctrl.eventLineColors'
+                 bar-post-units='$ctrl.postUnits'
+                 bar-pre-units='$ctrl.preUnits'
+                 bar-chart>
+            </div>
+ 		</div>
+      <div class="morris-chart-legend" ng-if="$ctrl.showLegend && $ctrl.legendType != 'hover'">
+            <div id="date_{{$ctrl.ref}}">{{$ctrl.legendDate}}</div>
+            <ul ng-repeat="entry in $ctrl.legendStructure">
+                <li>
+                    <span><i class="fa fa-square" ng-style="{ 'color' : '{{entry.color}}'}"></i> {{entry.label}}</span>
+                    <span  ng-style="{ 'color' : '{{entry.color}}'}" id="value_{{$index}}_{{$ctrl.ref}}">{{entry.value}}</span>
+                </li>
+            </ul>
+        </div>
     </div>
- 
-    <div ng-if="$ctrl.type == 'area'" style="height: 85%; width: 100%"
-         area-chart 
-         line-colors='$ctrl.colors'
-         area-data='$ctrl.datas'
-         area-xkey={{$ctrl.xkey}}
-         area-ykeys='$ctrl.ykeys'
-         area-labels='$ctrl.labels'
-         area-line-width='$ctrl.lineWidth'
-         area-point-size='$ctrl.pointSize'
-         area-point-fill-colors='$ctrl.pointFillColors'
-         area-point-stroke-colors='$ctrl.pointStrokeColors' 
-         area-ymax='$ctrl.ymax'
-         area-ymin='$ctrl.ymin'
-         area-smooth='$ctrl.smooth'
-		 area-hide-hover='$ctrl.hideHover'
-         area-hover-callback='$ctrl.hoverCallback(index, options, content, row)'
-         area-parse-time ='$ctrl.parseTime'
-         area-units='$ctrl.units'
-         area-post-units='$ctrl.postUnits'
-         area-pre-units='$ctrl.preUnits'
-         area-area-date-format='$ctrl.dateFormat(x)' 
-         area-x-labels='$ctrl.xlabels'
-         area-x-label-format='$ctrl.xlabelFormat(x)'
-         area-x-label-angle = '$ctrl.xlabelAngle'
-         area-y-label-format ='$ctrl.ylabelFormat(y)'
-         area-goals='$ctrl.goals'
-         area-goal-stroke-width ='$ctrl.goalStrokeWidth'
-         area-goal-line-colors='$ctrl.goalLineColors'
-         area-events='$ctrl.events'
-         area-event-stroke-width='$ctrl.eventStrokeWidth'
-         area-event-line-colors='$ctrl.eventLineColors'
-         area-continuous-line='$ctrl.continuousLine'
-         area-axes='$ctrl.axes'
-         area-grid='$ctrl.grid'
-         area-grid-text-color='$ctrl.gridTextColor'
-         area-grid-text-size='$ctrl.gridTextSize',
-         area-grid-text-family='$ctrl.gridTextFamily'
-         area-grid-text-weight='$ctrl.gridTextWeight'
-         area-fill-opacity='$ctrl.fillOpacity'
-         area-resize='$ctrl.resize'
-         area-behave-like-line='$ctrl.behaveLikeLine'>
+    
+     <div ng-if="$ctrl.type == 'area'">
+      	<div class="morris-chart-wrapper" ng-class="($ctrl.showLegend == 'true' && $ctrl.legendType != 'hover') ? 'with-legend' : ' ' ">  
+            <div style="height: 85%; width: 100%"
+                 area-chart 
+                 line-colors='$ctrl.colors'
+                 area-data='$ctrl.datas'
+                 area-xkey={{$ctrl.xkey}}
+                 area-ykeys='$ctrl.ykeys'
+                 area-labels='$ctrl.labels'
+                 area-line-width='$ctrl.lineWidth'
+                 area-point-size='$ctrl.pointSize'
+                 area-point-fill-colors='$ctrl.pointFillColors'
+                 area-point-stroke-colors='$ctrl.pointStrokeColors' 
+                 area-ymax='$ctrl.ymax'
+                 area-ymin='$ctrl.ymin'
+                 area-smooth='$ctrl.smooth'
+                 area-hide-hover='$ctrl.hideHover'
+                 area-hover-callback='$ctrl.hoverCallback(index, options, content, row)'
+                 area-parse-time ='$ctrl.parseTime'
+                 area-units='$ctrl.units'
+                 area-post-units='$ctrl.postUnits'
+                 area-pre-units='$ctrl.preUnits'
+                 area-area-date-format='$ctrl.dateFormat(x)' 
+                 area-x-labels='$ctrl.xlabels'
+                 area-x-label-format='$ctrl.xlabelFormat(x)'
+                 area-x-label-angle = '$ctrl.xlabelAngle'
+                 area-y-label-format ='$ctrl.ylabelFormat(y)'
+                 area-goals='$ctrl.goals'
+                 area-goal-stroke-width ='$ctrl.goalStrokeWidth'
+                 area-goal-line-colors='$ctrl.goalLineColors'
+                 area-events='$ctrl.events'
+                 area-event-stroke-width='$ctrl.eventStrokeWidth'
+                 area-event-line-colors='$ctrl.eventLineColors'
+                 area-continuous-line='$ctrl.continuousLine'
+                 area-axes='$ctrl.axes'
+                 area-grid='$ctrl.grid'
+                 area-grid-text-color='$ctrl.gridTextColor'
+                 area-grid-text-size='$ctrl.gridTextSize',
+                 area-grid-text-family='$ctrl.gridTextFamily'
+                 area-grid-text-weight='$ctrl.gridTextWeight'
+                 area-fill-opacity='$ctrl.fillOpacity'
+                 area-resize='$ctrl.resize'
+                 area-behave-like-line='$ctrl.behaveLikeLine'>
+            </div>
+		</div>
+      <div class="morris-chart-legend" ng-if="$ctrl.showLegend && $ctrl.legendType != 'hover'">
+            <div id="date_{{$ctrl.ref}}">{{$ctrl.legendDate}}</div>
+            <ul ng-repeat="entry in $ctrl.legendStructure">
+                <li>
+                    <span><i class="fa fa-square" ng-style="{ 'color' : '{{entry.color}}'}"></i> {{entry.label}}</span>
+                    <span  ng-style="{ 'color' : '{{entry.color}}'}" id="value_{{$index}}_{{$ctrl.ref}}">{{entry.value}}</span>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div ng-if="$ctrl.type == 'donut'" style="height: 85%; width: 100%"
