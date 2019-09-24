@@ -97,8 +97,8 @@ angular
                 self.resize = function () {
                     console.log("resize called")
                   
-                            self.layout.width = $element.parent()[0].clientHeight;
-                            self.layout.height = $element.parent()[0].clientWidth;
+                            self.layout.height = $element.parent()[0].clientHeight;
+                            self.layout.width = $element.parent()[0].clientWidth;
               
 
                 }
