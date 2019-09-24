@@ -1,7 +1,7 @@
-angular.module('D3Surface', ['angularPlotly']);
+angular.module('Plotly', ['angularPlotly']);
 
 angular
-    .module('D3Surface')
+    .module('Plotly')
     .component(
         'scriptrThreeDSurface',
         {
@@ -41,7 +41,7 @@ angular
 
 
             },
-            templateUrl: '/UIComponents/dashboard/frontend/components/plotly/plotly.html',
+            templateUrl: '/UIComponents/dashboard/frontend/components/plotly/3dsurface.html',
             controller: function ($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval, dataService) {
 
                 var self = this;

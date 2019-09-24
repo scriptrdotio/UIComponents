@@ -3,7 +3,7 @@ angular.module('Plotly', ['angularPlotly']);
 angular
     .module('Plotly')
     .component(
-        'scriptrPlotly',
+        'scriptrWindrose',
         {
 
             bindings : {
@@ -35,7 +35,7 @@ angular
                 
                 "fetchDataInterval" : "@"
             },
-            templateUrl : '/UIComponents/dashboard/frontend/components/plotly/plotly.html',
+            templateUrl : '/UIComponents/dashboard/frontend/components/plotly/windrose.html',
             controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval,dataService) {
 
                 var self = this;

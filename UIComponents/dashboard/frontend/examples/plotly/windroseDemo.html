@@ -62,8 +62,6 @@
     <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css">
     <link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/dashboard.css">
     <script src="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/message/displayBox.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/message/message.js"></script>
     
    <script src="//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&libraries=drawing,visualization"></script>
    <script src="/UIComponents/dashboard/frontend/components/map/markerClusterer.js"></script>
@@ -119,10 +117,10 @@
     <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer.js"></script>
     
     
-    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/plotly/plotly.css">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/plotly/windrose.css">
     <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/plotly/angular-plotly.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/plotly/plotly.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/plotly/windrose.js"></script>
     
     
      <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/metricBox/metricBox.css">
@@ -226,7 +224,7 @@
       httpClientProvider.setToken($.urlParam("auth_token"));
     }]
 
-     var myApp= angular.module("myApp", ["underscore" , "WsClient", "HttpClient", "Chart", 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', "ngAnimate", "ngSanitize", 'Dygraphs', 'DataService', 'Plotly', 'MetricBox'])
+     var myApp= angular.module("myApp", ["underscore" , "WsClient", "HttpClient", "Chart", 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', "ngAnimate", "ngSanitize", 'Dygraphs', 'DataService', 'Plotly', 'MetricBox'])
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      
@@ -272,7 +270,7 @@
 						  <div 
 						  				     	class='box-content box-content-with-header'
 						  		>
-						  		<scriptr-plotly
+						  		<scriptr-windrose
 										transport='wss'
 										data-type='raw'
 										schema-for='windrose'
@@ -284,7 +282,7 @@
                            		>
                                 
                                     
-                                </scriptr-plotly>
+                                </scriptr-windrose>
 						  </div>
 						</div>
 					</div>

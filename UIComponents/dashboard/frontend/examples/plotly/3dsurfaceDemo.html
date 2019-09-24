@@ -90,8 +90,8 @@
 
 
     <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/3dSurface/angular-plotly.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/3dSurface/3dsurface.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/plotly/angular-plotly.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/plotly/3dsurface.js"></script>
 
 
 </head>
@@ -165,7 +165,7 @@
             httpClientProvider.setToken($.urlParam("auth_token"));
         }]
 
-        var myApp = angular.module("myApp", ["underscore", "WsClient", "HttpClient", 'DataService', 'D3Surface'])
+        var myApp = angular.module("myApp", ["underscore", "WsClient", "HttpClient", 'DataService', 'Plotly'])
         angular.module('myApp').config(wssConfig);
         angular.module('myApp').config(httpsConfig);
 
@@ -208,7 +208,7 @@
                 <div class="clearfix"></div>
                 <div class='box-content box-content-with-header'>
                     <scriptr-three-d-surface transport='https' on-format-data='vm.plotlyFormatData1'
-                        api='UIComponents/dashboard/frontend/examples/3dsurface/getData'
+                        api='UIComponents/dashboard/frontend/examples/plotly/get3dSurfaceData'
                          title='Test 3d Surface'
                                              width='500'
                                              height='500'

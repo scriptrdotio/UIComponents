@@ -29,19 +29,14 @@ angular.module('angularPlotly', []).directive('angularPlotly', [
                             }
                             return;
                         }
-                        //If this is the first run with data, initialize
-                        if (!initialized) {
+                        
                             initialized = true;
                             Plotly.newPlot(graph, scope.plotlyData, scope.plotlyLayout, scope.plotlyOptions);
                             if (scope.plotlyEvents){
                               subscribeToEvents(graph);
                             }
-                        }
                         
-                        graph.layout = angular.copy(scope.plotlyLayout);
-                        graph.data = angular.copy(scope.plotlyData);
-                        Plotly.plot(graph, scope.plotlyData, scope.plotlyLayout);
-                        Plotly.Plots.resize(graph);
+                        
                     }
 
                     function onResize() {
