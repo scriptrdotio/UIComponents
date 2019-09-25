@@ -71,7 +71,17 @@ const __3DSURFACE__ = {
                                     "type": "section",
                                     "htmlClass": "col-xs-12 col-sm-4",
                                     "items": [
-                                        "show-bar",
+                                        {
+                                            "key":"show-bar",
+                                            "type": "radios-inline",
+                                            titleMap: [{
+                                                value: "true",
+                                                name: "Show"
+                                            }, {
+                                                value: "false",
+                                                name: "Hide"
+                                            }]
+                                        },
                                         "bar-title",
                                         "bar-thickness"
                                     ]

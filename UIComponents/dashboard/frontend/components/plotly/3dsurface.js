@@ -36,7 +36,7 @@ angular
                 "zaxis": "@",
                 "barTitle": "@",
                 "barThickness": "<?",
-                "showBar": "@",
+                "showBar": "<?",
                 "colorScale": "<?",
 
 
@@ -77,7 +77,7 @@ angular
                         },
                     };
                      self.transformedData=[{
-                        showscale:true,
+                        showscale:self.showBar,
                         colorscale:self.colorScale,
                         colorbar: {
                           title: self.barTitle,
@@ -156,7 +156,7 @@ angular
                     console.log("consumeData called", data)
                     if(data && data.x && data.y && data.z){
                         self.transformedData=[{
-                        showscale:true,
+                        showscale:self.showBar,
                         colorscale:self.colorScale,
                         colorbar: {
                           title: self.barTitle,
