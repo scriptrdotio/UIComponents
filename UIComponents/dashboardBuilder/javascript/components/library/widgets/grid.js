@@ -145,7 +145,18 @@ const __GRID__ = {
                                 "type": "section",
                                 "htmlClass": "col-xs-6",
                                 "items": [
-                                    "row-model-selection",
+                                    {
+                                        "key": "row-model-selection",
+                                        "type": 'strapselect',
+                                        "placeholder": " ",
+                                        "titleMap": [{
+                                            "value": "single",
+                                            "name": "single"
+                                        }, {
+                                            "value": "multiple",
+                                            "name": "multiple"
+                                        }]
+                                    },
                                     {
                                         "key": "enable-client-side-sorting",
                                         "type": "radios-inline",
@@ -354,15 +365,15 @@ const __GRID__ = {
                 "type": "string",
                 "description": "The supported ways are 'virtual' and 'pagination' for only non-static data",
                 "default": "pagination",
-                "format": 'uiselect',
-                "placeholder": " ",
-                "items": [{
-                    "value": "virtual",
-                    "label": "virtual"
-                }, {
-                    "value": "pagination",
-                    "label": "pagination"
-                }]
+                // "format": 'uiselect',
+                // "placeholder": " ",
+                // "items": [{
+                //     "value": "virtual",
+                //     "label": "virtual"
+                // }, {
+                //     "value": "pagination",
+                //     "label": "pagination"
+                // }]
 
             },
             "row-model-selection": {
@@ -370,15 +381,7 @@ const __GRID__ = {
                 "type": "string",
                 "description": "Set to either 'single' or 'multiple' in case of backend data.",
                 "default": "Source Sans Pro",
-                "format": 'uiselect',
-                "placeholder": " ",
-                "items": [{
-                    "value": "single",
-                    "label": "single"
-                }, {
-                    "value": "multiple",
-                    "label": "multiple"
-                }]
+
             },
             "pagination-page-size": {
                 "title": "Pagination Page Size",

@@ -146,8 +146,72 @@ const __AREA__ = {
                         {
                             "type": "section",
                             "htmlClass": "col-xs-6",
-                            "items": ["grid-text-family",
-                                "grid-text-weight",
+                            "items": [
+                                {
+                                    "key":"grid-text-family",
+                                    "type": 'strapselect',
+                                    "titleMap": [{
+                                        "value": "Arial",
+                                        "name": "Arial"
+                                    }, {
+                                        "value": "Helvetica",
+                                        "name": "Helvetica"
+                                    }, {
+                                        "value": "Times New Roman",
+                                        "name": "Times New Roman"
+                                    }, {
+                                        "value": "Courier New",
+                                        "name": "Courier New"
+                                    }, {
+                                        "value": "Courier",
+                                        "name": "Courier"
+                                    }, {
+                                        "value": "Verdana",
+                                        "name": "Verdana"
+                                    }, {
+                                        "value": "Georgia",
+                                        "name": "Georgia"
+                                    }, {
+                                        "value": "Palatino",
+                                        "name": "Palatino"
+                                    }, {
+                                        "value": "Garamond",
+                                        "name": "Garamond"
+                                    }, {
+                                        "value": "Bookman",
+                                        "name": "Bookman"
+                                    }, {
+                                        "value": "Comic Sans MS",
+                                        "name": "Comic Sans MS"
+                                    }, {
+                                        "value": "Trebuchet MS",
+                                        "name": "Trebuchet MS"
+                                    }, {
+                                        "value": "Arial Black",
+                                        "name": "Arial Black"
+                                    }, {
+                                        "value": "Impact",
+                                        "name": "Impact"
+                                    }, {
+                                        "value": "Sans-Serif",
+                                        "name": "Sans-Serif"
+                                    }, {
+                                        "value": "Source Sans Pro",
+                                        "name": "Source Sans Pro"
+                                    }]
+                                }
+                                    ,
+                                {
+                                    "key":"grid-text-weight",
+                                    "type": 'strapselect',
+                                    "titleMap": [{
+                                        "value": "normal",
+                                        "name": "Normal"
+                                    }, {
+                                        "value": "bold",
+                                        "name": "Bold"
+                                    }]
+                            },
                                 "grid-text-size"]
                         }]
                 }]
@@ -401,60 +465,60 @@ const __AREA__ = {
                 "type": "string",
                 "default": "auto",
                 "description": "Sets the x axis labelling interval. By default the interval will be automatically computed.",
-                "format": 'uiselect',
-                "placeholder": " ",
-                "items": [{
-                    "value": "auto",
-                    "label": "auto"
-                }, {
-                    "value": "decade",
-                    "label": "decade"
-                }, {
-                    "value": "year",
-                    "label": "year"
-                }, {
-                    "value": "month",
-                    "label": "month"
-                }, {
-                    "value": "week",
-                    "label": "week"
-                }, {
-                    "value": "day",
-                    "label": "day"
-                }, {
-                    "value": "hour",
-                    "label": "hour"
-                }, {
-                    "value": "30min",
-                    "label": "30min"
-                }, {
-                    "value": "15min",
-                    "label": "15min"
-                }, {
-                    "value": "10min",
-                    "label": "10min"
-                }, {
-                    "value": "5min",
-                    "label": "5min"
-                }, {
-                    "value": "minute",
-                    "label": "minute"
-                }, {
-                    "value": "30sec",
-                    "label": "30sec"
-                }, {
-                    "value": "15sec",
-                    "label": "15sec"
-                }, {
-                    "value": "10sec",
-                    "label": "10sec"
-                }, {
-                    "value": "5sec",
-                    "label": "5sec"
-                }, {
-                    "value": "second",
-                    "label": "second"
-                }]
+                // "format": 'uiselect',
+                // "placeholder": " ",
+                // "items": [{
+                //     "value": "auto",
+                //     "label": "auto"
+                // }, {
+                //     "value": "decade",
+                //     "label": "decade"
+                // }, {
+                //     "value": "year",
+                //     "label": "year"
+                // }, {
+                //     "value": "month",
+                //     "label": "month"
+                // }, {
+                //     "value": "week",
+                //     "label": "week"
+                // }, {
+                //     "value": "day",
+                //     "label": "day"
+                // }, {
+                //     "value": "hour",
+                //     "label": "hour"
+                // }, {
+                //     "value": "30min",
+                //     "label": "30min"
+                // }, {
+                //     "value": "15min",
+                //     "label": "15min"
+                // }, {
+                //     "value": "10min",
+                //     "label": "10min"
+                // }, {
+                //     "value": "5min",
+                //     "label": "5min"
+                // }, {
+                //     "value": "minute",
+                //     "label": "minute"
+                // }, {
+                //     "value": "30sec",
+                //     "label": "30sec"
+                // }, {
+                //     "value": "15sec",
+                //     "label": "15sec"
+                // }, {
+                //     "value": "10sec",
+                //     "label": "10sec"
+                // }, {
+                //     "value": "5sec",
+                //     "label": "5sec"
+                // }, {
+                //     "value": "second",
+                //     "label": "second"
+                // }]
             },
             "xlabel-angle": {
                 "title": "X label angle",
@@ -552,57 +616,9 @@ const __AREA__ = {
                 "type": "string",
                 "description": "Set the font family of the axis labels (default: sans-serif).",
                 "default": "Source Sans Pro",
-                "format": 'uiselect',
+                
                 "placeholder": " ",
-                "items": [{
-                    "value": "Arial",
-                    "label": "Arial"
-                }, {
-                    "value": "Helvetica",
-                    "label": "Helvetica"
-                }, {
-                    "value": "Times New Roman",
-                    "label": "Times New Roman"
-                }, {
-                    "value": "Courier New",
-                    "label": "Courier New"
-                }, {
-                    "value": "Courier",
-                    "label": "Courier"
-                }, {
-                    "value": "Verdana",
-                    "label": "Verdana"
-                }, {
-                    "value": "Georgia",
-                    "label": "Georgia"
-                }, {
-                    "value": "Palatino",
-                    "label": "Palatino"
-                }, {
-                    "value": "Garamond",
-                    "label": "Garamond"
-                }, {
-                    "value": "Bookman",
-                    "label": "Bookman"
-                }, {
-                    "value": "Comic Sans MS",
-                    "label": "Comic Sans MS"
-                }, {
-                    "value": "Trebuchet MS",
-                    "label": "Trebuchet MS"
-                }, {
-                    "value": "Arial Black",
-                    "label": "Arial Black"
-                }, {
-                    "value": "Impact",
-                    "label": "Impact"
-                }, {
-                    "value": "Sans-Serif",
-                    "label": "Sans-Serif"
-                }, {
-                    "value": "Source Sans Pro",
-                    "label": "Source Sans Pro"
-                }]
+                
             },
             "grid-text-weight": {
                 "title": "Grid text weight",
@@ -611,13 +627,7 @@ const __AREA__ = {
                 "default": "normal",
                 "format": 'uiselect',
                 "placeholder": " ",
-                "items": [{
-                    "value": "normal",
-                    "label": "Normal"
-                }, {
-                    "value": "bold",
-                    "label": "Bold"
-                }]
+                
             },
             "fill-opacity": {
                 "title": "Fill opacity",

@@ -50,6 +50,15 @@ const __TOGGLE_SWITCH__ = {
                                     },
                                     {
                                         "key": "http-method",
+                                        "type": 'strapselect',
+                                        "placeholder": " ",
+                                        "titleMap": [{
+                                            "value": "GET",
+                                            "name": "GET"
+                                        }, {
+                                            "value": "POST",
+                                            "name": "POST"
+                                        }],
                                         "condition": "model.transport=='https'"
                                     }]
                             }]
@@ -217,15 +226,7 @@ const __TOGGLE_SWITCH__ = {
                 "type": "string",
                 "description": "Method to be used when calling the scriptr api over https. Default: GET.",
                 "default": "GET",
-                "format": 'uiselect',
-                "placeholder": " ",
-                "items": [{
-                    "value": "GET",
-                    "label": "GET"
-                }, {
-                    "value": "GET",
-                    "label": "POST"
-                }]
+              
             },
             "msg-tag": {
                 "title": "Message Tag",

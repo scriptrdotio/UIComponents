@@ -55,7 +55,61 @@ const __SPEEDOMETER__ = {
                             "items": ["tick-col-maj",
                                 "outer-edge-col",
                                 "needle-col",
-                                "default-fonts"]
+                                {
+                                    "key":"default-fonts",
+                                    "type": 'strapselect',
+                                    "placeholder": " ",
+                                    "titleMap": [{
+                                        "value": "Arial",
+                                        "name": "Arial"
+                                    }, {
+                                        "value": "Helvetica",
+                                        "name": "Helvetica"
+                                    }, {
+                                        "value": "Times New Roman",
+                                        "name": "Times New Roman"
+                                    }, {
+                                        "value": "Courier New",
+                                        "name": "Courier New"
+                                    }, {
+                                        "value": "Courier",
+                                        "name": "Courier"
+                                    }, {
+                                        "value": "Verdana",
+                                        "name": "Verdana"
+                                    }, {
+                                        "value": "Georgia",
+                                        "name": "Georgia"
+                                    }, {
+                                        "value": "Palatino",
+                                        "name": "Palatino"
+                                    }, {
+                                        "value": "Garamond",
+                                        "name": "Garamond"
+                                    }, {
+                                        "value": "Bookman",
+                                        "name": "Bookman"
+                                    }, {
+                                        "value": "Comic Sans MS",
+                                        "name": "Comic Sans MS"
+                                    }, {
+                                        "value": "Trebuchet MS",
+                                        "name": "Trebuchet MS"
+                                    }, {
+                                        "value": "Arial Black",
+                                        "name": "Arial Black"
+                                    }, {
+                                        "value": "Impact",
+                                        "name": "Impact"
+                                    }, {
+                                        "value": "Sans-Serif",
+                                        "name": "Sans-Serif"
+                                    }, {
+                                        "value": "Source Sans Pro",
+                                        "name": "Source Sans Pro"
+                                    }]
+                            }
+                        ]
                         },
                         {
                             "type": "section",
@@ -174,57 +228,7 @@ const __SPEEDOMETER__ = {
                 "type": "string",
                 "description": "Sets the default fonts in gauge.",
                 "default": "Source Sans Pro",
-                "format": 'uiselect',
-                "placeholder": " ",
-                "items": [{
-                    "value": "Arial",
-                    "label": "Arial"
-                }, {
-                    "value": "Helvetica",
-                    "label": "Helvetica"
-                }, {
-                    "value": "Times New Roman",
-                    "label": "Times New Roman"
-                }, {
-                    "value": "Courier New",
-                    "label": "Courier New"
-                }, {
-                    "value": "Courier",
-                    "label": "Courier"
-                }, {
-                    "value": "Verdana",
-                    "label": "Verdana"
-                }, {
-                    "value": "Georgia",
-                    "label": "Georgia"
-                }, {
-                    "value": "Palatino",
-                    "label": "Palatino"
-                }, {
-                    "value": "Garamond",
-                    "label": "Garamond"
-                }, {
-                    "value": "Bookman",
-                    "label": "Bookman"
-                }, {
-                    "value": "Comic Sans MS",
-                    "label": "Comic Sans MS"
-                }, {
-                    "value": "Trebuchet MS",
-                    "label": "Trebuchet MS"
-                }, {
-                    "value": "Arial Black",
-                    "label": "Arial Black"
-                }, {
-                    "value": "Impact",
-                    "label": "Impact"
-                }, {
-                    "value": "Sans-Serif",
-                    "label": "Sans-Serif"
-                }, {
-                    "value": "Source Sans Pro",
-                    "label": "Source Sans Pro"
-                }]
+               
             }
         },
         "required": []

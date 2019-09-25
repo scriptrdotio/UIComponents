@@ -168,9 +168,72 @@ const __BAR__ = {
                         {
                             "type": "section",
                             "htmlClass": "col-xs-6",
-                            "items": ["grid-text-family",
-                                "grid-text-weight",
-                                "grid-text-size"]
+                            "items": [{
+                                "key":"grid-text-family",
+                                "type": 'strapselect',
+                                "titleMap": [{
+                                    "value": "Arial",
+                                    "name": "Arial"
+                                }, {
+                                    "value": "Helvetica",
+                                    "name": "Helvetica"
+                                }, {
+                                    "value": "Times New Roman",
+                                    "name": "Times New Roman"
+                                }, {
+                                    "value": "Courier New",
+                                    "name": "Courier New"
+                                }, {
+                                    "value": "Courier",
+                                    "name": "Courier"
+                                }, {
+                                    "value": "Verdana",
+                                    "name": "Verdana"
+                                }, {
+                                    "value": "Georgia",
+                                    "name": "Georgia"
+                                }, {
+                                    "value": "Palatino",
+                                    "name": "Palatino"
+                                }, {
+                                    "value": "Garamond",
+                                    "name": "Garamond"
+                                }, {
+                                    "value": "Bookman",
+                                    "name": "Bookman"
+                                }, {
+                                    "value": "Comic Sans MS",
+                                    "name": "Comic Sans MS"
+                                }, {
+                                    "value": "Trebuchet MS",
+                                    "name": "Trebuchet MS"
+                                }, {
+                                    "value": "Arial Black",
+                                    "name": "Arial Black"
+                                }, {
+                                    "value": "Impact",
+                                    "name": "Impact"
+                                }, {
+                                    "value": "Sans-Serif",
+                                    "name": "Sans-Serif"
+                                }, {
+                                    "value": "Source Sans Pro",
+                                    "name": "Source Sans Pro"
+                                }]
+                            }
+                                ,
+                            {
+                                "key":"grid-text-weight",
+                                "type": 'strapselect',
+                                "titleMap": [{
+                                    "value": "normal",
+                                    "name": "Normal"
+                                }, {
+                                    "value": "bold",
+                                    "name": "Bold"
+                                }]
+                        },
+                            "grid-text-size"]
                         }]
                 }]
             },
@@ -301,72 +364,17 @@ const __BAR__ = {
                 "type": "string",
                 "description": "Set the font family of the axis labels (default: sans-serif).",
                 "default": "Source Sans Pro",
-                "format": 'uiselect',
                 "placeholder": " ",
-                "items": [{
-                    "value": "Arial",
-                    "label": "Arial"
-                }, {
-                    "value": "Helvetica",
-                    "label": "Helvetica"
-                }, {
-                    "value": "Times New Roman",
-                    "label": "Times New Roman"
-                }, {
-                    "value": "Courier New",
-                    "label": "Courier New"
-                }, {
-                    "value": "Courier",
-                    "label": "Courier"
-                }, {
-                    "value": "Verdana",
-                    "label": "Verdana"
-                }, {
-                    "value": "Georgia",
-                    "label": "Georgia"
-                }, {
-                    "value": "Palatino",
-                    "label": "Palatino"
-                }, {
-                    "value": "Garamond",
-                    "label": "Garamond"
-                }, {
-                    "value": "Bookman",
-                    "label": "Bookman"
-                }, {
-                    "value": "Comic Sans MS",
-                    "label": "Comic Sans MS"
-                }, {
-                    "value": "Trebuchet MS",
-                    "label": "Trebuchet MS"
-                }, {
-                    "value": "Arial Black",
-                    "label": "Arial Black"
-                }, {
-                    "value": "Impact",
-                    "label": "Impact"
-                }, {
-                    "value": "Sans-Serif",
-                    "label": "Sans-Serif"
-                }, {
-                    "value": "Source Sans Pro",
-                    "label": "Source Sans Pro"
-                }]
+               
             },
             "grid-text-weight": {
                 "title": "Grid text weight",
                 "type": "string",
                 "description": "Set the font weight of the axis labels (default: normal).",
                 "default": "normal",
-                "format": 'uiselect',
+                
                 "placeholder": " ",
-                "items": [{
-                    "value": "normal",
-                    "label": "Normal"
-                }, {
-                    "value": "bold",
-                    "label": "Bold"
-                }]
+                
             },
             "parse-time": {
                 "title": "Parse time",

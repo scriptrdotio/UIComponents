@@ -53,6 +53,15 @@ const __SLIDER__ = {
                                     },
                                     {
                                         "key": "http-method",
+                                        "type": 'strapselect',
+                                        "placeholder": " ",
+                                        "titleMap": [{
+                                            "value": "GET",
+                                            "name": "GET"
+                                        }, {
+                                            "value": "POST",
+                                            "name": "POST"
+                                        }],
                                         "condition": "model.transport=='https'"
                                     }]
                             }]
@@ -571,15 +580,7 @@ const __SLIDER__ = {
                 "type": "string",
                 "description": "Method to be used when calling the scriptr api over https. Default: GET.",
                 "default": "GET",
-                "format": 'uiselect',
-                "placeholder": " ",
-                "items": [{
-                    "value": "GET",
-                    "label": "GET"
-                }, {
-                    "value": "GET",
-                    "label": "POST"
-                }]
+
             },
             "on-format-data": {
                 "title": "Format data",

@@ -112,7 +112,60 @@ const __GAUGE__ = {
                             {
                                 "type": "section",
                                 "htmlClass": "col-xs-6",
-                                "items": ["value-font-family"]
+                                "items": [{
+                                    "key": "value-font-family",
+                                    "type": 'strapselect',
+                                    "placeholder": " ",
+                                    "titleMap": [{
+                                        "value": "Arial",
+                                        "name": "Arial"
+                                    }, {
+                                        "value": "Helvetica",
+                                        "name": "Helvetica"
+                                    }, {
+                                        "value": "Times New Roman",
+                                        "name": "Times New Roman"
+                                    }, {
+                                        "value": "Courier New",
+                                        "name": "Courier New"
+                                    }, {
+                                        "value": "Courier",
+                                        "name": "Courier"
+                                    }, {
+                                        "value": "Verdana",
+                                        "name": "Verdana"
+                                    }, {
+                                        "value": "Georgia",
+                                        "name": "Georgia"
+                                    }, {
+                                        "value": "Palatino",
+                                        "name": "Palatino"
+                                    }, {
+                                        "value": "Garamond",
+                                        "name": "Garamond"
+                                    }, {
+                                        "value": "Bookman",
+                                        "name": "Bookman"
+                                    }, {
+                                        "value": "Comic Sans MS",
+                                        "name": "Comic Sans MS"
+                                    }, {
+                                        "value": "Trebuchet MS",
+                                        "name": "Trebuchet MS"
+                                    }, {
+                                        "value": "Arial Black",
+                                        "name": "Arial Black"
+                                    }, {
+                                        "value": "Impact",
+                                        "name": "Impact"
+                                    }, {
+                                        "value": "Sans-Serif",
+                                        "name": "Sans-Serif"
+                                    }, {
+                                        "value": "Source Sans Pro",
+                                        "name": "Source Sans Pro"
+                                    }],
+                                }]
                             },
                             {
                                 "type": "section",
@@ -444,8 +497,48 @@ const __GAUGE__ = {
                             "type": "section",
                             "htmlClass": "col-xs-6",
                             "items": [
-                                "start-animation-type",
-                                "refresh-animation-type",
+                                {
+                                    "key": "start-animation-type",
+                                    "type": 'strapselect',
+                                    "placeholder": " ",
+                                    "titleMap": [{
+                                        "value": "linear",
+                                        "name": "linear"
+                                    }, {
+                                        "value": ">",
+                                        "name": ">"
+                                    }, {
+                                        "value": "<",
+                                        "name": "<"
+                                    }, {
+                                        "value": "<>",
+                                        "name": "<>"
+                                    }, {
+                                        "value": "bounce",
+                                        "name": "bounce"
+                                    }]
+                                },
+                                {
+                                    "key": "refresh-animation-type",
+                                    "type": 'strapselect',
+                                    "placeholder": " ",
+                                    "titleMap": [{
+                                        "value": "linear",
+                                        "name": "linear"
+                                    }, {
+                                        "value": ">",
+                                        "name": ">"
+                                    }, {
+                                        "value": "<",
+                                        "name": "<"
+                                    }, {
+                                        "value": "<>",
+                                        "name": "<>"
+                                    }, {
+                                        "value": "bounce",
+                                        "name": "bounce"
+                                    }]
+                                },
                                 {
                                     "key": "counter",
                                     "type": "radios-inline",
@@ -584,105 +677,21 @@ const __GAUGE__ = {
                 "type": "string",
                 "default": "linear",
                 "description": "Select type of initial animation.",
-                "format": 'uiselect',
-                "placeholder": " ",
-                "items": [{
-                    "value": "linear",
-                    "label": "linear"
-                }, {
-                    "value": ">",
-                    "label": ">"
-                }, {
-                    "value": "<",
-                    "label": "<"
-                }, {
-                    "value": "<>",
-                    "label": "<>"
-                }, {
-                    "value": "bounce",
-                    "label": "bounce"
-                }]
+
             },
             "refresh-animation-type": {
                 "title": "Refresh animation",
                 "type": "string",
                 "default": "linear",
                 "description": "Select type of refresh animation.",
-                "format": 'uiselect',
-                "placeholder": " ",
-                "items": [{
-                    "value": "linear",
-                    "label": "linear"
-                }, {
-                    "value": ">",
-                    "label": ">"
-                }, {
-                    "value": "<",
-                    "label": "<"
-                }, {
-                    "value": "<>",
-                    "label": "<>"
-                }, {
-                    "value": "bounce",
-                    "label": "bounce"
-                }]
+
             },
 
             "value-font-family": {
                 "title": "Gauge font family",
                 "type": "string",
                 "default": "Source Sans Pro",
-                "format": 'uiselect',
-                "placeholder": " ",
-                "items": [{
-                    "value": "Arial",
-                    "label": "Arial"
-                }, {
-                    "value": "Helvetica",
-                    "label": "Helvetica"
-                }, {
-                    "value": "Times New Roman",
-                    "label": "Times New Roman"
-                }, {
-                    "value": "Courier New",
-                    "label": "Courier New"
-                }, {
-                    "value": "Courier",
-                    "label": "Courier"
-                }, {
-                    "value": "Verdana",
-                    "label": "Verdana"
-                }, {
-                    "value": "Georgia",
-                    "label": "Georgia"
-                }, {
-                    "value": "Palatino",
-                    "label": "Palatino"
-                }, {
-                    "value": "Garamond",
-                    "label": "Garamond"
-                }, {
-                    "value": "Bookman",
-                    "label": "Bookman"
-                }, {
-                    "value": "Comic Sans MS",
-                    "label": "Comic Sans MS"
-                }, {
-                    "value": "Trebuchet MS",
-                    "label": "Trebuchet MS"
-                }, {
-                    "value": "Arial Black",
-                    "label": "Arial Black"
-                }, {
-                    "value": "Impact",
-                    "label": "Impact"
-                }, {
-                    "value": "Sans-Serif",
-                    "label": "Sans-Serif"
-                }, {
-                    "value": "Source Sans Pro",
-                    "label": "Source Sans Pro"
-                }],
+
                 "description": "Font family of the gauge."
             },
             "value-min-font-size": {
