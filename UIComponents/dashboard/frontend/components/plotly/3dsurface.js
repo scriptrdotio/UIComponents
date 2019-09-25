@@ -38,6 +38,7 @@ angular
                 "barThickness": "<?",
                 "showBar": "<?",
                 "colorScale": "<?",
+                "contours": "<?",
 
 
             },
@@ -52,6 +53,7 @@ angular
                     self.data = self.data ? self.data : [];
                     self.width = self.width ? self.width : 400;
                     self.height = self.height ? self.height :400;
+                    self.contours = self.contours ? self.contours :{};
                     self.options = self.options ? self.options :{
                          displayModeBar: false 
                     };
@@ -83,6 +85,7 @@ angular
                           title: self.barTitle,
                           thickness:self.barThickness
                         },
+                        contours:self.contours,
                         z: self.staticData.z,
                         x: self.staticData.x,
                         y: self.staticData.y,
@@ -162,6 +165,7 @@ angular
                           title: self.barTitle,
                           thickness:self.barThickness
                         },
+                        contours:self.contours,
                         z: data.z,
                         x: data.x,
                         y: data.y,
