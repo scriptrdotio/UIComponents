@@ -656,10 +656,6 @@ angular
                         if(model["inline-style"]) {
                             applyPreviewInlineStyle(model["inline-style"]);
                         }
-                        
-                        
-                        
-                        	
                     }
                   } 
                 }
@@ -683,8 +679,8 @@ angular
            	   var compiledCss  = generateCustomStyle(dashboardSettingsModel); 
                applyCustomStyle(compiledCss);
                   
-                if(model["inline-style"]) {
-                     applyPreviewInlineStyle(dashboardSettingsModel["inline-style"]);
+                if(dashboardSettingsModel["inline-style"]) {
+                     applyInlineStyle(dashboardSettingsModel["inline-style"]);
                 }
                   
                 self.notifyDashboardChange();
