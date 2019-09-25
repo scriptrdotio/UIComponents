@@ -602,16 +602,39 @@ angular
           });
           this.notifyDashboardChange();
       };
+        
+        
+      
+      
+      var applyInlineStyle = function (style) {
+          var styleElement = angular.element(document.querySelector('#dashboardInlineStyle'));
+		  styleElement[0].innerText = style;
+      }
+      
+      var applyPreviewInlineStyle = function (style) {
+          var styleElement = angular.element(document.querySelector('#dashboardPreviewInlineStyle'));
+		  styleElement[0].innerText = style;
+      }
+      
+      var cleanPreviewInlineStyle = function () {
+          var styleElement = angular.element(document.querySelector('#dashboardPreviewInlineStyle'));
+		  styleElement[0].innerText = "";
+      }
+      
       
       this.setDashboardSettings = function(redirectTarget) {
         var self = this;
           
         var previewTheme  = self.dashboardSettings.defaults.theme;
         var savedTheme = self.dashboardSettings.defaults.theme;
+          
+        var previewInlineStyle = self.dashboardSettings.defaults["inline-style"];
+        var savedInlineStyle = self.dashboardSettings.defaults["inline-style"];
+          
         var modalInstance = $uibModal.open({
               animation: true,
               component: 'modalComponent',
-       		  size: 'lg',
+       		  size: 'md',
               resolve: {
                 widget: function () {
                   return {
@@ -621,14 +644,21 @@ angular
                     "form": self.dashboardSettings.form,
                     "onFormModelChange": function(modelValue, form, model) {
                         if(form.key.join(".") === "theme") {
-                            model.style = __defaultsThemeStyles__[modelValue];
+                            model.style = angular.copy(__defaultsThemeStyles__[modelValue]);
                         }
                        	var compiledCss  = generateCustomStyle(model); 
                			applyPreviewCustomStyle(compiledCss);
                         if(previewTheme != model.theme) {
-                            angular.element(document.getElementsByTagName('body')).switchClass(previewTheme, model.theme);
+                            switchThemeCSS(previewTheme, model.theme)
                             previewTheme = model.theme;
                         }
+                        
+                        if(model["inline-style"]) {
+                            applyPreviewInlineStyle(model["inline-style"]);
+                        }
+                        
+                        
+                        
                         	
                     }
                   } 
@@ -653,16 +683,22 @@ angular
            	   var compiledCss  = generateCustomStyle(dashboardSettingsModel); 
                applyCustomStyle(compiledCss);
                   
+                if(model["inline-style"]) {
+                     applyPreviewInlineStyle(dashboardSettingsModel["inline-style"]);
+                }
+                  
                 self.notifyDashboardChange();
               } else {
                   if(previewTheme != savedTheme)
-                	angular.element(document.getElementsByTagName('body')).switchClass(previewTheme, savedTheme);
+                		switchThemeCSS(previewTheme, savedTheme);
               }
               cleanPreviewCustomStyle();
+              cleanPreviewInlineStyle();
             }, function () {
               cleanPreviewCustomStyle();
+              cleanPreviewInlineStyle();   
               if(previewTheme != savedTheme)
-                	angular.element(document.getElementsByTagName('body')).switchClass(previewTheme, savedTheme);
+                	switchThemeCSS(previewTheme, savedTheme);
               console.log('modal-component dashboard settings dismissed at: ' + new Date());
             });
       };
@@ -685,6 +721,13 @@ angular
       var cleanPreviewCustomStyle = function () {
           var styleElement = angular.element(document.querySelector('#dashboardPreviewCustomStyle'));
 		  styleElement[0].innerText = "";
+      }
+      
+      var switchThemeCSS = function(previousTheme, newTheme) {
+            var prevTheme = document.getElementsByTagName("link").namedItem(previousTheme);
+            var newTheme = document.getElementsByTagName("link").namedItem(newTheme);
+            newTheme.disabled = false;
+          	prevTheme.disabled = true;
       }
       
       this.saveDashboard = function(form, custom, aclEvent) {

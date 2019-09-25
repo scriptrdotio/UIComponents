@@ -39,7 +39,9 @@
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/metricBox/metricBox.css">
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/plotly/plotly.css">
     
-    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/dashboard.css">
+    <!--link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/dashboard.css"-->
+    <link name="light" rel="stylesheet" href="/UIComponents/dashboardBuilder/css/light.css"> 
+    <link name="dark" disabled="true" rel="stylesheet" href="/UIComponents/dashboardBuilder/css/dark.css"> <!-- this the default theme -->
     <link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/media.css">
   
     <!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. -->
@@ -53,6 +55,8 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/codemirror.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/mode/javascript/javascript.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/mode/css/css.min.js"></script>
+    
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone-with-data.min.js"></script>
@@ -193,7 +197,13 @@
     <style id="dashboardCustomStyle">
     </style>
     
+    <style id="dashboardInlineStyle">
+    </style>
+    
     <style id="dashboardPreviewCustomStyle">
+    </style>
+    
+    <style id="dashboardPreviewInlineStyle">
     </style>
     
 </head> 
@@ -294,7 +304,7 @@
 </script>
 
     <!--script src="/UIComponents/dashboardBuilder/javascript/dashboard.js"></script-->
-<body ng-controller="dashboardCtrl as vm" class="light">
+<body ng-controller="dashboardCtrl as vm" class="dashboardTheme">
    <!--header-top user="vm.user" header-items='{
            "appname": "Dashboard Builder",
            "logout": {"route":"#/logout"}

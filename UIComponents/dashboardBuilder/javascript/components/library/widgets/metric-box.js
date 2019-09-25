@@ -25,7 +25,7 @@ const __METRIC_BOX__ = {
         minSizeY: 2
     },
     "imgCls": "metricbox-img",
-    "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/odometer.png",
+    "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/play.png",
     "form": [{
         type: "tabs",
         tabs: [{

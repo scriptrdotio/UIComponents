@@ -1,6 +1,6 @@
 <script type='text/x-handlebars-template' id="handlebar-customcss-template">
 
-.{{theme}} .dashboardContainer {
+.dashboardTheme .dashboardContainer {
       {{#if_eq style.dashboard.background-type "solid"}}
       	background-color: {{style.dashboard.background-color}};
       {{/if_eq}}
@@ -28,7 +28,7 @@
       {{/if_eq}}
 }
 
-.{{theme}} .box {
+.dashboardTheme .box {
       {{#if_eq style.box.background-type "solid"}}
       	background-color: {{style.box.background-color}};
       {{/if_eq}}
@@ -57,7 +57,7 @@
 }
 
 
-.{{theme}} .box .box-content {
+.dashboardTheme .box .box-content {
       {{#if_eq style.box-content.background-type "solid"}}
       	background-color: {{style.box-content.background-color}};
       {{/if_eq}}
@@ -82,7 +82,7 @@
       {{/if}}
 }  
 
-.{{theme}} .box .box-header {
+.dashboardTheme .box .box-header {
     
      {{#if_eq style.box-header.background-type "solid"}}
       	background-color: {{style.box-header.background-color}};
@@ -109,7 +109,7 @@
       {{/if}}
 }  
 
-.{{theme}} .box .box-header .box-label {
+.dashboardTheme .box .box-header .box-label {
     
       {{#if style.box-label.display}}
       	display: {{style.box-label.display}};

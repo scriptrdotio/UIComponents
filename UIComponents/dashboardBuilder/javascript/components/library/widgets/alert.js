@@ -21,8 +21,8 @@ const __ALERT__ = {
         minSizeY: 1
 
     },
-    "imgCls": "displaybox-img",
-    "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/display-box.png",
+    "imgCls": "alert-img",
+    "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/alert.png",
     "form": [{
         type: "tabs",
         tabs: [{
