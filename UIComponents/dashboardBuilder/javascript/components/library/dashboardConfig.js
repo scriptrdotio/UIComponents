@@ -971,7 +971,6 @@ angular
                                                 autoCloseBrackets: true,
                                                 matchBrackets: true,
                                                 theme: "neo",
-                                                hintOptions: {"hint": CodeMirror.hint.css},
                                                 readOnly: false,
                                                 autoRefresh: true,
                                                 lineNumbers: true,
