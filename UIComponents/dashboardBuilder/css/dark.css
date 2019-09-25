@@ -752,3 +752,68 @@
 .dashboardTheme .gridster-mobile .speedometer-wrapper {
   height: 50%;
 }
+
+
+
+
+.dashboardTheme .modal-dialog .sub-tabs .nav-tabs {
+  padding: 0;
+  border: none;
+}
+.dashboardTheme .modal-dialog .sub-tabs .nav-tabs li {
+  margin-right: 8px;
+  margin-bottom: 5px;
+}
+.dashboardTheme .modal-dialog .sub-tabs .nav-tabs li a {
+  border: none;
+  color: #FFF;
+  background: #333;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  font-size: 0.8em;
+}
+.dashboardTheme .modal-dialog .sub-tabs .nav-tabs li a:hover,
+.dashboardTheme .modal-dialog .sub-tabs .nav-tabs li a:focus {
+  background: #f5f5f5;
+  color: #000;
+  border: none;
+}
+.dashboardTheme .modal-dialog .sub-tabs .nav-tabs li a img {
+  margin-top: -4px;
+  padding-right: 6px;
+}
+.dashboardTheme .modal-dialog .sub-tabs .nav-tabs li:first-child a {
+  margin-left: 0;
+}
+.dashboardTheme .modal-dialog .sub-tabs .nav-tabs li.active > a {
+  background: #f5f5f5;
+  color: #000;
+  border: none;
+}
+
+.dashboardTheme .modal-dialog .select-controller .btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    width: 100%;
+}
+
+.dashboardTheme .modal-dialog .select-controller .btn {
+    text-align: left;
+}
+
+.dashboardTheme .modal-dialog .select-controller .btn-default .caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 8px dashed;
+    border-top: 4px solid\9;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    float: right;
+}
