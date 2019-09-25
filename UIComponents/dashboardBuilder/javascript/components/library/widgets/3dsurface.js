@@ -10,7 +10,7 @@ const __onColorScaleChange__=function (modelValue, form, model) {
 };
 
 const __3DSURFACE__ = {
-    "name": "3dsurface",
+    "name": "d3surface",
     "label": "3D Surface",
     "class": "scriptr-three-d-surface",
     "commonData": true,
