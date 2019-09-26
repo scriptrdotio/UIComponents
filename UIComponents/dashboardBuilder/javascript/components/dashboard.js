@@ -143,13 +143,13 @@ angular
         
         //Gidster Wall Options
         this.gridsterOptions = {
-          defaultSizeY: 200,
-          defaultSizeX:200,
+          defaultSizeY: 50,
+          defaultSizeX:50,
           minRows: 1, // the minimum height of the grid, in rows
           maxRows: 100,
-          columns: 5, // the width of the grid, in columns
+          columns: 10, // the width of the grid, in columns
           colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
-          rowHeight: '83', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+          rowHeight: '50', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
           margins: [10, 10], // the pixel distance between each widget
           defaultSizeX: 2, // the default width of a gridster item, if not specifed
           defaultSizeY: 1, // the default height of a gridster item, if not specified
