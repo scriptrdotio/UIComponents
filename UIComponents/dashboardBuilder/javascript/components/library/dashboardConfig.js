@@ -27,7 +27,8 @@ angular
 	                  "defaults" : {
 	                     "publishChannel" : "requestChannel",
 	                     "subscribeChannel" : "responseChannel",
-	                     "theme" : "light"
+	                     "theme" : "light",
+                          "style":__defaultsThemeStyles__.light
 	                  },
 	                  "form" : [ {
 	                     type : "tabs",

@@ -59,7 +59,7 @@
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;
 
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css&quot;&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/dashboard.css&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/{{dashboardSettings.theme}}.css&quot;&gt;
     &lt;script src=&quot;/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/alert/ngScriptrAlert.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/alert/alert.js&quot;&gt;&lt;/script&gt;
@@ -118,10 +118,11 @@
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/thermometer/thermometer.js&quot;&gt;&lt;/script&gt;
     
     
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/plotly/plotly.css&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/plotly/windrose.css&quot;&gt;
     &lt;script src=&quot;//cdn.plot.ly/plotly-latest.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/angular-plotly.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/plotly.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/windrose.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/3dsurface.js&quot;&gt;&lt;/script&gt;
     
     
      &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/metricBox/metricBox.css&quot;&gt;
@@ -133,6 +134,10 @@
 &lt;style&gt;
   {{compiledCss}}
 &lt;/style&gt;
+&lt;style&gt;
+  {{inlineStyle}}
+&lt;/style&gt;
+
 &lt;script&gt;
 
 (function() {
@@ -255,7 +260,7 @@
   
 &lt;/script&gt;
 
-   &lt;body class=&quot;dashboard-template {{dashboardSettings.theme}}&quot;&gt;
+   &lt;body class=&quot;dashboard-template dashboardTheme &quot;&gt;
       &lt;div ng-controller=&quot;RootCtrl as vm&quot; ng-init=&quot;vm.init();&quot; class=&quot;dashboardContainer&quot;&gt; 
 		&lt;div gridster=&quot;vm.gridsterOptions&quot;&gt;
           &lt;ul&gt;

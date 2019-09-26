@@ -742,10 +742,12 @@ angular
           data["token"] = scriptrService.getToken();
 
           self.dashboardSettings.defaults.redirectTarget = this.model.scriptName;
+            console.log("dashboardSettings",self.dashboardSettings);
           data["dashboardSettings"] = angular.copy(this.dashboardSettings.defaults) //MFE: dashboardSettings channels info info needs to be retrieved from url or cookie
           
           //Generate custom Style to pass for the to save template
           data["compiledCss"] = generateCustomStyle(data["dashboardSettings"])
+          data["inlineStyle"] = self.dashboardSettings.defaults["inline-style"];
           
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);

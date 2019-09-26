@@ -8,6 +8,14 @@
       	background-color: {{style.dashboard.background-gradient}};
       {{/if_eq}}
     
+    	{{#if_eq style.dashboard.background-type "image"}}
+      	background-image: url(\"{{style.dashboard.background-image}}\");
+        background-position-x: {{style.dashboard.background-position-x}};
+        background-position-y: {{style.dashboard.background-position-y}};
+        background-repeat: {{style.dashboard.background-repeat}};
+        background-size: {{style.dashboard.background-size}};
+      {{/if_eq}}
+    
        {{#if_eq style.dashboard.border "true"}}
       		border: {{style.dashboard.border-width}}px {{style.dashboard.border-style}} {{style.dashboard.border-color}} ;
       {{/if_eq}}
