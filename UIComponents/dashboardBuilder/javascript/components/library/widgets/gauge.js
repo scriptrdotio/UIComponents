@@ -13,9 +13,9 @@ const __GAUGE__ = {
         "api": "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"
     },
     "box": {
-        sizeX: 1,
-        sizeY: 2,
-        minSizeX: 1,
+        sizeX: 2,
+        sizeY: 4,
+        minSizeX: 2,
         minSizeY: 2
     },
     "imgCls": "gauge-img",

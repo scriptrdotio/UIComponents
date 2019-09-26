@@ -8,13 +8,13 @@ const __BUTTON__ = {
         "boxLabel": "Button",
         "type": "btn-success",
         "enable-resize": true,
-        "size": "small",
+        "size": "large",
         "label": "Refresh data"
         // ,"api" : "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"
     },
     "box": {
-        sizeX: 1,
-        sizeY: 1,
+        sizeX: 2,
+        sizeY: 2,
         minSizeX: 1,
         minSizeY: 1
     },

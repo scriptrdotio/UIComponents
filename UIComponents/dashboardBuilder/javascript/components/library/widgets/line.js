@@ -19,10 +19,10 @@ const __LINE__ = {
         "grid-text-family": "Source Sans Pro"
     },
     "box": {
-        sizeX: 2,
-        sizeY: 4,
-        minSizeX: 1,
-        minSizeY: 2
+        sizeX: 4,
+        sizeY: 5,
+        minSizeX: 2,
+        minSizeY: 3
     },
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/line-chart.png",
     "form": [{

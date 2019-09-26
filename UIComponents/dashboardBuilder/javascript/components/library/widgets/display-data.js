@@ -14,8 +14,8 @@ const __DISPLAY_DATA__ = {
         "number-cell-size": "medium"
     },
     "box": {
-        sizeX: 1,
-        sizeY: 1,
+        sizeX: 3,
+        sizeY: 2,
         minSizeX: 1,
         minSizeY: 1
     },

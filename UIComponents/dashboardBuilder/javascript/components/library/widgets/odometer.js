@@ -8,7 +8,7 @@ const __ODOMETER__ = {
         "transport": "wss",
         "boxLabel": "Odometer",
         "msg-tag": "odometer",
-        "data": 28022017,
+        "data": 200,
         // "api" : "UIComponents/dashboard/frontend/examples/odometer/getOdometerVal",
         "animation": "count",
         "theme": "car",
@@ -18,10 +18,10 @@ const __ODOMETER__ = {
         "size": 2
     },
     "box": {
-        sizeX: 1,
+        sizeX: 2,
         sizeY: 2,
         minSizeX: 1,
-        minSizeY: 2
+        minSizeY: 1
     },
     "imgCls": "odometer-img",
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/odometer.png",

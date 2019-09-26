@@ -7,8 +7,8 @@ const __IFRAME__ = {
         "boxLabel": "IFrame"
     },
     "box": {
-        sizeX: 1,
-        sizeY: 1,
+        sizeX: 6,
+        sizeY: 6,
         minSizeX: 1,
         minSizeY: 1
     },

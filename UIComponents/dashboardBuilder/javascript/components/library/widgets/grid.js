@@ -25,9 +25,9 @@ const __GRID__ = {
         "transport": 'https'
     },
     "box": {
-        sizeX: 2,
-        sizeY: 4,
-        minSizeX: 2,
+        sizeX: 4,
+        sizeY: 5,
+        minSizeX: 4,
         minSizeY: 2,
     },
     "imgCls": "grid-img",

@@ -30,7 +30,7 @@ const __THERMOMETER__ = {
     },
     "box": {
         sizeX: 1,
-        sizeY: 3,
+        sizeY: 4,
         minSizeX: 1,
         minSizeY: 3,
         maxSizeX: 5

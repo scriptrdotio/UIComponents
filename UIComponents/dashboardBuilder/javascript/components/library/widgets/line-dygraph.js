@@ -28,10 +28,10 @@ const __LINE_DYGRAPH__ = {
 
     },
     "box": {
-        sizeX: 3,
-        sizeY: 4,
-        minSizeX: 1,
-        minSizeY: 2
+        sizeX: 6,
+        sizeY: 5,
+        minSizeX: 4,
+        minSizeY: 3
     },
     "imgSrc": "//s3.amazonaws.com/scriptr-cdn/uicomponents/dashboard-builder/images/dygraphs-line.png",
     "form": [{

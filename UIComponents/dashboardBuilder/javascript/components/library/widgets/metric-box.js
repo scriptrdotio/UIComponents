@@ -7,6 +7,7 @@ const __METRIC_BOX__ = {
     "defaults": {
         "transport": "wss",
         "boxLabel": "Metric Box",
+        "boxHeader": "false",
         "msg-tag": "metricbox",
         "value": 10,
         "animation": "count",

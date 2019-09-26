@@ -13,10 +13,10 @@ const __SPEEDOMETER__ = {
         //     ,"api" : "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal"
     },
     "box": {
-        sizeX: 1,
-        sizeY: 2,
-        minSizeX: 1,
-        minSizeY: 2
+        sizeX: 3,
+        sizeY: 5,
+        minSizeX: 2,
+        minSizeY: 4
     },
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/speedometer.png",
     "form": [{

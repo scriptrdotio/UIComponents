@@ -15,9 +15,9 @@ const __ALERT__ = {
         
     },
     "box": {
-        sizeX: 2,
-        sizeY: 1,
-        minSizeX: 2,
+        sizeX: 4,
+        sizeY: 2,
+        minSizeX: 1,
         minSizeY: 1
 
     },

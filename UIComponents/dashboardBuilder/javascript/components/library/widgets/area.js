@@ -18,10 +18,10 @@ const __AREA__ = {
         "data": '[{"y":2000,"a":64,"b":82},{"y":2003,"a":53,"b":48},{"y":2004,"a":81,"b":58},{"y":2005,"a":68,"b":72},{"y":2008,"a":52,"b":60},{"y":20011,"a":55,"b":30},{"y":2013,"a":79,"b":40}]'
     },
     "box": {
-        sizeX: 2,
-        sizeY: 4,
-        minSizeX: 1,
-        minSizeY: 2
+        sizeX: 4,
+        sizeY: 5,
+        minSizeX: 2,
+        minSizeY: 3
     },
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/area-chart.png",
     "form": [{

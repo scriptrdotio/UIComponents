@@ -17,11 +17,9 @@ const __TOGGLE_SWITCH__ = {
     },
     "box": {
         sizeX: 1,
-        sizeY: 1,
+        sizeY: 2,
         minSizeX: 1,
-        minSizeY: 1,
-        maxSizeY: 1,
-        maxSizeX: 1
+        minSizeY: 1
     },
     "imgCls": "",
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/toggle-switch.png",

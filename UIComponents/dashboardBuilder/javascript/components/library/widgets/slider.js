@@ -21,10 +21,10 @@ const __SLIDER__ = {
         "theme": "scriptr-slider"
     },
     "box": {
-        sizeX: 2,
-        sizeY: 2,
-        minSizeX: 1,
-        minSizeY: 1
+        sizeX: 4,
+        sizeY: 3,
+        minSizeX: 4,
+        minSizeY: 2
     },
     "imgCls": "",
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/slider.png",

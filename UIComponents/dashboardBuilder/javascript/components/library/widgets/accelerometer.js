@@ -12,10 +12,10 @@ const __ACCELEROMETER__ = {
         //     ,"api" : "UIComponents/dashboard/frontend/examples/accelerometer/getAccelerometerData"
     },
     "box": {
-        sizeX: 2,
-        sizeY: 4,
-        minSizeX: 2,
-        minSizeY: 4,
+        sizeX: 4,
+        sizeY: 6,
+        minSizeX: 3,
+        minSizeY: 6,
     },
     "imgCls": "",
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/accelerometer.png",
