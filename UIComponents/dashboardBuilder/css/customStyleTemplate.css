@@ -5,7 +5,7 @@
       	background-color: {{style.dashboard.background-color}};
       {{/if_eq}}
       {{#if_eq style.dashboard.background-type "gradient"}}
-      	background-color: {{style.dashboard.background-gradient}};
+      	background-image: {{style.dashboard.background-gradient}};
       {{/if_eq}}
     
     	{{#if_eq style.dashboard.background-type "image"}}
@@ -16,10 +16,10 @@
         background-size: {{style.dashboard.background-size}};
       {{/if_eq}}
     
-       {{#if_eq style.dashboard.border "true"}}
+       {{#if_eq style.dashboard.border true}}
       		border: {{style.dashboard.border-width}}px {{style.dashboard.border-style}} {{style.dashboard.border-color}} ;
       {{/if_eq}}
-      {{#if_eq style.dashboard.border "false"}}
+      {{#if_eq style.dashboard.border false}}
       		border: none;
       {{/if_eq}}
     
@@ -41,13 +41,13 @@
       	background-color: {{style.box.background-color}};
       {{/if_eq}}
       {{#if_eq style.box.background-type "gradient"}}
-      	background-color: {{style.box.background-gradient}};
+      	background-image: {{style.box.background-gradient}};
       {{/if_eq}}
     
-       {{#if_eq style.box.border "true"}}
+       {{#if_eq style.box.border true}}
       		border: {{style.box.border-width}}px {{style.box.border-style}} {{style.box.border-color}} ;
       {{/if_eq}}
-      {{#if_eq style.box.border "false"}}
+      {{#if_eq style.box.border false}}
       		border: none;
       {{/if_eq}}
     
@@ -70,13 +70,13 @@
       	background-color: {{style.box-content.background-color}};
       {{/if_eq}}
       {{#if_eq style.box-content.background-type "gradient"}}
-      	background-color: {{style.box-content.background-gradient}};
+      	background-image: {{style.box-content.background-gradient}};
       {{/if_eq}}
     
-      {{#if_eq style.box-content.border "true"}}
+      {{#if_eq style.box-content.border true}}
       		border: {{style.box-content.border-width}}px {{style.box-content.border-style}} {{style.box-content.border-color}} ;
       {{/if_eq}}
-      {{#if_eq style.box-content.border "false"}}
+      {{#if_eq style.box-content.border false}}
       		border: none;
       {{/if_eq}}
     
@@ -96,14 +96,14 @@
       	background-color: {{style.box-header.background-color}};
       {{/if_eq}}
       {{#if_eq style.box-header.background-type "gradient"}}
-      	background-color: {{style.box-header.background-gradient}};
+      	background-image: {{style.box-header.background-gradient}};
       {{/if_eq}}
     
     
-      {{#if_eq style.box-header.border "true"}}
+      {{#if_eq style.box-header.border true}}
       		border: {{style.box-header.border-width}}px {{style.box-header.border-style}} {{style.box-header.border-color}} ;
       {{/if_eq}}
-      {{#if_eq style.box-header.border "false"}}
+      {{#if_eq style.box-header.border false}}
       		border: none;
       {{/if_eq}}
     

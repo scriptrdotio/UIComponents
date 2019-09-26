@@ -49,7 +49,7 @@ const __defaultsThemeStyles__ = {
         },
         "box-label" : {
             "font-weight" : "normal",
-            "font-size" : 1.2,
+            "font-size" : 12,
             "text-align" : "center",
             "display" : "block",
             "color" : "#000"
@@ -105,7 +105,7 @@ const __defaultsThemeStyles__ = {
         },
         "box-label" : {
             "font-weight" : "normal",
-            "font-size" : 1.2,
+            "font-size" : 12,
             "text-align" : "center",
             "display" : "block",
             "color" : "#000"
