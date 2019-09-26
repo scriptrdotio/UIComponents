@@ -198,6 +198,7 @@ const __TOGGLE_SWITCH__ = {
                 "enum": ["switch-default", "switch-danger",
                     "switch-warning", "switch-success",
                     "switch-info", "switch-primary"],
+                "placeholder": " ",
                 "description": "Choose the type of the Toggle Switch."
             },
             "size": {
@@ -205,6 +206,7 @@ const __TOGGLE_SWITCH__ = {
                 "type": "string",
                 "enum": ["switch-mini", "switch-small",
                     "switch-large"],
+                "placeholder": " ",
                 "description": "choose the size of the toggle switch."
             },
             "api": {
