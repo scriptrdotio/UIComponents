@@ -586,7 +586,8 @@ module.exports = function(grunt) {
 	         less: {
 	         	production: {
 	         	    files: {
-	         	      'dashboardBuilder/css/dashboard.css': 'dashboardBuilder/css/dashboard.less'
+	         	      'dashboardBuilder/css/light.css': 'dashboardBuilder/css/light.less',
+	         	     'dashboardBuilder/css/dark.css': 'dashboardBuilder/css/dark.less'
 	         	    }
 	         	  }
 	         }
