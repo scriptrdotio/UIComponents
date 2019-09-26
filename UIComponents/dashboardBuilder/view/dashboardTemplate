@@ -121,6 +121,7 @@
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/plotly/windrose.css&quot;&gt;
     &lt;script src=&quot;//cdn.plot.ly/plotly-latest.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/angular-plotly.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/plotly.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/windrose.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/3dsurface.js&quot;&gt;&lt;/script&gt;
     
