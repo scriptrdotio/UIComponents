@@ -135,7 +135,7 @@
   {{compiledCss}}
 &lt;/style&gt;
 &lt;style&gt;
-  {{inlineStyle}}
+  {{dashboardSettings.inline-style}}
 &lt;/style&gt;
 
 &lt;script&gt;

@@ -747,7 +747,6 @@ angular
           
           //Generate custom Style to pass for the to save template
           data["compiledCss"] = generateCustomStyle(data["dashboardSettings"])
-          data["inlineStyle"] = self.dashboardSettings.defaults["inline-style"];
           
           var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
           var unescapedHtml = Handlebars.compile(template)(data);
