@@ -1,4 +1,4 @@
-angular.module('Plotly', ['angularPlotly']);
+
 
 angular
     .module('Plotly')
