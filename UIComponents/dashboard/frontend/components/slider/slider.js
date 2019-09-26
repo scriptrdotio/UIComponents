@@ -208,7 +208,7 @@ angular
                    
                    self.resize = function(){
                         self.timeoutId = null;
-                        self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($($element.find(".rzslider").parent()).innerHeight()/2);
+                       // self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($($element.find(".rzslider").parent()).innerHeight()/2);
                         $($element).children()[0].style.display = ""
                    }
                   

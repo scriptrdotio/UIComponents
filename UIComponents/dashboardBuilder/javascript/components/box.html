@@ -1,10 +1,10 @@
-<div class="box" ng-class="{'box-without-header' : ($ctrl.widget.options.boxHeader == 'false') ,  'vertical' : ($ctrl.widget.sizeX == 1)}">
+<div class="box" ng-class="{'box-without-header' : ($ctrl.widget.options.boxHeader == 'false' || $ctrl.widget.sizeY == 1) ,  'vertical' : ($ctrl.widget.sizeX == 1)}">
     <div class="box-header-btns pull-right">
         <div class="btn-group" uib-dropdown dropdown-append-to-body auto-close="outsideClick">
-            <button id="btn-append-to-body" type="button" class="btn btn-primary wrench-icon radius4" uib-dropdown-toggle>
-                <i class="glyphicon glyphicon-cog"></i>
+            <button id="btn-append-to-body" type="button" class="btn btn-options wrench-icon" uib-dropdown-toggle>
+                <i class="glyphicon glyphicon-option-horizontal"></i>
             </button>
-            <ul class="dropdown-menu dropdown-menu-right header-sub" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
+            <ul class="dropdown-menu dropdown-menu-left header-sub" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
                 <li role="menuitem"> <a title="Remove this widget" ng-click="$ctrl.remove($ctrl.widget)">
                     <i class="glyphicon glyphicon-trash"></i>
                     </a></li>
