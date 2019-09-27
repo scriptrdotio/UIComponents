@@ -8,6 +8,30 @@ const __onColorScaleChange__ = function (modelValue, form, model) {
     });
     model["color-scale"] = arr;
 };
+const __onModeBarButtonsChange__ = function (modelValue, form, model) {
+    var arr = [];
+    var buttons=[
+        'zoom3d',
+        'pan3d',
+        'hoverClosest3d',
+        'resetCameraLastSave3d',
+        'resetCameraDefault3d',
+        'orbitRotation',
+        'tableRotation',
+        'toImage'
+      ];
+    var obj = model["mode-bar-buttons-to-remove-wrapper"];
+    buttons.forEach(function (element) {
+        if (obj.hasOwnProperty(element)) {
+            if (!obj[element]) {
+                arr.push(element);
+            }
+        }else{
+            arr.push(element);
+        }
+    });
+    model["mode-bar-buttons-to-remove"] = arr;
+};
 
 const __3DSURFACE__ = {
     "name": "d3surface",
@@ -51,7 +75,19 @@ const __3DSURFACE__ = {
             }
 
 
-        }
+        },
+        "mode-bar-buttons-to-remove-wrapper": {
+            "toImage": true,
+            "tableRotation": true,
+            "orbitRotation": true,
+            "resetCameraDefault3d": true,
+            "resetCameraLastSave3d": true,
+            "hoverClosest3d": true,
+            "pan3d": true,
+            "zoom3d": true
+        },
+        "show-mode-bar":true,
+        "displaylogo":true,
     },
     "box": {
         sizeX: 2,
@@ -257,6 +293,71 @@ const __3DSURFACE__ = {
                             ]
                         }
                     ]
+                },
+                {
+                    title: "Mode Bar",
+                    items: [
+                        {
+                            "type": "section",
+                            "htmlClass": "row",
+                            "items": [
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-12 col-sm-6",
+                                    "items": [
+                                        {
+                                            "key": "show-mode-bar"
+                                        },
+                                        {
+                                            "key": "displaylogo",
+                                            "condition": "model['show-mode-bar']"
+                                        }
+
+                                    ]
+                                },
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-12 col-sm-6",
+                                    "items": [
+                                        {
+                                            "key": "mode-bar-buttons-to-remove-wrapper",
+                                            "condition": "model['show-mode-bar']",
+                                            "items": [
+                                                {
+                                                    key:"mode-bar-buttons-to-remove-wrapper.toImage",
+                                                    onChange: __onModeBarButtonsChange__
+                                                },{
+                                                    key:"mode-bar-buttons-to-remove-wrapper.tableRotation",
+                                                    onChange: __onModeBarButtonsChange__
+                                                },{
+                                                    key:"mode-bar-buttons-to-remove-wrapper.orbitRotation",
+                                                    onChange: __onModeBarButtonsChange__
+                                                },{
+                                                    key:"mode-bar-buttons-to-remove-wrapper.resetCameraDefault3d",
+                                                    onChange: __onModeBarButtonsChange__
+                                                },{
+                                                    key:"mode-bar-buttons-to-remove-wrapper.resetCameraLastSave3d",
+                                                    onChange: __onModeBarButtonsChange__
+                                                },{
+                                                    key:"mode-bar-buttons-to-remove-wrapper.hoverClosest3d",
+                                                    onChange: __onModeBarButtonsChange__
+                                                },{
+                                                    key:"mode-bar-buttons-to-remove-wrapper.pan3d",
+                                                    onChange: __onModeBarButtonsChange__
+                                                },{
+                                                    key:"mode-bar-buttons-to-remove-wrapper.zoom3d",
+                                                    onChange: __onModeBarButtonsChange__
+                                                },
+                                            ]
+                                            
+                                        }
+
+                                    ]
+                                },
+                            ]
+                        },
+
+                    ]
                 }
 
             ]
@@ -431,6 +532,63 @@ const __3DSURFACE__ = {
                                 }
                             },
                         }
+                    },
+                }
+            },
+            "show-mode-bar": {
+                "title": "Show Mode Bar",
+                "type": "boolean",
+                "description": "Mode Bar is the set of functional icons shown at the top of the chart.",
+                "placeholder": " "
+            },
+            "displaylogo": {
+                "title": "Display Plotly Logo",
+                "type": "boolean",
+                "description": "",
+                "placeholder": " "
+            }, "mode-bar-buttons-to-remove": {
+                "type": "array",
+                "default": [],
+                "items": {
+                    "type": "string",
+                }
+            }, "mode-bar-buttons-to-remove-wrapper": {
+                "title": "Buttons To show on the mode bar",
+                "type": "object",
+                "default": {},
+                "properties": {
+                    "toImage": {
+                        "title": "To Image",
+                        "type": "boolean",
+                    },
+                    "tableRotation": {
+                        "title": "Table Rotation",
+                        "type": "boolean",
+                    },
+                    "orbitRotation": {
+                        "title": "Orbit Rotation",
+                        "type": "boolean",
+                    },
+                    "resetCameraDefault3d": {
+                        "title": "Reset Camera Default 3d",
+                        "type": "boolean",
+                    },
+                    "resetCameraLastSave3d": {
+                        "title": "Reset Camera Last Saved 3d",
+                        "type": "boolean",
+                    },
+                    "hoverClosest3d": {
+                        "title": "Hover Closest 3d",
+                        "type": "boolean",
+                    },
+                    "pan3d": {
+                        "title": "Pan 3d",
+                        "type": "boolean",
+                    },
+                    "zoom3d": {
+                        "title": "Zoom 3d",
+                        "type": "boolean",
+                        
                     },
                 }
             }
