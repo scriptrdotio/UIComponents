@@ -1,5 +1,7 @@
 <div class="box" ng-class="{'box-without-header' : ($ctrl.widget.options.boxHeader == 'false' || $ctrl.widget.sizeY == 1) ,  'vertical' : ($ctrl.widget.sizeX == 1)}">
     <div class="box-header-btns pull-right">
+        <div><a class="drag-box" title="Drag this widget"><i class="glyphicon glyphicon-move"></i></a></div>
+        <div class="clearfix"></div>
         <div class="btn-group" uib-dropdown dropdown-append-to-body auto-close="outsideClick">
             <button id="btn-append-to-body" type="button" class="btn btn-options wrench-icon" uib-dropdown-toggle>
                 <i class="glyphicon glyphicon-option-horizontal"></i>
@@ -11,10 +13,8 @@
                 <li role="menuitem"><a title="Configure this widget" ng-if="$ctrl.widget.form" ng-click="$ctrl.openSettings($ctrl.widget)">
                     <i class="glyphicon glyphicon-cog"></i>
                     </a></li>  
-                <li role="menuitem" ><a class="drag-box" title="Drag this widget"><i class="glyphicon glyphicon-move"></i></a></li>
-                </li>
             </ul>
-    </div>
+    	</div>
 </div>
 <div class="box-header">
     <div class="box-label"><span tooltip-append-to-body="true" uib-tooltip="{{$ctrl.widget.options.boxLabel}}">{{$ctrl.widget.options.boxLabel}}</span></div>
