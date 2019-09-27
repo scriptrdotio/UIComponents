@@ -179,15 +179,14 @@ form { margin-bottom: 0;}
 .slick-container {padding: 10px;background-color: @gray4;}
 .slick-item {}
 .slick-slide {height: auto; text-align: center;margin-bottom: -1px;}
-.slick-slide a[ng-click] {display: block;padding: 7px 0;color: @gray2;cursor: pointer;border: 1px solid @gray3;display: flex;align-items: center;}
+.slick-slide a[ng-click] {width: 50px; height: 40px;margin-right: -1px;display: block;padding: 5px;color: @gray2;cursor: pointer;border: 1px solid @gray3;display: flex;align-items: center;overflow: hidden;}
 .slick-slide a:hover, .slick-slide a:active {background: @gray5; text-decoration: none;} 
 .slick-slide a:focus {outline: 0!important; text-decoration: none;}
-.slick-slide img {margin: 0 auto; display: inline;}
+.slick-slide img {margin: 0 auto; display: inline;max-width: 85%;max-height: 85%;height: auto;width: auto;}
 .slick-label {font-size: 12px;padding-top: 3px;line-height: 2.4em; margin-left: 5px;}
 .slick-prev:before, .slick-next:before {color: @primaryColor;}
 
-
-
+.slick-slide .grid-img {max-width: 65%;max-height: 65%;}
 
 .dashboard-config {
     background: @primaryColor;
@@ -255,12 +254,6 @@ background: @gray3;
 
 /*** to show tooltip on slick list items ***/
 .slick-list {overflow: visible!important;}
-
-/*** slick slide list ***/
-.slick-slide a[ng-click] {width: 50px; height: 40px;margin-right: -1px;}
-.slick-slide img {width: 54%;}
-.slick-slide .odometer-img, .slick-slide .gauge-img {width: 60%; padding-top: 4px;}
-
 
 .dashboardContainer .box dsp-box div {
     margin-top: 35px;

@@ -19,7 +19,6 @@
   /*** dashboard builder wrap ***/
   /***  devices-models-tree ***/
   /*** to show tooltip on slick list items ***/
-  /*** slick slide list ***/
   /*** Dashboard view mode page1 ***/
   /*** dashboard back and toggle on/off button ***/
   /*** x-editable ***/
@@ -219,13 +218,17 @@
   margin-bottom: -1px;
 }
 .dashboardTheme .slick-slide a[ng-click] {
+  width: 50px;
+  height: 40px;
+  margin-right: -1px;
   display: block;
-  padding: 7px 0;
+  padding: 5px;
   color: #999;
   cursor: pointer;
   border: 1px solid #DDD;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 .dashboardTheme .slick-slide a:hover,
 .dashboardTheme .slick-slide a:active {
@@ -239,6 +242,10 @@
 .dashboardTheme .slick-slide img {
   margin: 0 auto;
   display: inline;
+  max-width: 85%;
+  max-height: 85%;
+  height: auto;
+  width: auto;
 }
 .dashboardTheme .slick-label {
   font-size: 12px;
@@ -249,6 +256,10 @@
 .dashboardTheme .slick-prev:before,
 .dashboardTheme .slick-next:before {
   color: #f48220;
+}
+.dashboardTheme .slick-slide .grid-img {
+  max-width: 65%;
+  max-height: 65%;
 }
 .dashboardTheme .dashboard-config {
   background: #f48220;
@@ -347,19 +358,6 @@
 }
 .dashboardTheme .slick-list {
   overflow: visible!important;
-}
-.dashboardTheme .slick-slide a[ng-click] {
-  width: 50px;
-  height: 40px;
-  margin-right: -1px;
-}
-.dashboardTheme .slick-slide img {
-  width: 54%;
-}
-.dashboardTheme .slick-slide .odometer-img,
-.dashboardTheme .slick-slide .gauge-img {
-  width: 60%;
-  padding-top: 4px;
 }
 .dashboardTheme .dashboardContainer .box dsp-box div {
   margin-top: 35px;
