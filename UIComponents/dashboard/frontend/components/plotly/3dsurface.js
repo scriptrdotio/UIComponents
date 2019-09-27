@@ -37,6 +37,9 @@ angular
                 "barTitle": "@",
                 "barThickness": "<?",
                 "showBar": "<?",
+                "displaylogo": "<?",
+                "showModeBar": "<?",
+                "modeBarButtonsToRemove": "<?",
                 "colorScale": "<?",
                 "contours": "<?",
 
@@ -54,9 +57,13 @@ angular
                     self.width = self.width ? self.width : 400;
                     self.height = self.height ? self.height :400;
                     self.contours = self.contours ? self.contours :{};
+                    self.modeBarButtonsToRemove = self.modeBarButtonsToRemove ? self.modeBarButtonsToRemove :[];
                     self.options = self.options ? self.options :{
-                         displayModeBar: false 
+                         displayModeBar: self.showModeBar, 
+                         modeBarButtonsToRemove: self.modeBarButtonsToRemove, 
+                         displaylogo: self.displaylogo,
                     };
+                    console.log(self.options);
                     self.staticData = angular.copy(self.data);
                     self.transformedData = angular.copy(self.data);
                     angular.element($window).on('resize', self.scheduleResize);
