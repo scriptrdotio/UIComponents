@@ -73,10 +73,15 @@ form { margin-bottom: 0;}
     box-shadow: 2px 2px 12px 0px rgba(51,51,51,0.3);
     .box-header-btns {
 		cursor: pointer;
-	    z-index: 2;
-	    position: absolute;
-	    padding: 10px 0;
-	    right: 5px;
+        z-index: 6;
+        position: absolute;
+        display: flex;
+        padding: 10px 3px 10px 3px;
+        right: -5px;
+        border-radius: 6px;
+        box-shadow: 5px 5px 5px -5px rgba(244,130,31,0.29);
+        background: linear-gradient(to left, rgba(118,124,127,1) 0%, rgba(222,222,222,1) 52%, rgba(232,232,232,1) 68%, rgba(242,242,242,1) 82%, rgba(255,255,255,1) 100%);
+
 	    a {
 	    	padding: 0 5px;
 	    	color: @primaryColor;
@@ -138,7 +143,7 @@ form { margin-bottom: 0;}
     }
 }
 }
-
+/**
 .gridster-desktop .vertical {
 	.box-header-btns {
 	    padding: 10px 5px;
@@ -153,7 +158,7 @@ form { margin-bottom: 0;}
 	    }
 	}
 }
-
+**/
 .modal {
 	.box-container {
    		position: absolute;

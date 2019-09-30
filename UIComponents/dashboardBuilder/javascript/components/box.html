@@ -1,20 +1,28 @@
-<div class="box" ng-class="{'box-without-header' : ($ctrl.widget.options.boxHeader == 'false' || $ctrl.widget.sizeY == 1) ,  'vertical' : ($ctrl.widget.sizeX == 1)}">
-    <div class="box-header-btns pull-right">
-        <div><a class="drag-box" title="Drag this widget"><i class="glyphicon glyphicon-move"></i></a></div>
-        <div class="clearfix"></div>
-        <div class="btn-group" uib-dropdown dropdown-append-to-body auto-close="outsideClick">
+<div class="box" ng-mouseover="$ctrl.showActionBar = true" ng-mouseout="$ctrl.showActionBar = false" ng-class="{'box-without-header' : ($ctrl.widget.options.boxHeader == 'false' || $ctrl.widget.sizeY == 1) ,  'vertical' : ($ctrl.widget.sizeX == 1)}">
+    <div class="box-header-btns pull-right" ng-show="$ctrl.showActionBar == true">
+       	<a class="drag-box" title="Drag this widget">
+            <i class="glyphicon glyphicon-move"></i>
+        </a>
+        <a title="Remove this widget" ng-click="$ctrl.remove($ctrl.widget)">
+              <i class="glyphicon glyphicon-trash"></i>
+        </a>
+         <a title="Configure this widget" ng-if="$ctrl.widget.form" ng-click="$ctrl.openSettings($ctrl.widget)">
+            <i class="glyphicon glyphicon-cog"></i>
+        </a>
+        
+        <!--div class="btn-group" uib-dropdown dropdown-append-to-body auto-close="outsideClick">
             <button id="btn-append-to-body" type="button" class="btn btn-options wrench-icon" uib-dropdown-toggle>
                 <i class="glyphicon glyphicon-option-horizontal"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-left header-sub" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
-                <li role="menuitem"> <a title="Remove this widget" ng-click="$ctrl.remove($ctrl.widget)">
-                    <i class="glyphicon glyphicon-trash"></i>
-                    </a></li>
                 <li role="menuitem"><a title="Configure this widget" ng-if="$ctrl.widget.form" ng-click="$ctrl.openSettings($ctrl.widget)">
                     <i class="glyphicon glyphicon-cog"></i>
-                    </a></li>  
+        		</a></li>
+                <li role="menuitem"><a title="Remove this widget" ng-click="$ctrl.remove($ctrl.widget)">
+                    <i class="glyphicon glyphicon-trash"></i>
+        			</a></li>  
             </ul>
-    	</div>
+    	</div-->
 </div>
 <div class="box-header">
     <div class="box-label"><span tooltip-append-to-body="true" uib-tooltip="{{$ctrl.widget.options.boxLabel}}">{{$ctrl.widget.options.boxLabel}}</span></div>
