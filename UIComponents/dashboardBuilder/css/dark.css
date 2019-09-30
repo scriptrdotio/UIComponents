@@ -591,6 +591,9 @@
   border: none;
   padding-top: 15px;
 }
+.dashboardTheme .modal-dialog .select-controller {
+  position: relative;
+}
 .dashboardTheme .modal-dialog .select-controller .btn {
   color: #64717f;
   background-color: #FFF;
@@ -610,6 +613,10 @@
   position: absolute;
   right: 12px;
   top: 12px;
+}
+.dashboardTheme .modal-dialog .select-controller .dropdown-menu {
+  width: 100%;
+  min-width: auto;
 }
 .dashboardTheme .list-group-item {
   background-color: transparent;

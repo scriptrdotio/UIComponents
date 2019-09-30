@@ -407,24 +407,31 @@ background: @gray3;
 		border: none;
 		padding-top: 15px;
 	}
-	.select-controller .btn {
-	    color: @gray1;
-	    background-color: @lightBase;
-	    border-color: @gray3;
-	    width: 100%;
-	    padding: 4px 40px 4px 12px;
-	    text-align: left;
-	    position: relative;
-	    .caret {
-		    width: 0;
-		    height: 0;
-		    vertical-align: middle;
-		    border-top: 6px dashed;
-		    border-right: 5px solid transparent;
-		    border-left: 6px solid transparent;
-		    position: absolute;
-		    right: 12px;
-		    top: 12px;
+	.select-controller {
+		position: relative;
+		.btn {
+		    color: @gray1;
+		    background-color: @lightBase;
+		    border-color: @gray3;
+		    width: 100%;
+		    padding: 4px 40px 4px 12px;
+		    text-align: left;
+		    position: relative;
+		    .caret {
+			    width: 0;
+			    height: 0;
+			    vertical-align: middle;
+			    border-top: 6px dashed;
+			    border-right: 5px solid transparent;
+			    border-left: 6px solid transparent;
+			    position: absolute;
+			    right: 12px;
+			    top: 12px;
+			}
+		}
+		.dropdown-menu {
+			width: 100%;
+			min-width: auto;
 		}
 	}
 }
