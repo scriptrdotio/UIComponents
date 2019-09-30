@@ -133,16 +133,16 @@
   z-index: 6;
   position: absolute;
   display: flex;
-  padding: 10px 3px 10px 3px;
-  right: -5px;
-  border-radius: 6px;
-  box-shadow: 5px 5px 5px -5px rgba(244, 130, 31, 0.29);
-  background: linear-gradient(to left, #767c7f 0%, #dedede 52%, #e8e8e8 68%, #f2f2f2 82%, #ffffff 100%);
+  padding: 8px 3px;
+  right: 2px;
 }
 .dashboardTheme .box .box-header-btns a {
-  padding: 0 5px;
+  padding: 5px;
   color: #f48220;
   float: right;
+  background: #FFF;
+  border-radius: 5px;
+  margin-left: 2px;
 }
 .dashboardTheme .box .box-header-btns a:hover {
   text-decoration: none;
@@ -584,7 +584,6 @@
 }
 .dashboardTheme .modal-dialog .nav-tabs li.active > a {
   background: #f48220;
-  color: #FFF;
   border: none;
 }
 .dashboardTheme .modal-dialog .tab-content {
@@ -857,7 +856,7 @@
   background-color: none;
 }
 .dashboardTheme .sub-tabs .nav-tabs li {
-  margin-left: 10px;
+  margin-right: 10px;
 }
 .dashboardTheme .sub-tabs .nav-tabs li a {
   border: none;
@@ -877,9 +876,6 @@
 .dashboardTheme .sub-tabs .nav-tabs li a img {
   margin-top: -4px;
   padding-right: 6px;
-}
-.dashboardTheme .sub-tabs .nav-tabs li:first-child {
-  margin-left: 0;
 }
 .dashboardTheme .sub-tabs .nav-tabs li.active > a {
   color: #FFF;
