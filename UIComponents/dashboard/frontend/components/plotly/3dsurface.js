@@ -29,8 +29,8 @@ angular
                 "fetchDataInterval": "@",
                 //extras
                 "title": "@",
-                "width": "<?",
-                "height": "<?",
+                //"width": "<?",
+                //"height": "<?",
                 "xaxis": "@",
                 "yaxis": "@",
                 "zaxis": "@",
@@ -54,8 +54,8 @@ angular
                     console.log("on init started",this)
                     self._apiParams = (self.apiParams) ? angular.copy(self.apiParams) : [];
                     self.data = self.data ? self.data : [];
-                    self.width = self.width ? self.width : 400;
-                    self.height = self.height ? self.height :400;
+                    //self.width = self.width ? self.width : 400;
+                    //self.height = self.height ? self.height :400;
                     self.contours = self.contours ? self.contours :{};
                     self.modeBarButtonsToRemove = self.modeBarButtonsToRemove ? self.modeBarButtonsToRemove :[];
                     self.options = self.options ? self.options :{
@@ -71,14 +71,6 @@ angular
                     self.layout = self.layout ? self.layout :{
                         title: self.title,
                         autosize: false,
-                        width: self.width,
-                        height: self.height,
-                        margin: {
-                            l: 65,
-                            r: 50,
-                            b: 65,
-                            t: 90,
-                        },
                         scene: {
                             xaxis: { title: self.xaxis },
                             yaxis: { title: self.yaxis },
