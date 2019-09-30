@@ -48,8 +48,8 @@ const __defaultsThemeStyles__ = {
             "border-radius" : 0
         },
         "box-label" : {
-            "font-weight" : "normal",
-            "font-size" : 12,
+            "font-weight" : "bold",
+            "font-size" : 17,
             "text-align" : "center",
             "display" : "block",
             "color" : "#000"
@@ -104,8 +104,8 @@ const __defaultsThemeStyles__ = {
             "border-radius" : 0
         },
         "box-label" : {
-            "font-weight" : "normal",
-            "font-size" : 12,
+            "font-weight" : "bold",
+            "font-size" : 17,
             "text-align" : "center",
             "display" : "block",
             "color" : "#000"
