@@ -74,13 +74,27 @@ angular
           "customGoals": "<?",
           "colorsMapping": "<?",
           "fetchDataInterval": "@",
-          "useWindowParams": "@"
+          "useWindowParams": "@",
+          //functional data
+          "useFunctional": "<?",
+          "functionalDataType": "@",//scattered , range
+          "calculateFunction": "@",          
+          "scatteredXdata": "<?",
+          "rangeMin": "<?",
+          "rangeMax": "<?",
+          "rangeStep": "<?",
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.html',
       controller: function($rootScope, httpClient, wsClient, $scope, $timeout, $interval, $window, dataService) {
         
          var self = this;
          this.$onInit = function() {
+             
+             //if functional data call function
+             
+             
+             this.evalFuncionalData();
+             
               this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
              if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
                this.noResults = true;
@@ -360,6 +374,8 @@ angular
              //Initially!!
              this.delta = false;
              
+             
+             
              angular.element($window).on('resize', function() {
                  if($(window).innerWidth() <= 480){
                      self.options.axes.y2.axisLabelWidth = 40;
@@ -372,13 +388,56 @@ angular
            
        }
          
+         this.evalFuncionalData=function(){
+             if(!self.useFunctional){
+                 return;
+             }
+             
+             var d = new Date();
+             var functionName="dygraphFn"+d.getMilliseconds();
+             eval(functionName+ " = " + self.calculateFunction);
+             
+             var x=[];
+             
+             if(self.functionalDataType=="scattered"){
+                 x=self.scatteredXdata
+             }else if(self.functionalDataType=="range"){
+                 var arr=[];
+                 var i=0;
+                    for (i=self.rangeMin; i <= self.rangeMax; i=i+ self.rangeStep){
+						arr.push(i);
+                    }
+                 x=arr;
+             }
+             var res=[];
+             x.forEach(function(element){
+                 var row=[element]
+                 var y=window[functionName](element);
+                 if (y.length > 0) {
+                    for (var j = 0; j < y.length; j++) {
+                      row.push(y[j]);
+                    }
+                  } else {
+                    row.push(y);
+                  }
+                 res.push(row);
+             });
+             
+             self.data=res;
+             this.consumeData(self.data);
+             
+         }
+         
          this.$postLink = function () {
            initDataService(this.transport);
            // apply 2 seconds delay for static data  
            if(this.data && !this.api) {
               self.timeout = false; 
          	  $timeout(function() {
-                 self.consumeData(self.data);
+                  if(!self.useFunctional){
+                      self.consumeData(self.data);
+                  }
+                 
                }, 2000)
            }else{
                self.timeout = true;
@@ -391,8 +450,11 @@ angular
                }
            },function(newVal){
                if(newVal){
-                   self.datas = newVal;
+                   if(!self.useFunctional){
+                       self.datas = newVal;
                    self.noResults = false;
+                   }
+                   
                }
            });
         }
@@ -446,6 +508,7 @@ angular
                   this.noResults = true;
               }
             }
+              console.log("datas",this.datas);
           }
         }
 	});
