@@ -53,10 +53,11 @@
 ***** Plotly chart *****
 ***/
   /*** Morris chart legends and grap ***/
+  /*** Diagraph ***/
+  /*** Morris chart legends and grap ***/
   /***
 ***** Gridster Mobile *****
 ***/
-  /*** Morris chart legends and grap ***/
 }
 .dashboardTheme body {
   font-family: 'Source Sans Pro', sans-serif !important;
@@ -758,63 +759,19 @@
 .dashboardTheme .morris-chart-legend::-webkit-scrollbar {
   width: 12px;
 }
-.dashboardTheme .gridster-mobile .box-content {
-  min-height: 80px;
-}
-.dashboardTheme .gridster-mobile .box,
-.dashboardTheme .gridster-mobile .box-content,
-.dashboardTheme .gridster-mobile.gridster-loaded .gridster-item box,
-.dashboardTheme .gridster-mobile.gridster-loaded .gridster-item box .box-wrapper {
-  height: auto;
-}
-.dashboardTheme .gridster-mobile .gauge {
-  height: 50%!important;
-  width: 100%;
-}
-.dashboardTheme .gridster-mobile scriptr-thermometer > div:first-child {
-  height: 45%;
-  margin-bottom: -22px;
-}
-.dashboardTheme .gridster-mobile .ag-layout-normal .ag-root {
-  height: 50%;
-}
-.dashboardTheme .gridster-mobile .morris-chart-dimension {
-  width: 100%;
-  height: 55%;
-}
-.dashboardTheme .gridster-mobile .dygraphs-legend {
-  float: none;
-  width: calc(100% - 30px);
+.dashboardTheme .graph.with-legend {
+  width: calc(100% - 110px) !important;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
   position: relative;
-  margin: 30px 30px 20px;
-  height: auto;
+  float: left;
 }
-.dashboardTheme .gridster-mobile .graph.with-legend {
-  position: relative;
-}
-.dashboardTheme .gridster-mobile .display-count {
-  height: 20%;
-}
-.dashboardTheme .gridster-mobile .plotly-chart-legend {
-  height: auto;
-  width: 100%;
-  float: none;
-  text-align: left;
-  margin: 10px;
-}
-.dashboardTheme .gridster-mobile .plotly-chart-dimension {
-  width: 100%;
-  height: 55%;
-}
-.dashboardTheme .gridster-mobile .accelerometer-wrapper {
-  height: 50%;
-}
-.dashboardTheme .gridster-mobile .speedometer-wrapper {
-  height: 50%;
-}
-.dashboardTheme .morris-chart-legend ul {
-  padding: 0;
-  list-style: none;
+.dashboardTheme .dygraphs-legend {
+  width: 100px;
+  float: right;
+  height: calc(100% - 40px);
 }
 .dashboardTheme .morris-chart-legend ul {
   padding: 0;
@@ -848,6 +805,71 @@
 .dashboardTheme .morris-chart-legend::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+.dashboardTheme .gridster-mobile .box-content {
+  min-height: 80px;
+}
+.dashboardTheme .gridster-mobile .box,
+.dashboardTheme .gridster-mobile .box-content,
+.dashboardTheme .gridster-mobile.gridster-loaded .gridster-item box,
+.dashboardTheme .gridster-mobile.gridster-loaded .gridster-item box .box-wrapper {
+  height: auto;
+}
+.dashboardTheme .gridster-mobile .gauge {
+  height: 50%!important;
+  width: 100%;
+}
+.dashboardTheme .gridster-mobile scriptr-thermometer > div:first-child {
+  height: 45%;
+  margin-bottom: -22px;
+}
+.dashboardTheme .gridster-mobile .ag-layout-normal .ag-root {
+  height: 50%;
+}
+.dashboardTheme .gridster-mobile .morris-chart-dimension {
+  width: 100%;
+  height: 55%;
+}
+.dashboardTheme .gridster-mobile .dygraphs-legend {
+  float: none;
+  width: calc(100% - 30px);
+  position: relative;
+  margin: 20px 30px;
+  height: auto;
+}
+.dashboardTheme .gridster-mobile .graph.with-legend {
+  width: 100%!important;
+  float: none;
+}
+.dashboardTheme .gridster-mobile .display-count {
+  height: 20%;
+}
+.dashboardTheme .gridster-mobile .plotly-chart-legend {
+  height: auto;
+  width: 100%;
+  float: none;
+  text-align: left;
+  margin: 10px;
+}
+.dashboardTheme .gridster-mobile .plotly-chart-dimension {
+  width: 100%;
+  height: 55%;
+}
+.dashboardTheme .gridster-mobile .accelerometer-wrapper {
+  height: 50%;
+}
+.dashboardTheme .gridster-mobile .speedometer-wrapper {
+  height: 50%;
+}
+.dashboardTheme .gridster-mobile .morris-chart-wrapper.with-legend {
+  width: 100%;
+  float: none;
+}
+.dashboardTheme .gridster-mobile .morris-chart-legend {
+  width: auto;
+  float: none;
+  margin: 20px;
+  height: auto;
 }
 .dashboardTheme .sub-tabs .nav-tabs {
   padding: 0;

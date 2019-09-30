@@ -12,14 +12,6 @@
 @media screen and (max-width: 768px) {
 	ul {padding-left: 20px;}
 	.btn.btn-block {width: 100%!important;}
-    
-    .box-content  .graph.with-legend {
-		position: relative;
-        right: auto;
-        left: auto;  
-        width: calc(100% - 15px)!important;
-    }
-    
 }
 
 @media screen and (min-width: 833px) {
