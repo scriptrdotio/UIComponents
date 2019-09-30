@@ -29,7 +29,7 @@ const __THERMOMETER__ = {
         }]
     },
     "box": {
-        sizeX: 1,
+        sizeX: 2,
         sizeY: 4,
         minSizeX: 1,
         minSizeY: 3,

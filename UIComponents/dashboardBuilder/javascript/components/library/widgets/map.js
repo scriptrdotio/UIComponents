@@ -27,7 +27,6 @@ const __MAP__ = {
         "heatmap": "false",
         "bounce": "true",
         "cluster-styles": [{
-
             url: "https://googlemaps.github.io/js-marker-clusterer/images/m1.png",
             width: 53,
             height: 53,
@@ -67,9 +66,9 @@ const __MAP__ = {
         "msg-tag": "everyone-main-live"
     },
     "box": {
-        sizeX: 2,
-        sizeY: 4,
-        minSizeX: 2,
+        sizeX: 4,
+        sizeY: 6,
+        minSizeX: 4,
         minSizeY: 4
     },
     "imgCls": "",
