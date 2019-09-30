@@ -67,7 +67,7 @@ angular
 	                                                   "items" : [
 	                                                         {
 	                                                            "key" : "theme",
-	                                                            "htmlClass" : "col-xs-12",
+	                                                            "htmlClass" : "",
 	                                                            "type" : 'strapselect',
 	                                                            "placeholder" : " ",
 	                                                            "titleMap" : [
@@ -96,85 +96,90 @@ angular
 	                                                            title : "Dashboard",
 	                                                            items : [ {
 	                                                               "type" : "fieldset",
-	                                                               "htmlClass" : "col-xs-12",
+	                                                               "htmlClass" : "",
 	                                                               "title" : "Dahsboard",
 	                                                               "key" : "style.box",
 	                                                               "items" : [
-	                                                                     {
+                                                                        {
 	                                                                        "type" : "section",
 	                                                                        "htmlClass" : "row",
-	                                                                        "items" : [ {
-	                                                                           "type" : "section",
-	                                                                           "htmlClass" : "col-xs-12",
-	                                                                           "items" : [ {
-	                                                                              "key" : "style.dashboard.background-type",
-	                                                                              "type" : "strapselect",
-	                                                                              "titleMap" : [
-	                                                                                    {
-	                                                                                       "value" : "solid",
-	                                                                                       "name" : "Solid"
-	                                                                                    },
-	                                                                                    {
-	                                                                                       "value" : "gradient",
-	                                                                                       "name" : "Gradient"
-	                                                                                    },
-	                                                                                    {
-	                                                                                       "value" : "image",
-	                                                                                       "name" : "Image"
-	                                                                                    } ]
-	                                                                           } ]
-	                                                                        } ]
-	                                                                     },
+	                                                                        "items" : [
+                                                                             {
+                                                                                "type" : "section",
+                                                                                "htmlClass" : "",
+                                                                                "items" : [ {
+                                                                                   "type" : "section",
+                                                                                   "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                   "items" : [ {
+                                                                                      "key" : "style.dashboard.background-type",
+                                                                                      "type" : "strapselect",
+                                                                                      "titleMap" : [
+                                                                                            {
+                                                                                               "value" : "solid",
+                                                                                               "name" : "Solid"
+                                                                                            },
+                                                                                            {
+                                                                                               "value" : "gradient",
+                                                                                               "name" : "Gradient"
+                                                                                            },
+                                                                                            {
+                                                                                               "value" : "image",
+                                                                                               "name" : "Image"
+                                                                                            } ]
+                                                                                   } ]
+                                                                                } ]
+                                                                             },
+                                                                             {
+                                                                                "type" : "section",
+                                                                                "htmlClass" : "",
+                                                                                "items" : [
+                                                                                      {
+                                                                                         "type" : "section",
+                                                                                         "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                         "condition" : "model.style['dashboard'] ['background-type'] === 'solid'",
+                                                                                         "items" : [ {
+                                                                                            "key" : "style.dashboard.background-color",
+                                                                                            "colorFormat" : "hex3",
+                                                                                            "spectrumOptions" : {
+                                                                                               showInput : true,
+                                                                                               showAlpha : true,
+                                                                                               allowEmpty : true,
+                                                                                               showPalette : true,
+                                                                                               preferredFormat : 'hex3',
+                                                                                               palette : [
+                                                                                                     [
+                                                                                                           '#ff',
+                                                                                                           '##f2f2f2',
+                                                                                                           '#2c343a' ],
+                                                                                                     [ '#000' ] ]
+                                                                                            }
+                                                                                         } ]
+                                                                                      },
+                                                                                      {
+                                                                                         "type" : "section",
+                                                                                         "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                         "condition" : "model.style ['dashboard'] ['background-type'] === 'gradient'",
+                                                                                         "items" : [ {
+                                                                                             "key" : "style.dashboard.background-gradient",
+                                                                                         } ]
+                                                                                      },
+                                                                                      {
+                                                                                         "type" : "section",
+                                                                                         "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                         "condition" : "model.style ['dashboard'] ['background-type'] === 'image'",
+                                                                                         "items" : [ {
+                                                                                             "key" : "style.dashboard.background-image",
+                                                                                         } ]
+                                                                                      } ]
+                                                                             },
+                                                                                ]},
 	                                                                     {
 	                                                                        "type" : "section",
 	                                                                        "htmlClass" : "row",
 	                                                                        "items" : [
 	                                                                              {
 	                                                                                 "type" : "section",
-	                                                                                 "htmlClass" : "col-xs-12",
-	                                                                                 "condition" : "model.style['dashboard'] ['background-type'] === 'solid'",
-	                                                                                 "items" : [ {
-	                                                                                    "key" : "style.dashboard.background-color",
-	                                                                                    "colorFormat" : "hex3",
-	                                                                                    "spectrumOptions" : {
-	                                                                                       showInput : true,
-	                                                                                       showAlpha : true,
-	                                                                                       allowEmpty : true,
-	                                                                                       showPalette : true,
-	                                                                                       preferredFormat : 'hex3',
-	                                                                                       palette : [
-	                                                                                             [
-	                                                                                                   '#ff',
-	                                                                                                   '##f2f2f2',
-	                                                                                                   '#2c343a' ],
-	                                                                                             [ '#000' ] ]
-	                                                                                    }
-	                                                                                 } ]
-	                                                                              },
-	                                                                              {
-	                                                                                 "type" : "section",
-	                                                                                 "htmlClass" : "col-xs-12",
-	                                                                                 "condition" : "model.style ['dashboard'] ['background-type'] === 'gradient'",
-	                                                                                 "items" : [ {
-		                                                                                 "key" : "style.dashboard.background-gradient",
-	                                                                                 } ]
-	                                                                              },
-	                                                                              {
-	                                                                                 "type" : "section",
-	                                                                                 "htmlClass" : "col-xs-12",
-	                                                                                 "condition" : "model.style ['dashboard'] ['background-type'] === 'image'",
-	                                                                                 "items" : [ {
-		                                                                                 "key" : "style.dashboard.background-image",
-	                                                                                 } ]
-	                                                                              } ]
-	                                                                     },
-	                                                                     {
-	                                                                        "type" : "section",
-	                                                                        "htmlClass" : "row",
-	                                                                        "items" : [
-	                                                                              {
-	                                                                                 "type" : "section",
-	                                                                                 "htmlClass" : "col-xs-3",
+	                                                                                 "htmlClass" : "col-xs-12 col-sm-3",
 	                                                                                 "condition" : "model.style ['dashboard'] ['background-type'] === 'image'",
 	                                                                                 "items" : [ {
 	                                                                                    "key" : "style.dashboard.background-position-x",
@@ -196,7 +201,7 @@ angular
 	                                                                              },
 	                                                                              {
 	                                                                                 "type" : "section",
-	                                                                                 "htmlClass" : "col-xs-3",
+	                                                                                 "htmlClass" : "col-xs-12 col-sm-3",
 	                                                                                 "condition" : "model.style ['dashboard'] ['background-type'] === 'image'",
 	                                                                                 "items" : [ {
 	                                                                                    "key" : "style.dashboard.background-position-y",
@@ -218,7 +223,7 @@ angular
 	                                                                              },
 	                                                                              {
 	                                                                                 "type" : "section",
-	                                                                                 "htmlClass" : "col-xs-3",
+	                                                                                 "htmlClass" : "col-xs-12 col-sm-3",
 	                                                                                 "condition" : "model.style ['dashboard'] ['background-type'] === 'image'",
 	                                                                                 "items" : [ {
 	                                                                                    "key" : "style.dashboard.background-size",
@@ -240,7 +245,7 @@ angular
 	                                                                              },
 	                                                                              {
 	                                                                                 "type" : "section",
-	                                                                                 "htmlClass" : "col-xs-3",
+	                                                                                 "htmlClass" : "col-xs-12 col-sm-3",
 	                                                                                 "condition" : "model.style ['dashboard'] ['background-type'] === 'image'",
 	                                                                                 "items" : [ {
 	                                                                                    "key" : "style.dashboard.background-repeat",
@@ -278,7 +283,7 @@ angular
 	                                                                        "htmlClass" : "row",
 	                                                                        "items" : [ {
 	                                                                           "type" : "section",
-	                                                                           "htmlClass" : "col-xs-4",
+	                                                                           "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                           "items" : [ {
 
 	                                                                              "key" : "style.dashboard.border-radius",
@@ -291,7 +296,7 @@ angular
 	                                                                        "htmlClass" : "row",
 	                                                                        "items" : [ {
 	                                                                           "type" : "section",
-	                                                                           "htmlClass" : "col-xs-4",
+	                                                                           "htmlClass" : "col-xs-12 col-sm-4",
 
 	                                                                           "items" : [ {
 		                                                                           "key" : "style.dashboard.border"
@@ -304,7 +309,7 @@ angular
 	                                                                        "items" : [
 	                                                                              {
 	                                                                                 "type" : "section",
-	                                                                                 "htmlClass" : "col-xs-4",
+	                                                                                 "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                                 "items" : [ {
 	                                                                                    "key" : "style.dashboard.border-width",
 	                                                                                    "condition" : "model.style ['dashboard'] ['border'] === true",
@@ -313,7 +318,7 @@ angular
 	                                                                              },
 	                                                                              {
 	                                                                                 "type" : "section",
-	                                                                                 "htmlClass" : "col-xs-4",
+	                                                                                 "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                                 "items" : [ {
 	                                                                                    "key" : "style.dashboard.border-style",
 	                                                                                    "condition" : "model.style ['dashboard'] ['border'] === true",
@@ -347,7 +352,7 @@ angular
 	                                                                              },
 	                                                                              {
 	                                                                                 "type" : "section",
-	                                                                                 "htmlClass" : "col-xs-4",
+	                                                                                 "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                                 "items" : [ {
 	                                                                                    "key" : "style.dashboard.border-color",
 	                                                                                    "condition" : "model.style ['dashboard'] ['border'] === true",
@@ -370,6 +375,7 @@ angular
 	                                                                     } ]
 	                                                            } ]
 	                                                         },
+                                                           
 	                                                         {
 	                                                            title : "Box",
 	                                                            "items" : [
@@ -377,53 +383,58 @@ angular
 	                                                                     "type" : "section",
 	                                                                     "htmlClass" : "row",
 	                                                                     "items" : [
-	                                                                           {
-	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-12",
-	                                                                              "items" : [ {
-	                                                                                 "key" : "style.box.background-type",
-	                                                                                 "type" : "strapselect",
-	                                                                                 "titleMap" : [
-	                                                                                       {
-	                                                                                          "value" : "solid",
-	                                                                                          "name" : "Solid"
-	                                                                                       },
-	                                                                                       {
-	                                                                                          "value" : "gradient",
-	                                                                                          "name" : "Gradient"
-	                                                                                       } ]
-	                                                                              } ]
-	                                                                           },
-	                                                                           {
-	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-12",
-	                                                                              "condition" : "model.style['box'] ['background-type'] === 'solid'",
-	                                                                              "items" : [ {
-	                                                                                 "key" : "style.box.background-color",
-	                                                                                 "colorFormat" : "hex3",
-	                                                                                 "spectrumOptions" : {
-	                                                                                    showInput : true,
-	                                                                                    showAlpha : true,
-	                                                                                    allowEmpty : true,
-	                                                                                    showPalette : true,
-	                                                                                    preferredFormat : 'hex3',
-	                                                                                    palette : [
-	                                                                                          [
-	                                                                                                '#ff',
-	                                                                                                '##f2f2f2',
-	                                                                                                '#2c343a' ],
-	                                                                                          [ '#000' ] ]
-	                                                                                 }
-	                                                                              } ]
-	                                                                           },
-	                                                                           {
-	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-12",
-	                                                                              "condition" : "model.style ['box'] ['background-type'] === 'gradient'",
-	                                                                              "items" : [ {
-		                                                                              "key" : "style.box.background-gradient",
-	                                                                              } ]
-	                                                                           } ]
+                                                                              {
+	                                                                        "type" : "section",
+	                                                                        "htmlClass" : "",
+	                                                                        "items" : [
+                                                                                   {
+                                                                                      "type" : "section",
+                                                                                      "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                      "items" : [ {
+                                                                                         "key" : "style.box.background-type",
+                                                                                         "type" : "strapselect",
+                                                                                         "titleMap" : [
+                                                                                               {
+                                                                                                  "value" : "solid",
+                                                                                                  "name" : "Solid"
+                                                                                               },
+                                                                                               {
+                                                                                                  "value" : "gradient",
+                                                                                                  "name" : "Gradient"
+                                                                                               } ]
+                                                                                      } ]
+                                                                                   },
+                                                                                   {
+                                                                                      "type" : "section",
+                                                                                      "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                      "condition" : "model.style['box'] ['background-type'] === 'solid'",
+                                                                                      "items" : [ {
+                                                                                         "key" : "style.box.background-color",
+                                                                                         "colorFormat" : "hex3",
+                                                                                         "spectrumOptions" : {
+                                                                                            showInput : true,
+                                                                                            showAlpha : true,
+                                                                                            allowEmpty : true,
+                                                                                            showPalette : true,
+                                                                                            preferredFormat : 'hex3',
+                                                                                            palette : [
+                                                                                                  [
+                                                                                                        '#ff',
+                                                                                                        '##f2f2f2',
+                                                                                                        '#2c343a' ],
+                                                                                                  [ '#000' ] ]
+                                                                                         }
+                                                                                      } ]
+                                                                                   },
+                                                                                   {
+                                                                                      "type" : "section",
+                                                                                      "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                      "condition" : "model.style ['box'] ['background-type'] === 'gradient'",
+                                                                                      "items" : [ {
+                                                                                          "key" : "style.box.background-gradient",
+                                                                                      } ]
+                                                                                   } 
+                                                                            ]}]
 	                                                                  },
 	                                                                  {
 	                                                                     "type" : "section",
@@ -431,7 +442,7 @@ angular
 	                                                                     "items" : [
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-6",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-6",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box.box-shadow",
 	                                                                                 "type" : "strapselect",
@@ -448,7 +459,7 @@ angular
 	                                                                           },
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-6",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-6",
 	                                                                              "condition" : "model.style ['box'] ['box-shadow'] === 'true'",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box.box-shadow-color",
@@ -474,7 +485,7 @@ angular
 	                                                                     "htmlClass" : "row",
 	                                                                     "items" : [ {
 	                                                                        "type" : "section",
-	                                                                        "htmlClass" : "col-xs-12",
+	                                                                        "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                        "items" : [ {
 
 	                                                                           "key" : "style.box.border-radius",
@@ -498,7 +509,7 @@ angular
 	                                                                     "items" : [
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-4",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box.border-width",
 	                                                                                 "condition" : "model.style ['box'] ['border'] === true",
@@ -507,7 +518,7 @@ angular
 	                                                                           },
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-4",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box.border-style",
 	                                                                                 "condition" : "model.style ['box'] ['border'] === true",
@@ -541,7 +552,7 @@ angular
 	                                                                           },
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-4",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box.border-color",
 	                                                                                 "condition" : "model.style ['box'] ['border'] === true",
@@ -570,64 +581,68 @@ angular
 	                                                                     "type" : "section",
 	                                                                     "htmlClass" : "row",
 	                                                                     "items" : [
-	                                                                           {
-	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-12",
-	                                                                              "items" : [ {
-	                                                                                 "key" : "style.box-content.background-type",
-	                                                                                 "type" : "strapselect",
-	                                                                                 "titleMap" : [
-	                                                                                       {
-	                                                                                          "value" : "solid",
-	                                                                                          "name" : "Solid"
-	                                                                                       },
-	                                                                                       {
-	                                                                                          "value" : "gradient",
-	                                                                                          "name" : "Gradient"
-	                                                                                       },
-	                                                                                       {
-	                                                                                          "value" : "transparent",
-	                                                                                          "name" : "Transparent"
-	                                                                                       } ]
-	                                                                              } ]
-	                                                                           },
-	                                                                           {
-	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-12",
-	                                                                              "condition" : "model.style ['box-content'] ['background-type'] === 'solid'",
-	                                                                              "items" : [ {
-	                                                                                 "key" : "style.box-content.background-color",
-	                                                                                 "colorFormat" : "hex3",
-	                                                                                 "spectrumOptions" : {
-	                                                                                    showInput : true,
-	                                                                                    showAlpha : true,
-	                                                                                    allowEmpty : true,
-	                                                                                    showPalette : true,
-	                                                                                    preferredFormat : 'hex3',
-	                                                                                    palette : [
-	                                                                                          [
-	                                                                                                '#ff',
-	                                                                                                '##f2f2f2',
-	                                                                                                '#2c343a' ],
-	                                                                                          [ '#000' ] ]
-	                                                                                 }
-	                                                                              } ]
-	                                                                           },
-	                                                                           {
-	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-12",
-	                                                                              "condition" : "model.style ['box-content'] ['background-type'] === 'gradient'",
-	                                                                              "items" : [ {
-		                                                                              "key" : "style.box-content.background-gradient",
-	                                                                              } ]
-	                                                                           } ]
+                                                                              {
+                                                                                "type" : "section",
+                                                                                "htmlClass" : "",
+                                                                                "items" : [
+                                                                                   {
+                                                                                      "type" : "section",
+                                                                                      "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                      "items" : [ {
+                                                                                         "key" : "style.box-content.background-type",
+                                                                                         "type" : "strapselect",
+                                                                                         "titleMap" : [
+                                                                                               {
+                                                                                                  "value" : "solid",
+                                                                                                  "name" : "Solid"
+                                                                                               },
+                                                                                               {
+                                                                                                  "value" : "gradient",
+                                                                                                  "name" : "Gradient"
+                                                                                               },
+                                                                                               {
+                                                                                                  "value" : "transparent",
+                                                                                                  "name" : "Transparent"
+                                                                                               } ]
+                                                                                      } ]
+                                                                                   },
+                                                                                   {
+                                                                                      "type" : "section",
+                                                                                      "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                      "condition" : "model.style ['box-content'] ['background-type'] === 'solid'",
+                                                                                      "items" : [ {
+                                                                                         "key" : "style.box-content.background-color",
+                                                                                         "colorFormat" : "hex3",
+                                                                                         "spectrumOptions" : {
+                                                                                            showInput : true,
+                                                                                            showAlpha : true,
+                                                                                            allowEmpty : true,
+                                                                                            showPalette : true,
+                                                                                            preferredFormat : 'hex3',
+                                                                                            palette : [
+                                                                                                  [
+                                                                                                        '#ff',
+                                                                                                        '##f2f2f2',
+                                                                                                        '#2c343a' ],
+                                                                                                  [ '#000' ] ]
+                                                                                         }
+                                                                                      } ]
+                                                                                   },
+                                                                                   {
+                                                                                      "type" : "section",
+                                                                                      "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                      "condition" : "model.style ['box-content'] ['background-type'] === 'gradient'",
+                                                                                      "items" : [ {
+                                                                                          "key" : "style.box-content.background-gradient",
+                                                                                      } ]
+                                                                                   } ]}]
 	                                                                  },
 	                                                                  {
 	                                                                     "type" : "section",
 	                                                                     "htmlClass" : "row",
 	                                                                     "items" : [ {
 	                                                                        "type" : "section",
-	                                                                        "htmlClass" : "col-xs-12",
+	                                                                        "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                        "items" : [ {
 	                                                                           "key" : "style.box-content.border-radius",
 	                                                                           "type" : "number"
@@ -651,7 +666,7 @@ angular
 
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-4",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box-content.border-width",
 	                                                                                 "condition" : "model.style['box-content'] ['border'] === true",
@@ -660,7 +675,7 @@ angular
 	                                                                           },
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-4",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                              "key" : "style.box-content.border-style",
 	                                                                              "type" : "strapselect",
 	                                                                              "condition" : "model.style['box-content'] ['border'] === true",
@@ -693,7 +708,7 @@ angular
 	                                                                           },
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-4",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box-content.border-color",
 	                                                                                 "condition" : "model.style ['box-content'] ['border'] === true",
@@ -722,64 +737,68 @@ angular
 	                                                                     "type" : "section",
 	                                                                     "htmlClass" : "row",
 	                                                                     "items" : [
-	                                                                           {
-	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-12",
-	                                                                              "items" : [ {
-	                                                                                 "key" : "style.box-header.background-type",
-	                                                                                 "type" : "strapselect",
-	                                                                                 "titleMap" : [
-	                                                                                       {
-	                                                                                          "value" : "solid",
-	                                                                                          "name" : "Solid"
-	                                                                                       },
-	                                                                                       {
-	                                                                                          "value" : "gradient",
-	                                                                                          "name" : "Gradient"
-	                                                                                       },
-	                                                                                       {
-	                                                                                          "value" : "transparent",
-	                                                                                          "name" : "Transparent"
-	                                                                                       } ]
-	                                                                              } ]
-	                                                                           },
-	                                                                           {
-	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-12",
-	                                                                              "condition" : "model.style ['box-header'] ['background-type'] === 'solid'",
-	                                                                              "items" : [ {
-	                                                                                 "key" : "style.box-header.background-color",
-	                                                                                 "colorFormat" : "hex3",
-	                                                                                 "spectrumOptions" : {
-	                                                                                    showInput : true,
-	                                                                                    showAlpha : true,
-	                                                                                    allowEmpty : true,
-	                                                                                    showPalette : true,
-	                                                                                    preferredFormat : 'hex3',
-	                                                                                    palette : [
-	                                                                                          [
-	                                                                                                '#ff',
-	                                                                                                '##f2f2f2',
-	                                                                                                '#2c343a' ],
-	                                                                                          [ '#000' ] ]
-	                                                                                 }
-	                                                                              } ]
-	                                                                           },
-	                                                                           {
-	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-12",
-	                                                                              "condition" : "model.style ['box-header'] ['background-type'] === 'gradient'",
-	                                                                              "items" : [ {
-		                                                                              "key" : "style.box-header.background-gradient",
-	                                                                              } ]
-	                                                                           } ]
+                                                                              {
+                                                                                "type" : "section",
+                                                                                "htmlClass" : "",
+                                                                                "items" : [
+                                                                                   {
+                                                                                      "type" : "section",
+                                                                                      "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                      "items" : [ {
+                                                                                         "key" : "style.box-header.background-type",
+                                                                                         "type" : "strapselect",
+                                                                                         "titleMap" : [
+                                                                                               {
+                                                                                                  "value" : "solid",
+                                                                                                  "name" : "Solid"
+                                                                                               },
+                                                                                               {
+                                                                                                  "value" : "gradient",
+                                                                                                  "name" : "Gradient"
+                                                                                               },
+                                                                                               {
+                                                                                                  "value" : "transparent",
+                                                                                                  "name" : "Transparent"
+                                                                                               } ]
+                                                                                      } ]
+                                                                                   },
+                                                                                   {
+                                                                                      "type" : "section",
+                                                                                      "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                      "condition" : "model.style ['box-header'] ['background-type'] === 'solid'",
+                                                                                      "items" : [ {
+                                                                                         "key" : "style.box-header.background-color",
+                                                                                         "colorFormat" : "hex3",
+                                                                                         "spectrumOptions" : {
+                                                                                            showInput : true,
+                                                                                            showAlpha : true,
+                                                                                            allowEmpty : true,
+                                                                                            showPalette : true,
+                                                                                            preferredFormat : 'hex3',
+                                                                                            palette : [
+                                                                                                  [
+                                                                                                        '#ff',
+                                                                                                        '##f2f2f2',
+                                                                                                        '#2c343a' ],
+                                                                                                  [ '#000' ] ]
+                                                                                         }
+                                                                                      } ]
+                                                                                   },
+                                                                                   {
+                                                                                      "type" : "section",
+                                                                                      "htmlClass" : "col-xs-12 col-sm-6",
+                                                                                      "condition" : "model.style ['box-header'] ['background-type'] === 'gradient'",
+                                                                                      "items" : [ {
+                                                                                          "key" : "style.box-header.background-gradient",
+                                                                                      } ]
+                                                                                   } ]}]
 	                                                                  },
 	                                                                  {
 	                                                                     "type" : "section",
 	                                                                     "htmlClass" : "row",
 	                                                                     "items" : [ {
 	                                                                        "type" : "section",
-	                                                                        "htmlClass" : "col-xs-12",
+	                                                                        "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                        "items" : [ {
 	                                                                           "key" : "style.box-header.border-radius",
 	                                                                           "type" : "number"
@@ -804,7 +823,7 @@ angular
 	                                                                     "items" : [
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-4",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box-header.border-style",
 	                                                                                 "condition" : "model.style ['box-header'] ['border'] === true",
@@ -838,7 +857,7 @@ angular
 	                                                                           },
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-4",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box-header.border-color",
 	                                                                                 "condition" : "model.style ['box-header'] ['border'] === true",
@@ -860,7 +879,7 @@ angular
 	                                                                           },
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-4",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-4",
 	                                                                              "items" : [ {
 	                                                                                 "condition" : "model.style ['box-header'] ['border'] === true",
 	                                                                                 "key" : "style.box-header.border-width",
@@ -875,7 +894,7 @@ angular
 
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-3",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-3",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box-label.text-align",
 	                                                                                 "type" : "strapselect",
@@ -896,7 +915,7 @@ angular
 	                                                                           },
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-3",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-3",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box-label.font-weight",
 	                                                                                 "type" : "strapselect",
@@ -913,7 +932,7 @@ angular
 	                                                                           },
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-3",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-3",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box-label.font-size",
 	                                                                                 "type" : "number"
@@ -924,7 +943,7 @@ angular
 																										 ************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 	                                                                           {
 	                                                                              "type" : "section",
-	                                                                              "htmlClass" : "col-xs-3",
+	                                                                              "htmlClass" : "col-xs-12 col-sm-3",
 	                                                                              "items" : [ {
 	                                                                                 "key" : "style.box-label.color",
 	                                                                                 "colorFormat" : "hex3",
