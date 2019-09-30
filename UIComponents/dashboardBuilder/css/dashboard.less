@@ -521,8 +521,8 @@ background: @gray3;
 }
 
 .sp-container {
-  background-color: @themeBase!important;
-  border: solid 1px @gray3!important;
+  background-color: @lightBase!important;
+  border: solid 1px @formBorder!important;
 }
 
 .schema-form-array .clearfix {
@@ -560,17 +560,23 @@ height: auto !important;
 ***** Plotly chart *****
 ***/
 .plotly-chart-legend {
-    float: none;
-    position: absolute;
-    right: 20px;
-    text-align: center;
+    float: right;
+    position: relative;
+    text-align: left;
+    background-color: transparent;
+    margin-right: 10px;
+    i {
+    	float: left;
+	    margin-right: 5px;
+	    margin-top: 2px;
+    }
 }
 
 /*** Morris chart legends and grap ***/
 .morris-chart-legend ul {padding: 0; list-style: none;}
 .morris-chart-wrapper.with-legend {width: calc(100% - 100px); float: left;}
 .morris-chart-dimension {width: 100%; height: 100%;}
-.morris-chart-legend {background: #fff; margin-top: 22px; width: 100px; text-align: left; float: right; overflow-y: auto; height: calc(100% - 40px); font-size: 12px;}
+.morris-chart-legend {background: transparent; margin-top: 22px; width: 100px; text-align: left; float: right; overflow-y: auto; height: calc(100% - 40px); font-size: 12px;}
 .morris-chart-legend::-webkit-scrollbar {width: 12px;}
 
 /*** Diagraph ***/
@@ -608,6 +614,9 @@ height: auto !important;
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
+
+/*** wind rose ***/
+.js-plotly-plot .plotly svg {background-color: transparent!important;}
 
 /***
 ***** Gridster Mobile *****

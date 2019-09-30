@@ -55,6 +55,7 @@
   /*** Morris chart legends and grap ***/
   /*** Diagraph ***/
   /*** Morris chart legends and grap ***/
+  /*** wind rose ***/
   /***
 ***** Gridster Mobile *****
 ***/
@@ -703,8 +704,8 @@
   text-decoration: underline!important;
 }
 .dashboardTheme .sp-container {
-  background-color: #22272b !important;
-  border: solid 1px #16191c !important;
+  background-color: #FFF !important;
+  border: solid 1px #DDD !important;
 }
 .dashboardTheme .schema-form-array .clearfix {
   padding: 0px!important;
@@ -729,10 +730,16 @@
   border: 1px solid #16191c;
 }
 .dashboardTheme .plotly-chart-legend {
-  float: none;
-  position: absolute;
-  right: 20px;
-  text-align: center;
+  float: right;
+  position: relative;
+  text-align: left;
+  background-color: transparent;
+  margin-right: 10px;
+}
+.dashboardTheme .plotly-chart-legend i {
+  float: left;
+  margin-right: 5px;
+  margin-top: 2px;
 }
 .dashboardTheme .morris-chart-legend ul {
   padding: 0;
@@ -747,7 +754,7 @@
   height: 100%;
 }
 .dashboardTheme .morris-chart-legend {
-  background: #fff;
+  background: transparent;
   margin-top: 22px;
   width: 100px;
   text-align: left;
@@ -805,6 +812,9 @@
 .dashboardTheme .morris-chart-legend::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+.dashboardTheme .js-plotly-plot .plotly svg {
+  background-color: transparent!important;
 }
 .dashboardTheme .gridster-mobile .box-content {
   min-height: 80px;
