@@ -830,6 +830,7 @@
   height: 50%!important;
   width: 100%;
 }
+
 .dashboardTheme .gridster-mobile scriptr-thermometer > div:first-child {
   height: 45%;
   margin-bottom: -22px;
@@ -851,9 +852,6 @@
 .dashboardTheme .gridster-mobile .graph.with-legend {
   width: 100%!important;
   float: none;
-}
-.dashboardTheme .gridster-mobile .display-count {
-  height: 20%;
 }
 .dashboardTheme .gridster-mobile .plotly-chart-legend {
   height: auto;
@@ -920,4 +918,42 @@
   border: none;
   cursor: pointer;
   overflow: hidden;
+}
+
+.dashboardTheme .fit-to-widget .ats-switch {
+  min-width: 100%!important;
+  min-height: 100%!important;
+}
+
+.dashboardTheme .fit-to-widget .ats-switch .switch-left, .dashboardTheme .fit-to-widget .ats-switch .switch-right, .dashboardTheme  .fit-to-widget .ats-switch .knob {
+    height: calc(100% - 2px)!important;
+    min-height: auto!important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboardTheme .gridster-mobile .fit-to-widget .box-content {
+    height: 50px;
+}
+
+.dashboardTheme .fit-to-widget .ui-button {
+    width: 100%!important;
+    height: 100%!important;
+}
+
+
+.dashboardTheme .gridster-mobile .ag-bl-full-height , .dashboardTheme .gridster-mobile .ag-layout-normal,.dashboardTheme .gridster-mobile .ag-bl-full-height-center {
+    height: auto!important;
+}
+
+.dashboardTheme .fit-to-widget .alert {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.dashboardTheme .CodeMirror {
+    height: 200px;
 }
