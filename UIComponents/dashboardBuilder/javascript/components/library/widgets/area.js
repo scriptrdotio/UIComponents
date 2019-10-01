@@ -65,7 +65,7 @@ const __AREA__ = {
                                     {
                                         type: "radios-inline",
                                         key: "legend-type",
-                                        condition: "model['show-legend'] =='true'",
+                                        condition: "model['show-legend'] ==true",
                                         titleMap: [{
                                             value: "hover",
                                             name: "Hover"
@@ -77,7 +77,7 @@ const __AREA__ = {
                                     {
                                         type: "radios-inline",
                                         key: "hide-hover",
-                                        condition: "model['show-legend'] =='true' && model['legend-type'] =='hover'",
+                                        condition: "model['show-legend'] ==true && model['legend-type'] =='hover'",
                                         titleMap: [{
                                             value: "auto",
                                             name: "Auto"

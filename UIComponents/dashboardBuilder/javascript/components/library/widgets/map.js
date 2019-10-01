@@ -355,7 +355,7 @@ const __MAP__ = {
                         "htmlClass": "",
                         "items": ["custom-default-info-window", {
                             "key": "default-info-window",
-                            "condition": "model['marker-info-window']=='true'",
+                            "condition": "model['marker-info-window']==true",
                             "title": "Default Info window",
                             "items": [{
                                 "type": "section",
@@ -402,7 +402,7 @@ const __MAP__ = {
                         "htmlClass": "",
                         "items": [{
                             "key": "source-info-window",
-                            "condition": "model['marker-info-window']=='true'",
+                            "condition": "model['marker-info-window']==true",
                             "title": "Info window per source",
                             "items": [{
                                 "type": "section",
