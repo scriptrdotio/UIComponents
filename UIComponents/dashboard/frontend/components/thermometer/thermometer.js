@@ -40,7 +40,6 @@ angular
 
                   "useWindowParams": "@"
                    
-                   
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
                controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval, dataService) {
@@ -52,14 +51,13 @@ angular
                        
 	               	  this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
                       this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;
-              
-              		  this.customSectors = (this.customSectors && this.customSectors.length > 0) ? this.customSectors : [{"color": "#005588", "lo": 0, "hi": 30}, {"color": "#aa241d", "lo": 30, "hi": 60}, {"color": "#ffa500", "lo": 60, "hi": 90}];
+              		  this.customSectors = (this.customSectors && this.customSectors.length > 0) ? this.customSectors : [{"color": "#CC5464", "lo": 0, "hi": 30}, {"color": "#FCC717", "lo": 30, "hi": 60}, {"color": "#38B9D6", "lo": 60, "hi": 90}];
 
                        //remove empty objects from the array
                        if(this.customSectors)
                       	 	this.customSectors = _.reject(this.customSectors, _.isEmpty);
                        
-                       this.outOfRangeColor = this.outOfRangeColor ? this.outOfRangeColor : "#5fc100";
+                       this.outOfRangeColor = this.outOfRangeColor ? this.outOfRangeColor : "#E90088";
                        
                        //this.value = (this.value) ? ((this.value > 100) ? 100 : this.value) : ((this.data) ? this.data : 0 );
                        
@@ -158,7 +156,7 @@ angular
 
 	              this.consumeData = function(data, response) {
                       if(typeof this.onFormatData() == "function"){
-                          data = this.onFormatData()(data);
+                          data = this.onFormatData()(data, self);
                       }
                       if(data != null){
                           this.noResults = false;
