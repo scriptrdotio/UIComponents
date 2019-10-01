@@ -14,26 +14,13 @@ const __THERMOMETER__ = {
         "boxBorder": true,
         "step": 40,
         "unit": "°C",
-        "custom-sectors": [{
-            "color": "#005588",
-            "lo": 0,
-            "hi": 40
-        }, {
-            "color": "#00953c",
-            "lo": 40,
-            "hi": 80
-        }, {
-            "color": "#ce2029",
-            "lo": 80,
-            "hi": 120
-        }]
+        "custom-sectors": [{"color": "#CC5464", "lo": 0, "hi": 30}, {"color": "#FCC717", "lo": 30, "hi": 60}, {"color": "#38B9D6", "lo": 60, "hi": 90}]
     },
     "box": {
         sizeX: 2,
-        sizeY: 4,
-        minSizeX: 1,
-        minSizeY: 3,
-        maxSizeX: 5
+        sizeY: 6,
+        minSizeX: 2,
+        minSizeY: 4
     },
     "imgCls": "",
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/thermometer.png",
@@ -78,63 +65,64 @@ const __THERMOMETER__ = {
                                     "type": "section",
                                     "htmlClass": "",
                                     "items": ["step"]
-                                },
-                                {
-                                    "type": "section",
-                                    "htmlClass": "",
-                                    "items": [{
-                                        "key": "custom-sectors",
-                                        "title": "Temperature Level Fill Colors",
-                                        "items": [{
-                                            "type": "section",
-                                            "htmlClass": "row",
-                                            "items": [
-                                                {
-                                                    "type": "section",
-                                                    "htmlClass": "col-xs-4",
-                                                    "items": [{
-                                                        "key": "custom-sectors[].color",
-                                                        "colorFormat": "hex3",
-                                                        "spectrumOptions": {
-                                                            showInput: true,
-                                                            showAlpha: false,
-                                                            allowEmpty: true,
-                                                            showPalette: true,
-                                                            preferredFormat: 'hex3',
-                                                            palette: [
-                                                                [
-                                                                    '#fce94f',
-                                                                    '#fcaf3e',
-                                                                    '#e9b96e'],
-                                                                [
-                                                                    '#8ae234',
-                                                                    '#729fcf',
-                                                                    '#ad7fa8'],
-                                                                [
-                                                                    '#ef2929',
-                                                                    '#888a85',
-                                                                    '#deface']]
-                                                        }
-                                                    }]
-                                                },
-                                                {
-                                                    "type": "section",
-                                                    "htmlClass": "col-xs-4",
-                                                    "items": [{
-                                                        "key": "custom-sectors[].lo"
-                                                    }]
-                                                },
-                                                {
-                                                    "type": "section",
-                                                    "htmlClass": "col-xs-4",
-                                                    "items": [{
-                                                        "key": "custom-sectors[].hi"
-                                                    }]
-                                                }]
-                                        }]
-                                    }]
                                 }]
+                        },
+                        
+                    	{
+
+                        "type": "section",
+                        "htmlClass": "col-xs-12",
+                        "items": [{
+                            "key": "custom-sectors",
+                            "title": "Temperature Level Fill Colors",
+                            "items": [{
+                                "type": "section",
+                                "htmlClass": "row",
+                                "items": [
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-4",
+                                        "items": [{
+                                            "key": "custom-sectors[].color",
+                                            "title": "Color",
+                                            "colorFormat": "hex3",
+                                            "spectrumOptions": {
+                                                showInput: true,
+                                                showAlpha: false,
+                                                allowEmpty: true,
+                                                showPalette: true,
+                                                preferredFormat: 'hex3',
+                                                palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                ['#ef2929', '#888a85', '#deface']]
+                                            }
+                                        }]
+                                    },
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-4",
+                                        "items": [{
+                                            "key": "custom-sectors[].lo",
+                                            "title": "Low"
+                                        }]
+                                    },
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-4",
+                                        "items": [{
+                                            "key": "custom-sectors[].hi",
+                                            "title": "High",
+                                            "notitle": false,
+                                        }]
+                                    }
+                                ]
+                            }]
                         }]
+                    }
+                    
+                    
+                    
+                    ]
                 }]
             }]
     }],
@@ -163,7 +151,7 @@ const __THERMOMETER__ = {
                 "type": "string",
                 "description": "Set the default color for out of range values (default: #005588).",
                 "format": "color",
-                "default": "#ffef00",
+                "default": "#1DBC68",
                 "validationMessage": "Invalid Color"
             },
             "custom-sectors": {
@@ -173,21 +161,19 @@ const __THERMOMETER__ = {
                     "type": "object",
                     "properties": {
                         "color": {
-                            "title": "Color",
+                            "title": "Colors",
                             "type": "string",
                             "format": "color",
-                            "required": true,
+                            "default": "#CC5464",
                             "validationMessage": "Invalid Color"
                         },
                         "lo": {
                             "title": "Low",
                             "type": "number",
-                            "required": true
                         },
                         "hi": {
                             "title": "High",
-                            "type": "number",
-                            "required": true
+                            "type": "number"
                         }
                     }
                 }

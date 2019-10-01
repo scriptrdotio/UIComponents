@@ -18,7 +18,8 @@ const __ALERT__ = {
         sizeX: 4,
         sizeY: 2,
         minSizeX: 1,
-        minSizeY: 1
+        minSizeY: 1,
+        "fitToWidget": true
 
     },
     "imgCls": "alert-img",

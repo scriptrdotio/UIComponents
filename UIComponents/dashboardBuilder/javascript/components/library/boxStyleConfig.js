@@ -21,10 +21,10 @@ angular
                     "maxLength": 40
                 },
                 "boxHeader": {
-                    "title": "Box Header",
+                    "title": "Has Header",
                     "type": "boolean",
                     "default": "true",
-                    "description": "Define your widget box border."
+                    "description": "Check to display a chart header."
                 }
             }
 

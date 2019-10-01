@@ -1,4 +1,4 @@
-<div class="board-menu-base">
+<div class="board-menu-base clearfix">
   <!-- begin left side -->
   <div ng-if="!$ctrl.isInIde && $ctrl.showTree" class="left-dashboard col-xs-3 col-sm-2 pdl0 pdr0">
     <div class="devices-models-tree">
@@ -87,7 +87,7 @@
         <div class="dashboardContainer">
             <div gridster="$ctrl.gridsterOptions">
                 <ul>
-                    <li gridster-item="widget" ng-repeat="widget in $ctrl.dashboard.widgets">
+                    <li gridster-item="widget" ng-repeat="widget in $ctrl.dashboard.widgets" ng-class="{'fit-to-widget': (widget.fitToWidget === true)}">
                       <box widget="widget"></box>
                     </li>
                 </ul>

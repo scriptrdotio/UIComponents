@@ -44,37 +44,33 @@ const __3DSURFACE__ = {
         "api": "UIComponents/dashboard/frontend/examples/plotly/get3dSurfaceData",
         "data": '{"x":[5,8,9,11,17,18,22,25,29,40,45],"y":[1,4,19,20,22,29,34,50,55,60,70],"z":[[94406,102226,100476,104180,95610,101533,102925,101269,99009,92350,104448],[93445,104218,103759,96438,97964,92475,98259,95060,96552,91771,100263],[92525,103953,103434,100673,92664,92543,90106,90020,91159,92297,98877],[104631,94803,97843,100977,90526,102190,101738,101019,95238,99732,93036],[94836,93296,90879,94323,94635,91338,93995,94928,90520,99140,98669],[103672,103768,102159,102392,99864,93895,95896,97644,93341,96207,98995],[91065,103743,101070,92035,102096,104144,103583,98755,101781,100802,98260],[96269,94443,93042,98596,94341,94682,90108,92787,103789,96213,100077],[92990,90872,103253,92603,92238,100841,99683,90743,97936,103678,102659],[95751,100822,92947,91383,92458,103821,97929,94826,90563,94954,100669],[90740,102921,97082,95820,91951,100666,99549,90632,103519,91803,99903]]}',
         "title": "3D",
-        "width": 400,
-        "height": 400,
         "xaxis": "Temperature",
         "yaxis": "Humidity",
         "zaxis": "Pressure",
         "show-bar": "true",
-        "bar-title": "Pressre",
+        "bar-title": "Pressure",
         "bar-thickness": 20,
-        "color-scale-wrapper": [{ priority: 0, color: 'rgb(0,0,255)' }, { priority: 1, color: 'rgb(255,0,0)' }],
-        "color-scale": [[0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']],
+        "color-scale-wrapper": [{"priority":0,"color":"#c64dff"},{"priority":1,"color":"#1dbc68"}],
+        "color-scale": [[0,"#c64dff"],[1,"#1dbc68"]],
         "contours": {
             z: {
                 show: true,
                 usecolormap: true,
-                highlightcolor: "#42f462",
+                highlightcolor: "#38b9d6",
                 project: { z: true }
             },
             x: {
                 show: false,
                 usecolormap: true,
-                highlightcolor: "#729fcf",
+                highlightcolor: "#c64dff",
                 project: { x: false }
             },
             y: {
                 show: false,
                 usecolormap: true,
-                highlightcolor: "#e9b96e",
+                highlightcolor: "#e90088",
                 project: { y: false }
             }
-
-
         },
         "mode-bar-buttons-to-remove-wrapper": {
             "toImage": true,
@@ -86,17 +82,17 @@ const __3DSURFACE__ = {
             "pan3d": true,
             "zoom3d": true
         },
-        "show-mode-bar":true,
-        "displaylogo":true,
+        "show-mode-bar":false,
+        "displaylogo":false,
     },
     "box": {
-        sizeX: 2,
-        sizeY: 6,
-        minSizeX: 2,
+        sizeX: 5,
+        sizeY: 10,
+        minSizeX: 4,
         minSizeY: 4
     },
     "imgCls": "",
-    "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/wind-rose.svg",
+    "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/3dSurface.png",
     "form": [
         {
             type: "tabs",

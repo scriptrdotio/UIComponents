@@ -174,7 +174,7 @@ const __MAP__ = {
                                         "key": "clustered-view",
                                         
                                     },
-                                    "cluster-zoom",]
+                                    "cluster-zoom"]
                             },
                             {
                                 "type": "section",
@@ -185,8 +185,83 @@ const __MAP__ = {
                                     "clustered-zoom-max",
                                     "detailed-zoom-min",
                                 ]
-                            },
-                            {
+                            }
+                      ]},
+                      {
+                           "type": "section",
+                            "htmlClass": "col-xs-12",
+                            "items": [{
+                                "key": "cluster-styles",
+                                "title": "Cluster Styles",
+                                "items": [
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "row",
+                                        "items": [
+                                            {
+                                                "type": "section",
+                                                "htmlClass": "col-xs-12",
+                                                "items": [ 
+                                                	 {
+                                                    "type": "section",
+                                                    "htmlClass": "col-xs-4",
+                                                    "items": [{
+                                                        "key": "cluster-styles[].url",
+                                                    }]
+                                                },
+                                                {
+                                                    "type": "section",
+                                                    "htmlClass": "col-xs-4",
+                                                    "items": [{
+                                                        "key": "cluster-styles[].height",
+                                                    }]
+                                                },
+                                                {
+                                                    "type": "section",
+                                                    "htmlClass": "col-xs-4",
+                                                    "items": [{
+                                                        "key": "cluster-styles[].width",
+                                                    }]
+                                                }
+                                                ]
+                                            }
+                                         ]
+                                    },
+                                	/**{
+                                        "type": "section",
+                                        "htmlClass": "row",
+                                        "items": [
+                                            {
+                                                "type": "section",
+                                                "htmlClass": "col-xs-12",
+                                                "items": [ 
+                                                
+                                                
+                                                ]
+                                            }
+                                         ]
+                                    },
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "row",
+                                        "items": [
+                                            {
+                                                "type": "section",
+                                                "htmlClass": "col-xs-4",
+                                                "items": [ ]
+                                            }
+                                         ]
+                                    }**/
+                                
+                                
+                                ]
+                            }]
+                      }
+                      /**{
+                        
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [ {
                                 "type": "section",
                                 "htmlClass": "col-xs-12",
                                 "items": [
@@ -200,30 +275,33 @@ const __MAP__ = {
 
                                                 {
                                                     "type": "section",
-                                                    "htmlClass": "col-xs-6 col-sm-4",
+                                                    "htmlClass": "col-xs-4",
                                                     "items": [{
                                                         "key": "cluster-styles[].url",
                                                     }]
                                                 },
                                                 {
                                                     "type": "section",
-                                                    "htmlClass": "col-xs-6 col-sm-4",
+                                                    "htmlClass": "col-xs-4",
                                                     "items": [{
                                                         "key": "cluster-styles[].height",
                                                     }]
-                                                }
-                                                ,
+                                                },
                                                 {
                                                     "type": "section",
-                                                    "htmlClass": "col-xs-6 col-sm-4",
+                                                    "htmlClass": "col-xs-4",
                                                     "items": [{
                                                         "key": "cluster-styles[].width",
                                                     }]
                                                 }
-                                                ,
-                                                {
+                                            ]
+                                        },
+                                        {
+                                            "type": "section",
+                                            "htmlClass": "row",
+                                            "items": [{
                                                     "type": "section",
-                                                    "htmlClass": "col-xs-6 col-sm-4",
+                                                    "htmlClass": "col-xs-4",
                                                     "items": [{
                                                         "key": "cluster-styles[].textColor",
                                                         "colorFormat": "hex3",
@@ -243,7 +321,7 @@ const __MAP__ = {
                                                 ,
                                                 {
                                                     "type": "section",
-                                                    "htmlClass": "col-xs-6 col-sm-4",
+                                                    "htmlClass": "col-xs-4",
                                                     "items": [{
                                                         "key": "cluster-styles[].textSize",
                                                     }]
@@ -251,28 +329,38 @@ const __MAP__ = {
                                                 ,
                                                 {
                                                     "type": "section",
-                                                    "htmlClass": "col-xs-6 col-sm-4",
+                                                    "htmlClass": "col-xs-4",
                                                     "items": [{
                                                         "key": "cluster-styles[].backgroundPosition",
                                                     }]
                                                 }
-                                                ,
+                                             ]
+                                        },
+                                        {
+                                            "type": "section",
+                                            "htmlClass": "col-xs-12",
+                                            "items": [
                                                 {
                                                     "type": "section",
-                                                    "htmlClass": "col-xs-6 col-sm-6",
-                                                    "items": [{
-                                                        "key": "cluster-styles[].anchor",
-                                                      	 "notitle": true
+                                                    "htmlClass": "row",
+                                                    "items": [
+                                                                {
+                                                            "type": "section",
+                                                            "htmlClass": "col-xs-6",
+                                                            "items": [{
+                                                                "key": "cluster-styles[].anchor",
+                                                                 "notitle": true
 
-                                                    }]
-                                                },
-                                                {
-                                                    "type": "section",
-                                                    "htmlClass": "col-xs-6 col-sm-6",
-                                                    "items": [{
-                                                        "key": "cluster-styles[].iconAnchor",
-                                                        "notitle": true
-                                                    }]
+                                                            }]
+                                                        },
+                                                        {
+                                                            "type": "section",
+                                                            "htmlClass": "col-xs-6",
+                                                            "items": [{
+                                                                "key": "cluster-styles[].iconAnchor",
+                                                                "notitle": true
+                                                            }]
+                                                        }]
                                                 }
 
                                             ]
@@ -280,7 +368,7 @@ const __MAP__ = {
                                     }
                                 ]
                             }]
-                    }
+                    }**/
 
                 ]
             },

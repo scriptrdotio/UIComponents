@@ -505,6 +505,7 @@ angular
             "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
             "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
             "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
+            "fitToWidget": (wdg.box && wdg.box.fitToWidget) ? wdg.box.fitToWidget : null,
             "label": wdg.label,
             "type": wdg.class,
             "options": angular.extend(angular.copy(wdg.defaults), angular.copy(defaults)),
@@ -594,6 +595,7 @@ angular
             "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
             "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
             "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
+            "fitToWidget": (wdg.box && wdg.box.fitToWidget) ? wdg.box.fitToWidget : null,
             "label": wdg.label,
             "type": wdg.class,
             "options": wdg.defaults,
@@ -941,6 +943,7 @@ angular
                     self.updateWidget(data.element.options)
                 }
             }
+            this.boxWidth = $element.width()
             boxSelf.parent.notifyDashboardChange();
         });
         
@@ -993,7 +996,7 @@ angular
              this.parent.dashboard.counter += 1;
              var counter = this.parent.dashboard.counter;
              var functionName = (widget.name+ "FormatData"+counter);
-             self[functionName] = new Function('data', value);
+             self[functionName] = new Function('data', 'self', value);
              widget["formatFunction"] = functionName;
              widget["formatFunctionValue"] = value;
           //   delete widget.options["on-format-data"];

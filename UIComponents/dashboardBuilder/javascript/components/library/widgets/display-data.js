@@ -17,7 +17,8 @@ const __DISPLAY_DATA__ = {
         sizeX: 3,
         sizeY: 2,
         minSizeX: 1,
-        minSizeY: 1
+        minSizeY: 1,
+        "fitToWidget": true
     },
     "imgCls": "display-data-img",
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/displayData.png",

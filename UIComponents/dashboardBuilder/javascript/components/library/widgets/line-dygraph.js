@@ -24,7 +24,8 @@ const __LINE_DYGRAPH__ = {
         "y2-axis-label-font-size": 12,
         "y-axis-label-font-size": 12,
         "independent-ticks": "independent",
-        "colors-mapping": [{ "labels": "Y1", "colors": "##CC546", "axisSelection": "y" }, { "labels": "Y2", "colors": "#FCC717", "axisSelection": "y" }, { "labels": "Y3", "colors": "#38B9D6", "axisSelection": "y" }, { "labels": "Y4", "colors": "#1DBC68", "axisSelection": "y" }],
+        "show-legend": true,
+        "colors-mapping": [{ "labels": "Y1", "colors": "#CC5464", "axisSelection": "y" }, { "labels": "Y2", "colors": "#FCC717", "axisSelection": "y" }, { "labels": "Y3", "colors": "#38B9D6", "axisSelection": "y" }, { "labels": "Y4", "colors": "#1DBC68", "axisSelection": "y" }],
         "use-functional":false,
         "functional-data-type":"scattered",
         "scattered-xdata": "[1,2,3,4,5,6,7,8,9,10]",
@@ -284,16 +285,16 @@ const __LINE_DYGRAPH__ = {
                         "type": "section",
                         "htmlClass": "",
                         "items": [{
-                            "condition": "model['show-legend'] =='true'",
+                            "condition": "model['show-legend'] === true",
                             "key": "colors-mapping",
                             "title": "Legend Details",
                             "items": [{
-                                "condition": "model['show-legend'] =='true'",
+                                "condition": "model['show-legend'] === true",
                                 "type": "section",
                                 "htmlClass": "row",
                                 "items": [
                                     {
-                                        "condition": "model['show-legend'] =='true'",
+                                        "condition": "model['show-legend'] === true",
                                         "type": "section",
                                         "htmlClass": "col-xs-6 col-sm-3",
                                         "items": [{
@@ -305,7 +306,7 @@ const __LINE_DYGRAPH__ = {
                                         "type": "section",
                                         "htmlClass": "col-xs-6 col-sm-3",
                                         "items": [{
-                                            "condition": "model['show-legend'] =='true'",
+                                            "condition": "model['show-legend'] === true",
                                             "key": "colors-mapping[].colors",
                                             "title": "Color",
                                             "colorFormat": "hex3",
@@ -325,7 +326,7 @@ const __LINE_DYGRAPH__ = {
                                         "type": "section",
                                         "htmlClass": "col-xs-6 col-sm-3",
                                         "items": [{
-                                            "condition": "model['show-legend'] =='true'",
+                                            "condition": "model['show-legend'] === true ",
                                             "key": "colors-mapping[].unit",
                                             "title": "Legend unit"
                                         }]
@@ -334,7 +335,7 @@ const __LINE_DYGRAPH__ = {
                                         "type": "section",
                                         "htmlClass": "col-xs-6 col-sm-3",
                                         "items": [{
-                                            "condition": "model['show-legend'] =='true'",
+                                            "condition": "model['show-legend'] === true",
                                             "key": "colors-mapping[].axisSelection",
                                             "title": "Legend Axis",
                                             "notitle": false,
@@ -714,7 +715,7 @@ const __LINE_DYGRAPH__ = {
             "colors-mapping": {
                 "title": "Colors",
                 "type": "array",
-                "default": [],
+                "default": [{ "labels": "Y1", "colors": "#CC546", "axisSelection": "y" }, { "labels": "Y2", "colors": "#FCC717", "axisSelection": "y" }, { "labels": "Y3", "colors": "#38B9D6", "axisSelection": "y" }, { "labels": "Y4", "colors": "#1DBC68", "axisSelection": "y" }],
                 "description": "",
                 "items": {
                     "type": "object",

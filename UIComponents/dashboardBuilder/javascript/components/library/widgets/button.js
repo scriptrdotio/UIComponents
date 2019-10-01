@@ -9,14 +9,15 @@ const __BUTTON__ = {
         "type": "btn-success",
         "enable-resize": true,
         "size": "large",
-        "label": "Refresh data"
+        "label": "Refresh"
         // ,"api" : "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"
     },
     "box": {
-        sizeX: 2,
-        sizeY: 2,
+        sizeX: 1,
+        sizeY: 1,
         minSizeX: 1,
-        minSizeY: 1
+        minSizeY: 1,
+        "fitToWidget": true
     },
     "imgCls": "",
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/button.png",
@@ -105,13 +106,20 @@ const __BUTTON__ = {
                     "items": [{
                         "type": "section",
                         "htmlClass": "col-xs-6",
-                        "items": ["type", "size"]
+                        "items": ["type"]
                     }, {
                         "type": "section",
                         "htmlClass": "col-xs-6",
                         "items": [{
                             "key": "is-disabled",
-                            
+                            "type": "radios-inline",
+                            titleMap: [{
+                                value: "true",
+                                name: "True"
+                            }, {
+                                value: "false",
+                                name: "False"
+                            }]
                         }]
                     }]
                 }]

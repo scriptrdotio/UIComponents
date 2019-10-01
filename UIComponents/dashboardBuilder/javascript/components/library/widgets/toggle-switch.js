@@ -19,7 +19,8 @@ const __TOGGLE_SWITCH__ = {
         sizeX: 1,
         sizeY: 2,
         minSizeX: 1,
-        minSizeY: 1
+        minSizeY: 1,
+        fitToWidget: true
     },
     "imgCls": "",
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/toggle-switch.png",

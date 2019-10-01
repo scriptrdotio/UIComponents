@@ -16,8 +16,8 @@ const __WINDROSE__ = {
         "data": '{"data": [{"direction": "E", "speeds": [2, 3, 15, 17]},{"direction": "ESE", "speeds": [24, 8, 4]},{"direction": "SSE", "speeds": [2.5, 7, 16]},{"direction": "S", "speeds": [3, 8, 2, 1, 9, 11]},{"direction": "SSW", "speeds": [13, 3, 7.5, 8]},{"direction": "WSW", "speeds": [21, 14, 9]},{"direction": "W", "speeds": [7, 0, 8, 9, 15, 19, 11]},{"direction": "WNW", "speeds": [4, 17, 21]},{"direction": "NNW", "speeds": [14, 7]},{"direction": "N", "speeds": [20, 0, 5, 9, 7]},{"direction": "NNE", "speeds": [1, 0.5, 6.5]},{"direction": "ENE", "speeds": [3.5, 30, 15]}]}'
     },
     "box": {
-        sizeX: 4,
-        sizeY: 4,
+        sizeX: 5,
+        sizeY: 8,
         minSizeX: 4,
         minSizeY: 4
     },
@@ -141,7 +141,7 @@ const __WINDROSE__ = {
             "custom-ranges": {
                 "title": "Custom Ranges",
                 "type": "array",
-                "default": [{ "color": "#00476b", "lo": 0, "hi": 2 }, { "color": "#005487", "lo": 2, "hi": 4 }, { "color": "#006699", "lo": 4, "hi": 6 }, { "color": "#0082b5", "lo": 6, "hi": 8 }, { "color": "#0294c1", "lo": 8, "hi": 10 }, { "color": "#06a9ce", "lo": 10, "hi": 20 }],
+                "default": [{"color": "#CC5464", "lo": 0, "hi": 2}, {"color": "#FCC717", "lo": 2, "hi": 4}, {"color": "#38B9D6", "lo": 4, "hi": 6}, {"color": "#1DBC68", "lo": 6, "hi": 8}, {"color": "#E90088", "lo": 8, "hi": 10}, {"color": "#c64dff", "lo": 10, "hi": 20}],
                 "items": {
                     "type": "object",
                     "properties": {

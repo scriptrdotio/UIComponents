@@ -69,16 +69,16 @@ angular
                                     "key": "on-format-data",
                                     "type": "codemirror",
                                     "codemirrorOptions": {
-                                        value: "return",
-                                        styleActiveLine: true,
-                                        lineNumbers: true,
-                                        lineWrapping: true,
-                                        autoCloseBrackets: true,
-                                        matchBrackets: true,
-                                        theme: "neo",
-                                        mode: "javascript",
-                                        readOnly: false,
-                                        autoRefresh: true
+                                        "value": "return;",
+                                        "styleActiveLine": true,
+                                        "lineNumbers": true,
+                                        "lineWrapping": true,
+                                        "autoCloseBrackets": true,
+                                        "matchBrackets": true,
+                                        "theme": "neo",
+                                        "mode": "javascript",
+                                        "readOnly": false,
+                                        "autoRefresh": true
                                     }
                                 }
                             ]
