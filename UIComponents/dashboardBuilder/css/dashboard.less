@@ -628,6 +628,9 @@ height: auto !important;
 .gridster-mobile scriptr-thermometer>div:first-child {height: 45%;margin-bottom: -22px;}
 
 .gridster-mobile .ag-layout-normal .ag-root {height: 50%;}
+.gridster-mobile .ag-bl-full-height , .gridster-mobile .ag-layout-normal, .gridster-mobile .ag-bl-full-height-center {
+    height: auto!important;
+}
 .gridster-mobile .morris-chart-dimension {width: 100%;height: 55%;}
 
 .gridster-mobile .dygraphs-legend {
@@ -642,8 +645,6 @@ height: auto !important;
 	width: 100%!important;
 	float: none;
 }
-
-.gridster-mobile .display-count {height: 20%;}
 
 .gridster-mobile .plotly-chart-legend {height: auto;width: 100%;float: none;text-align: left;margin: 10px;}
 .gridster-mobile .plotly-chart-dimension {width: 100%;height: 55%;}
@@ -699,6 +700,39 @@ height: auto !important;
     border: none;
     cursor: pointer;
     overflow: hidden;
+}
+
+.fit-to-widget .ats-switch {
+  min-width: 100%!important;
+  min-height: 100%!important;
+}
+
+.fit-to-widget .ats-switch .switch-left, .fit-to-widget .ats-switch .switch-right, .fit-to-widget .ats-switch .knob {
+    height: calc(100% - 2px)!important;
+    min-height: auto!important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gridster-mobile .fit-to-widget .box-content {
+    height: 50px;
+}
+
+.fit-to-widget .ui-button {
+    width: 100%!important;
+    height: 100%!important;
+}
+
+.fit-to-widget .alert {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.dashboardTheme .CodeMirror {
+    height: 200px;
 }
 
 
