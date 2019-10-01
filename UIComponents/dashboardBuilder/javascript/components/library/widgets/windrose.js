@@ -39,16 +39,7 @@ const __WINDROSE__ = {
                                 "items": ["font-size",
                                     {
                                         "key": "show-legend",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                        
                                     }]
                             },
                             {
@@ -136,7 +127,7 @@ const __WINDROSE__ = {
             },
             "show-legend": {
                 "title": "Show Legend",
-                "type": "string",
+                "type": "boolean",
                 "default": "true",
                 "description": "Set visibility of the legend."
             },

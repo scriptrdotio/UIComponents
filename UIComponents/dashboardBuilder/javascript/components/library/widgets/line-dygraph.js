@@ -53,15 +53,9 @@ const __LINE_DYGRAPH__ = {
                         "type": "section",
                         "htmlClass": "col-xs-12",
                         "items": [{
-                            type: "radios-inline",
+                            
                             key: "draw-x1-axis",
-                            titleMap: [{
-                                value: "true",
-                                name: "True"
-                            }, {
-                                value: "false",
-                                name: "False"
-                            }]
+                            
                         }, "x1-axis-label", "x1-axis-label-font-size"]
                     },
                     {
@@ -99,15 +93,9 @@ const __LINE_DYGRAPH__ = {
                         "type": "section",
                         "htmlClass": "col-xs-12",
                         "items": [{
-                            type: "radios-inline",
+                            
                             key: "draw-y-axis",
-                            titleMap: [{
-                                value: "true",
-                                name: "True"
-                            }, {
-                                value: "false",
-                                name: "False"
-                            }]
+                            
                         }, "y-axis-label", "y-axis-label-font-size", "y-axis-label-width"
                         ]
                     },
@@ -144,15 +132,9 @@ const __LINE_DYGRAPH__ = {
                             }]
                         },
                         {
-                            type: "radios-inline",
+                            
                             key: "y-axis-labels-kmb",
-                            titleMap: [{
-                                value: "true",
-                                name: "True"
-                            }, {
-                                value: "false",
-                                name: "False"
-                            }]
+                            
                         }]
                     }]
                 }
@@ -212,15 +194,9 @@ const __LINE_DYGRAPH__ = {
                             }]
                         },
                         {
-                            type: "radios-inline",
+                            
                             key: "y2-axis-labels-kmb",
-                            titleMap: [{
-                                value: "true",
-                                name: "True"
-                            }, {
-                                value: "false",
-                                name: "False"
-                            }]
+                            
                         }]
                     }]
                 }]
@@ -300,15 +276,8 @@ const __LINE_DYGRAPH__ = {
                 title: "Legend",
                 items: [
                     {
-                        type: "radios-inline",
                         key: "show-legend",
-                        titleMap: [{
-                            value: "true",
-                            name: "True"
-                        }, {
-                            value: "false",
-                            name: "False"
-                        }]
+                       
                     },
                     {
 
@@ -713,7 +682,7 @@ const __LINE_DYGRAPH__ = {
             "show-legend": {
                 "title": "Show Legend",
                 "default": "true",
-                "type": "string",
+                "type": "boolean",
                 "description": ""
             },
             "legend-position": {
@@ -725,13 +694,13 @@ const __LINE_DYGRAPH__ = {
             },
             "draw-x1-axis": {
                 "title": "Draw X-axis",
-                "type": "string",
+                "type": "boolean",
                 "default": "true",
                 "description": "Determines whether to draw the X-axis. Setting this to false also prevents x-axis ticks from being drawn and reclaims the space for the chart grid/lines."
             },
             "draw-y-axis": {
                 "title": "Draw Y-axis",
-                "type": "string",
+                "type": "boolean",
                 "default": "true",
                 "description": "Determines whether to draw the Y-axis. Setting this to false also prevents y-axis ticks from being drawn and reclaims the space for the chart grid/lines."
             },
@@ -934,13 +903,13 @@ const __LINE_DYGRAPH__ = {
             },
             "y-axis-labels-kmb": {
                 "title": "Labels KMB",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Show K/M/B for thousands/millions/billions on y-axis."
             },
             "y2-axis-labels-kmb": {
                 "title": "Labels KMB",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Show K/M/B for thousands/millions/billions on y-axis."
             },

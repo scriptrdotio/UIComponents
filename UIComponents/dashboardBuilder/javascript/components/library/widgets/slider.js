@@ -143,36 +143,15 @@ const __SLIDER__ = {
                                 "step",
                                 {
                                     "key": "keyboard-support",
-                                    "type": "radios-inline",
-                                    titleMap: [{
-                                        value: "true",
-                                        name: "True"
-                                    }, {
-                                        value: "false",
-                                        name: "False"
-                                    }]
+                                    
                                 },
                                 {
                                     "key": "log-scale",
-                                    "type": "radios-inline",
-                                    titleMap: [{
-                                        value: "true",
-                                        name: "True"
-                                    }, {
-                                        value: "false",
-                                        name: "False"
-                                    }]
+                                    
                                 },
                                 {
                                     "key": "is-disabled",
-                                    "type": "radios-inline",
-                                    titleMap: [{
-                                        value: "true",
-                                        name: "True"
-                                    }, {
-                                        value: "false",
-                                        name: "False"
-                                    }]
+                                    
                                 }]
                         },
                         {
@@ -186,25 +165,11 @@ const __SLIDER__ = {
                                 "precision",
                                 {
                                     "key": "right-to-left",
-                                    "type": "radios-inline",
-                                    titleMap: [{
-                                        value: "true",
-                                        name: "True"
-                                    }, {
-                                        value: "false",
-                                        name: "False"
-                                    }]
+                                    
                                 },
                                 {
                                     "key": "read-only",
-                                    "type": "radios-inline",
-                                    titleMap: [{
-                                        value: "true",
-                                        name: "True"
-                                    }, {
-                                        value: "false",
-                                        name: "False"
-                                    }]
+                                    
                                 }, "steps-array",]
                         }]
                 }]
@@ -222,36 +187,15 @@ const __SLIDER__ = {
                                 "show-selection-bar-from-value",
                                 {
                                     "key": "show-selection-bar",
-                                    "type": "radios-inline",
-                                    titleMap: [{
-                                        value: "true",
-                                        name: "True"
-                                    }, {
-                                        value: "false",
-                                        name: "False"
-                                    }]
+                                    
                                 },
                                 {
                                     "key": "show-ticks",
-                                    "type": "radios-inline",
-                                    titleMap: [{
-                                        value: "true",
-                                        name: "True"
-                                    }, {
-                                        value: "false",
-                                        name: "False"
-                                    }]
+                                    
                                 },
                                 {
                                     "key": "hide-limit-labels",
-                                    "type": "radios-inline",
-                                    titleMap: [{
-                                        value: "true",
-                                        name: "True"
-                                    }, {
-                                        value: "false",
-                                        name: "False"
-                                    }]
+                                    
                                 }]
                         },
                         {
@@ -261,25 +205,11 @@ const __SLIDER__ = {
                                 "ticks-array",
                                 {
                                     "key": "show-selection-bar-end",
-                                    "type": "radios-inline",
-                                    titleMap: [{
-                                        value: "true",
-                                        name: "True"
-                                    }, {
-                                        value: "false",
-                                        name: "False"
-                                    }]
+                                    
                                 },
                                 {
                                     "key": "show-ticks-values",
-                                    "type": "radios-inline",
-                                    titleMap: [{
-                                        value: "true",
-                                        name: "True"
-                                    }, {
-                                        value: "false",
-                                        name: "False"
-                                    }]
+                                    
                                 },
                                 {
                                     "key": "theme",
@@ -304,48 +234,20 @@ const __SLIDER__ = {
                         "htmlClass": "col-xs-6",
                         "items": [{
                             "key": "push-range",
-                            "type": "radios-inline",
-                            titleMap: [{
-                                value: "true",
-                                name: "True"
-                            }, {
-                                value: "false",
-                                name: "False"
-                            }]
+                            
                         }, {
                             "key": "draggable-range",
-                            "type": "radios-inline",
-                            titleMap: [{
-                                value: "true",
-                                name: "True"
-                            }, {
-                                value: "false",
-                                name: "False"
-                            }]
+                            
                         }]
                     }, {
                         "type": "section",
                         "htmlClass": "col-xs-6",
                         "items": [{
                             "key": "draggable-range-only",
-                            "type": "radios-inline",
-                            titleMap: [{
-                                value: "true",
-                                name: "True"
-                            }, {
-                                value: "false",
-                                name: "False"
-                            }]
+                           
                         }, {
-                            "key": "no-switching",
-                            "type": "radios-inline",
-                            titleMap: [{
-                                value: "true",
-                                name: "True"
-                            }, {
-                                value: "false",
-                                name: "False"
-                            }]
+                            "key": "boolean",
+                            
                         }]
                     }]
                 }]
@@ -408,7 +310,7 @@ const __SLIDER__ = {
             },
             "push-range": {
                 "title": "Push Range",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to have a push behavior. When the min handle goes above the max, the max is moved as well."
             },
             "steps-array": {
@@ -426,22 +328,22 @@ const __SLIDER__ = {
             },
             "draggable-range": {
                 "title": "Draggable Range",
-                "type": "string",
+                "type": "boolean",
                 "description": "When set to true and using a range slider, the range can be dragged by the selection bar."
             },
             "draggable-range-only": {
                 "title": "Draggable Range Only",
-                "type": "string",
+                "type": "boolean",
                 "description": "Same as draggableRange but the slider range can't be changed."
             },
             "show-selection-bar": {
                 "title": "Show Selection Bar",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to always show the selection bar before the slider handle."
             },
             "show-selection-bar-end": {
                 "title": "Show Selection Bar End",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to always show the selection bar after the slider handle.",
             },
             "show-selection-bar-from-value": {
@@ -451,7 +353,7 @@ const __SLIDER__ = {
             },
             "hide-limit-labels": {
                 "title": "Hide Limit Labels",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to hide min / max labels"
             },
             "auto-hide-limit-labels": {
@@ -461,12 +363,12 @@ const __SLIDER__ = {
             },
             "read-only": {
                 "title": "Read Only",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to make the slider read-only."
             },
             "is-disabled": {
                 "title": "Disabled",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to disable the slider."
             },
             "interval": {
@@ -476,12 +378,12 @@ const __SLIDER__ = {
             },
             "show-ticks": {
                 "title": "Show Ticks",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to display a tick for each step of the slider."
             },
             "show-ticks-values": {
                 "title": "Show Ticks Values",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to display a tick and the step value for each step of the slider."
             },
             "ticks-array": {
@@ -529,7 +431,7 @@ const __SLIDER__ = {
             },
             "right-to-left": {
                 "title": "Right To Left",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to show graphs right to left."
             },
             "vertical": {
@@ -539,12 +441,12 @@ const __SLIDER__ = {
             },
             "keyboard-support": {
                 "title": "Keyboard Support",
-                "type": "string",
+                "type": "boolean",
                 "description": "Handles are focusable (on click or with tab) and can be modified using keyboard controls.",
             },
             "log-scale": {
                 "title": "Log Scale",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to use a logarithmic scale to display the slider."
             },
             "selection-bar-gradient": {

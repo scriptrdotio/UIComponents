@@ -38,15 +38,8 @@ const __BAR__ = {
                         "type": "section",
                         "htmlClass": "col-xs-12",
                         "items": ["xkey", "xlabel-angle", {
-                            type: "radios-inline",
                             key: "parse-time",
-                            titleMap: [{
-                                value: "true",
-                                name: "True"
-                            }, {
-                                value: "false",
-                                name: "False"
-                            }]
+                           
                         }]
                     }]
                 }]
@@ -68,25 +61,11 @@ const __BAR__ = {
                                     "ymin",
                                     {
                                         "key": "stacked",
-                                        "type": "radios-inline",
-                                        titleMap: [{
-                                            value: "true",
-                                            name: "True"
-                                        }, {
-                                            value: "false",
-                                            name: "False"
-                                        }]
+                                      
                                     },
                                     {
-                                        type: "radios-inline",
                                         key: "show-legend",
-                                        titleMap: [{
-                                            value: "true",
-                                            name: "True"
-                                        }, {
-                                            value: "false",
-                                            name: "False"
-                                        }]
+                                       
                                     },
                                     {
                                         type: "radios-inline",
@@ -141,25 +120,13 @@ const __BAR__ = {
                             "type": "section",
                             "htmlClass": "col-xs-6",
                             "items": [{
-                                type: "radios-inline",
+                               
                                 key: "grid",
-                                titleMap: [{
-                                    value: "true",
-                                    name: "True"
-                                }, {
-                                    value: "false",
-                                    name: "False"
-                                }]
+                                
                             }, {
-                                type: "radios-inline",
+                                
                                 key: "axes",
-                                titleMap: [{
-                                    value: "true",
-                                    name: "True"
-                                }, {
-                                    value: "false",
-                                    name: "False"
-                                }]
+                                
                             }, {
                                 "key": "grid-text-color",
                                 "colorFormat": "hex3"
@@ -309,13 +276,13 @@ const __BAR__ = {
             },
             "stacked": {
                 "title": "Stacked",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Set to true to draw bars stacked vertically."
             },
             "show-legend": {
                 "title": "Show Legend",
-                "type": "string",
+                "type": "boolean",
                 "default": "true",
             },
             "legend-type": {
@@ -336,13 +303,13 @@ const __BAR__ = {
             },
             "axes": {
                 "title": "Axes",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to false to disable drawing the x and y axes.",
                 "default": "true"
             },
             "grid": {
                 "title": "Grid",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to false to disable drawing the horizontal grid lines.",
                 "default": "true"
             },
@@ -378,7 +345,7 @@ const __BAR__ = {
             },
             "parse-time": {
                 "title": "Parse time",
-                "type": "string",
+                "type": "boolean",
                 "default": "true",
                 "description": "Set to false to skip time/date parsing for X values, instead treating them as an equally-spaced series."
             },

@@ -7,15 +7,8 @@ angular
                 title: "Box Properties",
                 items: ["boxLabel",
                     {
-                        type: "radios-inline",
                         key: "boxHeader",
-                        titleMap: [{
-                            value: "true",
-                            name: "True"
-                        }, {
-                            value: "false",
-                            name: "False"
-                        }]
+                       
                     }
                 ]
             },
@@ -29,7 +22,7 @@ angular
                 },
                 "boxHeader": {
                     "title": "Box Header",
-                    "type": "string",
+                    "type": "boolean",
                     "default": "true",
                     "description": "Define your widget box border."
                 }

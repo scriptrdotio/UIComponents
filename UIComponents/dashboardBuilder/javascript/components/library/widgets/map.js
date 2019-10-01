@@ -90,16 +90,7 @@ const __MAP__ = {
                                 "items": [
                                     {
                                         "key": "bounce",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                        
                                     },
                                     "focused-marker-zoom",
                                     "path-stroke-opacity",
@@ -181,16 +172,7 @@ const __MAP__ = {
                                 "items": [
                                     {
                                         "key": "clustered-view",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                        
                                     },
                                     "cluster-zoom",]
                             },
@@ -315,16 +297,7 @@ const __MAP__ = {
                                 "items": [
                                     {
                                         "key": "heatmap",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                       
                                     },
                                     "heat-map-radius",
                                 ]
@@ -374,16 +347,7 @@ const __MAP__ = {
                 items: [
                     {
                         "key": "marker-info-window",
-                        "type": "radios-inline",
-                        titleMap: [
-                            {
-                                value: "true",
-                                name: "True"
-                            },
-                            {
-                                value: "false",
-                                name: "False"
-                            }]
+                        
                     },
                     {
 
@@ -499,7 +463,7 @@ const __MAP__ = {
         "properties": {
             "clustered-view": {
                 "title": "Clustered View",
-                "type": "string",
+                "type": "boolean",
                 "description": "Render map with a cluster view for conglomerate markers or not."
             },
             "cluster-zoom": {
@@ -562,7 +526,7 @@ const __MAP__ = {
             },
             "heatmap": {
                 "title": "Heat Map",
-                "type": "string",
+                "type": "boolean",
                 "description": "Enable/disable heat map."
             },
             "heat-map-radius": {
@@ -592,7 +556,7 @@ const __MAP__ = {
             },
             "bounce": {
                 "title": "Bounce",
-                "type": "string",
+                "type": "boolean",
                 "description": "Enable/disable bouncing."
             },
             "clustered-zoom-max": {
@@ -620,7 +584,7 @@ const __MAP__ = {
             },
             "marker-info-window": {
                 "title": "Show marker info",
-                "type": "string",
+                "type": "boolean",
                 "description": "Whether to show an info window on marker click.",
                 "default": "true"
             },

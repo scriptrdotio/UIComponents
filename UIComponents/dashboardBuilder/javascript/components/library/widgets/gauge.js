@@ -50,14 +50,7 @@ const __GAUGE__ = {
                                 "htmlClass": "col-xs-3",
                                 "items": [{
                                     "key": "hide-value",
-                                    "type": "radios-inline",
-                                    "titleMap": [{
-                                        "value": "true",
-                                        "name": "True"
-                                    }, {
-                                        "value": "false",
-                                        "name": "False"
-                                    }]
+                                    
                                 }]
                             }]
                     },
@@ -193,14 +186,7 @@ const __GAUGE__ = {
                             "htmlClass": "col-xs-6",
                             "items": [{
                                 "key": "format-number",
-                                "type": "radios-inline",
-                                "titleMap": [{
-                                    "value": "true",
-                                    "name": "True"
-                                }, {
-                                    "value": "false",
-                                    "name": "False"
-                                }]
+                                
                             }]
                         }, {
                             "type": "section",
@@ -217,14 +203,7 @@ const __GAUGE__ = {
                                 "htmlClass": "col-xs-6",
                                 "items": [{
                                     "key": "human-friendly",
-                                    "type": "radios-inline",
-                                    "titleMap": [{
-                                        "value": "true",
-                                        "name": "True"
-                                    }, {
-                                        "value": "false",
-                                        "name": "False"
-                                    }]
+                                    
                                 }]
                             },
                             {
@@ -248,14 +227,7 @@ const __GAUGE__ = {
                                 "min-label-min-font-size",
                                 {
                                     "key": "hide-min-max",
-                                    "type": "radios-inline",
-                                    "titleMap": [{
-                                        "value": "true",
-                                        "name": "True"
-                                    }, {
-                                        "value": "false",
-                                        "name": "False"
-                                    }]
+                                   
                                 }]
                         },
                         {
@@ -266,14 +238,7 @@ const __GAUGE__ = {
                                 "max-label-min-font-size",
                                 {
                                     "key": "reverse",
-                                    "type": "radios-inline",
-                                    "titleMap": [{
-                                        "value": "true",
-                                        "name": "True"
-                                    }, {
-                                        "value": "false",
-                                        "name": "False"
-                                    }]
+                                   
                                 }]
                         }]
                 }
@@ -291,14 +256,7 @@ const __GAUGE__ = {
                             "htmlClass": "col-xs-4",
                             "items": [{
                                 "key": "pointer",
-                                "type": "radios-inline",
-                                "titleMap": [{
-                                    "value": "true",
-                                    "name": "True"
-                                }, {
-                                    "value": "false",
-                                    "name": "False"
-                                }]
+                                
                             }]
                         }, {
                             "type": "section",
@@ -319,14 +277,7 @@ const __GAUGE__ = {
                                 "htmlClass": "col-xs-4",
                                 "items": [{
                                     "key": "donut",
-                                    "type": "radios-inline",
-                                    "titleMap": [{
-                                        "value": "true",
-                                        "name": "True"
-                                    }, {
-                                        "value": "false",
-                                        "name": "False"
-                                    }]
+                                   
                                 }]
                             },
                             {
@@ -346,14 +297,7 @@ const __GAUGE__ = {
                                 "htmlClass": "col-xs-4",
                                 "items": [{
                                     "key": "no-gradient",
-                                    "type": "radios-inline",
-                                    "titleMap": [{
-                                        "value": "true",
-                                        "name": "True"
-                                    }, {
-                                        "value": "false",
-                                        "name": "False"
-                                    }]
+                                    
                                 }]
                             },
                             {
@@ -385,16 +329,7 @@ const __GAUGE__ = {
                                     "items": [{
                                         "key": "custom-sectors.percents",
                                         "title": "Custom percent",
-                                        "type": "radios-inline",
-                                        "titleMap": [
-                                            {
-                                                "value": "true",
-                                                "name": "True"
-                                            },
-                                            {
-                                                "value": "false",
-                                                "name": "False"
-                                            }]
+                                       
                                     }]
                                 }]
                             },
@@ -457,14 +392,7 @@ const __GAUGE__ = {
                             "htmlClass": "col-xs-3",
                             "items": [{
                                 "key": "show-inner-shadow",
-                                "type": "radios-inline",
-                                "titleMap": [{
-                                    "value": "true",
-                                    "name": "True"
-                                }, {
-                                    "value": "false",
-                                    "name": "False"
-                                }]
+                                
                             }]
                         },
                         {
@@ -541,14 +469,7 @@ const __GAUGE__ = {
                                 },
                                 {
                                     "key": "counter",
-                                    "type": "radios-inline",
-                                    "titleMap": [{
-                                        "value": "true",
-                                        "name": "True"
-                                    }, {
-                                        "value": "false",
-                                        "name": "False"
-                                    }]
+                                   
                                 }]
                         },
                         {
@@ -592,20 +513,20 @@ const __GAUGE__ = {
 
             "hide-min-max": {
                 "title": "Hide min/max",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Select true to hide min and max values (bool)"
             },
             "hide-value": {
                 "title": "Hide value",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Select true to hide gauge value"
             },
 
             "show-inner-shadow": {
                 "title": "Show shadow",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Show gauge inner shadow"
             },
@@ -622,7 +543,7 @@ const __GAUGE__ = {
                 "properties": {
                     "percents": {
                         "title": "Percents",
-                        "type": "string",
+                        "type": "boolean",
                         "default": "false",
                         "description": "Set to true for to have percent based sectors."
                     },
@@ -750,7 +671,7 @@ const __GAUGE__ = {
             },
             "no-gradient": {
                 "title": "No gradient",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Set to true to use sector-based color change, false to use gradual color change."
             },
@@ -768,7 +689,7 @@ const __GAUGE__ = {
             },
             "donut": {
                 "title": "Donut",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Turn the gauge into a full circle donut."
             },
@@ -790,7 +711,7 @@ const __GAUGE__ = {
             },
             "reverse": {
                 "title": "Reverse",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Set to trueto swap max and min (with max appearing on the left, min on the right)."
             },
@@ -807,13 +728,13 @@ const __GAUGE__ = {
             },
             "format-number": {
                 "title": "Format number",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Set to true to format numbers."
             },
             "human-friendly": {
                 "title": "Human friendly",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Set to true to show shorthand big numbers (300K instead of 300XXX)."
             },
@@ -825,14 +746,14 @@ const __GAUGE__ = {
             },
             "pointer": {
                 "title": "Pointer",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Set to true to show value pointer."
             },
 
             "counter": {
                 "title": "Counter",
-                "type": "string",
+                "type": "boolean",
                 "default": "false",
                 "description": "Set to true to increase numbers one by one."
             }

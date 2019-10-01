@@ -132,14 +132,7 @@ const __TOGGLE_SWITCH__ = {
                             "htmlClass": "col-xs-6",
                             "items": [{
                                 "key": "switch-status",
-                                "type": "radios-inline",
-                                titleMap: [{
-                                    value: "true",
-                                    name: "True"
-                                }, {
-                                    value: "false",
-                                    name: "False"
-                                }]
+                                
                             }, "on-label", "size"]
                         },
                         {
@@ -147,14 +140,7 @@ const __TOGGLE_SWITCH__ = {
                             "htmlClass": "col-xs-6",
                             "items": [{
                                 "key": "is-disabled",
-                                "type": "radios-inline",
-                                titleMap: [{
-                                    value: "true",
-                                    name: "True"
-                                }, {
-                                    value: "false",
-                                    name: "False"
-                                }]
+                                
                             }, "off-label", "type",
                                 "knob-label",]
                         }]
@@ -167,7 +153,7 @@ const __TOGGLE_SWITCH__ = {
         "properties": {
             "switch-status": {
                 "title": "Toggle Switch Value",
-                "type": "string",
+                "type": "boolean",
                 "description": "The current value of toggle switch."
             },
             "on-label": {
@@ -187,7 +173,7 @@ const __TOGGLE_SWITCH__ = {
             },
             "is-disabled": {
                 "title": "Disabled",
-                "type": "string",
+                "type": "boolean",
                 "description": "Set to true to disbale the toggle switch.",
             },
             "type": {

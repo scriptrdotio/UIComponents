@@ -123,16 +123,7 @@ const __GRID__ = {
                             "items": [
                                 {
                                     "key": "pagination",
-                                    "type": "radios-inline",
-                                    titleMap: [
-                                        {
-                                            value: "true",
-                                            name: "True"
-                                        },
-                                        {
-                                            value: "false",
-                                            name: "False"
-                                        }]
+                                    
                                 }
                             ]
                         }]
@@ -159,81 +150,27 @@ const __GRID__ = {
                                     },
                                     {
                                         "key": "enable-client-side-sorting",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                        
                                     },
                                     {
                                         "key": "enable-client-side-filter",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                       
                                     },
                                     {
                                         "key": "suppress-filter",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                        
                                     },
                                     {
                                         "key": "enable-add-row",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                       
                                     },
                                     {
                                         "key": "enable-delete-row",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                       
                                     },
                                     {
                                         "key": "cell-editable",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                       
                                     },]
                             },
                             {
@@ -243,42 +180,15 @@ const __GRID__ = {
                                     "pagination-page-size",
                                     {
                                         "key": "enable-server-side-sorting",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                       
                                     },
                                     {
                                         "key": "enable-server-side-filter",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                        
                                     },
                                     {
                                         "key": "enable-col-resize",
-                                        "type": "radios-inline",
-                                        titleMap: [
-                                            {
-                                                value: "true",
-                                                name: "True"
-                                            },
-                                            {
-                                                value: "false",
-                                                name: "False"
-                                            }]
+                                        
                                     }, "add-params",
                                     "delete-params",
                                     "edit-params"]
@@ -317,47 +227,47 @@ const __GRID__ = {
             },
             "enable-client-side-sorting": {
                 "title": "Enable client Side Sorting",
-                "type": "string",
+                "type": "boolean",
                 "description": "Turn on client sorting for the grid."
             },
             "enable-server-side-sorting": {
                 "title": "Enable Server Side Sorting",
-                "type": "string",
+                "type": "boolean",
                 "description": "Turn on server sorting for the grid."
             },
             "enable-client-side-filter": {
                 "title": "Enable Client Side Filter",
-                "type": "string",
+                "type": "boolean",
                 "description": "Turn on client side filter."
             },
             "enable-server-side-filter": {
                 "title": "Enable Server Side Filter",
-                "type": "string",
+                "type": "boolean",
                 "description": "Turn on server side filter."
             },
             "enable-add-row": {
                 "title": "Enable Add Row",
-                "type": "string",
+                "type": "boolean",
                 "description": "Turn on insert row."
             },
             "enable-delete-row": {
                 "title": "Enable Delete Row",
-                "type": "string",
+                "type": "boolean",
                 "description": "Turn on delete row."
             },
             "cell-editable": {
                 "title": "Cell Editable",
-                "type": "string",
+                "type": "boolean",
                 "description": "Turn on cell editing."
             },
             "enable-col-resize": {
                 "title": "Enable Column Resize",
-                "type": "string",
+                "type": "boolean",
                 "description": "Enable column resize."
             },
             "pagination": {
                 "title": "Enable Pagination",
-                "type": "string",
+                "type": "boolean",
                 "description": "Enable Pagination."
             },
             "row-model-type": {
@@ -390,7 +300,7 @@ const __GRID__ = {
             },
             "suppress-filter": {
                 "title": "Suppress filer",
-                "type": "string",
+                "type": "boolean",
                 "description": "Hide column filter."
             },
             "api": {

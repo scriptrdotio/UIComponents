@@ -28,14 +28,7 @@ const __PROGRESSBAR__ = {
             title: "Progress bar behaviour",
             items: ["stacked", "class", "type", "max", {
                 "key": "animate",
-                "type": "radios-inline",
-                titleMap: [{
-                    value: "true",
-                    name: "True"
-                }, {
-                    value: "false",
-                    name: "False"
-                }]
+                
             }]
         }]
     }],
@@ -50,7 +43,7 @@ const __PROGRESSBAR__ = {
             },
             "animate": {
                 "title": "Animate",
-                "type": "string",
+                "type": "boolean",
                 "description": "Whether bars use transitions to achieve the width change."
             },
             "class": {
