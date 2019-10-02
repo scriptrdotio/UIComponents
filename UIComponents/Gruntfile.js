@@ -42,7 +42,11 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/codemirror.min.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/theme/neo.min.css',
-	                      // JS
+                          // JS
+                          'https://cdn.plot.ly/plotly-latest.min.js',
+                          'https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js',
+                         'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone-with-data.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js',
 	                     'https://code.jquery.com/ui/1.12.0/jquery-ui.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js',
@@ -86,7 +90,8 @@ module.exports = function(grunt) {
 	         ngtemplates : {
 		         app : {
 		            src : [
-		                  'dashboard/frontend/UIComponents/Components/ACL/ACL.html',
+                          'dashboard/frontend/UIComponents/Components/ACL/ACL.html',
+                          'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs.html',
 		                  'dashboard/frontend/UIComponents/Components/ACL/myModalContent.html',
 		                  'dashboard/frontend/UIComponents/Components/chart/chart.html',
 		                  'dashboard/frontend/UIComponents/Components/gauge/gauge.html',
@@ -106,7 +111,8 @@ module.exports = function(grunt) {
 		                  'dashboard/frontend/UIComponents/Components/slider/slider.html',
 		                  'dashboard/frontend/UIComponents/Components/IFrame/IFrame.html',
 						  'dashboard/frontend/UIComponents/Components/toggleSwitch/toggle_switch.html',
-						  'dashboard/frontend/UIComponents/Components/plotly/plotly.html',
+                          'dashboard/frontend/UIComponents/Components/plotly/3dsurface.html',                          
+						  'dashboard/frontend/UIComponents/Components/plotly/windrose.html',
 						  'dashboard/frontend/UIComponents/Components/metricBox/metricBox.html',
 		                  'dashboardBuilder/javascript/UIComponents/Components/box.html',
 		                  'dashboardBuilder/javascript/UIComponents/Components/dashboard.html',
@@ -150,8 +156,12 @@ module.exports = function(grunt) {
 	            },
 	            app : {
 		            files : {
+                        'concat/min-safe/angular_dygraphs.js' : [ 'dashboard/frontend/UIComponents/Components/dygraphs/angular-dygraphs.js' ],
+                        'concat/min-safe/dygraphs.js' : [ 'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs.js' ],
 						'concat/min-safe/angular_plotly.js' : [ 'dashboard/frontend/UIComponents/Components/plotly/angular-plotly.js' ],
-						'concat/min-safe/plotly.js' : [ 'dashboard/frontend/UIComponents/Components/plotly/plotly.js' ],
+                        'concat/min-safe/plotly.js' : [ 'dashboard/frontend/UIComponents/Components/plotly/plotly.js' ],
+                        'concat/min-safe/3dsurface.js' : [ 'dashboard/frontend/UIComponents/Components/plotly/3dsurface.js' ],
+                        'concat/min-safe/windrose.js' : [ 'dashboard/frontend/UIComponents/Components/plotly/windrose.js' ],
 						'concat/min-safe/metricBox.js' : [ 'dashboard/frontend/UIComponents/Components/metricBox/metricBox.js' ],
 		               'concat/min-safe/acl.js' : [ 'dashboard/frontend/UIComponents/Components/ACL/ACL.js' ],
 		               'concat/min-safe/abn_tree_directive.js' : [ 'dashboard/frontend/UIComponents/Components/searchBox/abn_tree_directive.js' ],
@@ -320,7 +330,8 @@ module.exports = function(grunt) {
 						'dashboardBuilder/javascript/components/library/widgets/alert.js',
 						'dashboardBuilder/javascript/components/library/widgets/display-data.js',
 						'dashboardBuilder/javascript/components/library/widgets/metric-box.js',
-						'dashboardBuilder/javascript/components/library/widgets/plotly.js'
+						'dashboardBuilder/javascript/components/library/widgets/3dsurface.js',
+						'dashboardBuilder/javascript/components/library/widgets/windrose.js'
 					],
 	            	dest: 'build/js/dashboard_builder_constants.min.js'
 	            },
@@ -405,7 +416,9 @@ module.exports = function(grunt) {
 		               'concat/min-safe/autocomplete.js',
 					   'concat/min-safe/acl.js',
 					   'concat/min-safe/angular_plotly.js' ,
-						'concat/min-safe/plotly.js' ,
+                        'concat/min-safe/plotly.js' ,
+						'concat/min-safe/3dsurface.js' ,                        
+						'concat/min-safe/windrose.js' ,
 						'concat/min-safe/metricBox.js' ,
 		               /**
 		               'concat/min-safe/module.js',
@@ -424,8 +437,20 @@ module.exports = function(grunt) {
 	            },
 	            
 	            external_libraries: {
-	            	src: [ 'lib/underscore-min.js', 'lib/handlebars.min.js', 'lib/codemirror.min.js', 'lib/javascript.min.js'],
+	            	src: [ 'lib/underscore-min.js','dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.js','lib/plotly-latest.min.js', 'lib/handlebars.min.js', 'lib/codemirror.min.js', 'lib/javascript.min.js'],
 	            	dest: 'build/js/external_libraries.min.js'
+                },
+                dt_external_libraries: {
+                    src: [ 
+                        'lib/underscore-min.js',
+                        'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.js',
+                        'lib/plotly-latest.min.js',
+                        'lib/justgage.min.js',
+                        'lib/moment.min.js',
+                        'lib/moment-timezone-with-data.min.js',
+                        'lib/javascript.min.js'
+                        ],
+	            	dest: 'build/js/dt_external_libraries.min.js'
 	            },
 	            
 	            external_angular_resources_1: {
@@ -498,9 +523,13 @@ module.exports = function(grunt) {
 			                     'concat/min-safe/map.js',
 			                     'concat/min-safe/grid.js',
 			                     'concat/min-safe/autocomplete.js',
-								 'concat/min-safe/acl.js',
+                                 'concat/min-safe/acl.js',
+                                 'concat/min-safe/angular_dygraphs.js',
+                                 'concat/min-safe/dygraphs.js',
 								 'concat/min-safe/angular_plotly.js' ,
 								'concat/min-safe/plotly.js' ,
+                                'concat/min-safe/3dsurface.js' ,                        
+                                'concat/min-safe/windrose.js' ,
 								'concat/min-safe/metricBox.js' ,
 			                     'concat/min-safe/module.js',
 			                     'concat/min-safe/widgetsConfig.js',
@@ -521,7 +550,8 @@ module.exports = function(grunt) {
 	                     'dashboardBuilder/lib/gridster/angular_gridster.min.css',
 	                     'lib/angular-material.min',
 	                     'dashboard/frontend/UIComponents/Components/odometer/odometer.car.css',
-	                     'dashboard/frontend/UIComponents/Components/thermometer/style.css',
+                         'dashboard/frontend/UIComponents/Components/thermometer/style.css',
+                         'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.css',
 	                     'lib/xeditable.min.css',
 	                     'dashboardBuilder/css/dashboard.css',
 	                     'dashboard/frontend/UIComponents/Components/ACL/ACL.css',
@@ -529,7 +559,7 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/UIComponents/Components/grid/grid.css',
 	                     'dashboard/frontend/UIComponents/Components/list/angucomplete.alt.css',
 						 'dashboard/frontend/UIComponents/Components/map/map.css',
-						 'dashboard/frontend/UIComponents/Components/plotly/plotly.css',
+						 'dashboard/frontend/UIComponents/Components/plotly/windrose.css',
 						 'dashboard/frontend/UIComponents/Components/metricBox/metricBox.css',
 	                     'dashboard/frontend/UIComponents/Components/toggleSwitch/angular_toggle_switch.css',
 	                     'dashboardBuilder/lib/schemaForm/select.min.css',
@@ -543,7 +573,29 @@ module.exports = function(grunt) {
 	                     'lib/neo.min.css'
 	                     ],
 	               dest : 'build/css/UIComponents/Components.css'
-	            }
+                },
+                dt_css : {
+                    src : [
+                          'lib/morris.css',//
+                          'dashboard/frontend/UIComponents/Components/chart/chart.css',//
+                          'dashboard/frontend/UIComponents/Components/searchBox/abn_tree.css',
+                          'dashboardBuilder/lib/gridster/angular_gridster.min.css',//
+                          'dashboard/frontend/UIComponents/Components/odometer/odometer.car.css',//
+                          'dashboard/frontend/UIComponents/Components/thermometer/style.css',//
+                          'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.css',//
+                          'dashboard/frontend/UIComponents/Components/displayCount/count.css',//
+                          'dashboard/frontend/UIComponents/Components/grid/grid.css',//
+                          'dashboard/frontend/UIComponents/Components/map/map.css',//
+                          'dashboard/frontend/UIComponents/Components/plotly/windrose.css',//
+                          'dashboard/frontend/UIComponents/Components/metricBox/metricBox.css',//
+                          'dashboard/frontend/UIComponents/Components/toggleSwitch/angular_toggle_switch.css',//
+                          'lib/rzslider.css',//
+                          'dashboard/frontend/UIComponents/Components/button/button.css',//
+                          'dashboard/frontend/UIComponents/Components/IFrame/IFrame.css',//
+                          'dashboard/frontend/UIComponents/Components/accelerometer/accelerometer.css',//
+                          ],
+                    dest : 'build/css/UIComponents/dt_components.css'
+                 },
 
 	         },
 
@@ -553,7 +605,19 @@ module.exports = function(grunt) {
 			         files : files
 		         },
 		         
-		     	dashboardBuilder: {
+		     	dt_uglify: {
+					files: {
+						'build/js/external_jquery_resources.min.js': ['build/js/external_jquery_resources.min.js'],
+						'build/js/dt_external_libraries.min.js': ['build/js/dt_external_libraries.min.js'],
+						'build/js/angular_resources_1.min.js': ['build/js/angular_resources_1.min.js'],
+						'build/js/angular_resources_2.min.js': ['build/js/angular_resources_2.min.js'],
+						'build/js/angular_resources_3.min.js': ['build/js/angular_resources_3.min.js'],
+						'build/js/directives_1.min.js': ['build/js/directives_1.min.js'],
+						'build/js/directives_2.min.js' : ['build/js/directives_2.min.js'],
+						'build/js/UIComponents/dt_components.min.js': ['build/js/UIComponents/dt_components.min.js'],
+					}
+                },
+                dashboardBuilder: {
 					files: {
 						'build/js/external_jquery_resources.min.js': ['build/js/external_jquery_resources.min.js'],
 						'build/js/external_libraries.min.js': ['build/js/external_libraries.min.js'],
@@ -576,7 +640,12 @@ module.exports = function(grunt) {
 	         	 dashboardBuilder : {
 		            src :  'build/css/UIComponents/Components.css',
 		            dest : 'build/css/UIComponents/Components.min.css'
+                 },
+                 dt_cssmin : {
+		            src :  'build/css/UIComponents/dt_components.css',
+		            dest : 'build/css/UIComponents/dt_components.min.css'
 		         }
+                 
 	         },
 
 	         clean : {
@@ -659,6 +728,21 @@ module.exports = function(grunt) {
 	                                         'concat:css',
 	                                         'uglify:dashboardBuilder',
 	                                         'uglify:dashboardBuilder',
-	                                         'cssmin:dashboardBuilder']);
+                                             'cssmin:dashboardBuilder']);
+    grunt.registerTask('dashboardTemplate', [ 'fetchFromCDN',
+	                                         'fetch_ag_grid', 
+	                                         'ngtemplates',
+	                                         'ngAnnotate', 
+	                                         'concat:external_jquery_resources',
+	                                         'concat:dt_external_libraries',
+	                                         'concat:external_angular_resources_1',
+	                                         'concat:external_angular_resources_2',
+	                                         'concat:external_angular_resources_3',
+	                                         'concat:directives_1',
+	                                         'concat:directives_2',
+											 'concat:components',
+	                                         'concat:dt_css',
+	                                         'cssmin:dt_cssmin',
+	                                         'uglify:dt_uglify']);
 
 };
