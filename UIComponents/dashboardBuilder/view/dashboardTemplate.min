@@ -13,7 +13,7 @@
   
     &lt;!-- Libraries --&gt;
     &lt;script src=&quot;/UIComponents/build/external/js/dt_external_libraries.min.js&quot;&gt;&lt;/script&gt;	
-    &lt;script src=&quot;//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&amp;libraries=drawing,visualization&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;//maps.google.com/maps/api/js?key={{dashboardSettings.googleMapsKey}}&amp;libraries=drawing,visualization&quot;&gt;&lt;/script&gt;
   
     &lt;!-- NG material --&gt;
     &lt;script src=&quot;/UIComponents/build/external/js/external_angular_resources_1.min.js&quot;&gt;&lt;/script&gt;

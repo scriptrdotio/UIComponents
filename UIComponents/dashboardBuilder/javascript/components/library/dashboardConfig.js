@@ -1,5 +1,8 @@
+const __GoogleMapsScriptrKey__="AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I";
+
 angular
     .module('DashboardBuilder')
+	.constant("GoogleMapsScriptrKey",__GoogleMapsScriptrKey__)
     .constant(
     "dashboardConfig",
     (function() {
@@ -31,6 +34,7 @@ angular
               "defaults": {
                  "publishChannel": "requestChannel",
                  "subscribeChannel": "responseChannel",
+                  "googleMapsKey":__GoogleMapsScriptrKey__,
                  "theme": "light",
                  "style": __defaultsThemeStyles__["light"]
               },
@@ -56,6 +60,28 @@ angular
                                       "items": [
                                          "publishChannel",
                                          "subscribeChannel"
+                                      ]
+                                   }
+                                ]
+                             }
+                          ]
+                       },
+                        {
+                          "title": "Google Maps",
+                          "items": [
+                             {
+                                "type": "section",
+                                "htmlClass": "row",
+                                "items": [
+                                   
+                                   {
+                                      "type": "section",
+                                      "htmlClass": "col-xs-12",
+                                      "items": [
+                                         {
+                                           "key":"googleMapsKey",
+                                             "placeholder":"API Key"
+                                         }
                                       ]
                                    }
                                 ]
@@ -1198,6 +1224,11 @@ angular
                        "title": "Subscribe channel",
                        "type": "string",
                        "description": "Widgets use the subscribe channel to consume the messages published over that channel as a data source."
+                    },
+                     "googleMapsKey": {
+                       "title": "Google Maps Key",
+                       "type": "string",
+                       "description": "Google Maps API key to be used with the maps widget."
                     },
                     "theme": {
                        "title": "Theme",
