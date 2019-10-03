@@ -2733,6 +2733,13 @@ angular.module('schemaForm').directive('schemaValidate', ['sfValidator', '$parse
 
         var error = null;
         var form = scope.$eval(attrs.schemaValidate);
+          
+       if(typeof(scope.form) !== 'undefined' && scope.form.schema.type === 'boolean') {
+           var value = scope.$eval(attrs.ngModel);
+           var boolvalue = (value === true || value === 'true' || value === '1' || value === 'no');
+           scope.ngModel.$setViewValue(boolvalue);
+           scope.ngModel.$render();
+       }
 
         if (form.copyValueTo) {
           ngModel.$viewChangeListeners.push(function() {
