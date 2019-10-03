@@ -46,7 +46,7 @@ angular
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, common, widgetsConfig, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle, dashboardConfig,GoogleMapsScriptrKey) {
+    controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, common, widgetsConfig, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle, dashboardConfig) {
       
       this.wsClient = wsClient;
       var self = this;
@@ -666,9 +666,7 @@ angular
 
           
             modalInstance.result.then(function (dashboardSettingsModel) {
-                if(!dashboardSettingsModel.googleMapsKey){
-                    dashboardSettingsModel.googleMapsKey=GoogleMapsScriptrKey;
-                }
+               
               console.log("modal-component dashboard settings data :", dashboardSettingsModel ,"submitted at: " + new Date());
               if(dashboardSettingsModel != "cancel") {
                 if(self.dashboardSettings.defaults && self.dashboardSettings.defaults.publishChannel != dashboardSettingsModel.publishChannel){
@@ -677,6 +675,7 @@ angular
                 if(self.dashboardSettings.defaults && self.dashboardSettings.defaults.subscribeChannel != dashboardSettingsModel.subscribeChannel){
                   	self.wsClient.updateSubscriptionChannel(dashboardSettingsModel.subscribeChannel);
                 } 
+                  
                 
                 self.dashboardSettings.defaults = angular.copy(dashboardSettingsModel);
                   
