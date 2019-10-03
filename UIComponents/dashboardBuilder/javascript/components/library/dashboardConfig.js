@@ -2,7 +2,6 @@
 
 angular
     .module('DashboardBuilder')
-	.constant("GoogleMapsScriptrKey",__GoogleMapsScriptrKey__)
     .constant(
     "dashboardConfig",
     (function() {
