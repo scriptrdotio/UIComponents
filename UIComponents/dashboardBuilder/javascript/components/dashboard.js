@@ -818,6 +818,14 @@ angular
                this.widgets = [];
                var widgets = JSON.parse(pluginContent.metadata.plugindata).wdg;
                 _.map(widgets, function(wdg, index) {
+                  //MFE: backward compatibility for stored dahsboard where gridst. cols were 5 and row was match
+                  if(wdg.schema && wdg.form) {
+                      wdg.sizeX = wdg.sizeX * 2;
+                      wdg.sizeY = wdg.sizeY * 3;
+                      wdg.col = wdg.col * 2;
+                      wdg.row = wdg.row * 3;
+                  }
+                    
                   var widgetDefinition =  _.findWhere(self.widgetsConfig, {name: wdg.name});
                    
                   //MFE: Needs to merge with addWidget, we are repeating logic
@@ -1126,13 +1134,7 @@ angular
             }
               
           }
-          
-         
-          
       };
-        
-        
-        
 
       this.onSubmit = function(form) {
         // First we broadcast an event so all fields validate themselves
