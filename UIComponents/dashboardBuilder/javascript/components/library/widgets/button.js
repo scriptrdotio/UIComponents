@@ -9,7 +9,8 @@ const __BUTTON__ = {
         "type": "btn-success",
         "enable-resize": true,
         "size": "large",
-        "label": "Refresh"
+        "label": "Refresh",
+        "boxHeader": false
         // ,"api" : "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"
     },
     "box": {
@@ -112,14 +113,6 @@ const __BUTTON__ = {
                         "htmlClass": "col-xs-6",
                         "items": [{
                             "key": "is-disabled",
-                            "type": "radios-inline",
-                            titleMap: [{
-                                value: "true",
-                                name: "True"
-                            }, {
-                                value: "false",
-                                name: "False"
-                            }]
                         }]
                     }]
                 }]
@@ -132,7 +125,7 @@ const __BUTTON__ = {
             "is-disabled": {
                 "title": "Disabled",
                 "type": "boolean",
-                "description": "Set to true to disbale the Button.",
+                "description": "Check to disbale the Button.",
             },
             "type": {
                 "title": "Type",

@@ -9,6 +9,7 @@ const __ALERT__ = {
         "transport": "wss",
         "boxLabel": "Alert",
         "msg-tag": "alert",
+        "boxHeader": false,
         "data": "{\"data\":\"Contextual Message.\", \"type\": \"INFO\"}",
         "showHeader": "false",
         "type":"info",

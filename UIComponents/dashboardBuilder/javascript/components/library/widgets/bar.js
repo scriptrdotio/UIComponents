@@ -7,7 +7,7 @@ const __BAR__ = {
     "defaults": {
         "type": "bar",
         "boxLabel": "Bar Chart",
-        "stacked": "true",
+        "stacked": true,
         "xkey": "y",
         "ykeys": "[\"a\", \"b\"]",
         "labels": "[\"Serie A\", \"Serie B\"]",
@@ -60,17 +60,16 @@ const __BAR__ = {
                                     "pre-units",
                                     "ymin",
                                     {
-                                        "key": "stacked",
+                                        "key": "stacked"
                                       
                                     },
                                     {
-                                        key: "show-legend",
-                                       
+                                        key: "show-legend"
                                     },
                                     {
                                         type: "radios-inline",
                                         key: "legend-type",
-                                        condition: "model['show-legend'] ==true",
+                                        condition: "model['show-legend'] == true",
                                         titleMap: [{
                                             value: "hover",
                                             name: "Hover"
@@ -277,7 +276,7 @@ const __BAR__ = {
             "stacked": {
                 "title": "Stacked",
                 "type": "boolean",
-                "default": "false",
+                "default": false,
                 "description": "Set to true to draw bars stacked vertically."
             },
             "show-legend": {
@@ -311,7 +310,7 @@ const __BAR__ = {
                 "title": "Grid",
                 "type": "boolean",
                 "description": "Set to false to disable drawing the horizontal grid lines.",
-                "default": "true"
+                "default": true
             },
             "grid-text-color": {
                 "title": "Grid text color",

@@ -20,10 +20,10 @@ const __MAP__ = {
       "on-format-data": "return data;",
       "transport": "wss",
       "boxLabel": "Map",
-      "clustered-view": "true",
+      "clustered-view": true,
       "cluster-zoom": 8,
-      "heatmap": "false",
-      "bounce": "true",
+      "heatmap": false,
+      "bounce": true,
       "cluster-styles": [
          {
             "url": "https://googlemaps.github.io/js-marker-clusterer/images/m1.png",
@@ -49,16 +49,7 @@ const __MAP__ = {
          "rgba(0, 255, 255, 1)",
          "rgba(0, 191, 255, 1)",
          "rgba(0, 127, 255, 1)",
-         "rgba(0, 63, 255, 1)",
-         "rgba(0, 0, 255, 1)",
-         "rgba(0, 0, 223, 1)",
-         "rgba(0, 0, 191, 1)",
-         "rgba(0, 0, 159, 1)",
-         "rgba(0, 0, 127, 1)",
-         "rgba(63, 0, 91, 1)",
-         "rgba(127, 0, 63, 1)",
-         "rgba(191, 0, 31, 1)",
-         "rgba(255, 0, 0, 1)"
+         "rgba(0, 63, 255, 1)"
       ],
       "simple-sources-info": [
          {
@@ -68,7 +59,7 @@ const __MAP__ = {
          }
       ],
       "resize": "false",
-      "data": {
+      "data": JSON.stringify({
          "253812": {
             "550153": [
                {
@@ -353,7 +344,7 @@ const __MAP__ = {
                "550191"
             ]
          }
-      },
+      }),
       "msg-tag": "everyone-main-live"
    },
    "box": {
@@ -563,7 +554,7 @@ const __MAP__ = {
                ]
             },
             {
-               "title": "Map Heat",
+               "title": "Heatmap",
                "items": [
                   {
                      "type": "section",
@@ -571,27 +562,35 @@ const __MAP__ = {
                      "items": [
                         {
                            "type": "section",
-                           "htmlClass": "col-xs-6",
-                           "items": [
-                              {
-                                 "key": "heatmap"
-                              },
-                              "heat-map-radius"
-                           ]
-                        },
-                        {
-                           "type": "section",
-                           "htmlClass": "col-xs-6",
-                           "items": [
-                              "heat-map-weight",
-                              "heat-map-opacity"
-                           ]
+                           "htmlClass": "col-xs-12",
+                           "items": ["heatmap"]
                         },
                         {
                            "type": "section",
                            "htmlClass": "col-xs-12",
+                           "title": "Heat map properties",
+                           "condition": "model['heatmap']==true",
                            "items": [
                               {
+                                "key": "heat-map-radius",
+                                "htmlClass":  "col-xs-3"
+                              },
+                              {
+                                "key": "heat-map-weight",
+                                "htmlClass": "col-xs-3"
+                              },
+                              {
+                                "key": "heat-map-opacity",
+                                "htmlClass": "col-xs-3"
+                              }
+                           ]
+                        },
+                        {   "type": "section",
+                            "htmlClass": "col-xs-12",
+                            "condition": "model['heatmap']==true",
+                            "items": [
+                                {
+                                 "htmlClass": "col-xs-6",
                                  "key": "heat-map-gradient",
                                  "items": [
                                     {
@@ -624,7 +623,7 @@ const __MAP__ = {
                                     }
                                  ]
                               }
-                           ]
+                            ]
                         }
                      ]
                   }
@@ -840,30 +839,36 @@ const __MAP__ = {
             }
          },
          "heatmap": {
-            "title": "Heat Map",
+            "title": "Show heatmap toggle",
             "type": "boolean",
-            "description": "Enable/disable heat map."
+             "default": false
          },
          "heat-map-radius": {
             "title": "Heat Map Radius",
             "type": "number",
-            "description": ""
+            "default": 40
          },
          "heat-map-weight": {
             "title": "Heat Map Weight",
             "type": "number",
-            "description": ""
+            "default": 40
          },
          "heat-map-opacity": {
             "title": "Heat Map Opacity",
             "type": "number",
-            "description": ""
+            "default": 0.8
          },
          "heat-map-gradient": {
             "title": "Heat Map Gradient",
             "type": "array",
             "description": "",
-            "default": [],
+            "default": [
+                 "rgba(0, 255, 255, 0)",
+                 "rgba(0, 255, 255, 1)",
+                 "rgba(0, 191, 255, 1)",
+                 "rgba(0, 127, 255, 1)",
+                 "rgba(0, 63, 255, 1)"
+            ],
             "items": {
                "type": "string",
                "format": "color"
@@ -936,12 +941,12 @@ const __MAP__ = {
             }
          },
          "data": {
-            "title": "Markers data",
+            "title": "Static Markers data",
             "type": "string",
             "description": "Static markers data",
             "x-schema-form": {
                "type": "textarea",
-               "placeholder": {
+               "placeholder": JSON.stringify({
                   "253812": {
                      "550153": [
                         {
@@ -1223,7 +1228,7 @@ const __MAP__ = {
                         "550191"
                      ]
                   }
-               }
+               })
             }
          },
          "path-stroke-opacity": {
