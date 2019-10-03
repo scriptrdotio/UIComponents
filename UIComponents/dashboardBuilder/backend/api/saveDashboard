@@ -82,7 +82,8 @@ if(response.metadata.status == "failure") {
     if(queryResults.metadata.status == "failure") {
       return {status : "failure", errorDetails : "an error has occured when quering customDashboards doc ", errorMsg: queryResults};
     } else{
-      fields["key"] = queryResults.result.documents[0].key
+      if( queryResults.result && queryResults.result.documents && queryResults.result.documents.length > 0)
+      	fields["key"] = queryResults.result.documents[0].key
     }
   }
   var saveFieldsResult = documents.save(fields);
