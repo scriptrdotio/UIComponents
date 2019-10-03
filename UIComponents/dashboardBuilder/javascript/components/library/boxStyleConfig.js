@@ -5,10 +5,14 @@ angular
         {
             "formTab": {
                 title: "Box Properties",
-                items: ["boxLabel",
-                    {
-                        key: "boxHeader",
+                items: [
+                    { 	
+                        "key": "boxHeader"
                        
+                    },
+                    {
+                        "condition": "model.boxHeader === true",
+                        "key": "boxLabel"
                     }
                 ]
             },
@@ -21,10 +25,10 @@ angular
                     "maxLength": 40
                 },
                 "boxHeader": {
-                    "title": "Has Header",
+                    "title": "Has header title",
                     "type": "boolean",
-                    "default": "true",
-                    "description": "Check to display a chart header."
+                    "default": true,
+                    "description": "Check to display a chart header title."
                 }
             }
 
