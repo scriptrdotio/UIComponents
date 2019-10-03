@@ -47,6 +47,10 @@ angular
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
     controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, common, widgetsConfig, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle, dashboardConfig) {
+        
+        $rootScope.isMobileDevice=function(){
+            return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+        }
       
       this.wsClient = wsClient;
       var self = this;
