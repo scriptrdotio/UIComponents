@@ -1201,7 +1201,7 @@ angular
                        "title": "Subscribe channel",
                        "type": "string",
                        "description": "Widgets use the subscribe channel to consume the messages published over that channel as a data source."
-                    }
+                    },
                     "theme": {
                        "title": "Theme",
                        "type": "string",
