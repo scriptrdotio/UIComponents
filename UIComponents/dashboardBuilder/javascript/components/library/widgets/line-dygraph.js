@@ -1,5 +1,5 @@
 const __LINE_DYGRAPH__ = {
-    "name": "line",
+    "name": "linedygraph",
     "label": "Line Chart",
     "class": "scriptr-dygraphs",
     "commonData": true,
