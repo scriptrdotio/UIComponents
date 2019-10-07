@@ -160,39 +160,39 @@ angular
              }
 
              //if yconfig streatch it to individuals 
-             if(this.yconfig){
+             if(self.yconfig){
                   var ykeys = [];
                   var ylabels = [];
                   var ycolors = [];
-                 this.yconfig.forEach(function(e){
+                 self.yconfig.forEach(function(e){
                      ykeys.push(e.key);
                      ylabels.push(e.label);
                      ycolors.push(e.color);
                  });
-                 this.ykeys=JSON.stringify(ykeys);
-                 this.labels=JSON.stringify(ylabels);
-                 this.colors=ycolors;
+                 self.ykeys=JSON.stringify(ykeys);
+                 self.labels=JSON.stringify(ylabels);
+                 self.colors=ycolors;
              }
              
              //if eventConfig streatch it to individuals 
-             if(this.goalsconfig){
-                 this.goals=[];
-                 this.goalLineColors=[];
-                 this.goalsconfig.forEach(function(e){
-                     this.goals.push(e.goal);
-                    // this.goalStrokeWidth=e.storkeWidth;
-                     this.goalLineColors.push(e.lineColor);
+             if(self.goalsconfig){
+                 self.goals=[];
+                 self.goalLineColors=[];
+                 self.goalsconfig.forEach(function(e){
+                     self.goals.push(e.goal);
+                    // self.goalStrokeWidth=e.storkeWidth;
+                     self.goalLineColors.push(e.lineColor);
                  });
                 
              }
              //if goalsConfig streatch it to individuals 
-             if(this.eventsconfig){
-                 this.events=[];
-                 this.eventLineColors=[];
-                 this.eventsconfig.forEach(function(e){
-                     this.events.push(e.event);
-                    // this.eventStrokeWidth=e.storkeWidth;
-                     this.eventLineColors.push(e.lineColor);
+             if(self.eventsconfig){
+                 self.events=[];
+                 self.eventLineColors=[];
+                 self.eventsconfig.forEach(function(e){
+                     self.events.push(e.event);
+                    // self.eventStrokeWidth=e.storkeWidth;
+                     self.eventLineColors.push(e.lineColor);
                  });
                  
                  
