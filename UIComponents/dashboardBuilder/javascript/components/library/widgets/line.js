@@ -1,3 +1,44 @@
+const __onLineArraysChanged__ = function (modelValue, form, model) {
+    //if yconfig streatch it to individuals 
+    if (model.yconfig) {
+        var ykeys = [];
+        var ylabels = [];
+        var ycolors = [];
+        model.yconfig.forEach(function (e) {
+            ykeys.push(e.key);
+            ylabels.push(e.label);
+            ycolors.push(e.color);
+        });
+        model.ykeys = JSON.stringify(ykeys);
+        model.labels = JSON.stringify(ylabels);
+        model.colors = ycolors;
+    }
+
+    //if eventConfig streatch it to individuals 
+    if (model.goalsconfig) {
+        var goals = [];
+        var gColors = [];
+        model.goalsconfig.forEach(function (e) {
+            goals.push(e.goal);
+            gColors.push(e.lineColor);
+        });
+        model.goals = goals;
+        model['goal-line-colors'] = gColors;
+    }
+    //if goalsConfig streatch it to individuals 
+    if (model.eventsconfig) {
+        var events = [];
+        var eColors = [];
+        model.eventsconfig.forEach(function (e) {
+            events.push(e.event);
+            eColors.push(e.lineColor);
+        });
+        model.events = events;
+        model['event-line-colors'] = eColors;
+    }
+}
+
+
 const __LINE__ = {
     "name": "line",
     "label": "Line Chart",
@@ -28,6 +69,8 @@ const __LINE__ = {
     "form": [{
         type: "tabs",
         tabs: [
+
+
             {
                 title: "X",
                 items: [{
@@ -36,11 +79,77 @@ const __LINE__ = {
                     "items": [{
                         "type": "section",
                         "htmlClass": "col-xs-12",
-                        "items": ["xkey", "xlabel-angle", {
-                            
-                            key: "parse-time",
-                           
-                        }]
+                        "items": [
+                            "xkey",
+                            "xlabel-angle",
+                            {
+
+                                key: "parse-time",
+
+                            },
+                            {
+                                key: "_dummy",
+                                "htmlClass": "hidden",
+                                onFieldLoad: function (modelValue, form, model) {
+                                    //build yconfig
+                                    if (!model.yconfig || !model.yconfig.length) {
+                                        var ykeys = JSON.parse(model.ykeys);
+                                        var ylabels = JSON.parse(model.labels);
+                                        var ycolors = model.colors;
+                                        var keysNum = ykeys.length;
+                                        // clean the array
+                                        model.yconfig = [];
+                                        for (var i = 0; i < keysNum; i++) {
+                                            var e = {
+                                                key: ykeys[i],
+                                                color: ycolors[i],
+                                                label: ylabels[i],
+                                            };
+                                            model.yconfig.push(e);
+                                        }
+                                    }
+
+
+                                    //build goals
+                                    if (!model.goalsconfig || !model.goalsconfig.length) {
+                                        var goalsNum = model.goals.length;
+                                        // clean the array
+                                        model.goals = [];
+                                        for (var i = 0; i < goalsNum; i++) {
+                                            if (model.goals[i]) {
+                                                var e = {
+                                                    goal: model.goals[i],
+                                                    //storkeWidth: model['goal-stroke-width'],
+                                                    lineColor: model['goal-line-colors'][i],
+                                                };
+                                                model.goalsconfig.push(e);
+                                            }
+
+                                        }
+                                    }
+
+                                    //build events
+                                    if (!model.eventsconfig || !model.eventsconfig.length) {
+                                        var eventsNum = model.events.length;
+                                        // clean the array
+                                        model.events = [];
+                                        for (var i = 0; i < eventsNum; i++) {
+                                            if (model.events[i]) {
+                                                var e = {
+                                                    event: model.events[i],
+                                                    //storkeWidth: model['event-stroke-width'],
+                                                    lineColor: model['event-line-colors'][i],
+                                                };
+                                                model.eventsconfig.push(e);
+                                            }
+
+                                        }
+                                    }
+
+                                }
+                            }
+
+                        ]
                     }]
                 }]
             },
@@ -54,15 +163,59 @@ const __LINE__ = {
                         "items": [
                             {
                                 "type": "section",
+                                "htmlClass": "col-xs-12",
+                                "items": [
+                                    {
+                                        key: "yconfig",
+                                        title: "Y Configuration",
+                                        startEmpty: true,
+                                        onChange: __onLineArraysChanged__,
+                                        items: [{
+                                            "type": "section",
+                                            "htmlClass": "row",
+                                            "items": [
+                                                {
+                                                    "type": "section",
+                                                    "htmlClass": "col-sm-4",
+                                                    "items": [{
+                                                        key: "yconfig[].key",
+                                                        onChange: __onLineArraysChanged__
+                                                    }]
+                                                },
+                                                {
+                                                    "type": "section",
+                                                    "htmlClass": "col-sm-4",
+                                                    "items": [{
+                                                        key: "yconfig[].label",
+                                                        onChange: __onLineArraysChanged__
+                                                    }]
+                                                },
+                                                {
+                                                    "type": "section",
+                                                    "htmlClass": "col-sm-4",
+                                                    "items": [{
+                                                        key: "yconfig[].color",
+                                                        "colorFormat": "hex",
+                                                        onChange: __onLineArraysChanged__
+                                                    }]
+                                                }]
+                                        }
+                                        ],
+
+                                    },
+                                ]
+                            },
+                            {
+                                "type": "section",
                                 "htmlClass": "col-xs-6",
                                 "items": [
-                                    "ykeys",
+
                                     "pre-units",
                                     "ymin",
                                     {
-                                        
+
                                         key: "show-legend",
-                                        
+
                                     },
                                     {
                                         type: "radios-inline",
@@ -92,7 +245,7 @@ const __LINE__ = {
                             {
                                 "type": "section",
                                 "htmlClass": "col-xs-6",
-                                "items": ["labels",
+                                "items": [
                                     "post-units", "ymax" // ,"ylabel-format"
                                 ]
                             }]
@@ -108,13 +261,13 @@ const __LINE__ = {
                             "type": "section",
                             "htmlClass": "col-xs-6",
                             "items": [{
-                                
+
                                 key: "grid",
-                               
+
                             }, {
-                               
+
                                 key: "axes",
-                                
+
                             }, {
                                 "key": "grid-text-color",
                                 "colorFormat": "hex3"
@@ -201,16 +354,10 @@ const __LINE__ = {
                         "type": "section",
                         "htmlClass": "col-xs-6",
                         "items": ["line-width", {
-                           
+
                             key: "smooth",
-                            
-                        }, {
-                                "key": "colors",
-                                "items": [{
-                                    "key": "colors[]",
-                                    "colorFormat": "hex3"
-                                }]
-                            }]
+
+                        }]
                     }, {
                         "type": "section",
                         "htmlClass": "col-xs-6",
@@ -232,21 +379,46 @@ const __LINE__ = {
                     "items": [
                         {
                             "type": "section",
-                            "htmlClass": "col-xs-6",
-                            "items": ["goals",
+                            "htmlClass": "col-xs-3",
+                            "items": [
                                 "goal-stroke-width"]
                         },
                         {
                             "type": "section",
-                            "htmlClass": "col-xs-6",
-                            "items": [{
-                                "key": "goal-line-colors",
-                                "items": [{
-                                    "key": "goal-line-colors[]",
-                                    "colorFormat": "hex3"
-                                }]
-                            }]
-                        }]
+                            "htmlClass": "col-xs-9",
+                            "items": [
+                                {
+                                    key: "goalsconfig",
+                                    title: "Goals Configuration",
+                                    startEmpty: true,
+                                    onChange: __onLineArraysChanged__,
+                                    items: [{
+                                        "type": "section",
+                                        "htmlClass": "row",
+                                        "items": [
+                                            {
+                                                "type": "section",
+                                                "htmlClass": "col-sm-4",
+                                                "items": [{
+                                                    key: "goalsconfig[].goal",
+                                                    onChange: __onLineArraysChanged__
+                                                }]
+                                            },
+                                            {
+                                                "type": "section",
+                                                "htmlClass": "col-sm-4",
+                                                "items": [{
+                                                    key: "goalsconfig[].lineColor",
+                                                    "colorFormat": "hex",
+                                                    onChange: __onLineArraysChanged__
+                                                }]
+                                            }]
+                                    }
+                                    ],
+
+                                },
+                            ]
+                        },]
                 }]
             },
             {
@@ -257,21 +429,46 @@ const __LINE__ = {
                     "items": [
                         {
                             "type": "section",
-                            "htmlClass": "col-xs-6",
-                            "items": ["events",
+                            "htmlClass": "col-xs-3",
+                            "items": [
                                 "event-stroke-width"]
                         },
                         {
                             "type": "section",
-                            "htmlClass": "col-xs-6",
-                            "items": [{
-                                "key": "event-line-colors",
-                                "items": [{
-                                    "key": "event-line-colors[]",
-                                    "colorFormat": "hex3"
-                                }]
-                            }]
-                        }]
+                            "htmlClass": "col-xs-9",
+                            "items": [
+                                {
+                                    key: "eventsconfig",
+                                    title: "Events Configuration",
+                                    startEmpty: true,
+                                    onChange: __onLineArraysChanged__,
+                                    items: [{
+                                        "type": "section",
+                                        "htmlClass": "row",
+                                        "items": [
+                                            {
+                                                "type": "section",
+                                                "htmlClass": "col-sm-4",
+                                                "items": [{
+                                                    key: "eventsconfig[].event",
+                                                    onChange: __onLineArraysChanged__
+                                                }]
+                                            },
+                                            {
+                                                "type": "section",
+                                                "htmlClass": "col-sm-4",
+                                                "items": [{
+                                                    key: "eventsconfig[].lineColor",
+                                                    "colorFormat": "hex",
+                                                    onChange: __onLineArraysChanged__
+                                                }]
+                                            }]
+                                    }
+                                    ],
+
+                                },
+                            ]
+                        },]
                 }]
             }]
     }],
@@ -569,6 +766,66 @@ const __LINE__ = {
                 "title": "Date format",
                 "type": "string",
                 "description": "A function that accepts millisecond timestamps and formats them for display as chart labels. default is function (x) { return new Date(x).toString() }."
+            }, "yconfig": {
+                "type": "array",
+                "default": [],
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "key": {
+                            "title": "Key",
+                            "type": "string"
+                        },
+                        "label": {
+                            "title": "Label",
+                            "type": "string"
+                        },
+                        "color": {
+                            "title": "Color",
+                            "type": "string",
+                            "format": "color",
+                        }
+                    }
+                }
+            }, "goalsconfig": {
+                "type": "array",
+                "default": [],
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "goal": {
+                            "title": "goal",
+                            "type": "string"
+                        },
+
+                        "lineColor": {
+                            "title": "Line Color",
+                            "type": "string",
+                            "format": "color",
+                        }
+                    }
+                }
+            }, "eventsconfig": {
+                "type": "array",
+                "default": [],
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "event": {
+                            "title": "event",
+                            "type": "string"
+                        },
+
+                        "lineColor": {
+                            "title": "Line Color",
+                            "type": "string",
+                            "format": "color",
+                        }
+                    }
+                }
+            }, "_dummy": {
+                "title": "Dummy not used Value",
+                "type": "string",
             }
         },
         "required": ["xkey", "ykeys"]

@@ -75,6 +75,7 @@ angular
         "type" : "@",
         
         "xkey" : "@",
+        "yconfig" : "<?",
         
         "ykeys" : "<?",
          
@@ -112,9 +113,12 @@ angular
         "goals": "@", 
         "goalStrokeWidth": "@",
         "goalLineColors": "@", 
+        "goalsconfig" : "<?",
         "events": "@", 
         "eventStrokeWidth": "@", 
         "eventLineColors": "@", 
+        "eventconfig" : "<?",
+          
         "continuousLine": "@",
         "axes": "@", 
         "grid": "@", 
@@ -154,7 +158,46 @@ angular
              if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
                this.noResults = true;
              }
-            
+
+             //if yconfig streatch it to individuals 
+             if(this.yconfig){
+                  var ykeys = [];
+                  var ylabels = [];
+                  var ycolors = [];
+                 this.yconfig.forEach(function(e){
+                     ykeys.push(e.key);
+                     ylabels.push(e.label);
+                     ycolors.push(e.color);
+                 });
+                 this.ykeys=JSON.stringify(ykeys);
+                 this.labels=JSON.stringify(ylabels);
+                 this.colors=ycolors;
+             }
+             
+             //if eventConfig streatch it to individuals 
+             if(this.goalsconfig){
+                 this.goals=[];
+                 this.goalLineColors=[];
+                 this.goalsconfig.forEach(function(e){
+                     this.goals.push(e.goal);
+                    // this.goalStrokeWidth=e.storkeWidth;
+                     this.goalLineColors.push(e.lineColor);
+                 });
+                
+             }
+             //if goalsConfig streatch it to individuals 
+             if(this.eventsconfig){
+                 this.events=[];
+                 this.eventLineColors=[];
+                 this.eventsconfig.forEach(function(e){
+                     this.events.push(e.event);
+                    // this.eventStrokeWidth=e.storkeWidth;
+                     this.eventLineColors.push(e.lineColor);
+                 });
+                 
+                 
+             }
+             
            	 //this.type = (this.type) ? this.type : "line";
            
              this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];
