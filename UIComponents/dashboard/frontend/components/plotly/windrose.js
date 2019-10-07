@@ -64,10 +64,10 @@ angular
                         radialaxis: {ticksuffix: '%'},
                         orientation: 270,
                         margin: {
-                            l: 10,
-                            r: 0,
-                            b: 5,
-                            t: 5,
+                            l: 25,
+                            r: 15,
+                            b: 10,
+                            t: 10,
                         }
                     };
                     
@@ -121,10 +121,10 @@ angular
                         width: self.style["width"],
                         height: self.style["height"],
                         margin: {
-                            l: 10,
-                            r: 0,
-                            b: 5,
-                            t: 5,
+                            l: 25,
+                            r: 15,
+                            b: 10,
+                            t: 10,
                         }
                     };
                 }

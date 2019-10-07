@@ -877,14 +877,14 @@
 .dashboardTheme .gridster-mobile .wind-rose .plotly-chart-dimension {
   height: auto;
 }
-.dashboardTheme .gridster-mobile .wind-rose .js-plotly-plot .plotly div {
+.dashboardTheme .gridster-mobile .wind-rose .plotly-chart-dimension .js-plotly-plot .plotly div {
   height: auto!important;
 }
-.dashboardTheme .gridster-mobile .wind-rose .js-plotly-plot .plotly svg {
+.dashboardTheme .gridster-mobile .wind-rose .plotly-chart-dimension .js-plotly-plot .plotly svg {
   height: 35%;
 }
-.dashboardTheme .gridster-mobile .wind-rose .js-plotly-plot .plotly svg .outer-group {
-  transform: translate(0, 0);
+.dashboardTheme .gridster-mobile .wind-rose .plotly-chart-dimension .js-plotly-plot .plotly svg .outer-group {
+  transform: translate(0, 20px);
 }
 .dashboardTheme .gridster-mobile .accelerometer-wrapper {
   height: 50%;
