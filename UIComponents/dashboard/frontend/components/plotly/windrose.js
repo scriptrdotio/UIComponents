@@ -48,7 +48,7 @@ angular
                     console.log("on init started")
                	  this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
                     
-                    this.plotCustomRanges = (this.customRanges && this.customRanges.length > 0) ? this.customRanges :  [{"color": "#CC5464", "lo": 0, "hi": 2}, {"color": "#FCC717", "lo": 2, "hi": 4}, {"color": "#38B9D6", "lo": 4, "hi": 6}, {"color": "#1DBC68", "lo": 6, "hi": 8}, {"color": "#E90088", "lo": 8, "hi": 10}, {"color": "#c64dff", "lo": 10, "hi": 20}];
+                    this.plotCustomRanges = (this.customRanges && this.customRanges.length > 0) ? this.customRanges :  [{"color": "#CC5464", "lo": 0, "hi": 2}, {"color": "#FCC717", "lo": 2, "hi": 4}, {"color": "#38B9D6", "lo": 4, "hi": 6}, {"color": "#1DBC68", "lo": 6, "hi": 8}, {"color": "#E90088", "lo": 8, "hi": 10}, {"color": "#ffac47", "lo": 10, "hi": 20}];
                     
                     this.data = this.data ? this.data : [];
                     
@@ -62,7 +62,13 @@ angular
                         title: '',
                         font: {size: this.fontSize},
                         radialaxis: {ticksuffix: '%'},
-                        orientation: 270
+                        orientation: 270,
+                        margin: {
+                            l: 10,
+                            r: 0,
+                            b: 5,
+                            t: 5,
+                        }
                     };
                     
                     //get highest value in ranges
@@ -113,7 +119,13 @@ angular
 						radialaxis: {ticksuffix: '%'},
                         orientation: 270,
                         width: self.style["width"],
-                        height: self.style["height"]
+                        height: self.style["height"],
+                        margin: {
+                            l: 10,
+                            r: 0,
+                            b: 5,
+                            t: 5,
+                        }
                     };
                 }
 
