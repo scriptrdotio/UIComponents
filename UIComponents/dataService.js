@@ -6,7 +6,7 @@ angular.module('DataService', []).service(
             var defer = $q.defer();
             var params = {};
             if (useWindowParams == "true") {
-                params = angular.merge($location.search(), apiParams)
+                params = angular.merge( apiParams,$location.search())
             } else {
                 params = angular.copy(apiParams);
             }
@@ -59,7 +59,7 @@ angular.module('DataService', []).service(
 
             var params = {};
             if (useWindowParams == "true") {
-                params = angular.merge($location.search(), apiParams)
+                params = angular.merge( apiParams,$location.search())
             } else {
                 params = angular.copy(apiParams);
             }
