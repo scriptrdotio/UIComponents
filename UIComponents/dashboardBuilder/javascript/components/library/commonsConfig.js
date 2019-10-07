@@ -152,10 +152,10 @@ angular
                     "type": "string",
                     "description": "Callback function to be called after data is returned from backend."
                 },"use-window-params": {
-                    "title": "Use Window Params",
+                    "title": "Merge Window Params",
                     "type": "boolean",
                     "default": false,
-                    "description": "This Need some description."
+                    "description": "Merge URL query params with the widget api params."
                 },"fetch-interval": {
                     "title": "Fetch Interval",
                     "type": "number",
