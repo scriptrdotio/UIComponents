@@ -584,7 +584,7 @@ const __LINE__ = {
             "parse-time": {
                 "title": "Parse time",
                 "type": "boolean",
-                "default": "true",
+                "default": false,
                 "description": "Set to false to skip time/date parsing for X values, instead treating them as an equally-spaced series."
             },
             "post-units": {
