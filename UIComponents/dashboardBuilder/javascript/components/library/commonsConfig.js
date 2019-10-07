@@ -39,6 +39,9 @@ angular
                                     "value": "GET",
                                     "name": "GET"
                                 }]
+                            },{
+                                key:"fetch-interval",
+                                "condition": "model.transport=='https'",
                             }]
                         }]
                     },
@@ -52,22 +55,10 @@ angular
                         }, {
                             "type": "section",
                             "htmlClass": "col-xs-6",
-                            "items": ["api-params"]
+                            "items": ["api-params","use-window-params"]
                         }]
                     },
-                     {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [{
-                            "type": "section",
-                            "htmlClass": "col-xs-6",
-                            "items": ["use-window-params"]
-                        }, {
-                            "type": "section",
-                            "htmlClass": "col-xs-6",
-                            "items": ["fetch-interval"]
-                        }]
-                    },
+                     
                     {
                         "type": "section",
                         "htmlClass": "row",
