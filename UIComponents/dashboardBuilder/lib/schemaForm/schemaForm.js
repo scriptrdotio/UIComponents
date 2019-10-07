@@ -2733,10 +2733,11 @@ angular.module('schemaForm').directive('schemaValidate', ['sfValidator', '$parse
 
         var error = null;
         var form = scope.$eval(attrs.schemaValidate);
-          
+       
+        //MFE: in case ngModel field schema type is boolean transform "true", "1", "yes" to true
        if(typeof(scope.form) !== 'undefined' && scope.form.schema.type === 'boolean') {
            var value = scope.$eval(attrs.ngModel);
-           var boolvalue = (value === true || value === 'true' || value === '1' || value === 'no');
+           var boolvalue = (value === true || value === 'true' || value === '1' || value === 'yes');
            scope.ngModel.$setViewValue(boolvalue);
            scope.ngModel.$render();
        }
