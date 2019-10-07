@@ -55,6 +55,19 @@ angular
                             "items": ["api-params"]
                         }]
                     },
+                     {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [{
+                            "type": "section",
+                            "htmlClass": "col-xs-6",
+                            "items": ["use-window-params"]
+                        }, {
+                            "type": "section",
+                            "htmlClass": "col-xs-6",
+                            "items": ["fetch-interval"]
+                        }]
+                    },
                     {
                         "type": "section",
                         "htmlClass": "row",
@@ -147,7 +160,17 @@ angular
                     "default": "return data;",
                     "type": "string",
                     "description": "Callback function to be called after data is returned from backend."
-                }
+                },"use-window-params": {
+                    "title": "Use Window Params",
+                    "type": "boolean",
+                    "default": false,
+                    "description": "This Need some description."
+                },"fetch-interval": {
+                    "title": "Fetch Interval",
+                    "type": "number",
+                    "default": 0,
+                    "description": "Data update interval value."
+                },
             }
 
         }
