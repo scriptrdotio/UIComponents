@@ -26,13 +26,13 @@ const __LINE_DYGRAPH__ = {
         "independent-ticks": "independent",
         "show-legend": true,
         "colors-mapping": [{ "labels": "Y1", "colors": "#CC5464", "axisSelection": "y" }, { "labels": "Y2", "colors": "#FCC717", "axisSelection": "y" }, { "labels": "Y3", "colors": "#38B9D6", "axisSelection": "y" }, { "labels": "Y4", "colors": "#1DBC68", "axisSelection": "y" }],
-        "use-functional":false,
-        "functional-data-type":"scattered",
-        "scattered-xdata": "[1,2,3,4,5,6,7,8,9,10]",
-        "range-min": "1",
-        "range-max": "10",
-        "range-step": "1",
-        "calculate-function": "function(x) {return x;}",
+        // "use-functional":false,
+        // "functional-data-type":"scattered",
+        // "scattered-xdata": "[1,2,3,4,5,6,7,8,9,10]",
+        // "range-min": "1",
+        // "range-max": "10",
+        // "range-step": "1",
+        // "calculate-function": "function(x) {return x;}",
 
     },
     "box": {
@@ -202,76 +202,76 @@ const __LINE_DYGRAPH__ = {
                     }]
                 }]
             },
-            {
-                title: "Functional Data",
+            // {
+            //     title: "Functional Data",
 
-                items: [
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [
+            //     items: [
+            //         {
+            //             "type": "section",
+            //             "htmlClass": "row",
+            //             "items": [
 
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-12",
-                                "items": [
-                                    { key: "use-functional" },
-                                    {
-                                        type: "radios-inline",
-                                        key: "functional-data-type",
-                                        condition: " model['use-functional'] ",
-                                        titleMap: [{
-                                            value: "scattered",
-                                            name: "Scattered"
-                                        }, {
-                                            value: "range",
-                                            name: "Range"
-                                        }]
-                                    },
-                                    {
-                                        key: "scattered-xdata",
-                                        condition: " model['use-functional'] && (model['functional-data-type']=='scattered') "
+            //                 {
+            //                     "type": "section",
+            //                     "htmlClass": "col-xs-12",
+            //                     "items": [
+            //                         { key: "use-functional" },
+            //                         {
+            //                             type: "radios-inline",
+            //                             key: "functional-data-type",
+            //                             condition: " model['use-functional'] ",
+            //                             titleMap: [{
+            //                                 value: "scattered",
+            //                                 name: "Scattered"
+            //                             }, {
+            //                                 value: "range",
+            //                                 name: "Range"
+            //                             }]
+            //                         },
+            //                         {
+            //                             key: "scattered-xdata",
+            //                             condition: " model['use-functional'] && (model['functional-data-type']=='scattered') "
 
-                                    },
-                                    {
-                                        key: "range-min",
-                                        condition: " model['use-functional'] && (model['functional-data-type']=='range') ",
-                                        "htmlClass": "col-xs-12 col-sm-4",
+            //                         },
+            //                         {
+            //                             key: "range-min",
+            //                             condition: " model['use-functional'] && (model['functional-data-type']=='range') ",
+            //                             "htmlClass": "col-xs-12 col-sm-4",
 
-                                    },
-                                    {
-                                        key: "range-max",
-                                        condition: " model['use-functional'] && (model['functional-data-type']=='range') ",
-                                        "htmlClass": "col-xs-12 col-sm-4"
-                                    },
-                                    {
-                                        key: "range-step",
-                                        condition: " model['use-functional'] && (model['functional-data-type']=='range') ",
-                                        "htmlClass": "col-xs-12 col-sm-4"
-                                    },
-                                    {
-                                        key: "calculate-function",
-                                        condition: " model['use-functional'] ",
-                                        "type": "codemirror",
-                                        "codemirrorOptions": {
-                                            value: "return",
-                                            styleActiveLine: true,
-                                            lineNumbers: true,
-                                            lineWrapping: true,
-                                            autoCloseBrackets: true,
-                                            matchBrackets: true,
-                                            theme: "neo",
-                                            mode: "javascript",
-                                            readOnly: false,
-                                            autoRefresh: true
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
+            //                         },
+            //                         {
+            //                             key: "range-max",
+            //                             condition: " model['use-functional'] && (model['functional-data-type']=='range') ",
+            //                             "htmlClass": "col-xs-12 col-sm-4"
+            //                         },
+            //                         {
+            //                             key: "range-step",
+            //                             condition: " model['use-functional'] && (model['functional-data-type']=='range') ",
+            //                             "htmlClass": "col-xs-12 col-sm-4"
+            //                         },
+            //                         {
+            //                             key: "calculate-function",
+            //                             condition: " model['use-functional'] ",
+            //                             "type": "codemirror",
+            //                             "codemirrorOptions": {
+            //                                 value: "return",
+            //                                 styleActiveLine: true,
+            //                                 lineNumbers: true,
+            //                                 lineWrapping: true,
+            //                                 autoCloseBrackets: true,
+            //                                 matchBrackets: true,
+            //                                 theme: "neo",
+            //                                 mode: "javascript",
+            //                                 readOnly: false,
+            //                                 autoRefresh: true
+            //                             }
+            //                         }
+            //                     ]
+            //                 }
+            //             ]
+            //         }
+            //     ]
+            // },
 
             {
                 title: "Legend",
@@ -1097,51 +1097,51 @@ const __LINE_DYGRAPH__ = {
                 "description": "",
                 "maxLength": 40
             },
-            "calculate-function": {
-                "title": "Function",
-                "type": "string",
-                "description": "Function takes the X data element and generate the Y[s] data array/value as functional relation, the function must return single value or array of values.",
-                "x-schema-form": {
-                    "type": "textarea",
-                    "placeholder": "function(x){ return [2*x , x*x ];}"
-                }
-            },
-            "use-functional": {
-                "title": "Use Function to generate static data?",
-                "type": "boolean",
-                "default": "",
-                "description": "",
-            },
-            "functional-data-type": {
-                "title": "Function X Data Type",
-                "type": "string",
-                "default": "scattered",
-                "description": "The X data Array type can be scattered values or desicrete range",
-            },
-            "scattered-xdata": {
-                "title": "Scattered Data array",
-                "type": "string",
-                "default": "",
-                "description": "The X data array, Ex [2,4,10,11].",
-            },
-            "range-min": {
-                "title": "X data range min value",
-                "type": "string",
-                "default": "",
-                "description": "",
-            },
-            "range-max": {
-                "title": "X data range max value",
-                "type": "string",
-                "default": "",
-                "description": "",
-            },
-            "range-step": {
-                "title": "X data range step",
-                "type": "string",
-                "default": "",
-                "description": "",
-            },
+            // "calculate-function": {
+            //     "title": "Function",
+            //     "type": "string",
+            //     "description": "Function takes the X data element and generate the Y[s] data array/value as functional relation, the function must return single value or array of values.",
+            //     "x-schema-form": {
+            //         "type": "textarea",
+            //         "placeholder": "function(x){ return [2*x , x*x ];}"
+            //     }
+            // },
+            // "use-functional": {
+            //     "title": "Use Function to generate static data?",
+            //     "type": "boolean",
+            //     "default": "",
+            //     "description": "",
+            // },
+            // "functional-data-type": {
+            //     "title": "Function X Data Type",
+            //     "type": "string",
+            //     "default": "scattered",
+            //     "description": "The X data Array type can be scattered values or desicrete range",
+            // },
+            // "scattered-xdata": {
+            //     "title": "Scattered Data array",
+            //     "type": "string",
+            //     "default": "",
+            //     "description": "The X data array, Ex [2,4,10,11].",
+            // },
+            // "range-min": {
+            //     "title": "X data range min value",
+            //     "type": "string",
+            //     "default": "",
+            //     "description": "",
+            // },
+            // "range-max": {
+            //     "title": "X data range max value",
+            //     "type": "string",
+            //     "default": "",
+            //     "description": "",
+            // },
+            // "range-step": {
+            //     "title": "X data range step",
+            //     "type": "string",
+            //     "default": "",
+            //     "description": "",
+            // },
         }
     }
 };
