@@ -838,7 +838,9 @@
   margin-bottom: -22px;
 }
 .dashboardTheme .gridster-mobile .ag-layout-normal .ag-root {
-  height: 50%;
+  height: auto;
+  display: inline-block;
+  width: 100%;
 }
 .dashboardTheme .gridster-mobile .ag-bl-full-height,
 .dashboardTheme .gridster-mobile .ag-layout-normal,
@@ -863,7 +865,7 @@
 }
 .dashboardTheme .gridster-mobile .plotly-chart-wrapper.with-legend {
   width: 100%!important;
-  height: 40%!important;
+  height: auto!important;
 }
 .dashboardTheme .gridster-mobile .plotly-chart-legend {
   height: auto;
@@ -873,7 +875,20 @@
   margin: 10px;
 }
 .dashboardTheme .gridster-mobile .plotly-chart-dimension {
-  height: 100%;
+  height: auto;
+}
+.dashboardTheme .gridster-mobile .plotly-chart-dimension .js-plotly-plot .plotly div {
+  height: auto!important;
+}
+.dashboardTheme .gridster-mobile .plotly-chart-dimension .js-plotly-plot .plotly svg {
+  height: 35%;
+}
+.dashboardTheme .gridster-mobile .plotly-chart-dimension .js-plotly-plot .plotly svg .outer-group {
+  transform: translate(0, 0);
+}
+.dashboardTheme rect {
+  /* doesn't work in IE/ older Edge */
+  transform: translate(295px, 115px);
 }
 .dashboardTheme .gridster-mobile .accelerometer-wrapper {
   height: 50%;
@@ -895,6 +910,23 @@
   width: auto;
   float: none;
   margin: 20px;
+  height: auto;
+}
+.dashboardTheme .gridster-mobile .ag-bootstrap {
+  height: auto!important;
+}
+.dashboardTheme .gridster-mobile .ag-bootstrap .ag-body {
+  height: auto!important;
+  position: relative;
+  top: auto!important;
+}
+.dashboardTheme .gridster-mobile .ag-bootstrap .ag-header {
+  position: relative;
+}
+.dashboardTheme .gridster-mobile .ag-layout-normal .ag-body-viewport-wrapper {
+  height: auto;
+}
+.dashboardTheme .gridster-mobile .ag-layout-normal .ag-body-viewport {
   height: auto;
 }
 .dashboardTheme .sub-tabs .nav-tabs {
@@ -962,6 +994,6 @@
   align-items: center;
   justify-content: left;
 }
- .dashboardTheme .CodeMirror {
+.dashboardTheme .CodeMirror {
   height: 200px;
 }
