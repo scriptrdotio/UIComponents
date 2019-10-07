@@ -863,32 +863,28 @@
   float: none;
   height: calc(100% - 100px) !important;
 }
-.dashboardTheme .gridster-mobile .plotly-chart-wrapper.with-legend {
+.dashboardTheme .gridster-mobile .wind-rose .plotly-chart-wrapper.with-legend {
   width: 100%!important;
   height: auto!important;
 }
-.dashboardTheme .gridster-mobile .plotly-chart-legend {
+.dashboardTheme .gridster-mobile .wind-rose .plotly-chart-legend {
   height: auto;
   width: 100%;
   float: none;
   text-align: left;
   margin: 10px;
 }
-.dashboardTheme .gridster-mobile .plotly-chart-dimension {
+.dashboardTheme .gridster-mobile .wind-rose .plotly-chart-dimension {
   height: auto;
 }
-.dashboardTheme .gridster-mobile .plotly-chart-dimension .js-plotly-plot .plotly div {
+.dashboardTheme .gridster-mobile .wind-rose .js-plotly-plot .plotly div {
   height: auto!important;
 }
-.dashboardTheme .gridster-mobile .plotly-chart-dimension .js-plotly-plot .plotly svg {
+.dashboardTheme .gridster-mobile .wind-rose .js-plotly-plot .plotly svg {
   height: 35%;
 }
-.dashboardTheme .gridster-mobile .plotly-chart-dimension .js-plotly-plot .plotly svg .outer-group {
+.dashboardTheme .gridster-mobile .wind-rose .js-plotly-plot .plotly svg .outer-group {
   transform: translate(0, 0);
-}
-.dashboardTheme rect {
-  /* doesn't work in IE/ older Edge */
-  transform: translate(295px, 115px);
 }
 .dashboardTheme .gridster-mobile .accelerometer-wrapper {
   height: 50%;
