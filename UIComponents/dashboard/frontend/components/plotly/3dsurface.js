@@ -69,13 +69,21 @@ angular
                     angular.element($window).on('resize', self.scheduleResize);
                     self.style={};
                     self.layout = self.layout ? self.layout :{
-                        title: self.title,
-                        autosize: false,
+                        //title: self.title,
+                        autosize: true,
+                        height: $element.parent().height(),
+                        width: $element.parent().width(),
                         scene: {
                             xaxis: { title: self.xaxis },
                             yaxis: { title: self.yaxis },
                             zaxis: { title: self.zaxis },
                         },
+                         margin: {
+                            l: 5,
+                            r: 5,
+                            b: 5,
+                            t: 5,
+                        }
                     };
                      self.transformedData=[{
                         showscale:self.showBar,
@@ -98,9 +106,8 @@ angular
 
                 self.resize = function () {
                     console.log("resize called")
-                  
-                            self.layout.height = $element.parent()[0].clientHeight;
-                            self.layout.width = $element.parent()[0].clientWidth;
+                    self.layout.height =  $element.parent().height();
+                    self.layout.width = $element.parent().width();
               
 
                 }
