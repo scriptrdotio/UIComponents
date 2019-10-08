@@ -56,6 +56,7 @@
   /*** Diagraph ***/
   /*** Morris chart legends and grap ***/
   /*** wind rose ***/
+  /*** 3D surface ***/
   /***
 ***** Gridster Mobile *****
 ***/
@@ -816,6 +817,10 @@
 }
 .dashboardTheme .js-plotly-plot .plotly svg {
   background-color: transparent!important;
+}
+.dashboardTheme .surface {
+  width: 100%;
+  height: 100%;
 }
 .dashboardTheme .gridster-mobile .box-content {
   min-height: 80px;
