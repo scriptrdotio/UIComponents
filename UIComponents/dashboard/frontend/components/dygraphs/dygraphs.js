@@ -72,6 +72,7 @@ angular
           "independentTicks": "@",
           "legendMapping": "<?",
           "customGoals": "<?",
+          "customEvents": "<?",
           "colorsMapping": "<?",
           "fetchDataInterval": "@",
           "useWindowParams": "@",
@@ -155,10 +156,14 @@ angular
              
              this.customGoals = (this.customGoals) ? _.reject(this.customGoals, function(item) {return (item.goals === "" || item.goals == null)}) : [];
              this.goalLineColors = _.pluck(this.customGoals, "goal-line-colors");
-             this.goals = _.pluck(this.customGoals, "goals");             
+             this.goals = _.pluck(this.customGoals, "goals");     
+             
+             this.customEvents = (this.customEvents) ? _.reject(this.customEvents, function(item) {return (item.events === "" || item.events == null)}) : [];
+             this.eventLineColors = _.pluck(this.customEvents, "event-line-colors");
+             this.events = _.pluck(this.customEvents, "events");  
 
-             this.events = (this.events) ? this.events : [];   
-             this.eventLineColors = (this.eventLineColors) ? this.eventLineColors : ["#ffffff"];   
+             //this.events = (this.events) ? this.events : [];   
+             //this.eventLineColors = (this.eventLineColors) ? this.eventLineColors : ["#ffffff"];   
              
              this.x1AxisLabelFontSize = (this.x1AxisLabelFontSize) ? JSON.parse(this.x1AxisLabelFontSize) : 14;
              this.yAxisLabelFontSize = (this.yAxisLabelFontSize) ? JSON.parse(this.yAxisLabelFontSize) : 14;

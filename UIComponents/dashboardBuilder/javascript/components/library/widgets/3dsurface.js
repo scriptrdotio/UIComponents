@@ -127,14 +127,7 @@ const __3DSURFACE__ = {
                                     "items": [
                                         {
                                             "key": "show-bar",
-                                            "type": "radios-inline",
-                                            titleMap: [{
-                                                value: "true",
-                                                name: "Show"
-                                            }, {
-                                                value: "false",
-                                                name: "Hide"
-                                            }]
+                                            
                                         },
                                         "bar-title",
                                         "bar-thickness"
@@ -400,7 +393,7 @@ const __3DSURFACE__ = {
                 "placeholder": " "
             },
             "show-bar": {
-                "title": "Show Bar",
+                "title": "Show Values Bar",
                 "type": "boolean",
                 "description": "",
                 "placeholder": " "

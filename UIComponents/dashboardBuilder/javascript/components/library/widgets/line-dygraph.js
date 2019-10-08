@@ -1,6 +1,6 @@
 const __LINE_DYGRAPH__ = {
     "name": "linedygraph",
-    "label": "Line Chart",
+    "label": "Dygraph Chart",
     "class": "scriptr-dygraphs",
     "commonData": true,
     "show": true,
@@ -49,38 +49,66 @@ const __LINE_DYGRAPH__ = {
                 title: "X",
                 items: [{
                     "type": "section",
-                    "htmlClass": "row",
+                    "htmlClass": "",
                     "items": [{
                         "type": "section",
-                        "htmlClass": "col-xs-12",
-                        "items": [{
-                            
-                            key: "draw-x1-axis",
-                            
-                        }, "x1-axis-label", "x1-axis-label-font-size"]
+                        "htmlClass": "row",
+                        "items": [
+
+
+
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-12",
+                                "items": ["draw-x1-axis"]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": ["x1-axis-label"]
+                            }, {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": ["x1-axis-label-font-size"]
+                            }, {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": [{
+                                    "key": "x1-axis-line-color",
+                                    "colorFormat": "hex3",
+                                    "spectrumOptions": {
+                                        showInput: true,
+                                        showAlpha: false,
+                                        allowEmpty: true,
+                                        showPalette: true,
+                                        preferredFormat: 'hex3',
+                                        palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                        ['#8ae234', '#729fcf', '#ad7fa8'],
+                                        ['#ef2929', '#888a85', '#deface']]
+                                    }
+                                }]
+                            },
+                        ]
                     },
                     {
                         "type": "section",
-                        "htmlClass": "col-xs-12",
-                        "items": [{
-                            "key": "x1-axis-line-color",
-                            "colorFormat": "hex3",
-                            "spectrumOptions": {
-                                showInput: true,
-                                showAlpha: false,
-                                allowEmpty: true,
-                                showPalette: true,
-                                preferredFormat: 'hex3',
-                                palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                ['#8ae234', '#729fcf', '#ad7fa8'],
-                                ['#ef2929', '#888a85', '#deface']]
+                        "htmlClass": "row",
+                        "items": [
+
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": [{
+                                    "key": "x1-axis-line-width",
+                                    "step": "1"
+                                }]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": ["x1-axis-label-width"]
                             }
-                        },
-                        {
-                            "key": "x1-axis-line-width",
-                            "step": "1"
-                        },
-                            "x1-axis-label-width"]
+                        ]
                     }
                     ]
                 }]
@@ -89,118 +117,168 @@ const __LINE_DYGRAPH__ = {
                 title: "Y",
                 items: [{
                     "type": "section",
-                    "htmlClass": "row",
-                    "items": [{
-                        "type": "section",
-                        "htmlClass": "col-xs-12",
-                        "items": [{
-                            
-                            key: "draw-y-axis",
-                            
-                        }, "y-axis-label", "y-axis-label-font-size", "y-axis-label-width"
-                        ]
-                    },
-                    {
-                        "type": "section",
-                        "htmlClass": "col-xs-12",
-                        "items": [{
-                            "key": "y-axis-line-color",
-                            "colorFormat": "hex3",
-                            "spectrumOptions": {
-                                showInput: true,
-                                showAlpha: false,
-                                allowEmpty: true,
-                                showPalette: true,
-                                preferredFormat: 'hex3',
-                                palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                ['#8ae234', '#729fcf', '#ad7fa8'],
-                                ['#ef2929', '#888a85', '#deface']]
-                            }
+                    "htmlClass": "",
+                    "items": [
+                        {
+                            "type": "section",
+                            "htmlClass": "row",
+                            "items": [
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-4",
+                                    "items": ["draw-y-axis"]
+                                },
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-4",
+                                    "items": ["y-axis-include-zero"]
+                                }
+                                ,
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-4",
+                                    "items": ["y-axis-labels-kmb"]
+                                }
+
+                            ]
                         },
                         {
-                            "key": "y-axis-line-width",
-                            "step": "1"
+                            "type": "section",
+                            "htmlClass": "row",
+                            "items": [
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-4",
+                                    "items": ["y-axis-label"]
+                                },
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-4",
+                                    "items": ["y-axis-label-font-size"]
+                                },
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-4",
+                                    "items": ["y-axis-label-width"]
+                                }
+                            ]
                         },
                         {
-                            type: "radios-inline",
-                            key: "y-axis-include-zero",
-                            titleMap: [{
-                                value: "true",
-                                name: "Yes"
-                            }, {
-                                value: "false",
-                                name: "No"
-                            }]
-                        },
-                        {
-                            
-                            key: "y-axis-labels-kmb",
-                            
-                        }]
-                    }]
+                            "type": "section",
+                            "htmlClass": "row",
+                            "items": [
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-4",
+                                    "items": [{
+                                        "key": "y-axis-line-color",
+                                        "colorFormat": "hex3",
+                                        "spectrumOptions": {
+                                            showInput: true,
+                                            showAlpha: false,
+                                            allowEmpty: true,
+                                            showPalette: true,
+                                            preferredFormat: 'hex3',
+                                            palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                            ['#8ae234', '#729fcf', '#ad7fa8'],
+                                            ['#ef2929', '#888a85', '#deface']]
+                                        }
+                                    },]
+                                },
+                                {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-4",
+                                    "items": [{
+                                        "key": "y-axis-line-width",
+                                        "step": "1"
+                                    }]
+                                }
+                            ]
+                        }
+                    ]
                 }
                 ]
             },
             {
                 title: "Y2",
-                items: [{
-                    "type": "section",
-                    "htmlClass": "row",
-                    "items": [{
+                "items": [
+                    {
                         "type": "section",
-                        "htmlClass": "col-xs-12",
-                        "items": [{
-                            type: "radios-inline",
-                            key: "draw-y2-axis",
-                            titleMap: [{
-                                value: "true",
-                                name: "Yes"
-                            }, {
-                                value: "false",
-                                name: "No"
-                            }]
-                        }, "y2-axis-label", "y2-axis-label-font-size", "y2-axis-label-width"
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": ["draw-y2-axis"]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": ["y2-axis-include-zero"]
+                            }
+                            ,
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": ["y2-axis-labels-kmb"]
+                            }
+
                         ]
                     },
                     {
                         "type": "section",
-                        "htmlClass": "col-xs-12",
-                        "items": [{
-                            "key": "y2-axis-line-color",
-                            "colorFormat": "hex3",
-                            "spectrumOptions": {
-                                showInput: true,
-                                showAlpha: false,
-                                allowEmpty: true,
-                                showPalette: true,
-                                preferredFormat: 'hex3',
-                                palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                ['#8ae234', '#729fcf', '#ad7fa8'],
-                                ['#ef2929', '#888a85', '#deface']]
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": ["y2-axis-label"]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": ["y2-axis-label-font-size"]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": ["y2-axis-label-width"]
                             }
-                        },
-                        {
-                            "key": "y2-axis-line-width",
-                            "step": "1"
-                        },
-                        {
-                            type: "radios-inline",
-                            key: "y2-axis-include-zero",
-                            titleMap: [{
-                                value: "true",
-                                name: "Yes"
-                            }, {
-                                value: "false",
-                                name: "No"
-                            }]
-                        },
-                        {
-                            
-                            key: "y2-axis-labels-kmb",
-                            
-                        }]
-                    }]
-                }]
+                        ]
+                    },
+                    {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": [{
+                                    "key": "y2-axis-line-color",
+                                    "colorFormat": "hex3",
+                                    "spectrumOptions": {
+                                        showInput: true,
+                                        showAlpha: false,
+                                        allowEmpty: true,
+                                        showPalette: true,
+                                        preferredFormat: 'hex3',
+                                        palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                        ['#8ae234', '#729fcf', '#ad7fa8'],
+                                        ['#ef2929', '#888a85', '#deface']]
+                                    }
+                                },]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": [{
+                                    "key": "y2-axis-line-width",
+                                    "step": "1"
+                                }]
+                            }
+                        ]
+                    }
+                ]
             },
             // {
             //     title: "Functional Data",
@@ -278,7 +356,7 @@ const __LINE_DYGRAPH__ = {
                 items: [
                     {
                         key: "show-legend",
-                       
+
                     },
                     {
 
@@ -364,15 +442,9 @@ const __LINE_DYGRAPH__ = {
                         "type": "section",
                         "htmlClass": "col-xs-4",
                         "items": [{
-                            type: "radios-inline",
+
                             key: "x1-draw-grid",
-                            titleMap: [{
-                                value: "true",
-                                name: "Yes"
-                            }, {
-                                value: "false",
-                                name: "No"
-                            }]
+
                         }, {
                             "key": "x1-grid-line-color",
                             "colorFormat": "hex3",
@@ -397,15 +469,8 @@ const __LINE_DYGRAPH__ = {
                         "type": "section",
                         "htmlClass": "col-xs-4",
                         "items": [{
-                            type: "radios-inline",
+
                             key: "y-draw-grid",
-                            titleMap: [{
-                                value: "true",
-                                name: "Yes"
-                            }, {
-                                value: "false",
-                                name: "No"
-                            }]
                         }, {
                             "key": "y-grid-line-color",
                             "colorFormat": "hex3",
@@ -432,15 +497,9 @@ const __LINE_DYGRAPH__ = {
                         "htmlClass": "col-xs-4",
                         "items": [
                             {
-                                type: "radios-inline",
+
                                 key: "y2-draw-grid",
-                                titleMap: [{
-                                    value: "true",
-                                    name: "Yes"
-                                }, {
-                                    value: "false",
-                                    name: "No"
-                                }]
+
                             }, {
                                 "key": "y2-grid-line-color",
                                 "colorFormat": "hex3",
@@ -495,16 +554,9 @@ const __LINE_DYGRAPH__ = {
                             "type": "section",
                             "htmlClass": "col-xs-12",
                             "items": [{
-                                type: "radios-inline",
+
                                 key: "show-range-selector",
-                                titleMap: [{
-                                    value: "true",
-                                    name: "Yes"
-                                }, {
-                                    value: "false",
-                                    name: "No"
-                                }
-                                ]
+
                             }, "range-selector-alpha", "range-selector-background-line-width",
                             {
                                 "key": "range-selector-background-stroke-color",
@@ -656,21 +708,49 @@ const __LINE_DYGRAPH__ = {
                     "items": [
                         {
                             "type": "section",
-                            "htmlClass": "col-xs-6",
-                            "items": ["events"]
-                        },
-                        {
-                            "type": "section",
-                            "htmlClass": "col-xs-6",
-                            "items": [
-                                {
-                                    "key": "event-line-colors",
-                                    "items": [{
-                                        "key": "event-line-colors[]",
-                                        "colorFormat": "hex3"
-                                    }]
+                            "htmlClass": "col-xs-12",
+                            "items": [{
+                                "key": "custom-events",
+                                "startEmpty": true,
+                                "title": "Fill Colors & Events",
+                                "items": [{
+                                    "type": "section",
+                                    "htmlClass": "row",
+                                    "items": [
+                                        {
+                                            "type": "section",
+                                            "htmlClass": "col-xs-6",
+                                            "items": [{
+                                                "key": "custom-events[].color",
+                                                "title": "Color",
+                                                "colorFormat": "hex3",
+                                                "spectrumOptions": {
+                                                    showInput: true,
+                                                    showAlpha: false,
+                                                    allowEmpty: true,
+                                                    showPalette: true,
+                                                    preferredFormat: 'hex3',
+                                                    palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                    ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                    ['#ef2929', '#888a85', '#deface']]
+                                                }
+                                            }]
+                                        },
+                                        {
+                                            "type": "section",
+                                            "htmlClass": "col-xs-6",
+                                            "items": [{
+                                                "key": "custom-events[].event",
+                                                "title": "Event",
+
+
+                                            }]
+                                        }
+                                    ]
                                 }]
-                        }]
+                            }]
+                        }
+                    ]
                 }]
             }
         ]
@@ -682,7 +762,7 @@ const __LINE_DYGRAPH__ = {
         "properties": {
             "show-legend": {
                 "title": "Show Legend",
-                "default": "true",
+                "default": true,
                 "type": "boolean",
                 "description": ""
             },
@@ -707,8 +787,8 @@ const __LINE_DYGRAPH__ = {
             },
             "draw-y2-axis": {
                 "title": "Draw Y2-axis",
-                "type": "string",
-                "default": "false",
+                "type": "boolean",
+                "default": false,
                 "description": "When turned off this prevents the y2-axis from being drawn and reclaims the space for the grid lines."
             },
 
@@ -763,6 +843,29 @@ const __LINE_DYGRAPH__ = {
                         },
                         "goals": {
                             "title": "Goals",
+                            "type": "number",
+                            "default": 0
+                        }
+                    }
+                }
+            },
+            "custom-events": {
+                "title": "Events",
+                "type": "array",
+                "default": [{ "color": "#f0f0f0", "event": "" }],
+                "description": "List of x-values to draw as vertical 'event' lines on the chart, Color:Event Line Colors.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "color": {
+                            "title": "Color",
+                            "type": "string",
+                            "format": "color",
+                            "validationMessage": "Invalid Color",
+                            "default": "#F0F0F0"
+                        },
+                        "event": {
+                            "title": "Event",
                             "type": "number",
                             "default": 0
                         }
@@ -892,14 +995,14 @@ const __LINE_DYGRAPH__ = {
             },
             "y-axis-include-zero": {
                 "title": "Include Zero",
-                "type": "string",
-                "default": "false",
+                "type": "boolean",
+                "default": false,
                 "description": "Determines if the y-axis will include zero, typically the lowest value. This can be used to avoid exaggerating the variance in the data."
             },
             "y2-axis-include-zero": {
                 "title": "Include Zero",
-                "type": "string",
-                "default": "false",
+                "type": "boolean",
+                "default": false,
                 "description": "Determines if the y2-axis will include zero, typically the lowest value. This can be used to avoid exaggerating the variance in the data."
             },
             "y-axis-labels-kmb": {
@@ -996,20 +1099,20 @@ const __LINE_DYGRAPH__ = {
             },
             "x1-draw-grid": {
                 "title": "Draw X-axis Grid Lines",
-                "type": "string",
-                "default": "true",
+                "type": "boolean",
+                "default": true,
                 "description": ""
             },
             "y-draw-grid": {
                 "title": "Draw Y-axis Grid Lines",
-                "type": "string",
-                "default": "true",
+                "type": "boolean",
+                "default": true,
                 "description": ""
             },
             "y2-draw-grid": {
                 "title": "Draw Y2-axis Grid Lines",
-                "type": "string",
-                "default": "false",
+                "type": "boolean",
+                "default": false,
                 "description": ""
             },
             "x1-grid-line-color": {
