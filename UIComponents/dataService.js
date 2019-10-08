@@ -5,6 +5,9 @@ angular.module('DataService', []).service(
         this.postData = function (transport, api, apiParams, useWindowParams, msgTag, consumerFnc, id) {
             var defer = $q.defer();
             var params = {};
+            if(!apiParams){
+                apiParams={};
+            }
             if (useWindowParams == "true") {
                 params = angular.merge( apiParams,$location.search())
             } else {
@@ -58,6 +61,9 @@ angular.module('DataService', []).service(
         this.getData = function (transport, api, apiParams, useWindowParams, msgTag, consumerFnc, fetchDataInterval, id) {
 
             var params = {};
+            if(!apiParams){
+                apiParams={};
+            }
             if (useWindowParams == "true") {
                 params = angular.merge( apiParams,$location.search())
             } else {
