@@ -74,6 +74,10 @@ angular
           "customGoals": "<?",
           "customEvents": "<?",
           "colorsMapping": "<?",
+          "connectSeparatedPoints": "<?",
+          "drawPoints": "<?",
+          "pointSize": "<?",
+          "strokeWidth": "<?",
           "fetchDataInterval": "@",
           "useWindowParams": "@",
           //functional data
@@ -365,7 +369,11 @@ angular
              this.options.eventLineColors = (this.eventLineColors) ? this.eventLineColors : ["#ffffff"];   
         
              //Usually, when Dygraphs encounters a missing value in a data series, it interprets this as a gap and draws it as such. If, instead, the missing values represents an x-value for which only a different series has data, then you'll want to connect the dots by setting this to true. To explicitly include a gap with this option set, use a value of NaN.
-             this.options.connectSeparatedPoints = true;
+             this.options.connectSeparatedPoints = (this.connectSeparatedPoints!=null) ? this.connectSeparatedPoints : true;   
+             this.options.drawPoints = (this.drawPoints!=null) ? this.drawPoints : true;   
+             this.options.strokeWidth = (this.strokeWidth!=null) ? this.strokeWidth : 1;   
+             this.options.pointSize = (this.pointSize!=null) ? this.pointSize : 3; 
+              
              
              
              //this.data = JSON.parse(this.data);

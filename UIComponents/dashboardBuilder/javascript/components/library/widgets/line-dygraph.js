@@ -46,11 +46,9 @@ const __LINE_DYGRAPH__ = {
         type: "tabs",
         tabs: [
             {
-                title: "X",
-                items: [{
-                    "type": "section",
-                    "htmlClass": "",
-                    "items": [{
+                title: "Points",
+                items: [
+                    {
                         "type": "section",
                         "htmlClass": "row",
                         "items": [
@@ -59,9 +57,57 @@ const __LINE_DYGRAPH__ = {
 
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-12",
-                                "items": ["draw-x1-axis"]
+                                "htmlClass": "col-xs-3",
+                                "items": ["draw-points"]
                             },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-3",
+                                "items": ["connect-separated-points"]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-3",
+                                "items": ["point-size"]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-3",
+                                "items": ["stroke-width"]
+                            }
+                        ]
+                    },
+                    
+                ]
+            },
+            {
+                title: "X",
+                items: [{
+                    "type": "section",
+                    "htmlClass": "",
+                    "items": [
+                        {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+
+
+
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-4",
+                                "items": ["draw-x1-axis"]
+                            }
+                        ]
+                    },
+                        {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+
+
+
+                            
                             {
                                 "type": "section",
                                 "htmlClass": "col-xs-4",
@@ -1221,6 +1267,30 @@ const __LINE_DYGRAPH__ = {
                 "default": "",
                 "description": "",
                 "maxLength": 40
+            },
+            "connect-separated-points": {
+                "title": "Connect Separated Points",
+                "type": "boolean",
+                "default": true,
+                "description": "Draw Lines between separated points"
+            },
+            "draw-points": {
+                "title": "Draw Points",
+                "type": "boolean",
+                "default": true,
+                "description": "Draw Data points"
+            },
+            "point-size": {
+                "title": "Point Size",
+                "type": "number",
+                "default": 3,
+                "description": "Data points size in Px."
+            },
+            "stroke-width": {
+                "title": "Line Width",
+                "type": "number",
+                "default": 1,
+                "description": "Data Lines widtth in Px. Set to 0 to hide the line"
             },
             // "calculate-function": {
             //     "title": "Function",
