@@ -13,6 +13,8 @@ angular
                     __AREA__,
                     __LINE__,
                     __DONUT__,
+                    __WINDROSE__,
+                    __3DSURFACE__,
                     __GAUGE__,
                     __SPEEDOMETER__,
                     __THERMOMETER__,
@@ -27,10 +29,7 @@ angular
                     __IFRAME__,
                     __ALERT__,
                     __DISPLAY_DATA__,
-                    __METRIC_BOX__,
-                    __WINDROSE__,
-                    __3DSURFACE__
-
+                    __METRIC_BOX__
                 ]
             }
         }
