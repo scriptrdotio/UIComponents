@@ -96,6 +96,9 @@ const __LINE__ = {
                                         var ykeys = JSON.parse(model.ykeys);
                                         var ylabels = JSON.parse(model.labels);
                                         var ycolors = model.colors;
+                                        if(ykeys == null){
+                                            ykeys=[];
+                                        }
                                         var keysNum = ykeys.length;
                                         // clean the array
                                         model.yconfig = [];
@@ -112,6 +115,9 @@ const __LINE__ = {
 
                                     //build goals
                                     if (!model.goalsconfig || !model.goalsconfig.length) {
+                                        if(model.goals == null){
+                                            model.goals=[];
+                                        }
                                         var goalsNum = model.goals.length;
                                         // clean the array
                                         model.goals = [];
@@ -130,6 +136,9 @@ const __LINE__ = {
 
                                     //build events
                                     if (!model.eventsconfig || !model.eventsconfig.length) {
+                                        if(model.events == null){
+                                            model.events=[];
+                                        }
                                         var eventsNum = model.events.length;
                                         // clean the array
                                         model.events = [];

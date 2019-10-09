@@ -557,84 +557,106 @@ const __LINE_DYGRAPH__ = {
 
                                 key: "show-range-selector",
 
-                            }, "range-selector-alpha", "range-selector-background-line-width",
-                            {
-                                "key": "range-selector-background-stroke-color",
-                                "colorFormat": "hex3",
-                                "spectrumOptions": {
-                                    showInput: true,
-                                    showAlpha: false,
-                                    allowEmpty: true,
-                                    showPalette: true,
-                                    preferredFormat: 'hex3',
-                                    palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                    ['#8ae234', '#729fcf', '#ad7fa8'],
-                                    ['#ef2929', '#888a85', '#deface']]
-                                }
-                            }, "range-selector-foreground-line-width"]
+                            }
+                            ]
                         },
                         {
                             "type": "section",
-                            "htmlClass": "col-xs-12",
-                            "items": [{
-                                "key": "range-selector-foreground-stroke-color",
-                                "colorFormat": "hex3",
-                                "spectrumOptions": {
-                                    showInput: true,
-                                    showAlpha: false,
-                                    allowEmpty: true,
-                                    showPalette: true,
-                                    preferredFormat: 'hex3',
-                                    palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                    ['#8ae234', '#729fcf', '#ad7fa8'],
-                                    ['#ef2929', '#888a85', '#deface']]
-                                }
-                            }, "range-selector-height",
-                            {
-                                "key": "range-selector-plot-fill-color",
-                                "colorFormat": "hex3",
-                                "spectrumOptions": {
-                                    showInput: true,
-                                    showAlpha: false,
-                                    allowEmpty: true,
-                                    showPalette: true,
-                                    preferredFormat: 'hex3',
-                                    palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                    ['#8ae234', '#729fcf', '#ad7fa8'],
-                                    ['#ef2929', '#888a85', '#deface']]
-                                }
-                            },
-                            {
-                                "key": "range-selector-plot-fill-gradient-color",
-                                "colorFormat": "hex3",
-                                "spectrumOptions": {
-                                    showInput: true,
-                                    showAlpha: false,
-                                    allowEmpty: true,
-                                    showPalette: true,
-                                    preferredFormat: 'hex3',
-                                    palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                    ['#8ae234', '#729fcf', '#ad7fa8'],
-                                    ['#ef2929', '#888a85', '#deface']]
-                                }
-                            },
-                            {
-                                "key": "range-selector-plot-line-width",
-                                "step": "0.1"
-                            }, {
-                                "key": "range-selector-plot-stroke-color",
-                                "colorFormat": "hex3",
-                                "spectrumOptions": {
-                                    showInput: true,
-                                    showAlpha: false,
-                                    allowEmpty: true,
-                                    showPalette: true,
-                                    preferredFormat: 'hex3',
-                                    palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                    ['#8ae234', '#729fcf', '#ad7fa8'],
-                                    ['#ef2929', '#888a85', '#deface']]
-                                }
-                            }]
+                            "htmlClass": "col-xs-4",
+                            "condition":"model['show-range-selector']",
+                            "items": [
+                                "range-selector-alpha",
+                                "range-selector-height",
+                            ]
+                        },
+                        {
+                            "type": "section",
+                            "htmlClass": "col-xs-4",
+                            "condition":"model['show-range-selector']",
+                            "items": [
+                                "range-selector-background-line-width",
+                                {
+                                    "key": "range-selector-background-stroke-color",
+                                    "colorFormat": "hex3",
+                                    "spectrumOptions": {
+                                        showInput: true,
+                                        showAlpha: false,
+                                        allowEmpty: true,
+                                        showPalette: true,
+                                        preferredFormat: 'hex3',
+                                        palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                        ['#8ae234', '#729fcf', '#ad7fa8'],
+                                        ['#ef2929', '#888a85', '#deface']]
+                                    }
+                                },
+                                "range-selector-foreground-line-width",
+                                {
+                                    "key": "range-selector-foreground-stroke-color",
+                                    "colorFormat": "hex3",
+                                    "spectrumOptions": {
+                                        showInput: true,
+                                        showAlpha: false,
+                                        allowEmpty: true,
+                                        showPalette: true,
+                                        preferredFormat: 'hex3',
+                                        palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                        ['#8ae234', '#729fcf', '#ad7fa8'],
+                                        ['#ef2929', '#888a85', '#deface']]
+                                    }
+                                },
+
+                            ]
+                        },
+                        {
+                            "type": "section",
+                            "htmlClass": "col-xs-4",
+                            "condition":"model['show-range-selector']",
+                            "items": [
+                                {
+                                    "key": "range-selector-plot-fill-color",
+                                    "colorFormat": "hex3",
+                                    "spectrumOptions": {
+                                        showInput: true,
+                                        showAlpha: false,
+                                        allowEmpty: true,
+                                        showPalette: true,
+                                        preferredFormat: 'hex3',
+                                        palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                        ['#8ae234', '#729fcf', '#ad7fa8'],
+                                        ['#ef2929', '#888a85', '#deface']]
+                                    }
+                                },
+                                {
+                                    "key": "range-selector-plot-fill-gradient-color",
+                                    "colorFormat": "hex3",
+                                    "spectrumOptions": {
+                                        showInput: true,
+                                        showAlpha: false,
+                                        allowEmpty: true,
+                                        showPalette: true,
+                                        preferredFormat: 'hex3',
+                                        palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                        ['#8ae234', '#729fcf', '#ad7fa8'],
+                                        ['#ef2929', '#888a85', '#deface']]
+                                    }
+                                },
+                                {
+                                    "key": "range-selector-plot-line-width",
+                                    "step": "0.1"
+                                }, {
+                                    "key": "range-selector-plot-stroke-color",
+                                    "colorFormat": "hex3",
+                                    "spectrumOptions": {
+                                        showInput: true,
+                                        showAlpha: false,
+                                        allowEmpty: true,
+                                        showPalette: true,
+                                        preferredFormat: 'hex3',
+                                        palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                        ['#8ae234', '#729fcf', '#ad7fa8'],
+                                        ['#ef2929', '#888a85', '#deface']]
+                                    }
+                                }]
                         }]
                 }]
             },
@@ -1019,8 +1041,8 @@ const __LINE_DYGRAPH__ = {
             },
             "show-range-selector": {
                 "title": "Show Slider",
-                "type": "string",
-                "default": "false",
+                "type": "boolean",
+                "default": false,
                 "description": ""
             },
             "range-selector-alpha": {
