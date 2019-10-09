@@ -11,6 +11,27 @@ angular
                         "htmlClass": "row",
                         "items": [{
                             "type": "section",
+                            "htmlClass": "col-xs-7",
+                            "items": [{
+                                "key": "use-dashboard-data-handler"
+                            }]
+                        },
+                        {
+                            "type": "section",
+                            "htmlClass": "col-xs-5",
+                            "condition": "model['use-dashboard-data-handler'] === true", //Condition on section and not on key because of a bug in the destroy in schemaForm, needs to be here to remove fields from model
+                            "items": [{
+                                "key": "dashoard-data-handler-tag"
+                            }]
+                        }    
+						]
+                    },
+                    {
+                        "type": "section",
+             			"condition": "model['use-dashboard-data-handler'] === false",
+                        "htmlClass": "row",
+                        "items": [{
+                            "type": "section",
                             "htmlClass": "col-xs-6",
                             "items": [{
                                 "key": "transport",
@@ -29,10 +50,8 @@ angular
                             "htmlClass": "col-xs-6",
                             "items": [{
                                 "key": "msg-tag",
-                                "condition": "model.transport=='wss'"
                             }, {
                                 "key": "http-method",
-                                "condition": "model.transport=='https'",
                                 "type": 'strapselect',
                                 "placeholder": " ",
                                 "titleMap": [{
@@ -40,22 +59,31 @@ angular
                                     "name": "GET"
                                 }]
                             },{
-                                key:"fetch-interval",
-                                "condition": "model.transport=='https'",
+                                "key":"fetch-data-interval",
                             }]
                         }]
                     },
                     {
                         "type": "section",
                         "htmlClass": "row",
+     					"condition": "model['use-dashboard-data-handler'] === false",
                         "items": [{
                             "type": "section",
                             "htmlClass": "col-xs-6",
-                            "items": ["api"]
+                            "items": [
+                                { 
+                                    "key":"api"
+                                }
+                            ]
                         }, {
                             "type": "section",
                             "htmlClass": "col-xs-6",
-                            "items": ["api-params","use-window-params"]
+                            "items": [
+                                {
+                                    "key": "api-params" 
+                                }, {
+                                    "key": "use-window-params" 
+                                }]
                         }]
                     },
                      
@@ -64,10 +92,23 @@ angular
                         "htmlClass": "row",
                         "items": [{
                             "type": "section",
-                            "htmlClass": "col-xs-12",
+                            "htmlClass": "col-xs-12 codemirror-small",
                             "items": [
                                 {
-                                    "key": "data"
+                                    "key": "data",
+                                    "type": "codemirror",
+                                    "codemirrorOptions": {
+                                        "value": "",
+                                        "styleActiveLine": true,
+                                        "lineNumbers": true,
+                                        "lineWrapping": true,
+                                        "autoCloseBrackets": true,
+                                        "matchBrackets": true,
+                                        "theme": "neo",
+                                        "mode": "javascript",
+                                        "readOnly": false,
+                                        "autoRefresh": true
+                                    }
                                 },
                                 {
                                     "key": "on-format-data",
@@ -116,6 +157,17 @@ angular
                 ]
             },
             "schemaFields": {
+                "use-dashboard-data-handler": {
+                    "title": "The dashboard will handle data sourcing for widget",
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Dashboard will use the properties in its settings tab to fetch data and will relay it to the widget."
+                },
+                "dashoard-data-handler-tag": {
+                    "title": "Data tag",
+                    "type": "string",
+                    "description": "The dashboard data source will fetch data for multiple widgets. Set a data tag for the dashboard to propagate to your widget the data object with the data tag as its key. If not set all the data fetched by the dashboard will be relayed to the widget"
+                },
                 "api": {
                     "title": "Api",
                     "type": "string",
@@ -150,13 +202,13 @@ angular
                     "title": "Format data",
                     "default": "return data;",
                     "type": "string",
-                    "description": "Callback function to be called after data is returned from backend."
+                    "description": "Callback function to be called after data is returned from data source."
                 },"use-window-params": {
                     "title": "Merge Window Params",
                     "type": "boolean",
                     "default": false,
                     "description": "Merge URL query params with the widget api params."
-                },"fetch-interval": {
+                },"fetch-data-interval": {
                     "title": "Fetch Interval",
                     "type": "number",
                     "default": 0,
