@@ -895,9 +895,11 @@ angular
       "widget": "<"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/box.html',
-    controller: function($scope, $compile, $element, $uibModal) {
+    controller: function($rootScope,$scope, $compile, $element, $uibModal) {
       
       var boxSelf = this;
+        
+        boxSelf.isMobile=$rootScope.isMobileDevice();
         
       this.remove = function(widget) {
       	var self = this;
