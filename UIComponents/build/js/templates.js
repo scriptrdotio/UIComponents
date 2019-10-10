@@ -242,17 +242,19 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "\n" +
     "       vm.gridsterOptions = {\r" +
     "\n" +
-    "          pushing: false,\r" +
+    "          defaultSizeY: 50,\r" +
+    "\n" +
+    "          defaultSizeX:50,\r" +
     "\n" +
     "          minRows: 1, // the minimum height of the grid, in rows\r" +
     "\n" +
     "          maxRows: 100,\r" +
     "\n" +
-    "          columns: 5, // the width of the grid, in columns\r" +
+    "          columns: 10, // the width of the grid, in columns\r" +
     "\n" +
     "          colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'\r" +
     "\n" +
-    "          rowHeight: '83', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.\r" +
+    "          rowHeight: '50', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.\r" +
     "\n" +
     "          margins: [10, 10], // the pixel distance between each widget\r" +
     "\n" +
@@ -260,9 +262,9 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "\n" +
     "          defaultSizeY: 1, // the default height of a gridster item, if not specified\r" +
     "\n" +
-    "          mobileBreakPoint: 480, // if the screen is not wider that this, remove the grid layout and stack the items\r" +
+    "          mobileBreakPoint:480, // if the screen is not wider that this, remove the grid layout and stack the items\r" +
     "\n" +
-    "          minColumns: 1,\r" +
+    "          minColumns: 1, // the minimum columns the grid must have\r" +
     "\n" +
     "          resizable: {\r" +
     "\n" +
