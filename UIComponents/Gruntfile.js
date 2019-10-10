@@ -614,7 +614,7 @@ module.exports = function(grunt) {
 						'build/js/angular_resources_3.min.js': ['build/js/angular_resources_3.min.js'],
 						'build/js/directives_1.min.js': ['build/js/directives_1.min.js'],
 						'build/js/directives_2.min.js' : ['build/js/directives_2.min.js'],
-						'build/js/UIComponents/dt_components.min.js': ['build/js/UIComponents/dt_components.min.js'],
+						'build/js/UIComponents/Components.min.js': ['build/js/UIComponents/Components.min.js'],
 					}
                 },
                 dashboardBuilder: {
