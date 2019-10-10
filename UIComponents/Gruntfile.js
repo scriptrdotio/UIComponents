@@ -90,30 +90,30 @@ module.exports = function(grunt) {
 	         ngtemplates : {
 		         app : {
 		            src : [
-                          'dashboard/frontend/UIComponents/Components/ACL/ACL.html',
-                          'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs.html',
-		                  'dashboard/frontend/UIComponents/Components/ACL/myModalContent.html',
-		                  'dashboard/frontend/UIComponents/Components/chart/chart.html',
-		                  'dashboard/frontend/UIComponents/Components/gauge/gauge.html',
-		                  'dashboard/frontend/UIComponents/Components/grid/grid.html',
-		                  'dashboard/frontend/UIComponents/Components/grid/popup.html',
-		                  'dashboard/frontend/UIComponents/Components/list/autocomplete.html',
-		                  'dashboard/frontend/UIComponents/Components/map/map.html',
-		                  'dashboard/frontend/UIComponents/Components/progressBar/progressBar.html',
-		                  'dashboard/frontend/UIComponents/Components/thermometer/thermometer.html',
-		                  'dashboard/frontend/UIComponents/Components/thermometer/tg_thermometer_vertical.html',
-		                  'dashboard/frontend/UIComponents/Components/odometer/odometer.html',
-		                  'dashboard/frontend/UIComponents/Components/searchBox/searchBox.html',
-		                  'dashboard/frontend/UIComponents/Components/speedometer/speedometer.html',
-		                  'dashboard/frontend/UIComponents/Components/message/message.html',
-                          'dashboard/frontend/UIComponents/Components/accelerometer/accelerometer.html',
-		                  'dashboard/frontend/UIComponents/Components/button/button.html',
-		                  'dashboard/frontend/UIComponents/Components/slider/slider.html',
-		                  'dashboard/frontend/UIComponents/Components/IFrame/IFrame.html',
-						  'dashboard/frontend/UIComponents/Components/toggleSwitch/toggle_switch.html',
-                          'dashboard/frontend/UIComponents/Components/plotly/3dsurface.html',                          
-						  'dashboard/frontend/UIComponents/Components/plotly/windrose.html',
-						  'dashboard/frontend/UIComponents/Components/metricBox/metricBox.html',
+                          'dashboard/frontend/components/ACL/ACL.html',
+                          'dashboard/frontend/components/dygraphs/dygraphs.html',
+		                  'dashboard/frontend/components/ACL/myModalContent.html',
+		                  'dashboard/frontend/components/chart/chart.html',
+		                  'dashboard/frontend/components/gauge/gauge.html',
+		                  'dashboard/frontend/components/grid/grid.html',
+		                  'dashboard/frontend/components/grid/popup.html',
+		                  'dashboard/frontend/components/list/autocomplete.html',
+		                  'dashboard/frontend/components/map/map.html',
+		                  'dashboard/frontend/components/progressBar/progressBar.html',
+		                  'dashboard/frontend/components/thermometer/thermometer.html',
+		                  'dashboard/frontend/components/thermometer/tg_thermometer_vertical.html',
+		                  'dashboard/frontend/components/odometer/odometer.html',
+		                  'dashboard/frontend/components/searchBox/searchBox.html',
+		                  'dashboard/frontend/components/speedometer/speedometer.html',
+		                  'dashboard/frontend/components/message/message.html',
+                          'dashboard/frontend/components/accelerometer/accelerometer.html',
+		                  'dashboard/frontend/components/button/button.html',
+		                  'dashboard/frontend/components/slider/slider.html',
+		                  'dashboard/frontend/components/IFrame/IFrame.html',
+						  'dashboard/frontend/components/toggleSwitch/toggle_switch.html',
+                          'dashboard/frontend/components/plotly/3dsurface.html',                          
+						  'dashboard/frontend/components/plotly/windrose.html',
+						  'dashboard/frontend/components/metricBox/metricBox.html',
 		                  'dashboardBuilder/javascript/UIComponents/Components/box.html',
 		                  'dashboardBuilder/javascript/UIComponents/Components/dashboard.html',
 		                  'dashboardBuilder/javascript/UIComponents/Components/dashboardsList.html',
@@ -156,29 +156,29 @@ module.exports = function(grunt) {
 	            },
 	            app : {
 		            files : {
-                        'concat/min-safe/angular_dygraphs.js' : [ 'dashboard/frontend/UIComponents/Components/dygraphs/angular-dygraphs.js' ],
-                        'concat/min-safe/dygraphs.js' : [ 'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs.js' ],
-						'concat/min-safe/angular_plotly.js' : [ 'dashboard/frontend/UIComponents/Components/plotly/angular-plotly.js' ],
-                        'concat/min-safe/plotly.js' : [ 'dashboard/frontend/UIComponents/Components/plotly/plotly.js' ],
-                        'concat/min-safe/3dsurface.js' : [ 'dashboard/frontend/UIComponents/Components/plotly/3dsurface.js' ],
-                        'concat/min-safe/windrose.js' : [ 'dashboard/frontend/UIComponents/Components/plotly/windrose.js' ],
-						'concat/min-safe/metricBox.js' : [ 'dashboard/frontend/UIComponents/Components/metricBox/metricBox.js' ],
-		               'concat/min-safe/acl.js' : [ 'dashboard/frontend/UIComponents/Components/ACL/ACL.js' ],
-		               'concat/min-safe/abn_tree_directive.js' : [ 'dashboard/frontend/UIComponents/Components/searchBox/abn_tree_directive.js' ],
-		               'concat/min-safe/markerClusterer.js' : [ 'dashboard/frontend/UIComponents/Components/map/markerClusterer.js' ],
-		               'concat/min-safe/map.js' : [ 'dashboard/frontend/UIComponents/Components/map/map.js' ],
-		               'concat/min-safe/angucomplete.alt.js' : [ 'dashboard/frontend/UIComponents/Components/list/angucomplete.alt.js' ],
-		               'concat/min-safe/grid.js' : [ 'dashboard/frontend/UIComponents/Components/grid/grid.js' ],
-		               'concat/min-safe/autocomplete.js' : [ 'dashboard/frontend/UIComponents/Components/list/autocomplete.js' ],
-		               'concat/min-safe/odometer.js' : [ 'dashboard/frontend/UIComponents/Components/odometer/odometer.js' ],
-		               'concat/min-safe/speedometer.js' : [ 'dashboard/frontend/UIComponents/Components/speedometer/speedometer.js' ],
-		               'concat/min-safe/gauge.js' : [ 'dashboard/frontend/UIComponents/Components/gauge/gauge.js' ],
-		               'concat/min-safe/chart.js' : [ 'dashboard/frontend/UIComponents/Components/chart/chart.js' ],
-		               'concat/min-safe/searchBox.js' : [ 'dashboard/frontend/UIComponents/Components/searchBox/searchBox.js' ],
+                        'concat/min-safe/angular_dygraphs.js' : [ 'dashboard/frontend/components/dygraphs/angular-dygraphs.js' ],
+                        'concat/min-safe/dygraphs.js' : [ 'dashboard/frontend/components/dygraphs/dygraphs.js' ],
+						'concat/min-safe/angular_plotly.js' : [ 'dashboard/frontend/components/plotly/angular-plotly.js' ],
+                        'concat/min-safe/plotly.js' : [ 'dashboard/frontend/components/plotly/plotly.js' ],
+                        'concat/min-safe/3dsurface.js' : [ 'dashboard/frontend/components/plotly/3dsurface.js' ],
+                        'concat/min-safe/windrose.js' : [ 'dashboard/frontend/components/plotly/windrose.js' ],
+						'concat/min-safe/metricBox.js' : [ 'dashboard/frontend/components/metricBox/metricBox.js' ],
+		               'concat/min-safe/acl.js' : [ 'dashboard/frontend/components/ACL/ACL.js' ],
+		               'concat/min-safe/abn_tree_directive.js' : [ 'dashboard/frontend/components/searchBox/abn_tree_directive.js' ],
+		               'concat/min-safe/markerClusterer.js' : [ 'dashboard/frontend/components/map/markerClusterer.js' ],
+		               'concat/min-safe/map.js' : [ 'dashboard/frontend/components/map/map.js' ],
+		               'concat/min-safe/angucomplete.alt.js' : [ 'dashboard/frontend/components/list/angucomplete.alt.js' ],
+		               'concat/min-safe/grid.js' : [ 'dashboard/frontend/components/grid/grid.js' ],
+		               'concat/min-safe/autocomplete.js' : [ 'dashboard/frontend/components/list/autocomplete.js' ],
+		               'concat/min-safe/odometer.js' : [ 'dashboard/frontend/components/odometer/odometer.js' ],
+		               'concat/min-safe/speedometer.js' : [ 'dashboard/frontend/components/speedometer/speedometer.js' ],
+		               'concat/min-safe/gauge.js' : [ 'dashboard/frontend/components/gauge/gauge.js' ],
+		               'concat/min-safe/chart.js' : [ 'dashboard/frontend/components/chart/chart.js' ],
+		               'concat/min-safe/searchBox.js' : [ 'dashboard/frontend/components/searchBox/searchBox.js' ],
 		               'concat/min-safe/httpProvider.js' : [ 'httpProvider.js' ],
 		               'concat/min-safe/wsProvider.js' : [ 'wsProvider.js' ],
-		               'concat/min-safe/morris.js' : [ 'dashboard/frontend/UIComponents/Components/chart/morris.js' ],
-		               'concat/min-safe/angular.morris.js' : [ 'dashboard/frontend/UIComponents/Components/chart/angular.morris.js' ],
+		               'concat/min-safe/morris.js' : [ 'dashboard/frontend/components/chart/morris.js' ],
+		               'concat/min-safe/angular.morris.js' : [ 'dashboard/frontend/components/chart/angular.morris.js' ],
 					   'concat/min-safe/templates.js' : [ 'build/js/templates.js' ],
 					   'concat/min-safe/boxStyleConfig.js' : [ 'dashboardBuilder/javascript/UIComponents/Components/library/boxStyleConfig.js' ],
 					   'concat/min-safe/commonsConfig.js' : [ 'dashboardBuilder/javascript/UIComponents/Components/library/commonsConfig.js' ],
@@ -188,13 +188,13 @@ module.exports = function(grunt) {
 		               'concat/min-safe/module.js' : [ 'dashboardBuilder/javascript/UIComponents/Components/module.js' ],
 		               'concat/min-safe/dashboard.js' : [ 'dashboardBuilder/javascript/UIComponents/Components/dashboard.js' ],
 		               'concat/min-safe/dashboardsList.js' : [ 'dashboardBuilder/javascript/UIComponents/Components/dashboardsList.js' ],
-		               'concat/min-safe/ngScriptrAlert.js' : [ 'dashboard/frontend/UIComponents/Components/alert/ngScriptrAlert.js' ],
-		               'concat/min-safe/alert.js' : [ 'dashboard/frontend/UIComponents/Components/alert/alert.js' ],
-		               'concat/min-safe/toggle_switch.js' : [ 'dashboard/frontend/UIComponents/Components/toggleSwitch/toggle_switch.js' ],
-	            	   'concat/min-safe/slider.js' : [ 'dashboard/frontend/UIComponents/Components/slider/slider.js' ],
-		               'concat/min-safe/button.js' : [ 'dashboard/frontend/UIComponents/Components/button/button.js' ],
-                       'concat/min-safe/accelerometer.js' : [ 'dashboard/frontend/UIComponents/Components/accelerometer/accelerometer.js' ], 
-                       'concat/min-safe/IFrame.js' : [ 'dashboard/frontend/UIComponents/Components/IFrame/IFrame.js' ], 
+		               'concat/min-safe/ngScriptrAlert.js' : [ 'dashboard/frontend/components/alert/ngScriptrAlert.js' ],
+		               'concat/min-safe/alert.js' : [ 'dashboard/frontend/components/alert/alert.js' ],
+		               'concat/min-safe/toggle_switch.js' : [ 'dashboard/frontend/components/toggleSwitch/toggle_switch.js' ],
+	            	   'concat/min-safe/slider.js' : [ 'dashboard/frontend/components/slider/slider.js' ],
+		               'concat/min-safe/button.js' : [ 'dashboard/frontend/components/button/button.js' ],
+                       'concat/min-safe/accelerometer.js' : [ 'dashboard/frontend/components/accelerometer/accelerometer.js' ], 
+                       'concat/min-safe/IFrame.js' : [ 'dashboard/frontend/components/IFrame/IFrame.js' ], 
                        'concat/min-safe/angular-underscore.js' : [ 'dashboardBuilder/lib/schemaForm/angular-underscore.js' ],
 	            	   'concat/min-safe/svg-assets-cache.js' : [ 'lib/svg-assets-cache.js' ],
 	            	   'concat/min-safe/spectrum.js' : [ 'dashboardBuilder/lib/schemaForm/spectrum.js' ],
@@ -205,8 +205,8 @@ module.exports = function(grunt) {
 		               'concat/min-safe/bootstrapDecorator.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrapDecorator.js' ],
 		               'concat/min-safe/bootstrap-colorpicker.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-colorpicker.min.js' ],
 		               'concat/min-safe/ui-codemirror.js' : [ 'dashboardBuilder/lib/codemirror/js/mode/ui-codemirror.js' ],
-                       'concat/min-safe/thermometer_directive.js' : [ 'dashboard/frontend/UIComponents/Components/thermometer/thermometer_directive.js' ],
-		               'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/UIComponents/Components/thermometer/thermometer.js' ] 
+                       'concat/min-safe/thermometer_directive.js' : [ 'dashboard/frontend/components/thermometer/thermometer_directive.js' ],
+		               'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/components/thermometer/thermometer.js' ] 
 		            }
 	            }
 	         },
@@ -249,20 +249,20 @@ module.exports = function(grunt) {
 		                     'lib/raphael-min.js',
 		                     'concat/min-safe/morris.js',
 		                     'concat/min-safe/angular.morris.js',
-		                     'dashboard/frontend/UIComponents/Components/gauge/justgauge.js',
-		                     'dashboard/frontend/UIComponents/Components/gauge/angular.gauge.min.js',
-		                     'dashboard/frontend/UIComponents/Components/speedometer/angular.metergauge.min.js',
+		                     'dashboard/frontend/components/gauge/justgauge.js',
+		                     'dashboard/frontend/components/gauge/angular.gauge.min.js',
+		                     'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
 		                     'lib/d3.v4.min.js',
-		                     'dashboard/frontend/UIComponents/Components/odometer/odometer.min.js',
-		                     'dashboard/frontend/UIComponents/Components/odometer/angular.odometer.min.js',
+		                     'dashboard/frontend/components/odometer/odometer.min.js',
+		                     'dashboard/frontend/components/odometer/angular.odometer.min.js',
 		                     'concat/min-safe/abn_tree_directive.js',
 		                     'concat/min-safe/thermometer_directive.js',
 		                     'lib/ng-map.min.js',
 		                     'lib/ag_grid.js',
 		                     'concat/min-safe/angucomplete.alt.js',
-		                     'dashboard/frontend/UIComponents/Components/toggleSwitch/angular_toggle_switch.js',
+		                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js',
 		                     'lib/rzslider.min.js',
-		                     'dashboard/frontend/UIComponents/Components/button/angular-promise-buttons.js',
+		                     'dashboard/frontend/components/button/angular-promise-buttons.js',
 		                     'lib/xeditable.min.js',
 		                     'concat/min-safe/spectrum.js',
 		                     'concat/min-safe/angular-spectrum-colorpicker.min.js',
@@ -304,7 +304,7 @@ module.exports = function(grunt) {
 		                     'concat/min-safe/dashboardsList.js',
 		                     'concat/min-safe/dashboard.js',
 		                     'concat/min-safe/thermometer.js',
-		                     'dashboard/frontend/UIComponents/Components/progressBar/progressBar.js' ],
+		                     'dashboard/frontend/components/progressBar/progressBar.js' ],
 		                     
 		                     dest : 'build/javascript/dashboardBuilder_resources.js'
 				},
@@ -370,20 +370,20 @@ module.exports = function(grunt) {
 		               'lib/raphael-min.js',
 		               'concat/min-safe/morris.js',
 		               'concat/min-safe/angular.morris.js',
-		               'dashboard/frontend/UIComponents/Components/gauge/justgauge.js',
-		               'dashboard/frontend/UIComponents/Components/gauge/angular.gauge.min.js',
-		               'dashboard/frontend/UIComponents/Components/speedometer/angular.metergauge.min.js',
+		               'dashboard/frontend/components/gauge/justgauge.js',
+		               'dashboard/frontend/components/gauge/angular.gauge.min.js',
+		               'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
 		               'lib/d3.v4.min.js',
-		               'dashboard/frontend/UIComponents/Components/odometer/odometer.min.js',
-		               'dashboard/frontend/UIComponents/Components/odometer/angular.odometer.min.js',
+		               'dashboard/frontend/components/odometer/odometer.min.js',
+		               'dashboard/frontend/components/odometer/angular.odometer.min.js',
 		               'concat/min-safe/abn_tree_directive.js',
-		               'dashboard/frontend/UIComponents/Components/thermometer/thermometer_directive.js',
+		               'dashboard/frontend/components/thermometer/thermometer_directive.js',
 		               'lib/ng-map.min.js',
 		               'lib/ag_grid.js',
 		               'concat/min-safe/angucomplete.alt.js',
-		               'dashboard/frontend/UIComponents/Components/toggleSwitch/angular_toggle_switch.js',
+		               'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js',
 		               'lib/rzslider.min.js',
-		               'dashboard/frontend/UIComponents/Components/button/angular-promise-buttons.js',
+		               'dashboard/frontend/components/button/angular-promise-buttons.js',
 		               /**
 		               'lib/xeditable.min.js',
 		               'concat/min-safe/spectrum.js',
@@ -425,8 +425,8 @@ module.exports = function(grunt) {
 		               'concat/min-safe/widgetsConfig_ide.js',
 		               'concat/min-safe/dashboardsList.js',
 		               'concat/min-safe/dashboard.js',**/
-		               'dashboard/frontend/UIComponents/Components/thermometer/thermometer.js',
-		               'dashboard/frontend/UIComponents/Components/progressBar/progressBar.js' ],
+		               'dashboard/frontend/components/thermometer/thermometer.js',
+		               'dashboard/frontend/components/progressBar/progressBar.js' ],
 		               
 		               dest: 'build/javascript/template_resources.js'
 	            },
@@ -438,7 +438,7 @@ module.exports = function(grunt) {
 	            
 	            external_libraries: {
 					src: [ 'lib/underscore-min.js',
-					'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.js',
+					'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js',
 					'lib/plotly-latest.min.js', 'lib/handlebars.min.js',
 					 'lib/codemirror.min.js', 'lib/javascript.min.js'],
 	            	dest: 'build/js/external_libraries.min.js'
@@ -447,7 +447,7 @@ module.exports = function(grunt) {
                     src: [ 
 						'lib/underscore-min.js',
 						'lib/codemirror.min.js',
-                        'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.js'
+                        'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js'
                         ],
 	            	dest: 'build/js/dt_external_libraries1.min.js'
 				},
@@ -481,23 +481,23 @@ module.exports = function(grunt) {
 	            	src: [   'lib/raphael-min.js',
 		                     'concat/min-safe/morris.js',
 		                     'concat/min-safe/angular.morris.js',
-		                     'dashboard/frontend/UIComponents/Components/gauge/justgauge.js',
-		                     'dashboard/frontend/UIComponents/Components/gauge/angular.gauge.min.js',
-		                     'dashboard/frontend/UIComponents/Components/speedometer/angular.metergauge.min.js',
+		                     'dashboard/frontend/components/gauge/justgauge.js',
+		                     'dashboard/frontend/components/gauge/angular.gauge.min.js',
+		                     'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
 		                     'lib/d3.v4.min.js',
-		                     'dashboard/frontend/UIComponents/Components/odometer/odometer.min.js',
-		                     'dashboard/frontend/UIComponents/Components/odometer/angular.odometer.min.js',
+		                     'dashboard/frontend/components/odometer/odometer.min.js',
+		                     'dashboard/frontend/components/odometer/angular.odometer.min.js',
 		                     'concat/min-safe/abn_tree_directive.js',
-		                     'dashboard/frontend/UIComponents/Components/thermometer/thermometer_directive.js',
+		                     'dashboard/frontend/components/thermometer/thermometer_directive.js',
 		                     'lib/ng-map.min.js'],
 	            	dest: 'build/js/directives_1.min.js'
 	            },
 	            
 	            directives_2: {
 	            	src: [       'concat/min-safe/angucomplete.alt.js',
-			                     'dashboard/frontend/UIComponents/Components/toggleSwitch/angular_toggle_switch.js',
+			                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js',
 			                     'lib/rzslider.min.js',
-			                     'dashboard/frontend/UIComponents/Components/button/angular-promise-buttons.js',
+			                     'dashboard/frontend/components/button/angular-promise-buttons.js',
 			                     'lib/xeditable.min.js',
 			                     'concat/min-safe/spectrum.js',
 			                     'concat/min-safe/angular-spectrum-colorpicker.min.js',
@@ -544,8 +544,8 @@ module.exports = function(grunt) {
 			                     'concat/min-safe/widgetsConfig.js',
 			                     'concat/min-safe/dashboardsList.js',
 			                     'concat/min-safe/dashboard.js',
-			                     'dashboard/frontend/UIComponents/Components/thermometer/thermometer.js',
-			                     'dashboard/frontend/UIComponents/Components/progressBar/progressBar.js'
+			                     'dashboard/frontend/components/thermometer/thermometer.js',
+			                     'dashboard/frontend/components/progressBar/progressBar.js'
 			                ],
 	            	dest: 'build/js/UIComponents/Components.min.js'
 	            },
@@ -554,29 +554,29 @@ module.exports = function(grunt) {
 	               src : [
 	                     'lib/slick.css',
 	                     'lib/morris.css',
-	                     'dashboard/frontend/UIComponents/Components/chart/chart.css',
-	                     'dashboard/frontend/UIComponents/Components/searchBox/abn_tree.css',
+	                     'dashboard/frontend/components/chart/chart.css',
+	                     'dashboard/frontend/components/searchBox/abn_tree.css',
 	                     'dashboardBuilder/lib/gridster/angular_gridster.min.css',
 	                     'lib/angular-material.min',
-	                     'dashboard/frontend/UIComponents/Components/odometer/odometer.car.css',
-                         'dashboard/frontend/UIComponents/Components/thermometer/style.css',
-                         'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.css',
+	                     'dashboard/frontend/components/odometer/odometer.car.css',
+                         'dashboard/frontend/components/thermometer/style.css',
+                         'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.css',
 	                     'lib/xeditable.min.css',
 	                     'dashboardBuilder/css/dashboard.css',
-	                     'dashboard/frontend/UIComponents/Components/ACL/ACL.css',
-	                     'dashboard/frontend/UIComponents/Components/gauge/gauge.css',
-	                     'dashboard/frontend/UIComponents/Components/grid/grid.css',
-	                     'dashboard/frontend/UIComponents/Components/list/angucomplete.alt.css',
-						 'dashboard/frontend/UIComponents/Components/map/map.css',
-						 'dashboard/frontend/UIComponents/Components/plotly/windrose.css',
-						 'dashboard/frontend/UIComponents/Components/metricBox/metricBox.css',
-	                     'dashboard/frontend/UIComponents/Components/toggleSwitch/angular_toggle_switch.css',
+	                     'dashboard/frontend/components/ACL/ACL.css',
+	                     'dashboard/frontend/components/gauge/gauge.css',
+	                     'dashboard/frontend/components/grid/grid.css',
+	                     'dashboard/frontend/components/list/angucomplete.alt.css',
+						 'dashboard/frontend/components/map/map.css',
+						 'dashboard/frontend/components/plotly/windrose.css',
+						 'dashboard/frontend/components/metricBox/metricBox.css',
+	                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css',
 	                     'dashboardBuilder/lib/schemaForm/select.min.css',
 	                     'lib/colorpicker.min.css',
 	                     'lib/rzslider.css',
-	                     'dashboard/frontend/UIComponents/Components/button/button.css',
-	                     'dashboard/frontend/UIComponents/Components/IFrame/IFrame.css',
-                         'dashboard/frontend/UIComponents/Components/accelerometer/accelerometer.css',
+	                     'dashboard/frontend/components/button/button.css',
+	                     'dashboard/frontend/components/IFrame/IFrame.css',
+                         'dashboard/frontend/components/accelerometer/accelerometer.css',
 	                     'dashboardBuilder/lib/schemaForm/spectrum.css',
 	                     'lib/codemirror.min.css',
 	                     'lib/neo.min.css'
@@ -586,22 +586,22 @@ module.exports = function(grunt) {
                 dt_css : {
                     src : [
                           'lib/morris.css',//
-                          'dashboard/frontend/UIComponents/Components/chart/chart.css',//
-                          'dashboard/frontend/UIComponents/Components/searchBox/abn_tree.css',
+                          'dashboard/frontend/components/chart/chart.css',//
+                          'dashboard/frontend/components/searchBox/abn_tree.css',
                           'dashboardBuilder/lib/gridster/angular_gridster.min.css',//
-                          'dashboard/frontend/UIComponents/Components/odometer/odometer.car.css',//
-                          'dashboard/frontend/UIComponents/Components/thermometer/style.css',//
-                          'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.css',//
-                          'dashboard/frontend/UIComponents/Components/displayCount/count.css',//
-                          'dashboard/frontend/UIComponents/Components/grid/grid.css',//
-                          'dashboard/frontend/UIComponents/Components/map/map.css',//
-                          'dashboard/frontend/UIComponents/Components/plotly/windrose.css',//
-                          'dashboard/frontend/UIComponents/Components/metricBox/metricBox.css',//
-                          'dashboard/frontend/UIComponents/Components/toggleSwitch/angular_toggle_switch.css',//
+                          'dashboard/frontend/components/odometer/odometer.car.css',//
+                          'dashboard/frontend/components/thermometer/style.css',//
+                          'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.css',//
+                          'dashboard/frontend/components/displayCount/count.css',//
+                          'dashboard/frontend/components/grid/grid.css',//
+                          'dashboard/frontend/components/map/map.css',//
+                          'dashboard/frontend/components/plotly/windrose.css',//
+                          'dashboard/frontend/components/metricBox/metricBox.css',//
+                          'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css',//
                           'lib/rzslider.css',//
-                          'dashboard/frontend/UIComponents/Components/button/button.css',//
-                          'dashboard/frontend/UIComponents/Components/IFrame/IFrame.css',//
-                          'dashboard/frontend/UIComponents/Components/accelerometer/accelerometer.css',//
+                          'dashboard/frontend/components/button/button.css',//
+                          'dashboard/frontend/components/IFrame/IFrame.css',//
+                          'dashboard/frontend/components/accelerometer/accelerometer.css',//
                           ],
                     dest : 'build/css/UIComponents/dt_components.css'
                  },
