@@ -443,14 +443,14 @@ module.exports = function(grunt) {
                 dt_external_libraries1: {
                     src: [ 
                         'lib/underscore-min.js',
-                        'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.js',
-                        'lib/plotly-latest.min.js',
-                        'lib/justgage.min.js'
+                        'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.js'
                         ],
 	            	dest: 'build/js/dt_external_libraries1.min.js'
 				},
 				dt_external_libraries2: {
                     src: [ 
+						'lib/plotly-latest.min.js',
+                        'lib/justgage.min.js',
                         'lib/moment.min.js',
                         'lib/moment-timezone-with-data.min.js',
                         'lib/javascript.min.js'
