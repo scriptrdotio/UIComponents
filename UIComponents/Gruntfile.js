@@ -437,12 +437,16 @@ module.exports = function(grunt) {
 	            },
 	            
 	            external_libraries: {
-	            	src: [ 'lib/underscore-min.js','dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.js','lib/plotly-latest.min.js', 'lib/handlebars.min.js', 'lib/codemirror.min.js', 'lib/javascript.min.js'],
+					src: [ 'lib/underscore-min.js',
+					'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.js',
+					'lib/plotly-latest.min.js', 'lib/handlebars.min.js',
+					 'lib/codemirror.min.js', 'lib/javascript.min.js'],
 	            	dest: 'build/js/external_libraries.min.js'
                 },
                 dt_external_libraries1: {
                     src: [ 
-                        'lib/underscore-min.js',
+						'lib/underscore-min.js',
+						'lib/codemirror.min.js',
                         'dashboard/frontend/UIComponents/Components/dygraphs/dygraphs-2.1.0.js'
                         ],
 	            	dest: 'build/js/dt_external_libraries1.min.js'
