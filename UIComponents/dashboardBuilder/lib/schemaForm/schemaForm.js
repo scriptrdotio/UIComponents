@@ -1646,7 +1646,6 @@ angular.module('schemaForm').directive('sfArray', ['sfSelect', 'schemaForm', 'sf
           scope.$emit('schemaFormPropagateNgModelController', ngModel);
         }
 
-
         // Watch for the form definition and then rewrite it.
         // It's the (first) array part of the key, '[]' that needs a number
         // corresponding to an index of the form.
@@ -1656,11 +1655,22 @@ angular.module('schemaForm').directive('sfArray', ['sfSelect', 'schemaForm', 'sf
           }
 
 
+            
+          var onChangeFn =  function() {
+              if (scope.form && scope.form.onChange) {
+                  if (angular.isFunction(scope.form.onChange)) {
+                      scope.form.onChange(scope.modelArray, scope.form, scope.model);
+                  } else {
+                      scope.evalExpr(scope.form.onChange, {'modelValue': scope.modelArray, form: scope.form, model: scope.model});
+                  }
+              }
+          };
           // An array model always needs a key so we know what part of the model
           // to look at. This makes us a bit incompatible with JSON Form, on the
           // other hand it enables two way binding.
           var list = sfSelect(form.key, scope.model);
 
+            
           // We only modify the same array instance but someone might change the array from
           // the outside so let's watch for that. We use an ordinary watch since the only case
           // we're really interested in is if its a new instance.
@@ -1750,6 +1760,7 @@ angular.module('schemaForm').directive('sfArray', ['sfSelect', 'schemaForm', 'sf
 
             // Trigger validation.
             scope.validateArray();
+              onChangeFn()
             return list;
           };
 
@@ -1763,6 +1774,7 @@ angular.module('schemaForm').directive('sfArray', ['sfSelect', 'schemaForm', 'sf
             if (ngModel && ngModel.$setDirty) {
               ngModel.$setDirty();
             }
+             onChangeFn()
             return list;
           };
 
