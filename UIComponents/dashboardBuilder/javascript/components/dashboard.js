@@ -1111,7 +1111,10 @@ angular
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/myModalContent.html',
     controller: function ($scope) {
+        
+        var self=this;
       this.$onInit = function () {
+          
         this.widget = this.resolve.widget;
         
         $scope.$broadcast('schemaFormRedraw')
@@ -1137,11 +1140,29 @@ angular
               
           }
       };
+            this.highlightTabs = function (formName) {
+        let rootEl = $('form[name="' + formName + '"]');
+        let tabHeaders = rootEl.find('ul li');
+        let tabPanes = rootEl.find('.tab-pane') || [];
+        rootEl.find('ul li a span.badge').remove();
+
+        for (let i = 0; i < tabPanes.length; i++) {
+            let errorCount = $(tabPanes[i]).find('div.ng-invalid').length;
+            if (errorCount > 0) {
+                $(tabHeaders[i].childNodes[0]).append('<span class="badge sf-badge-error">' + errorCount + '</span>');
+            }
+        }
+    };
+    
 
       this.onSubmit = function(form) {
         // First we broadcast an event so all fields validate themselves
         $scope.$broadcast('schemaFormValidate');
-        console.log(this.model)
+        console.log(this.model);
+          
+           setTimeout(function() {
+          self.highlightTabs(form.$name);
+        }, 100);
 
         // Then we check if the form is valid
         if (form.$valid) {
