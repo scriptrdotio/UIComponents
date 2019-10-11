@@ -678,6 +678,11 @@
 .dashboardTheme .has-success .form-control {
   border-color: #4FCD8A;
 }
+.dashboardTheme .sf-badge-error {
+  margin-left: 2px;
+  background-color: #aa3322;
+  line-height: 0.7;
+}
 .dashboardTheme .sp-replacer {
   border: solid 1px #DDD !important;
   background: #FFF !important;
