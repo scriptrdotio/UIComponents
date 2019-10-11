@@ -11,7 +11,8 @@ const __DISPLAY_DATA__ = {
         "data": "12",
         "message": "Connected Devices",
         "fetch-data-interval": 300,
-        "number-cell-size": "medium"
+        "number-cell-size": "medium",
+        "number-background-colors":[{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]
     },
     "box": {
         sizeX: 3,
@@ -24,7 +25,9 @@ const __DISPLAY_DATA__ = {
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/displayData.png",
     "form": [{
         type: "tabs",
-        tabs: [{
+        tabs: [
+        	
+        {
             title: "Format",
             items: ["message",
                 {
@@ -147,20 +150,7 @@ const __DISPLAY_DATA__ = {
                             ['#ef2929', '#888a85', '#deface']]
                         }
                     },
-                    {
-                        "key": "number-background-color",
-                        "colorFormat": "hex3",
-                        "spectrumOptions": {
-                            showInput: true,
-                            showAlpha: false,
-                            allowEmpty: true,
-                            showPalette: true,
-                            preferredFormat: 'hex3',
-                            palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                            ['#8ae234', '#729fcf', '#ad7fa8'],
-                            ['#ef2929', '#888a85', '#deface']]
-                        }
-                    },
+                    
                     {
                         "key": "number-Text-Alignment",
                         "notitle": false,
@@ -288,7 +278,53 @@ const __DISPLAY_DATA__ = {
 
 
 
-        }]
+        },
+        {
+            title: "Background colors",
+            items: [
+                {
+                            "type": "section",
+                            "htmlClass": "col-xs-3",
+                            "items": ["number-background-color"]
+                },
+                
+                {
+                            "type": "section",
+                            "htmlClass": "col-xs-9",
+                            "items": [
+                                {
+                                    key: "number-background-colors",
+                                    startEmpty: true,
+                                    items: [{
+                                        "type": "section",
+                                        "htmlClass": "row",
+                                        "items": [
+                                            {
+                                                "type": "section",
+                                                "htmlClass": "col-sm-6",
+                                                "items": [{
+                                                    key: "number-background-colors[].value",
+                                                   
+                                                }]
+                                            },
+                                            {
+                                                "type": "section",
+                                                "htmlClass": "col-sm-6",
+                                                "items": [{
+                                                    key: "number-background-colors[].color",
+                                                    "colorFormat": "hex",
+                                                    
+                                                }]
+                                            }]
+                                    }
+                                    ],
+
+                                },
+                            ]
+                        }
+        ]
+    },
+        ]
     }],
     "schema": {
         "type": "object",
@@ -369,12 +405,32 @@ const __DISPLAY_DATA__ = {
                 "validationMessage": "Invalid Color"
             },
             "number-background-color": {
-                "title": "Number Backgrount Color",
+                "title": "Number Default Backgrount Color",
                 "type": "string",
                 "description": "Define your widget number background color.",
                 "format": "color",
                 "default": "#ff8c00",
                 "validationMessage": "Invalid Color"
+            },
+            "number-background-colors": {
+                "title": "Number Backgrount Colors",
+                "type": "array",
+                "description": "Define your widget number background colors.If data not matching any defined color default color will be used.",
+               	"items":{
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "title": "Value",
+                            "type": "number"
+                        },
+
+                        "color": {
+                            "title": "Color",
+                            "type": "string",
+                            "format": "color",
+                        }
+                    }
+                }
             },
             "message-background-color": {
                 "title": "Message Backgrount Color",

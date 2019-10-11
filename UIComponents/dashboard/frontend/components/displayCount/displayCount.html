@@ -1,5 +1,5 @@
 <!-- Messages from the backend -->
-<div class="display-count">
+<div class="display-count" ng-if="$ctrl.rerenderVal">
     <div ng-if="$ctrl.widgetLayout == 'vertical'" ng-style="{ 'border' : '{{$ctrl.borderSize}}px solid {{$ctrl.borderColor}}' }">
             <div class="vertical-count-media" ng-style="{ 'background' : '{{$ctrl.numberBackgroundColor}}', 'font-weight' : '{{$ctrl.numberFontWeight}}', 'font-family' : '{{$ctrl.numberFontFamily}}', 'color' : '{{$ctrl.numberTextColor}}', 'text-align' : '{{$ctrl.numberTextAlignment}}' }">{{$ctrl.data}}</div>
             <div class="vertical-count-media" ng-style="{ 'background' : '{{$ctrl.messageBackgroundColor}}', 'font-weight' : '{{$ctrl.messageFontWeight}}', 'font-family' : '{{$ctrl.messageFontFamily}}', 'color' : '{{$ctrl.messageTextColor}}', 'text-align' : '{{$ctrl.messageTextAlignment}}' }">{{$ctrl.message}}</div>    

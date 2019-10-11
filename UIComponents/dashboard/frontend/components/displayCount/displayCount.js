@@ -8,7 +8,7 @@ angular
   
       bindings : {
         "widgetLayout": "@",//vertical, horozontal
-        "data": "@",  
+        "data": "<?",  
         "message": "@",            
         "borderSize": "@",
         "borderColor": "@",          
@@ -18,6 +18,7 @@ angular
         "numberFontWeight": "@",         
         "numberTextColor": "@",                   
         "numberBackgroundColor": "@",    
+        "numberBackgroundColors": "<?",  
         "numberTextAlignment": "@",    
         "messageFontFamily": "@",            
         "messageFontSize": "@",                      
@@ -38,6 +39,7 @@ angular
       controller: function($scope, httpClient, wsClient, $element, $window, $timeout, $interval, $window, dataService) {
         
          var self = this;
+          self.rerenderVal=null;
           self.isLoading = false;
           
          this.$onInit = function() {
@@ -59,7 +61,11 @@ angular
             this.messageFontWeight = (this.messageFontWeight) ? this.messageFontWeight : "600";             
             this.messageTextColor = (this.messageTextColor) ? this.messageTextColor : "#686868";             
             this.messageBackgroundColor = (this.messageBackgroundColor) ? this.messageBackgroundColor : "white";                          
-            this.messageTextAlignment = (this.messageTextAlignment) ? this.messageTextAlignment : "center";               
+            this.messageTextAlignment = (this.messageTextAlignment) ? this.messageTextAlignment : "center";       
+             
+             this.rerender();
+             
+             //end 
  
             this.enableResize = (typeof this.enableResize != 'undefined') ? this.enableResize : true;  
               angular.element($window).on('resize', function() {
@@ -75,6 +81,31 @@ angular
              this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;
   			 this.style = {};
       	 }
+         
+         this.findBackgroundColor =function(s){
+             var match=null;
+             if(typeof s.data === 'string'){
+                 match=_.find(s.numberBackgroundColors,function(e){
+                     return e.value==s.data;
+                 });
+             }else if(typeof s.data === 'number'){
+                 match=_.find(s.numberBackgroundColors.reverse(),function(e){
+                     return s.data>=e.value;
+                 });
+             }
+             if(match!=null){
+                 s.numberBackgroundColor=match.color;
+             }
+             
+            
+         }
+         this.rerender=function(){
+             self.rerenderVal=false;
+             $timeout(function(){
+                   self.findBackgroundColor(self);
+                 self.rerenderVal=true;
+             },100);
+         }
          
          this.$postLink = function () {
              $timeout(self.resize,100);
@@ -120,6 +151,8 @@ angular
             if(typeof data == "string"){
 				self.data = data
             }
+            
+            self.rerender();
         }
         }
 	});
