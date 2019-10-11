@@ -174,9 +174,11 @@ module.exports = function(grunt) {
 		               'concat/min-safe/speedometer.js' : [ 'dashboard/frontend/components/speedometer/speedometer.js' ],
 		               'concat/min-safe/gauge.js' : [ 'dashboard/frontend/components/gauge/gauge.js' ],
 		               'concat/min-safe/chart.js' : [ 'dashboard/frontend/components/chart/chart.js' ],
-		               'concat/min-safe/searchBox.js' : [ 'dashboard/frontend/components/searchBox/searchBox.js' ],
+					   'concat/min-safe/searchBox.js' : [ 'dashboard/frontend/components/searchBox/searchBox.js' ],
+					   'concat/min-safe/displayCount.js' : [ 'dashboard/frontend/components/displayCount/displayCount.js' ],
 		               'concat/min-safe/httpProvider.js' : [ 'httpProvider.js' ],
-		               'concat/min-safe/wsProvider.js' : [ 'wsProvider.js' ],
+					   'concat/min-safe/wsProvider.js' : [ 'wsProvider.js' ],
+					   'concat/min-safe/dataService.js' : [ 'dataService.js' ],
 		               'concat/min-safe/morris.js' : [ 'dashboard/frontend/components/chart/morris.js' ],
 		               'concat/min-safe/angular.morris.js' : [ 'dashboard/frontend/components/chart/angular.morris.js' ],
 					   'concat/min-safe/templates.js' : [ 'build/js/templates.js' ],
@@ -454,12 +456,17 @@ module.exports = function(grunt) {
 				dt_external_libraries2: {
                     src: [ 
 						'lib/plotly-latest.min.js',
-                        'lib/justgage.min.js',
+                        'lib/justgage.min.js'
+                        ],
+	            	dest: 'build/js/dt_external_libraries2.min.js'
+				},
+				dt_external_libraries3: {
+                    src: [ 
                         'lib/moment.min.js',
                         'lib/moment-timezone-with-data.min.js',
                         'lib/javascript.min.js'
                         ],
-	            	dest: 'build/js/dt_external_libraries2.min.js'
+	            	dest: 'build/js/dt_external_libraries3.min.js'
 	            },
 	            
 	            external_angular_resources_1: {
@@ -515,7 +522,9 @@ module.exports = function(grunt) {
 	            
 	            components: {
 	            	src: [       'concat/min-safe/wsProvider.js',
-	 		                     'concat/min-safe/httpProvider.js',
+								  'concat/min-safe/httpProvider.js',
+								  'concat/min-safe/dataService.js',
+								  'concat/min-safe/displayCount.js',
 			                     'concat/min-safe/templates.js',
 			                     'concat/min-safe/chart.js',
 			                     'concat/min-safe/odometer.js',
@@ -619,6 +628,7 @@ module.exports = function(grunt) {
 						'build/js/external_jquery_resources.min.js': ['build/js/external_jquery_resources.min.js'],
 						'build/js/dt_external_libraries1.min.js': ['build/js/dt_external_libraries1.min.js'],
 						'build/js/dt_external_libraries2.min.js': ['build/js/dt_external_libraries2.min.js'],
+						'build/js/dt_external_libraries3.min.js': ['build/js/dt_external_libraries3.min.js'],
 						'build/js/angular_resources_1.min.js': ['build/js/angular_resources_1.min.js'],
 						'build/js/angular_resources_2.min.js': ['build/js/angular_resources_2.min.js'],
 						'build/js/angular_resources_3.min.js': ['build/js/angular_resources_3.min.js'],
@@ -746,6 +756,7 @@ module.exports = function(grunt) {
 	                                         'concat:external_jquery_resources',
 											 'concat:dt_external_libraries1',
 											 'concat:dt_external_libraries2',
+											 'concat:dt_external_libraries3',
 	                                         'concat:external_angular_resources_1',
 	                                         'concat:external_angular_resources_2',
 	                                         'concat:external_angular_resources_3',
