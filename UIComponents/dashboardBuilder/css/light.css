@@ -683,6 +683,9 @@
   background-color: #aa3322;
   line-height: 0.7;
 }
+.dashboardTheme [name=myForm] .tab-content .ng-invalid .help-block {
+  border: 1px solid #aa3322;
+}
 .dashboardTheme .sp-replacer {
   border: solid 1px #DDD !important;
   background: #FFF !important;
