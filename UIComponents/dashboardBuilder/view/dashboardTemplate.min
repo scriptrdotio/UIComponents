@@ -6,27 +6,39 @@
     &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;
     &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;
 
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/build/external/css/dt_components.min.css&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/build/css/UIComponents/dt_components.min.css&quot;&gt;
     
     &lt;!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. --&gt;
-    &lt;script src=&quot;/UIComponents/build/external/js/external_jquery_resources.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/external_jquery_resources.min.js&quot;&gt;&lt;/script&gt;
+    
   
     &lt;!-- Libraries --&gt;
-    &lt;script src=&quot;/UIComponents/build/external/js/dt_external_libraries.min.js&quot;&gt;&lt;/script&gt;	
+    &lt;script src=&quot;/UIComponents/build/js/dt_external_libraries1.min.js&quot;&gt;&lt;/script&gt;	
+    &lt;script src=&quot;/UIComponents/build/js/dt_external_libraries2.min.js&quot;&gt;&lt;/script&gt;	
+    
+    &lt;!-- Plotly is very huge lib and unpackageable  --&gt;
+    &lt;script src=&quot;https://cdn.plot.ly/plotly-latest.min.js&quot;&gt;&lt;/script&gt;	
+    
+    
     &lt;script src=&quot;//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&amp;libraries=drawing,visualization&quot;&gt;&lt;/script&gt;
   
     &lt;!-- NG material --&gt;
-    &lt;script src=&quot;/UIComponents/build/external/js/external_angular_resources_1.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;/UIComponents/build/external/js/external_angular_resources_2.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;/UIComponents/build/external/js/external_angular_resources_3.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/angular_resources_1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/angular_resources_2.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/angular_resources_3.min.js&quot;&gt;&lt;/script&gt;
   
     &lt;!-- Directives --&gt;
-    &lt;script src=&quot;/UIComponents/build/external/js/directives_1.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;/UIComponents/build/external/js/directives_2.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/directives_1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/directives_2.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ag-grid/12.0.0/ag-grid.js?ignore=notused36&quot;&gt;&lt;/script&gt;
+    
+
   
     &lt;!-- Components --&gt;
-    &lt;script src=&quot;/UIComponents/build/external/js/components.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/UIComponents/Components.min.js&quot;&gt;&lt;/script&gt;
+    
+    &lt;!-- Thermometer cusing error , solve it with redefine the widget --&gt;
+    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/thermometer/thermometer.js&quot;&gt;&lt;/script&gt;
     
     
     &lt;!-- Theme --&gt;
