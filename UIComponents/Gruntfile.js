@@ -455,19 +455,15 @@ module.exports = function(grunt) {
 				},
 				dt_external_libraries2: {
                     src: [ 
-						'lib/plotly-latest.min.js',
+						//'lib/plotly-latest.min.js',
+						'lib/moment.min.js',
+                        'lib/moment-timezone-with-data.min.js',
+                        'lib/javascript.min.js',
                         'lib/justgage.min.js'
                         ],
 	            	dest: 'build/js/dt_external_libraries2.min.js'
 				},
-				dt_external_libraries3: {
-                    src: [ 
-                        'lib/moment.min.js',
-                        'lib/moment-timezone-with-data.min.js',
-                        'lib/javascript.min.js'
-                        ],
-	            	dest: 'build/js/dt_external_libraries3.min.js'
-	            },
+				
 	            
 	            external_angular_resources_1: {
 	            	src: [ 'lib/angular.min.js', 'lib/angular-route.min.js',  'lib/angular-websocket.min.js', 'lib/angular-cookies.min.js', 'lib/angular-slick.min.js', 'dashboardBuilder/lib/gridster/angular_gridster.min.js', 'lib/angular-animate.min.js'],
@@ -627,8 +623,7 @@ module.exports = function(grunt) {
 					files: {
 						'build/js/external_jquery_resources.min.js': ['build/js/external_jquery_resources.min.js'],
 						'build/js/dt_external_libraries1.min.js': ['build/js/dt_external_libraries1.min.js'],
-						'build/js/dt_external_libraries2.min.js': ['build/js/dt_external_libraries2.min.js'],
-						'build/js/dt_external_libraries3.min.js': ['build/js/dt_external_libraries3.min.js'],
+						'build/js/dt_external_libraries2.min.js': ['build/js/dt_external_libraries2.min.js'],	
 						'build/js/angular_resources_1.min.js': ['build/js/angular_resources_1.min.js'],
 						'build/js/angular_resources_2.min.js': ['build/js/angular_resources_2.min.js'],
 						'build/js/angular_resources_3.min.js': ['build/js/angular_resources_3.min.js'],
@@ -756,7 +751,6 @@ module.exports = function(grunt) {
 	                                         'concat:external_jquery_resources',
 											 'concat:dt_external_libraries1',
 											 'concat:dt_external_libraries2',
-											 'concat:dt_external_libraries3',
 	                                         'concat:external_angular_resources_1',
 	                                         'concat:external_angular_resources_2',
 	                                         'concat:external_angular_resources_3',
