@@ -32,7 +32,8 @@ angular
                     "publishChannel": "requestChannel",
                     "subscribeChannel": "responseChannel",
                     "theme": "light",
-                    "style": __defaultsThemeStyles__["light"]
+                    "style": __defaultsThemeStyles__["light"],
+                    "isDashboard": true
                 },
                 "form": [
                     {
@@ -1186,11 +1187,6 @@ angular
                             "title": "Subscribe channel",
                             "type": "string",
                             "description": "Widgets use the subscribe channel to consume the messages published over that channel as a data source."
-                        },
-                        "googleMapsKey": {
-                            "title": "Google Maps Key",
-                            "type": "string",
-                            "description": "Google Maps API key to be used with the maps widget."
                         },
                         "theme": {
                             "title": "Theme",

@@ -9,26 +9,27 @@ angular
                     {
                         "type": "section",
                         "htmlClass": "row",
+                        "condition": "model['isDashboard'] == false",
                         "items": [{
                             "type": "section",
                             "htmlClass": "col-xs-7",
                             "items": [{
-                                "key": "use-dashboard-data-handler"
+                                "key": "dashboard-data-handler"
                             }]
                         },
                         {
                             "type": "section",
                             "htmlClass": "col-xs-5",
-                            "condition": "model['use-dashboard-data-handler'] === true", //Condition on section and not on key because of a bug in the destroy in schemaForm, needs to be here to remove fields from model
+                            "condition": "model['dashboard-data-handler'] === true", //Condition on section and not on key because of a bug in the destroy in schemaForm, needs to be here to remove fields from model
                             "items": [{
-                                "key": "dashoard-data-handler-tag"
+                                "key": "service-tag"
                             }]
                         }    
 						]
                     },
                     {
                         "type": "section",
-             			"condition": "model['use-dashboard-data-handler'] === false",
+             			"condition": "model['dashboard-data-handler'] === false",
                         "htmlClass": "row",
                         "items": [{
                             "type": "section",
@@ -49,16 +50,19 @@ angular
                             "type": "section",
                             "htmlClass": "col-xs-6",
                             "items": [{
+                                "condition": "model.transport=='wss'",
                                 "key": "msg-tag",
                             }, {
                                 "key": "http-method",
                                 "type": 'strapselect',
+                                "condition": "model.transport=='https'",
                                 "placeholder": " ",
                                 "titleMap": [{
                                     "value": "GET",
                                     "name": "GET"
                                 }]
                             },{
+                                "condition": "model.transport=='https'",
                                 "key":"fetch-data-interval",
                             }]
                         }]
@@ -66,7 +70,7 @@ angular
                     {
                         "type": "section",
                         "htmlClass": "row",
-     					"condition": "model['use-dashboard-data-handler'] === false",
+     					"condition": "model['dashboard-data-handler'] === false",
                         "items": [{
                             "type": "section",
                             "htmlClass": "col-xs-6",
@@ -92,6 +96,7 @@ angular
                         "htmlClass": "row",
                         "items": [{
                             "type": "section",
+                            "condition": "model['isDashboard'] == false",
                             "htmlClass": "col-xs-12 codemirror-small",
                             "items": [
                                 {
@@ -157,13 +162,13 @@ angular
                 ]
             },
             "schemaFields": {
-                "use-dashboard-data-handler": {
+                "dashboard-data-handler": {
                     "title": "The dashboard will handle data sourcing for widget",
                     "type": "boolean",
                     "default": false,
                     "description": "Dashboard will use the properties in its settings tab to fetch data and will relay it to the widget."
                 },
-                "dashoard-data-handler-tag": {
+                "service-tag": {
                     "title": "Data tag",
                     "type": "string",
                     "description": "The dashboard data source will fetch data for multiple widgets. Set a data tag for the dashboard to propagate to your widget the data object with the data tag as its key. If not set all the data fetched by the dashboard will be relayed to the widget"
@@ -208,12 +213,18 @@ angular
                     "type": "boolean",
                     "default": false,
                     "description": "Merge URL query params with the widget api params."
-                },"fetch-data-interval": {
+                },
+                "fetch-data-interval": {
                     "title": "Fetch Interval",
                     "type": "number",
-                    "default": 0,
                     "description": "Data update interval value."
                 },
+                "isDashboard": {
+                    "title": "Is dashboard?",
+                    "type": "hidden",
+                    "default": false
+                }
+                
             }
 
         }
