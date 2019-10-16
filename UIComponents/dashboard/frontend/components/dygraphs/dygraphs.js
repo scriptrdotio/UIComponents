@@ -13,6 +13,7 @@ angular
           "msgTag" : "@",
           "apiParams" : "<?",
           "onFormatData" : "&",
+          "serviceTag": "@",
           "resize": "<?",
           "data": "<?",
           "legend": '<?',
@@ -35,6 +36,7 @@ angular
           "yAxisLineWidth": "@",
           "y2AxisLineWidth": "@",
           "x1AxisTickSize": "@",
+          "x1MinGranularity": "@",
           "yAxisTickSize": "@",
           "y2AxisTickSize": "@",
           "yAxisIncludeZero": "@",
@@ -248,20 +250,25 @@ angular
            	 //Format x-axis as date, use default formatting to be comforme to Onset
              this.options.axes.x.independentTicks = true;  
              this.options.axes.x.ticker = Dygraph.dateTicker
-             /**
-                 this.options.xValueParser = function(date) {
-                     if(self.timeZone){
-                         return moment(date).utcOffset(self.timeZone).format("YYYY-MM-DD kk:mm");
-                     }
-                    return moment(date).format("YYYY-MM-DD kk:mm");
-                 }
+             
+            this.options.xValueParser = function(date) {
+               return moment(date).format("YYYY-MM-DD kk:mm");
+             }
            
-             this.options.labelsUTC = true;
-             **/
+             //this.options.labelsUTC = true;
+
+             //this.x1MinGranularity =  this.x1MinGranularity ? this.x1MinGranularity : Dygraph.Granularity.THIRTY_MINUTELY;
              this.options.axes.x.axisLabelFormatter = function(d, gran, opts) {
-                 return Dygraph.dateAxisLabelFormatter(new Date(d), gran, opts);
+                 if(self.x1MinGranularity && gran < self.x1MinGranularity)
+                 	return Dygraph.dateAxisLabelFormatter(new Date(d), this.x1MinGranularity, opts);
+                 else
+                    return Dygraph.dateAxisLabelFormatter(new Date(d), gran, opts);
              }   
              
+             this.options.axes.x.valueFormatter = function(d) {
+                 return moment(d).format("YYYY-MM-DD kk:mm");
+             }
+                 
              
              //Set y-axis options
              this.options.axes.y = {};
@@ -378,7 +385,7 @@ angular
              
              //this.data = JSON.parse(this.data);
              this.resize = (this.resize) ? this.resize : true;
-             this.transport = (this.transport) ? this.transport : "wss";
+             this.transport = (this.transport) ? this.transport : null;
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
              
@@ -443,11 +450,14 @@ angular
          
          this.$postLink = function () {
            initDataService(this.transport);
+           $scope.$emit("waiting-for-data");
            // apply 2 seconds delay for static data  
            if(this.data && !this.api) {
               self.timeout = false; 
          	  $timeout(function() {
-                self.consumeData(self.data);
+                if(self.timeout == false) {
+                    self.consumeData(self.data);
+                }
                 //   if(!self.useFunctional){
                 //       self.consumeData(self.data);
                 //   }
@@ -464,13 +474,7 @@ angular
                }
            },function(newVal){
                if(newVal){
-                //    if(!self.useFunctional){
-                //        self.datas = newVal;
-                //    self.noResults = false;
-                //    }
-                   self.datas = newVal;
-               self.noResults = false;
-                   
+					self.consumeData(newVal);
                }
            });
         }
@@ -488,7 +492,8 @@ angular
         }
         
         var initDataService = function(transport) {
-           dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+           if(transport) { 
+           		dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
                 
                 if(self.fetchDataInterval && !self.refreshTimer) {
                     //Assuming this is success
@@ -497,6 +502,15 @@ angular
                             initDataService(self.transport)
                         }, self.fetchDataInterval * 1000);
                 }
+            
+            } else {
+                $scope.$on("update-data", function(event, data) {
+                    if(data[self.serviceTag])
+                        self.consumeData(data[self.serviceTag]);
+                    else
+                        self.consumeData(data);
+                });
+            }
           };
           
           
