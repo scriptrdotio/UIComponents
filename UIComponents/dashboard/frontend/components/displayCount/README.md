@@ -85,7 +85,7 @@
   
   ## Component usage:
 
-scriptr-display-count is an element component. you will just have to add it in your html view and add its relevant options.
+scriptr-displaycount is an element component. you will just have to add it in your html view and add its relevant options.
 
 Example where data is static
 
