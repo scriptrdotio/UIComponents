@@ -1,6 +1,6 @@
 # Angular Dygraphs Chart 
  
-  Angular component for displaying Value visualization.
+  Angular component for displaying big historical data.
   
   It can take static value or be synced to a Real-time Communication. 
 
@@ -96,7 +96,6 @@
   range-selector-plot-fill-gradient-color     | #ffffff	 | color value. | string | NO
   range-selector-plot-line-width     | 1.5	 | width in px. | float | NO
   range-selector-plot-stroke-color     | #808FAB	 | color value. | string | NO
-  
   show-legend     | false	 | show chart legend. | boolean | NO
   legend-position     | top	 | The legend position (top,bottom,left,right). | string | NO
   x1-draw-grid     | true	 | draw grid on the X1 Axis | boolean | NO
@@ -108,7 +107,6 @@
   x1-grid-line-width     | 0.3	 | grid on the X1 Axis line width in px | float | NO
   y-grid-line-width     | 0.3	 | grid on the Y Axis line width in px | float | NO
   y2-grid-line-width     | 0.3	 | grid on the Y2 Axis line width in px | float | NO
-  
   legend-labels     | ["x"]	 | The Legend Labels to show. | array | NO
   independent-ticks     | y-primary	 | independent ticks . | string | NO
   legend-mapping     | ["X"]	 | The Legend Labels mappings. | array | NO
@@ -118,8 +116,7 @@
   connect-separated-points     | true	 | Connect the points if there is gaps ,gaps comes from null Y values. | boolean | NO
   draw-points     | true	 | Drow the points over the chart line. | boolean | NO
   point-size     | 3	 | The point size in px. | float | NO
-  stroke-width     | 1	 | The stroke line width in px, set to 0 if you want to draw scattered points on the chart | float | NO
-  
+  stroke-width     | 1	 | The stroke line width in px, set to 0 if you want to draw scattered points on the chart | float | NO 
   api | null | Name of the API to get data | string | Required if getting data from backend 
   on-format-data | null | Callback function to be called after data is returned from backend | function | NO
   transport |  'wss'     | 	method used to call api (can take "https" or "wss").	 | string | NO
