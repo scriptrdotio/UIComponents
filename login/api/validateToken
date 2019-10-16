@@ -1,0 +1,5 @@
+systemLogger.setLevel("off");  
+var result = request.user;
+result.email=request.account.adminEmail;
+delete result ["apsdb.authTokens"];
+return result;
