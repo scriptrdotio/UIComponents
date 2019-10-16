@@ -18,9 +18,8 @@
     
 ## Getting started:
 
-  Include angular JS with angular-gauge.js in your application, as well as the raphael.js and justgage.js directives.
+  Include angular JS  in your application.
 
-  Include angular JS
   
   ```html
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
@@ -50,7 +49,7 @@
   Add "WsClient", "HttpClient", "DataService", "DisplayCount" to your app module's dependency
   
   ```
-  angular.module("myApp", ["WsClient", "HttpClient",, "DataService" "DisplayCount"])
+  angular.module("myApp", ["WsClient", "HttpClient", "DataService" "DisplayCount"])
   ```
   
   ## Options:
@@ -86,7 +85,7 @@
   
   ## Component usage:
 
-scriptr-gauge is an element component. you will just have to add it in your html view and add its relevant options.
+scriptr-display-count is an element component. you will just have to add it in your html view and add its relevant options.
 
 Example where data is static
 
