@@ -25,7 +25,7 @@
     - Branch **master**
     - Destination Folder **login** , or other specific folder
 ## Configure the module
-  there is two configuration files , API configurations , Constants
+  there are two configuration files: config.js, constants.js
   - navigate to ./view/javascript/config.js
   - confige the apis paths 
   - confige the redirect paths 
