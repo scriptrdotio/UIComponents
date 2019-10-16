@@ -9,8 +9,8 @@ const __onAreaArraysChanged__ = function (modelValue, form, model) {
             ylabels.push(e.label);
             ycolors.push(e.color);
         });
-        model.ykeys = JSON.stringify(ykeys);
-        model.labels = JSON.stringify(ylabels);
+        model.ykeys = ykeys;
+        model.labels = ylabels;
         model.colors = ycolors;
     }
 

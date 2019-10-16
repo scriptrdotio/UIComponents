@@ -94,7 +94,10 @@ angular
         "apiParams" : "<?",
         
         "onFormatData" : "&",
+          
+        "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
         
+          
         "lineWidth": "@", 
         "pointSize": "@",
         "pointFillColors" : "@", 
@@ -144,9 +147,6 @@ angular
           
         "showLegend": "@",
         "legendType": "@" //"hover", "right"
-          
-        
-       
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
       controller: function(httpClient, wsClient, $scope, $timeout, $interval, dataService) {
@@ -158,7 +158,7 @@ angular
              if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
                this.noResults = true;
              }
-
+             
              //if yconfig streatch it to individuals 
              if(self.yconfig){
                   var ykeys = [];
@@ -169,8 +169,8 @@ angular
                      ylabels.push(e.label);
                      ycolors.push(e.color);
                  });
-                 self.ykeys=JSON.stringify(ykeys);
-                 self.labels=JSON.stringify(ylabels);
+                 self.ykeys=ykeys;
+                 self.labels=ylabels;
                  self.colors=ycolors;
              }
              
@@ -208,7 +208,7 @@ angular
              this.labelColor = (this.labelColor) ? this.labelColor : "#eee";
              this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#fff";
          
-             this.transport = (this.transport) ? this.transport : "wss";
+             this.transport = (this.transport) ? this.transport : null;
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
            
@@ -265,25 +265,27 @@ angular
          
          this.$postLink = function () {
            initDataService(this.transport);
+           $scope.$emit("waiting-for-data");
            // apply 2 seconds delay for static data  
            if(this.data && !this.api) {
               self.timeout = false; 
          	  $timeout(function() {
-                 self.consumeData(self.data);
+                 if(self.timeout == false)
+                 	self.consumeData(self.data);
                }, 2000)
            }else{
                self.timeout = true;
            }
+             
            // set datas info when data is changed  
            $scope.$watch(function( $scope ) {
                // wait for the timeout
                if(($scope.$ctrl.data && self.timeout == true)){
                   return $scope.$ctrl.data
                }
-           },function(newVal){
+           },function(newVal, oldVal){
                if(newVal){
-                   self.datas = newVal;
-                   self.noResults = false;
+                   self.consumeData(newVal);
                }
            });
          	  
@@ -301,7 +303,8 @@ angular
         }
         
         var initDataService = function(transport) {
-            dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+            if(transport) {
+                dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
                 
                 if(self.fetchDataInterval && !self.refreshTimer) {
                     //Assuming this is success
@@ -310,6 +313,15 @@ angular
                             initDataService(self.transport)
                         }, self.fetchDataInterval * 1000);
                 }
+            } else {
+                $scope.$on("update-data", function(event, data) {
+                    if(data[self.serviceTag])
+                        self.consumeData(data[self.serviceTag]);
+                    else
+                        self.consumeData(data);
+                });
+            }
+            
           }
 
           this.consumeData = function(data, response) {

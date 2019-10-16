@@ -9,8 +9,8 @@ const __onBarArraysChanged__ = function (modelValue, form, model) {
             ylabels.push(e.label);
             ycolors.push(e.color);
         });
-        model.ykeys = JSON.stringify(ykeys);
-        model.labels = JSON.stringify(ylabels);
+        model.ykeys = ykeys;
+        model.labels = ylabels;
         model.colors = ycolors;
     }
 
@@ -129,28 +129,6 @@ const __BAR__ = {
 
                                     }
                                 }
-
-                                //build events
-                                // if (!model.eventsconfig || !model.eventsconfig.length) {
-                                //		if(model.events == null){
-                                //            model.events=[];
-                                //        }
-                                //     var eventsNum = model.events.length;
-                                //     // clean the array
-                                //     model.events = [];
-                                //     for (var i = 0; i < eventsNum; i++) {
-                                //         if (model.events[i]) {
-                                //             var e = {
-                                //                 event: model.events[i],
-                                //                 //storkeWidth: model['event-stroke-width'],
-                                //                 lineColor: model['event-line-colors'][i],
-                                //             };
-                                //             model.eventsconfig.push(e);
-                                //         }
-
-                                //     }
-                                // }
-
                             }
                         }
                     
