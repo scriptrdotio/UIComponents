@@ -12,7 +12,7 @@
   - Add, Remove, Edit the system users
 ## Add the Module to your app
   - click on install module button in the bottme left corner of your IDE screen
-  - click on  *Add Custom Module from GitHub*
+  - click on  **Add Custom Module from GitHub**
   - Enter the following info
   -- Owner *scriptrdotio*
   -- Repository *UIComponents*
@@ -20,3 +20,12 @@
   -- Branch *master*
   -- Destination Folder *login* , or other specific folder
 ## Configure the module
+  there is two configuration files , API configurations , Constants
+  - navigate to ./view/javascript/config.js
+  - confige the apis locations 
+  - navigate to ./view/javascript/constants.js
+  - config the constants
+    - appTitle is the title shown in the browser tab
+    - login.background is the background image of the login pages
+    - login.logo is the logo image to be used
+    - login.poweredBy is the link to scriptr.io logo 
