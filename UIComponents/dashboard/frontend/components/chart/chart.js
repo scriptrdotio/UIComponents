@@ -270,8 +270,9 @@ angular
            if(this.data && !this.api) {
               self.timeout = false; 
          	  $timeout(function() {
-                 if(self.timeout == false)
-                 	self.consumeData(self.data);
+                  if(self.timeout == false) {
+                    self.consumeData(self.data);
+                  }
                }, 2000)
            }else{
                self.timeout = true;
