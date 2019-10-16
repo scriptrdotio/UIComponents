@@ -38,7 +38,6 @@ angular.module("angular-dygraphs", [
                     mainDiv.appendChild(div);
                     
                     chartDiv.classList.add("with-legend");
-                    scope.options.labelsDiv = "legend_"+scope.$id;
                 }else {
                     //var legendDiv = document.getElementById("legend_" + scope.$id);
                     $("#legend_" + scope.$id).hide();
