@@ -46,7 +46,7 @@ angular
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $rootScope, $timeout, $sce, $window, httpClient, wsClient, $cookies, common, widgetsConfig, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle, dashboardConfig) {
+    controller: function($scope, $rootScope, $timeout, $interval, $sce, $window, httpClient, wsClient, $cookies, common, widgetsConfig, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle, dashboardConfig, dataService) {
         
         $rootScope.isMobileDevice=function(){
             return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
@@ -101,7 +101,7 @@ angular
         var scriptName = $routeParams.scriptName;
         if(scriptName) {
           this.openEditor(scriptName);
-        }
+        } 
         
         this.slickConfig = {
             enabled: true,
@@ -229,9 +229,8 @@ angular
         
       };
       
-           //IDE CODE start
+      //IDE CODE start
       this.$postLink = function() {
-        
         var self = this;
         this.scriptrIdeRef = $routeParams.scriptrIdeRef;
         angular.element($window).on('message', function(event) {
@@ -255,7 +254,513 @@ angular
       this.trustSrc = function(src) {
         return $sce.trustAsResourceUrl(src);
       }
-      this.addCustomDashboard = function(){
+       
+      this.openEditor = function(scriptName){
+        this.model = {"scriptName": scriptName};
+        var self = this;
+        scriptrService.getScript(this.model).then(
+          function(data, response) {
+            self.postLoadScript(scriptName, data);
+          }, function(err) {
+            console.error("reject", err);
+          });
+      }
+      
+      this.initializeDashboard =  function() {
+          
+          if(self.data) {
+              $scope.$on("wait-for-data", self.consumeData(self.data))
+          }
+          
+          this.dashboard = { widgets: [] };
+          if(this.widgets) {
+            this.dashboard["widgets"] = this.widgets
+          }
+      };
+        
+      this.postLoadScript = function(scriptName, data) {
+       	 var userConfigRegex = /\/\*#\*SCRIPTR_PLUGIN\*#\*(.*\n?.*)\*#\*#\*\//;
+     	 if(data) {
+           var userConfig = data.userConfig;
+           var matches = userConfig.match(userConfigRegex);
+           if(userConfig && matches) {
+             var pluginContent = JSON.parse(matches[1]);
+             if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "DashboardBuilder"){
+                 
+               this.widgets = [];
+               var widgets = JSON.parse(pluginContent.metadata.plugindata).wdg;
+                _.map(widgets, function(wdg, index) {
+                  //MFE: backward compatibility for stored dahsboard where gridst. cols were 5 and row was match
+                  if(wdg.schema && wdg.form) {
+                      wdg.sizeX = wdg.sizeX * 2;
+                      wdg.sizeY = wdg.sizeY * 3;
+                      wdg.col = wdg.col * 2;
+                      wdg.row = wdg.row * 3;
+                  }
+                    
+                  var widgetDefinition =  _.findWhere(self.widgetsConfig, {name: wdg.name});
+                   
+                  //MFE: Needs to merge with addWidget, we are repeating logic
+                  var form = angular.copy(widgetDefinition.form);
+                  var schema =  angular.copy(widgetDefinition.schema);
+                  var defaults = angular.copy(widgetDefinition.defaults);
+
+                  if(widgetDefinition.commonData){
+                      form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
+                      schema.properties =  merge_options(schema.properties,common.schemaFields); 
+                  }
+                   
+                   form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
+            	   schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
+                   form[0].selectedTabIndex = 0;
+                   
+                  wdg.form = angular.copy(form);
+                  wdg.schema =  angular.copy(schema);
+                  self.isManualAdd = false;
+                  self.widgets.push(wdg);
+               });  
+               
+               //this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
+               this.urlParams = JSON.parse(pluginContent.metadata.plugindata).urlParams;
+               this.dashboardSettings.defaults = JSON.parse(pluginContent.metadata.plugindata).settings;
+                 
+               this.initDashboardDataService();
+                 
+               //Generate & apply the custom style
+           	   var compiledCss  = generateCustomStyle(this.dashboardSettings.defaults); 
+               applyCustomStyle(compiledCss);
+                 
+               this.dashboard["widgets"] = this.widgets;
+               this.isEdit = true;
+               this.savedScript = scriptName;
+               this.setACLs(data);  
+             } else {
+               this.showAlert("danger", "Invalid dashboard script. Pass another script.")
+               console.error("Invalid dashboard script. Pass another script.")
+             }
+           } else {
+             this.showAlert("danger", "Invalid dashboard script. Pass another script.")
+             console.error("Invalid dashboard script. Pass another script.")
+           }
+         } else {
+           this.showAlert("danger", "Invalid dashboard script. Pass another script.")
+           console.error("Invalid dashboard script. Pass another script.");
+           return;
+         }
+       console.debug("resolve get script "+scriptName+ " :", data) 
+     }
+      
+      this.clear = function() {
+      	var self = this;
+         var modalInstance = $uibModal.open({
+              animation: true,
+              component: 'confirmationModal',
+        		  size: 'md',
+           	  scope: $scope,
+               resolve: {
+                 data: function () {
+                   return {"title": "Clear Board", "body": "Are you sure you want to empty your dashboard?"};
+                 }
+               }
+             });
+             modalInstance.result.then(function (wdgModel) {
+               if(wdgModel) {
+                  self.clearWidgets();
+               } 
+             }, function () {
+                console.info('modal-component for clearing dashboard update dismissed at: ' + new Date());
+             });
+			
+	  };
+	  
+	  this.clearWidgets = function() {
+		this.dashboard.widgets = [];
+        this.notifyDashboardChange();
+	  };
+      
+      this.logout = function() {
+        var authorization  = $.scriptr.authorization({loginPage: login.loginTarget});
+		  authorization.logout();
+	  };
+        
+
+      this.addWidget = function(wdg) {
+          
+          var form = angular.copy(wdg.form);
+          var schema =  angular.copy(wdg.schema);
+         
+          if(wdg.commonData){
+              form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs))
+              schema.properties =  merge_options(wdg.schema.properties,common.schemaFields); 
+          }
+          
+          
+          form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
+          schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
+          form[0].selectedTabIndex = 0;
+  
+          var model = angular.copy(wdg.defaults);
+          if(self.dashboardSettings.defaults["transport"]) {
+              model["dashboard-data-handler"] = true;
+          }
+          
+          this.dashboard.widgets.push({
+            "name": wdg.name,
+            "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
+            "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
+            "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
+            "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
+            "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
+            "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
+            "fitToWidget": (wdg.box && wdg.box.fitToWidget) ? wdg.box.fitToWidget : null,
+            "label": wdg.label,
+            "type": wdg.class,
+            "options": model,
+            "schema": schema,
+            "form": form
+          });
+          this.isManualAdd = true;
+          this.notifyDashboardChange();
+      };
+        
+        
+      
+      
+      var applyInlineStyle = function (style) {
+          var styleElement = angular.element(document.querySelector('#dashboardInlineStyle'));
+		  styleElement[0].innerText = style;
+      }
+      
+      var applyPreviewInlineStyle = function (style) {
+          var styleElement = angular.element(document.querySelector('#dashboardPreviewInlineStyle'));
+		  styleElement[0].innerText = style;
+      }
+      
+      var cleanPreviewInlineStyle = function () {
+          var styleElement = angular.element(document.querySelector('#dashboardPreviewInlineStyle'));
+		  styleElement[0].innerText = "";
+      }
+      
+      //We need to add a watch for dashboard settings dataService object
+      this.cancelDashboardDataService = function() {
+           var msgTag = this.dashboardSettings.defaults["msg-tag"];
+           console.log("destory dashboard data service", msgTag, $scope.$id);
+            if(msgTag){
+               wsClient.unsubscribe(msgTag, null, $scope.$id); 
+            }
+            
+            if(self.refreshDataTimer){
+                $interval.cancel( self.refreshTimer );
+            }
+      } 
+
+    this.data = null;
+        
+    this.consumeData = function(data, response) {
+        this.data = data;
+        $scope.$broadcast("update-data", data);
+    }
+     
+    this.$onDestroy = function() {
+		self.resetDashboardDataService();
+    }
+    
+    this.resetDashboardDataService = function() {
+        console.log("destory dashboard data service props", self.dashboardSettings.defaults["msg-tag"], $scope.$id);
+        if(self.dashboardSettings.defaults["msg-tag"]){
+            wsClient.unsubscribe(self.dashboardSettings.defaults["msg-tag"], null, $scope.$id); 
+        }
+
+        if(self.refreshTimer) {
+            $interval.cancel( self.refreshTimer );
+        }
+     }
+     
+     this.initDashboardDataService = function() {
+        if(self.dashboardSettings.defaults["transport"]) {
+            dataService.getData(self.dashboardSettings.defaults["transport"], self.dashboardSettings.defaults["api"], this.dashboardSettings.defaults["api-params"], self.dashboardSettings.defaults["use-window-params"], this.dashboardSettings.defaults["msg-tag"], self.consumeData.bind(self), this.dashboardSettings.defaults["fetch-data-interval"], $scope.$id);
+                
+          if(self.dashboardSettings.defaults["fetch-data-interval"] && !self.refreshTimer) {
+              //Assuming this is success
+              self.refreshTimer = $interval(
+                  function(){
+                     self.initDashboardDataService()
+                  }, self.dashboardSettings.defaults["fetch-data-interval"]  * 1000);
+          }
+        }
+      }
+
+      
+     this.setDashboardSettings = function(redirectTarget) {
+        var self = this; 
+        var previewTheme  = self.dashboardSettings.defaults.theme;
+        var savedTheme = self.dashboardSettings.defaults.theme;
+          
+        var previewInlineStyle = self.dashboardSettings.defaults["inline-style"];
+        var savedInlineStyle = self.dashboardSettings.defaults["inline-style"];
+        var form = angular.copy(self.dashboardSettings.form);
+        var schema = angular.copy(self.dashboardSettings.schema);
+        form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
+        schema.properties =  merge_options(schema.properties,common.schemaFields); 
+        
+        var modalInstance = $uibModal.open({
+              animation: true,
+              component: 'modalComponent',
+       		  size: 'md',
+              resolve: {
+                widget: function () {
+                  return {
+                    "label":  self.dashboardSettings.label,
+                    "options": self.dashboardSettings.defaults,
+                    "schema": schema,
+                    "form": form,
+                    "onFormModelChange": function(modelValue, form, model) {
+                        if(form.key.join(".") === "theme") {
+                            model.style = angular.copy(__defaultsThemeStyles__[modelValue]);
+                        }
+                       	var compiledCss  = generateCustomStyle(model); 
+               			applyPreviewCustomStyle(compiledCss);
+                        if(previewTheme != model.theme) {
+                            switchThemeCSS(previewTheme, model.theme)
+                            previewTheme = model.theme;
+                        }
+                        
+                        if(model["inline-style"]) {
+                            applyPreviewInlineStyle(model["inline-style"]);
+                        }
+                    }
+                  } 
+                }
+              }
+            });
+
+          
+            modalInstance.result.then(function (dashboardSettingsModel) {
+               
+              console.log("modal-component dashboard settings data :", dashboardSettingsModel ,"submitted at: " + new Date());
+              if(dashboardSettingsModel != "cancel") {
+                if(self.dashboardSettings.defaults && self.dashboardSettings.defaults.publishChannel != dashboardSettingsModel.publishChannel){
+                    self.wsClient.updatePublishingChannel(dashboardSettingsModel.publishChannel);
+                }
+                if(self.dashboardSettings.defaults && self.dashboardSettings.defaults.subscribeChannel != dashboardSettingsModel.subscribeChannel){
+                  	self.wsClient.updateSubscriptionChannel(dashboardSettingsModel.subscribeChannel);
+                } 
+                  
+                
+                self.dashboardSettings.defaults = angular.copy(dashboardSettingsModel);
+                  
+               //Generate & apply the custom style
+           	   var compiledCss  = generateCustomStyle(dashboardSettingsModel); 
+               applyCustomStyle(compiledCss);
+                  
+                if(dashboardSettingsModel["inline-style"]) {
+                     applyInlineStyle(dashboardSettingsModel["inline-style"]);
+                }
+                  
+                self.notifyDashboardChange();
+              } else {
+                  if(previewTheme != savedTheme)
+                		switchThemeCSS(previewTheme, savedTheme);
+              }
+                
+              self.resetDashboardDataService()
+              self.initDashboardDataService();
+                
+              cleanPreviewCustomStyle();
+              cleanPreviewInlineStyle();
+            }, function () {
+              cleanPreviewCustomStyle();
+              cleanPreviewInlineStyle();   
+              if(previewTheme != savedTheme)
+                	switchThemeCSS(previewTheme, savedTheme);
+              console.log('modal-component dashboard settings dismissed at: ' + new Date());
+            });
+      };
+        
+      var generateCustomStyle = function(settings) {
+           var template = document.querySelector('#handlebar-customcss-template').innerText;
+           return Handlebars.compile(template)(settings); 
+      }
+      
+      var applyCustomStyle = function (compiledCss) {
+          var styleElement = angular.element(document.querySelector('#dashboardCustomStyle'));
+		  styleElement[0].innerText = compiledCss;
+      }
+      
+      var applyPreviewCustomStyle = function (compiledCss) {
+          var styleElement = angular.element(document.querySelector('#dashboardPreviewCustomStyle'));
+		  styleElement[0].innerText = compiledCss;
+      }
+      
+      var cleanPreviewCustomStyle = function () {
+          var styleElement = angular.element(document.querySelector('#dashboardPreviewCustomStyle'));
+		  styleElement[0].innerText = "";
+      }
+      
+      var switchThemeCSS = function(previousTheme, newTheme) {
+            var prevTheme = document.getElementsByTagName("link").namedItem(previousTheme);
+            var newTheme = document.getElementsByTagName("link").namedItem(newTheme);
+            newTheme.disabled = false;
+          	prevTheme.disabled = true;
+      }
+      
+      this.saveDashboard = function(form, custom, aclEvent) {
+		console.log("Form submit", form)
+        var self = this;
+        $scope.$broadcast('schemaFormValidate');
+
+        // Then we check if the form is valid
+        if ((form && form.$valid) || aclEvent) {
+          var data = {};
+           
+          var tmp = angular.copy(this.dashboard.widgets);
+          data["items"] = _.map(tmp, function(object, index){return _.omit(object, ["form", "schema"] )});
+            
+          data["urlParams"] = angular.copy(this.urlParams);
+          data["token"] = scriptrService.getToken();
+
+          self.dashboardSettings.defaults.redirectTarget = this.model.scriptName;
+            console.log("dashboardSettings",self.dashboardSettings);
+          data["dashboardSettings"] = angular.copy(this.dashboardSettings.defaults) //MFE: dashboardSettings channels info info needs to be retrieved from url or cookie
+          
+          //Generate custom Style to pass for the to save template
+          data["compiledCss"] = generateCustomStyle(data["dashboardSettings"])
+          
+          var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
+          var unescapedHtml = Handlebars.compile(template)(data);
+            
+          var scriptData = {}
+          scriptData["content"] = unescapedHtml;
+          scriptData["scriptName"] =  this.model.scriptName;
+          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"], "settings": data["dashboardSettings"]});
+          if(self.isEdit) {
+            scriptData["update"] = true;
+          }
+          if(self.savedScript) {
+            scriptData["previousScriptName"]  = self.savedScript;
+          }
+          //scriptData["custom"] = this.custom; //TODO MFE: Removed, need to check backend
+          scriptData["acls"] = this.acls;  
+          var d = $q.defer();  
+          scriptrService.saveScript(scriptData).then(
+            function(data, response) {
+               console.log("resolve", data)
+               if(data.status == "failure") {
+                  self.showAlert("danger", data.errorDetail);
+               } else {
+                 self.isEdit = true;
+                 self.savedScript = scriptData["scriptName"];
+                 self.showAlert("success", "The dashboard has been saved successfully.");
+                 d.resolve(data, response);  
+               }
+               
+            }, function(err) {
+              self.showAlert("danger", err.data.response.metadata.errorDetail);
+              console.log("reject", err.data.response.metadata.errorDetail);
+              d.reject(err);  
+		  });
+          return d.promise;   
+          //Save data to scriptr
+          console.log();        
+        }
+      }
+     
+      this.setACLs = function(data){
+          this.acls = data.ACL.execute;
+          var array = this.acls.split(";");
+          this.users = [];  
+          for(var i = 0; i < array.length; i++){
+              var obj = {};
+              obj["code"] = array[i];
+              this.users.push(obj);
+          }    
+      } 
+      
+     this.selectBranch = function(branch) {
+         console.log("Clicked branch data", branch);
+        //Get clicked item Name
+        var itemLabel = branch.label
+        //Check if it has a ui representation
+        
+        if(branch[itemLabel] && branch[itemLabel].widget && branch[itemLabel].widget.type) {
+          var dmWdg = branch[itemLabel].widget;
+          var wdg = _.findWhere(widgetsConfig.widgets, {"name": dmWdg.type});
+          console.log("Widget is", wdg);
+          
+          if(!wdg) {
+              wdg = _.findWhere(widgetsConfig.widgets, {"name": widgetsConfig.defaultWidget.name});
+          }
+          
+          var form = angular.copy(wdg.form);
+          var schema =  angular.copy(wdg.schema);
+         
+          if(wdg.commonData){
+              form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs));
+              schema.properties = merge_options(wdg.schema.properties,common.schemaFields); 
+          }  
+            
+            
+            form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
+            schema.properties = merge_options(wdg.schema.properties,boxStyle.schemaFields); 
+            form[0].selectedTabIndex = 0;
+            
+          var defApiParamsCount = 0;
+          if(dmWdg["default-api-params"]){
+            defApiParamsCount = Object.keys(dmWdg["default-api-params"]).length;
+          }
+
+          var defaults = {};
+          _.each(dmWdg, function(value, key) {
+            defaults[key] = value;
+          });
+
+          //MFE: TO REVIEW BIG TIME
+          var apiParamsOutput = "{";
+          if(dmWdg["api-params-name"]) {
+            _.each(dmWdg["api-params-name"], function(item, index) {
+              self.urlParams =  self.urlParams.concat([item]);
+              apiParamsOutput += "\""+item+"\": vm."+ item + ((index < dmWdg["api-params-name"].length -1 || defApiParamsCount > 0) ? "," : "");
+            });
+          }
+
+          if(dmWdg["default-api-params"]) {
+            var cnt = 0;
+            _.each(dmWdg["default-api-params"], function(value, key) {
+              self.urlParams =  self.urlParams.concat([key]);
+              apiParamsOutput += "\""+key+"\": \""+ value + ((cnt < defApiParamsCount -1) ? "\"," : "\"");
+              cnt++;
+            });
+            apiParamsOutput +="}";
+          } else {
+            apiParamsOutput +="}";
+          }
+          console.log("apiParamsOutput",apiParamsOutput )
+          // self.urlParams =  self.urlParams.concat(Object.keys(dmWdg["api-params"]));
+          defaults["api-params"] =  apiParamsOutput; 
+          //, "msg-tag": dmWdg["msg-tag"]}
+
+          self.dashboard.widgets.push({
+            "name":  branch.label,
+            "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
+            "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
+            "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
+            "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
+            "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
+            "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
+            "fitToWidget": (wdg.box && wdg.box.fitToWidget) ? wdg.box.fitToWidget : null,
+            "label": wdg.label,
+            "type": wdg.class,
+            "options": angular.extend(angular.copy(wdg.defaults), angular.copy(defaults)),
+            "schema": schema,
+            "form": form
+          });
+          self.notifyDashboardChange();
+        } else {
+          //self.showAlert("warning", "Device model attribute \""+ itemLabel + "\" has a no widget representation.")
+          return;
+        };
+      }
+     this.addCustomDashboard = function(){
         this.showDashboard = true;
         self.savedScript = null;
         this.switchStatus = true;
@@ -427,455 +932,19 @@ angular
        }
       //IDEC CODE end 
        
-      this.openEditor = function(scriptName){
-        this.model = {"scriptName": scriptName};
-        var self = this;
-        scriptrService.getScript(this.model).then(
-          function(data, response) {
-            self.postLoadScript(scriptName, data);
-          }, function(err) {
-            console.error("reject", err);
-          });
-      }
-      
-      this.selectBranch = function(branch) {
-         console.log("Clicked branch data", branch);
-        //Get clicked item Name
-        var itemLabel = branch.label
-        //Check if it has a ui representation
-        
-        if(branch[itemLabel] && branch[itemLabel].widget && branch[itemLabel].widget.type) {
-          var dmWdg = branch[itemLabel].widget;
-          var wdg = _.findWhere(widgetsConfig.widgets, {"name": dmWdg.type});
-          console.log("Widget is", wdg);
-          
-          if(!wdg) {
-              wdg = _.findWhere(widgetsConfig.widgets, {"name": widgetsConfig.defaultWidget.name});
-          }
-          
-          var form = angular.copy(wdg.form);
-          var schema =  angular.copy(wdg.schema);
-         
-          if(wdg.commonData){
-              form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs));
-              schema.properties = merge_options(wdg.schema.properties,common.schemaFields); 
-          }  
-            
-            
-            form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
-            schema.properties = merge_options(wdg.schema.properties,boxStyle.schemaFields); 
-            form[0].selectedTabIndex = 0;
-            
-          var defApiParamsCount = 0;
-          if(dmWdg["default-api-params"]){
-            defApiParamsCount = Object.keys(dmWdg["default-api-params"]).length;
-          }
-
-          var defaults = {};
-          _.each(dmWdg, function(value, key) {
-            defaults[key] = value;
-          });
-
-          //MFE: TO REVIEW BIG TIME
-          var apiParamsOutput = "{";
-          if(dmWdg["api-params-name"]) {
-            _.each(dmWdg["api-params-name"], function(item, index) {
-              self.urlParams =  self.urlParams.concat([item]);
-              apiParamsOutput += "\""+item+"\": vm."+ item + ((index < dmWdg["api-params-name"].length -1 || defApiParamsCount > 0) ? "," : "");
-            });
-          }
-
-          if(dmWdg["default-api-params"]) {
-            var cnt = 0;
-            _.each(dmWdg["default-api-params"], function(value, key) {
-              self.urlParams =  self.urlParams.concat([key]);
-              apiParamsOutput += "\""+key+"\": \""+ value + ((cnt < defApiParamsCount -1) ? "\"," : "\"");
-              cnt++;
-            });
-            apiParamsOutput +="}";
-          } else {
-            apiParamsOutput +="}";
-          }
-          console.log("apiParamsOutput",apiParamsOutput )
-          // self.urlParams =  self.urlParams.concat(Object.keys(dmWdg["api-params"]));
-          defaults["api-params"] =  apiParamsOutput; 
-          //, "msg-tag": dmWdg["msg-tag"]}
-
-          self.dashboard.widgets.push({
-            "name":  branch.label,
-            "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
-            "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
-            "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
-            "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
-            "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
-            "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
-            "fitToWidget": (wdg.box && wdg.box.fitToWidget) ? wdg.box.fitToWidget : null,
-            "label": wdg.label,
-            "type": wdg.class,
-            "options": angular.extend(angular.copy(wdg.defaults), angular.copy(defaults)),
-            "schema": schema,
-            "form": form
-          });
-          self.notifyDashboardChange();
-        } else {
-          //self.showAlert("warning", "Device model attribute \""+ itemLabel + "\" has a no widget representation.")
-          return;
-        };
-      }
-      
-      this.initializeDashboard =  function() {
-          this.dashboard = { widgets: [] };
-          if(this.widgets) {
-            this.dashboard["widgets"] = this.widgets
-          }
-      };
-      
-      this.clear = function() {
-      	var self = this;
-         var modalInstance = $uibModal.open({
-              animation: true,
-              component: 'confirmationModal',
-        		  size: 'md',
-           	  scope: $scope,
-               resolve: {
-                 data: function () {
-                   return {"title": "Clear Board", "body": "Are you sure you want to empty your dashboard?"};
-                 }
-               }
-             });
-             modalInstance.result.then(function (wdgModel) {
-               if(wdgModel) {
-                  self.clearWidgets();
-               } 
-             }, function () {
-                console.info('modal-component for clearing dashboard update dismissed at: ' + new Date());
-             });
-			
-	  };
-	  
-	  this.clearWidgets = function() {
-		  this.dashboard.widgets = [];
-        this.notifyDashboardChange();
-	  };
-      
-      this.logout = function() {
-        var authorization  = $.scriptr.authorization({loginPage: login.loginTarget});
-		  authorization.logout();
-	  };
-        
-      /**
- * Overwrites obj1's values with obj2's and adds obj2's if non existent in obj1
- * @param obj1
- * @param obj2
- * @returns obj3 a new object based on obj1 and obj2
- */
- var merge_options = function(obj1,obj2){
-    var obj3 = {};
-    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
-    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
-    return obj3;
-}
-
-      this.addWidget = function(wdg) {
-          
-          var form = angular.copy(wdg.form);
-          var schema =  angular.copy(wdg.schema);
-         
-          if(wdg.commonData){
-              form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs))
-              schema.properties =  merge_options(wdg.schema.properties,common.schemaFields); 
-          }
-          
-          
-          form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
-          schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
-          form[0].selectedTabIndex = 0;
-  
-          this.dashboard.widgets.push({
-            "name": wdg.name,
-            "sizeX": (wdg.box && wdg.box.sizeX) ? wdg.box.sizeX : 2,
-            "sizeY": (wdg.box && wdg.box.sizeY) ? wdg.box.sizeY : 2,
-            "minSizeX": (wdg.box && wdg.box.minSizeX) ? wdg.box.minSizeX : 2, // minimum column width of an item
-            "maxSizeX": (wdg.box && wdg.box.maxSizeX) ? wdg.box.maxSizeX : null, // maximum column width of an item
-            "minSizeY": (wdg.box && wdg.box.minSizeY) ? wdg.box.minSizeY : 2, // minumum row height of an item
-            "maxSizeY": (wdg.box && wdg.box.maxSizeY) ? wdg.box.maxSizeY : null,
-            "fitToWidget": (wdg.box && wdg.box.fitToWidget) ? wdg.box.fitToWidget : null,
-            "label": wdg.label,
-            "type": wdg.class,
-            "options": wdg.defaults,
-            "schema": schema,
-            "form": form
-          });
-          this.notifyDashboardChange();
-      };
-        
-        
-      
-      
-      var applyInlineStyle = function (style) {
-          var styleElement = angular.element(document.querySelector('#dashboardInlineStyle'));
-		  styleElement[0].innerText = style;
-      }
-      
-      var applyPreviewInlineStyle = function (style) {
-          var styleElement = angular.element(document.querySelector('#dashboardPreviewInlineStyle'));
-		  styleElement[0].innerText = style;
-      }
-      
-      var cleanPreviewInlineStyle = function () {
-          var styleElement = angular.element(document.querySelector('#dashboardPreviewInlineStyle'));
-		  styleElement[0].innerText = "";
-      }
-      
-      
-      this.setDashboardSettings = function(redirectTarget) {
-        var self = this;
-          
-        var previewTheme  = self.dashboardSettings.defaults.theme;
-        var savedTheme = self.dashboardSettings.defaults.theme;
-          
-        var previewInlineStyle = self.dashboardSettings.defaults["inline-style"];
-        var savedInlineStyle = self.dashboardSettings.defaults["inline-style"];
-          
-        var modalInstance = $uibModal.open({
-              animation: true,
-              component: 'modalComponent',
-       		  size: 'md',
-              resolve: {
-                widget: function () {
-                  return {
-                    "label":  self.dashboardSettings.label,
-                    "options": self.dashboardSettings.defaults,
-                    "schema": self.dashboardSettings.schema,
-                    "form": self.dashboardSettings.form,
-                    "onFormModelChange": function(modelValue, form, model) {
-                        if(form.key.join(".") === "theme") {
-                            model.style = angular.copy(__defaultsThemeStyles__[modelValue]);
-                        }
-                       	var compiledCss  = generateCustomStyle(model); 
-               			applyPreviewCustomStyle(compiledCss);
-                        if(previewTheme != model.theme) {
-                            switchThemeCSS(previewTheme, model.theme)
-                            previewTheme = model.theme;
-                        }
-                        
-                        if(model["inline-style"]) {
-                            applyPreviewInlineStyle(model["inline-style"]);
-                        }
-                    }
-                  } 
-                }
-              }
-            });
-
-          
-            modalInstance.result.then(function (dashboardSettingsModel) {
-               
-              console.log("modal-component dashboard settings data :", dashboardSettingsModel ,"submitted at: " + new Date());
-              if(dashboardSettingsModel != "cancel") {
-                if(self.dashboardSettings.defaults && self.dashboardSettings.defaults.publishChannel != dashboardSettingsModel.publishChannel){
-                    self.wsClient.updatePublishingChannel(dashboardSettingsModel.publishChannel);
-                }
-                if(self.dashboardSettings.defaults && self.dashboardSettings.defaults.subscribeChannel != dashboardSettingsModel.subscribeChannel){
-                  	self.wsClient.updateSubscriptionChannel(dashboardSettingsModel.subscribeChannel);
-                } 
-                  
-                
-                self.dashboardSettings.defaults = angular.copy(dashboardSettingsModel);
-                  
-               //Generate & apply the custom style
-           	   var compiledCss  = generateCustomStyle(dashboardSettingsModel); 
-               applyCustomStyle(compiledCss);
-                  
-                if(dashboardSettingsModel["inline-style"]) {
-                     applyInlineStyle(dashboardSettingsModel["inline-style"]);
-                }
-                  
-                self.notifyDashboardChange();
-              } else {
-                  if(previewTheme != savedTheme)
-                		switchThemeCSS(previewTheme, savedTheme);
-              }
-              cleanPreviewCustomStyle();
-              cleanPreviewInlineStyle();
-            }, function () {
-              cleanPreviewCustomStyle();
-              cleanPreviewInlineStyle();   
-              if(previewTheme != savedTheme)
-                	switchThemeCSS(previewTheme, savedTheme);
-              console.log('modal-component dashboard settings dismissed at: ' + new Date());
-            });
-      };
-        
-      var generateCustomStyle = function(settings) {
-           var template = document.querySelector('#handlebar-customcss-template').innerText;
-           return Handlebars.compile(template)(settings); 
-      }
-      
-      var applyCustomStyle = function (compiledCss) {
-          var styleElement = angular.element(document.querySelector('#dashboardCustomStyle'));
-		  styleElement[0].innerText = compiledCss;
-      }
-      
-      var applyPreviewCustomStyle = function (compiledCss) {
-          var styleElement = angular.element(document.querySelector('#dashboardPreviewCustomStyle'));
-		  styleElement[0].innerText = compiledCss;
-      }
-      
-      var cleanPreviewCustomStyle = function () {
-          var styleElement = angular.element(document.querySelector('#dashboardPreviewCustomStyle'));
-		  styleElement[0].innerText = "";
-      }
-      
-      var switchThemeCSS = function(previousTheme, newTheme) {
-            var prevTheme = document.getElementsByTagName("link").namedItem(previousTheme);
-            var newTheme = document.getElementsByTagName("link").namedItem(newTheme);
-            newTheme.disabled = false;
-          	prevTheme.disabled = true;
-      }
-      
-      this.saveDashboard = function(form, custom, aclEvent) {
-		console.log("Form submit", form)
-        var self = this;
-        $scope.$broadcast('schemaFormValidate');
-
-        // Then we check if the form is valid
-        if ((form && form.$valid) || aclEvent) {
-          var data = {};
-           
-          var tmp = angular.copy(this.dashboard.widgets);
-          data["items"] = _.map(tmp, function(object, index){return _.omit(object, ["form", "schema"] )});
-            
-          data["urlParams"] = angular.copy(this.urlParams);
-          data["token"] = scriptrService.getToken();
-
-          self.dashboardSettings.defaults.redirectTarget = this.model.scriptName;
-            console.log("dashboardSettings",self.dashboardSettings);
-          data["dashboardSettings"] = angular.copy(this.dashboardSettings.defaults) //MFE: dashboardSettings channels info info needs to be retrieved from url or cookie
-          
-          //Generate custom Style to pass for the to save template
-          data["compiledCss"] = generateCustomStyle(data["dashboardSettings"])
-          
-          var template = this.unsafe_tags(document.querySelector('#handlebar-template').innerHTML);
-          var unescapedHtml = Handlebars.compile(template)(data);
-            
-          var scriptData = {}
-          scriptData["content"] = unescapedHtml;
-          scriptData["scriptName"] =  this.model.scriptName;
-          scriptData["pluginData"] = JSON.stringify({"wdg": data["items"], "urlParams": data["urlParams"], "settings": data["dashboardSettings"]});
-          if(self.isEdit) {
-            scriptData["update"] = true;
-          }
-          if(self.savedScript) {
-            scriptData["previousScriptName"]  = self.savedScript;
-          }
-          //scriptData["custom"] = this.custom; //TODO MFE: Removed, need to check backend
-          scriptData["acls"] = this.acls;  
-          var d = $q.defer();  
-          scriptrService.saveScript(scriptData).then(
-            function(data, response) {
-               console.log("resolve", data)
-               if(data.status == "failure") {
-                  self.showAlert("danger", data.errorDetail);
-               } else {
-                 self.isEdit = true;
-                 self.savedScript = scriptData["scriptName"];
-                 self.showAlert("success", "The dashboard has been saved successfully.");
-                 d.resolve(data, response);  
-               }
-               
-            }, function(err) {
-              self.showAlert("danger", err.data.response.metadata.errorDetail);
-              console.log("reject", err.data.response.metadata.errorDetail);
-              d.reject(err);  
-		  });
-          return d.promise;   
-          //Save data to scriptr
-          console.log();        
-        }
-      }
-     
-      this.setACLs = function(data){
-          this.acls = data.ACL.execute;
-          var array = this.acls.split(";");
-          this.users = [];  
-          for(var i = 0; i < array.length; i++){
-              var obj = {};
-              obj["code"] = array[i];
-              this.users.push(obj);
-          }    
-      } 
-      
-     this.postLoadScript = function(scriptName, data) {
-       	 var userConfigRegex = /\/\*#\*SCRIPTR_PLUGIN\*#\*(.*\n?.*)\*#\*#\*\//;
-     	 if(data) {
-           var userConfig = data.userConfig;
-           var matches = userConfig.match(userConfigRegex);
-           if(userConfig && matches) {
-             var pluginContent = JSON.parse(matches[1]);
-             if(pluginContent && pluginContent.metadata &&  pluginContent.metadata.name == "DashboardBuilder"){
-                 
-               this.widgets = [];
-               var widgets = JSON.parse(pluginContent.metadata.plugindata).wdg;
-                _.map(widgets, function(wdg, index) {
-                  //MFE: backward compatibility for stored dahsboard where gridst. cols were 5 and row was match
-                  if(wdg.schema && wdg.form) {
-                      wdg.sizeX = wdg.sizeX * 2;
-                      wdg.sizeY = wdg.sizeY * 3;
-                      wdg.col = wdg.col * 2;
-                      wdg.row = wdg.row * 3;
-                  }
-                    
-                  var widgetDefinition =  _.findWhere(self.widgetsConfig, {name: wdg.name});
-                   
-                  //MFE: Needs to merge with addWidget, we are repeating logic
-                  var form = angular.copy(widgetDefinition.form);
-                  var schema =  angular.copy(widgetDefinition.schema);
-                  var defaults = angular.copy(widgetDefinition.defaults);
-
-                  if(widgetDefinition.commonData){
-                      form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
-                      schema.properties =  merge_options(schema.properties,common.schemaFields); 
-                  }
-                   
-                   form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
-            	   schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
-                   form[0].selectedTabIndex = 0;
-                   
-                  wdg.form = angular.copy(form);
-                  wdg.schema =  angular.copy(schema);
-                  self.widgets.push(wdg);
-               });  
-               
-               //this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
-               this.urlParams = JSON.parse(pluginContent.metadata.plugindata).urlParams;
-               this.dashboardSettings.defaults = JSON.parse(pluginContent.metadata.plugindata).settings;
-                 
-               //Generate & apply the custom style
-           	   var compiledCss  = generateCustomStyle(this.dashboardSettings.defaults); 
-               applyCustomStyle(compiledCss);
-                 
-               this.dashboard["widgets"] = this.widgets;
-               this.isEdit = true;
-               this.savedScript = scriptName;
-               this.setACLs(data);  
-             } else {
-               this.showAlert("danger", "Invalid dashboard script. Pass another script.")
-               console.error("Invalid dashboard script. Pass another script.")
-             }
-           } else {
-             this.showAlert("danger", "Invalid dashboard script. Pass another script.")
-             console.error("Invalid dashboard script. Pass another script.")
-           }
-         } else {
-           this.showAlert("danger", "Invalid dashboard script. Pass another script.")
-           console.error("Invalid dashboard script. Pass another script.");
-           return;
-         }
-       console.debug("resolve get script "+scriptName+ " :", data) 
-     }
-      
-     this.safe_tags= function(str) {
+    /**
+         * Overwrites obj1's values with obj2's and adds obj2's if non existent in obj1
+         * @param obj1
+         * @param obj2
+         * @returns obj3 a new object based on obj1 and obj2
+         */
+       var merge_options = function(obj1,obj2){
+           var obj3 = {};
+           for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+           for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+           return obj3;
+       }
+    this.safe_tags= function(str) {
 	    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') ;
 	};
 	
@@ -1059,12 +1128,25 @@ angular
         }, this);
  
         var el = $compile( this.chart )( $scope );
-        
-        angular.element($element.find(".box-content")).append( el );
-        
-        /**$scope.$watch('widget', function() {
-          $compile( self.chart )( $scope );
-        }, true)**/
+        var boxContent =  angular.element($element.find(".box-content"));
+        boxContent.append(el);
+          
+         if(self.parent.isManualAdd) {
+                    setTimeout(function() {
+                        
+                        var top_of_element = boxContent.offset().top;
+                        var bottom_of_element = boxContent.offset().top + boxContent.outerHeight(true);
+                        var bottom_of_screen = $(window).scrollTop() + window.innerHeight;
+                        var top_of_screen = $(window).scrollTop();
+
+                        if((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
+                            // The element is visible, do nothing
+                        }
+                        else {
+                            // The element is not visible, scroll into it
+                            $('body').animate({ scrollTop: (boxContent.offset().top + $(boxContent.children()[0]).outerHeight(true)) }, 100);
+                 	 }}, 200);
+                }
       };
       
       this.updateWidget =  function(/**event, **/wdgModel) {
