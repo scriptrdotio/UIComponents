@@ -1,7 +1,6 @@
 # Login Module
 
-## About Login Module:
- 
+## About Login Module: 
   The login module adds the functionality required to authenticate the application , depends on the regesterd users in the system
 ## Requirements:
   Scriptr Underscore module
@@ -14,11 +13,11 @@
   - click on install module button in the bottme left corner of your IDE screen
   - click on  **Add Custom Module from GitHub**
   - Enter the following info
-  -- Owner *scriptrdotio*
-  -- Repository *UIComponents*
-  -- Path *UIComponents/login*
-  -- Branch *master*
-  -- Destination Folder *login* , or other specific folder
+    - Owner **scriptrdotio**
+    - Repository **UIComponents**
+    - Path **UIComponents/login**
+    - Branch **master**
+    - Destination Folder **login** , or other specific folder
 ## Configure the module
   there is two configuration files , API configurations , Constants
   - navigate to ./view/javascript/config.js
