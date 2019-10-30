@@ -56,7 +56,9 @@
           var vm = this;
           vm.init = function() {
               wsClient.onReady.then(function() {});
-              vm.sources = mapConstants.sources;
+              vm.sources = {"simulator": {
+      "label": "ddd",
+      "icon": { "url": "//icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png"}}};
               vm.icons = mapConstants.infoWindows.icons
           }
 
