@@ -788,7 +788,7 @@
   bottom: auto;
   position: relative;
   float: left;
-  height: 100%!important;
+  height: 95%!important;
 }
 .dashboardTheme .dygraphs-legend {
   width: 100px;
