@@ -1,0 +1,9 @@
+var log = require("log");
+log.setLevel("INFO");
+
+var requestParams = request.body;
+
+
+publish("responseChannel", {"id": "button-label", "result": request.parameters.newLabel });
+
+return request.parameters.newLabel

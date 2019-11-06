@@ -1,3 +1,0 @@
-
-var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
-return body;

@@ -28,14 +28,15 @@
         angular.module('exampleApp').config(wssConfig);
         angular.module('exampleApp').controller('exampleCtrl', function () {
             var vm = this;
-            vm.params={
-                something:"SOME_THING"
-            }
             vm.onAPISuccess=function(data){
-                console.log("success ", data._apiResult)
+                console.log("success ", data)
             }
             vm.onAPIFailure=function(data){
-                console.log("failure ", data._apiResult)
+                console.log("failure ", data)
+            }
+            vm.onFormatData = function(data, self) {
+             	self.label = data;
+                return data;
             }
         });
     </script>
@@ -46,11 +47,14 @@
                             type="btn btn-danger"
                             is-disabled="false"
                             label="Test"
-                            api="UIComponents/dashboard/frontend/examples/button/demoScript"
+                            api="UIComponents/dashboard/frontend/examples/button/getButtonLabel"
+                            action-api="UIComponents/dashboard/frontend/examples/button/setButtonLabel"
                             transport="https"
-                            api-params="vm.params"
+                            msg-tag="button-label"
+                            action-api-params="{'newLabel': 'new label'}"
                             on-success="vm.onAPISuccess"
-                             on-failure="vm.onAPIFailure"
+                            on-failure="vm.onAPIFailure"
+                            on-format-data="vm.onFormatData"
                             >
             </scriptr-button>
         </div>

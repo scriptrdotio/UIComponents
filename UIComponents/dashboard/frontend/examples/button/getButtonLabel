@@ -1,0 +1,10 @@
+var log = require("log");
+log.setLevel("INFO");
+
+var requestParams = request.body;
+
+var initialLabel = "initial label";
+
+publish("responseChannel", {"id": "button-label", "result": initialLabel });
+
+return initialLabel;
