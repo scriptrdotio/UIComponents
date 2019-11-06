@@ -187,7 +187,7 @@ angular
             } else {
                 $scope.$emit("waiting-for-data");
                 $scope.$on("update-data", function(event, data) {
-                    if(data[self.serviceTag])
+                    if(data && data[self.serviceTag])
                         self.consumeData(data[self.serviceTag]);
                     else
                         self.consumeData(data);

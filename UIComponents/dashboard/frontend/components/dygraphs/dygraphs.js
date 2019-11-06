@@ -517,7 +517,7 @@ angular
             } else {
                 $scope.$emit("waiting-for-data");
                 $scope.$on("update-data", function(event, data) {
-                    if(data[self.serviceTag])
+                     if(data && data[self.serviceTag])
                         self.consumeData(data[self.serviceTag]);
                     else
                         self.consumeData(data);
@@ -527,11 +527,6 @@ angular
           
           
           this.consumeData = function(data, response) {
-              if(typeof data == "object" && data.timeZone){
-                  self.timeZone = data.timeZone;
-                  self.options.offset =  data.timeZone;
-                  data = data.data;
-              }
             self.timeout = true;   
             if(typeof self.onFormatData() == "function"){
               data = self.onFormatData()(data);

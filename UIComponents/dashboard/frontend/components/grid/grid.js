@@ -289,11 +289,11 @@ angular
                 this.style = {};   
                 if(this.fixedHeight){
                     this.gridHeight = (this.gridHeight) ? this.gridHeight : "500";
-                    this.style["height"] = this.gridHeight;
+                    //this.style["height"] = this.gridHeight;
                     this.style["clear"] = "left";
                     this.style["width"] = "100%";
                 }else{
-                    this.style["height"] = "77%";
+                    //this.style["height"] = "77%";
                 }   
                 this.refreshOnEdit = (typeof this.refreshOnEdit != "undefined") ? this.refreshOnEdit : false;
                 this.transport = (this.transport) ? this.transport : "wss";
