@@ -46,9 +46,9 @@ angular
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
-    controller: function($scope, $rootScope, $timeout, $interval, $sce, $window, httpClient, wsClient, $cookies, common, widgetsConfig, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle, dashboardConfig, dataService) {
+    controller: function($scope, $rootScope, $timeout, $interval, $sce, $window, httpClient, wsClient, $cookies, common, commonAction, widgetsConfig, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle, dashboardConfig, dataService) {
         
-        $rootScope.isMobileDevice=function(){
+        $rootScope.isMobileDevice= function(){
             return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
         }
       
@@ -225,6 +225,7 @@ angular
         
         this.widgetsConfig = widgetsConfig.widgets; 
         this.widgetsCommon = common;
+        this.widgetsCommonAction = commonAction;
         this.dataLoaded = true;
         
       };
@@ -268,9 +269,9 @@ angular
       
       this.initializeDashboard =  function() {
           
-          if(self.data) {
-              $scope.$on("wait-for-data", self.consumeData(self.data))
-          }
+          $scope.$on("waiting-for-data", function() {
+              self.consumeData(self.data)
+          })
           
           this.dashboard = { widgets: [] };
           if(this.widgets) {
@@ -305,11 +306,16 @@ angular
                   var schema =  angular.copy(widgetDefinition.schema);
                   var defaults = angular.copy(widgetDefinition.defaults);
 
+                  if(widgetDefinition.commonActionData){
+                      form[0].tabs = angular.copy([commonAction.formTab].concat(form[0].tabs));
+                      schema.properties =  merge_options(schema.properties,commonAction.schemaFields); 
+                  }
+                    
                   if(widgetDefinition.commonData){
                       form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
                       schema.properties =  merge_options(schema.properties,common.schemaFields); 
                   }
-                   
+                    
                    form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
             	   schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
                    form[0].selectedTabIndex = 0;
@@ -389,12 +395,16 @@ angular
           var form = angular.copy(wdg.form);
           var schema =  angular.copy(wdg.schema);
          
-          if(wdg.commonData){
-              form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs))
-              schema.properties =  merge_options(wdg.schema.properties,common.schemaFields); 
+          
+          if(wdg.commonActionData){
+               form[0].tabs = angular.copy([commonAction.formTab].concat(form[0].tabs));
+               schema.properties =  merge_options(schema.properties,commonAction.schemaFields); 
+           }
+          
+           if(wdg.commonData){
+              form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs))
+              schema.properties =  merge_options(schema.properties,common.schemaFields); 
           }
-          
-          
           form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
           schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
           form[0].selectedTabIndex = 0;
@@ -478,15 +488,25 @@ angular
      
      this.initDashboardDataService = function() {
         if(self.dashboardSettings.defaults["transport"]) {
-            dataService.getData(self.dashboardSettings.defaults["transport"], self.dashboardSettings.defaults["api"], this.dashboardSettings.defaults["api-params"], self.dashboardSettings.defaults["use-window-params"], this.dashboardSettings.defaults["msg-tag"], self.consumeData.bind(self), this.dashboardSettings.defaults["fetch-data-interval"], $scope.$id);
+            
+            var requestInfo = {
+                    "api": self.dashboardSettings.defaults["api"],
+                    "transport": self.dashboardSettings.defaults["transport"],
+                    "msgTag": self.dashboardSettings.defaults["msg-tag"],
+                    "apiParams": self.dashboardSettings.defaults["api-params"],
+                    "useWindowParams": self.dashboardSettings.defaults["use-window-params"],
+                    "httpMethod": self.dashboardSettings.defaults["http-method"],
+                    "widgetId": $scope.$id
+               };
+               dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                 
-          if(self.dashboardSettings.defaults["fetch-data-interval"] && !self.refreshTimer) {
-              //Assuming this is success
-              self.refreshTimer = $interval(
-                  function(){
-                     self.initDashboardDataService()
-                  }, self.dashboardSettings.defaults["fetch-data-interval"]  * 1000);
-          }
+              if(self.dashboardSettings.defaults["fetch-data-interval"] && !self.refreshTimer) {
+                  //Assuming this is success
+                  self.refreshTimer = $interval(
+                      function(){
+                         self.initDashboardDataService()
+                      }, self.dashboardSettings.defaults["fetch-data-interval"]  * 1000);
+              }
         }
       }
 
@@ -694,14 +714,19 @@ angular
           var form = angular.copy(wdg.form);
           var schema =  angular.copy(wdg.schema);
          
-          if(wdg.commonData){
-              form[0].tabs = angular.copy([common.formTab].concat(wdg.form[0].tabs));
-              schema.properties = merge_options(wdg.schema.properties,common.schemaFields); 
-          }  
+          if(wdg.commonActionData){
+               form[0].tabs = angular.copy([commonAction.formTab].concat(form[0].tabs));
+               schema.properties =  merge_options(schema.properties,commonAction.schemaFields); 
+           }
             
+          if(wdg.commonData){
+              form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
+              schema.properties = merge_options(schema.properties,common.schemaFields); 
+          }  
+           
             
             form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
-            schema.properties = merge_options(wdg.schema.properties,boxStyle.schemaFields); 
+            schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
             form[0].selectedTabIndex = 0;
             
           var defApiParamsCount = 0;
@@ -1311,3 +1336,4 @@ angular
 
     }
 });
+   
