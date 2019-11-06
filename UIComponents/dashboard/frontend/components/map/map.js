@@ -22,16 +22,11 @@ angular
         "summaryIcons": "<?", //MFE: Check what to do with this in dashboard builder
         
         "assetsData": "<?",
-        "data": "<?",
         
         "heatMapWeight": "@",
         "heatMapRadius": "@",
         "heatMapOpacity": "@",
         "heatMapGradient": "<?",
-      	"api" : "@",
-      	"apiParams" : "@",
-        "msgTag": "@",
-      	"onFormatData" : "&",
         "setMarkerIcon" : "&",
         "onSelectAsset" : "&",
         "clusterStyles" : "<?",
@@ -44,13 +39,29 @@ angular
         "heatmap" : "<?",
         "bounce" : "<?",
         "markerInfoWindow": "<?", //On marker click show info window
-        "customDefaultInfoWindow": "@" //id of custom default info window
+        "customDefaultInfoWindow": "@", //id of custom default info window
+        
+        
+        "data": "@",
+        "transport": "@",
+        "api" : "@",
+        "msgTag" : "@",
+        "httpMethod": "@",
+        "apiParams" : "<?",
+        "onFormatData" : "&",
+        "useWindowParams": "@",
+        "serviceTag": "@",
+        "fetchDataInterval": "@"
+        
+        
+        
+        
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
     
     controller : function($scope, $rootElement, $location, $sce,
                            $compile, $timeout, $interval, $controller, NgMap,
-                           defaultConstants, wsClient) {
+                           defaultConstants, wsClient, httpClient, dataService) {
 
       
       var self = this;
@@ -58,6 +69,8 @@ angular
       // On load, get latest 500 data points saved in db
       self.$onInit = function() {
           var self = this;
+          
+          self.transport = (self.transport) ? self.transport : "wss";
           self.$wdgid = $scope.$id;
           self.pathStrokeOpacity = (self.pathStrokeOpacity) ? self.pathStrokeOpacity : 0;
           self.pathStrokeWeight = (self.pathStrokeWeight) ? self.pathStrokeWeight : 5;
@@ -151,7 +164,9 @@ angular
           if(self.msgTag){
               wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
           }
-          console.log("destory Map")
+          if(self.refreshTimer){
+              $interval.cancel( self.refreshTimer );
+          }
       }
 
       //Load asset Icons per source
@@ -200,7 +215,7 @@ angular
       
       //Load initial map assets from api or from passed data and subscribe to channel messages to add newly published assets to map
       var loadMapData =  function() {
-          	wsClient.onReady.then(function() {
+          /**	wsClient.onReady.then(function() {
               if(self.api) {
            		    self.apiParams =  (self.apiParams) ? self.apiParams : {};
              	   	wsClient.call(self.api, self.apiParams).then(function(data, response) {
@@ -215,7 +230,8 @@ angular
             	 wsClient.subscribe(self.msgTag, self.processAssets, $scope.$id)
               }
               
-          });
+          });**/
+          initDataService(self.transport);
         
           if(self.assetsData) {
           	 console.log("static assets data", self.assetsData);
@@ -226,6 +242,40 @@ angular
           }
        
       };
+        
+     
+      var initDataService = function(transport) {
+          if((transport == "wss" && (self.api || self.msgTag)) || (transport == "https" && self.api)) {
+              var requestInfo = {
+                  "api": self.api,
+                  "transport": transport,
+                  "msgTag": self.msgTag,
+                  "apiParams": self.apiParams,
+                  "useWindowParams": self.useWindowParams,
+                  "httpMethod": self.httpMethod,
+                  "widgetId": $scope.$id
+              };
+              dataService.scriptrRequest(requestInfo, self.processAssets.bind(self));
+
+              if(self.fetchDataInterval && !self.refreshTimer) {
+                  //Assuming this is success
+                  self.refreshTimer = $interval(
+                      function(){
+                          initDataService(self.transport)
+                      }, self.fetchDataInterval * 1000);
+              }
+          } else {
+              $scope.$emit("waiting-for-data");
+              $scope.$on("update-data", function(event, data) {
+                  if(data[self.serviceTag])
+                      self.consumeData(data[self.serviceTag]);
+                  else
+                      self.consumeData(data);
+              });
+          }
+
+      }
+        
 
       //Call when receiving a new asset, or a set of assets
       self.processAssets = function(data) {
