@@ -25,15 +25,19 @@ angular
         "messageFontWeight": "@",         
         "messageTextColor": "@",                   
         "messageBackgroundColor": "@",  
-        "messageTextAlignment": "@",              
-        "api": "@",
-        "enableResize": "<?",            
-        "transport" : "@",
-        "msgTag" : "@",
-        "apiParams" : "<?",
-        "onFormatData" : "&",
-        "fetchDataInterval": "@",
-        "useWindowParams": "@"
+        "messageTextAlignment": "@", 
+        "enableResize": "<?",    
+          
+        "transport": "@",
+          "api" : "@",
+          "msgTag" : "@",
+          "httpMethod": "@",
+          "apiParams" : "<?",
+          "onFormatData" : "&",
+          "fetchDataInterval": "@",
+          "useWindowParams": "@",
+          "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
+                
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/displayCount/displayCount.html',
       controller: function($scope, httpClient, wsClient, $element, $window, $timeout, $interval, $window, dataService) {
@@ -74,7 +78,7 @@ angular
               	}
              	 return self.timeoutId = $timeout(self.resize, 100);
              });
-             this.transport = (this.transport) ? this.transport : "wss";
+             this.transport = (this.transport) ? this.transport : null;
              this.msgTag = (this.msgTag) ? this.msgTag : null;
 
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
@@ -127,8 +131,18 @@ angular
          }
 
         var initDataService = function(transport) {
-            dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
-                
+             if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                 var requestInfo = {
+                               "api": self.api,
+                               "transport": transport,
+                               "msgTag": self.msgTag,
+                               "apiParams": self.apiParams,
+                               "useWindowParams": self.useWindowParams,
+                               "httpMethod": self.httpMethod,
+                               "widgetId": $scope.$id
+                           };
+                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
+
                 if(self.fetchDataInterval && !self.refreshTimer) {
                     //Assuming this is success
                     self.refreshTimer = $interval(
@@ -136,11 +150,20 @@ angular
                             initDataService(self.transport)
                         }, self.fetchDataInterval * 1000);
                 }
+            } else {
+                $scope.$emit("waiting-for-data");
+                $scope.$on("update-data", function(event, data) {
+                    if(data[self.serviceTag])
+                        self.consumeData(data[self.serviceTag]);
+                    else
+                        self.consumeData(data);
+                });
+            }
           }
 
         this.consumeData = function(data, response) {
             if(typeof self.onFormatData() == "function"){
-                data = self.onFormatData()(data);
+                data = self.onFormatData()(data, self);
             }
             self.data = data;
             if(typeof data == "object"){  

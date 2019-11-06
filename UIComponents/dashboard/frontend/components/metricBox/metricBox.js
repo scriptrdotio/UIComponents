@@ -86,7 +86,7 @@ angular
                     this.unitTextAlignment = (this.unitTextAlignment) ? this.unitTextAlignment : "center";
 
                     this.enableResize = (typeof this.enableResize != 'undefined') ? this.enableResize : true;
-                  console.log(this);
+
                     angular.element($window).on('resize', function () {
                         if (self.timeoutId != null) {
                             $timeout.cancel(self.timeoutId);
@@ -121,7 +121,6 @@ angular
                 }
 
                 var initDataService = function (transport) {
-                  console.log(dataService );
                     dataService .getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
 
                     if (self.fetchDataInterval && !self.refreshTimer) {
@@ -132,10 +131,11 @@ angular
                             }, self.fetchDataInterval * 1000);
                     }
                 }
+                
                 $scope.actionClicked=function(){
-                  console.log("actionClicked")
-                  if (typeof self.onActionClicked() == "function") {
-                         self.onActionClicked()(self.tag);
+                  	console.log("actionClicked")
+                  	if (typeof self.onActionClicked() == "function") {
+                         self.onActionClicked()(self.tag, self.value);
                     }
                 }
 

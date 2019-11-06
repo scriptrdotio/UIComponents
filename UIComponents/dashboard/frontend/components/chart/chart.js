@@ -67,7 +67,18 @@ angular
       bindings : {
         
         "onLoad" : "&onLoad",
-        
+         
+          "transport": "@",
+          "api" : "@",
+          "msgTag" : "@",
+          "httpMethod": "@",
+          "apiParams" : "<?",
+          "onFormatData" : "&",
+          "fetchDataInterval": "@",
+          "useWindowParams": "@",
+          "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
+          
+          
         "resize": "<?",
         
         "data": "<?",
@@ -85,19 +96,6 @@ angular
         
         "colors" : "<?",
         
-        "api": "@",
-        
-        "transport" : "@",
-        
-        "msgTag" : "@",
-        
-        "apiParams" : "<?",
-        
-        "onFormatData" : "&",
-          
-        "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
-        
-          
         "lineWidth": "@", 
         "pointSize": "@",
         "pointFillColors" : "@", 
@@ -142,8 +140,6 @@ angular
         "dateFormat": "&?",
         "xlabelFormat": "&?", 
         "ylabelFormat": "&?",     
-        "fetchDataInterval": "@",
-        "useWindowParams": "@",
           
         "showLegend": "@",
         "legendType": "@" //"hover", "right"
@@ -208,7 +204,7 @@ angular
              this.labelColor = (this.labelColor) ? this.labelColor : "#eee";
              this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#fff";
          
-             this.transport = (this.transport) ? this.transport : null;
+             this.transport = (this.transport) ? this.transport : "wss";
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
            
@@ -265,7 +261,6 @@ angular
          
          this.$postLink = function () {
            initDataService(this.transport);
-           $scope.$emit("waiting-for-data");
            // apply 2 seconds delay for static data  
            if(this.data && !this.api) {
               self.timeout = false; 
@@ -293,7 +288,6 @@ angular
         }
 
         this.$onDestroy = function() {
-            console.log("destory chart", self.msgTag, $scope.$id);
             if(self.msgTag){
                wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
             }
@@ -304,8 +298,17 @@ angular
         }
         
         var initDataService = function(transport) {
-            if(transport) {
-                dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+            if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                var requestInfo = {
+                    "api": self.api,
+                    "transport": transport,
+                    "msgTag": self.msgTag,
+                    "apiParams": self.apiParams,
+                    "useWindowParams": self.useWindowParams,
+                    "httpMethod": self.httpMethod,
+                    "widgetId": $scope.$id
+                };
+                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                 
                 if(self.fetchDataInterval && !self.refreshTimer) {
                     //Assuming this is success
@@ -315,6 +318,7 @@ angular
                         }, self.fetchDataInterval * 1000);
                 }
             } else {
+                $scope.$emit("waiting-for-data");
                 $scope.$on("update-data", function(event, data) {
                     if(data[self.serviceTag])
                         self.consumeData(data[self.serviceTag]);

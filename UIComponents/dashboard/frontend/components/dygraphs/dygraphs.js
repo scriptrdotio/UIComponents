@@ -8,12 +8,17 @@ angular
   
       bindings : {
           "onLoad" : "&onLoad",
-          "api": "@",
-          "transport" : "@",
+          
+          "transport": "@",
+          "api" : "@",
           "msgTag" : "@",
+          "httpMethod": "@",
           "apiParams" : "<?",
           "onFormatData" : "&",
+          "fetchDataInterval": "@",
+          "useWindowParams": "@",
           "serviceTag": "@",
+          
           "resize": "<?",
           "data": "<?",
           "legend": '<?',
@@ -80,8 +85,6 @@ angular
           "drawPoints": "<?",
           "pointSize": "<?",
           "strokeWidth": "<?",
-          "fetchDataInterval": "@",
-          "useWindowParams": "@",
           //functional data
         //   "useFunctional": "<?",
         //   "functionalDataType": "@",//scattered , range
@@ -386,6 +389,7 @@ angular
              //this.data = JSON.parse(this.data);
              this.resize = (this.resize) ? this.resize : true;
              this.transport = (this.transport) ? this.transport : null;
+             this.httpMethod = (this.httpMethod) ? this.httpMethod : "GET";
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
              
@@ -450,8 +454,7 @@ angular
          
          this.$postLink = function () {
            initDataService(this.transport);
-           $scope.$emit("waiting-for-data");
-           // apply 2 seconds delay for static data  
+           //apply 2 seconds delay for static data  
            if(this.data && !this.api) {
               self.timeout = false; 
          	  $timeout(function() {
@@ -488,12 +491,20 @@ angular
             if(self.refreshTimer) {
                 $interval.cancel( self.refreshTimer );
             }
-              	
         }
         
         var initDataService = function(transport) {
-           if(transport) { 
-           		dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+            if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                var requestInfo = {
+                    "api": self.api,
+                    "transport": transport,
+                    "msgTag": self.msgTag,
+                    "apiParams": self.apiParams,
+                    "useWindowParams": self.useWindowParams,
+                    "httpMethod": self.httpMethod,
+                    "widgetId": $scope.$id
+               };
+               dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                 
                 if(self.fetchDataInterval && !self.refreshTimer) {
                     //Assuming this is success
@@ -504,6 +515,7 @@ angular
                 }
             
             } else {
+                $scope.$emit("waiting-for-data");
                 $scope.$on("update-data", function(event, data) {
                     if(data[self.serviceTag])
                         self.consumeData(data[self.serviceTag]);
@@ -515,7 +527,6 @@ angular
           
           
           this.consumeData = function(data, response) {
-              console.log(data);
               if(typeof data == "object" && data.timeZone){
                   self.timeZone = data.timeZone;
                   self.options.offset =  data.timeZone;
@@ -538,7 +549,6 @@ angular
                   this.noResults = true;
               }
             }
-              console.log("datas",this.datas);
           }
         }
 	});

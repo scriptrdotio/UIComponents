@@ -9,11 +9,15 @@ angular
       bindings : {
         "data": "<?",
         "type": "@",  
-        "api": "@",
-        "transport" : "@",
-        "msgTag" : "@",
-        "apiParams" : "<?",
-        "onFormatData" : "&"
+        "transport": "@",
+          "api" : "@",
+          "msgTag" : "@",
+          "httpMethod": "@",
+          "apiParams" : "<?",
+          "onFormatData" : "&",
+          "fetchDataInterval": "@",
+          "useWindowParams": "@",
+          "serviceTag": "@"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/alert/alert.html',
       controller: function(httpClient, wsClient,dataService,$scope) {
@@ -23,24 +27,49 @@ angular
          this.$onInit = function() {
             this.type = (this.type) ? this.type : "info";
             this.data = (this.data) ? this.data : "Waiting for info...";
-             
-            if(this.data) {
-                this.consumeData(this.data);
-            }
       	 }
          
           this.$postLink = function () {
              initDataService(this.transport);
+             if(this.data) {
+                this.consumeData(this.data);
+             }
           }
 
         var initDataService = function(transport) {
-           dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+             if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                 var requestInfo = {
+                               "api": self.api,
+                               "transport": transport,
+                               "msgTag": self.msgTag,
+                               "apiParams": self.apiParams,
+                               "useWindowParams": self.useWindowParams,
+                               "httpMethod": self.httpMethod,
+                               "widgetId": $scope.$id
+                           };
+                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
+                if(self.fetchDataInterval && !self.refreshTimer) {
+                    //Assuming this is success
+                    self.refreshTimer = $interval(
+                        function(){
+                            initDataService(self.transport)
+                        }, self.fetchDataInterval * 1000);
+                }
+            } else {
+                $scope.$emit("waiting-for-data");
+                $scope.$on("update-data", function(event, data) {
+                    if(data[self.serviceTag])
+                        self.consumeData(data[self.serviceTag]);
+                    else
+                        self.consumeData(data);
+                });
+            }
 
         }              
 
         this.consumeData = function(data, response) {
             if(typeof self.onFormatData() == "function"){
-                data = self.onFormatData()(data);
+                data = self.onFormatData()(data, self);
             }
             if(typeof data == "object"){  
                 if(data && data.data && typeof data.data == "string"){

@@ -9,6 +9,16 @@ angular
       bindings : {
           
         "onLoad" : "&onLoad",
+          
+          "transport": "@",
+          "api" : "@",
+          "msgTag" : "@",
+          "httpMethod": "@",
+          "apiParams" : "<?",
+          "onFormatData" : "&",
+          "fetchDataInterval": "@",
+          "useWindowParams": "@",
+          "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
         
         "gaugeRadius" : "<?",
         
@@ -43,21 +53,7 @@ angular
         
         "needleCol" : "@",
         
-        "defaultFonts" : "@",
-        
-        "api": "@",
-        
-        "transport" : "@",
-        
-        "msgTag" : "@",
-        
-        "apiParams" : "<?",
-        
-        "onFormatData" : "&",
-          
-        "fetchDataInterval": "@",
-
-        "useWindowParams": "@"
+        "defaultFonts" : "@"
         
       },
       templateUrl: '/UIComponents/dashboard/frontend/components/speedometer/speedometer.html',
@@ -67,6 +63,7 @@ angular
 
          this.$onInit = function() {
             this.speedoConfig = {};
+           
             if(this.theme == "speed" || typeof this.theme == 'undefined'){
                  this.speedoConfig.gaugeRadius = (this.gaugeRadius) ? this.gaugeRadius : 150;
                  this.speedoConfig.minVal = (this.minValue)? this.minValue : 0;
@@ -107,7 +104,7 @@ angular
              
              
              
-             this.transport = (this.transport) ? this.transport : "wss";
+             this.transport = (this.transport) ? this.transport :  null;
              this.msgTag = (this.msgTag) ? this.msgTag : null;
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
          }
@@ -117,7 +114,6 @@ angular
             self.timeoutId = null;
             var h = $element.parent().height();
             var w = $element.parent().width();
-            //gaugeRadius = (w >= h) ? ((h / 2) - 20) : ((w / 2) - 20)
             if(h == 0) {
                 self.speedoConfig.gaugeRadius = (w / 2);
             } else {
@@ -147,10 +143,6 @@ angular
 	           });
       		  initDataService(self.transport);
       	  }, 500); 
-      	  
-            
-            
-           // initDataService(this.transport);
         }
          
         this.$onDestroy = function() {
@@ -162,7 +154,6 @@ angular
             if(self.refreshTimer){
                   $interval.cancel( self.refreshTimer );
              }
-            console.log("destory speedo")
         }
         
         this.renderGauge = function() {
@@ -174,8 +165,17 @@ angular
         }
 
         var initDataService = function(transport) {
-            console.log("Gauge Size", self.speedoConfig.gaugeRadius)
-            dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+             if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                 var requestInfo = {
+                               "api": self.api,
+                               "transport": transport,
+                               "msgTag": self.msgTag,
+                               "apiParams": self.apiParams,
+                               "useWindowParams": self.useWindowParams,
+                               "httpMethod": self.httpMethod,
+                               "widgetId": $scope.$id
+                           };
+                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                 
                 if(self.fetchDataInterval && !self.refreshTimer) {
                     //Assuming this is success
@@ -184,6 +184,15 @@ angular
                             initDataService(self.transport)
                         }, self.fetchDataInterval * 1000);
                 }
+            } else {
+                $scope.$emit("waiting-for-data");
+                $scope.$on("update-data", function(event, data) {
+                    if(data[self.serviceTag])
+                        self.consumeData(data[self.serviceTag]);
+                    else
+                        self.consumeData(data);
+                });
+            }
           }
 
           this.consumeData = function(data, response) {

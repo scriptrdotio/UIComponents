@@ -9,31 +9,23 @@ angular
             bindings : {
                 
                 "onLoad" : "&onLoad",
-
-                "api" : "@",
-
                 "data" : "<?",
-                
                 "customRanges": "<?",
-                
                 "layout" : "<?",
-                
                 "options" : "<?",
-
-                "transport" : "@",
-                
                 "showLegend" : "@",
                 "speedUnit" : "@",
-                
                 "fontSize" : "@",
                 
+                "transport": "@",
+                "api" : "@",
                 "msgTag" : "@",
-
+                "httpMethod": "@",
                 "apiParams" : "<?",
-
                 "onFormatData" : "&",
-                
-                "fetchDataInterval" : "@"
+                "fetchDataInterval": "@",
+                "useWindowParams": "@",
+                "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
             },
             templateUrl : '/UIComponents/dashboard/frontend/components/plotly/windrose.html',
             controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval,dataService) {
@@ -84,13 +76,9 @@ angular
                     this.speedUnit = ((this.speedUnit) ? this.speedUnit : "")
                     this.style = {};
                     angular.element($window).on('resize', self.scheduleResize);
-                    
-                    
-                    self.initDataService(this.transport);
                 }
                 
                 self.resize = function(){
-                    console.log("resize called")
                     self.timeoutId = null;
                      if($window.matchMedia($rootScope.mobileBreakPoint).matches) {
                         self.style["height"] = "300";
@@ -130,27 +118,33 @@ angular
                 }
 
                 this.$postLink = function () {
+                    self.initDataService(this.transport);
                     if (self.timeoutId != null) {
                             $timeout.cancel(self.timeoutId);
                         }
                     self.timeoutId = $timeout(self.resize, 300);
                     $scope.$watch(function( $scope ) {
                         return $scope.$ctrl.data
-                    },function(newData){
-                        self.data = newData;
+                    },function(newVal){
+                               if(newVal){
+                           self.consumeData(newVal);
+                       }
                     });
                     
                     if(this.data) {
                         self.timeout = false; 
                         $timeout(function() {
-                            self.consumeData(self.data);
+                             if(self.timeout == false) {
+                                self.consumeData(self.data);
+                             }
                         }, 200)
+                    } else{
+                        self.timeout = true;
                     }
                 }
                 
                 this.$onDestroy = function() {
                     angular.element($window).off('resize', self.scheduleResize);
-                    console.log("destory wind rose")
                     if(self.msgTag){
                         wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
                     }
@@ -159,7 +153,6 @@ angular
                 }
                 
                 self.scheduleResize = function() {
-                    console.log("scheduleResize called")
                         if (self.timeoutId != null) {
                             $timeout.cancel(self.timeoutId);
                         }
@@ -167,26 +160,44 @@ angular
           		}
 
                 self.initDataService = function(transport) {
-                    console.log("initDataService called")
-                    dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+                     if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                         var requestInfo = {
+                               "api": self.api,
+                               "transport": transport,
+                               "msgTag": self.msgTag,
+                               "apiParams": self.apiParams,
+                               "useWindowParams": self.useWindowParams,
+                               "httpMethod": self.httpMethod,
+                               "widgetId": $scope.$id
+                           };
+                		dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
 
-                    if (self.fetchDataInterval && !self.refreshTimer) {
-                        //Assuming this is success
-                        self.refreshTimer = $interval(
-                            function () {
-                                self.initDataService(self.transport)
-                            }, self.fetchDataInterval * 1000);
+                        if (self.fetchDataInterval && !self.refreshTimer) {
+                            //Assuming this is success
+                            self.refreshTimer = $interval(
+                                function () {
+                                    self.initDataService(self.transport)
+                                }, self.fetchDataInterval * 1000);
+                        }
+                    } else {
+                        $scope.$emit("waiting-for-data");
+                        $scope.$on("update-data", function(event, data) {
+                            if(data[self.serviceTag])
+                                self.consumeData(data[self.serviceTag]);
+                            else
+                                self.consumeData(data);
+                        });
                     }
                 }
 
                 this.consumeData = function(data, response) {
-                    console.log("consumeData called",data)
+                    self.timeout = true;
+                    
                     if(_.isEqual(this.data.data, this.staticData))
                         this.data = [];
                     
                     if(typeof this.onFormatData() == "function"){
                         data = this.onFormatData()(data);
-                        console.log("data after format",data)
                     }
                     if(data && data.data && data.data.length > 0){
                         if(this.fetchDataInterval && this.fetchDataInterval > 0 && this.retrievedData && this.retrievedData.length > 0 && this.delta) {
@@ -206,7 +217,6 @@ angular
                             this.noResults = true;
                         }
                     }
-                    console.log(this.data)
                 }
                 
                 this.buildWindRoseData = function(){
@@ -216,7 +226,8 @@ angular
                         self.totalSpeeds += speedsArrays[i].length;
                     }
                     
-                   /**MFE if(self.totalSpeeds == 0)
+                   /**MFE  removed as an attempt to show wind directions without speed
+                   if(self.totalSpeeds == 0) 
                         self.noResults = true;
                     else
                         self.noResults = false; **/

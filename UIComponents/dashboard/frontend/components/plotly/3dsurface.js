@@ -9,24 +9,11 @@ angular
             bindings: {
 
                 "onLoad": "&onLoad",
-
-                "api": "@",
-
+                
                 "data": "<?",
-
                 "layout": "<?",
-
                 "options": "<?",
 
-                "transport": "@",
-
-                "msgTag": "@",
-
-                "apiParams": "<?",
-
-                "onFormatData": "&",
-
-                "fetchDataInterval": "@",
                 //extras
                 "title": "@",
                 //"width": "<?",
@@ -42,6 +29,16 @@ angular
                 "modeBarButtonsToRemove": "<?",
                 "colorScale": "<?",
                 "contours": "<?",
+                
+                "transport": "@",
+                "api" : "@",
+                "msgTag" : "@",
+                "httpMethod": "@",
+                "apiParams" : "<?",
+                "onFormatData" : "&",
+                "fetchDataInterval": "@",
+                "useWindowParams": "@",
+                "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
 
 
             },
@@ -51,7 +48,6 @@ angular
                 var self = this;
 
                 self.$onInit = function () {
-                    console.log("on init started",this)
                     self._apiParams = (self.apiParams) ? angular.copy(self.apiParams) : [];
                     self.data = self.data ? self.data : [];
                     //self.width = self.width ? self.width : 400;
@@ -63,7 +59,6 @@ angular
                          modeBarButtonsToRemove: self.modeBarButtonsToRemove, 
                          displaylogo: self.displaylogo,
                     };
-                    console.log(self.options);
                     self.staticData = angular.copy(self.data);
                     self.transformedData = angular.copy(self.data);
                     angular.element($window).on('resize', self.scheduleResize);
@@ -99,35 +94,36 @@ angular
                         type: 'surface'
                       }];
 
-                    
-
-                    self.initDataService(self.transport);
                 }
 
                 self.resize = function () {
-                    console.log("resize called")
                     self.layout.height =  $element.parent().height();
                     self.layout.width = $element.parent().width();
-              
-
                 }
 
                 self.$postLink = function () {
+                    self.initDataService(this.transport);
                     if (self.timeoutId != null) {
-                        $timeout.cancel(self.timeoutId);
-                    }
+                            $timeout.cancel(self.timeoutId);
+                        }
                     self.timeoutId = $timeout(self.resize, 300);
-                    $scope.$watch(function ($scope) {
+                    $scope.$watch(function( $scope ) {
                         return $scope.$ctrl.data
-                    }, function (newData) {
-                        self.data = newData;
+                    },function(newVal){
+                               if(newVal){
+                           self.consumeData(newVal);
+                       }
                     });
-
-                    if (self.data) {
-                        self.timeout = false;
-                        $timeout(function () {
-                            self.consumeData(self.data);
+                    
+                    if(this.data) {
+                        self.timeout = false; 
+                        $timeout(function() {
+                             if(self.timeout == false) {
+                                self.consumeData(self.data);
+                             }
                         }, 200)
+                    } else{
+                        self.timeout = true;
                     }
                 }
 
@@ -141,7 +137,6 @@ angular
                 }
 
                 self.scheduleResize = function () {
-                    console.log("scheduleResize called")
                     if (self.timeoutId != null) {
                         $timeout.cancel(self.timeoutId);
                     }
@@ -149,20 +144,38 @@ angular
                 }
 
                 self.initDataService = function (transport) {
-                    console.log("initDataService called")
-                    dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+                    if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                         var requestInfo = {
+                               "api": self.api,
+                               "transport": transport,
+                               "msgTag": self.msgTag,
+                               "apiParams": self.apiParams,
+                               "useWindowParams": self.useWindowParams,
+                               "httpMethod": self.httpMethod,
+                               "widgetId": $scope.$id
+                           };
+                		dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
 
-                    if (self.fetchDataInterval && !self.refreshTimer) {
-                        //Assuming this is success
-                        self.refreshTimer = $interval(
-                            function () {
-                                self.initDataService(self.transport)
-                            }, self.fetchDataInterval * 1000);
+                        if (self.fetchDataInterval && !self.refreshTimer) {
+                            //Assuming this is success
+                            self.refreshTimer = $interval(
+                                function () {
+                                    self.initDataService(self.transport)
+                                }, self.fetchDataInterval * 1000);
+                        }
+                    } else {
+                        $scope.$emit("waiting-for-data");
+                        $scope.$on("update-data", function(event, data) {
+                            if(data[self.serviceTag])
+                                self.consumeData(data[self.serviceTag]);
+                            else
+                                self.consumeData(data);
+                        });
                     }
                 }
 
                self.consumeData = function (data, response) {
-                    console.log("consumeData called", data)
+                    self.timeout = true;
                     if(data && data.x && data.y && data.z){
                         self.transformedData=[{
                         showscale:self.showBar,
@@ -177,8 +190,6 @@ angular
                         y: data.y,
                         type: 'surface'
                       }];
-                    
-                     console.log("transformedData called", self.transformedData)
                     }
 
                     

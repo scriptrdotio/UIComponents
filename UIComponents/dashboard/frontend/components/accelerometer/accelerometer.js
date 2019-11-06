@@ -8,13 +8,15 @@ angular
   
       bindings : {
          "data" : "<?",
-      	 "api" : "@",
-         "transport" : "@",
- 		 "msgTag" : "@",
-		 "apiParams" : "<?",
-         "onFormatData" : "&",
-         "fetchDataInterval": "@",   
-         "useWindowParams": "@"
+          "transport": "@",
+          "api" : "@",
+          "msgTag" : "@",
+          "httpMethod": "@",
+          "apiParams" : "<?",
+          "onFormatData" : "&",
+          "fetchDataInterval": "@",
+          "useWindowParams": "@",
+          "serviceTag": "@"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.html',
       controller: function(httpClient, wsClient, $scope, $interval, dataService) {
@@ -38,7 +40,17 @@ angular
               initDataService(this.transport);
         }
         var initDataService = function(transport) {
-            dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+            if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                var requestInfo = {
+                               "api": self.api,
+                               "transport": transport,
+                               "msgTag": self.msgTag,
+                               "apiParams": self.apiParams,
+                               "useWindowParams": self.useWindowParams,
+                               "httpMethod": self.httpMethod,
+                               "widgetId": $scope.$id
+                           };
+                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                 
                 if(self.fetchDataInterval && !self.refreshTimer) {
                     //Assuming this is success
@@ -47,6 +59,15 @@ angular
                             initDataService(self.transport)
                         }, self.fetchDataInterval * 1000);
                 }
+            } else {
+                $scope.$emit("waiting-for-data");
+                $scope.$on("update-data", function(event, data) {
+                    if(data[self.serviceTag])
+                        self.consumeData(data[self.serviceTag]);
+                    else
+                        self.consumeData(data);
+                });
+            }
           }
         
          this.$onDestroy = function() {
@@ -57,7 +78,6 @@ angular
             if(self.refreshTimer){
                 $interval.cancel( self.refreshTimer );
             }
-            console.log("destory accelerometer")
         }
 
           this.consumeData = function(data, response) {

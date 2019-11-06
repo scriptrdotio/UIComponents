@@ -9,8 +9,16 @@ angular
                bindings : {
                   
                   "onLoad" : "&onLoad",
-
+                   
+                  "transport": "@",
                   "api" : "@",
+                  "msgTag" : "@",
+                  "httpMethod": "@",
+                  "apiParams" : "<?",
+                  "onFormatData" : "&",
+                  "fetchDataInterval": "@",
+        		  "useWindowParams": "@",
+                  "serviceTag": "@",
                  
                   "data" : "<?",
 
@@ -26,19 +34,7 @@ angular
                    
                   "unit" : "@",
                   
-                  "height" : "@",
-
-                  "transport" : "@",
-
-                  "msgTag" : "@",
-
-                  "apiParams" : "<?",
-                 
-                  "onFormatData" : "&",
-                   
-                  "fetchDataInterval": "@",
-
-                  "useWindowParams": "@"
+                  "height" : "@"
                    
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
@@ -93,7 +89,7 @@ angular
                            this.ticks.push(obj);
                        }
                        
-                       this.transport = (this.transport) ? this.transport : "wss";
+                       this.transport = (this.transport) ? this.transport : null;
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
                        this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
                        
@@ -106,9 +102,6 @@ angular
                        });
                        
                        this.consumeData(this.data);
-
-                       initDataService(this.transport);
-
 	               }
                    
                    self.resize = function(){
@@ -117,6 +110,7 @@ angular
                    }
                    
                    this.$postLink = function () {
+                       initDataService(this.transport);
                        $timeout(self.resize,100);
                        if (self.timeoutId != null) {
                            $timeout.cancel(self.timeoutId);
@@ -143,14 +137,32 @@ angular
                    }
 
 	               var initDataService = function(transport) {
-		               	dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
-                
-                        if(self.fetchDataInterval && !self.refreshTimer) {
-                            //Assuming this is success
-                            self.refreshTimer = $interval(
-                                function(){
-                                    initDataService(self.transport)
-                                }, self.fetchDataInterval * 1000);
+                       if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                             var requestInfo = {
+                               "api": self.api,
+                               "transport": transport,
+                               "msgTag": self.msgTag,
+                               "apiParams": self.apiParams,
+                               "useWindowParams": self.useWindowParams,
+                               "httpMethod": self.httpMethod,
+                               "widgetId": $scope.$id
+                           };
+                            dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
+                            if(self.fetchDataInterval && !self.refreshTimer) {
+                                //Assuming this is success
+                                self.refreshTimer = $interval(
+                                    function(){
+                                        initDataService(self.transport)
+                                    }, self.fetchDataInterval * 1000);
+                            }
+                        } else {
+                            $scope.$emit("waiting-for-data");
+                            $scope.$on("update-data", function(event, data) {
+                                if(data[self.serviceTag])
+                                    self.consumeData(data[self.serviceTag]);
+                                else
+                                    self.consumeData(data);
+                            });
                         }
 	               }
 
