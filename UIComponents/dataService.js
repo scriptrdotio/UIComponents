@@ -3,25 +3,25 @@ angular.module('DataService', [])
       		'dataService',
             function dataServiceProvider() {
 	            var self = this;
-                this._getData = function($q, httpClient, wsClient, $location, transport, api, apiParams, useWindowParams, msgTag, consumerFnc, fetchDataInterval, id) {
+                
+                this._sendRequestApi = function($q, httpClient, wsClient, $location, request, consumerFnc) {
 
                     var params = {};
-                    if(!apiParams){
-                        apiParams={};
-                    }
-                    if (useWindowParams == "true") {
-                        params = angular.merge( apiParams,$location.search())
+                    var apiParams= (request.apiParams) ? request.apiParams : {};
+
+                    if (request.useWindowParams && request.useWindowParams == "true") {
+                        params = angular.merge(apiParams,$location.search())
                     } else {
                         params = angular.copy(apiParams);
                     }
-                    if (transport == "wss") {
+                    if (request.transport == "wss") {
                         wsClient.onReady.then(function () {
-                            // Subscribe to socket messages with id chart
-                            if (msgTag) {
-                                wsClient.subscribe(msgTag, consumerFnc, id);
+                            // Subscribe to socket messages with widget id
+                            if (request.msgTag) {
+                                wsClient.subscribe(request.msgTag, consumerFnc, request.widgetId);
                             }
-                            if (api) {
-                                wsClient.call(api, params, msgTag)
+                            if (request.api) {
+                                wsClient.call(request.api, params, request.msgTag)
                                     .then(function (data, response) {
                                     consumerFnc(data)
                                 },
@@ -32,18 +32,30 @@ angular.module('DataService', [])
                             }
                         });
                     } else {
-                        if (transport == "https" && api) {
-                            httpClient
-                                .get(api, params)
+                        if (request.transport == "https" && request.api) {
+                             if(request.httpMethod == "POST") {
+                                 httpClient
+                                     .post(request.api, params)
+                                     .then(
+                                     function (data, response) {
+                                         if (typeof consumerFnc == "function") consumerFnc(data)
+                                     },
+                                     function (err) {
+                                         if (typeof consumerFnc == "function") consumerFnc(err)
+                                     });
+                                 
+                             } else { //default to get
+                                httpClient
+                                .get(request.api, params)
                                 .then(
                                 function (data, response) {
                                     consumerFnc(data)
                                 },
                                 function (err) {
-                                    console.log(
-                                        "reject published promise",
-                                        err);
+                                    console.log("reject published promise", err);
                                 });
+                            } 
+                            
                         }
                     }
                 }
@@ -52,57 +64,8 @@ angular.module('DataService', [])
 	                  "$q", "httpClient", "wsClient", "$location",
 	                  function dataServiceFactory($q, httpClient, wsClient, $location) {
 		                  var methods = {
-		                     getData: function (transport, api, apiParams, useWindowParams, msgTag, consumerFnc, fetchDataInterval, id) {
-                                 self._getData($q, httpClient, wsClient, $location, transport, api, apiParams, useWindowParams, msgTag, consumerFnc, fetchDataInterval, id);
-                            },
-
-                            postData: function (transport, api, apiParams, useWindowParams, msgTag, consumerFnc, id) {
-                                var defer = $q.defer();
-                                var params = {};
-                                if(!apiParams){
-                                    apiParams={};
-                                }
-                                if (useWindowParams == "true") {
-                                    params = angular.merge( apiParams,$location.search())
-                                } else {
-                                    params = angular.copy(apiParams);
-                                }
-                                if (api) {
-                                    //transport wss
-                                    if (transport == "wss") {
-                                        wsClient.onReady.then(function () {
-                                            if (msgTag) {
-                                                wsClient.subscribe(msgTag, consumerFnc, id);
-                                            }
-                                            wsClient.call(api, params, msgTag)
-                                                .then(
-                                                function (data, response) {
-                                                    if (typeof consumerFnc == "function") consumerFnc(data);
-                                                    defer.resolve({ msg: 'SUCCESS', details: "", data: data });
-                                                },
-                                                function (err) {
-                                                    if (typeof consumerFnc == "function") consumerFnc(err);
-                                                    defer.resolve({ msg: 'ERROR', details: err, data: {} });
-                                                });
-                                        });
-                                    } else if (transport == "https") {
-                                        httpClient
-                                            .post(api, params)
-                                            .then(
-                                            function (data, response) {
-                                                if (typeof consumerFnc == "function") consumerFnc(data)
-                                                defer.resolve({ msg: 'SUCCESS', details: "", data: data });
-                                            },
-                                            function (err) {
-                                                if (typeof consumerFnc == "function") consumerFnc(err)
-                                                defer.resolve({ msg: 'ERROR', details: err, data: {} });
-                                            });
-                                    } else {
-                                    }
-                                } else {
-                                    defer.reject({ msg: "ERROR", details: "api is undefined", data: {} });
-                                }
-                                return defer.promise;
+		                    scriptrRequest: function (request, consumerFnc) {
+                                 self._sendRequestApi($q, httpClient, wsClient, $location, request, consumerFnc);
                             }
 		                  };
 		                  return methods;
