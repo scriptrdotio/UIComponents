@@ -23,13 +23,13 @@ angular
                     __MAP__,
                     __ACCELEROMETER__,
                     __GRID__,
-                    __TOGGLE_SWITCH__,
-                    __SLIDER__,
-                    __BUTTON__,
-                    __IFRAME__,
                     __ALERT__,
                     __DISPLAY_DATA__,
-                    __METRIC_BOX__
+                    __IFRAME__,
+                    __TOGGLE_SWITCH__,
+                    __SLIDER__,
+                    __BUTTON__
+                    //,__METRIC_BOX__
                 ]
             }
         }
