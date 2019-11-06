@@ -33,7 +33,7 @@ angular
                     "subscribeChannel": "responseChannel",
                     "theme": "light",
                     "style": __defaultsThemeStyles__["light"],
-                    "isDashboard": true
+                    "deactivateExternalDataHandler": true
                 },
                 "form": [
                     {
