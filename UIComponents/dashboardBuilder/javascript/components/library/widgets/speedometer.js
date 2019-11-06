@@ -53,7 +53,7 @@ const __SPEEDOMETER__ = {
                             "type": "section",
                             "htmlClass": "col-xs-4",
                             "items": ["tick-col-maj",
-                                "outer-edge-col",
+                                 "outer-edge-col",
                                 "needle-col",
                                 {
                                     "key":"default-fonts",
@@ -230,7 +230,6 @@ const __SPEEDOMETER__ = {
                 "default": "Source Sans Pro",
                
             }
-        },
-        "required": []
+        }
     }
 };
