@@ -9,7 +9,7 @@ angular
                     {
                         "type": "section",
                         "htmlClass": "row",
-                        "condition": "model['isDashboard'] == false",
+                        "condition": "!model['deactivateExternalDataHandler'] || model['deactivateExternalDataHandler'] == false",
                         "items": [{
                             "type": "section",
                             "htmlClass": "col-xs-7",
