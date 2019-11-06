@@ -2,11 +2,13 @@ const __SLIDER__ = {
     "name": "slider",
     "label": "Slider",
     "class": "scriptr-slider",
+    "commonData": true,
+    "commonActionData": true,
     "show": true,
     "defaults": {
         "transport": "wss",
-        // "api":"UIComponents/dashboard/frontend/examples/slider/getSliderVal",
-        // "publish-api" : "UIComponents/dashboard/frontend/examples/slider/publishSliderVal",
+        "api":"UIComponents/dashboard/frontend/examples/slider/getSliderVal",
+        "publish-api" : "UIComponents/dashboard/frontend/examples/slider/publishSliderVal",
         "boxLabel": "Slider",
         "min": 2,
         "enable-resize": true,
@@ -24,108 +26,14 @@ const __SLIDER__ = {
         sizeX: 4,
         sizeY: 3,
         minSizeX: 4,
-        minSizeY: 2
+        minSizeY: 1,
+       fitToWidget: true
     },
     "imgCls": "",
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/slider.png",
     "form": [{
         type: "tabs",
         tabs: [
-            {
-                title: "Data",
-                items: [
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-6",
-                                "items": ["transport"]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-6",
-                                "items": [
-                                    {
-                                        "key": "msg-tag",
-                                        "condition": "model.transport=='wss'"
-                                    },
-                                    {
-                                        "key": "http-method",
-                                        "type": 'strapselect',
-                                        "placeholder": " ",
-                                        "titleMap": [{
-                                            "value": "GET",
-                                            "name": "GET"
-                                        }, {
-                                            "value": "POST",
-                                            "name": "POST"
-                                        }],
-                                        "condition": "model.transport=='https'"
-                                    }]
-                            }]
-                    },
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-6",
-                                "items": [
-                                    "api",
-                                    {
-                                        "key": "on-format-data",
-                                        "type": "codemirror",
-                                        "codemirrorOptions": {
-                                            value: "return",
-                                            styleActiveLine: true,
-                                            lineNumbers: true,
-                                            lineWrapping: true,
-                                            autoCloseBrackets: true,
-                                            matchBrackets: true,
-                                            theme: "neo",
-                                            mode: "javascript",
-                                            readOnly: false,
-                                            autoRefresh: true
-                                        }
-                                    }]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-6",
-                                "items": ["api-params",
-                                    "publish-api-params"]
-                            }]
-                    },
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [{
-                            "type": "section",
-                            "htmlClass": "col-xs-12",
-                            "items": [{
-                                "type": "help",
-                                "helpvalue": "<hr>"
-                            }]
-                        }]
-                    },
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [{
-                            "type": "section",
-                            "htmlClass": "col-xs-12",
-                            "items": [{
-                                "type": "help",
-                                "helpvalue": "<div class=\"alert alert-info\"><ul><li>Messages published over the subscibe channel need to have the following format in order to be consumed by a widget:<ul><li>{“id”: “&lt;message tag value&gt;”, “result”: “&lt;static data structure&gt;”}</li></ul></li><li>A script would publish a message  over the subscribe channel as follow:<ul><li>publish(“responseChannel”, {“id”: “&lt;message tag value&gt;”, “result”: “&lt;static data structure&gt;”});</li></ul></li><li>Whether https or wss transport is used, Sciptr API should return the static data structure for widget initial load:<ul><li>return &lt;static data structure&gt;;</li></ul></li></ul></div>"
-                            }]
-                        }]
-                    }
-
-                ]
-            },
             {
                 title: "Slider behaviour",
                 items: [{
@@ -468,54 +376,6 @@ const __SLIDER__ = {
                 "title": "Theme",
                 "type": "string",
                 "description": "Select a theme for your slider from the list of available themes."
-            },
-            "api": {
-                "title": "Api",
-                "type": "string",
-                "description": "Name of the api to get data.",
-                "x-schema-form": {
-                    "placeholder": "UIComponents/dashboard/frontend/examples/grid/getCarsInfo"
-                }
-            },
-            "http-method": {
-                "title": "Http method",
-                "type": "string",
-                "description": "Method to be used when calling the scriptr api over https. Default: GET.",
-                "default": "GET",
-
-            },
-            "on-format-data": {
-                "title": "Format data",
-                "default": "return data;",
-                "type": "string",
-                "description": "Callback function to be called after data is returned from backend."
-            },
-            "transport": {
-                "title": "Transport",
-                "type": "string",
-                "enum": ["wss", "https"],
-                "description": "Method used to call api (can take 'http' or 'wss')."
-            },
-            "msg-tag": {
-                "title": "Message Tag",
-                "type": "string",
-                "description": "Subscribe to socket messages with tag name."
-            },
-            "api-params": {
-                "title": "Api Params",
-                "type": "string",
-                "description": "Api parameters.",
-                "x-schema-form": {
-                    "placeholder": "Ex: {'id' : '599865'}"
-                }
-            },
-            "publish-api-params": {
-                "title": "Publish Api Params",
-                "type": "string",
-                "description": "Publish Api parameters.",
-                "x-schema-form": {
-                    "placeholder": "Ex: {'id' : '599865'}"
-                }
             }
         },
         "required": ["ceil"]
