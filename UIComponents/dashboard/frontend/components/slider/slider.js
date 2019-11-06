@@ -74,24 +74,24 @@ angular
                 "ariaLabelHigh": "<?",
                 "ariaLabelledByHigh": "<?",
                    
-                "publishApi": "@",   
                    
                 "enableResize" : "<?",   
                    
-                "api": "@",   
-                   
-                "transport": "@",   
-                   
+                "transport": "@",
+                "api" : "@",
                 "msgTag" : "@",
+                "httpMethod": "@",
+               	"apiParams" : "<?",
+                "onFormatData" : "&",
+                "fetchDataInterval": "@",
+                "useWindowParams": "@",
+                "serviceTag": "@",
 
-                "apiParams" : "<?",
-                   
-                "publishApiParams" : "<?",   
-                   
-                "onFormatData" : "&"
-
-                 
-
+                "actionTransport" : "@",
+                "actionApi" : "@",
+                "actionApiParams": "<?",  
+                "actionUseWindowParams": "@",
+                "actionHttpMethod": "@",
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/slider/slider.html',
                controller : function($scope, $element, $window, $timeout, httpClient, wsClient,dataService) {
@@ -116,7 +116,6 @@ angular
                        this.options.minRange= (typeof this.minRange != 'undefined')? this.minRange : null;
                        this.options.maxRange=(typeof this.maxRange != 'undefined')? this.maxRange : null;
                        this.options.pushRange= (typeof this.pushRange != 'undefined')? this.pushRange : false;
-                       this.options.id=(typeof this.id != 'undefined')? this.id : null;
                        this.options.translate=(typeof this.translate != 'undefined')? this.translate : null;
                        this.options.getLegend=(typeof this.getLegend != 'undefined')? this.getLegend : null;
                        this.options.stepsArray=(typeof this.stepsArray != 'undefined')? this.stepsArray : null;
@@ -149,7 +148,7 @@ angular
                        this.options.onlyBindHandles = (typeof this.onlyBindHandles != 'undefined')? this.onlyBindHandles : null;
                        this.options.onStart = (typeof this.onStart() != 'function')? this.onStart : null;
                        this.options.onChange = (typeof this.onChange() != 'function')? this.onChange : null;
-                       this.options.onEnd= publishData;
+                       this.options.onEnd= this.publishData;
                        this.options.rightToLeft= (typeof this.rightToLeft != 'undefined')? this.rightToLeft : false;
                        this.options.boundPointerLabels= (typeof this.boundPointerLabels != 'undefined')? this.boundPointerLabels : true;
                        this.options.mergeRangeLabelsIfSame= (typeof this.mergeRangeLabelsIfSame != 'undefined')? this.mergeRangeLabelsIfSame : false;
@@ -163,74 +162,82 @@ angular
                        this.options.ariaLabelHigh=(typeof this.ariaLabelHigh != 'undefined')? this.ariaLabelHigh : null;
                        this.options.ariaLabelledByHigh=(typeof this.ariaLabelledByHigh != 'undefined')? this.ariaLabelledByHigh : null;
                        
-                       this.transport = (this.transport) ? this.transport : "wss";
+                       this.transport = (this.transport) ? this.transport : null;
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
                        this.enableResize = (typeof this.enableResize != 'undefined') ? this.enableResize : true;
-                       
+                       this.actionParams = (this.actionParams != "undefined") ? this.actionParams : ((this.apiParams) ? this.apiParams : {});
                        this.style = {};
-                       angular.element($window).on('resize', function() {
-                           if (self.timeoutId != null) {
-                           	$timeout.cancel(self.timeoutId);
-                         	}
-                        	 return self.timeoutId = $timeout(self.resize, 100);
-                        });
-                       
+
                        $timeout(function() {
                           $scope.$broadcast('reCalcViewDimensions');
                           $scope.$broadcast('rzSliderForceRender');
                        }, 2000)
 
-		               initDataService(this.api, self.apiParams, this.transport);
-
 	               }
                    
-                   var publishData = function(sliderId, modelValue, highValue, pointerType){
+                   this.$postLink = function() {
+                       initDataService(this.transport);
+                       
+                       if(this.data && !this.api) {
+                            self.timeout = false; 
+                            $timeout(function() {
+                                if(self.timeout == false) {
+                                    self.consumeData(self.data);
+                                }
+                            }, 2000);
+                        } else {
+                            self.timeout = true;
+                        }
+                   }
+                   
+                   this.publishData = function(sliderId, modelValue, highValue, pointerType){
                        if(typeof self.onEnd() == "function"){
                            self.onEnd()(sliderId, modelValue, highValue, pointerType); 
                        }
-                       if(typeof self.publishApiParams == 'undefined'){
-                           self.publishApiParams = {};
+                       if(typeof self.actionApiParams == 'undefined'){
+                           self.actionApiParams = {};
                        }
                        if(sliderId){
-                           self.publishApiParams["sliderId"] = sliderId;
+                           self.actionApiParams["sliderId"] = sliderId;
                        }
                        if(modelValue){
-                           self.publishApiParams["modelValue"] = modelValue;
+                           self.actionApiParams["modelValue"] = modelValue;
                        }
                        if(highValue){
-                           self.publishApiParams["highValue"] = highValue;
+                           self.actionApiParams["highValue"] = highValue;
                        }
                        if(pointerType){
-                           self.publishApiParams["pointerType"] = pointerType;
+                           self.actionApiParams["pointerType"] = pointerType;
                        }
-                       initDataService(self.api, self.publishApiParams, self.transport);
+                       
+                       var requestInfo = {
+                           "api": (self.actionApi) ? self.actionApi : self.api,
+                           "transport": (self.actionTransport) ? (self.actionTransport) : self.transport,
+                           "apiParams": self.actionApiParams,
+                           "useWindowParams": (self.actionUseWindowParams) ? self.actionUseWindowParams : self.useWindowParams,
+                           "httpMethod": (self.actionHttpMethod) ? self.actionHttpMethod : self.httpMehtod
+                       };
+                       dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                    }
                    
-                   self.resize = function(){
-                        self.timeoutId = null;
-                       // self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($($element.find(".rzslider").parent()).innerHeight()/2);
-                        $($element).children()[0].style.display = ""
-                   }
-                  
-                  this.$postLink = function() {
-                       $timeout(self.resize,700);
-                       if (self.timeoutId != null) {
-                       	$timeout.cancel(self.timeoutId);
-                     	}
-                    	self.timeoutId = $timeout(self.resize, 700);
-                  }    
-
-                            
                   this.$onDestroy = function() {
-                      console.log("destory slider")
-                      angular.element($window).off('resize');
                       if(self.msgTag){
                           wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
                       }
                   }
                   
-	               var initDataService = function(api, params, transport) {
-		                dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+	               var initDataService = function(transport) {
+                       if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                           var requestInfo = {
+                               "api": self.api,
+                               "transport": transport,
+                               "msgTag": self.msgTag,
+                               "apiParams": self.apiParams,
+                               "useWindowParams": self.useWindowParams,
+                               "httpMethod": self.httpMethod,
+                               "widgetId": $scope.$id
+                           };
+                           dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
 
                             if(self.fetchDataInterval && !self.refreshTimer) {
                                 //Assuming this is success
@@ -239,11 +246,20 @@ angular
                                         initDataService(self.transport)
                                     }, self.fetchDataInterval * 1000);
                             }
+                        } else {
+                            $scope.$emit("waiting-for-data");
+                            $scope.$on("update-data", function(event, data) {
+                                if(data[self.serviceTag])
+                                    self.consumeData(data[self.serviceTag]);
+                                else
+                                    self.consumeData(data);
+                            });
+                        }
 	               }
 
 	              this.consumeData = function(data, response) {
                        if(typeof this.onFormatData() == "function"){
-                         data = this.onFormatData()(data);
+                         data = this.onFormatData()(data, self);
                        }
                        data = parseInt(data);
                        if(typeof data == "number" && data.toString() != "NaN"){

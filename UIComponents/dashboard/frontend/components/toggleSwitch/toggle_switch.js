@@ -9,38 +9,31 @@ angular
                bindings : {
 
                   "onLoad" : "&onLoad",
-                   
                   "type" : "@", 
-                   
                   "size": "@", 
-                   
                   "class" : "@", 
-                   
-                  "api" : "@",
-                 
                   "switchStatus" : "<?",
-                 
                   "onLabel" : "@",
-                  
                   "offLabel" : "@",
-
                   "knobLabel" : "@",
-                   
                   "isDisabled" : "<?",
-
-                  "msgTag" : "@",
-
-                  "apiParams" : "<?",
-                   
                   "onSwitchChange" : "&", 
                    
-                  "publishApiParams": "<?",  
-                   
-                  "enableResize": "<?",
-                 
+				  "transport": "@",
+                  "api" : "@",
+                  "msgTag" : "@",
+                  "httpMethod": "@",
+                  "apiParams" : "<?",
                   "onFormatData" : "&",
-                   "transport": "@",
-
+                  "fetchDataInterval": "@",
+        		  "useWindowParams": "@",
+                  "serviceTag": "@",
+                   
+                  "actionTransport" : "@",
+                  "actionApi" : "@",
+                  "actionApiParams": "<?",  
+                  "actionUseWindowParams": "@",
+                  "actionHttpMethod": "@"
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/toggleSwitch/toggle_switch.html',
                controller : function($scope, $element, $window, $timeout, httpClient, wsClient,dataService) {
@@ -56,66 +49,76 @@ angular
                        this.disabled = (typeof this.isDisabled != "undefined") ? this.isDisabled : false;
                        this.type = (typeof this.type != "undefined") ? this.type : "switch-success";
                        this.size = (typeof this.size != "undefined") ? this.size : "switch-large";
-                       this.enableResize = (typeof this.enableResize != "undefined") ? this.enableResize : true;
+                       
+                       this.actionParams = (this.actionParams != "undefined") ? this.actionParams : ((this.apiParams) ? this.apiParams : {});
                        
                        this.class = this.type + " " + this.size;
                        
-                     	console.log(this.transport);
-                       this.transport = (this.transport) ? this.transport : "wss";
+                       this.transport = (this.transport) ? this.transport : null;
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
                        
                        this.style = {};
-                       angular.element($window).on('resize', function() {
-                           if (self.timeoutId != null) {
-                           	$timeout.cancel(self.timeoutId);
-                         	}
-                        	 return self.timeoutId = $timeout(self.resize, 100);
-                        });
-
-		               initDataService(this.api, self.apiParams, this.transport);
-
 	               }
                    
                    this.$onDestroy = function() {
-                       console.log("destory toggle switch")
-                       angular.element($window).off('resize');
                        if(self.msgTag){
                            wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
                        }
+                       
+                       if(self.refreshTimer){
+                            $interval.cancel( self.refreshTimer );
+                        }
                    }
                    
                    this.publishData = function(){
-                       if(!this.isDisabled){
-                           if(typeof this.onSwitchChange() == "function"){
-                               this.onSwitchChange()(self.switchStatus);
+                       if(!self.isDisabled){
+                           if(typeof self.onSwitchChange() == "function"){
+                               self.onSwitchChange()(self.switchStatus);
                            } 
-                           if(typeof self.publishApiParams == 'undefined'){
-                               self.publishApiParams = {};
+                           if(typeof self.actionApiParams == 'undefined'){
+                               self.actionApiParams = {};
                            }
-                           self.publishApiParams["value"] = this.switchStatus;
-                           initDataService(self.api, self.publishApiParams, self.transport);  
-                       }
-                   }
-                   
-                   self.resize = function(){
-                       if(self.enableResize){
-                           self.timeoutId = null;
-                          // self.style["margin-top"] = ($element.parent().outerHeight(true)/2) - ($element.outerHeight(true)/2);
+                           self.actionApiParams["value"] = self.switchStatus;
+                               
+                           var requestInfo = {
+                               "api": (self.actionApi) ? self.actionApi : self.api,
+                               "transport": (self.actionTransport) ? (self.actionTransport) : self.transport,
+                               "apiParams": self.actionApiParams,
+                               "useWindowParams": (self.actionUseWindowParams) ? self.actionUseWindowParams : self.useWindowParams,
+                               "httpMethod": (self.actionHttpMethod) ? self.actionHttpMethod : self.httpMehtod
+                           };
+                           dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                        }
                    }
                   
                   this.$postLink = function() {
-                       $timeout(self.resize,100);
-                       if (self.timeoutId != null) {
-                       	$timeout.cancel(self.timeoutId);
-                     	}
-                    	self.timeoutId = $timeout(self.resize, 100);
+                      //Load initial state of toggle switch
+                      initDataService(this.transport);
+                      
+                      if(this.data && !this.api) {
+                          self.timeout = false; 
+                          $timeout(function() {
+                              if(self.timeout == false) {
+                                self.consumeData(self.data);
+                              }
+                           }, 2000)
+                       }else{
+                           self.timeout = true;
+                       }
                   }   
-                  
-                  
 
-	                var initDataService = function(api, params, transport) {
-		               dataService.getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+	              var initDataService = function(transport) {
+		               if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                           var requestInfo = {
+                               "api": self.api,
+                               "transport": transport,
+                               "msgTag": self.msgTag,
+                               "apiParams": self.apiParams,
+                               "useWindowParams": self.useWindowParams,
+                               "httpMethod": self.httpMethod,
+                               "widgetId": $scope.$id
+                           };
+                           dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
 
                             if(self.fetchDataInterval && !self.refreshTimer) {
                                 //Assuming this is success
@@ -124,19 +127,34 @@ angular
                                         initDataService(self.transport)
                                     }, self.fetchDataInterval * 1000);
                             }
-	               }
+                        } else {
+                            $scope.$emit("waiting-for-data");
+                            $scope.$on("update-data", function(event, data) {
+                                if(data[self.serviceTag])
+                                    self.consumeData(data[self.serviceTag]);
+                                else
+                                    self.consumeData(data);
+                            });
+                        }
+				  }
                    
 	              this.consumeData = function(data, response) {
+                       self.timeout = true;  
                        if(typeof this.onFormatData() == "function"){
-                         data = this.onFormatData()(data);
+                         data = this.onFormatData()(data, self);
                        }
                        var status = data.status;
                        var disabled = data.disabled;
-                       if(status == true || status == false || status == "true" || status == "false"){
-                           this.switchStatus = data;
+                       if(status == true|| status == "true"){
+                           self.switchStatus = true;
                        }
+                       
+                       if(status == false|| status == "false"){
+                           self.switchStatus = false;
+                       }
+                      
                        if(typeof disabled != 'undefined'){
-                         this.isDisabled = disabled;
+                         self.isDisabled = disabled;
                        }
 	               }
                }
