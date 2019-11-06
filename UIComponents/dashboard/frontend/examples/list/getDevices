@@ -5,8 +5,8 @@ var imgSrc = {
     
 }
 
-var results = apsdb.callApi("ListDevices", null, null);
-
+var devices = require("device")
+var results = devices.query({fields:"*"})
 var devices = results.result.devices;
 
 var myDevices = [];

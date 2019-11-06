@@ -39,6 +39,8 @@
           }
           vm.onSelect = function(data){
             console.log("object selected");
+              vm.selectedObject = data.key
+              return data;
           }
         });
   </script>
@@ -50,9 +52,10 @@
           pause="400"
           search-fields="user"
           selected-object="vm.onSelect"
+                          selected-object-data="vm.selectedObject"
           title-field="user"
           objects="vm.users"                
-          clear-selected="true"                
+                     
           description-field="description"                
           image-field="pic"
           list-selected-object="false"                
