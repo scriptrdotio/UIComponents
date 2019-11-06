@@ -1,6 +1,13 @@
 var log = require("log");
 log.setLevel("INFO");
 
+var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
+var params = typeof(body) == "string" ? JSON.parse(body) : body;
 
-
-return {status:true,disabled:false};
+if(params["value"])
+	return { 
+        status: params["value"], //IF sucess, if not suscces status: !request.parameters["value"]
+        disabled:false 
+    };
+else 
+    return {status:false, disabled:false};

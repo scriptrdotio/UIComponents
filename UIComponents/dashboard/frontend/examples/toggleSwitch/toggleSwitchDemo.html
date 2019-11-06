@@ -45,11 +45,12 @@
                      on-label="ON"
                      off-label="OFF"
                      on-switch-change="vm.onChange"
-                     transport="https"
+                     transport="wss"
                      type="switch-danger"        
                      size="switch-mini"
                      msg-tag="toggle"        
-                     api="UIComponents/dashboard/frontend/examples/toggleSwitch/getToggleSwitchVal"        
+                     api="UIComponents/dashboard/frontend/examples/toggleSwitch/getToggleSwitchVal"
+                     action-api="UIComponents/dashboard/frontend/examples/toggleSwitch/publishToggleSwitchVal"
                      >
       </scriptr-toggle-switch>
     </div>
