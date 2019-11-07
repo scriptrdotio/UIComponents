@@ -1,4 +1,4 @@
-# Angular Map 
+# Angular Plotly 
  
   Angular component for displaying plotly 3d surface and windrose visualization.
   
