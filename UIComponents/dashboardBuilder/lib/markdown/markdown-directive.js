@@ -25,8 +25,16 @@ angular.module('btford.markdown', ['ngSanitize']).
       link: function (scope, element, attrs) {
         if (attrs.btfMarkdown) {
           scope.$watch(attrs.btfMarkdown, function (newVal) {
-            var html = newVal ? $sanitize(markdownConverter.makeHtml(newVal)) : '';
-            element.html(html);
+              var client = new XMLHttpRequest();
+                client.open('GET', newVal);
+                client.onreadystatechange = function() {
+                  //alert(client.responseText);
+                    var content=client.responseText;
+                    var html = newVal ? markdownConverter.makeHtml(content) : '';
+            		element.html(html);
+                }
+                client.send();
+            
           });
         } else {
           var html = $sanitize(markdownConverter.makeHtml(element.text()));

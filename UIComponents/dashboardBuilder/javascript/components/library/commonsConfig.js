@@ -10,7 +10,7 @@ angular
                             {
                                 "key": "docValue",
                                 "type": "template",
-                                "template": "<div> <div btf-markdown ng-include src=\"form.url\"> </div> </div>",
+                                "template": "<div class=\"markdown-db\"> <div btf-markdown=\"form.url\"> </div> </div>",
                                 "url":"",
                                 "testVal":"test"
                                
