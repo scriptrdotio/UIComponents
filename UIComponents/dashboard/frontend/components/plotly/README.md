@@ -18,6 +18,8 @@
   
   httpProvider.js
 
+  plotly.js
+
   angular-plotly
 
 ## Getting started:
@@ -124,7 +126,7 @@ Example
   fetch-data-interval |  null     | 	the refresh interval in case of https transport.	 | int | NO
   use-window-params |  null     | 	If true the widget will merge the defined api-params with the params passed in the URL query params	 | boolean | NO
     
-    ### Component usage:
+### Component usage:
 
 scriptr-windrose is an element component. you will just have to add it in your html view and add its relevant options.
 
