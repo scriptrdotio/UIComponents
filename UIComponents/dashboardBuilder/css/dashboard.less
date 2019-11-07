@@ -181,7 +181,7 @@ form { margin-bottom: 0;}
 }
 
 /*** slick styles ***/
-.slick-container {padding: 10px;background-color: @gray4;}
+.slick-container {padding: 10px;}
 .slick-item {}
 .slick-slide {height: auto; text-align: center;margin-bottom: -1px;}
 .slick-slide a[ng-click] {width: 50px; height: 40px;margin-right: -1px;display: block;padding: 5px;color: @gray2;cursor: pointer;border: 1px solid @gray3;display: flex;align-items: center;overflow: hidden;}
@@ -194,17 +194,25 @@ form { margin-bottom: 0;}
 .slick-slide .grid-img {max-width: 65%;max-height: 65%;}
 
 .dashboard-config {
-    background: @primaryColor;
-    padding: 11px 4px 10px 4px;
-    border-left: 4px solid @themeBase;
+    background: @gray4;
+    text-align: right;
+    padding-top: 10px;
 }
 .dashboard-config a {   
 	cursor: pointer;
     border-radius: 6px;
-    background: @primaryDarker;
     padding: 5px 9px;
-    color: @themeBase;
-    }
+    background-color: @primaryColor;
+	border-color: @primaryDarker;
+	color: @lightBase;
+    margin-left: 2px;
+    margin-right: 2px;
+    float: right;
+}
+.dashboardTheme .dashboard-config a:hover {
+  background-color: @primaryDarker;
+  border-color: @primaryDarker;
+}
 .dashboard-config a:hover {opacity: 0.8;}
 .dashboard-config a:link, .dashboard-config a:visited {color: @themeBase; font-size: 14px;}
 
@@ -241,7 +249,7 @@ background: @gray3;
 }
 
 /*** dashboard builder wrap ***/
-.slick-wrap {min-height: calc(100vh - 44px); background: @themeBase; padding-right: 0;}
+.slick-wrap {min-height: calc(100vh - 44px); background: @gray4; padding-right: 0;}
 .chart-options-wrap {margin-right: -15px; padding-left: 9px; padding-right: 6px;}
 
 /***  devices-models-tree ***/

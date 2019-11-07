@@ -221,7 +221,6 @@
 }
 .dashboardTheme .slick-container {
   padding: 10px;
-  background-color: #374148;
 }
 .dashboardTheme .slick-slide {
   height: auto;
@@ -273,16 +272,24 @@
   max-height: 65%;
 }
 .dashboardTheme .dashboard-config {
-  background: #f48220;
-  padding: 11px 4px 10px 4px;
-  border-left: 4px solid #22272b;
+  background: #374148;
+  text-align: right;
+  padding-top: 10px;
 }
 .dashboardTheme .dashboard-config a {
   cursor: pointer;
   border-radius: 6px;
-  background: #d6690b;
   padding: 5px 9px;
-  color: #22272b;
+  background-color: #f48220;
+  border-color: #d6690b;
+  color: #FFF;
+  margin-left: 2px;
+  margin-right: 2px;
+  float: right;
+}
+.dashboardTheme .dashboardTheme .dashboard-config a:hover {
+  background-color: #d6690b;
+  border-color: #d6690b;
 }
 .dashboardTheme .dashboard-config a:hover {
   opacity: 0.8;
@@ -330,7 +337,7 @@
 }
 .dashboardTheme .slick-wrap {
   min-height: calc(100vh - 44px);
-  background: #22272b;
+  background: #374148;
   padding-right: 0;
 }
 .dashboardTheme .chart-options-wrap {
@@ -678,18 +685,17 @@
 .dashboardTheme .has-success .form-control {
   border-color: #4FCD8A;
 }
-.dashboardTheme .sf-badge-error{
-    margin-left: 5px;
-    background-color: #aa3322;
-    font-size: 10px;
-    padding: 2px 5px 3px;
-    font-weight: 600;
-    color: #F2F2F2;
-    margin-top: -2px;
+.dashboardTheme .sf-badge-error {
+  margin-left: 5px;
+  background-color: #aa3322;
+  font-size: 10px;
+  padding: 2px 5px 3px;
+  font-weight: 600;
+  color: #f2f2f2;
+  margin-top: -2px;
 }
-
 .dashboardTheme [name=myForm] .tab-content .ng-invalid .help-block {
-  color: #aa3322!important;
+  color: #aa3322 !important;
 }
 .dashboardTheme .sp-replacer {
   border: solid 1px #DDD !important;
@@ -1008,6 +1014,20 @@
   align-items: center;
   justify-content: left;
 }
+.dashboardTheme .fit-to-widget .slider {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 0px 10px 0px 10px;
+}
+.dashboardTheme .rzslider {
+  margin: 35px 0 20px 0;
+}
 .dashboardTheme .CodeMirror {
   height: 200px;
+}
+.dashboardTheme .codemirror-small .CodeMirror {
+  height: 100px;
 }
