@@ -17,7 +17,7 @@
   
   dygraphs v2.1.0
  
- ## Getting started:
+## Getting started:
 
   Include angular JS  in your application.
 
