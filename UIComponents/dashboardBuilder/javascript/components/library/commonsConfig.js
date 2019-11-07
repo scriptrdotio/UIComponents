@@ -3,6 +3,21 @@ angular
     .constant(
         "common",
         {
+            "docTab": {
+                title: "Documentation",
+                items: [
+                    
+                            {
+                                "key": "docValue",
+                                "type": "template",
+                                "template": "<div> <div btf-markdown ng-include src=\"form.url\"> </div> </div>",
+                                "url":"",
+                                "testVal":"test"
+                               
+
+                            }
+                ]
+            },
             "formTab": {
                 title: "Data",
                 items: [
@@ -24,12 +39,12 @@ angular
                             "items": [{
                                 "key": "service-tag"
                             }]
-                        }    
-						]
+                        }
+                        ]
                     },
                     {
                         "type": "section",
-             			"condition": "model['dashboard-data-handler'] === false",
+                        "condition": "model['dashboard-data-handler'] === false",
                         "htmlClass": "row",
                         "items": [{
                             "type": "section",
@@ -61,22 +76,22 @@ angular
                                     "value": "GET",
                                     "name": "GET"
                                 }]
-                            },{
+                            }, {
                                 "condition": "model.transport=='https'",
-                                "key":"fetch-data-interval",
+                                "key": "fetch-data-interval",
                             }]
                         }]
                     },
                     {
                         "type": "section",
                         "htmlClass": "row",
-     					"condition": "model['dashboard-data-handler'] === false",
+                        "condition": "model['dashboard-data-handler'] === false",
                         "items": [{
                             "type": "section",
                             "htmlClass": "col-xs-6",
                             "items": [
-                                { 
-                                    "key":"api"
+                                {
+                                    "key": "api"
                                 }
                             ]
                         }, {
@@ -84,13 +99,13 @@ angular
                             "htmlClass": "col-xs-6",
                             "items": [
                                 {
-                                    "key": "api-params" 
+                                    "key": "api-params"
                                 }, {
-                                    "key": "use-window-params" 
+                                    "key": "use-window-params"
                                 }]
                         }]
                     },
-                     
+
                     {
                         "type": "section",
                         "htmlClass": "row",
@@ -208,7 +223,7 @@ angular
                     "default": "return data;",
                     "type": "string",
                     "description": "Callback function to be called after data is returned from data source."
-                },"use-window-params": {
+                }, "use-window-params": {
                     "title": "Merge Window Params",
                     "type": "boolean",
                     "default": false,
@@ -219,13 +234,20 @@ angular
                     "type": "number",
                     "description": "Data update interval value."
                 },
+                
+                "docValue": {
+                    "title": "docValue",
+                    "type": "string",
+                    "description": "",
+                    
+                },
                 "isDashboard": {
                     "title": "Is dashboard?",
                     "type": "hidden",
                     "default": false
                 }
-                
+
             }
 
         }
-);
+    );

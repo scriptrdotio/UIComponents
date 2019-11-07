@@ -34,4 +34,14 @@ angular
             }
         }
         )()
-    );
+    ).constant(
+        "widgetsDocs",{
+            default:"/README.md",
+            widgets:{
+                "alert":"https://raw.githubusercontent.com/scriptrdotio/UIComponents/master/README.md",
+            	"linedygraph":"/UIComponents/dashboard/frontend/components/dygraphs/README.md"
+            }
+            
+            
+        })
+;
