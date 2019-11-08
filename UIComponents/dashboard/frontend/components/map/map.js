@@ -857,7 +857,6 @@ angular
                "bounds": JSON.stringify(fenceOverlay.assetFence.getBounds())
             }, "main-savegeofence_"+self.selectedAsset);
             
-            $scope
         } else {
 
         }
