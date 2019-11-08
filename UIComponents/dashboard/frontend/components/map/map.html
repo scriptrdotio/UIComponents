@@ -18,13 +18,13 @@
 			single-info-window="true" zoom-to-inlude-markers="true"
 			center="{{$ctrl.mapcenter || $ctrl.defaultcenter}}"
 			zoom="{{$ctrl.detailedmapzoom}}">
-            <drawing-manager ng-if="$ctrl.geofenceManager == true"
+            <drawing-manager ng-if="$ctrl.geofenceManager == true && $ctrl.selectedAsset != 'all'"
                 on-overlaycomplete="$ctrl.onMapOverlayCompleted()"
                 drawing-control-options="{{$ctrl.drawingOptions}}"
                 drawingControl="{{$ctrl.drawingControl}}"
                 drawingMode="null"
                 rectangleOptions="{{$ctrl.overlaySettings}}"
-               >
+               >  
               </drawing-manager>
 		<div>
 			<div ng-repeat="(key, asset) in $ctrl.displayedAssets">
@@ -48,7 +48,7 @@
 				<!-- end trip markers loop -->
 			</div>
 		</div>
-        <div ng-if="$ctrl.selectedAsset != null && $ctrl.markerInfoWindow == true"  >
+        <div ng-if="$ctrl.selectedAsset != 'all' && $ctrl.markerInfoWindow == true"  >
 			<div ng-transclude></div>
           	<info-window id="{{'infoWindowTemplate_default_'+$ctrl.$wdgid}}">
               	<div ng-non-bindable="">
@@ -82,7 +82,7 @@
                     <scriptr-toggle-switch resize="false" on-switch-change="$ctrl.activateHeatMap" switch-status="$ctrl.switchStatus"class="switch-success switch-small"></scriptr-toggle-switch>
                   </span>
         </div>         
-        <div ng-if="$ctrl.geofenceManager == true" class="drawingmanager-buttons">
+        <div ng-if="$ctrl.geofenceManager == true && $ctrl.selectedAsset != 'all'" class="drawingmanager-buttons">
             <span>
               <a ng-click="$ctrl.removeGeofence()" data-toggle="tooltip" title="Delete geofence" data-placement="bottom"><i class="fa fa-trash" aria-hidden="true"></i></a>
               <a  ng-click="$ctrl.saveGeofence()" data-toggle="tooltip" title="Save geofence" data-placement="bottom"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>

@@ -42,7 +42,7 @@ angular
         "customDefaultInfoWindow": "@", //id of custom default info window
         
         
-        "data": "@",
+        "data": "<?",
         "transport": "@",
         "api" : "@",
         "msgTag" : "@",
@@ -215,22 +215,6 @@ angular
       
       //Load initial map assets from api or from passed data and subscribe to channel messages to add newly published assets to map
       var loadMapData =  function() {
-          /**	wsClient.onReady.then(function() {
-              if(self.api) {
-           		    self.apiParams =  (self.apiParams) ? self.apiParams : {};
-             	   	wsClient.call(self.api, self.apiParams).then(function(data, response) {
-                    self.processAssets(data);
-                    console.log("api call "+ self.api +" response returned", data)
-                  }, function(err) {
-                    self.callError = JSON.stringify(error)
-                    console.log("api call "+ self.apiParams +" reject call promise", err);
-                  });
-              }
-              if(self.msgTag) {
-            	 wsClient.subscribe(self.msgTag, self.processAssets, $scope.$id)
-              }
-              
-          });**/
           initDataService(self.transport);
         
           if(self.assetsData) {
@@ -267,10 +251,12 @@ angular
           } else {
               $scope.$emit("waiting-for-data");
               $scope.$on("update-data", function(event, data) {
-                   if(data && data[self.serviceTag])
-                      self.consumeData(data[self.serviceTag]);
-                  else
-                      self.consumeData(data);
+                  if(data) {
+                      if(data[self.serviceTag])
+                          self.consumeData(data[self.serviceTag]);
+                      else
+                          self.consumeData(data);
+                  }
               });
           }
 
@@ -747,8 +733,8 @@ angular
       
       
       self.assetsFences = [];
-      self.drawingControl = ["rectangle"];
-      self.drawingOptions = {position: 'TOP_CENTER',drawingModes:['rectangle']}
+      self.drawingControl = ["rectangle", "circle", "polygon"];
+      self.drawingOptions = {position: 'TOP_CENTER',drawingModes:['rectangle', 'circle', 'polygon']}
 
       self.overlaySettings = {"fillColor": "#444", "fillOpacity": 0.2, "strokeWeight": 3, "strokeColor": "#ff8c00", "clickable": true, "zIndex": 1, "editable": true};
 
@@ -870,6 +856,8 @@ angular
                "vehicleId": self.selectedAsset,
                "bounds": JSON.stringify(fenceOverlay.assetFence.getBounds())
             }, "main-savegeofence_"+self.selectedAsset);
+            
+            $scope
         } else {
 
         }

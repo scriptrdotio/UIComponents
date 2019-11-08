@@ -1,0 +1,23 @@
+//vehicleId
+//bounds
+var query = {};
+if(request.body != null){
+	query = request.body; 
+}else{
+	query = request.parameters.body;
+}
+if(query != null){
+  	try{
+    	query = JSON.parse(query);   
+    }catch(e){
+      	return "INVALID OR MISSING PARAMETER";
+    }
+}
+var vehicleInfo = require("telematics/api/lib/vehicleInfo");
+if(query.vehicleId != null){
+  //id arrives as source_id
+  var src = query.vehicleId.split("_");
+  return vehicleInfo.getVehicleGeoFence(src[1], src[0]);
+} else {
+  	return "MISSING PARAMETER: vehicleId";
+}
