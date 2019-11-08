@@ -38,8 +38,28 @@ angular
         "widgetsDocs",{
             default:"/README.md",
             widgets:{
-                "alert":"https://raw.githubusercontent.com/scriptrdotio/UIComponents/master/README.md",
-            	"linedygraph":"/UIComponents/dashboard/frontend/components/dygraphs/README.md"
+                "alert":"/README.md",
+            	"linedygraph":"/UIComponents/dashboard/frontend/components/dygraphs/README.md",
+                "d3surface":"/UIComponents/dashboard/frontend/components/plotly/README.md",
+                "accelerometer":"/README.md",
+                "area":"/UIComponents/dashboard/frontend/components/chart/README.md",
+                "bar":"/UIComponents/dashboard/frontend/components/chart/README.md",
+                "button":"/README.md",
+                "displayData":"/UIComponents/dashboard/frontend/components/displayCount/README.md",
+                "donut":"/UIComponents/dashboard/frontend/components/chart/README.md",
+                "gauge":"/UIComponents/dashboard/frontend/components/gauge/README.md",
+                "grid":"/UIComponents/dashboard/frontend/components/grid/README.md",
+                "iframe":"/README.md",
+                "line":"/UIComponents/dashboard/frontend/components/chart/README.md",
+                "map":"/UIComponents/dashboard/frontend/components/map/README.md",
+                "metricbox":"/README.md",
+                "odometer":"/UIComponents/dashboard/frontend/components/odometer/README.md",
+                "slider":"/README.md",
+                "progressbar":"/UIComponents/dashboard/frontend/components/progressbar/README.md",
+                "speedometer":"/UIComponents/dashboard/frontend/components/speedometer/README.md",
+                "thermometer":"/UIComponents/dashboard/frontend/components/thermometer/README.md",
+                "toggleSwitch":"/README.md",
+                "windrose":"/UIComponents/dashboard/frontend/components/plotly/README.md",
             }
             
             
