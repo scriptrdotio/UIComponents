@@ -69,7 +69,7 @@
   ```
   
 
-#include "properties.md"
+![Options](./properties.md) 
 
   
 ## Component usage:
