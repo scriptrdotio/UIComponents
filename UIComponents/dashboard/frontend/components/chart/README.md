@@ -69,7 +69,7 @@
   ```
   
 
-[mkdnlink]: properties.md
+#include "properties.md"
 
   
 ## Component usage:
