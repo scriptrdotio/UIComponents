@@ -68,8 +68,9 @@
   angular.module("myApp", ["WsClient", "HttpClient", "Chart"])
   ```
   
+## Options 
+ check the options [here](./properties.md).
 
-[Options](./properties.md) 
 
   
 ## Component usage:
