@@ -69,7 +69,7 @@
   ```
   
 
-[mkdnlink]: /UIComponents/dashboard/frontend/components/chart/properties.md
+[mkdnlink]: properties.md
 
   
 ## Component usage:
