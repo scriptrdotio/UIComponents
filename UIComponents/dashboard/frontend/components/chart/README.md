@@ -69,7 +69,7 @@
   ```
   
 
-![Options](./properties.md) 
+[Options](./properties.md) 
 
   
 ## Component usage:
