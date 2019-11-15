@@ -845,21 +845,23 @@ angular
       //Load the stored geofences
       self.loadGeofences = function() {
           
-          if(self.geofenceData.apiParams) {
-              self.geofenceData.apiParams["assetId"] = self.selectedAsset;
-          } else {
-              self.geofenceData.apiParams =  {"assetId": self.selectedAsset};
-           }
+          
+           if(self.geofenceData["api-params"]) {
+                self.geofenceData["api-params"]["assetId"] = self.selectedAsset;
+            } else {
+                self.geofenceData["api-params"] =  {"assetId": self.selectedAsset};
+            }
 
-           //Invoke
-           var requestInfo = {
-                "api": self.geofenceData.loadApi,
+        
+            var requestInfo = {
+                "api": self.geofenceData["load-api"],
                 "transport": self.geofenceData.transport || self.transport,
-                "apiParams": self.geofenceData.apiParams,
-                "useWindowParams": self.geofenceData.useWindowParams,
-                "httpMethod": self.geofenceData.httpMethod,
+                "apiParams": self.geofenceData["api-params"],
+                "useWindowParams": self.geofenceData["use-window-params"],
+                "httpMethod": self.geofenceData["http-method"],
                 "widgetId": $scope.$id
-           };
+            };
+          
            dataService.scriptrRequest(requestInfo, self.consumeLoadedGeofences.bind(self));
 
         //TODO: Put a loading on get & remove when response received
@@ -1131,19 +1133,19 @@ angular
             return {"dataModel": item.dataModel, "overlay": item.overlay, "type": item.type}
         })
         
-        if(self.geofenceData.apiParams) {
-            self.geofenceData.apiParams["geofences"] = geofenceData;
+        if(self.geofenceData["api-params"]) {
+            self.geofenceData["api-params"]["geofences"] = geofenceData;
         } else {
-            self.geofenceData.apiParams =  {"geofences": geofenceData};
+            self.geofenceData["api-params"] =  {"geofences": geofenceData};
         }
           
         
             var requestInfo = {
-                "api": self.geofenceData.saveApi,
+                "api": self.geofenceData["save-api"],
                 "transport": self.geofenceData.transport || self.transport,
-                "apiParams": self.geofenceData.apiParams,
-                "useWindowParams": self.geofenceData.useWindowParams,
-                "httpMethod": self.geofenceData.httpMethod,
+                "apiParams": self.geofenceData["api-params"],
+                "useWindowParams": self.geofenceData["use-window-params"],
+                "httpMethod": self.geofenceData["http-method"],
                 "widgetId": $scope.$id
             };
             dataService.scriptrRequest(requestInfo, function(data) {
