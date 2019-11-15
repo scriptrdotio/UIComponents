@@ -121,10 +121,6 @@ angular
         "geofenceData": "<?",
         
         
-      	"apiGeofence": "<?",
-        "apiGeofenceParams": "<?",
-        "msgTagGeofence": "<?",
-        
         
         "heatmap" : "<?",
         "bounce" : "<?",
