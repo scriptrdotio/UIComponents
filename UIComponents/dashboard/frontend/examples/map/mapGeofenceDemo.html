@@ -3,9 +3,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
-    <title>Map</title>
+    <title>Map with Geofence</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+
     <!-- font awesome.css -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link href="//fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
@@ -14,15 +15,29 @@
     <!-- Adding Angular -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
       
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/angular-underscore.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/angular-translate.min.js"></script>
+    <script src='/UIComponents/dashboardBuilder/lib/schemaForm/select.min.js'></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/tv4.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/objectPath.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/schemaForm.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/bootstrapDecorator.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>      
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script> 
     
-
+      
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
-      <script src="/UIComponents/dataService.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/map/map.js"></script>
     
     <!-- Map widget -->
@@ -69,17 +84,22 @@
           vm.focusOnAsset = function() {
               $scope.$broadcast('mapFoucsOnMarker', "all");
           }
+          
+          vm.selectedAsset = "all";
+          
+          vm.onSelectAsset = function(marker) {
+               vm.selectedAsset = marker.id;
+           }
       });
   </script>
   <body>
      <div ng-controller="testCtrl as vm" ng-init="vm.init()">
-        <scriptr-map bounce="true" heatmap="true"  heat-map-weight="200" default-center="33.888630,35.495480" transport="https" sources-info="vm.sources" fetch-data-interval="20" clustered-view="true" cluster-zoom="8" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" api="UIComponents/dashboard/frontend/examples/map/simulatorData" api-params='{"timeframe" : "this_1_years", "limit" : "20"}' msg-tag="everyone-main-live" geofence-manager="false">
+        <scriptr-map bounce="true" heatmap="false"  heat-map-weight="200" default-center="33.888630,35.495480" transport="https" sources-info="vm.sources" clustered-view="true" cluster-zoom="8" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" api="UIComponents/dashboard/frontend/examples/map/simulatorData" api-params='{"timeframe" : "this_1_years", "limit" : "20"}' msg-tag="everyone-main-live" geofence-manager="true" geofence-data="{loadApi: 'UIComponents/dashboard/frontend/examples/map/getGeofences', saveApi:'UIComponents/dashboard/frontend/examples/map/saveGeofence', apiParams: {'selectedDevice': vm.selectedAsset }}" on-select-asset="vm.onSelectAsset" >
           <div>
             <info-window id="infoWindowTemplate_simulator" template="/UIComponents/dashboard/frontend/examples/map/info_simulator.html" max-width="600"></info-window>
             <info-window id="infoWindowTemplate_stream" template="/UIComponents/dashboard/frontend/examples/map/info_stream.html" max-width="300"></info-window>
           </div>
         </scriptr-map>
-    	<span style="position: absolute"><a ng-click="vm.focusOnAsset()">Test Focus On Asset</a></span>
     </div>
      </body>
 </html>

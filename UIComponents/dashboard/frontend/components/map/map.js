@@ -1,7 +1,92 @@
-angular.module('Map', ['ngMap', 'ToggleSwitch']);
+angular.module('Map', ['ngMap', 'ToggleSwitch', 'ui.bootstrap', 'schemaForm', "ngAnimate", "ngSanitize", "angular-underscore/filters", "pascalprecht.translate", "ngMessages"]);
 
+
+//"underscore","btford.markdown", "ngSanitize",   "ui.codemirror", 
 angular
   .module("Map")
+  .constant(
+        "geofenceDetails",
+        {
+            "form": [  {
+                        "type": "section",
+                        "htmlClass": "col-xs-12",
+                        "items": [
+                               {"key": "identifier",
+                                validationMessage: {
+                                      "unique": 'Identifier already taken'
+                                    },
+                                    $validators: {
+                                      "unique": function(modelValue, viewValue, model, form) {
+                                        if (model["inUseIdentifiers"].indexOf(modelValue) != -1) {
+                                          return false;
+                                        }
+                                        return true
+                                      }
+                                    }
+                               }
+                         ]
+            			},
+                        {
+                            "type": "section",
+                            "htmlClass": "col-xs-12",
+                            "items": [
+                                {
+                                    key: "properties",
+                                    title: "Geofence Properties",
+                                    startEmpty: true,
+                                    "items": [
+                                          {
+                                            "type": "section",
+                                            "htmlClass": "row",
+                                            "items": [
+                                              {
+                                                "type": "section",
+                                                "htmlClass": "col-xs-6",
+                                                "items": [{
+                                                    key: "properties[].key"
+                                                }]
+                                            },
+                                            {
+                                                "type": "section",
+                                                "htmlClass": "col-xs-6",
+                                                "items": [{
+                                                    key: "properties[].value"
+                                                }]
+                                        	}
+                                            ]}
+                                        ]
+                                }
+                            ]
+                         }
+                        ],
+            "schema": {
+                "type": "object",
+                "title": "Schema",
+                "properties": {
+                    "identifier": {
+                        "title": "Identifier",
+                        "type": "string",
+                	},
+                    "properties": {
+                        "type": "array",
+                        "default": [],
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "title": "Key",
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "title": "Value",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+        },
+        "required": []
+    }})
   .component(
   'scriptrMap',
   {
@@ -33,9 +118,14 @@ angular
       
          //TODO the below attributes, currently use without geofence
         "geofenceManager": "<?", //True to show the geofence drawing manage icons or not
+        "geofenceData": "<?",
+        
+        
       	"apiGeofence": "<?",
         "apiGeofenceParams": "<?",
         "msgTagGeofence": "<?",
+        
+        
         "heatmap" : "<?",
         "bounce" : "<?",
         "markerInfoWindow": "<?", //On marker click show info window
@@ -53,15 +143,12 @@ angular
         "serviceTag": "@",
         "fetchDataInterval": "@"
         
-        
-        
-        
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
     
     controller : function($scope, $rootElement, $location, $sce,
                            $compile, $timeout, $interval, $controller, NgMap,
-                           defaultConstants, wsClient, httpClient, dataService) {
+                           defaultConstants, wsClient, httpClient, dataService, $uibModal, $element, geofenceDetails) {
 
       
       var self = this;
@@ -124,6 +211,7 @@ angular
           
          //This should be move to a parent component
       	 loadMapData();
+          
          
          //Should use default one if not available
          self.sourcesInfo = self.sourcesInfo;//mapConstants.sourceAssetIcon;
@@ -149,15 +237,35 @@ angular
                        heatmap.setMap(null);
                   }
               }
+            if(self.geofenceManager) {
+            	self.attachGeofencesToMap(map);
+            }
+            
             if(self.selectedTrackedAsset && self.showDetailedMap == true) {
                  $timeout(function() {
                  	if(self.selectedTrackedMarker)
                         self.showAssetInfo(null, self.selectedTrackedMarker, self.selectedTrackedMarker.assetKey, self.selectedTrackedMarker.tripKey, self.selectedTrackedMarker.id)
                  },1000);
              }
-              
-
           });  
+          
+          
+          //Load geofence
+          if(self.geofenceManager) {
+              self.geofencesIncrement = 0;
+              self.geofenceMenuDisplayed = false;
+              if(!self.geofencesLoaded) {
+                  self.loadGeofences();
+              }
+
+              google.maps.event.addDomListener(document ,"click", function(e) {
+                  if (self.geofenceMenuDisplayed == true) {
+                      menuBox = $element.find(".geofence-menu")[0]
+                      menuBox.style.display = "none";
+                      self.geofenceMenuDisplayed = false;
+                  }
+              });
+          }
       }
       
       this.$onDestroy = function() {
@@ -407,8 +515,6 @@ angular
           });
         }
       };
-
-      
       
       // Add an asset marker point to map
       // Example of pushed of asset trips: {"tripId":[{"lat":{"value": "51.650359051036","long": {"value":"-0.055656842290684",....},
@@ -732,134 +838,335 @@ angular
       
       
       
-      self.assetsFences = [];
       self.drawingControl = ["rectangle", "circle", "polygon"];
       self.drawingOptions = {position: 'TOP_CENTER',drawingModes:['rectangle', 'circle', 'polygon']}
+      self.geoFencesList = [];
+      self.geofencesVisible = true;
 
-      self.overlaySettings = {"fillColor": "#444", "fillOpacity": 0.2, "strokeWeight": 3, "strokeColor": "#ff8c00", "clickable": true, "zIndex": 1, "editable": true};
+      self.overlaySettings = {"fillColor": "#444", "fillOpacity": 0.2, "strokeWeight": 3, "strokeColor": "#ff8c00", "clickable": true, "zIndex": 1, "editable": true, "draggable": true};
 
-      self.setupDrawingManager = function() {
-        self.assetsFences = [];
-        //Invoke
-        $scope.invoke("telematics/api/getVehicleGeofence", {
-           "vehicleId": self.selectedAsset
-        }, "main-getgeofence_"+self.selectedAsset);
+        
+      //Load the stored geofences
+      self.loadGeofences = function() {
+          
+          if(self.geofenceData.apiParams) {
+              self.geofenceData.apiParams["assetId"] = self.selectedAsset;
+          } else {
+              self.geofenceData.apiParams =  {"assetId": self.selectedAsset};
+           }
 
-        //By Default hide rect drawing mode
-        hideRectDrawingMode();
+           //Invoke
+           var requestInfo = {
+                "api": self.geofenceData.loadApi,
+                "transport": self.geofenceData.transport || self.transport,
+                "apiParams": self.geofenceData.apiParams,
+                "useWindowParams": self.geofenceData.useWindowParams,
+                "httpMethod": self.geofenceData.httpMethod,
+                "widgetId": $scope.$id
+           };
+           dataService.scriptrRequest(requestInfo, self.consumeLoadedGeofences.bind(self));
 
         //TODO: Put a loading on get & remove when response received
-      };
-
-
-      self.drawGeofence = function(bounds) {
-         if(bounds != null) {
-           NgMap.getMap({id:'detailed-'+self.$wdgid}).then(function(map) {
-              var props = {};
-              props["fillColor"] = self.overlaySettings["fillColor"];
-              props["fillOpacity"] = self.overlaySettings["fillOpacity"];
-              props["strokeWeight"] = self.overlaySettings["strokeWeight"];
-              props["strokeColor"] = self.overlaySettings["strokeColor"];
-              props["clickable"] = self.overlaySettings["clickable"];
-              props["zIndex"] = self.overlaySettings["zIndex"];
-              props["editable"] = self.overlaySettings["editable"];
-              props["map"] = map;
-              props["bounds"] = JSON.parse(bounds);
-              var rectangle = new google.maps.Rectangle(props);
-              self.assetsFences.push({assetId: self.selectedAsset, thissetFence: rectangle});
-            });
-            //TODO: Remove loading
-         } else {
-           showRectDrawingMode();
-           //TODO: Remove loading
-         }
-         $('[data-toggle="tooltip"]').tooltip(); 
-
-        $(".gmnoprint").each(function(){ //Add classes to drawing manager to override css
-              // ID the Hand button
-              newObj = $(this).find("[title='Stop drawing']");
-              newObj.attr('class', 'btnStop');
-              // ID the Rectangle Button
-              newObj = $(this).find("[title='Draw a rectangle']");
-              newObj.attr('id', 'btnRectangle');
+     };
+        
+      
+      self.consumeLoadedGeofences = function(geofences) {
+           self.geofencesLoaded = true;
+          
+          _.each(geofences, function(overlayData) {
+              drawGeofence(overlayData, null)
           });
-
-
+          
+          NgMap.getMap({id:'detailed-'+self.$wdgid}).then(function(map) {
+                 self.attachGeofencesToMap(map)
+          });
+             
+          NgMap.getMap({id:'clustered-'+self.$wdgid}).then(function(map) {
+              	 self.attachGeofencesToMap(map)
+          });
+         
+      }
+      
+      
+      self.attachGeofencesToMap = function(map) {
+          _.each(self.geoFencesList, function(overlayData) {
+              overlayData.overlayInstance.setMap(map);
+          })
       }
 
-      var showRectDrawingMode = function() {
-         self.drawingOptions = {position: 'TOP_CENTER',drawingModes:["rectangle"]};
-      }
+      var drawGeofence = function(overlayInfo, map) {
+          var props = {};
+          props["fillColor"] = self.overlaySettings["fillColor"];
+          props["fillOpacity"] = self.overlaySettings["fillOpacity"];
+          props["strokeWeight"] = self.overlaySettings["strokeWeight"];
+          props["strokeColor"] = self.overlaySettings["strokeColor"];
+          props["clickable"] = self.overlaySettings["clickable"];
+          props["zIndex"] = self.overlaySettings["zIndex"];
+          props["editable"] = self.overlaySettings["editable"];
+          props["draggable"] = self.overlaySettings["draggable"];
+          if(map) {
+              props["map"] = map;
+          }
+          var overlayData = (typeof overlayInfo == "string" ) ? JSON.parse(overlayInfo) : overlayInfo;
+          var type = overlayData.type;
+          var overlay = null;
+          if(type == "rectangle") {
+              props["bounds"] = overlayData.overlay.bounds;
+              overlay = new google.maps.Rectangle(props);
+          }
 
-      var hideRectDrawingMode = function() {
-        self.drawingOptions = {position: 'TOP_CENTER',drawingModes:[]};
-      }
+          if(type == "circle") {
+              props["center"] = overlayData.overlay.center;
+              props["radius"] = overlayData.overlay.radius;
+              overlay = new google.maps.Circle(props);
+          }
 
+          if(type == "polygon") {
+              props["path"] = overlayData.overlay.path;
+              overlay = new google.maps.Polygon(props);
+          }
+
+          delete overlayData.overlay;
+          delete overlayData.type; 
+          if(overlay)
+              self.setupOverlay(overlay, type, overlayData.dataModel);
+      }
+     
+      var buildGeofenceEntry = function(geofence, type, props) {
+         if(type == "circle") {
+             return {"dataModel": props, "type": "circle", "overlay": {"radius": geofence.getRadius(), "center": geofence.getCenter()}, "overlayInstance": geofence};
+         }
+         
+         if(type == "rectangle") {
+            return {"dataModel": props, "type": "rectangle", "overlay": {"bounds": geofence.getBounds()}, "overlayInstance": geofence};
+         }
+         
+         if(type == "polygon") {
+             return {"dataModel": props, "type": "polygon", "overlay": {"path": geofence.getPath().getArray()}, "overlayInstance": geofence};
+         }
+         
+         return;
+     }
+     self.createLocalGeofence =  function(geofence, type, props) {
+         var geofenceEntry = buildGeofenceEntry(geofence, type, props);
+         if(geofenceEntry) {
+             self.geoFencesList.push(geofenceEntry);
+             console.log("Push to list: ", self.geoFencesList)
+         }
+         self.reminderToSave();
+     }
+     
+
+     self.updateLocalGeofence =  function(toUpdateIdentifier, geofence) {
+         _.each(self.geoFencesList, function(item, index, list){
+             if(toUpdateIdentifier === item["dataModel"]["identifier"]) {
+                 var geofenceEntry = buildGeofenceEntry(geofence, item.type, geofence.get("dataModel"));
+                 if(geofenceEntry) {
+                     list[index] = geofenceEntry;
+                     console.log("Push to list: ", self.geoFencesList)
+                 }
+             }
+         })
+         self.reminderToSave();
+     }
+        
       self.onMapOverlayCompleted = function(e){
-        hideRectDrawingMode();
-        self.assetsFences.push({assetId: self.selectedAsset, assetFence: e.overlay});
+        self.setupOverlay(e.overlay, e.type);
+      } 
 
-        if(self.drawingMessagesTimeout) {
-            $timeout.cancel(self.drawingMessagesTimeout);
+      self.setupOverlay = function(overlay, type, props) {
+        //if no id passed to setup Generate default unique geofence identifier. PS: Unicity is validated client side per map
+        var properties = {};
+          
+        //Generate default identifier and make sure it is unique
+        var inUseIdentifiers = _.pluck(_.pluck(self.geoFencesList, "dataModel"), "identifier");
+        do {
+          self.geofencesIncrement++;
+          var defaultIdentifier = "Geofence_" + self.geofencesIncrement;
+        } while(inUseIdentifiers.indexOf(defaultIdentifier) > -1)
+            
+        var properties = (props && props.identifier) ? props :{"identifier": defaultIdentifier};
+        overlay.set("dataModel",properties);
+            
+        self.createLocalGeofence(overlay, type, properties);
+          
+        //Edit Geofence, properties, in case newly created
+        if(!props || !props.identifier) {
+            self.rightClickedOverlay = overlay; //setup as right clicked and click on edit
+            self.editSelectedGeofenceSettings();
+        }
+        
+        self.disableContextMenuListener = null;
+        
+        google.maps.event.addListener(overlay, "mouseover", function(e) {
+         	self.disableContextMenuListener = google.maps.event.addDomListener(document, "contextmenu", function(e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  e.stopImmediatePropagation(); 
+                return false;
+            })
+         
+        });
+          
+       google.maps.event.addListener(overlay, "mouseout", function(e) {
+            if(self.disableContextMenuListener) {
+                google.maps.event.removeListener( self.disableContextMenuListener);
+            }
+        });
+          
+
+        google.maps.event.addListener(overlay, "rightclick", function(e) {
+          self.rightClickedOverlay = this;
+          for (prop in e) {
+            if (e[prop] instanceof MouseEvent) {
+              mouseEvt = e[prop];
+              var left = mouseEvt.clientX;
+              var top = mouseEvt.clientY;
+              menuBox = $element.find(".geofence-menu");
+              menuBox.attr("style", 'left: '+left +'px; top:'+ top + 'px; display: block;');
+              mouseEvt.preventDefault();
+              self.geofenceMenuDisplayed = true;
+            }
+          }
+          return false;
+        });
+          
+        var updateOverlay = function(overlay) {
+            var identifier = overlay.get("dataModel")["identifier"];
+            self.updateLocalGeofence(identifier, overlay)
+        }
+        
+        if(type == "circle") {
+            google.maps.event.addListener(overlay, "center_changed", function() {
+             	updateOverlay(this);
+            });
+            
+            google.maps.event.addListener(overlay, "radius_changed", function() {
+                updateOverlay(this);
+            });
+        }
+          
+          
+        if(type == "rectangle") {
+            google.maps.event.addListener(overlay, "bounds_changed", function() {
+             	updateOverlay(this);
+            });
         }
 
-        self.drawingMessages = "Do not forget to save your geofence before selecting another vehicle."
-        self.drawingMessagesTimeout = $timeout(function () { self.drawingMessages = null }, 5000); 
       };
-
-      self.focusVehicle = function() {
-        if(self.selectedAsset) {
-          self.mapcenter = self.assets[self.selectedAsset].latestMarker.position
+        
+        
+     self.editSelectedGeofenceSettings = function() {
+        var beforeUpdateIdentifier = null;
+        if(self.rightClickedOverlay.get("dataModel"))
+        	beforeUpdateIdentifier = self.rightClickedOverlay.get("dataModel")["identifier"];
+         
+        var inUseIdentifiers = _.pluck(_.pluck(self.geoFencesList, "dataModel"), "identifier");
+        
+        var model = {};
+        if(self.rightClickedOverlay.get("dataModel")) {
+           model = self.rightClickedOverlay.get("dataModel") 
         }
+         
+        model["inUseIdentifiers"] = _.filter(inUseIdentifiers, function(id) {return id != beforeUpdateIdentifier});
+         
+        var modalInstance = $uibModal.open({
+              animation: true,
+              component: 'mapModalComponent',
+       		  size: 'md',
+          	  scope: $scope,
+              resolve: {
+                widget: function () {
+                  return {
+                    "label":  "Geofence Properties",
+                    "model": model ,
+                    "schema": angular.copy(geofenceDetails.schema),
+                    "form": angular.copy(geofenceDetails.form)
+                  }
+                }
+              }
+            });
+            modalInstance.result.then(function (dataModel) {
+              if(dataModel != "cancel") {
+                  delete dataModel["inUseIdentifiers"];
+                  self.rightClickedOverlay.set("dataModel", dataModel);
+                  self.updateLocalGeofence(beforeUpdateIdentifier, self.rightClickedOverlay);
+              } 
+            }, function () {
+                 console.info('modal-component for widget update dismissed at: ' + new Date());
+            });
       }
+
+     
+      self.removeSelectedGeofence = function() {
+          if(self.rightClickedOverlay.get("dataModel")) {
+              var identifier = self.rightClickedOverlay.get("dataModel")["identifier"];
+              self.geoFencesList = _.filter(self.geoFencesList, function(item, index, list){
+                  return identifier != item["dataModel"]["identifier"]
+              })
+          }
+          self.rightClickedOverlay.setMap(null);
+          
+          self.reminderToSave();
+      }
+      
 
       self.drawingMessages = null;
       self.drawingMessagesTimeout = null;
 
-      self.focusGeofence = function() {
-         var fenceOverlay =  _.findWhere(self.assetsFences, {"assetId": self.selectedAsset});
-         if(fenceOverlay) {
-            self.mapcenter = fenceOverlay.assetFence.getBounds().getCenter()
-         } else {
-            if(self.drawingMessagesTimeout) {
-                $timeout.cancel(self.drawingMessagesTimeout);
-            }
-           self.drawingMessages = "No geofence has been defined yet for selected vehicle."
-           self.drawingMessagesTimeout = $timeout(function () { self.drawingMessages = null }, 5000);  
-         }
+      self.clearAllGeofences = function() {
+        _.each(self.geoFencesList, function(geofence) {
+            geofence.overlayInstance.setMap(null);
+        });
+        self.geoFencesList = [];
+        self.reminderToSave();
+      };
+        
+      self.hideShowGeofences = function() {
+          var geofenceData = _.map(self.geoFencesList, function(item) {
+              return item.overlayInstance.setVisible(!self.geofencesVisible);
+          })
+          self.geofencesVisible = !self.geofencesVisible;
       }
 
-      self.removeGeofence = function() {
-        var fenceOverlay =  _.findWhere(self.assetsFences, {"assetId": self.selectedAsset});
-        //substract fence
-        if(fenceOverlay) {
-          self.assetsFences = _.without(self.assetsFences, fenceOverlay);
-          $scope.invoke("telematics/api/removeVehicleGeofence", {
-               "vehicleId": self.selectedAsset,
-            }, "main-removegeofence_"+self.selectedAsset);
-            fenceOverlay.assetFence.setMap(null);
-        }
-        showRectDrawingMode();
-      };
-
-      self.hideAllGeofences = function() {
-        _.every(self.assetsFences, function(fenceOverlay) {
-            fenceOverlay.assetFence.setMap(null);
-            return true;
-        });
-      };
-
-      self.saveGeofence = function() {
-         var fenceOverlay =  _.findWhere(self.assetsFences, {"assetId": self.selectedAsset});
-        if(fenceOverlay) {
-           $scope.invoke("telematics/api/saveVehicleGeofence", {
-               "vehicleId": self.selectedAsset,
-               "bounds": JSON.stringify(fenceOverlay.assetFence.getBounds())
-            }, "main-savegeofence_"+self.selectedAsset);
-            
+      self.saveAllGeofences = function() {
+       // var copyGeofenceList = angular.copy(self.geoFencesList);
+        var geofenceData = _.map(self.geoFencesList, function(item) {
+            return {"dataModel": item.dataModel, "overlay": item.overlay, "type": item.type}
+        })
+        
+        if(self.geofenceData.apiParams) {
+            self.geofenceData.apiParams["geofences"] = geofenceData;
         } else {
-
+            self.geofenceData.apiParams =  {"geofences": geofenceData};
         }
+          
+        
+            var requestInfo = {
+                "api": self.geofenceData.saveApi,
+                "transport": self.geofenceData.transport || self.transport,
+                "apiParams": self.geofenceData.apiParams,
+                "useWindowParams": self.geofenceData.useWindowParams,
+                "httpMethod": self.geofenceData.httpMethod,
+                "widgetId": $scope.$id
+            };
+            dataService.scriptrRequest(requestInfo, function(data) {
+                self.drawingMessages = JSON.stringify(data);
+                self.drawingMessagesTimeout = $timeout(function () { self.drawingMessages = null }, 5000);  
+            });
+      }
+      
+     self.reminderToSave = function() {
+         self.drawingMessages = "Do not forget to save your changes, once you are done defining your geofences.";
+         self.drawingMessagesTimeout = $timeout(function () { self.drawingMessages = null }, 5000);  
+     }
+      
+     var showRectDrawingMode = function() {
+         self.drawingOptions = {position: 'TOP_CENTER',drawingModes:["rectangle", "circle", "polygon"]};
+      }
+
+      var hideRectDrawingMode = function() {
+        self.drawingOptions = {position: 'TOP_CENTER',drawingModes:[]};
       }
 	
    }
@@ -869,5 +1176,57 @@ angular
       "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAoCAMAAAA1+gEjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjM5Q0JGQjdENzVBNTExRTY4RDczRThCNDhCQkVDQ0REIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjM5Q0JGQjdFNzVBNTExRTY4RDczRThCNDhCQkVDQ0REIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzlDQkZCN0I3NUE1MTFFNjhENzNFOEI0OEJCRUNDREQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzlDQkZCN0M3NUE1MTFFNjhENzNFOEI0OEJCRUNDREQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4YqnkxAAAAY1BMVEUAAAD///8fitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitIfitItkdU7mdhJoNpXp91ztuOBveaPxemdzOur0+652vHH4vTV6ffj8Pnx+Pz////2ehAtAAAAEXRSTlMAABAgMEBQYHCAj5+vv8/f7/4ucL8AAAFeSURBVBgZfcEBYqIwFEXRP1FBEUtuVEAa5O1/lY0iFrTOOfaU7Stuqn1mL9zO88vvnM1sKpaqjT3l3NTdVdK1q7nJ7SEnqa+aXGuS3O4yIHxr7jsAmSXOQ+i11AfwzswKIOpVBAozB9RKYmAUopIacLYFBiWnYxwdz0oGYGsHqJX0dBp19EpqOJiHTknNoNFAraQDb0CU1DDXSIqAAZJ6QsOkCfSSAAMGKdLqxOikligNgAFRioQTk1MgShGwEi5SZClKFzhYDmcpshSlM2zNeYiSoNWoBUkRWJnt4SwpcNHoQpB0htLMVkArXaMm8Sq1wMaSPdBpqQMOdrPyQKO5hmRjdzuSY6dJdyQ52MhV3IS6izF2deBuZQ8b3hX2VPLKO3tynheZzWQslbZQMOdXtuAqZrb2Ys2v0t5smXhn70oeMvuD++KusD+tPcmXfZADfm2fFJDZZ2VhC//+5wfrMULZDg3JQwAAAABJRU5ErkJggg=="  	
     }
   }
+}).component('mapModalComponent', 
+  {
+    bindings: {
+        
+      resolve: '<',
+      close: '&',
+      dismiss: '&'
+    },
+    templateUrl: '/UIComponents/dashboard/frontend/components/map/modalContent.html',
+    controller: function ($scope) {
+        
+        var self=this;
+        this.$onInit = function () {
+
+            this.widget = this.resolve.widget;
+            $scope.$broadcast('schemaFormRedraw')
+
+            this.frmGlobalOptions = {
+              "destroyStrategy" : "remove",
+              "formDefaults": {"feedback": false}
+            }
+            
+            if(this.widget) {
+                if(this.widget.schema) {
+                  this.schema =  angular.copy(this.widget.schema)
+                } 
+                if(this.widget.form) {
+                   this.form =   angular.copy(this.widget.form)
+                }
+
+                this.model =  (this.widget.model) ?  angular.copy(this.widget.model) : {}
+         	 }
+
+      };
+        
+
+      this.onSubmit = function(form) {
+        // First we broadcast an event so all fields validate themselves
+        $scope.$broadcast('schemaFormValidate');
+        // Then we check if the form is valid
+        if (form.$valid) {
+          this.close({$value: this.model});
+        } 
+      };
+
+      this.onCancel = function (myForm) {
+        this.schema = {};
+        this.form = {}
+        this.dismiss({$value: 'cancel'});
+        console.log("Dissmissed")
+      };
+
+    }
 });
- 

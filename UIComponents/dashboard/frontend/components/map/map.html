@@ -1,11 +1,25 @@
 <div style="height: 90%;"> 
-    <section class="map-wrap" ng-if="$ctrl.clusteredView == true || $ctrl.showDetailedMap == false">
+    <section class="map-wrap" ng-if="$ctrl.clusteredView == true && $ctrl.showDetailedMap == false">
         <ng-map id="{{'clustered-'+$ctrl.$wdgid}}" on-zoom_changed="$ctrl.onClusteredZoomChanged();"
                 single-info-window="true" zoom-to-inlude-markers="true"
                 center="{{$ctrl.mapcenter || $ctrl.defaultCenter}}"
                 zoom="{{$ctrl.clusterZoom}}">
-            <!--heatmap-layer ng-if="$ctrl.heatmap == true"></heatmap-layer-->
+				<drawing-manager ng-if="$ctrl.geofenceManager == true"
+                    on-overlaycomplete="$ctrl.onMapOverlayCompleted()"
+                    drawing-control-options="{{$ctrl.drawingOptions}}"
+                    drawingControl="{{$ctrl.drawingControl}}"
+                    drawingMode="null"
+                    rectangleOptions="{{$ctrl.overlaySettings}}"
+                    polygonOptions="{{$ctrl.overlaySettings}}"
+                    circleOptions="{{$ctrl.overlaySettings}}"
+                   >  
+              </drawing-manager>               
         </ng-map>
+          <div  class="messages" ng-show="$ctrl.drawingMessages != null">
+            <div class="alert alert-warning">
+              {{$ctrl.drawingMessages}}
+            </div>
+        </div>
           <div  class="heatmap" ng-if="$ctrl.heatmap == true">
                 <h5>Enable Heatmap</h5>
                   <span>
@@ -18,14 +32,16 @@
 			single-info-window="true" zoom-to-inlude-markers="true"
 			center="{{$ctrl.mapcenter || $ctrl.defaultcenter}}"
 			zoom="{{$ctrl.detailedmapzoom}}">
-            <drawing-manager ng-if="$ctrl.geofenceManager == true && $ctrl.selectedAsset != 'all'"
-                on-overlaycomplete="$ctrl.onMapOverlayCompleted()"
-                drawing-control-options="{{$ctrl.drawingOptions}}"
-                drawingControl="{{$ctrl.drawingControl}}"
-                drawingMode="null"
-                rectangleOptions="{{$ctrl.overlaySettings}}"
-               >  
-              </drawing-manager>
+            <drawing-manager ng-if="$ctrl.geofenceManager == true"
+                    on-overlaycomplete="$ctrl.onMapOverlayCompleted()"
+                    drawing-control-options="{{$ctrl.drawingOptions}}"
+                    drawingControl="{{$ctrl.drawingControl}}"
+                    drawingMode="null"
+                    rectangleOptions="{{$ctrl.overlaySettings}}"
+                    polygonOptions="{{$ctrl.overlaySettings}}"
+                    circleOptions="{{$ctrl.overlaySettings}}"
+                   >  
+              </drawing-manager> 
 		<div>
 			<div ng-repeat="(key, asset) in $ctrl.displayedAssets">
 				<shape name="polyline" path="{{asset.path}}"
@@ -82,13 +98,29 @@
                     <scriptr-toggle-switch resize="false" on-switch-change="$ctrl.activateHeatMap" switch-status="$ctrl.switchStatus"class="switch-success switch-small"></scriptr-toggle-switch>
                   </span>
         </div>         
-        <div ng-if="$ctrl.geofenceManager == true && $ctrl.selectedAsset != 'all'" class="drawingmanager-buttons">
-            <span>
-              <a ng-click="$ctrl.removeGeofence()" data-toggle="tooltip" title="Delete geofence" data-placement="bottom"><i class="fa fa-trash" aria-hidden="true"></i></a>
-              <a  ng-click="$ctrl.saveGeofence()" data-toggle="tooltip" title="Save geofence" data-placement="bottom"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
-              <a type="button" data-toggle="tooltip" title="Locate geofence" ng-click="$ctrl.focusGeofence()" data-placement="bottom"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>
-              <a type="button" data-toggle="tooltip" title="Locate vehicle" ng-click="$ctrl.focusVehicle()" data-placement="bottom"><i class="fa fa-car aria-hidden="true"></i> </a>
-            </span>
-      </div>
 	</section>
+        
+     <div>   
+     <div ng-if="$ctrl.geofenceManager == true" class="drawingmanager-buttons">
+          <span>
+             <a ng-click="$ctrl.hideShowGeofences()"  title="Hide all geofences"><i class="fa" ng-class='{"fa-eye-slash":  $ctrl.geofencesVisible, "fa-eye": !$ctrl.geofencesVisible }' aria-hidden="true"></i>
+             </a>
+         </span>
+         <span>
+             <a ng-click="$ctrl.clearAllGeofences()"  title="Erase all geofences"><i class="fa fa-eraser" aria-hidden="true"></i>
+         	</a>	
+         </span>
+     </div>
+      <div ng-if="$ctrl.geofenceManager == true" class="drawingmanager-action-buttons">  
+      		<button class="btn btn-primary btn-sm btn-block" ng-click="$ctrl.saveAllGeofences()" data-toggle="tooltip" title="Save all geofences">Save</button>
+       </div>
+    </div>
+</div>
+<div class="geofence-menu">
+       <a title="Configure this widget" ng-click="$ctrl.editSelectedGeofenceSettings()">
+           <i class="glyphicon glyphicon-pencil"></i>
+       </a>
+       <a title="Remove this widget" ng-click="$ctrl.removeSelectedGeofence()">
+           <i class="glyphicon glyphicon-trash"></i>
+       </a>
 </div>

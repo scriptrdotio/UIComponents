@@ -69,31 +69,65 @@ ng-map {
 /** drawing map buttons **/
 .drawingmanager-buttons {
     position: absolute;
-    width: 14px;
-    height: 14px;
-    width: 100%;
-    top: 33px;
+    left: calc(50vw + 47px);
+    height: 48px;
+    width: 48px;
+    font: 400 14px Roboto, Arial, sans-serif;
+    top: 5px;
+    user-select: none;
+    cursor: pointer;
 }
 
 .drawingmanager-buttons span {
+    float: left;
+}
+.drawingmanager-buttons a {
+   text-align: center;
+    position: relative;
+    color: rgba(152, 152, 152, 1);
+    user-select: none;
+    font-size: 11px;
+    background-color: rgb(255, 255, 255);
+    padding: 4px;
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+    background-clip: padding-box;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    border-left: 0px;
     width: 100%;
-    height: 14px;
     text-align: center;
     margin: 0 auto;
     display: inline-block;
+    font-size: 14px;
+    padding: 4px;
 }
   
-.drawingmanager-buttons span a {
-    background: white;
-    padding: 6px;
-    border: 1px solid #ddd;
-    color: #888;
-  	cursor: pointer;
-  	margin: 0 -2px;
+.drawingmanager-buttons a:hover {
+    color: rgb(0, 0, 0);
+	background-color: rgb(235, 235, 235);
 }
 
-.drawingmanager-buttons span a:hover {
- 	background: #ddd; 
+.drawingmanager-action-buttons {
+    position: absolute;
+    left: calc(50vw + 120px);
+    top: 5px;
+}
+
+.drawingmanager-action-buttons .btn.btn-block {
+    width: auto;
+}
+
+.drawingmanager-action-buttons .btn-primary {
+    background-color: #f48220;
+    border-color: #d6690b;
+    color: #FFF;
+}
+
+
+.modal-footer .btn-primary {
+    background-color: #f48220;
+    border-color: #d6690b;
+    color: #FFF;
 }
 
 .messages {
@@ -118,3 +152,41 @@ ng-map {
   margin: 0;
 }
 
+
+.menu {
+  width: 150px;
+  box-shadow: 3px 3px 5px #888888;
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+  border-radius: 2px;
+  position: fixed;
+  display: none;
+}
+
+.schema-form-array .list-group button.close {
+    position: absolute!important;
+    top: 4px;
+    right: 4px;
+}
+
+.geofence-menu {
+	background: #f5f5f5;
+    text-align: right;
+    padding-top: 10px;
+    position: fixed;
+  	display: none;
+    background: transparent;
+}
+
+.geofence-menu a {
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 5px 9px;
+    background-color: #f48220;
+    border: 1px solid #d6690b;
+    color: #FFF;
+    margin-left: 2px;
+    margin-right: 2px;
+    float: right;
+}

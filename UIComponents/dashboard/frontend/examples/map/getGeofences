@@ -1,0 +1,27 @@
+var documents = require("document");
+var response = documents.query({"query":'type = "geofence"', "fields":"data"});
+
+//Fetching latest geofence entry, for sake of example
+//Wiget expected format is
+ /**[
+            "{'dataModel':{'identifier':'Geofence_6','properties':[{'key':'d','value':'1'}]},'overlay':{'radius':24257.529109529794,'center':{'lat':41.34329061985296,'lng':-74.32100148437502}},'type':'circle'}",
+            "{'dataModel':{'identifier':'Geofence_5','properties':[]},'overlay':{'bounds':{'south':40.925427566016204,'west':-74.21663136718752,'north':40.966918837330816,'east':-74.18367238281252}},'type':'rectangle'}",
+            "{'dataModel':{'identifier':'Geofence_8','properties':[]},'overlay':{'radius':10152.963637311848,'center':{'lat':41.07053293897242,'lng':-74.80439992187502}},'type':'circle'}",          
+	]
+**/
+
+//or
+
+/**[
+            {'dataModel':{'identifier':'Geofence_6','properties':[{'key':'d','value':'1'}]},'overlay':{'radius':24257.529109529794,'center':{'lat':41.34329061985296,'lng':-74.32100148437502}},'type':'circle'},
+            {'dataModel':{'identifier':'Geofence_5','properties':[]},'overlay':{'bounds':{'south':40.925427566016204,'west':-74.21663136718752,'north':40.966918837330816,'east':-74.18367238281252}},'type':'rectangle'},
+            {'dataModel':{'identifier':'Geofence_8','properties':[]},'overlay':{'radius':10152.963637311848,'center':{'lat':41.07053293897242,'lng':-74.80439992187502}},'type':'circle'},          
+	]
+**/
+
+if(response.metadata.status == "success") {
+    var geofencesData = response.result.documents[0].data;
+    return (typeof geofencesData == "string") ? [geofencesData]  :  geofencesData;
+} else {
+    return response.metadata;
+}
