@@ -389,12 +389,12 @@ angular
                }
           }
           self.renderAssets();
-          if(self.clusteredView && !self.trackedAsset)  {
+          if(self.clusteredView && !self.trackedAsset && !self.selectedTrackedAsset)  {
             self.renderClusterer();
           }
         };
         
-        if (self.clusteredView && !self.markerClusterer && !self.trackedAsset) {
+        if (self.clusteredView && !self.markerClusterer && !self.trackedAsset && !self.selectedTrackedAsset) {
           NgMap
             .getMap({
             id : 'clustered-'+self.$wdgid //TODO: figure out another thing then id, or pass id as a param
@@ -405,6 +405,8 @@ angular
                 self.buildClusterer(map);
               }
              process(assets);
+            }, function(e) {
+              console.log("Clusterer Map error", e)
             });
         } else {
           process(assets)
@@ -475,7 +477,7 @@ angular
 
       // Change map on zoom threshold
       self.onClusteredZoomChanged = function() {
-        if (!self.trackedAsset) {
+        if (!self.trackedAsset && !self.selectedTrackedAsset) {
           NgMap.getMap({
             id : 'clustered-'+self.$wdgid
           }).then(function(map) {
@@ -496,7 +498,7 @@ angular
 
       //Change map on zoom threshold
       self.onDetailedZoomChanged = function() {
-        if (!self.trackedAsset && self.clusteredView == true) {
+        if (!self.trackedAsset && !self.selectedTrackedAsset && self.clusteredView == true) {
           NgMap.getMap({
             id : 'detailed-'+self.$wdgid
           }).then(function(map) {
