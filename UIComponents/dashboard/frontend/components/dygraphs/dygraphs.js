@@ -494,7 +494,7 @@ angular
         }
         
         var initDataService = function(transport) {
-            if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+            if((transport == "wss" && (self.api || self.msgTag)) || (transport == "https" && self.api)) {
                 var requestInfo = {
                     "api": self.api,
                     "transport": transport,
@@ -517,10 +517,12 @@ angular
             } else {
                 $scope.$emit("waiting-for-data");
                 $scope.$on("update-data", function(event, data) {
-                     if(data && data[self.serviceTag])
-                        self.consumeData(data[self.serviceTag]);
-                    else
-                        self.consumeData(data);
+                     if(data) {
+                          if(data[self.serviceTag])
+                            self.consumeData(data[self.serviceTag]);
+                        else
+                            self.consumeData(data);
+                     }
                 });
             }
           };
