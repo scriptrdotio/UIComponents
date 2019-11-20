@@ -7,7 +7,7 @@ angular
       dashboard: "<"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboardsList.html',
-    controller: function($scope, $timeout, $sce, $window, httpClient, wsClient, $cookies, config, $uibModal, scriptrService, $route, $routeParams, $q, _) {
+    controller: function($scope, $timeout, $sce, $window, httpClient, wsClient, $cookies,  $uibModal, scriptrService, $route, $routeParams, $q, _) {
       
       this.wsClient = wsClient;
       var self = this;
@@ -23,7 +23,7 @@ angular
         }];
           
         this.urlParams = [];
-        this.transport = angular.copy(config.transport);
+        this.transport = {}//angular.copy(config.transport);
         this.frmGlobalOptions = {
           "destroyStrategy" : "remove",
           "formDefaults": {"feedback": true}
