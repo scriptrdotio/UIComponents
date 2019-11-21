@@ -345,7 +345,8 @@ const __MAP__ = {
             ]
          }
       }),
-      "msg-tag": "everyone-main-live"
+      "msg-tag": "everyone-main-live",
+      "geofence-manager":false
    },
    "box": {
       "sizeX": 4,
@@ -757,6 +758,33 @@ const __MAP__ = {
                         }
                      ]
                   }
+               ]
+            },
+            
+            {
+               "title": "GeoFence",
+               "items": [
+                {
+                    "key": "geofence-manager"
+                 },
+                 {
+                    "condition": "model['geofence-manager']==true",
+                    "key": "geofence-data",
+                    "items": [
+                        {
+                            "key": "geofence-data.load-api",
+                            "title":"Load API"
+                        },
+                        {
+                            "key": "geofence-data.save-api",
+                            "title":"Save API"
+                        },
+                        {
+                            "key": "geofence-data.api-params",
+                            "title":"API Params"
+                        },
+                    ]
+                 },
                ]
             },
             {
@@ -1296,6 +1324,33 @@ const __MAP__ = {
                   "max-height": {
                      "title": "Max height",
                      "type": "number"
+                  }
+               }
+            }
+         }, "geofence-manager": {
+            "title": "Geofence Manager",
+            "type": "boolean",
+            "description": "Enable/disable Geofence."
+         },
+          
+         "geofence-data": {
+            "title": "Geofence Data",
+            "type": "object",
+            "description": "Geofence load and save apis and params",
+            "items": {
+               "type": "object",
+               "properties": {
+                  "load-api": {
+                     "title": "Load API",
+                     "type": "string"
+                  },
+                  "save-api": {
+                     "title": "Save API",
+                     "type": "string"
+                  },
+                  "api-params": {
+                     "title": "API Params",
+                     "type": "string"
                   }
                }
             }
