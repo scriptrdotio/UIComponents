@@ -320,17 +320,19 @@ angular
                     
                   if(widgetDefinition.commonData){ 
                     
-                       //add docs tab
-                         var docTab=angular.copy(common.docTab);
-                         docTab.items[0].url=self.getDocsURL(wdg.name);
-                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
-            //end 
+                       
                       form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
                       schema.properties =  merge_options(schema.properties,common.schemaFields); 
                   }
                     
                    form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
-            	   schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
+                   schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
+                   //add docs tab
+                   var docTab=angular.copy(common.docTab);
+                         docTab.items[1].url=self.getDocsURL(wdg.name);
+                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
+            //end 
+
                    form[0].selectedTabIndex = 0;
                    
                   wdg.form = angular.copy(form);
@@ -415,17 +417,18 @@ angular
            }
           
            if(wdg.commonData){
-             //add docs tab
-                  var docTab=angular.copy(common.docTab);
-                         docTab.items[0].url=this.getDocsURL(wdg.name);
-                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
-                        
-                  //end  
+               
              form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs))
               schema.properties =  merge_options(schema.properties,common.schemaFields); 
           }
           form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
           schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
+          //add docs tab
+          var docTab=angular.copy(common.docTab);
+                         docTab.items[1].url=this.getDocsURL(wdg.name);
+                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
+                        
+                  //end
           form[0].selectedTabIndex = 0;
   
           var model = angular.copy(wdg.defaults);
@@ -540,15 +543,16 @@ angular
         var form = angular.copy(self.dashboardSettings.form);
         var schema = angular.copy(self.dashboardSettings.schema);
        
-       //add docs tab
-           var docTab=angular.copy(common.docTab);
-                         docTab.items[0].url=this.getDocsURL(wdg.name);
-                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
-                        
-           //end 
+      
        
        form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
         schema.properties =  merge_options(schema.properties,common.schemaFields); 
+         //add docs tab
+         var docTab=angular.copy(common.docTab);
+                         docTab.items[1].url=this.getDocsURL(wdg.name);
+                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
+                        
+           //end 
         
         var modalInstance = $uibModal.open({
               animation: true,
@@ -747,12 +751,7 @@ angular
            }
             
           if(wdg.commonData){
-               //add docs tab
-                 var docTab=angular.copy(common.docTab);
-                         docTab.items[0].url=this.getDocsURL(wdg.name);
-                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
-                        
-                 //end 
+               
             form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
               schema.properties = merge_options(schema.properties,common.schemaFields); 
           }  
@@ -760,6 +759,12 @@ angular
             
             form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
             schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
+            //add docs tab
+            var docTab=angular.copy(common.docTab);
+                         docTab.items[1].url=this.getDocsURL(wdg.name);
+                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
+                        
+                 //end 
             form[0].selectedTabIndex = 0;
             
           var defApiParamsCount = 0;

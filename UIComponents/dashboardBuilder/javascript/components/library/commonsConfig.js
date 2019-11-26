@@ -6,6 +6,13 @@ angular
             "docTab": {
                 title: "Documentation",
                 items: [
+                    {
+                                
+                                "type": "template",
+                                "template": "<div><strong>Note:</strong> if you want to use these properities in the onFormatData Function , please note you need to use the camel case instead of the hyphen case <br/><strong>Example:</strong> if the attribute is <i>item-type</i> , use it as <i>self.itemType</i>  </div>",
+                               
+
+                            },
                     
                             {
                                 "key": "docValue",
