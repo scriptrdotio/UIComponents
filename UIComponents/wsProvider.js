@@ -204,7 +204,11 @@ angular
 			                  var callbackId = data.id;
 			                  if (callbackId && callbacks.hasOwnProperty(callbackId)) {
 				                  console.log("Execute registered call back for received socket message.", callbacks[callbackId]);
-				                  $rootScope.$apply(callbacks[callbackId].cb.resolve(data.result));
+				                  if(data.status == "failure") {
+                                      $rootScope.$apply(callbacks[callbackId].cb.reject(data));
+                                  } else {
+                                      $rootScope.$apply(callbacks[callbackId].cb.resolve(data.result));
+                                  }
 				                  delete callbacks[callbackId];
 			                  } else {
 				                  console

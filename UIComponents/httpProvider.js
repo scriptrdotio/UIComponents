@@ -98,7 +98,10 @@ angular
                                             	}
                                          		console.error("You have reached your requests rate limit. For more info check the documentation. https://www.scriptr.io/documentation#documentation-ratelimitingRateLimiting")   
                                         	  }
-				                              d.reject(err);
+                                              if(err.data && err.data.response && err.data.response.metadata)
+				                              	d.reject(err.data.response.metadata);
+                                              else
+                                                d.reject(err);  
 			                              });
 			                  return d.promise;
 		                  };
