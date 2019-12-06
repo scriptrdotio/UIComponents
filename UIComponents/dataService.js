@@ -25,9 +25,9 @@ angular.module('DataService', [])
                                     .then(function (data, response) {
                                     consumerFnc(data)
                                 },
-                                          function (err) {
-                                    console.log("reject published promise", err);
-                                    consumerFnc();
+                                function (err) {
+                                    console.log("Reject wss call", err);
+                                    consumerFnc(err);
                                 });
                             }
                         });
@@ -52,7 +52,8 @@ angular.module('DataService', [])
                                     consumerFnc(data)
                                 },
                                 function (err) {
-                                    console.log("reject published promise", err);
+                                    consumerFnc(err)
+                                    console.log("Reject http call", err);
                                 });
                             } 
                             
