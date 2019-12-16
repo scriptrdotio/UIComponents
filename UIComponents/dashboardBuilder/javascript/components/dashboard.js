@@ -329,9 +329,9 @@ angular
                    schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
                    //add docs tab
                    var docTab=angular.copy(common.docTab);
-                         docTab.items[1].url=self.getDocsURL(wdg.name);
-                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
-            //end 
+                   docTab.items[1].url=self.getDocsURL(wdg.name);
+                   form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
+            	   //end 
 
                    form[0].selectedTabIndex = 0;
                    

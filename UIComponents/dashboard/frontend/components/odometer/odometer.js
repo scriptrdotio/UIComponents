@@ -61,7 +61,7 @@ angular
                if (self.timeoutId != null) {
                    $timeout.cancel(self.timeoutId);
                }
-               self.timeoutId = $timeout(self.resize.bind(self), 100);
+               self.timeoutId = $timeout(self.resize.bind(self), 300);
            }
            
            self.resize = function(){
@@ -84,7 +84,7 @@ angular
            
            this.$postLink = function() {
                 
-               self.timeoutId = $timeout(self.resize.bind(self), 100);
+               self.timeoutId = $timeout(self.resize.bind(self), 300);
                angular.element($window).on('resize', self.onResize);
                
 			   if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend

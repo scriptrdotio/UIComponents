@@ -97,11 +97,10 @@ angular
                 {
                     "type": "section",
                     "htmlClass": "row",
-                    "condition": "model['dashboard-data-handler'] === false",
+                    "condition": "model['dashboard-data-handler'] === false && (model.transport == 'wss' || model.transport == 'https')",
                     "items": [{
                         "type": "section",
                         "htmlClass": "col-xs-6",
-                        "condition": "(model.transport == 'wss' || model.transport == 'https') && dropdata != true ",
                         "items": [
                             {
                                 "key": "api"
@@ -110,7 +109,6 @@ angular
                     }, {
                         "type": "section",
                         "htmlClass": "col-xs-6",
-                        "condition": "model.transport == 'wss' || model.transport == 'https' ",
                         "items": [
                             {
                                 "key": "api-params"
@@ -125,7 +123,7 @@ angular
                     "items": [{
                         "type": "section",
                         "htmlClass": "col-xs-12 codemirror-small",
-                        "condition": "model['dashboard-data-handler'] === false && model['transport'] != 'wss' && model['transport'] != 'https' && dropdata != true ",
+                        "condition": "model['dashboard-data-handler'] === false && model['transport'] != 'wss' && model['transport'] != 'https' && model['dropdata'] !== true ",
                         "items": [
                             {
                                 "key": "data",
