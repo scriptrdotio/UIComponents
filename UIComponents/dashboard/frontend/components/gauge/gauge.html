@@ -1,43 +1,47 @@
-<div style="width: {{$ctrl.width}}%; height: {{$ctrl.height}}{{$ctrl.heightUnit}};" class="gauge">
+<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+</scriptr-notifications>
+       
+
+<div style="width: {{$ctrl.width}}%; height: {{$ctrl.height}}{{$ctrl.heightUnit}};" class="gauge" ng-if="$ctrl.gaugeValue">
     <div 
-       value={{$ctrl.gaugeValue}}
-       value-font-color={{$ctrl.valueFontColor}}
-       min={{$ctrl.min}}
-       max={{$ctrl.max}}
-       hide-min-max={{$ctrl.hideMinMax}}
-       hide-value={{$ctrl.hideValue}}
-       show-inner-shadow={{$ctrl.showInnerShadow}}
-       gauge-color={{$ctrl.gaugeColor}}
-       shadow-opacity={{$ctrl.shadowOpacity}}
-       shadow-size={{$ctrl.shadowSize}}
-       custom-sectors={{$ctrl.customSectors}}
-       label={{$ctrl.label}}
-       label-font-color={{$ctrl.labelFontColor}}
-       start-animation-type={{$ctrl.startAnimationType}}
-       refresh-animation-type={{$ctrl.refreshAnimationType}}
-       counter={{$ctrl.counter}}
-       value-font-family={{$ctrl.valueFontFamily}}
-       relative-gauge-size={{$ctrl.relativeGaugeSize}}
-       value-min-font-size={{$ctrl.valueMinFontSize}}
-       label-min-font-size={{$ctrl.labelMinFontSize}}
-       min-label-min-font-size={{$ctrl.minLabelMinFontSize}}
-       max-label-min-font-size={{$ctrl.maxLabelMinFontSize}}
-       gauge-width-scale={{$ctrl.gaugeWidthScale}}
-       shadow-vertical-offset={{$ctrl.shadowVerticalOffset}}
-       level-colors={{$ctrl.levelColors}}  
-       no-gradient={{$ctrl.noGradient}}
-       start-animation-time={{$ctrl.startAnimationTime}}
-       refresh-animation-time={{$ctrl.refreshAnimationTime}}
-       donut={{$ctrl.donut}}  
-       donut-start-angle={{$ctrl.donutStartAngle}}
-       reverse={{$ctrl.reverse}}
-       decimals={{$ctrl.decimals}} 
-       symbol={{$ctrl.symbol}}  
-       format-number={{$ctrl.formatNumber}}  
-       human-friendly={{$ctrl.humanFriendly}}
-       human-friendly-decimal={{$ctrl.humanFriendlyDecimal}}  
-       on-animation-end={{$ctrl.onAnimationEnd}}
-       pointer={{$ctrl.pointer}}
-       justgage>
-  </div>
+         value={{$ctrl.gaugeValue}}
+         value-font-color={{$ctrl.valueFontColor}}
+         min={{$ctrl.min}}
+         max={{$ctrl.max}}
+         hide-min-max={{$ctrl.hideMinMax}}
+         hide-value={{$ctrl.hideValue}}
+         show-inner-shadow={{$ctrl.showInnerShadow}}
+         gauge-color={{$ctrl.gaugeColor}}
+         shadow-opacity={{$ctrl.shadowOpacity}}
+         shadow-size={{$ctrl.shadowSize}}
+         custom-sectors={{$ctrl.customSectors}}
+         label={{$ctrl.label}}
+         label-font-color={{$ctrl.labelFontColor}}
+         start-animation-type={{$ctrl.startAnimationType}}
+         refresh-animation-type={{$ctrl.refreshAnimationType}}
+         counter={{$ctrl.counter}}
+         value-font-family={{$ctrl.valueFontFamily}}
+         relative-gauge-size={{$ctrl.relativeGaugeSize}}
+         value-min-font-size={{$ctrl.valueMinFontSize}}
+         label-min-font-size={{$ctrl.labelMinFontSize}}
+         min-label-min-font-size={{$ctrl.minLabelMinFontSize}}
+         max-label-min-font-size={{$ctrl.maxLabelMinFontSize}}
+         gauge-width-scale={{$ctrl.gaugeWidthScale}}
+         shadow-vertical-offset={{$ctrl.shadowVerticalOffset}}
+         level-colors={{$ctrl.levelColors}}  
+         no-gradient={{$ctrl.noGradient}}
+         start-animation-time={{$ctrl.startAnimationTime}}
+         refresh-animation-time={{$ctrl.refreshAnimationTime}}
+         donut={{$ctrl.donut}}  
+         donut-start-angle={{$ctrl.donutStartAngle}}
+         reverse={{$ctrl.reverse}}
+         decimals={{$ctrl.decimals}} 
+         symbol={{$ctrl.symbol}}  
+         format-number={{$ctrl.formatNumber}}  
+         human-friendly={{$ctrl.humanFriendly}}
+         human-friendly-decimal={{$ctrl.humanFriendlyDecimal}}  
+         on-animation-end={{$ctrl.onAnimationEnd}}
+         pointer={{$ctrl.pointer}}
+         justgage>
+    </div>
 </div>

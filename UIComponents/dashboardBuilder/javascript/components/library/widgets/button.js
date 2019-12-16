@@ -6,13 +6,15 @@ const __BUTTON__ = {
     "commonActionData": true,
     "show": true,
     "defaults": {
-        "transport": "https",
+        "action-transport": "https",
+        "action-api": "UIComponents/dashboard/frontend/examples/button/setButtonLabel",
         "boxLabel": "Button",
         "type": "btn-success",
-        "enable-resize": true,
         "label": "Click",
-        "data": "Click", //Put same as label so it doesn't flicker, data overrides label
-        "boxHeader": false
+        "enable-resize": true,
+        //"data": "Click", //Put same as label so it doesn't flicker, data overrides label
+        "boxHeader": false,
+        "dropdata": true
     },
     "box": {
         sizeX: 1,
@@ -75,10 +77,11 @@ const __BUTTON__ = {
         "title": "Schema",
         "properties": {
             "data": {
-                "title": "Data",
-                "type": "string",
-                "description": "Label",
-                "placeholder": "Publish!"
+                "type": "hidden",
+            },
+            "dropdata": {
+                "type": "boolean",
+                "default": true
             },
             "is-disabled": {
                 "title": "Disabled",
@@ -91,7 +94,7 @@ const __BUTTON__ = {
                 "description": "Choose the type of the Button."
             },
             "label": {
-                "title": "Label",
+                "title": "Default label",
                 "type": "string",
                 "description": "Choose the label of the Button."
             },

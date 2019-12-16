@@ -1,4 +1,4 @@
-angular.module('Accelerometer', []);
+angular.module('Accelerometer', ['ComponentsCommon', 'DataService']);
 
 angular
   .module('Accelerometer')
@@ -19,12 +19,12 @@ angular
           "serviceTag": "@"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.html',
-      controller: function(httpClient, wsClient, $scope, $interval, dataService) {
+      controller: function(httpClient, wsClient, $scope, $interval, $window, $element, dataService, $timeout) {
         
         var self = this;
           
         this.$onInit = function() {
-              if(this.data) {
+             /**if(this.data) {
                 if(this.data.x){
                     this.data.x = (this.data.x > 20) ? 20 : (this.data.x < -20) ? -20 : this.data.x; 
                     this.xLine = "scaleX("+Math.round(this.data.x)+")";
@@ -34,41 +34,91 @@ angular
                      this.yLine = "scaleY("+Math.round(this.data.y)+")";
                 } 
             	if(this.data.z) this.angle = "rotateZ("+ Math.round(this.data.z) + "deg )"; 
-              }
+              }**/
+              
             
+              this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/accelerometer-bg.svg";
+                       
+              this.hasData = ((!isNaN(self.xLine) && isFinite(self.xLine)) && (!isNaN(self.yLine) && isFinite(self.yLine)) && (!isNaN(self.zLine) && isFinite(self.zLine)))  ?  true : false;
+                              
               this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
-              initDataService(this.transport);
         }
-        var initDataService = function(transport) {
-            if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
-                var requestInfo = {
-                               "api": self.api,
-                               "transport": transport,
-                               "msgTag": self.msgTag,
-                               "apiParams": self.apiParams,
-                               "useWindowParams": self.useWindowParams,
-                               "httpMethod": self.httpMethod,
-                               "widgetId": $scope.$id
-                           };
-                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
-                
-                if(self.fetchDataInterval && !self.refreshTimer) {
-                    //Assuming this is success
-                    self.refreshTimer = $interval(
-                        function(){
-                            initDataService(self.transport)
-                        }, self.fetchDataInterval * 1000);
-                }
-            } else {
-                $scope.$emit("waiting-for-data");
-                $scope.$on("update-data", function(event, data) {
-                    if(data && data[self.serviceTag])
-                        self.consumeData(data[self.serviceTag]);
-                    else
-                        self.consumeData(data);
+        
+        this.$postLink = function () {
+            
+            self.timeoutId = $timeout(self.resize.bind(self), 100);
+            angular.element($window).on('resize', self.onResize);
+            
+            if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
+                initDataService(this.transport);
+            } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
+                $scope.$watch(function( $scope ) {
+                    // wait for the timeout
+                    if($scope.$ctrl.data){
+                        return $scope.$ctrl.data
+                    }
+                },function(newVal, oldVal){
+                    if(JSON.stringify(newVal)){
+                        self.consumeData(newVal);
+                    }
                 });
+            } else { //Listen on update-data event to build data
+                $scope.$on("update-data", function(event, data) {
+                   if(data == null) { //typeOf data == 'undefined' || data === null
+                       if(self.xLine == null && self.yLine == null && self.zLine == null) {
+                           self.noResults = true;
+                       } 
+                   } else  {
+                        if(data[self.serviceTag]) 
+                            self.consumeData(data[self.serviceTag]);
+                        else
+                            self.consumeData(data);
+                    } 
+                });
+
+                $scope.$emit("waiting-for-data");
             }
-          }
+        }
+         
+        this.onResize = function() {
+            if (self.timeoutId != null) {
+                $timeout.cancel(self.timeoutId);
+            }
+            self.timeoutId = $timeout(self.resize.bind(self), 100);
+        }
+        
+        this.resize =  function() {
+            this.calculateNotificationsDisplay();
+        }
+        
+		this.calculateNotificationsDisplay = function() {
+            if($element.parent().innerWidth() < 240) {
+                self.usePopover = true;
+            } else {
+                self.usePopover = false;
+            }
+
+        }   
+        var initDataService = function(transport) {
+            var requestInfo = {
+                       "api": self.api,
+                       "transport": transport,
+                       "msgTag": self.msgTag,
+                       "apiParams": self.apiParams,
+                       "useWindowParams": self.useWindowParams,
+                       "httpMethod": self.httpMethod,
+                       "widgetId": $scope.$id
+                   };
+                   dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
+
+                   if(self.fetchDataInterval && !self.refreshTimer) {
+                       //Assuming this is success
+                       self.refreshTimer = $interval(
+                           function(){
+                               initDataService(self.transport)
+                           }, self.fetchDataInterval * 1000);
+                   }
+         }
         
          this.$onDestroy = function() {
          	if(self.msgTag) {
@@ -78,23 +128,58 @@ angular
             if(self.refreshTimer){
                 $interval.cancel( self.refreshTimer );
             }
+             
+            if (self.timeoutId != null) {
+               $timeout.cancel(self.timeoutId);
+            }
+             
+           angular.element($window).off('resize', self.onResize);
         }
 
           this.consumeData = function(data, response) {
-            if(typeof self.onFormatData() == "function"){
-              data = self.onFormatData()(data);
-            }
-           //var obj = computeQuaternionFromEulers(data["GYR_X"], data["GYR_Y"], data["GYR_Z"])
-           //var obj = { x: data["Acc_X"], y: data["Acc_Y"], z: data["Acc_Z"]}
-           // var obj = {x: 10, y: 100, z: 30}
-           //console.log(obj)
-              
-            data.x = (data.x > 20) ? 20 : (data.x < -20) ? -20 : data.x; 
-            data.y = (data.y > 20) ? 20 : (data.y < -20) ? -20 : data.y;   
-              
-            this.xLine = "scaleX("+Math.round(data.x)+")";
-            this.yLine = "scaleY("+Math.round(data.y)+")";
-            this.angle = "rotateZ("+ Math.round(data.z) + "deg )"; 
+             if(data.status && data.status == "failure") {
+                  self.noResults = true;
+                  self.dataFailureMessage = "Failure to fetch data.";
+                  if(self.xLine && this.yLine && this.angle) {
+                      self.stalledData = true;
+                      self.dataFailureMessage = "Failure to update data.";
+                  } 
+              } else {
+                  
+                  if(typeof self.onFormatData() == "function"){
+                      data = self.onFormatData()(data);
+                  }
+                  if(data != null){
+                      var x = parseFloat(data.x);
+                      var y = parseFloat(data.y);
+                      var z = parseFloat(data.z);
+                      if(data && (!isNaN(x) && isFinite(x)) && (!isNaN(y) && isFinite(y)) && (!isNaN(z) && isFinite(z))) {
+                          data.x = (data.x > 20) ? 20 : (data.x < -20) ? -20 : data.x; 
+                          data.y = (data.y > 20) ? 20 : (data.y < -20) ? -20 : data.y;   
+
+                          self.xLine = "scaleX("+Math.round(x)+")";
+                          self.yLine = "scaleY("+Math.round(y)+")";
+                          self.angle = "rotateZ("+ Math.round(z) + "deg )"; 
+                          
+                          self.hasData = true;
+                          self.noResults = false;
+                          self.stalledData = false;
+                       }else{
+                           self.noResults = true;
+                           if(self.xLine != null && self.yLine  != null && self.angle != null ) {
+                               self.stalledData = true;
+                           } 
+                       	   self.dataFailureMessage = "Failed to update data, invalid data format.";
+                   	   }
+                  } else {
+                      self.noResults = true;
+                      if(self.xLine != null && self.yLine  != null && self.angle != null ) {
+                          self.stalledData = true;
+                  	  } 
+                      self.dataFailureMessage = "Failed to update data, invalid data format.";
+                  }
+                  
+               }
           }
  
           var makeQuat = function(x,y,z,w)//simple utitlity to make quaternion object

@@ -322,7 +322,7 @@ angular
                     
                        
                       form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
-                      schema.properties =  merge_options(schema.properties,common.schemaFields); 
+                      schema.properties =  merge_options(common.schemaFields,schema.properties); 
                   }
                     
                    form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
@@ -410,30 +410,34 @@ angular
           var form = angular.copy(wdg.form);
           var schema =  angular.copy(wdg.schema);
          
-          
           if(wdg.commonActionData){
                form[0].tabs = angular.copy([commonAction.formTab].concat(form[0].tabs));
                schema.properties =  merge_options(schema.properties,commonAction.schemaFields); 
            }
           
            if(wdg.commonData){
-               
              form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs))
-              schema.properties =  merge_options(schema.properties,common.schemaFields); 
+             schema.properties =  merge_options(common.schemaFields, schema.properties); 
           }
+          
           form[0].tabs = angular.copy((form[0].tabs).concat(boxStyle.formTab));
           schema.properties = merge_options(schema.properties,boxStyle.schemaFields); 
+          
           //add docs tab
           var docTab=angular.copy(common.docTab);
-                         docTab.items[1].url=this.getDocsURL(wdg.name);
-                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
+          docTab.items[1].url=this.getDocsURL(wdg.name);
+          form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
                         
                   //end
           form[0].selectedTabIndex = 0;
   
           var model = angular.copy(wdg.defaults);
-          if(self.dashboardSettings.defaults["transport"]) {
+          if(self.dashboardSettings.defaults["transport"] != null) {
               model["dashboard-data-handler"] = true;
+              model["msg-tag"] = null;
+              model["transport"] = null;
+              model["api"] = null;
+              model["data"] = null;
           }
           
           this.dashboard.widgets.push({
@@ -489,7 +493,7 @@ angular
     this.data = null;
         
     this.consumeData = function(data, response) {
-        this.data = data;
+        self.data = data;
         $scope.$broadcast("update-data", data);
     }
      
@@ -522,7 +526,7 @@ angular
                };
                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                 
-              if(self.dashboardSettings.defaults["fetch-data-interval"] && !self.refreshTimer) {
+              if(self.dashboardSettings.defaults["fetch-data-interval"] != null && self.refreshTimer == null) {
                   //Assuming this is success
                   self.refreshTimer = $interval(
                       function(){
@@ -549,11 +553,10 @@ angular
         schema.properties =  merge_options(schema.properties,common.schemaFields); 
          //add docs tab
          var docTab=angular.copy(common.docTab);
-                         docTab.items[1].url=this.getDocsURL(wdg.name);
-                        form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
-                        
-           //end 
-        
+         docTab.items[0].url=this.getDocsURL(self.dashboardSettings.name);
+         form[0].tabs = angular.copy(form[0].tabs.concat(docTab));
+        //end 
+            
         var modalInstance = $uibModal.open({
               animation: true,
               component: 'modalComponent',
@@ -671,7 +674,7 @@ angular
           data["token"] = scriptrService.getToken();
 
           self.dashboardSettings.defaults.redirectTarget = this.model.scriptName;
-            console.log("dashboardSettings",self.dashboardSettings);
+          console.log("dashboardSettings",self.dashboardSettings);
           data["dashboardSettings"] = angular.copy(this.dashboardSettings.defaults) //MFE: dashboardSettings channels info info needs to be retrieved from url or cookie
           
           //Generate custom Style to pass for the to save template
@@ -753,7 +756,7 @@ angular
           if(wdg.commonData){
                
             form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
-              schema.properties = merge_options(schema.properties,common.schemaFields); 
+              schema.properties = merge_options(common.schemaFields, schema.properties); 
           }  
            
             

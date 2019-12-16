@@ -7,14 +7,12 @@ const __TOGGLE_SWITCH__ = {
     "show": true,
     "defaults": {
         "boxLabel": "Toggle Switch",
-        "switch-status": "false",
-        "knob-label": "TV",
+        "knob-label": "Light",
         "on-label": "ON",
         "off-label": "OFF",
         "on-format-data": "return data;",
-        "on-switch-change": "vm.onChange",
-        "transport": "wss",
-        "msg-tag": "toggle",
+        //"transport": "wss",
+        //"msg-tag": "toggle",
         "boxHeader": false,
         //"api" : "UIComponents/dashboard/frontend/examples/toggleSwitch/getToggleSwitchVal"
     },
@@ -60,10 +58,13 @@ const __TOGGLE_SWITCH__ = {
         "type": "object",
         "title": "Schema",
         "properties": {
-            "switch-status": {
-                "title": "Toggle Switch Value",
+           "data": {
+                "type": "hidden",
+           },
+           "switch-status": {
+                "title": "Default Toggle Switch State",
                 "type": "boolean",
-                "description": "The current value of toggle switch."
+                "description": "Set the toggle switch default loaded state."
             },
             "on-label": {
                 "title": "ON Label",

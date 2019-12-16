@@ -1,4 +1,7 @@
-<div ng-style="$ctrl.style">
+<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+</scriptr-notifications>
+
+<div ng-style="$ctrl.style" ng-if="$ctrl.label">
     <button ng-if="$ctrl.isDisabled" disabled class="{{$ctrl.class}} is-disabled ui-button" ng-click="$ctrl.click()" promise-btn="$ctrl.successPromise">{{$ctrl.label}}</button>
     <button ng-if="!$ctrl.isDisabled" class="{{$ctrl.class}} ui-button" ng-click="$ctrl.click()" promise-btn="$ctrl.successPromise">{{$ctrl.label}}</button>
 </div>

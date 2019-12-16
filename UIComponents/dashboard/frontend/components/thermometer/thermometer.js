@@ -1,4 +1,4 @@
-angular.module('Thermometer', ['angularThermometer']);
+angular.module('Thermometer', ['angularThermometer', 'ComponentsCommon', 'DataService']);
 
 angular
       .module('Thermometer')
@@ -45,6 +45,9 @@ angular
 
 	               this.$onInit = function() {
                        
+                      this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/thermometer-bg.svg";
+                       
+                      this.hasData = (!isNaN(parseFloat(this.value)) && isFinite(this.value)) ?  true : false;
 	               	  this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
                       this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;
               		  this.customSectors = (this.customSectors && this.customSectors.length > 0) ? this.customSectors : [{"color": "#CC5464", "lo": 0, "hi": 30}, {"color": "#FCC717", "lo": 30, "hi": 60}, {"color": "#38B9D6", "lo": 60, "hi": 90}];
@@ -54,8 +57,6 @@ angular
                       	 	this.customSectors = _.reject(this.customSectors, _.isEmpty);
                        
                        this.outOfRangeColor = this.outOfRangeColor ? this.outOfRangeColor : "#E90088";
-                       
-                       //this.value = (this.value) ? ((this.value > 100) ? 100 : this.value) : ((this.data) ? this.data : 0 );
                        
                        this.thermoUnit =  (this.unit) ? this.unit : "°C";
                        
@@ -94,90 +95,141 @@ angular
                        this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
                        
                        this.style = {};
-                       angular.element($window).on('resize', function() {
-                           if (self.timeoutId != null) {
-                               $timeout.cancel(self.timeoutId);
-                           }
-                           return self.timeoutId = $timeout(self.resize, 100);
-                       });
-                       
-                       this.consumeData(this.data);
 	               }
+                   
+                   this.onResize = function() {
+                        if (self.timeoutId != null) {
+                            $timeout.cancel(self.timeoutId);
+                        }
+                        self.timeoutId = $timeout(self.resize.bind(self), 100);
+                   }
                    
                    self.resize = function(){
                        self.timeoutId = null;
                        self.style["margin-left"] = (($element.parent().outerWidth(true)/2) - 50);
+                       self.calculateNotificationsDisplay();
                    }
                    
                    this.$postLink = function () {
-                       initDataService(this.transport);
-                       $timeout(self.resize,100);
-                       if (self.timeoutId != null) {
-                           $timeout.cancel(self.timeoutId);
-                       }
-                       self.timeoutId = $timeout(self.resize, 100);
-                       $scope.$watch(function( $scope ) {
-                               return $scope.$ctrl.value
-                       },function(newVal){
-                           if(!isNaN(parseFloat(newVal)) && isFinite(newVal)){
-                               newVal = (newVal > $scope.$ctrl.mercuryMax) ? $scope.$ctrl.mercuryMax : newVal;
-                               self.percent = parseInt((newVal - $scope.$ctrl.minSectorValue) * $scope.$ctrl.height / ($scope.$ctrl.mercuryMax - $scope.$ctrl.minSectorValue));
-                           }
-                       });
-                   }
-                   
-                   this.$onDestroy = function() {
-                       if(self.msgTag){
-                           wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
+                      self.timeoutId = $timeout(self.resize.bind(self), 100);
+                      angular.element($window).on('resize', self.onResize);
+
+                      if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
+                          initDataService(this.transport);
+                      } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
+                          $scope.$watch(function( $scope ) {
+                              // wait for the timeout
+                              if($scope.$ctrl.data){
+                                  return $scope.$ctrl.data
+                              }
+                          },function(newVal, oldVal){
+                              if(JSON.stringify(newVal)){
+                                  self.consumeData(newVal);
+                              }
+                          });
+                      } else {  
+                           $scope.$on("update-data", function(event, data) {
+                               if(data == null) { //typeOf data == 'undefined' || data === null
+                                   if(self.value == null) {
+                                       self.noResults = true;
+                                   } 
+                               } else { 
+                                   if(data[self.serviceTag])
+                                       self.consumeData(data[self.serviceTag]);
+                                   else
+                                       self.consumeData(data);
+                               } 
+                           });
+
+                           $scope.$emit("waiting-for-data");
                        }
                        
-                       if(self.refreshTimer){
-                        	$interval.cancel( self.refreshTimer );
-                       }
-                   }
+                }
+
+                this.calculateNotificationsDisplay = function() {
+                    if($element.parent().innerWidth() < 240) {
+                        self.usePopover = true;
+                    } else {
+                        self.usePopover = false;
+                    }
+
+                }  
+
+                this.$onDestroy = function() {
+                    if(self.msgTag){
+                        wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
+                    }
+
+                    if(self.refreshTimer){
+                        $interval.cancel( self.refreshTimer );
+                    }
+
+                    if (self.timeoutId != null) {
+                        console.log("timeout inside destroy")
+                        $timeout.cancel(self.timeoutId);
+                    }
+                    
+                    angular.element($window).off('resize', self.onResize);
+                }
 
 	               var initDataService = function(transport) {
-                       if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
-                             var requestInfo = {
-                               "api": self.api,
-                               "transport": transport,
-                               "msgTag": self.msgTag,
-                               "apiParams": self.apiParams,
-                               "useWindowParams": self.useWindowParams,
-                               "httpMethod": self.httpMethod,
-                               "widgetId": $scope.$id
-                           };
-                            dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
-                            if(self.fetchDataInterval && !self.refreshTimer) {
-                                //Assuming this is success
-                                self.refreshTimer = $interval(
-                                    function(){
-                                        initDataService(self.transport)
-                                    }, self.fetchDataInterval * 1000);
-                            }
-                        } else {
-                            $scope.$emit("waiting-for-data");
-                            $scope.$on("update-data", function(event, data) {
-                                 if(data && data[self.serviceTag])
-                                    self.consumeData(data[self.serviceTag]);
-                                else
-                                    self.consumeData(data);
-                            });
-                        }
+                       var requestInfo = {
+                           "api": self.api,
+                           "transport": transport,
+                           "msgTag": self.msgTag,
+                           "apiParams": self.apiParams,
+                           "useWindowParams": self.useWindowParams,
+                           "httpMethod": self.httpMethod,
+                           "widgetId": $scope.$id
+                       };
+                       dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
+
+                       if(self.fetchDataInterval && !self.refreshTimer) {
+                           //Assuming this is success
+                           self.refreshTimer = $interval(
+                               function(){
+                                   initDataService(self.transport)
+                               }, self.fetchDataInterval * 1000);
+                       }
 	               }
 
 	              this.consumeData = function(data, response) {
-                      if(typeof this.onFormatData() == "function"){
-                          data = this.onFormatData()(data, self);
-                      }
-                      if(data != null){
-                          this.noResults = false;
-                          this.value = parseFloat(data);
-                          this.mercuryColor = this.evaluateColor(data);
-                      }else{
+                      if(data.status && data.status == "failure") {
                           this.noResults = true;
-                      }
-                 },
+                          self.dataFailureMessage = "Failed to fetch data.";
+                          if(self.value != null) {
+                              self.stalledData = true;
+                              self.dataFailureMessage = "Failed to update data.";
+                          }
+                      } else {
+                          if(typeof this.onFormatData() == "function"){
+                              data = self.onFormatData()(data, self);
+                          }
+                          if(data != null){
+                              data = parseFloat(data);
+                              if(!isNaN(data) && isFinite(data)){
+                                  self.mercuryColor = self.evaluateColor(data);
+                                  self.value = (data > self.mercuryMax) ? self.mercuryMax : data;
+                                  self.percent = parseInt((data - self.minSectorValue) * self.height / (self.mercuryMax - self.minSectorValue));
+                                  self.hasData = true;
+                                  self.noResults = false;
+                              	  self.stalledData = false;
+                                  self.timeout = true;  
+                              } else {
+                                  self.noResults = true;
+                                  if(self.value != null) {
+                                      self.stalledData = true;
+                                  } 
+                                  self.dataFailureMessage = "Failed to update data, invalid data format.";
+                              }
+                          } else{
+                              self.noResults = true;
+                              if(self.value != null) { ////typeOf value !== 'undefined' || data !== null
+                             	  self.stalledData = true;
+                         	  } 
+                          }
+                     }
+                 }, 
                       
                       
                    this.evaluateColor = function(data) {

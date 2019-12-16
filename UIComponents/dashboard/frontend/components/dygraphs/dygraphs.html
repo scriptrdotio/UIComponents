@@ -1,6 +1,7 @@
-<div class="text-center loading" ng-hide="$ctrl.datas"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
-<div class="parent"><div class="alert alert-danger" ng-show="$ctrl.noResults">No data to display</div></div>
-<div ng-if="$ctrl.datas && !$ctrl.noResults">
+<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+</scriptr-notifications>
+
+<div ng-if="$ctrl.datas">
     <ng-dygraphs 
                  data="$ctrl.datas"
                  options="$ctrl.options"

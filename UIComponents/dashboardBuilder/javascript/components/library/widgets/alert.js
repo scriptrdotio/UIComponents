@@ -6,11 +6,11 @@ const __ALERT__ = {
     "show": true,
     "defaults": {
         "on-format-data": "return data;",
-        "transport": "wss",
+        //"transport": "wss",
         "boxLabel": "Alert",
-        "msg-tag": "alert",
+        //"msg-tag": "alert",
         "boxHeader": false,
-        "data": "{\"data\":\"Contextual Message.\", \"type\": \"INFO\"}",
+        "data": "{\"value\":\"Contextual Message.\", \"type\": \"INFO\"}",
         "showHeader": "false",
         "type":"info",
         
@@ -60,10 +60,9 @@ const __ALERT__ = {
             "data": {
                 "title": "Data",
                 "type": "string",
-                "description": "Alert to display with can be in one of these 2 formats. Message with its type ex: {\"data\":\"Contextual Message.\", \"type\": \"INFO\"} or just the message ex: \"Contextual Message\"",
-                "x-schema-form": {
-                    "type": "textarea",
-                    "placeholder": "Front door has been unlocked for the past 5 hours."
+                "description": "Alert to display with can be in one of these 2 formats. Message with its type ex: {\"data\":\"Contextual Message.\", \"type\": \"INFO\"}",
+                "codemirrorOptions": {
+                    "placeholder": "{'value': '\"'Front door has been unlocked for the past 5 hours.\", \"type\":\"INFO\"}"
                 }
             },
             "type": {

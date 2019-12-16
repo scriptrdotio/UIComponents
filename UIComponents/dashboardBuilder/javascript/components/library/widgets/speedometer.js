@@ -5,12 +5,12 @@ const __SPEEDOMETER__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        "transport": "wss",
+        //"transport": "wss",
         "boxLabel": "Speedometer",
         "on-format-data": "return data;",
-        "data": 45,
-        "msg-tag": "speedometer"
-        //     ,"api" : "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal"
+        "data": "45",
+        //"msg-tag": "speedometer",
+        //"api" : "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal"
     },
     "box": {
         sizeX: 3,
@@ -132,10 +132,13 @@ const __SPEEDOMETER__ = {
         "type": "object",
         "title": "Schema",
         "properties": {
-            "data": {
+             "data": {
                 "title": "Static data",
                 "type": "number",
-                "description": "Sets the value of needle to be pointed."
+                "description": "Sets the value of needle to be pointed.",
+                "codemirrorOptions": {
+                    "placeholder": "24"
+                }
             },
             "min-value": {
                 "title": "Minimum Value",

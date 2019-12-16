@@ -107,7 +107,7 @@
 .dashboardTheme .controls {
   margin-bottom: 20px;
 }
-.dashboardTheme scriptr-odometer {
+.dashboardTheme .odometer-inside {
   white-space: normal !important;
 }
 .dashboardTheme form {
@@ -1008,7 +1008,7 @@
   width: 100%!important;
   height: 100%!important;
 }
-.dashboardTheme .fit-to-widget .alert {
+.dashboardTheme .fit-to-widget .scriptr-alert {
   height: 100%;
   display: flex;
   align-items: center;
@@ -1030,4 +1030,10 @@
 }
 .dashboardTheme .codemirror-small .CodeMirror {
   height: 100px;
+}
+
+.dashboardTheme pre.CodeMirror-placeholder {
+    font-style: italic;
+    font-weight: 100;
+    color: #a9a9a9;
 }

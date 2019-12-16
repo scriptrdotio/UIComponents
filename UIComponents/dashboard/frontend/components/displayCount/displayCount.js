@@ -1,4 +1,4 @@
-angular.module('Display', []);
+angular.module('Display', ['ComponentsCommon', 'DataService']);
 
 angular
   .module('Display')
@@ -26,9 +26,8 @@ angular
         "messageTextColor": "@",                   
         "messageBackgroundColor": "@",  
         "messageTextAlignment": "@", 
-        "enableResize": "<?",    
           
-        "transport": "@",
+          "transport": "@",
           "api" : "@",
           "msgTag" : "@",
           "httpMethod": "@",
@@ -47,10 +46,15 @@ angular
           self.isLoading = false;
           
          this.$onInit = function() {
+             
+            this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/display-data-bg.svg";
+                       
+            this.hasData = (this.value != null && this.value != "") ?  true : false;
+            
             this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
             this.widgetLayout = (this.widgetLayout=="vertical") ? this.widgetLayout : "horizontal";
-            this.data = (this.data) ? (isNaN(this.data) ? "0": this.data) : "0";
-            this.message = (this.message) ? this.message : "Items";
+            //this.data = (this.data) ? (isNaN(this.data) ? "0": this.data) : "0";
+            //this.message = (this.message) ? this.message : "Items";
             this.borderSize = (this.borderSize) ? this.borderSize : "1";
             this.numberCellSize = (this.numberCellSize) ? this.numberCellSize : "";             
             this.borderColor = (this.borderColor) ? this.borderColor : "#d7d7d7";
@@ -70,14 +74,7 @@ angular
              this.rerender();
              
              //end 
- 
-            this.enableResize = (typeof this.enableResize != 'undefined') ? this.enableResize : true;  
-              angular.element($window).on('resize', function() {
-                if (self.timeoutId != null) { 
-                	$timeout.cancel(self.timeoutId);
-              	}
-             	 return self.timeoutId = $timeout(self.resize, 100);
-             });
+             
              this.transport = (this.transport) ? this.transport : null;
              this.msgTag = (this.msgTag) ? this.msgTag : null;
 
@@ -88,21 +85,20 @@ angular
          
          this.findBackgroundColor =function(s){
              var match=null;
-             if(typeof s.data === 'string'){
+             if(typeof s.value === 'string'){
                  match=_.find(s.numberBackgroundColors,function(e){
-                     return e.value==s.data;
+                     return e.value==s.value;
                  });
-             }else if(typeof s.data === 'number'){
+             }else if(typeof s.value === 'number'){
                  match=_.find(s.numberBackgroundColors.reverse(),function(e){
-                     return s.data>=e.value;
+                     return s.value>=e.value;
                  });
              }
              if(match!=null){
                  s.numberBackgroundColor=match.color;
              }
-             
-            
          }
+         
          this.rerender=function(){
              self.rerenderVal=false;
              $timeout(function(){
@@ -112,14 +108,61 @@ angular
          }
          
          this.$postLink = function () {
-             $timeout(self.resize,100);
-             if (self.timeoutId != null) {
-                 $timeout.cancel(self.timeoutId);
+             
+           self.timeoutId = $timeout(self.resize.bind(self), 100);
+           angular.element($window).on('resize', self.onResize);
+             
+           if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
+               initDataService(this.transport);
+           } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
+               $scope.$watch(function( $scope ) {
+                   // wait for the timeout
+                   if($scope.$ctrl.data){
+                       return $scope.$ctrl.data
+                   }
+               },function(newVal, oldVal){
+                   if(JSON.stringify(newVal)){
+                       self.consumeData(newVal);
+                   }
+               });
+           } else {
+                 //Listen on update-data event to build data
+                 $scope.$on("update-data", function(event, data) {
+                     if(data == null) {
+                         if( self.value == null) {
+                             self.noResults = true;
+                         }
+                     } else {
+                         if(data[self.serviceTag])
+                             self.consumeData(data[self.serviceTag]);
+                         else
+                             self.consumeData(data);
+                     } 
+                 });
+
+                 $scope.$emit("waiting-for-data");
              }
-             self.timeoutId = $timeout(self.resize, 100);
-             initDataService(this.transport);
+        }
+
+         this.onResize = function() {
+                    if (self.timeoutId != null) {
+                        $timeout.cancel(self.timeoutId);
+                    }
+                    self.timeoutId = $timeout(self.resize.bind(self), 100);
          }
          
+         this.resize = function() {
+           this.calculateNotificationsDisplay();
+         }
+
+         this.calculateNotificationsDisplay = function() {
+             if($element.parent().innerWidth() < 240) {
+                 self.usePopover = true;
+             } else {
+                 self.usePopover = false;
+             }
+
+         }   
          this.$onDestroy = function() {
              if(self.msgTag){
                  wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
@@ -128,54 +171,72 @@ angular
              if(self.refreshTimer) {
                 $interval.cancel( self.refreshTimer );
             }
-         }
+             
+            if (self.timeoutId != null) {
+               $timeout.cancel(self.timeoutId);
+           }
+             angular.element($window).off('resize', self.onResize);
+        }
 
         var initDataService = function(transport) {
-             if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
-                 var requestInfo = {
-                               "api": self.api,
-                               "transport": transport,
-                               "msgTag": self.msgTag,
-                               "apiParams": self.apiParams,
-                               "useWindowParams": self.useWindowParams,
-                               "httpMethod": self.httpMethod,
-                               "widgetId": $scope.$id
-                           };
-                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
+              var requestInfo = {
+                  "api": self.api,
+                  "transport": transport,
+                  "msgTag": self.msgTag,
+                  "apiParams": self.apiParams,
+                  "useWindowParams": self.useWindowParams,
+                  "httpMethod": self.httpMethod,
+                  "widgetId": $scope.$id
+              };
+            dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
 
-                if(self.fetchDataInterval && !self.refreshTimer) {
-                    //Assuming this is success
-                    self.refreshTimer = $interval(
-                        function(){
-                            initDataService(self.transport)
-                        }, self.fetchDataInterval * 1000);
-                }
-            } else {
-                $scope.$emit("waiting-for-data");
-                $scope.$on("update-data", function(event, data) {
-                     if(data && data[self.serviceTag])
-                        self.consumeData(data[self.serviceTag]);
-                    else
-                        self.consumeData(data);
-                });
+            if(self.fetchDataInterval && !self.refreshTimer) {
+                //Assuming this is success
+                self.refreshTimer = $interval(
+                    function(){
+                        initDataService(self.transport)
+                    }, self.fetchDataInterval * 1000);
             }
-          }
+        }
 
         this.consumeData = function(data, response) {
-            if(typeof self.onFormatData() == "function"){
-                data = self.onFormatData()(data, self);
-            }
-            self.data = data;
-            if(typeof data == "object"){  
-                if(data && data.data && typeof data.data == "string"){
-                    self.data = data.data;
-                }  
-            }
-            if(typeof data == "string"){
-				self.data = data
-            }
+            if(data.status && data.status == "failure") {
+                 self.noResults = true;
+                 self.dataFailureMessage = "Failed to fetch data.";
+                 if(self.value) {
+                     self.stalledData = true;
+                     self.dataFailureMessage = "Failed to update data.";
+                 }
+             } else {
+                 if(typeof self.onFormatData() == "function"){
+                     data = self.onFormatData()(data, self);
+                 }	
+                 if(data != null) {
+                     if(typeof data == "object" && data.value != null){  
+                         self.value = data.value;
+                         if(data.message){
+                             self.message = data.message;
+                         } 
+                         self.rerender();
+                         self.hasData = true;
+                         self.noResults = false;
+                         self.stalledData = false;
+                     } else {
+                         self.noResults = true;
+                         if(self.value != null) {
+                             self.stalledData = true;
+                         } 
+                         self.dataFailureMessage = "Failed to update data, no data returned.";
+                     }
+                 } else {
+                     self.noResults = true;
+                     if(self.value != null) {
+                         self.stalledData = true;
+                     } 
+                     self.dataFailureMessage = "Failed to update data.";
+                 }
+             }
             
-            self.rerender();
-        }
+          }
         }
 	});

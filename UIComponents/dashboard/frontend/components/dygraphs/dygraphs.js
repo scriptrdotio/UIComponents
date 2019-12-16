@@ -1,4 +1,4 @@
-angular.module('Dygraphs', ['angular-dygraphs']);
+angular.module('Dygraphs', ['angular-dygraphs', 'ComponentsCommon', 'DataService']);
 
 angular
   .module('Dygraphs')
@@ -18,6 +18,7 @@ angular
           "fetchDataInterval": "@",
           "useWindowParams": "@",
           "serviceTag": "@",
+          "delta": "<?",
           
           "resize": "<?",
           "data": "<?",
@@ -95,7 +96,7 @@ angular
         //   "rangeStep": "<?",
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.html',
-      controller: function($rootScope, httpClient, wsClient, $scope, $timeout, $interval, $window, dataService) {
+      controller: function($rootScope, httpClient, wsClient, $scope, $element, $timeout, $interval, $window, dataService) {
         
          var self = this;
          this.$onInit = function() {
@@ -104,6 +105,10 @@ angular
              
              
              //this.evalFuncionalData();
+             
+             this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/dygraphs-line-bg.svg";
+                       
+             this.hasData = (this.datas != null  && this.datas.length > 0) ?  true : false;
              
               this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
              if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
@@ -185,9 +190,9 @@ angular
              this.yAxisLabelWidth = (this.yAxisLabelWidth) ? JSON.parse(this.yAxisLabelWidth) : 250;
              this.y2AxisLabelWidth = (this.y2AxisLabelWidth) ? JSON.parse(this.y2AxisLabelWidth) : 50;
 
-             this.x1AxisLineColor = (this.x1AxisLineColor) ? this.x1AxisLineColor : "#000000";
-             this.yAxisLineColor = (this.yAxisLineColor) ? this.yAxisLineColor : "#000000";
-             this.y2AxisLineColor = (this.y2AxisLineColor) ? this.y2AxisLineColor : "#000000";  
+             this.x1AxisLineColor = (this.x1AxisLineColor) ? this.x1AxisLineColor : "#a9a9a9";
+             this.yAxisLineColor = (this.yAxisLineColor) ? this.yAxisLineColor : "#a9a9a9";
+             this.y2AxisLineColor = (this.y2AxisLineColor) ? this.y2AxisLineColor : "#a9a9a9";  
              
              this.showLegend = (this.showLegend) ? JSON.parse(this.showLegend) : true;               
              
@@ -221,9 +226,9 @@ angular
              this.x1DrawGrid = (this.x1DrawGrid) ? JSON.parse(this.x1DrawGrid) : true;   
              this.yDrawGrid = (this.yDrawGrid) ? JSON.parse(this.yDrawGrid) : true;   
              this.y2DrawGrid = (this.y2DrawGrid) ? JSON.parse(this.y2DrawGrid) : false;                
-             this.x1GridLineColor = (this.x1GridLineColor) ? this.x1GridLineColor : "#000000";                
-             this.yGridLineColor = (this.yGridLineColor) ? this.yGridLineColor : "#000000";                
-             this.y2GridLineColor = (this.y2GridLineColor) ? this.y2GridLineColor : "#000000";                             
+             this.x1GridLineColor = (this.x1GridLineColor) ? this.x1GridLineColor : "#e5e5e5";                
+             this.yGridLineColor = (this.yGridLineColor) ? this.yGridLineColor : "#e5e5e5";                
+             this.y2GridLineColor = (this.y2GridLineColor) ? this.y2GridLineColor : "#e5e5e5";                             
              this.x1GridLineWidth = (this.x1GridLineWidth) ? JSON.parse(this.x1GridLineWidth) : 0.3;             
              this.yGridLineWidth = (this.yGridLineWidth) ? JSON.parse(this.yGridLineWidth) : 0.3;             
              this.y2GridLineWidth = (this.y2GridLineWidth) ? JSON.parse(this.y2GridLineWidth) : 0.3;                          
@@ -387,28 +392,13 @@ angular
              
              
              //this.data = JSON.parse(this.data);
-             this.resize = (this.resize) ? this.resize : true;
+             //this.resize = (this.resize) ? this.resize : true;
              this.transport = (this.transport) ? this.transport : null;
              this.httpMethod = (this.httpMethod) ? this.httpMethod : "GET";
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
              
              this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;
-
-             //Initially!!
-             this.delta = false;
-             
-             
-             
-             angular.element($window).on('resize', function() {
-                 if($(window).innerWidth() <= 480){
-                     self.options.axes.y2.axisLabelWidth = 40;
-                     self.options.axes.y.axisLabelWidth = 40;
-                 }else{
-                     self.options.axes.y2.axisLabelWidth = JSON.parse(self.y2AxisLabelWidth);
-                     self.options.axes.y.axisLabelWidth = JSON.parse(self.yAxisLabelWidth);
-                 }
-             });
            
        }
          
@@ -453,35 +443,68 @@ angular
         //  }
          
          this.$postLink = function () {
-           initDataService(this.transport);
-           //apply 2 seconds delay for static data  
-           if(this.data && !this.api) {
-              self.timeout = false; 
-         	  $timeout(function() {
-                if(self.timeout == false) {
-                    self.consumeData(self.data);
-                }
-                //   if(!self.useFunctional){
-                //       self.consumeData(self.data);
-                //   }
-                 
-               }, 2000)
-           }else{
-               self.timeout = true;
+             
+           self.timeoutId = $timeout(self.resize.bind(self), 100);
+           angular.element($window).on('resize', self.onResize);
+             
+           if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
+               initDataService(this.transport);
+           } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
+               $scope.$watch(function( $scope ) {
+                   // wait for the timeout
+                   if($scope.$ctrl.data){
+                       return $scope.$ctrl.data
+                   }
+               },function(newVal, oldVal){
+                   if(JSON.stringify(newVal)){
+                       self.consumeData(newVal);
+                   }
+               });
+           } else {
+               $scope.$on("update-data", function(event, data) {
+                     if(data == null) {
+                         if(!self.data || self.data.length == 0) {
+                             self.noResults = true;
+                         } 
+                     } else {
+                         if(data[self.serviceTag])
+                             self.consumeData(data[self.serviceTag]);
+                         else
+                             self.consumeData(data);
+                     } 
+                });
+                
+                $scope.$emit("waiting-for-data");
            }
-           // set datas info when data is changed  
-           $scope.$watch(function( $scope ) {
-               // wait for the timeout
-               if(($scope.$ctrl.data && self.timeout == true)){
-                  return $scope.$ctrl.data
-               }
-           },function(newVal){
-               if(newVal){
-					self.consumeData(newVal);
-               }
-           });
         }
+         
+        this.onResize = function() {
+            if (self.timeoutId != null) {
+                $timeout.cancel(self.timeoutId);
+            }
+            self.timeoutId = $timeout(self.resize.bind(self), 100);
+        }
+         
+        this.resize = function() {
+            if($(window).innerWidth() <= 480){
+                self.options.axes.y2.axisLabelWidth = 40;
+                self.options.axes.y.axisLabelWidth = 40;
+            }else{
+                self.options.axes.y2.axisLabelWidth = JSON.parse(self.y2AxisLabelWidth);
+                self.options.axes.y.axisLabelWidth = JSON.parse(self.yAxisLabelWidth);
+            }
+            
+            this.calculateNotificationsDisplay();
+        }
+        
+		this.calculateNotificationsDisplay = function(stalledData) {
+            if($element.parent().innerWidth() < 240) {
+                self.usePopover = true;
+            } else {
+                self.usePopover = false;
+            }
 
+        }   
         this.$onDestroy = function() {
             console.log("destory chart", self.msgTag, $scope.$id);
             if(self.msgTag){
@@ -491,10 +514,15 @@ angular
             if(self.refreshTimer) {
                 $interval.cancel( self.refreshTimer );
             }
+            
+            if (self.timeoutId != null) {
+               $timeout.cancel(self.timeoutId);
+           }
+            
+           angular.element($window).off('resize', self.onResize);
         }
         
         var initDataService = function(transport) {
-            if((transport == "wss" && (self.api || self.msgTag)) || (transport == "https" && self.api)) {
                 var requestInfo = {
                     "api": self.api,
                     "transport": transport,
@@ -506,46 +534,61 @@ angular
                };
                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                 
-                if(self.fetchDataInterval && !self.refreshTimer) {
+              if(self.fetchDataInterval != null && !self.refreshTimer !=null) {
                     //Assuming this is success
                     self.refreshTimer = $interval(
                         function(){
                             initDataService(self.transport)
                         }, self.fetchDataInterval * 1000);
-                }
+              }
             
-            } else {
-                $scope.$emit("waiting-for-data");
-                $scope.$on("update-data", function(event, data) {
-                     if(data) {
-                          if(data[self.serviceTag])
-                            self.consumeData(data[self.serviceTag]);
-                        else
-                            self.consumeData(data);
-                     }
-                });
-            }
           };
           
           
           this.consumeData = function(data, response) {
-            self.timeout = true;   
-            if(typeof self.onFormatData() == "function"){
-              data = self.onFormatData()(data);
-            }
-            if(data && data.length > 0 && typeof data == "object"){
-              if(this.fetchDataInterval && this.fetchDataInterval > 0 && this.datas && this.delta) {
-                    this.datas = this.datas.concat(data)
-              } else {
-                  this.datas = data;
-                  this.noResults = false;
+            
+            if(data.status && data.status == "failure") {
+                 this.noResults = true;
+                 this.dataFailureMessage = "Failed to fetch data.";
+                 if(this.datas && this.datas.length > 0) {
+                     this.stalledData = true;
+                     this.dataFailureMessage = "Failed to update data.";
+                 } 
+            } else { 
+                if(data != null) {
+                   if(typeof data == "object" && Array.isArray(data)){
+                      if(data.length > 0) {
+                          if(this.datas && this.delta) {
+                            this.datas = this.datas.concat(data)
+                          } else {
+                              this.datas = data;
+                          }
+                          self.hasData = true;
+                          self.noResults = false;
+                          self.stalledData = false;
+                      } else {
+                          self.noResults = true;
+                          if(self.datas != null  && self.datas.length > 0) {
+                              self.stalledData = true;
+                          }
+                          
+                          self.dataFailureMessage = "Failed to update data, no data returned.";
+                      }
+                   } else {
+                       self.noResults = true;
+                       if(self.datas != null  && self.datas.length > 0) {
+                          self.stalledData = true;
+                        } 
+                        self.dataFailureMessage = "Failed to update data, invalid data format.";
+                   }
+                }else{
+                  	self.noResults = true;
+                    if(self.datas != null  && self.datas.length > 0) {
+                        self.stalledData = true;
+                    } 
+                    self.dataFailureMessage = "Failed to update data, no data returned.";
+                } 
               }
-            }else{
-              if((this.api && data && data.length == 0) && (!this.datas || (this.datas && this.datas.length == 0))) {
-                  this.datas = [];
-                  this.noResults = true;
-              }
-            }
-          }
+           }
         }
 	});

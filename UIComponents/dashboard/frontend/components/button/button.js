@@ -1,4 +1,4 @@
-angular.module('Button', ['ngAnimate', 'angularPromiseButtons']);
+angular.module('Button', ['ngAnimate', 'angularPromiseButtons', 'ui.bootstrap', 'ComponentsCommon', 'DataService']);
 
 angular
     .module('Button')
@@ -16,13 +16,14 @@ angular
             "onSuccess": "&",
             "onFailure": "&",
             
-            "data": "@",
+            "data": "<?",
             "transport": "@",
             "api" : "@",
             "msgTag" : "@",
             "httpMethod": "@",
             "apiParams" : "<?",
             "onFormatData" : "&",
+            "fetchDataInterval": "@",
             "useWindowParams": "@",
             "serviceTag": "@",
 
@@ -34,13 +35,25 @@ angular
 
         },
         templateUrl : '/UIComponents/dashboard/frontend/components/button/button.html',
-        controller : function($scope, $q, $element, $window, $timeout, httpClient, wsClient,dataService) {
+        controller : function($scope, $q, $element, $window, $timeout, httpClient, wsClient,dataService, $interval) {
 
             var self = this;
 
             this.$onInit = function() {
                 
-                this.label = (this.label) ? this.label : "Click";
+                
+               this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/button-bg.svg";
+                       
+               this.hasData = (this.label != null && this.label != "") ?  true : false;
+                
+                //For backward compatibility 
+                if(this.label && !this.data) {
+                    this.data = {"label": this.label}
+                } else if(this.data && this.data.label) {
+                    this.label = null;
+                } 
+                
+                //this.label = (this.label) ? this.label : "Click";
                 
                 
                 this.transport = (this.transport) ? this.transport : null;
@@ -55,51 +68,62 @@ angular
             }
             
              this.$postLink = function() {
-                //Load initial data
-                initDataService(this.transport); 
-
-                if(this.data && !this.api) {
-                    self.timeout = false; 
-                    $timeout(function() {
-                        if(self.timeout == false) {
-                            self.consumeData(self.data);
+                 
+                self.timeoutId = $timeout(self.resize.bind(self), 100);
+                angular.element($window).on('resize', self.onResize);
+                 
+                if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
+                    initDataService(this.transport);
+                } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
+                    $scope.$watch(function( $scope ) {
+                        // wait for the timeout
+                        if($scope.$ctrl.data){
+                            return $scope.$ctrl.data
                         }
-                    }, 2000);
+                    },function(newVal, oldVal){
+                        if(JSON.stringify(newVal)){
+                            self.consumeData(newVal);
+                        }
+                    });
                 } else {
-                    self.timeout = true;
+                    //Listen on update-data event to build data
+                    $scope.$on("update-data", function(event, data) {
+                        if(data == null) {
+                            if(self.label == null  || self.label == "") {
+                                 self.noResults = true;
+                            }
+                        } else {
+                            if(data[self.serviceTag])
+                                self.consumeData(data[self.serviceTag]);
+                            else
+                                self.consumeData(data);
+                        } 
+                    });
+                    $scope.$emit("waiting-for-data");
                 }
-            }     
-            
-            self.call = function (transport) {
-                
-                if(!self.isDisabled){
-                    var requestInfo = {
-                        "api": (self.actionApi) ? self.actionApi : self.api,
-                        "transport": (self.actionTransport) ? (self.actionTransport) : self.transport,
-                        "apiParams": self.actionApiParams,
-                        "useWindowParams": (self.actionUseWindowParams) ? self.actionUseWindowParams : self.useWindowParams,
-                        "httpMethod": (self.actionHttpMethod) ? self.actionHttpMethod : self.httpMehtod
-                    };
-                    dataService.scriptrRequest(requestInfo, self.onClickCallback.bind(self));
+             }   
+
+			this.onResize = function() {
+                if (self.timeoutId != null) {
+                    $timeout.cancel(self.timeoutId);
                 }
+                self.timeoutId = $timeout(self.resize.bind(self), 100);
             }
             
-           self.onClickCallback = function(data, response) {
-               if (data.msg == 'SUCCESS') {
-                   if (typeof self.onSuccess() == "function") {
-                       self.onSuccess()(self);
-                   }
-               } else {
-                   if (typeof self.onFailure() == "function") {
-                       self.onFailure()(self);
-                   }
-               }
-               self.consumeData(data);
-           }
-            
+            this.resize = function() {
+                 this.calculateNotificationsDisplay();
+             }
 
+             this.calculateNotificationsDisplay = function(stalledData) {
+                 if($element.parent().innerWidth() < 240) {
+                     self.usePopover = true;
+                 } else {
+                     self.usePopover = false;
+                 }
+
+           	 }   
+            
             var initDataService = function(transport) {
-                 if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
                     var requestInfo = {
                         "api": self.api,
                         "transport": transport,
@@ -118,15 +142,6 @@ angular
                                 initDataService(self.transport)
                             }, self.fetchDataInterval * 1000);
                     }
-                } else {
-                    $scope.$emit("waiting-for-data");
-                    $scope.$on("update-data", function(event, data) {
-                         if(data && data[self.serviceTag])
-                            self.consumeData(data[self.serviceTag]);
-                        else
-                            self.consumeData(data);
-                    });
-                }
             }
                   
             
@@ -138,29 +153,79 @@ angular
                 if(self.refreshTimer){
                     $interval.cancel( self.refreshTimer );
                 }
+                
+                if (self.timeoutId != null) {
+                     $timeout.cancel(self.timeoutId);
+                 }
+                
+                angular.element($window).off('resize', self.onResize);
             }
             
             
-             this.consumeData = function(data, response) {
-                 self.timeout = true;   
-                 if(typeof this.onFormatData() == "function"){
-                     data = this.onFormatData()(data, self);
-                 }
+            this.consumeData = function(data, response) {
+                  if(data && data.status && data.status == "failure") {
+                      self.noResults = true;
+                      self.dataFailureMessage = "Failed to load button label.";
+                      if(self.label) {
+                          self.stalledData = true;
+                          self.dataFailureMessage = "Failed to update button label.";
+                      } 
+                   } else {
+                       if(typeof self.onFormatData() == "function"){
+                           data = self.onFormatData()(data, self);
+                       }	
+                       if(data != null) {
+                          if(typeof data == "object"  && data.hasOwnProperty("label")) {
+                               self.label = data.label;
+                               self.hasData = true;
+                               self.noResults = false;
+                               self.stalledData = false;
+                           } else {
+                               self.noResults = true;
+                               if(self.label != null && self.label != "") {
+                                   self.stalledData = true;
+                               } 
+                               self.dataFailureMessage = "Failed to update data, invalid data format.";
+                           }
+                       } else {
+                           self.noResults = true;
+                           if(self.label != null  && self.label != "") {
+                               self.stalledData = true;
+                           } 
+                           self.dataFailureMessage = "Failed to update data, invalid data format.";
+
+                       }
+	              }
              }
             
-            self.click = function () {
-                if(typeof this.onButtonclick() == "function"){
-                    this.onButtonclick()(self);
-                } 
-                var requestInfo = {
-                    "api": (self.actionApi) ? self.actionApi : self.api,
-                    "transport": (self.actionTransport) ? (self.actionTransport) : self.transport,
-                    "apiParams": self.actionApiParams,
-                    "useWindowParams": (self.actionUseWindowParams) ? self.actionUseWindowParams : self.useWindowParams,
-                    "httpMethod": (self.actionHttpMethod) ? self.actionHttpMethod : self.httpMehtod
-                };
-                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
-            };
+            
+            self.click = function (transport) {
+                if(!self.isDisabled){
+                    var requestInfo = {
+                        "api": (self.actionApi) ? self.actionApi : self.api,
+                        "transport": (self.actionTransport) ? (self.actionTransport) : self.transport,
+                        "apiParams": self.actionApiParams,
+                        "useWindowParams": (self.actionUseWindowParams) ? self.actionUseWindowParams : self.useWindowParams,
+                        "httpMethod": (self.actionHttpMethod) ? self.actionHttpMethod : self.httpMehtod
+                    };
+                    dataService.scriptrRequest(requestInfo, self.onClickCallback.bind(self));
+                }
+            }
+            
+            
+            self.onClickCallback = function(data, response) {
+                if(data.status && data.status == "failure") {
+                    self.actionSuccess = false;
+                    self.actionMessage = data.errorDetail || "Click action failed.";
+                } else { 
+                    self.actionSuccess = true;
+                    self.actionMessage = data.successMessage || "Click action succeeded.";
+                }
+                $timeout(function() {
+                    self.actionSuccess = null;
+                    self.actionMessage = null;
+                }, 10000);
+           }
 
             
         }

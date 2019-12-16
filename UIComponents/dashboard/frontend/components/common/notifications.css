@@ -1,0 +1,215 @@
+.greyout {
+    background-color: transparent;
+    left: 0px;
+    opacity: .5;
+}
+
+.greyout img{
+    opacity: 0.5;
+    filter: blur(1px);
+    height: 100%;
+    width: 100%;
+}
+
+
+
+.data-notification {
+     position: absolute;
+     z-index: 100;
+}	
+
+
+.data-notification.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+   
+}
+
+.data-notification.bottom{
+    left: 0px;
+    bottom: 0px;   
+    padding: 5px;
+}
+
+.data-notification .fa-1x {
+    font-size: 20px;
+}
+
+
+.data-notification .alert {
+    padding: 5px;
+    display: block!important;
+    margin: 0px;
+    border: none;
+}
+
+.data-notification.danger {
+     color: #cc5463;
+}
+
+.data-notification.warning  {
+     color: #fbc616;
+}
+
+.data-notification.success{
+     color: #5cb85c;
+}
+
+.data-notification.danger {
+     color: #cc5463;
+}
+
+.data-notification .alert-warning .fa-1x {
+    color: #fbc616;
+}
+
+.data-notification .alert-danger .fa-1x {
+    color: #cc5463;;
+}
+
+.data-notification .alert-success .fa-1x {
+     color: #5cb85c;
+}
+
+.data-notification-popup.popover {
+    border: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.data-notification-popup.popover.alert-danger {
+    border-bottom-color: rgb(169, 68, 66);
+    color: rgb(169, 68, 66);
+}
+
+.data-notification-popup.popover.alert-warning {
+    border-bottom-color: rgb(138, 109, 59);;
+    color: rgb(138, 109, 59);
+}
+
+.data-notification-popup.popover.alert-success {
+    border-bottom-color: rgb(138, 109, 59);;
+    color: rgb(138, 109, 59);
+}
+
+.data-notification-popup.popover .popover-inner .popover-content {
+    padding: 5px 30px 5px 5px;
+}
+
+.data-notification-popup.popover.right>.arrow {
+    border-right-color: transparent;
+}
+
+.data-notification-popup.popover.top>.arrow {
+    border-top-color: transparent;
+}
+
+.data-notification-popup.popover.left>.arrow {
+    border-left-color: transparent;
+}
+
+.data-notification-popup.bottom.right>.arrow {
+    border-bottom-color: transparent;
+}
+
+.data-notification-popup.popover.alert {
+    max-width: 100%;
+}
+
+.data-notification-popup.popover.alert.alert-danger.top >.arrow:after {
+    border-top-color: #fef2f2;
+}
+
+.data-notification-popup.popover.alert.alert-success.top>.arrow:after {
+    border-top-color: #def2d6;
+}
+
+.data-notification-popup.popover.alert.alert-info.top>.arrow:after {
+    border-top-color: #ceefff;
+}
+
+.data-notification-popup.popover.alert.alert-warning.top>.arrow:after {
+    border-top-color: #fdffce;
+}
+
+.data-notification-popup.popover.alert.alert-danger.right >.arrow:after {
+    border-right-color: #fef2f2;
+}
+
+.data-notification-popup.popover.alert.alert-success.right>.arrow:after {
+    border-right-color: #def2d6;
+}
+
+.data-notification-popup.popover.alert.alert-info.right>.arrow:after {
+    border-right-color: #ceefff;
+}
+
+.data-notification-popup.popover.alert.alert-warning.right>.arrow:after {
+    border-right-color: #fdffce;
+}
+
+
+.data-notification-popup.popover.alert.alert-danger.left >.arrow:after {
+    border-left-color: #fef2f2;
+}
+
+.data-notification-popup.popover.alert.alert-success.left>.arrow:after {
+    border-left-color: #def2d6;
+}
+
+.data-notification-popup.popover.alert.alert-info.left>.arrow:after {
+    border-left-color: #ceefff;
+}
+
+.data-notification-popup.popover.alert.alert-warning.left>.arrow:after  {
+    border-left-color: #fdffce;
+}
+
+.data-notification-popup.popover.alert.alert-danger.bottom >.arrow:after {
+    border-bottom-color: #fef2f2;
+}
+
+.data-notification-popup.popover.alert.alert-success.bottom>.arrow:after {
+    border-bottom-color: #def2d6;
+}
+
+.data-notification-popup.popover.alert.alert-info.bottom>.arrow:after {
+    border-bottom-color: #ceefff;
+}
+
+.data-notification-popup.popover.alert.alert-warning.bottom>.arrow:after {  
+    border-bottom-color: #fdffce;
+}
+
+
+
+.data-notification.action {
+    width: 100%;
+    height: 100%;
+}
+
+.data-notification.action .alert {
+    min-width: 100%;
+    min-height: 100%;
+    display: table!important;
+}
+
+.data-notification.action .alert div {
+    width: 100%;
+    height: 100%;
+    white-space: pre-line;      /* CSS3 */    
+   	white-space: -moz-pre-line; /* Firefox */    
+   	word-wrap: break-word;  
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.data-notification.action.alert .center-icon {
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    position: absolute;
+    top: calc(50% - 11px);
+    left: calc(50% - 11px);
+}

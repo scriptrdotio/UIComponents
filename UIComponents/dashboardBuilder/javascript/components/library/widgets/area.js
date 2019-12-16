@@ -52,8 +52,8 @@ const __AREA__ = {
         "ykeys": "[\"a\", \"b\"]",
         "labels": "[\"Serie A\", \"Serie B\"]",
         "colors": ["#CC5464", "#38B9D6"],
-        "transport": "wss",
-        "msg-tag": "chart",
+        //"transport": "wss",
+        //"msg-tag": "chart",
         "grid-text-family": "Source Sans Pro",
         "data": '[{"y":2000,"a":64,"b":82},{"y":2003,"a":53,"b":48},{"y":2004,"a":81,"b":58},{"y":2005,"a":68,"b":72},{"y":2008,"a":52,"b":60},{"y":20011,"a":55,"b":30},{"y":2013,"a":79,"b":40}]'
     },
@@ -506,10 +506,9 @@ const __AREA__ = {
                 "title": "Data",
                 "type": "string",
                 "description": "Data series in case of static data.",
-                "x-schema-form": {
-                    "type": "textarea",
-                    "placeholder": "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
-                }
+                "codemirrorOptions": {
+                	"placeholder": "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
+            	}
             },
             "xkey": {
                 "title": "X key",

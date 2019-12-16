@@ -8,9 +8,9 @@ const __DONUT__ = {
         "type": "donut",
         "on-format-data": "return data;",
         "boxLabel": "Donut Chart",
-        "transport": "wss",
+        //"transport": "wss",
         "data": '[{label: "Drillers", value: 50}, {label: "Cranes",value: 20 }, {label: "Blasters", value: 30 }]',
-        "msg-tag": "donut"
+        //"msg-tag": "donut"
     },
     "box": {
         sizeX: 4,
@@ -58,8 +58,7 @@ const __DONUT__ = {
                 "title": "Data",
                 "type": "string",
                 "description": "Data series in case of static data.",
-                "x-schema-form": {
-                    "type": "textarea",
+                "codemirrorOptions": {
                     "placeholder": "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
                 }
             },

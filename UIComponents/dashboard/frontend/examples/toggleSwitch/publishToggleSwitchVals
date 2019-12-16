@@ -17,4 +17,4 @@ var publishResponse = function(channel, data, request) {
 
 //publishResponse("responseChannel", {status:true,disabled:false}, request);
 
-return "success";
+return {"state": requestParams.value};

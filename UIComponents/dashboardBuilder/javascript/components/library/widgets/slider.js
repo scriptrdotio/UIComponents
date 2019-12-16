@@ -6,9 +6,9 @@ const __SLIDER__ = {
     "commonActionData": true,
     "show": true,
     "defaults": {
-        "transport": "wss",
-        "api":"UIComponents/dashboard/frontend/examples/slider/getSliderVal",
-        "publish-api" : "UIComponents/dashboard/frontend/examples/slider/publishSliderVal",
+        //"transport": "wss",
+        //"api":"UIComponents/dashboard/frontend/examples/slider/getSliderVal",
+        //"publish-api" : "UIComponents/dashboard/frontend/examples/slider/publishSliderVal",
         "boxLabel": "Slider",
         "min": 2,
         "enable-resize": true,
@@ -165,6 +165,9 @@ const __SLIDER__ = {
         "type": "object",
         "title": "Schema",
         "properties": {
+            "data": {
+                "type": "hidden"
+            },
             "min": {
                 "title": "Slider 1",
                 "type": "number",

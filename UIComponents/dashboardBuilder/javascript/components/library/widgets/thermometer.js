@@ -5,11 +5,11 @@ const __THERMOMETER__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        "transport": "wss",
-        "on-format-data": "if(data && data instanceof Array && data[0].value) return data[0].value; else return data;",
+        //"transport": "wss",
+        "on-format-data": "return data;",
         "schema-for": "thermometer",
-        "fetch-data-interval": 300, // in seconds
-        "data": 20,
+        //"fetch-data-interval": 300, // in seconds
+        "data": "20",
         "boxLabel": "Thermometer",
         "boxBorder": true,
         "step": 40,
@@ -130,10 +130,13 @@ const __THERMOMETER__ = {
         "type": "object",
         "title": "Schema",
         "properties": {
-            "data": {
-                "title": "Thermometer Value",
-                "type": "string",
-                "description": "Thermometer Value (0 to 100)"
+             "data": {
+                "title": "Static data",
+                "type": "number",
+                "description": "Thermometer Value (0 to 100)",
+                "codemirrorOptions": {
+                    "placeholder": "24"
+                }
             },
             "height": {
                 "title": "Height",

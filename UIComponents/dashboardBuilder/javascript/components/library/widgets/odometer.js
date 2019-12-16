@@ -5,10 +5,10 @@ const __ODOMETER__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        "transport": "wss",
+        //"transport": "wss",
         "boxLabel": "Odometer",
-        "msg-tag": "odometer",
-        "data": 200,
+        //"msg-tag": "odometer",
+        "data": "200",
         // "api" : "UIComponents/dashboard/frontend/examples/odometer/getOdometerVal",
         "animation": "count",
         "theme": "car",
@@ -93,7 +93,10 @@ const __ODOMETER__ = {
             "data": {
                 "title": "Static data",
                 "type": "number",
-                "description": "Set a static value for Odometer."
+                "description": "Set a static value for Odometer.",
+                "codemirrorOptions": {
+                    "placeholder": "2020"
+                }
             },
             "duration": {
                 "title": "Duration",

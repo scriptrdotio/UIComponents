@@ -1,4 +1,4 @@
-angular.module('Map', ['ngMap', 'ToggleSwitch', 'ui.bootstrap', 'schemaForm', "ngAnimate", "ngSanitize", "angular-underscore/filters", "pascalprecht.translate", "ngMessages"]);
+angular.module('Map', ['ngMap', 'ToggleSwitch', 'ui.bootstrap', 'schemaForm', "ngAnimate", "ngSanitize", "angular-underscore/filters", "pascalprecht.translate", "ngMessages", 'ComponentsCommon', 'DataService']);
 
 
 //"underscore","btford.markdown", "ngSanitize",   "ui.codemirror", 

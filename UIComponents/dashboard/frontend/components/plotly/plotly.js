@@ -1,1 +1,1 @@
-angular.module('Plotly', ['angularPlotly']);
+angular.module('Plotly', ['angularPlotly', 'ComponentsCommon', 'DataService']);

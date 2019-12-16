@@ -53,9 +53,9 @@ const __LINE__ = {
         "ykeys": "[\"a\", \"b\"]",
         "labels": "[\"Serie A\", \"Serie B\"]",
         "colors": ["#FCC717", "#38B9D6"],
-        "transport": "wss",
-        //   "api" : "UIComponents/dashboard/frontend/examples/chart/getChartData",
-        "msg-tag": "chart",
+        //"transport": "wss",
+        //"api" : "UIComponents/dashboard/frontend/examples/chart/getChartData",
+        //"msg-tag": "chart",
         "data": '[{"y": 2006, "a": 2, "b": 3 }, { "y": 2007, "a": 82, "b": 68 }, { "y": 2009, "a": 70, "b": 99 }, { "y":2010, "a": 30, "b": 64 }, { "y": 2011, "a": 72, "b":100 }, { "y": 2012, "a": 81, "b": 81 }, { "y": 2013,"a": 52, "b": 39 } ]',
         "grid-text-family": "Source Sans Pro"
     },
@@ -489,8 +489,7 @@ const __LINE__ = {
                 "title": "Data",
                 "type": "string",
                 "description": "Data series in case of static data.",
-                "x-schema-form": {
-                    "type": "textarea",
+                "codemirrorOptions": {
                     "placeholder": "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
                 }
             },

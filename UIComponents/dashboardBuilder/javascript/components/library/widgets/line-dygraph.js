@@ -11,10 +11,10 @@ const __LINE_DYGRAPH__ = {
         "data-format": "dygraphs",
         "schema-for": "line",
         "display-metric-param": "display_metric",
-        "fetch-data-interval": 300, //in seconds
         "boxLabel": "Line Chart",
         "boxBorder": true,
-        "transport": "wss",
+        //"transport": "wss",
+        //"msg-tag": "dygraphs",
         "data": "[[1519312895840,10,26,16,20],[1519312896840,11,25,16,20],[1519312897840,10,26,16,20],[1519312898840,11,25,15,20],[1519312899840,10,26,16,21]]",
         "grid-text-family": "Source Sans Pro",
         "x1-axis-label-font-size": 12,
@@ -828,6 +828,14 @@ const __LINE_DYGRAPH__ = {
         "type": "object",
         "title": "Schema",
         "properties": {
+            "data": { //This is an override of the commonsconfig definition, to provide sample data based on widget type
+                "title": "Data",
+                "type": "string",
+                "description": "Data series in case of static data.",
+                "codemirrorOptions": {
+                    "placeholder": "[[1519312895840,10,26,16,20],[1519312896840,11,25,16,20],[1519312897840,10,26,16,20],[1519312898840,11,25,15,20],[1519312899840,10,26,16,21]]"
+                }
+            },
             "show-legend": {
                 "title": "Show Legend",
                 "default": true,
@@ -1016,7 +1024,7 @@ const __LINE_DYGRAPH__ = {
             "x1-axis-line-color": {
                 "title": "X-axis Line Color",
                 "type": "string",
-                "default": "#000000",
+                "default": "#a9a9a9",
                 "format": "color",
                 "description": "",
                 "validationMessage": "Invalid Color"
@@ -1024,7 +1032,7 @@ const __LINE_DYGRAPH__ = {
             "y-axis-line-color": {
                 "title": "Y-axis Line Color",
                 "type": "string",
-                "default": "#000000",
+                "default": "#a9a9a9",
                 "format": "color",
                 "description": "",
                 "validationMessage": "Invalid Color"
@@ -1032,7 +1040,7 @@ const __LINE_DYGRAPH__ = {
             "y2-axis-line-color": {
                 "title": "Y2-axis Line Color",
                 "type": "string",
-                "default": "#000000",
+                "default": "#a9a9a9",
                 "format": "color",
                 "description": "",
                 "validationMessage": "Invalid Color"
@@ -1186,7 +1194,7 @@ const __LINE_DYGRAPH__ = {
             "x1-grid-line-color": {
                 "title": "X-axis Grid Line Color",
                 "type": "string",
-                "default": "#000000",
+                "default": "#e5e5e5",
                 "format": "color",
                 "description": "",
                 "validationMessage": "Invalid Color"
@@ -1194,7 +1202,7 @@ const __LINE_DYGRAPH__ = {
             "y-grid-line-color": {
                 "title": "Y-axis Grid Line Color",
                 "type": "string",
-                "default": "#000000",
+                "default": "#e5e5e5",
                 "format": "color",
                 "description": "",
                 "validationMessage": "Invalid Color"
@@ -1202,7 +1210,7 @@ const __LINE_DYGRAPH__ = {
             "y2-grid-line-color": {
                 "title": "Y2-axis Grid Line Color",
                 "type": "string",
-                "default": "#000000",
+                "default": "#e5e5e5",
                 "format": "color",
                 "description": "",
                 "validationMessage": "Invalid Color"
@@ -1237,15 +1245,6 @@ const __LINE_DYGRAPH__ = {
                 "default": "independent",
                 "description": "This option defines whether the y axes should align their ticks or if they should be independent.",
                 "placeholder": " "
-            },
-            "data": {
-                "title": "Data",
-                "type": "string",
-                "description": "Data series in case of static data.",
-                "x-schema-form": {
-                    "type": "textarea",
-                    "placeholder": "[[\"2009-12-31T22:00:00.000Z\",1,99,1039600.0000000001,1960400],[\"2010-01-01T22:00:00.000Z\",2,98,1078400,1921600]]"
-                }
             },
             "x1-axis-label": {
                 "title": "X-axis Label",

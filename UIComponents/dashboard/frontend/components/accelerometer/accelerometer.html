@@ -1,4 +1,7 @@
-<div class="accelerometer-wrapper">
+<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+</scriptr-notifications>
+
+<div class="accelerometer-wrapper" ng-if="$ctrl.xLine && $ctrl.yLine && $ctrl.angle">
    <div class="line y"  ng-style="{ 'transform' :  $ctrl.yLine, 'border': '1px solid blue' }" ></div>
    <div class ="line"  ng-style="{ 'transform':  $ctrl.xLine}"></div>
    <div  class="angle" ng-style="{ 'transform':  $ctrl.angle }"></div>

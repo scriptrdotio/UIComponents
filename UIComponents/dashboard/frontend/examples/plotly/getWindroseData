@@ -1,20 +1,21 @@
 var log = require("log");
 log.setLevel("INFO");
 
-var retrievedData = [
-    {"direction": "E", "speeds": [2, 3, 15, 17]},
-    {"direction": "ESE", "speeds": [24, 8, 4]},
-    {"direction": "SSE", "speeds": [2.5, 7, 16]},
-    {"direction": "S", "speeds": [3, 8, 2, 1, 9, 11]},
-    {"direction": "SSW", "speeds": [13, 3, 7.5, 8]},
-    {"direction": "WSW", "speeds": [21, 14, 9]},
-    {"direction": "W", "speeds": [7, 0, 8, 9, 15, 19, 11]},
-    {"direction": "WNW", "speeds": [4, 17, 21]},
-    {"direction": "NNW", "speeds": [14, 7]},
-    {"direction": "N", "speeds": [20, 0, 5, 9, 7]},
-    {"direction": "NNE", "speeds": [1, 0.5, 6.5]},
-    {"direction": "ENE", "speeds": [3.5, 30, 15]}
+var windroseData = [
+    {"direction": "E", "speeds": [Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + Math.floor((Math.random() * 100) + 1))]},
+    {"direction": "ESE", "speeds": [Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), 4]},
+    {"direction": "SSE", "speeds": [Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), 16]},
+    {"direction": "S", "speeds": [Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), 2, 1, 9, 11]},
+    {"direction": "SSW", "speeds": [Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), 7.5, 8]},
+    {"direction": "WSW", "speeds": [Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), 9]},
+    {"direction": "W", "speeds": [Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), 9, 15, 19, 11]},
+    {"direction": "WNW", "speeds": [Math.floor((Math.random() * 100) + 1), 17, Math.floor((Math.random() * 100) + 1)]},
+    {"direction": "NNW", "speeds": [Math.floor((Math.random() * 100) + 1), 7]},
+    {"direction": "N", "speeds": [Math.floor((Math.random() * 100) + 1), 0, 5, 9, 7]},
+    {"direction": "NNE", "speeds": [Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), 6.5]},
+    {"direction": "ENE", "speeds": [Math.floor((Math.random() * 100) + 1), 30, Math.floor((Math.random() * 100) + 1)]}
 ];
+
 
 var requestParams = request.body;
 
@@ -29,6 +30,6 @@ var publishResponse = function(channel, data, request) {
    publish(channel, message);
 }
 
-publishResponse("responseChannel", {data:retrievedData}, request);
+publishResponse("responseChannel", windroseData, request);
 
-return {data:retrievedData};
+return windroseData;

@@ -6,4 +6,4 @@ var requestParams = request.body;
 
 publish("responseChannel", {"id": "button-label", "result": request.parameters.newLabel });
 
-return request.parameters.newLabel
+return {"status": "success"}

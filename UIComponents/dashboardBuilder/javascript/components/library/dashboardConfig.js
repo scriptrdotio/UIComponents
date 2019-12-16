@@ -28,6 +28,7 @@ angular
             },
             "settings": {
                 "label": "Dashboard Configuration",
+                "name": "dasboard",
                 "defaults": {
                     "publishChannel": "requestChannel",
                     "subscribeChannel": "responseChannel",

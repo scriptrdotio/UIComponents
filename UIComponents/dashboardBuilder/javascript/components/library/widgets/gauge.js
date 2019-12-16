@@ -5,12 +5,12 @@ const __GAUGE__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        "transport": "wss",
+        //"transport": "wss",
         "on-format-data": "return data;",
         "boxLabel": "Gauge",
-        "msg-tag": "gauge",
-        //   "data" : 30,
-        "api": "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"
+        //"msg-tag": "gauge",
+        "data" : "30",
+        //"api": "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"
     },
     "box": {
         sizeX: 2,
@@ -489,7 +489,10 @@ const __GAUGE__ = {
             "data": {
                 "title": "Static data",
                 "type": "number",
-                "description": "Gauge static value to show"
+                "description": "Gauge static value to show",
+                "codemirrorOptions": {
+                    "placeholder": "24"
+                }
             },
             "value-font-color": {
                 "title": "Value color",

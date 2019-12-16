@@ -20,15 +20,15 @@ angular
                     __THERMOMETER__,
                     __ODOMETER__,
                     __PROGRESSBAR__,
-                    __MAP__,
                     __ACCELEROMETER__,
-                    __GRID__,
                     __ALERT__,
                     __DISPLAY_DATA__,
-                    __IFRAME__,
+                    __BUTTON__,
                     __TOGGLE_SWITCH__,
                     __SLIDER__,
-                    __BUTTON__
+                    __GRID__,
+                    __MAP__,
+                    __IFRAME__
                     //,__METRIC_BOX__
                 ]
             }

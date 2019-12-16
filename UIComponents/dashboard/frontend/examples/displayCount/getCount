@@ -2,7 +2,7 @@ var log = require("log");
 log.setLevel("INFO");
 
 var requestParams = request.body;
-/*
+var count = Math.floor(Math.random() * 100);
 var publishResponse = function(channel, data, request, id) {
    var message = {"result": data};
    if(request.body && request.body.id) {
@@ -17,6 +17,6 @@ var publishResponse = function(channel, data, request, id) {
    publish(channel, message);
 }
 
-publishResponse("responseChannel", "Message Publish " +  (Math.floor((Math.random() * 100) + 1)), request, "myMessage");
-*/
-return "111";
+publishResponse("responseChannel",  {"value": count}, request, "count");
+
+return {"value": count} ;

@@ -48,6 +48,12 @@ angular
                 var self = this;
 
                 self.$onInit = function () {
+                    
+                    
+                    this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/3dsurface-bg.svg";
+                       
+                    this.hasData = (this.transformedData != null  && this.transformedData.length > 0) ?  true : false;
+                    
                     self._apiParams = (self.apiParams) ? angular.copy(self.apiParams) : [];
                     self.data = self.data ? self.data : [];
                     //self.width = self.width ? self.width : 400;
@@ -59,9 +65,9 @@ angular
                          modeBarButtonsToRemove: self.modeBarButtonsToRemove, 
                          displaylogo: self.displaylogo,
                     };
-                    self.staticData = angular.copy(self.data);
-                    self.transformedData = angular.copy(self.data);
-                    angular.element($window).on('resize', self.scheduleResize);
+                    //self.staticData = angular.copy(self.data);
+                    //self.transformedData = angular.copy(self.data);
+                    angular.element($window).on('resize', self.onResize);
                     self.style={};
                     self.layout = self.layout ? self.layout :{
                         //title: self.title,
@@ -80,72 +86,82 @@ angular
                             t: 5,
                         }
                     };
-                     self.transformedData=[{
-                        showscale:self.showBar,
-                        colorscale:self.colorScale,
-                        colorbar: {
-                          title: self.barTitle,
-                          thickness:self.barThickness
-                        },
-                        contours:self.contours,
-                        z: self.staticData.z,
-                        x: self.staticData.x,
-                        y: self.staticData.y,
-                        type: 'surface'
-                      }];
-
                 }
 
                 self.resize = function () {
                     self.layout.height =  $element.parent().height();
                     self.layout.width = $element.parent().width();
+                    self.calculateNotificationsDisplay()
                 }
+                
+                this.calculateNotificationsDisplay = function() {
+                    if($element.parent().innerWidth() < 240) {
+                        self.usePopover = true;
+                    } else {
+                        self.usePopover = false;
+                    }
+                }   
 
                 self.$postLink = function () {
-                    self.initDataService(this.transport);
-                    if (self.timeoutId != null) {
-                            $timeout.cancel(self.timeoutId);
-                        }
-                    self.timeoutId = $timeout(self.resize, 300);
-                    $scope.$watch(function( $scope ) {
-                        return $scope.$ctrl.data
-                    },function(newVal){
-                               if(newVal){
-                           self.consumeData(newVal);
-                       }
-                    });
-                    
-                    if(this.data) {
-                        self.timeout = false; 
-                        $timeout(function() {
-                             if(self.timeout == false) {
-                                self.consumeData(self.data);
-                             }
-                        }, 200)
-                    } else{
-                        self.timeout = true;
-                    }
+                    self.timeoutId = $timeout(self.resize.bind(self), 100);
+                    angular.element($window).on('resize', self.onResize);
+                   
+                    if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
+                        initDataService(this.transport);
+                    } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
+                        $scope.$watch(function( $scope ) {
+                            // wait for the timeout
+                            if($scope.$ctrl.data){
+                                return $scope.$ctrl.data
+                            }
+                        },function(newVal, oldVal){
+                            if(JSON.stringify(newVal)){
+                                self.consumeData(newVal);
+                            }
+                        });
+                    } else { 
+                       //Listen on update-data event to build data
+                       $scope.$on("update-data", function(event, data) {
+                             if(data == null){
+                                 if(self.transformedData == null || self.transformedData.length == 0) {
+                                     self.noResults = true;
+                                 } 
+                             } else {
+                                  if(data[self.serviceTag])
+                                    self.consumeData(data[self.serviceTag]);
+                                else
+                                    self.consumeData(data);
+                             } 
+                        });
+                        
+                      $scope.$emit("waiting-for-data");
+            		}
                 }
 
                 self.$onDestroy = function () {
-                    angular.element($window).off('resize', self.scheduleResize);
                     if (self.msgTag) {
                         wsClient.unsubscribe(self.msgTag, null, $scope.$id);
                     }
                     if (self.refreshTimer)
                         $interval.cancel(self.refreshTimer);
+                    
+                    if (self.timeoutId != null) {
+                       console.log("timeout inside destroy")
+                       $timeout.cancel(self.timeoutId);
+                   }
+                   
+                   angular.element($window).off('resize', self.onResize);
                 }
 
-                self.scheduleResize = function () {
+                self.onResize = function () {
                     if (self.timeoutId != null) {
                         $timeout.cancel(self.timeoutId);
                     }
                     return self.timeoutId = $timeout(self.resize, 100);
                 }
 
-                self.initDataService = function (transport) {
-                    if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
-                         var requestInfo = {
+                initDataService = function (transport) {
+                    var requestInfo = {
                                "api": self.api,
                                "transport": transport,
                                "msgTag": self.msgTag,
@@ -160,40 +176,58 @@ angular
                             //Assuming this is success
                             self.refreshTimer = $interval(
                                 function () {
-                                    self.initDataService(self.transport)
+                                    initDataService(self.transport)
                                 }, self.fetchDataInterval * 1000);
                         }
-                    } else {
-                        $scope.$emit("waiting-for-data");
-                        $scope.$on("update-data", function(event, data) {
-                             if(data && data[self.serviceTag])
-                                self.consumeData(data[self.serviceTag]);
-                            else
-                                self.consumeData(data);
-                        });
-                    }
                 }
 
                self.consumeData = function (data, response) {
-                    self.timeout = true;
-                    if(data && data.x && data.y && data.z){
-                        self.transformedData=[{
-                        showscale:self.showBar,
-                        colorscale:self.colorScale,
-                        colorbar: {
-                          title: self.barTitle,
-                          thickness:self.barThickness
-                        },
-                        contours:self.contours,
-                        z: data.z,
-                        x: data.x,
-                        y: data.y,
-                        type: 'surface'
-                      }];
+                   
+                    if(data.status && data.status == "failure") {
+                         self.noResults = true;
+                         self.dataFailureMessage = "Failed to fetch data.";
+                         if(self.transformedData && self.transformedData.length > 0) {
+                             self.stalledData = true;
+                             self.dataFailureMessage = "Failed to update data.";
+                         }
+                    } else {
+                        if(typeof this.onFormatData() == "function"){
+                            data = this.onFormatData()(data);
+                        }
+                        if(data != null) {
+                         if(typeof data == "object" && data.x != null && Array.isArray(data.x) && data.y !=null && Array.isArray(data.y) && data.z != null && Array.isArray(data.z)) { 
+                                self.transformedData=[{
+                                    showscale:self.showBar,
+                                    colorscale:self.colorScale,
+                                    colorbar: {
+                                      title: self.barTitle,
+                                      thickness:self.barThickness
+                                    },
+                                    contours:self.contours,
+                                    z: data.z,
+                                    x: data.x,
+                                    y: data.y,
+                                    type: 'surface'
+                                  }];
+
+                              	  self.hasData = true;
+                                  self.noResults = false;
+                                  self.stalledData = false;
+                           } else {
+                               self.noResults = true;
+                               if(self.transformedData != null  && self.transformedData.length > 0) {
+                                  self.stalledData = true;
+                                } 
+                                self.dataFailureMessage = "Failed to update data, invalid data format.";
+                           }
+                        } else {
+                            self.noResults = true;
+                             if(self.transformedData != null  && self.transformedData.length > 0) {
+                                self.stalledData = true;
+                            } 
+                            self.dataFailureMessage = "Failed to update data, no data returned.";
+                        } 
                     }
-
-                    
-
                 }
 
 

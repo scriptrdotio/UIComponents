@@ -5,15 +5,14 @@ const __WINDROSE__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        "transport": "wss",
+        //"transport": "wss",
         "data-type": "raw",
         "schema-for": "windrose",
         "data-format": "windrose",
         "speed-unit": "km/h",
-        "fetch-data-interval": 300, //in seconds
         "on-format-data": "return data;",
         "boxLabel": "Wind Rose",
-        "data": '{"data": [{"direction": "E", "speeds": [2, 3, 15, 17]},{"direction": "ESE", "speeds": [24, 8, 4]},{"direction": "SSE", "speeds": [2.5, 7, 16]},{"direction": "S", "speeds": [3, 8, 2, 1, 9, 11]},{"direction": "SSW", "speeds": [13, 3, 7.5, 8]},{"direction": "WSW", "speeds": [21, 14, 9]},{"direction": "W", "speeds": [7, 0, 8, 9, 15, 19, 11]},{"direction": "WNW", "speeds": [4, 17, 21]},{"direction": "NNW", "speeds": [14, 7]},{"direction": "N", "speeds": [20, 0, 5, 9, 7]},{"direction": "NNE", "speeds": [1, 0.5, 6.5]},{"direction": "ENE", "speeds": [3.5, 30, 15]}]}'
+        "data": '[{"direction": "E", "speeds": [2, 3, 15, 17]},{"direction": "ESE", "speeds": [24, 8, 4]},{"direction": "SSE", "speeds": [2.5, 7, 16]},{"direction": "S", "speeds": [3, 8, 2, 1, 9, 11]},{"direction": "SSW", "speeds": [13, 3, 7.5, 8]},{"direction": "WSW", "speeds": [21, 14, 9]},{"direction": "W", "speeds": [7, 0, 8, 9, 15, 19, 11]},{"direction": "WNW", "speeds": [4, 17, 21]},{"direction": "NNW", "speeds": [14, 7]},{"direction": "N", "speeds": [20, 0, 5, 9, 7]},{"direction": "NNE", "speeds": [1, 0.5, 6.5]},{"direction": "ENE", "speeds": [3.5, 30, 15]}]'
     },
     "box": {
         sizeX: 5,
@@ -105,6 +104,14 @@ const __WINDROSE__ = {
         "type": "object",
         "title": "Schema",
         "properties": {
+            "data": {
+                "title": "Data",
+                "type": "string",
+                "description": "Registered wind directions with their scheduled speeds.",
+                "codemirrorOptions": {
+                    "placeholder": '[{"direction": "E", "speeds": [2, 3, 15, 17]},{"direction": "ESE", "speeds": [24, 8, 4]},{"direction": "SSE", "speeds": [2.5, 7, 16]},{"direction": "S", "speeds": [3, 8, 2, 1, 9, 11]},{"direction": "SSW", "speeds": [13, 3, 7.5, 8]},{"direction": "WSW", "speeds": [21, 14, 9]},{"direction": "W", "speeds": [7, 0, 8, 9, 15, 19, 11]},{"direction": "WNW", "speeds": [4, 17, 21]},{"direction": "NNW", "speeds": [14, 7]},{"direction": "N", "speeds": [20, 0, 5, 9, 7]},{"direction": "NNE", "speeds": [1, 0.5, 6.5]},{"direction": "ENE", "speeds": [3.5, 30, 15]}]'
+                }
+            },
             "windDirection": {
                 "title": "Wind Direction Channel",
                 "type": "string",

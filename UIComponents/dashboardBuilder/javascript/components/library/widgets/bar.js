@@ -52,10 +52,10 @@ const __BAR__ = {
         "ykeys": "[\"a\", \"b\"]",
         "labels": "[\"Serie A\", \"Serie B\"]",
         "colors": ["#7ed38c", "#dd7ca7"],
-        "transport": "wss",
+        //"transport": "wss",
+        //"msg-tag": "chart",
         "on-format-data": "return data;",
-        //    "api" : "UIComponents/dashboard/frontend/examples/chart/getChartData",
-        "msg-tag": "chart",
+        //"api" : "UIComponents/dashboard/frontend/examples/chart/getChartData",
         "data": '[{"y":"2006","a":88,"b":20},{"y":"2007","a":30,"b":34},{"y":"2008","a":90,"b":42},{"y":"2009","a":89,"b":59},{"y":"2010","a":43,"b":61},{"y":"2011","a":85,"b":69},{"y":"2012","a":29,"b":65}]',
         "grid-text-family": "Source Sans Pro"
     },
@@ -390,8 +390,7 @@ const __BAR__ = {
                 "title": "Data",
                 "type": "string",
                 "description": "Data to plot in case of static data.This is an array of objects, containing x and y attributes as described by the xkey and ykeys options. The order in which you provide the data is the order in which the bars are displayed.",
-                "x-schema-form": {
-                    "type": "textarea",
+                "codemirrorOptions": {
                     "placeholder": "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
                 }
             },

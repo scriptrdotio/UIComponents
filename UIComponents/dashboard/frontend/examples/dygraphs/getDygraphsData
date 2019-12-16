@@ -1,1 +1,39 @@
-return [[1519312895840,3,26,16,20],[1519312896840,1,25,16,20],[1519312897840,0,26,16,20],[1519312898840,14,25,15,20],[1519312899840,10,26,16,21]];
+var log = require("log");
+log.setLevel("INFO");
+
+var requestParams = request.body;
+
+var publishResponse = function(channel, data, request, id) {
+   var message = {"result": data};
+   if(request.body && request.body.id) {
+     message["id"] = request.body.id;
+   } else {
+     if(!id) {
+        id = "gauge"
+     }
+     //Add a default id to identify the message published over the socket
+      message["id"] = id;
+   }
+   publish(channel, message);
+}
+
+
+var dygraphData  = [];
+for (var i = 1; i <= 20; i++) {
+    var m = "01", d = i;
+    if (d > 31) { m = "02"; d -= 31; }
+    if (m == "02" && d > 28) { m = "03"; d -= 28; }
+    if (m == "03" && d > 31) { m = "04"; d -= 31; }
+    if (d < 10) d = "0" + d;
+    // two series, one with range 1-100, one with range 1-2M
+    dygraphData.push([(new Date("2010/" + m + "/" + d)).getTime(),
+                  i + Math.random(),
+                  100 - (i + Math.floor((Math.random() * 100) + 1)),
+                  10 * (1 + (i + Math.floor((Math.random() * 100) + 1)) * (100 - Math.floor((Math.random() * 100) + 1)) / (50 * 50)),
+                  10 * (2 - (i + Math.floor((Math.random() * 100) + 1)) * (100 - Math.floor((Math.random() * 100) + 1)) / (50 * 50))]);
+}
+
+
+publishResponse("responseChannel", dygraphData, request, "dygraphs");
+
+return dygraphData;

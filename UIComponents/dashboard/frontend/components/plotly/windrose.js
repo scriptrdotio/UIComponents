@@ -31,21 +31,28 @@ angular
             controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval,dataService) {
 
                 var self = this;
+                
+                
+                
                 this.directions = ["N", "NNE", "ENE", "E", "ESE", "SSE", "S", "SSW", "WSW", "W", "WNW", "NNW"];
                 this.speedUnit =this.speedUnit ? this.speedUnit: "m/h";
                 this.noResults = false;
                 this.showSelectStream = self.api ? false: true;
 		
                 this.$onInit = function() {
-                    console.log("on init started")
+                    
+                  this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/wind-rose-bg.svg";
+                       
+                  this.hasData = (this.transformedData != null  && this.transformedData.length > 0) ?  true : false;
+                    
                	  this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
                     
                     this.plotCustomRanges = (this.customRanges && this.customRanges.length > 0) ? this.customRanges :  [{"color": "#CC5464", "lo": 0, "hi": 2}, {"color": "#FCC717", "lo": 2, "hi": 4}, {"color": "#38B9D6", "lo": 4, "hi": 6}, {"color": "#1DBC68", "lo": 6, "hi": 8}, {"color": "#E90088", "lo": 8, "hi": 10}, {"color": "#ffac47", "lo": 10, "hi": 20}];
                     
                     this.data = this.data ? this.data : [];
                     
-                    this.staticData = angular.copy(this.data);
-                    this.transformedData = angular.copy(this.data);
+                    //this.staticData = angular.copy(this.data);
+                    //this.transformedData = angular.copy(this.data);
                     
                     this.showLegend = this.showLegend ? this.showLegend : "true";
                     
@@ -75,29 +82,42 @@ angular
                     
                     this.speedUnit = ((this.speedUnit) ? this.speedUnit : "")
                     this.style = {};
-                    angular.element($window).on('resize', self.scheduleResize);
+                }
+                
+                
+                this.onResize = function() {
+                    if (self.timeoutId != null) {
+                        $timeout.cancel(self.timeoutId);
+                    }
+                    self.timeoutId = $timeout(self.resize.bind(self), 100);
                 }
                 
                 self.resize = function(){
                     self.timeoutId = null;
                      if($window.matchMedia($rootScope.mobileBreakPoint).matches) {
                         self.style["height"] = "300";
-                    	self.style["width"] = $element.parent()[0].clientWidth;
+                    	//self.style["width"] = $element.parent().innerWidth();
                     } else {
                         if(!(self.showLegend != null && self.showLegend == "true")) {
-                             self.style["height"] = $element.parent()[0].clientHeight;
-                    		 self.style["width"] = $element.parent()[0].clientWidth;
+                            var height = $element.parent().innerHeight();
+                            var width = $element.parent().innerWidth();
+                            if(width < height) {
+                                self.style["width"] = width
+                            } else {
+                                self.style["height"] = height;
+                            }
+                    		 
                         } else {
-                            self.style["height"] = $element.parent()[0].clientHeight ;
-                    	self.style["width"] = $element.parent()[0].clientWidth - $element.find(".plotly-chart-legend").outerWidth(true) - 10;
-                        //Might happen due to timeout order
-                            if(self.style["width"] <= 0 ) {
-                                self.style["width"] = $element.parent()[0].clientWidth 
+                            var height = $element.parent().innerHeight() - 10 ;
+                            var width = $element.parent().innerWidth() - $element.find(".plotly-chart-legend").outerWidth(true) - 10;
+                           if(width < height) {
+                                self.style["width"] = width;
+                                self.style["height"] = width;
+                            } else {
+                                self.style["height"] = height;
+                                self.style["width"] = height
                             }
                         }
-                     
-                        
-                        
                     }
                         
                     
@@ -115,52 +135,72 @@ angular
                             t: 10,
                         }
                     };
+                	self.calculateNotificationsDisplay()
                 }
+                
+                this.calculateNotificationsDisplay = function() {
+                    if($element.parent().innerWidth() < 240) {
+                        self.usePopover = true;
+                    } else {
+                        self.usePopover = false;
+                    }
+
+                }   
 
                 this.$postLink = function () {
-                    self.initDataService(this.transport);
-                    if (self.timeoutId != null) {
-                            $timeout.cancel(self.timeoutId);
-                        }
-                    self.timeoutId = $timeout(self.resize, 300);
-                    $scope.$watch(function( $scope ) {
-                        return $scope.$ctrl.data
-                    },function(newVal){
-                               if(newVal){
-                           self.consumeData(newVal);
-                       }
-                    });
+                    self.timeoutId = $timeout(self.resize.bind(self),  100);
+                    angular.element($window).on('resize', self.onResize);
+                   
+                    if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
+                        initDataService(this.transport);
+                    } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
+                        $scope.$watch(function( $scope ) {
+                            // wait for the timeout
+                            if($scope.$ctrl.data){
+                                return $scope.$ctrl.data
+                            }
+                        },function(newVal, oldVal){
+                            if(JSON.stringify(newVal)){
+                                self.consumeData(newVal);
+                            }
+                        });
+                    } else {
+                       //Listen on update-data event to build data
+                       $scope.$on("update-data", function(event, data) {
+                             if(data == null){
+                                 if(self.transformedData == null || self.transformedData.length == 0) {
+                                     self.noResults = true;
+                                 } 
+                             } else {
+                                  if(data[self.serviceTag])
+                                    self.consumeData(data[self.serviceTag]);
+                                else
+                                    self.consumeData(data);
+                             } 
+                        });
+                        
+                      $scope.$emit("waiting-for-data");
+            		}
                     
-                    if(this.data) {
-                        self.timeout = false; 
-                        $timeout(function() {
-                             if(self.timeout == false) {
-                                self.consumeData(self.data);
-                             }
-                        }, 200)
-                    } else{
-                        self.timeout = true;
-                    }
                 }
                 
                 this.$onDestroy = function() {
-                    angular.element($window).off('resize', self.scheduleResize);
+                    
                     if(self.msgTag){
                         wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
                     }
-                     if(self.refreshTimer)
-              			$interval.cancel( self.refreshTimer );
+                    if(self.refreshTimer)
+                        $interval.cancel( self.refreshTimer );
+
+                    if (self.timeoutId != null) {
+                        $timeout.cancel(self.timeoutId);
+                    }
+                    
+                   angular.element($window).off('resize', self.onResize);
                 }
                 
-                self.scheduleResize = function() {
-                        if (self.timeoutId != null) {
-                            $timeout.cancel(self.timeoutId);
-                        }
-                        return self.timeoutId = $timeout(self.resize, 100);
-          		}
 
-                self.initDataService = function(transport) {
-                     if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
+                var initDataService = function(transport) {
                          var requestInfo = {
                                "api": self.api,
                                "transport": transport,
@@ -176,46 +216,63 @@ angular
                             //Assuming this is success
                             self.refreshTimer = $interval(
                                 function () {
-                                    self.initDataService(self.transport)
+                                    initDataService(self.transport)
                                 }, self.fetchDataInterval * 1000);
                         }
-                    } else {
-                        $scope.$emit("waiting-for-data");
-                        $scope.$on("update-data", function(event, data) {
-                             if(data && data[self.serviceTag])
-                                self.consumeData(data[self.serviceTag]);
-                            else
-                                self.consumeData(data);
-                        });
-                    }
+                    
                 }
 
                 this.consumeData = function(data, response) {
-                    self.timeout = true;
-                    
-                    if(_.isEqual(this.data.data, this.staticData))
-                        this.data = [];
-                    
-                    if(typeof this.onFormatData() == "function"){
-                        data = this.onFormatData()(data);
-                    }
-                    if(data && data.data && data.data.length > 0){
-                        if(this.fetchDataInterval && this.fetchDataInterval > 0 && this.retrievedData && this.retrievedData.length > 0 && this.delta) {
-                            for(var i = 0; i < data.data.length; i++){
-                               this.data[i]["speeds"] = this.data[i]["speeds"].concat(data.data[i]["speeds"]); 
-                               this.data[i]["dates"] = this.data[i]["dates"].concat(data.data[i]["dates"]); 
-                            }
+                     if(data.status && data.status == "failure") {
+                         self.noResults = true;
+                         self.dataFailureMessage = "Failed to fetch data.";
+                         if(self.transformedData && self.transformedData.length > 0) {
+                             self.stalledData = true;
+                             self.dataFailureMessage = "Failed to update data.";
+                         } 
+                    } else {
+                        if(typeof this.onFormatData() == "function"){
+                            data = this.onFormatData()(data);
+                        }
+                        if(data != null){
+                            if(typeof data == "object" && Array.isArray(data)){
+                                if(data.length > 0){
+                                    if(this.fetchDataInterval && this.fetchDataInterval > 0 && this.data && this.data.length > 0 && this.delta) {
+                                        for(var i = 0; i < data.length; i++){
+                                           this.data[i]["speeds"] = this.data[i]["speeds"].concat(data[i]["speeds"]); 
+                                           this.data[i]["dates"] = this.data[i]["dates"].concat(data[i]["dates"]); 
+                                        }
+                                    } else {
+                                        this.data = data;
+                                    }
+                                    if(data.latestDate)
+                                        this.latestRetrievedDataDate = data.latestDate
+                                    this.buildWindRoseData();
+
+                                    self.hasData = true;
+                                    self.noResults = false;
+                                    self.stalledData = false;
+                                } else {
+                                      self.noResults = true;
+                                      if(self.transformedData != null  && self.transformedData.length > 0) {
+                                          self.stalledData = true;
+                                      } 
+                                      self.dataFailureMessage = "Failed to update data, no data returned.";
+                                  }
+                            } else {
+                               self.noResults = true;
+                               if(self.transformedData != null  && self.transformedData.length > 0) {
+                                  self.stalledData = true;
+                                } 
+                                self.dataFailureMessage = "Failed to update data, invalid data format.";
+                           }
                         } else {
-                            this.data = data.data;
-                        }
-                        if(data.latestDate)
-                        	this.latestRetrievedDataDate = data.latestDate
-                        this.buildWindRoseData();
-                    }else{
-                        if((this.api && data.length == 0) && (!this.data || (this.data && this.data.length == 0))) {
-                            this.data = [];
-                            this.noResults = true;
-                        }
+                            self.noResults = true;
+                             if(self.transformedData != null  && self.transformedData.length > 0) {
+                                self.stalledData = true;
+                            } 
+                            self.dataFailureMessage = "Failed to update data, no data returned.";
+                        } 
                     }
                 }
                 
@@ -297,6 +354,8 @@ angular
                         }
                         self.transformedData.push(tmp);
                     }
+                    
+                    $timeout(self.resize, 100)
                 }
             }
         });

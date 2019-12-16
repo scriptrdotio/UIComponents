@@ -6,11 +6,10 @@ const __DISPLAY_DATA__ = {
     "show": true,
     "defaults": {
         "on-format-data": "return data;",
-        "transport": "wss",
+        //"transport": "wss",
         "boxHeader": false,
-        "data": "12",
+        "data": JSON.stringify({"value": 12}),
         "message": "Connected Devices",
-        "fetch-data-interval": 300,
         "number-cell-size": "medium",
         "number-background-colors":[{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]
     },
@@ -469,9 +468,12 @@ const __DISPLAY_DATA__ = {
                 "validationMessage": "Invalid Color"
             },
             "data": {
-                "title": "Count",
+                "title": "Data",
                 "type": "string",
-                "description": "Count to display."
+                "description": "Set the value to display, message also can be set.",
+                "codemirrorOptions": {
+                    "placeholder": "{\"value\": 20, \"message\": \"Connected Devices\"}"
+                }
             }
         },
         "required": []

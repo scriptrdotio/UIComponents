@@ -5,6 +5,6 @@ var requestParams = request.body;
 
 var initialLabel = "initial label";
 
-publish("responseChannel", {"id": "button-label", "result": initialLabel });
+publish("responseChannel", {"id": "button-label", "result": {"label" : initialLabel} });
 
-return initialLabel;
+return {"label" : initialLabel};

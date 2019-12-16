@@ -5,8 +5,13 @@ const __ACCELEROMETER__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        "transport": "wss",
-        "msg-tag": "accelerometer",
+        //"transport": "wss",
+       // "msg-tag": "accelerometer",
+        "data": {
+		"x": 52,
+		"y": 13,
+		"z": 44
+	},
         "on-format-data": "return data;",
         "boxLabel": "Accelerometer",
         //     ,"api" : "UIComponents/dashboard/frontend/examples/accelerometer/getAccelerometerData"
@@ -21,14 +26,7 @@ const __ACCELEROMETER__ = {
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/accelerometer.png",
     "form": [{
         type: "tabs",
-        tabs: [
-            {
-                title: "Data",
-                items: ["transport", "msg-tag", "api",
-                    "api-params", "data",
-                    // "on-format-data"
-                ]
-            }]
+        tabs: []
     }],
     "schema": {
         "type": "object",
@@ -37,7 +35,10 @@ const __ACCELEROMETER__ = {
             "data": {
                 "title": "Data",
                 "type": "string",
-                "description": "X,Y,Z Value"
+                "description": "X,Y,Z Value",
+                "codemirrorOptions": {
+                    "placeholder": "{'x': 52, 'y': 13, 'z': 44}"
+                }
             }
         },
         "required": []

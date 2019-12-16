@@ -1,0 +1,24 @@
+var log = require("log");
+log.setLevel("INFO");
+
+var requestParams = request.body;
+
+var publishResponse = function(channel, data, request, id) {
+   var message = {"result": data};
+   if(request.body && request.body.id) {
+     message["id"] = request.body.id;
+   } else {
+     if(!id) {
+        id = "gauge"
+     }
+     //Add a default id to identify the message published over the socket
+      message["id"] = id;
+   }
+   publish(channel, message);
+}
+
+var donutdata = [{label: "Cranes", value: Math.floor((Math.random() * 100) + 1) }, {label: "Drillers",value: Math.floor((Math.random() * 100) + 1) }, {label: "Blasters", value: Math.floor((Math.random() * 100) + 1) }];
+
+publishResponse("responseChannel", donutdata, request, "donut");
+
+return donutdata;

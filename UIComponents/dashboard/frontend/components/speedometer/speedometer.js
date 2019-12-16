@@ -1,4 +1,4 @@
-angular.module('Speedometer', [ 'meterGauge' ]);
+angular.module('Speedometer', [ 'meterGauge', 'ComponentsCommon', 'DataService' ]);
 
 angular
   .module('Speedometer')
@@ -64,11 +64,15 @@ angular
          this.$onInit = function() {
             this.speedoConfig = {};
            
+            this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/speedometer-bg.svg";
+                       
+             this.hasData = (!isNaN(parseFloat(this.speedoConfig.needleVal)) && isFinite(this.speedoConfig.needleVal)) ?  true : false;
+             
             if(this.theme == "speed" || typeof this.theme == 'undefined'){
                  this.speedoConfig.gaugeRadius = (this.gaugeRadius) ? this.gaugeRadius : 150;
                  this.speedoConfig.minVal = (this.minValue)? this.minValue : 0;
                  this.speedoConfig.maxVal = (this.maxValue)? this.maxValue : 220;
-                 this.speedoConfig.needleVal= (this.needleVal)? Math.round(this.needleVal) : ((this.data) ? Math.round(this.data) : 0 );
+                // this.speedoConfig.needleVal= (this.needleVal)? Math.round(this.needleVal) : ((this.data) ? Math.round(this.data) : 0 );
                  this.speedoConfig.tickSpaceMinVal= (this.tickSpaceMinVal)? this.tickSpaceMinVal : 10;
                  this.speedoConfig.tickSpaceMajVal= (this.tickSpaceMajVal)? this.tickSpaceMajVal : 20;
                  this.speedoConfig.gaugeUnits= (this.gaugeUnits)? this.gaugeUnits : "kmh";
@@ -107,12 +111,20 @@ angular
              this.transport = (this.transport) ? this.transport :  null;
              this.msgTag = (this.msgTag) ? this.msgTag : null;
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
+             
+             
+             angular.element($window).on('resize', function() {
+                if (self.timeoutId != null) {
+                    $timeout.cancel(self.timeoutId);
+                }
+                self.timeoutId = $timeout(function() {
+                    self.renderGauge();
+                }, 100);
+            });
          }
-         
-         
+ 
         this.calculateGaugeRadius = function(){
-            self.timeoutId = null;
-            var h = $element.parent().height();
+            var h = $element.parent().height(); 
             var w = $element.parent().width();
             if(h == 0) {
                 self.speedoConfig.gaugeRadius = (w / 2);
@@ -121,32 +133,75 @@ angular
             }
         }
         
+        this.calculateNotificationsDisplay = function() {
+            if($element.parent().innerWidth() < 240) {
+                self.usePopover = true;
+            } else {
+                self.usePopover = false;
+            }
+        }  
+        
+        
+        this.renderGauge = function() {
+           angular.element($element).find(".speedometer-wrapper").html("");
+           self.speedo = angular.element(document.createElement("meter-gauge"));
+           self.calculateGaugeRadius();
+           self.speedo.attr("gaugeconfig", JSON.stringify(self.speedoConfig));
+           this.el = $compile( self.speedo )( $scope );
+           angular.element($element).find(".speedometer-wrapper").append( this.el );
+        }
+        
+        this.onResize = function() {
+            if (self.timeoutId != null) {
+                $timeout.cancel(self.timeoutId);
+            }
+            self.timeoutId = $timeout(self.resize.bind(self), 100);
+        }
+        
+        this.resize =  function() {
+            if(this.speedoConfig.needleVal)
+            	self.renderGauge();
+            self.calculateNotificationsDisplay();
+        }
+        
         this.$postLink = function() {
-      	  $timeout(function() {
-      		  if(!self.gaugeRadius) {
-      			  self.calculateGaugeRadius();
-      			  angular.element($window).on('resize', function() {
-                    if (self.timeoutId != null) {
-                		$timeout.cancel(self.timeoutId);
-              		}
-                 	self.timeoutId = $timeout(self.calculateGaugeRadius, 100);
-      			  });
-      		  }
-      		  self.renderGauge();
-      		  $scope.$watch(function( $scope ) {
-                    if($scope.$ctrl.needleVal){
-                      self.speedoConfig.needleVal = $scope.$ctrl.needleVal;
+            
+            self.timeoutId = $timeout(self.resize.bind(self), 100);
+            angular.element($window).on('resize', self.onResize);
+                   
+            if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
+                initDataService(this.transport);
+            } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
+                $scope.$watch(function( $scope ) {
+                    // wait for the timeout
+                    if($scope.$ctrl.data){
+                        return $scope.$ctrl.data
                     }
-	                 return(JSON.stringify(self.speedoConfig));
-	               },function(newVal){
-	               self.renderGauge()
-	           });
-      		  initDataService(self.transport);
-      	  }, 500); 
+                },function(newVal, oldVal){
+                    if(JSON.stringify(newVal)){
+                        self.consumeData(newVal);
+                    }
+                });
+            } else {
+                $scope.$on("update-data", function(event, data) {
+                    if(data == null) { //typeOf data == 'undefined' || data === null
+                        if(self.speedoConfig.needleVal == null) {
+                            self.noResults = true;
+                        } 
+                    } else {
+                        if(data[self.serviceTag])
+                            self.consumeData(data[self.serviceTag]);
+                        else
+                            self.consumeData(data);
+                    } 
+                });
+
+                $scope.$emit("waiting-for-data");
+            }
         }
          
+        
         this.$onDestroy = function() {
-            if(!this.gaugeRadius) angular.element($window).off('resize');
             if(self.msgTag){
                wsClient.unsubscribe(self.msgTag, null, $scope.$id); 
             }
@@ -154,27 +209,24 @@ angular
             if(self.refreshTimer){
                   $interval.cancel( self.refreshTimer );
              }
+            
+            if (self.timeoutId != null) {
+                $timeout.cancel(self.timeoutId);
+            }
+            
+            angular.element($window).off('resize', self.onResize);
         }
         
-        this.renderGauge = function() {
-           angular.element($element).html("")
-           this.speedo = angular.element(document.createElement("meter-gauge"));
-           this.speedo.attr("gaugeconfig", JSON.stringify(this.speedoConfig));
-           var el = $compile( this.speedo )( $scope );
-           angular.element($element).append( el );
-        }
-
         var initDataService = function(transport) {
-             if((transport == "wss" && (this.api || this.msgTag)) || (transport == "https" && this.api)) {
-                 var requestInfo = {
-                               "api": self.api,
-                               "transport": transport,
-                               "msgTag": self.msgTag,
-                               "apiParams": self.apiParams,
-                               "useWindowParams": self.useWindowParams,
-                               "httpMethod": self.httpMethod,
-                               "widgetId": $scope.$id
-                           };
+                var requestInfo = {
+                    "api": self.api,
+                    "transport": transport,
+                    "msgTag": self.msgTag,
+                    "apiParams": self.apiParams,
+                    "useWindowParams": self.useWindowParams,
+                    "httpMethod": self.httpMethod,
+                    "widgetId": $scope.$id
+                };
                 dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                 
                 if(self.fetchDataInterval && !self.refreshTimer) {
@@ -184,28 +236,47 @@ angular
                             initDataService(self.transport)
                         }, self.fetchDataInterval * 1000);
                 }
-            } else {
-                $scope.$emit("waiting-for-data");
-                $scope.$on("update-data", function(event, data) {
-                    if(data && data[self.serviceTag])
-                        self.consumeData(data[self.serviceTag]);
-                    else
-                        self.consumeData(data);
-                });
-            }
+            
           }
 
           this.consumeData = function(data, response) {
-            if(typeof self.onFormatData() == "function"){
-              data = self.onFormatData()(data);
-            }
-             data = parseInt(data);
-            if(typeof data == "number" && data.toString() != "NaN"){
-              data = data;
-            }else{
-              data = 0;
-            }
-            this.speedoConfig.needleVal = Math.round(data);
+           if(data.status && data.status == "failure") {
+               self.noResults = true;
+               self.dataFailureMessage = "Failed to fetch data.";
+               if(self.speedoConfig.needleVal) {
+                   self.stalledData = true;
+                   self.dataFailureMessage = "Failed to update data.";
+               }
+           } else {
+               if(typeof self.onFormatData() == "function"){
+                   data = self.onFormatData()(data);
+               }
+               if(data != null){
+                  data = parseFloat(data);
+                  if(!isNaN(data) && isFinite(data)){
+                      self.speedoConfig.needleVal = Math.round(data);
+                      
+                      self.hasData = true;
+                      self.noResults = false;
+                      self.stalledData = false;
+
+                      self.renderGauge();
+                   }else{
+                       self.noResults = true;
+                       if(self.speedoConfig.needleVal != null) {
+                           self.stalledData = true;
+                       } 
+                       self.dataFailureMessage = "Failed to update data, invalid data format.";
+                   }
+               } else {
+                   self.noResults = true;
+                   if(self.speedoConfig.needleVal != null) {
+                       self.stalledData = true;
+                   } 
+                   self.dataFailureMessage = "Failed to update data, invalid data format.";
+               }
+
+           }
           }
         }
 	});

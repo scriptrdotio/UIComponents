@@ -10,7 +10,7 @@ angular.module('angular-scriptrui', []).directive('ngScriptrAlert', function() {
          msg: '=ngModel',
          type: '@', //info, warning, success, error
     },
-    template: '<div class="alert alert-{{type}}" role="alert"><span ng-bind="msg"></span></div>',
+    template: '<div class="alert alert-{{type}} scriptr-alert" role="alert"><span ng-bind="msg"></span></div>',
     replace: true
   }
 });
