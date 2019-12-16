@@ -8,17 +8,25 @@
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
     <script src="/UIComponents/dataService.js"></script>
-  
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  	
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+    
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
+    
   
     <script src="/UIComponents/config/scriptrTransport.js"></script>
 </head>  
   
 <script>
-      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Gauge",'DataService'])
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Gauge"])
       angular.module('myApp').config(wssConfig);
       angular.module('myApp').config(httpsConfig);
   
