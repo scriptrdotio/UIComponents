@@ -42,8 +42,7 @@
     
     <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
-     <script src="/UIComponents/dashboard/frontend/components/common/widgetsFactory.js"></script>
-    
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
 </head> 
   
   
@@ -57,20 +56,6 @@
 
 (function() {
 	
-  if("" == "Yes"){
-  
-   var scriptName = window.location.pathname.substring(1,window.location.pathname.length )
-   var loginTemplateTarget ="/UIComponents/dashboardBuilder/loginTemplate.html?redirectTarget="+scriptName+"&anon_token="
-
-    var authorization  = $.scriptr.authorization(
-        {
-          onTokenValid: function(){ }, 
-          loginPage: loginTemplateTarget
-        }
-      );
-    }
-  
-  
    $.urlParam = function(name){
 	     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 	     if (results==null){
@@ -92,25 +77,7 @@
 		return vars;
 	}
     
-    var underscore = angular.module('underscore', []);
-		underscore.factory('_', ['$window', function($window) {		
-  		return $window._; // assumes underscore has already been loaded on the page		
-	}]);
-    
-
-    var wssConfig = ["wsClientProvider",function (wsClientProvider) {
-   	 	wsClientProvider.setBaseUrl("wss://" + window.location.host + "/");   	 
-        wsClientProvider.setToken($.urlParam("auth_token"));
-        wsClientProvider.setPublishChannel("requestChannel");
-        wsClientProvider.setSubscribeChannel("responseChannel");
-    }];
-
-    var httpsConfig = ["httpClientProvider",function (httpClientProvider) {
-   	  httpClientProvider.setBaseUrl("https://" + window.location.host);
-      httpClientProvider.setToken($.urlParam("auth_token"));
-    }]
-
-     var myApp= angular.module("myApp", ["underscore" , "WsClient", "HttpClient", 'ngRoute', "ngAnimate", "ngSanitize", 'Dygraphs', 'DataService' ])
+     var myApp= angular.module("myApp", ["WsClient", "HttpClient", 'Dygraphs'])
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      
@@ -122,7 +89,6 @@
           requireBase: false
         });
      });
-  
   
      myApp.controller('RootCtrl', function($scope, $interpolate, $location, $interval) {
        var vm = this;
