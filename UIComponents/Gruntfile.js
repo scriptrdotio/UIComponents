@@ -292,11 +292,11 @@ module.exports = function(grunt) {
 	            directives_1 : {
 	               src : [
 	                     'lib/raphael-min.js',
+	                     'lib/d3.v4.min.js',
 	                     'concat/min-safe/morris.js',
 	                     'concat/min-safe/angular.morris.js',
 	                     'dashboard/frontend/components/gauge/justgauge.js',
 	                     'dashboard/frontend/components/gauge/angular.gauge.min.js',
-	                     'lib/d3.v4.min.js',
 	                     'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
 	                     'dashboard/frontend/components/odometer/odometer.min.js',
 	                     'dashboard/frontend/components/odometer/angular.odometer.min.js',
@@ -519,7 +519,6 @@ module.exports = function(grunt) {
 	      'less:production', 
 	      'concat:css',
 	      'uglify:dashboardBuilder', 
-	      'uglify:dashboardBuilder',
 	      'cssmin:dashboardBuilder' ]);
 	grunt.registerTask('dashboardTemplate', [ 
 			'fetchFromCDN', 
