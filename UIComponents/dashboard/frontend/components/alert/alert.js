@@ -24,7 +24,7 @@ angular
          var self = this;
           
          this.$onInit = function() {
-            this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/gauge-bg.svg";
+            this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/alert-bg.svg";
                        
             this.hasData = (this.message != null && this.message != "") ?  true : false;
             this.type = (this.type) ? this.type : "info";
