@@ -61,8 +61,8 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/codemirror.min.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/mode/javascript/javascript.min.js'
-
+	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/mode/javascript/javascript.min.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/addon/display/placeholder.min.js'
 	               ]
 	            }
 	         },
@@ -198,7 +198,8 @@ module.exports = function(grunt) {
 		               'concat/min-safe/ui-codemirror.js' : [ 'dashboardBuilder/lib/codemirror/js/mode/ui-codemirror.js' ],
 		               'concat/min-safe/thermometer_directive.js' : [ 'dashboard/frontend/components/thermometer/thermometer_directive.js' ],
 		               'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/components/thermometer/thermometer.js' ],
-		               'concat/min-safe/notifications.js' : [ 'dashboard/frontend/components/common/notifications.js' ]
+		               'concat/min-safe/notifications.js' : [ 'dashboard/frontend/components/common/notifications.js' ],
+		               'concat/min-safe/markdown.js' : [ 'dashboardBuilder/lib/markdown/markdown-directive.js' ]
 		            }
 	            }
 	         },
@@ -309,7 +310,8 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/metricBox.js',
 	                     'dashboard/frontend/components/thermometer/thermometer.js',
 	                     'dashboard/frontend/components/progressBar/progressBar.js',
-	                     'concat/min-safe/notifications.js' ],
+	                     'concat/min-safe/notifications.js',
+	                     'concat/min-safe/markdown.js'],
 
 	               dest : 'build/javascript/template_resources.js'
 	            },
@@ -330,7 +332,7 @@ module.exports = function(grunt) {
 	            external_libraries2 : {
 	               src : [
 	                     'lib/handlebars.min.js',
-	                     'lib/codemirror.min.js', 'lib/javascript.min.js' ],
+	                     'lib/codemirror.min.js', 'lib/javascript.min.js', 'lib/placeholder.min.js' ],
 	               dest : 'build/js/external_libraries2.min.js'
 	            },
 	            
@@ -451,7 +453,8 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/dashboardsList.js',
 	                     'concat/min-safe/dashboard.js',
 	                     'dashboard/frontend/components/thermometer/thermometer.js',
-	                     'dashboard/frontend/components/progressBar/progressBar.js' ],
+	                     'dashboard/frontend/components/progressBar/progressBar.js',
+	                     'concat/min-safe/notifications.js'],
 	               dest : 'build/js/UIComponents/Components.min.js'
 	            },
 
@@ -483,7 +486,8 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/accelerometer/accelerometer.css',
 	                     'dashboardBuilder/lib/schemaForm/spectrum.css',
 	                     'lib/codemirror.min.css', 'lib/neo.min.css',
-	                     'dashboard/frontend/components/common/notifications.css' ],
+	                     'dashboard/frontend/components/common/notifications.css',
+	                     'dashboardBuilder/css/markdown.css'],
 	               dest : 'build/css/UIComponents/Components.css'
 	            },
 	            dt_css : {
@@ -615,22 +619,44 @@ module.exports = function(grunt) {
 
 	// Run the tasks
 	grunt.registerTask('buildCss', [ 'less:production' ]);
-	grunt.registerTask('dashboardBuilder', [ 'fetchFromCDN', 'fetch_ag_grid',
-	      'ngtemplates', 'ngAnnotate', 'concat:external_jquery_resources',
-	      'concat:external_libraries1', 'concat:external_libraries2', 'concat:external_angular_resources_1',
-	      'concat:external_angular_resources_2',
-	      'concat:external_angular_resources_3', 'concat:directives_1',
-	      'concat:directives_2', 'concat:components',
-	      'concat:dashboard_builder_constants', 'less:production', 'concat:css',
-	      'uglify:dashboardBuilder', 'uglify:dashboardBuilder',
-	      'cssmin:dashboardBuilder' ]);
-	grunt.registerTask('dashboardTemplate', [ 'fetchFromCDN', 'fetch_ag_grid',
-	      'ngtemplates', 'ngAnnotate', 'concat:external_jquery_resources',
-	      'concat:dt_external_libraries1', 'concat:dt_external_libraries2',
+	grunt.registerTask('dashboardBuilder', [ 
+			'fetchFromCDN', 
+			'fetch_ag_grid',
+	      'ngtemplates', 
+	      'ngAnnotate', 
+	      'concat:external_jquery_resources',
+	      'concat:external_libraries1', 
+	      'concat:external_libraries2', 
 	      'concat:external_angular_resources_1',
 	      'concat:external_angular_resources_2',
-	      'concat:external_angular_resources_3', 'concat:directives_1',
-	      'concat:directives_2', 'concat:components', 'less:production', 'concat:dt_css',
-	      'cssmin:dt_cssmin', 'uglify:dt_uglify' ]);
+	      'concat:external_angular_resources_3', 
+	      'concat:directives_1',
+	      'concat:directives_2', 
+	      'concat:components',
+	      'concat:dashboard_builder_constants', 
+	      'less:production', 
+	      'concat:css',
+	      'uglify:dashboardBuilder', 
+	      'uglify:dashboardBuilder',
+	      'cssmin:dashboardBuilder' ]);
+	grunt.registerTask('dashboardTemplate', [ 
+			'fetchFromCDN', 
+			'fetch_ag_grid',
+	      'ngtemplates',
+	      'ngAnnotate', 
+	      'concat:external_jquery_resources',
+	      'concat:dt_external_libraries1', 
+	      'concat:dt_external_libraries2',
+	      'concat:external_angular_resources_1',
+	      'concat:external_angular_resources_2',
+	      'concat:external_angular_resources_3',
+	      'concat:directives_1',
+	      'concat:directives_2', 
+	      'concat:components', 
+	      'less:production', 
+	      'concat:dt_css',
+	      'cssmin:dt_cssmin', 
+	      'uglify:dt_uglify' 
+	      ]);
 
 };
