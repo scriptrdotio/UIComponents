@@ -1031,9 +1031,8 @@
 .dashboardTheme .codemirror-small .CodeMirror {
   height: 100px;
 }
-
 .dashboardTheme pre.CodeMirror-placeholder {
-    font-style: italic;
-    font-weight: 100;
-    color: #a9a9a9;
+  font-style: italic;
+  font-weight: 100;
+  color: #a9a9a9;
 }
