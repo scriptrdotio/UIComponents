@@ -12,6 +12,12 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  	
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+    
     <script src="/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/toggleSwitch/toggle_switch.js"></script>
     
@@ -23,7 +29,7 @@
 </head>  
   
 <script>
-      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "ToggleSwitch","DataService"]);
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "ToggleSwitch"]);
       angular.module('myApp').config(wssConfig);
       angular.module('myApp').config(httpsConfig);
   

@@ -9,6 +9,12 @@
     <script src="/UIComponents/httpProvider.js"></script>
     <script src="/UIComponents/dataService.js"></script>
   
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  	
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+    
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/odometer/odometer.car.css">
     <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/odometer/angular.odometer.min.js"></script>
@@ -18,7 +24,7 @@
 </head>  
   
 <script>
-      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Odometer",'DataService',])
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Odometer"])
       angular.module('myApp').config(wssConfig);
     angular.module('myApp').config(httpsConfig);
   

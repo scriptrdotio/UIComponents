@@ -2,12 +2,12 @@ var log = require("log");
 log.setLevel("INFO"); 
 
 
-var requestParams = request.body;
+var requestParams = JSON.parse(request.parameters.body);
 
 var publishResponse = function(channel, data, request) {
    var message = {"result": data};
-   if(request.body && request.body.id) {
-     message["id"] = request.body.id;
+   if(request && request.id) {
+     message["id"] = request.id;
    } else {
      //Add a default id to identify the message published over the socket
       message["id"] = "toggle";
