@@ -296,13 +296,14 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/angular.morris.js',
 	                     'dashboard/frontend/components/gauge/justgauge.js',
 	                     'dashboard/frontend/components/gauge/angular.gauge.min.js',
-	                     'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
 	                     'lib/d3.v4.min.js',
+	                     'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
 	                     'dashboard/frontend/components/odometer/odometer.min.js',
 	                     'dashboard/frontend/components/odometer/angular.odometer.min.js',
 	                     'concat/min-safe/abn_tree_directive.js',
 	                     'dashboard/frontend/components/thermometer/thermometer_directive.js',
-	                     'lib/ng-map.js' ],
+	                     'lib/ng-map.js' 
+	                     ],
 	               dest :'build/js/directives_1.min.js'
 	            },
 
@@ -406,46 +407,10 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/common/notifications.css',
 	                     'dashboardBuilder/css/markdown.css'],
 	               dest : 'build/css/UIComponents/Components.css'
-	            },
-	            dt_css : {
-	               src : [
-	                     'lib/morris.css',//
-	                     'dashboard/frontend/components/chart/chart.css',//
-	                     'dashboard/frontend/components/searchBox/abn_tree.css',
-	                     'dashboardBuilder/lib/gridster/angular_gridster.min.css',//
-	                     'dashboard/frontend/components/odometer/odometer.car.css',//
-	                     'dashboard/frontend/components/thermometer/style.css',//
-	                     'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.css',//
-	                     'dashboard/frontend/components/displayCount/count.css',//
-	                     'dashboard/frontend/components/grid/grid.css',//
-	                     'dashboard/frontend/components/map/map.css',//
-	                     'dashboard/frontend/components/plotly/windrose.css',//
-	                     'dashboard/frontend/components/metricBox/metricBox.css',//
-	                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css',//
-	                     'lib/rzslider.css',//
-	                     'dashboard/frontend/components/button/button.css',//
-	                     'dashboard/frontend/components/IFrame/IFrame.css',//
-	                     'dashboard/frontend/components/accelerometer/accelerometer.css',//
-	                     'dashboard/frontend/components/common/notifications.css' ],
-	               dest : 'build/css/UIComponents/dt_components.css'
-	            },
-
+	            }
 	         },
 
 	         uglify : {
-	            dt_uglify : {
-		            files : {
-		               'build/js/external_jquery_resources.min.js' : [ 'build/js/external_jquery_resources.min.js' ],
-		               'build/js/dt_external_libraries1.min.js' : [ 'build/js/dt_external_libraries1.min.js' ],
-		               'build/js/dt_external_libraries2.min.js' : [ 'build/js/dt_external_libraries2.min.js' ],
-		               'build/js/angular_resources_1.min.js' : [ 'build/js/angular_resources_1.min.js' ],
-		               'build/js/angular_resources_2.min.js' : [ 'build/js/angular_resources_2.min.js' ],
-		               'build/js/angular_resources_3.min.js' : [ 'build/js/angular_resources_3.min.js' ],
-		               'build/js/directives_1.min.js' : [ 'build/js/directives_1.min.js' ],
-		               'build/js/directives_2.min.js' : [ 'build/js/directives_2.min.js' ],
-		               'build/js/UIComponents/Components.min.js' : [ 'build/js/UIComponents/Components.min.js' ],
-		            }
-	            },
 	            dashboardBuilder : {
 		            files : {
 		               'build/js/external_jquery_resources.min.js' : [ 'build/js/external_jquery_resources.min.js' ],
