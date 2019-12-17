@@ -292,12 +292,12 @@ module.exports = function(grunt) {
 	            directives_1 : {
 	               src : [
 	                     'lib/raphael-min.js',
-	                     'lib/d3.v4.min.js',
 	                     'concat/min-safe/morris.js',
 	                     'concat/min-safe/angular.morris.js',
 	                     'dashboard/frontend/components/gauge/justgauge.js',
 	                     'dashboard/frontend/components/gauge/angular.gauge.min.js',
 	                     'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
+	                     'lib/d3.v4.min.js',
 	                     'dashboard/frontend/components/odometer/odometer.min.js',
 	                     'dashboard/frontend/components/odometer/angular.odometer.min.js',
 	                     'concat/min-safe/abn_tree_directive.js',
