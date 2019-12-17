@@ -320,14 +320,21 @@ module.exports = function(grunt) {
 	               dest : 'build/js/external_jquery_resources.min.js'
 	            },
 
-	            external_libraries : {
+	            external_libraries1 : {
 	               src : [
 	                     'lib/underscore-min.js',
 	                     'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js',
-	                     'lib/plotly-latest.min.js', 'lib/handlebars.min.js',
-	                     'lib/codemirror.min.js', 'lib/javascript.min.js' ],
-	               dest : 'build/js/external_libraries.min.js'
+	                     'lib/plotly-latest.min.js' ],
+	               dest : 'build/js/external_libraries1.min.js'
 	            },
+	            
+	            external_libraries2 : {
+	               src : [
+	                     'lib/handlebars.min.js',
+	                     'lib/codemirror.min.js', 'lib/javascript.min.js' ],
+	               dest : 'build/js/external_libraries2.min.js'
+	            },
+	            
 	            dt_external_libraries1 : {
 	               src : [ 'lib/underscore-min.js', 'lib/codemirror.min.js',
 	                     'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js' ],
@@ -522,7 +529,8 @@ module.exports = function(grunt) {
 	            dashboardBuilder : {
 		            files : {
 		               'build/js/external_jquery_resources.min.js' : [ 'build/js/external_jquery_resources.min.js' ],
-		               'build/js/external_libraries.min.js' : [ 'build/js/external_libraries.min.js' ],
+		               'build/js/external_libraries1.min.js' : [ 'build/js/external_libraries1.min.js' ],
+		               'build/js/external_libraries2.min.js' : [ 'build/js/external_libraries2.min.js' ],
 		               'build/js/angular_resources_1.min.js' : [ 'build/js/angular_resources_1.min.js' ],
 		               'build/js/angular_resources_2.min.js' : [ 'build/js/angular_resources_2.min.js' ],
 		               'build/js/angular_resources_3.min.js' : [ 'build/js/angular_resources_3.min.js' ],
@@ -610,7 +618,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('buildCss', [ 'less:production' ]);
 	grunt.registerTask('dashboardBuilder', [ 'fetchFromCDN', 'fetch_ag_grid',
 	      'ngtemplates', 'ngAnnotate', 'concat:external_jquery_resources',
-	      'concat:external_libraries', 'concat:external_angular_resources_1',
+	      'concat:external_libraries1', 'concat:external_libraries2', 'concat:external_angular_resources_1',
 	      'concat:external_angular_resources_2',
 	      'concat:external_angular_resources_3', 'concat:directives_1',
 	      'concat:directives_2', 'concat:components',
