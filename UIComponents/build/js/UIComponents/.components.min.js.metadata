@@ -1,1 +1,1 @@
-{"acl":{},"contentType":"application/vnd.scriptr-javascript"}
+{"acl":{"read":"anonymous","write":"nobody","execute":"nobody"},"contentType":"application/javascript","userConfig":"/*#*SCRIPTR_PLUGIN*#*{\"metadata\":{\"name\":\"CodeMirrorArbitraryFile\",\"plugindata\":{}}}*#*#*/"}
