@@ -325,8 +325,8 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/angular.morris.js',
 	                     'concat/min-safe/justgauge.js',
 	                     'concat/min-safe/angular.gauge.min.js',
+	                     'lib/d3.v4.min.js',
 	                     'concat/min-safe/angular.metergauge.min.js',
-	                     
 	                     'concat/min-safe/odometer.min.js',
 	                     'concat/min-safe/angular.odometer.min.js',
 	                     'concat/min-safe/abn_tree_directive.js',
