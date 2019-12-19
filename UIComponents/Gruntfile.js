@@ -361,25 +361,12 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/chart.js',
 	                     'concat/min-safe/odometer.js',
 	                     'concat/min-safe/speedometer.js',
-	                     'concat/min-safe/module.js',
-	                     'dashboardBuilder/javascript/components/library/commonsConfig.js',
-	                     'dashboardBuilder/javascript/components/library/commonsActionConfig.js',
-	                     'dashboardBuilder/javascript/components/library/boxStyleConfig.js',
-	                     'dashboardBuilder/javascript/components/library/widgetsConfig.js',
-	                     'dashboardBuilder/javascript/components/library/defaultThemeModel.js',
-	                     'dashboardBuilder/javascript/components/library/dashboardConfig.js',
-	                     'concat/min-safe/dashboardsList.js',
-	                     'concat/min-safe/dashboard.js',
-	                     'concat/min-safe/searchBox.js',
 	                     'concat/min-safe/gauge.js',
 	                     'concat/min-safe/ngScriptrAlert.js',
 	                     'concat/min-safe/alert.js',
 	                     'concat/min-safe/thermometer.js',
 	                     'concat/min-safe/map.js',
 	                     'concat/min-safe/grid.js',
-	                     'concat/min-safe/ACL.js',
-	                     'concat/min-safe/autocomplete.js',
-	                     
 	                     'concat/min-safe/dygraphs-2.1.0.js',
 	                     'concat/min-safe/angular_dygraphs.js',
 	                     'concat/min-safe/dygraphs.js',
@@ -398,7 +385,24 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/notifications.js',
 	                     'concat/min-safe/templates.js'
 	                     ],
-	               dest : 'build/js/UIComponents/Components.min.js'
+	               dest : 'build/js/UIComponents/components.min.js'
+	            },
+	            editor: {
+	            	src: [
+	            		'concat/min-safe/module.js',
+                     'concat/min-safe/ACL.js',
+                     'dashboardBuilder/javascript/components/library/commonsConfig.js',
+                     'dashboardBuilder/javascript/components/library/commonsActionConfig.js',
+                     'dashboardBuilder/javascript/components/library/boxStyleConfig.js',
+                     'dashboardBuilder/javascript/components/library/widgetsConfig.js',
+                     'dashboardBuilder/javascript/components/library/defaultThemeModel.js',
+                     'dashboardBuilder/javascript/components/library/dashboardConfig.js',
+                     'concat/min-safe/dashboardsList.js',
+                     'concat/min-safe/dashboard.js',
+                     'concat/min-safe/searchBox.js',
+                     'concat/min-safe/autocomplete.js'
+	            	],
+	            	dest : 'build/js/UIComponents/editor.min.js'
 	            },
 
 	            css : {
@@ -435,7 +439,7 @@ module.exports = function(grunt) {
 	                     'dashboardBuilder/css/markdown.css',
 	                     'dashboardBuilder/css/media.css'
 	                     ],
-	               dest : 'build/css/UIComponents/Components.css'
+	               dest : 'build/css/UIComponents/components.css'
 	            }
 	         },
 
@@ -544,6 +548,7 @@ module.exports = function(grunt) {
 	      'concat:directives_1',
 	      'concat:directives_2', 
 	      'concat:components',
+	      'concat:editor',
 	      'concat:dashboard_builder_constants', 
 	      'less:production', 
 	      'concat:css',
@@ -562,7 +567,8 @@ module.exports = function(grunt) {
 	      'concat:external_angular_resources_3',
 	      'concat:directives_1',
 	      'concat:directives_2', 
-	      'concat:components', 
+	      'concat:components',
+	      'concat:editor',
 	      'less:production', 
 	      'concat:dt_css',
 	      'cssmin:dt_cssmin', 
