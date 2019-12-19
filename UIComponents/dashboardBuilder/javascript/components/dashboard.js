@@ -1287,13 +1287,13 @@ angular
           }
       };
             this.highlightTabs = function (formName) {
-        let rootEl = $('form[name="' + formName + '"]');
-        let tabHeaders = rootEl.find('ul li');
-        let tabPanes = rootEl.find('.tab-pane') || [];
+        var rootEl = $('form[name="' + formName + '"]');
+        var tabHeaders = rootEl.find('ul li');
+        var tabPanes = rootEl.find('.tab-pane') || [];
         rootEl.find('ul li a span.badge').remove();
 
-        for (let i = 0; i < tabPanes.length; i++) {
-            let errorCount = $(tabPanes[i]).find('div.ng-invalid').length;
+        for (var i = 0; i < tabPanes.length; i++) {
+            var errorCount = $(tabPanes[i]).find('div.ng-invalid').length;
             if (errorCount > 0) {
                 $(tabHeaders[i].childNodes[0]).append('<span class="badge sf-badge-error">' + errorCount + '</span>');
             }
