@@ -1,7 +1,8 @@
 var log = require("log");
 log.setLevel("INFO");
 
-var requestParams = request.body;
+var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
+var requestParams = typeof(body) == "string" ? JSON.parse(body) : body;
 
 var initialLabel = "initial label";
 
