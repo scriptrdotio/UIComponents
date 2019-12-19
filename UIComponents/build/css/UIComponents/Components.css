@@ -1290,190 +1290,6 @@ ul.nav.abn-tree .treeImg {margin-right: 5px; max-width: 20px;}
 	color: #3F51B5
 }
 /*# sourceMappingURL=style.css.map */
-/**
- * Default styles for the dygraphs charting library.
- */
-
-/* styles for a solid line in the legend */
-.dygraph-legend-line {
-  display: inline-block;
-  position: relative;
-  bottom: .5ex;
-  padding-left: 1em;
-  height: 1px;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  /* border-bottom-color is set based on the series color */
-}
-
-/* styles for a dashed line in the legend, e.g. when strokePattern is set */
-.dygraph-legend-dash {
-  display: inline-block;
-  position: relative;
-  bottom: .5ex;
-  height: 1px;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  /* border-bottom-color is set based on the series color */
-  /* margin-right is set based on the stroke pattern */
-  /* padding-left is set based on the stroke pattern */
-}
-
-.dygraph-roller {
-  position: absolute;
-  z-index: 10;
-}
-
-/* This class is shared by all annotations, including those with icons */
-.dygraph-annotation {
-  position: absolute;
-  z-index: 10;
-  overflow: hidden;
-}
-
-/* This class only applies to annotations without icons */
-/* Old class name: .dygraphDefaultAnnotation */
-.dygraph-default-annotation {
-  border: 1px solid black;
-  background-color: white;
-  text-align: center;
-}
-
-.dygraph-axis-label {
-  /* position: absolute; */
-  /* font-size: 14px; */
-  z-index: 10;
-  line-height: normal;
-  overflow: hidden;
-  color: black;  /* replaces old axisLabelColor option */
-}
-
-.dygraph-axis-label-x {
-}
-
-.dygraph-axis-label-y {
-}
-
-.dygraph-axis-label-y2 {
-}
-
-.dygraph-title {
-  font-weight: bold;
-  z-index: 10;
-  text-align: center;
-  /* font-size: based on titleHeight option */
-}
-
-.dygraph-xlabel {
-  text-align: center;
-  /* font-size: based on xLabelHeight option */
-}
-
-/* For y-axis label */
-.dygraph-label-rotate-left {
-  text-align: center;
-  /* See http://caniuse.com/#feat=transforms2d */
-  transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-}
-
-/* For y2-axis label */
-.dygraph-label-rotate-right {
-  text-align: center;
-  /* See http://caniuse.com/#feat=transforms2d */
-  transform: rotate(-90deg);
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-  -o-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-}
-
-
-.graph {
-    position: absolute; left: 10px; right: 10px; top: 10px; bottom: 10px;
-}
-
-.bottomLegend{ position: absolute;
-    bottom: 0;
-    text-align: center;
-    width: 100%;}   
-
-
-
-/*** dygraph legend ***/
-.graph.with-legend {right: 100px;}
-
-.dygraphs-legend {background: transparent; width: 100px; text-align: left; float: right; overflow-y: auto; height: calc(100% - 40px); font-size: 12px; color: #000; white-space: normal; word-wrap: break-word;}
-
-
-.dygraphs-legend::-webkit-scrollbar {
-    width: 12px;
-}
-
-.dygraphs-legend::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-    border-radius: 10px;
-}
-
-.dygraphs-legend::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
-}
-
-
-/**
-
-.greyout {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    left: 0px;
-    opacity: .5;
-}
-
-.greyout img{
-    background-color: gray;
-    opacity: 0.5;
-    filter: blur(1px);
-    height: 100%;
-    width: 100%;
-}
-
-.warningMessage {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    z-index: 100;
-}
-
-.loading-widget {
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    padding: 15px;
-}
-
-.loading-widget:after{
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%)
-}
-
-.stalled-data {
-    color: #f48220;
-    margin: 35 0 0 10;
-    right: 10px;
-    padding: 0;
-    position: absolute;
-    z-index: 1000;
-}**/
 /*!
 angular-xeditable - 0.7.0
 Edit-in-place for angular.js
@@ -1875,42 +1691,6 @@ ng-map {
     margin-left: 2px;
     margin-right: 2px;
     float: right;
-}
-/***Plotly chart legends and grap ***/
-
-
-
-
-.plotly-chart-wrapper.with-legend {/*width: calc(100% - 130px); */ float: left;}
-.plotly-chart-dimension {width: 100%; height: 100%;}
-.plotly-chart-legend {background: #fff; margin-top: 22px; text-align: left; float: right; overflow-y: auto;  font-size: 12px;}
-.plotly-chart-legend ul {padding: 0; list-style: none;}
-.plotly-chart-legend::-webkit-scrollbar {
-    width: 12px;
-}
-.plotly-chart-legend::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-    border-radius: 10px;
-}
-.plotly-chart-legend::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
-}
-.gridster-mobile .plotly-chart-wrapper.with-legend {width: 100%;}
-.gridster-mobile .plotly-chart-dimension {width: 100%; height: 55%;}
-.gridster-mobile .plotly-chart-legend {height: auto; width: 100%; float: none; text-align: left; margin: 10px;}
-
-
-/* mobile */
-@media only screen and (max-width: 600px) {
- .plotly-chart-legend {   
-     display: block;
-    text-align: center ;
-    width: 100%;
-    float: none;
-    position: initial !important;
-    right: 20px;
-}
 }
 .ats-switch {
   border: 1px solid;
@@ -3083,6 +2863,291 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 /*# sourceMappingURL=codemirror.min.css.map */
 .cm-s-neo.CodeMirror{background-color:#fff;color:#2e383c;line-height:1.4375}.cm-s-neo .cm-comment{color:#75787b}.cm-s-neo .cm-keyword,.cm-s-neo .cm-property{color:#1d75b3}.cm-s-neo .cm-atom,.cm-s-neo .cm-number{color:#75438a}.cm-s-neo .cm-node,.cm-s-neo .cm-tag{color:#9c3328}.cm-s-neo .cm-string{color:#b35e14}.cm-s-neo .cm-qualifier,.cm-s-neo .cm-variable{color:#047d65}.cm-s-neo pre{padding:0}.cm-s-neo .CodeMirror-gutters{border:none;border-right:10px solid transparent;background-color:transparent}.cm-s-neo .CodeMirror-linenumber{padding:0;color:#e0e2e5}.cm-s-neo .CodeMirror-guttermarker{color:#1d75b3}.cm-s-neo .CodeMirror-guttermarker-subtle{color:#e0e2e5}.cm-s-neo .CodeMirror-cursor{width:auto;border:0;background:rgba(155,157,162,.37);z-index:1}
 /*# sourceMappingURL=neo.min.css.map */
+/**
+ * Default styles for the dygraphs charting library.
+ */
+
+/* styles for a solid line in the legend */
+.dygraph-legend-line {
+  display: inline-block;
+  position: relative;
+  bottom: .5ex;
+  padding-left: 1em;
+  height: 1px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  /* border-bottom-color is set based on the series color */
+}
+
+/* styles for a dashed line in the legend, e.g. when strokePattern is set */
+.dygraph-legend-dash {
+  display: inline-block;
+  position: relative;
+  bottom: .5ex;
+  height: 1px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  /* border-bottom-color is set based on the series color */
+  /* margin-right is set based on the stroke pattern */
+  /* padding-left is set based on the stroke pattern */
+}
+
+.dygraph-roller {
+  position: absolute;
+  z-index: 10;
+}
+
+/* This class is shared by all annotations, including those with icons */
+.dygraph-annotation {
+  position: absolute;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* This class only applies to annotations without icons */
+/* Old class name: .dygraphDefaultAnnotation */
+.dygraph-default-annotation {
+  border: 1px solid black;
+  background-color: white;
+  text-align: center;
+}
+
+.dygraph-axis-label {
+  /* position: absolute; */
+  /* font-size: 14px; */
+  z-index: 10;
+  line-height: normal;
+  overflow: hidden;
+  color: black;  /* replaces old axisLabelColor option */
+}
+
+.dygraph-axis-label-x {
+}
+
+.dygraph-axis-label-y {
+}
+
+.dygraph-axis-label-y2 {
+}
+
+.dygraph-title {
+  font-weight: bold;
+  z-index: 10;
+  text-align: center;
+  /* font-size: based on titleHeight option */
+}
+
+.dygraph-xlabel {
+  text-align: center;
+  /* font-size: based on xLabelHeight option */
+}
+
+/* For y-axis label */
+.dygraph-label-rotate-left {
+  text-align: center;
+  /* See http://caniuse.com/#feat=transforms2d */
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+}
+
+/* For y2-axis label */
+.dygraph-label-rotate-right {
+  text-align: center;
+  /* See http://caniuse.com/#feat=transforms2d */
+  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+}
+
+
+.graph {
+    position: absolute; left: 10px; right: 10px; top: 10px; bottom: 10px;
+}
+
+.bottomLegend{ position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;}   
+
+
+
+/*** dygraph legend ***/
+.graph.with-legend {right: 100px;}
+
+.dygraphs-legend {background: transparent; width: 100px; text-align: left; float: right; overflow-y: auto; height: calc(100% - 40px); font-size: 12px; color: #000; white-space: normal; word-wrap: break-word;}
+
+
+.dygraphs-legend::-webkit-scrollbar {
+    width: 12px;
+}
+
+.dygraphs-legend::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+
+.dygraphs-legend::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+
+/**
+
+.greyout {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    left: 0px;
+    opacity: .5;
+}
+
+.greyout img{
+    background-color: gray;
+    opacity: 0.5;
+    filter: blur(1px);
+    height: 100%;
+    width: 100%;
+}
+
+.warningMessage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 100;
+}
+
+.loading-widget {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+}
+
+.loading-widget:after{
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.stalled-data {
+    color: #f48220;
+    margin: 35 0 0 10;
+    right: 10px;
+    padding: 0;
+    position: absolute;
+    z-index: 1000;
+}**/
+.horizontal-count-media .media-middle {padding: 0 10px;}
+.horizontal-count-media .media-middle span {word-wrap: break-word; display: block;} 
+.horizontal-count-media .pull-none {float: none;}
+.horizontal-count-media .media-left {padding: 0 10px;}
+
+.vertical-count-media {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 10px;
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+    .horizontal-count-media .media-middle span{ 
+    margin-top:10px; 
+    }
+}
+
+
+.display-count {height: 100%;}
+.display-count div {height: 100%;}
+.horizontal-count-media {height: 100%; display: table;}
+.display-count .vertical-count-media {height: 50%;}
+.scriptr-slider.rzslider .rz-bar {
+  background: #ffe4d1;
+  height: 2px;
+}
+.scriptr-slider.rzslider .rz-selection {
+  background: orange;
+}
+
+.scriptr-slider.rzslider .rz-pointer {
+  width: 8px;
+  height: 16px;
+  top: auto; /* to remove the default positioning */
+  bottom: 0;
+  background-color: #333;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.scriptr-slider.rzslider .rz-pointer:after {
+  display: none;
+}
+
+.scriptr-slider.rzslider .rz-bubble {
+  bottom: 14px;
+}
+
+.scriptr-slider.rzslider .rz-limit {
+  font-weight: bold;
+  color: orange;
+}
+
+.scriptr-slider.rzslider .rz-tick {
+  width: 1px;
+  height: 10px;
+  margin-left: 4px;
+  border-radius: 0;
+  background: #ffe4d1;
+  top: -1px;
+}
+
+.scriptr-slider.rzslider .rz-tick.rz-selected {
+  background: orange;
+}
+/***Plotly chart legends and grap ***/
+
+
+
+
+.plotly-chart-wrapper.with-legend {/*width: calc(100% - 130px); */ float: left;}
+.plotly-chart-dimension {width: 100%; height: 100%;}
+.plotly-chart-legend {background: #fff; margin-top: 22px; text-align: left; float: right; overflow-y: auto;  font-size: 12px;}
+.plotly-chart-legend ul {padding: 0; list-style: none;}
+.plotly-chart-legend::-webkit-scrollbar {
+    width: 12px;
+}
+.plotly-chart-legend::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+.plotly-chart-legend::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+.gridster-mobile .plotly-chart-wrapper.with-legend {width: 100%;}
+.gridster-mobile .plotly-chart-dimension {width: 100%; height: 55%;}
+.gridster-mobile .plotly-chart-legend {height: auto; width: 100%; float: none; text-align: left; margin: 10px;}
+
+
+/* mobile */
+@media only screen and (max-width: 600px) {
+ .plotly-chart-legend {   
+     display: block;
+    text-align: center ;
+    width: 100%;
+    float: none;
+    position: initial !important;
+    right: 20px;
+}
+}
 .greyout {
     background-color: transparent;
     left: 0px;
@@ -3484,3 +3549,30 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   border-bottom: 1px solid #eaecef;
   color: #111;
   /* Darker */ }</style>
+@media screen and (min-width: 480px) {
+    
+}
+
+@media screen and (min-width: 560px) {
+  .slick-slide a[ng-click] {width: 40px; height: 35px;}
+  .slick-slide img {width: 54%;}
+  .slick-slide .odometer-img, .slick-slide .gauge-img {width: 60%; padding-top: 4px;}
+  .col-md-p0 {padding-right: 15px;padding-left: 15px;}
+
+}
+
+@media screen and (min-width: 768px) {
+	ul {padding-left: 20px;}
+	.btn.btn-block {width: 100%!important;}
+}
+
+@media screen and (min-width: 833px) {
+  .slick-slide a[ng-click] {width: 50px; height: 40px;}
+  .slick-slide img {width: 54%;}
+  .slick-slide .odometer-img, .slick-slide .gauge-img {width: 60%; padding-top: 4px;}
+}
+
+@media screen and (min-width: 561px) and (max-width: 832px) { 
+  .slick-slide img {max-width: 100%;}
+  .slick-label {line-height: inherit; display: block;}
+}
