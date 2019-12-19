@@ -63,18 +63,7 @@
 </head> 
   
 <script type="text/javascript"> 
-    /*
-     Handlebars.registerHelper('json', function(context) {
-          if(typeof context === "object") {
-               console.log("context object", context);
-            return JSON.stringify(context);
-          } else {
-              console.log("context string", context);
-            return context;
-          }
-    });
-    */
-    
+(function ($) { 
     Handlebars.registerHelper('if_eq', function(a, b, opts) {
         if(a === b) // Or === depending on your needs
             return opts.fn(this);
@@ -145,16 +134,7 @@
           var vm = this;
           //vm.user = (atob(document.cookie.split("=")[1]).split(":")[1])
       });
-    
-    /**
-    if(!$.urlParam('scriptrIdeRef')) { //if not in IDE open login
-         var authorization  = $.scriptr.authorization(
-        {
-          onTokenValid: function(){ }, 
-          loginPage: login.loginTarget
-        }
-      )
-    } **/
+ }(jQuery));   
 </script>
 
     <!--script src="/UIComponents/dashboardBuilder/javascript/dashboard.js"></script-->
