@@ -40,8 +40,6 @@
   
     &lt;!-- Components --&gt;
     &lt;script src=&quot;/UIComponents/build/js/UIComponents/components.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;/UIComponents/build/js/UIComponents/editor.min.js&quot;&gt;&lt;/script&gt;
-    
     
     
     &lt;script src=&quot;/UIComponents/dashboardBuilder/javascript/config/config.js&quot;&gt;&lt;/script&gt;
