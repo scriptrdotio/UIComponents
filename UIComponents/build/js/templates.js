@@ -125,6 +125,136 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
   );
 
 
+  $templateCache.put('/UIComponents/dashboardBuilder/javascript/components/box.html',
+    "<div class=box ng-mouseover=\"$ctrl.showActionBar = true\" ng-mouseout=\"$ctrl.showActionBar = false\" ng-class=\"{'box-without-header' : ($ctrl.widget.options.boxHeader === false || $ctrl.widget.options.boxHeader == 'false' || $ctrl.widget.sizeY == 1) ,  'vertical' : ($ctrl.widget.sizeX == 1)}\"><div class=\"box-header-btns pull-right\" ng-show=\"$ctrl.showActionBar == true\"><a title=\"Configure this widget\" ng-if=$ctrl.widget.form ng-click=$ctrl.openSettings($ctrl.widget)><i class=\"glyphicon glyphicon-cog\"></i> </a><a title=\"Remove this widget\" ng-click=$ctrl.remove($ctrl.widget)><i class=\"glyphicon glyphicon-trash\"></i> </a><a class=drag-box title=\"Drag this widget\" ng-if=\"$ctrl.isMobile== false\"><i class=\"glyphicon glyphicon-move\"></i></a></div><div class=box-header><div class=box-label><span tooltip-append-to-body=true uib-tooltip={{$ctrl.widget.options.boxLabel}}>{{$ctrl.widget.options.boxLabel}}</span></div></div><div class=clearfix></div><div class=box-content></div></div>"
+  );
+
+
+  $templateCache.put('/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
+    "<div class=\"board-menu-base clearfix\">\n" +
+    "  <!-- begin left side -->\n" +
+    "  <div ng-if=\"!$ctrl.isInIde && $ctrl.showTree\" class=\"left-dashboard col-xs-3 col-sm-2 pdl0 pdr0\">\n" +
+    "    <div class=\"devices-models-tree\">\n" +
+    "      <scriptr-searchbox \n" +
+    "                         transport=\"https\"\n" +
+    "                         load-tree = \"$ctrl.loadTree\"\n" +
+    "                         icon-expand = \"{{$ctrl.iconExpand || 'fa expand-collapse fa-caret-right'}} \"\n" +
+    "                         icon-collapse = \"{{$ctrl.iconCollapse || 'fa expand-collapse fa-caret-right'}}\"\n" +
+    "                         tree-search-criteria = \"{{$ctrl.treeSearchCriteria}}\"\n" +
+    "                         api='{{$ctrl.devicesModel}}'\n" +
+    "                         on-select=\"$ctrl.selectBranch\"\n" +
+    "      </scriptr-searchbox>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "  <!-- end left side -->\n" +
+    "\n" +
+    "  <!-- begin dashboard content -->\n" +
+    "  <div class=\"dashboard-content col-xs-9 col-sm-10 pdr0 pdl0\">\n" +
+    "      <!-- begin page header -->\n" +
+    "      <div class=\"page-header col-xs-12\" ng-if=\"!$ctrl.isInIde\">\n" +
+    "           <div ng-if=\"$ctrl.show\" uib-alert ng-class=\"'alert-' + ( $ctrl.message.type || 'warning')  + ' m10'\" close=\"$ctrl.closeAlert()\" dismiss-on-timeout=\"5000\">{{$ctrl.message.content}}</div>\n" +
+    "           <form name=\"scriptForm\" ng-submit=\"$ctrl.saveDashboard(scriptForm)\">\n" +
+    "            <div class=\"form-group col-xs-12 col-sm-6\">\n" +
+    "              <div class=\"row\">\n" +
+    "                <div class=\"col-xs-12 col-sm-4\"><a class=\"back-to-panel btn-block btn btn-info\" ng-href=\"#/dashboardsList\"><i class=\"fa fa-arrow-circle-left\"></i> Back to dashboard panel</a></div>   \n" +
+    "\n" +
+    "                <div class=\"col-xs-12 col-sm-5\"><div ng-if=\"!$ctrl.isInIde\" sf-options=\"$ctrl.frmGlobalOptions\" sf-schema=\"$ctrl.schema\" sf-form=\"$ctrl.form\" sf-model=\"$ctrl.model\" ></div>\n" +
+    "                  </div>\n" +
+    "                  <div class=\"col-xs-12 col-sm-2\"><button class=\"btn btn-primary btn-sm btn-block\"  type=\"submit\" ng-if=\"!$ctrl.isInIde\"><i class=\"fa fa-floppy-o\" aria-hidden=\"true\"></i> Save</button>\n" +
+    "                  </div>\n" +
+    "                   <div ng-if=\"$ctrl.savedScript && !$ctrl.isInIde\" class=\"col-xs-12 col-sm-1\">\n" +
+    "                      <scriptr-acl \n" +
+    "                                   users=\"$ctrl.users\"\n" +
+    "                                   default-set-object=\"[{code : 'nobody',icon : 'fa fa-group'}]\"\n" +
+    "                                   on-save=\"$ctrl.onACLChange\"       \n" +
+    "                                   >\n" +
+    "                      </scriptr-acl>\n" +
+    "                  </div>\n" +
+    "              </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"col-xs-12 col-sm-6 pull-right\" ng-if=\"!$ctrl.isInIde\">\n" +
+    "               <a class=\"pull-right btn btn-sm btn-primary ml5\" ng-if=\"!$ctrl.isInIde\" ng-click=\"$ctrl.logout()\"><i class=\"fa fa-user-circle\" aria-hidden=\"true\"></i> Logout</a>\n" +
+    "               <a class=\"pull-right  btn-sm  btn btn-primary ml5\" ng-if=\"!$ctrl.isInIde\" ng-if=\"$ctrl.isEdit\" ng-click=\"$ctrl.viewDasboard()\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i> View</a>\n" +
+    "            </div>\n" +
+    "          </form>\n" +
+    "      </div>	\n" +
+    "      <!-- end page header -->\n" +
+    "      <!-- begin slick wrap -->\n" +
+    "    <div class=\"col-xs-12 pdl0 slick-wrap\">\n" +
+    "          <!-- begin carousel options -->\n" +
+    "          <div>\n" +
+    "            <div class=\"dashboard-config col-xs-12 col-sm-2 col-sm-push-10\">\n" +
+    "                <a ng-click=\"$ctrl.clear()\" uib-tooltip=\"Clear widgets\" tooltip-placement=\"bottom\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i></a>\n" +
+    "                <a ng-click=\"$ctrl.setDashboardSettings()\" uib-tooltip=\"Settings\" tooltip-placement=\"bottom\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\n" +
+    "            </div>\n" +
+    "            <div class=\"slick-container col-xs-12 col-sm-10 col-sm-pull-2\">\n" +
+    "                <slick \n" +
+    "                       settings=\"$ctrl.slickConfig\"\n" +
+    "                       infinite=\"true\" \n" +
+    "                       slides-to-show=\"$ctrl.widgetsConfig.length\"\n" +
+    "                       slides-to-scroll=\"0\"\n" +
+    "                       ng-if=\"$ctrl.dataLoaded\" \n" +
+    "                       init-onload=\"false\"\n" +
+    "                       data=\"$ctrl.dataLoaded\"\n" +
+    "                       >\n" +
+    "                  <div class=\"slick-item\" ng-repeat=\"item in $ctrl.widgetsConfig\" ng-if=\"item.show != false\">\n" +
+    "                     <span >\n" +
+    "                         <a ng-click=\"$ctrl.addWidget(item)\"  uib-tooltip=\"{{ item.label }}\" tooltip-placement=\"auto\" tooltip-append-to-body=\"true\">\n" +
+    "                           <img ng-if=\"item.imgSrc\" ng-src=\"{{ item.imgSrc }}\" class=\"{{item.imgCls}}\" alt=\"{{ item.label}}\" />\n" +
+    "                           <i ng-if=\"item.iconSrc\" class=\"{{ item.iconSrc }}\" aria-hidden=\"true\" alt=\"{{ item.label}}\" /></i>\n" +
+    "                           <!--  span class=\"slick-label\">{{ item.label }}</span -->\n" +
+    "                         </a>\n" +
+    "                      </span>\n" +
+    "                  </div>\n" +
+    "                </slick>\n" +
+    "             </div>\n" +
+    "	        <div class=\"clearfix\"></div>\n" +
+    "          </div>\n" +
+    "          <!-- end carousel options -->\n" +
+    "\n" +
+    "        <div class=\"clearfix\"></div>\n" +
+    "\n" +
+    "        <!-- begin gridster -->\n" +
+    "        <div class=\"dashboardContainer\">\n" +
+    "            <div gridster=\"$ctrl.gridsterOptions\">\n" +
+    "                <ul>\n" +
+    "                    <li gridster-item=\"widget\" ng-repeat=\"widget in $ctrl.dashboard.widgets\" ng-class=\"{'fit-to-widget': (widget.fitToWidget === true)}\">\n" +
+    "                      <box widget=\"widget\"></box>\n" +
+    "                    </li>\n" +
+    "                </ul>\n" +
+    "        	</div>\n" +
+    "     	</div>\n" +
+    "        <!-- end gridster -->\n" +
+    "    </div>\n" +
+    "    <!-- end slick wrap -->\n" +
+    "\n" +
+    "\n" +
+    "  </div>\n" +
+    "</div>\n" +
+    "<!-- end dashboard content -->\n"
+  );
+
+
+  $templateCache.put('/UIComponents/dashboardBuilder/javascript/components/dashboardsList.html',
+    "<div><div class=container><div class=\"col-xs-12 mb20\"><div class=\"box-shadow text-white add-dashboard\"><div class=\"col-xs-12 text-center\"><h5 class=\"box-title text-uppercase\">Add custom dashboard</h5></div>Create and manage visually your dashboard.<div><a class=\"btn btn-primary add-btn\" ng-href=#/newDashboard><i class=\"fa fa-plus-circle\" aria-hidden=true></i> Add</a></div></div></div><div ng-if=$ctrl.showPanelMsg class=col-xs-12><div uib-alert ng-class=\"'alert-' + ( $ctrl.message.type || 'warning')\" close=$ctrl.closeMsg() dismiss-on-timeout=5000>{{$ctrl.message.content}}</div></div><span class=\"col-xs-12 col-sm-4 mb20\" ng-show=$ctrl.noDashboards>No Dashboards created.</span><div class=\"text-center loading\" ng-show=$ctrl.loading><i class=\"fa fa-spinner fa-spin fa-3x\"></i></div><div ng-repeat=\"dashboard in $ctrl.customDashboards track by $index\" class=\"col-xs-12 col-sm-4 mb20 custom-dashboard-box\"><div index=\"{{scriptName = dashboard.path}}\" class=\"box-shadow bg-white\"><div class=\"col-xs-12 added-box-title text-left\"><div class=pull-left><h4 onbeforesave=\"$ctrl.renameDashboard(scriptName, $data)\" href=# editable-text=dashboard.path e-form=textBtnForm uib-tooltip={{dashboard.path}} tooltip-placement=bottom>{{dashboard.label}}</h4></div><a title=\"Edit widget\" ng-click=textBtnForm.$show() ng-hide=textBtnForm.$visible><i class=\"edit-name glyphicon glyphicon-pencil\"></i></a><div class=\"pull-right remove-widget\"><a title=\"Remove widget\" ng-click=\"$ctrl.deleteDashboardConfirmation(dashboard.path, dashboard.name)\"><i class=\"glyphicon glyphicon-trash\"></i></a></div></div><a ng-href=#/scriptName/{{scriptName}}><div class=clickable><div class=\"col-xs-12 center-div custom-widget-icon\"><i class=\"fa fa-pie-chart\" aria-hidden=true></i></div><div class=clearfix></div></div></a></div></div></div></div>"
+  );
+
+
+  $templateCache.put('/UIComponents/dashboardBuilder/javascript/components/deletePopup.html',
+    "<div class=modal-header><h3 class=modal-title>Delete Dashboard</h3></div><div class=modal-body>Are you sure you want to delete '{{name}}' dashboard?</div><div class=modal-footer><button class=\"btn btn-primary\" type=button ng-click=close()>No</button> <button class=\"btn btn-primary\" type=button ng-click=ondeleteDashboard()>Yes</button></div>"
+  );
+
+
+  $templateCache.put('/UIComponents/dashboardBuilder/javascript/components/confirmation.html',
+    "<div class=modal-header><h4 class=modal-title>{{ $ctrl.data.title }}</h4></div><div class=modal-body>{{ $ctrl.data.body }}</div><div class=modal-footer><button type=reset class=\"btn btn-default\" ng-click=$ctrl.onCancel()>No</button> <button type=submit ng-click=$ctrl.onSubmit() class=\"btn btn-primary\">Yes</button></div>"
+  );
+
+
+  $templateCache.put('/UIComponents/dashboardBuilder/javascript/components/myModalContent.html',
+    "<div class=modal-header><h4 class=modal-title id=modal-title>{{$ctrl.widget.label}}</h4></div><form name=myForm ng-submit=$ctrl.onSubmit(myForm)><div class=modal-body><div html-class=bls sf-options=$ctrl.frmGlobalOptions sf-schema=$ctrl.schema sf-form=$ctrl.form sf-model=$ctrl.model></div></div><div class=modal-footer><button type=reset class=\"btn btn-default\" ng-click=$ctrl.onCancel()>Cancel</button> <button type=submit class=\"btn btn-primary\">Save</button></div></form>"
+  );
+
+
   $templateCache.put('/UIComponents/dashboardBuilder/view/dashboard.html',
     "<dashboard load-tree=true tree-search-criteria=model.Car devices-model=modules/devicemodels/api/getSensors></dashboard>"
   );
