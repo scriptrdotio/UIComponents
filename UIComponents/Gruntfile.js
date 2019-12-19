@@ -170,7 +170,7 @@ module.exports = function(grunt) {
 		               'concat/min-safe/morris.js' : [ 'dashboard/frontend/components/chart/morris.js' ],
 		               'concat/min-safe/angular.morris.js' : [ 'dashboard/frontend/components/chart/angular.morris.js' ],
 		               'concat/min-safe/templates.js' : [ 'build/js/templates.js' ],
-		               'concat/min-safe/module.js' : [ 'dashboardBuilder/javascript/UIComponents/Components/module.js' ],
+		               'concat/min-safe/module.js' : [ 'dashboardBuilder/javascript/components/module.js' ],
 		               'concat/min-safe/dashboard.js' : [ 'dashboardBuilder/javascript/UIComponents/Components/dashboard.js' ],
 		               'concat/min-safe/dashboardsList.js' : [ 'dashboardBuilder/javascript/UIComponents/Components/dashboardsList.js' ],
 		               'concat/min-safe/ngScriptrAlert.js' : [ 'dashboard/frontend/components/alert/ngScriptrAlert.js' ],
