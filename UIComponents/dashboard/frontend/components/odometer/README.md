@@ -6,6 +6,8 @@
 
 ## Requirements:
   
+  underscore-min.js
+  
   AngularJS v1.5.6+
   
   Odometer 
@@ -13,6 +15,12 @@
   wsProvider.js
   
   httpProvider.js
+  
+  dataService.js
+  
+  Bootstrap JS
+  
+  Notifications CSS/JS
   
 ## Getting started:
 
