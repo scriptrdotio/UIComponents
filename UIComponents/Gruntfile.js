@@ -240,14 +240,7 @@ module.exports = function(grunt) {
 	                     'dashboardBuilder/javascript/components/library/widgets/alert.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/display-data.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/windrose.js',
-	                     'dashboardBuilder/javascript/components/library/widgets/3dsurface.js',
-	                     'dashboardBuilder/javascript/components/library/commonsConfig.js',
-	                     'dashboardBuilder/javascript/components/library/commonsActionConfig.js',
-	                     'dashboardBuilder/javascript/components/library/boxStyleConfig.js',
-	                     'dashboardBuilder/javascript/components/library/widgetsConfig.js',
-	                     'dashboardBuilder/javascript/components/library/defaultThemeModel.js',
-	                     'dashboardBuilder/javascript/components/library/dashboardConfig.js'
-
+	                     'dashboardBuilder/javascript/components/library/widgets/3dsurface.js'
 	                     ],
 	               dest : 'build/js/dashboard_builder_constants.min.js'
 	            },
@@ -366,6 +359,12 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/odometer.js',
 	                     'concat/min-safe/speedometer.js',
 	                     'concat/min-safe/module.js',
+	                     'dashboardBuilder/javascript/components/library/commonsConfig.js',
+	                     'dashboardBuilder/javascript/components/library/commonsActionConfig.js',
+	                     'dashboardBuilder/javascript/components/library/boxStyleConfig.js',
+	                     'dashboardBuilder/javascript/components/library/widgetsConfig.js',
+	                     'dashboardBuilder/javascript/components/library/defaultThemeModel.js',
+	                     'dashboardBuilder/javascript/components/library/dashboardConfig.js',
 	                     'concat/min-safe/dashboardsList.js',
 	                     'concat/min-safe/dashboard.js',
 	                     'concat/min-safe/searchBox.js',
@@ -397,7 +396,7 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/templates.js',
 	                     'concat/min-safe/wsProvider.js',
 	                     'concat/min-safe/httpProvider.js',
-	                     'concat/min-safe/dataService.js',
+	                     'concat/min-safe/dataService.js'
 	                     ],
 	               dest : 'build/js/UIComponents/Components.min.js'
 	            },
