@@ -1,5 +1,7 @@
 <html ng-app="myApp">
 <head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
     <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
     <title>Dashboard Builder</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -51,15 +53,28 @@
           }
     });
     */
+    
+    Handlebars.registerHelper('if_eq', function(a, b, opts) {
+        if(a === b) // Or === depending on your needs
+            return opts.fn(this);
+        else
+            return opts.inverse(this);
+    });
     Handlebars.registerHelper('buildAttr', function(options, block) {
-        var accum = '';
-        for(option in options){
-            if(option == 'on-format-data') continue;
-            if(typeof options[option] == 'object'){
-                options[option] = JSON.stringify(options[option]);
+            var accum = '';
+            for(option in options){
+                var temp = null;
+                if(option == 'on-format-data' || option == 'functions') continue;
+                if(option == 'info-window') continue;
+                if(typeof options[option] == 'object'){
+                    temp = JSON.stringify(options[option]);
+                   // console.log("option object "+option, temp)
+                } else {
+                    temp = options[option]
+                    //console.log("option not object "+option, temp)
+                }
+                accum += "\t\t\t\t\t\t\t\t\t\t" + option + "=" + "'" + temp +"'\n";
             }
-            accum += "\t\t\t\t\t\t\t\t\t\t" + option + "=" + "'" +options[option] +"'\n";
-        }
 
         return accum;
     });
@@ -110,7 +125,7 @@
           //vm.user = (atob(document.cookie.split("=")[1]).split(":")[1])
       });
     
-    
+    /**
     if(!$.urlParam('scriptrIdeRef')) { //if not in IDE open login
          var authorization  = $.scriptr.authorization(
         {
@@ -118,11 +133,11 @@
           loginPage: login.loginTarget
         }
       )
-    } 
+    } **/
 </script>
-  
-<!--script src="/UIComponents/dashboardBuilder/javascript/dashboard.js"></script-->
-<body ng-controller="dashboardCtrl as vm">
+
+    <!--script src="/UIComponents/dashboardBuilder/javascript/dashboard.js"></script-->
+<body ng-controller="dashboardCtrl as vm" class="dashboardTheme" lang="en">
    <!--header-top user="vm.user" header-items='{
            "appname": "Dashboard Builder",
            "logout": {"route":"#/logout"}
