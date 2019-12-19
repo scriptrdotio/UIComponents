@@ -192,8 +192,8 @@
     <script src="/UIComponents/dashboard/frontend/components/accelerometer/accelerometer.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/displayCount/displayCount.js"></script>
     
-    <script src="/UIComponents/layout/frontend/components/module.js"></script>
-    <script src="/UIComponents/layout/frontend/components/header/header.js"></script>
+    <!--script src="/UIComponents/layout/frontend/components/module.js"></script>
+    <script src="/UIComponents/layout/frontend/components/header/header.js"></script-->
     
     <script src="/UIComponents/dashboardBuilder/javascript/config/config.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
@@ -256,7 +256,7 @@
 
             return accum;
         });
-     var myApp= angular.module("myApp", ['DashboardBuilder', 'Layout']);
+     var myApp= angular.module("myApp", ['DashboardBuilder']);
      $.urlParam = function(name){
     		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     		if (results==null){
