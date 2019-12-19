@@ -437,7 +437,9 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/plotly/windrose.css',
 	                     'dashboard/frontend/components/common/notifications.css',
 	                     'dashboardBuilder/css/markdown.css',
-	                     'dashboardBuilder/css/media.css'
+	                     'dashboardBuilder/css/media.css',
+	                     'dashboardBuilder/css/light.css',
+	                     'dashboardBuilder/css/dark.css'
 	                     ],
 	               dest : 'build/css/UIComponents/components.css'
 	            }

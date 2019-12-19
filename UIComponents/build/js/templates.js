@@ -133,49 +133,51 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
   $templateCache.put('/UIComponents/dashboardBuilder/view/dashboardTemplate.min',
     "<script type=text/x-handlebars-template id=handlebar-template>&lt;html ng-app=&quot;myApp&quot;&gt;\n" +
     "&lt;head&gt;\n" +
-    "\n" +
-    "    &lt;link rel=&quot;icon&quot; href=&quot;data:;base64,iVBORw0KGgo=&quot;&gt;\n" +
+    "	&lt;meta charset=&quot;UTF-8&quot;&gt;\n" +
+    "    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1,user-scalable=no&quot;&gt;\n" +
+    "    &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://www.scriptr.io/themes/scriptr/images/favicon.ico&quot;&gt;\n" +
+    "    &lt;title&gt;Dashboard Builder&lt;/title&gt;\n" +
     "    &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;\n" +
     "    &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;\n" +
     "\n" +
-    "    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/build/css/UIComponents/dt_components.min.css&quot;&gt;\n" +
+    "    &lt;!-- CSS --&gt;\n" +
+    "    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;/UIComponents/build/css/UIComponents/components.min.css&quot;/&gt;\n" +
+    "    \n" +
+    "    \n" +
+    "     &lt;!-- Theme --&gt;\n" +
+    "    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/{{dashboardSettings.theme}}.css&quot;&gt;\n" +
+    "    \n" +
     "    \n" +
     "    &lt;!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. --&gt;\n" +
     "    &lt;script src=&quot;/UIComponents/build/js/external_jquery_resources.min.js&quot;&gt;&lt;/script&gt;\n" +
-    "    \n" +
-    "  \n" +
-    "    &lt;!-- Libraries --&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/dt_external_libraries1.min.js&quot;&gt;&lt;/script&gt;	\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/dt_external_libraries2.min.js&quot;&gt;&lt;/script&gt;	\n" +
-    "    \n" +
-    "    &lt;!-- Plotly is very huge lib and unpackageable  --&gt;\n" +
-    "    &lt;script src=&quot;https://cdn.plot.ly/plotly-latest.min.js&quot;&gt;&lt;/script&gt;	\n" +
-    "    \n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/external_libraries1.min.js&quot;&gt;&lt;/script&gt;	\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/external_libraries2.min.js&quot;&gt;&lt;/script&gt;	\n" +
     "    \n" +
     "    &lt;script src=&quot;//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&amp;libraries=drawing,visualization&quot;&gt;&lt;/script&gt;\n" +
-    "  \n" +
+    "    \n" +
+    "   \n" +
     "    &lt;!-- NG material --&gt;\n" +
     "    &lt;script src=&quot;/UIComponents/build/js/angular_resources_1.min.js&quot;&gt;&lt;/script&gt;\n" +
     "    &lt;script src=&quot;/UIComponents/build/js/angular_resources_2.min.js&quot;&gt;&lt;/script&gt;\n" +
     "    &lt;script src=&quot;/UIComponents/build/js/angular_resources_3.min.js&quot;&gt;&lt;/script&gt;\n" +
-    "  \n" +
+    "    \n" +
+    "    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ag-grid/12.0.0/ag-grid.js?ignore=notused36&quot;&gt;&lt;/script&gt;\n" +
+    "\n" +
     "    &lt;!-- Directives --&gt;\n" +
     "    &lt;script src=&quot;/UIComponents/build/js/directives_1.min.js&quot;&gt;&lt;/script&gt;\n" +
     "    &lt;script src=&quot;/UIComponents/build/js/directives_2.min.js&quot;&gt;&lt;/script&gt;\n" +
-    "    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ag-grid/12.0.0/ag-grid.js?ignore=notused36&quot;&gt;&lt;/script&gt;\n" +
     "    \n" +
-    "\n" +
+    "    &lt;!-- Libraries --&gt;\n" +
+    "    &lt;script src=&quot;//cdn.plot.ly/plotly-latest.min.js&quot;&gt;&lt;/script&gt;\n" +
     "  \n" +
     "    &lt;!-- Components --&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/UIComponents/Components.min.js&quot;&gt;&lt;/script&gt;\n" +
-    "    \n" +
-    "    &lt;!-- Thermometer cusing error , solve it with redefine the widget --&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/dashboard/frontend/components/thermometer/thermometer.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/UIComponents/components.min.js&quot;&gt;&lt;/script&gt;\n" +
     "    \n" +
     "    \n" +
-    "    &lt;!-- Theme --&gt;\n" +
-    "    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/{{dashboardSettings.theme}}.css&quot;&gt;\n" +
+    "    &lt;script src=&quot;/UIComponents/dashboardBuilder/javascript/config/config.js&quot;&gt;&lt;/script&gt;\n" +
     "    \n" +
+    "    &lt;script src=&quot;/UIComponents/config/scriptrTransport.js&quot;&gt;&lt;/script&gt;\n" +
+    "            \n" +
     "\n" +
     "&lt;/head&gt; \n" +
     "  \n" +
@@ -244,7 +246,7 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "      httpClientProvider.setToken($.urlParam(&quot;auth_token&quot;));\n" +
     "    }]\n" +
     "\n" +
-    "     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', &quot;ngAnimate&quot;, &quot;ngSanitize&quot;, 'Dygraphs', 'DataService', 'Plotly', 'MetricBox', 'Alert'])\n" +
+    "     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', &quot;ngAnimate&quot;, &quot;ngSanitize&quot;, 'Dygraphs', 'DataService', 'Plotly', 'Alert'])\n" +
     "     angular.module('myApp').config(wssConfig);\n" +
     "     angular.module('myApp').config(httpsConfig);\n" +
     "     \n" +
@@ -258,7 +260,7 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "     });\n" +
     "  \n" +
     "  \n" +
-    "     myApp.controller('RootCtrl', function($scope, $interpolate, $location) {\n" +
+    "     myApp.controller('RootCtrl', function($scope, $interpolate, $location, dataService, $interval) {\n" +
     "       var vm = this;\n" +
     "       vm.gridsterOptions = {\n" +
     "          defaultSizeY: 50,\n" +
@@ -286,7 +288,64 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "           	console.log(&quot;{{this}}&quot;, $location.search()[&quot;{{this}}&quot;])\n" +
     "            vm.{{this}} = $location.search()[&quot;{{this}}&quot;]\n" +
     "          {{/each}}\n" +
+    "          \n" +
+    "          {{#if dashboardSettings.transport}}\n" +
+    "          		   vm.refreshTimer = null;\n" +
+    "          		   vm.data = null;\n" +
+    "                   vm.dashboardSettings = {\n" +
+    "                        {{#if dashboardSettings.api}}    &quot;api&quot;: &quot;{{dashboardSettings.api}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.transport}}    &quot;transport&quot;: &quot;{{dashboardSettings.transport}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.msg-tag}}    &quot;msgTag&quot;: &quot;{{dashboardSettings.msg-tag}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.api-params}}    &quot;apiParams&quot;: &quot;{{dashboardSettings.api-params}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.use-window-params}}    &quot;useWindowParams&quot;: &quot;{{dashboardSettings.use-window-params}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.http-method}}    &quot;httpMethod&quot;: &quot;{{dashboardSettings.http-method}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.fetch-data-interval}}&quot;fetchDataInterval&quot;: &quot;{{dashboardSettings.fetch-data-interval}}&quot;, {{/if}}\n" +
+    "                        &quot;widgetId&quot;: $scope.$id\n" +
+    "                        \n" +
+    "                    };\n" +
+    "                    \n" +
+    "                    \n" +
+    "                    vm.initDashboardDataService();\n" +
+    "                    \n" +
+    "                    \n" +
+    "                    $scope.$on(&quot;waiting-for-data&quot;, function() {\n" +
+    "                      	vm.consumeData(vm.data)\n" +
+    "                    })\n" +
+    "           {{/if}}\n" +
     "        }\n" +
+    "        \n" +
+    "        {{#if dashboardSettings.transport}}\n" +
+    "            vm.initDashboardDataService =  function() {\n" +
+    "\n" +
+    "                        var requestInfo = {\n" +
+    "                                &quot;api&quot;: vm.dashboardSettings.api,\n" +
+    "                                &quot;transport&quot;: vm.dashboardSettings.transport,\n" +
+    "                                &quot;msgTag&quot;: vm.dashboardSettings.msgTag,\n" +
+    "                                &quot;apiParams&quot;: vm.dashboardSettings.apiParams,\n" +
+    "                                &quot;useWindowParams&quot;: vm.dashboardSettings.useWindowParams,\n" +
+    "                                &quot;httpMethod&quot;: vm.dashboardSettings.httpMethod,\n" +
+    "                                &quot;widgetId&quot;: vm.dashboardSettings.widgetId\n" +
+    "                           };\n" +
+    "                           dataService.scriptrRequest(requestInfo, vm.consumeData.bind(vm));\n" +
+    "\n" +
+    "                          if(vm.dashboardSettings[&quot;fetchDataInterval&quot;] != null &amp;&amp; vm.refreshTimer == null) {\n" +
+    "                              //Assuming this is success\n" +
+    "                              self.refreshTimer = $interval(\n" +
+    "                                  function(){\n" +
+    "                                     vm.initDashboardDataService()\n" +
+    "                                  }, vm.dashboardSettings[&quot;fetchDataInterval&quot;]  * 1000);\n" +
+    "                          }\n" +
+    "\n" +
+    "            }\n" +
+    "            \n" +
+    "             vm.consumeData = function(data, response) {\n" +
+    "                vm.data = data;\n" +
+    "                $scope.$broadcast(&quot;update-data&quot;, data);\n" +
+    "            }\n" +
+    "        \n" +
+    "         {{/if}}\n" +
+    "        \n" +
+    "        \n" +
     "        {{#each items}}\n" +
     "           	{{#if this.formatFunction}}   \n" +
     "                vm.{{this.formatFunction}} = function(data){\n" +
@@ -295,7 +354,7 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "           	{{/if}} \n" +
     "        {{/each}}\n" +
     "        \n" +
-    "        {{#each items}}\n" +
+    "        /**{{#each items}}\n" +
     "           	{{#if this.functions}}   \n" +
     "            	{{#each this.functions}}\n" +
     "                    vm.{{this.name}} = function(arguments){\n" +
@@ -303,7 +362,7 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "                    }\n" +
     "                 {{/each}}\n" +
     "           	{{/if}} \n" +
-    "        {{/each}}\n" +
+    "        {{/each}}**/\n" +
     "     });\n" +
     "        	\n" +
     "})();\n" +
@@ -315,9 +374,9 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "		&lt;div gridster=&quot;vm.gridsterOptions&quot;&gt;\n" +
     "          &lt;ul&gt;\n" +
     "             {{#each items}}\n" +
-    "                &lt;li class=&quot;myItem&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;\n" +
+    "                &lt;li class=&quot;myItem {{#if_eq  fitToWidget true}} fit-to-widget {{/if_eq}}&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;\n" +
     "                    \n" +
-    "						&lt;div class=&quot;box {{#if_eq  this.options.box-header \"false\"}} box-without-header {{/if_eq}}&quot;&gt;\n" +
+    "						&lt;div class=&quot;box {{#if_eq  this.options.boxHeader &quot;false&quot;}} box-without-header {{/if_eq}} {{#if_eq  this.options.boxHeader false}} box-without-header {{/if_eq}}&quot;&gt;\n" +
     "						  &lt;div class=&quot;box-header&quot;&gt;\n" +
     "						    &lt;div class=&quot;box-label&quot;&gt;&lt;span tooltip-append-to-body=&quot;true&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot;&gt;{{this.options.boxLabel}}&lt;/span&gt;&lt;/div&gt;\n" +
     "						  &lt;/div&gt;\n" +
