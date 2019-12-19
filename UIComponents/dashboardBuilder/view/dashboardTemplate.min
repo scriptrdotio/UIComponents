@@ -1,8 +1,10 @@
 <script type='text/x-handlebars-template' id="handlebar-template">
 &lt;html ng-app=&quot;myApp&quot;&gt;
 &lt;head&gt;
-
-    &lt;link rel=&quot;icon&quot; href=&quot;data:;base64,iVBORw0KGgo=&quot;&gt;
+	&lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1,user-scalable=no&quot;&gt;
+    &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://www.scriptr.io/themes/scriptr/images/favicon.ico&quot;&gt;
+    &lt;title&gt;Dashboard Builder&lt;/title&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;
     &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;
 
@@ -154,7 +156,64 @@
            	console.log(&quot;{{this}}&quot;, $location.search()[&quot;{{this}}&quot;])
             vm.{{this}} = $location.search()[&quot;{{this}}&quot;]
           {{/each}}
+          
+          {{#if dashboardSettings.transport}}
+          		   vm.refreshTimer = null;
+          		   vm.data = null;
+                   vm.dashboardSettings = {
+                        {{#if dashboardSettings.api}}    &quot;api&quot;: &quot;{{dashboardSettings.api}}&quot;, {{/if}}
+                        {{#if dashboardSettings.transport}}    &quot;transport&quot;: &quot;{{dashboardSettings.transport}}&quot;, {{/if}}
+                        {{#if dashboardSettings.msg-tag}}    &quot;msgTag&quot;: &quot;{{dashboardSettings.msg-tag}}&quot;, {{/if}}
+                        {{#if dashboardSettings.api-params}}    &quot;apiParams&quot;: &quot;{{dashboardSettings.api-params}}&quot;, {{/if}}
+                        {{#if dashboardSettings.use-window-params}}    &quot;useWindowParams&quot;: &quot;{{dashboardSettings.use-window-params}}&quot;, {{/if}}
+                        {{#if dashboardSettings.http-method}}    &quot;httpMethod&quot;: &quot;{{dashboardSettings.http-method}}&quot;, {{/if}}
+                        {{#if dashboardSettings.fetch-data-interval}}&quot;fetchDataInterval&quot;: &quot;{{dashboardSettings.fetch-data-interval}}&quot;, {{/if}}
+                        &quot;widgetId&quot;: $scope.$id
+                        
+                    };
+                    
+                    
+                    vm.initDashboardDataService();
+                    
+                    
+                    $scope.$on(&quot;waiting-for-data&quot;, function() {
+                      	vm.consumeData(vm.data)
+                    })
+           {{/if}}
         }
+        
+        {{#if dashboardSettings.transport}}
+            vm.initDashboardDataService =  function() {
+
+                        var requestInfo = {
+                                &quot;api&quot;: vm.dashboardSettings.api,
+                                &quot;transport&quot;: vm.dashboardSettings.transport,
+                                &quot;msgTag&quot;: vm.dashboardSettings.msgTag,
+                                &quot;apiParams&quot;: vm.dashboardSettings.apiParams,
+                                &quot;useWindowParams&quot;: vm.dashboardSettings.useWindowParams,
+                                &quot;httpMethod&quot;: vm.dashboardSettings.httpMethod,
+                                &quot;widgetId&quot;: vm.dashboardSettings.widgetId
+                           };
+                           dataService.scriptrRequest(requestInfo, vm.consumeData.bind(vm));
+
+                          if(vm.dashboardSettings[&quot;fetchDataInterval&quot;] != null &amp;&amp; vm.refreshTimer == null) {
+                              //Assuming this is success
+                              self.refreshTimer = $interval(
+                                  function(){
+                                     vm.initDashboardDataService()
+                                  }, vm.dashboardSettings[&quot;fetchDataInterval&quot;]  * 1000);
+                          }
+
+            }
+            
+             vm.consumeData = function(data, response) {
+                vm.data = data;
+                $scope.$broadcast(&quot;update-data&quot;, data);
+            }
+        
+         {{/if}}
+        
+        
         {{#each items}}
            	{{#if this.formatFunction}}   
                 vm.{{this.formatFunction}} = function(data){
@@ -163,7 +222,7 @@
            	{{/if}} 
         {{/each}}
         
-        {{#each items}}
+        /**{{#each items}}
            	{{#if this.functions}}   
             	{{#each this.functions}}
                     vm.{{this.name}} = function(arguments){
@@ -171,7 +230,7 @@
                     }
                  {{/each}}
            	{{/if}} 
-        {{/each}}
+        {{/each}}**/
      });
         	
 })();
@@ -183,9 +242,9 @@
 		&lt;div gridster=&quot;vm.gridsterOptions&quot;&gt;
           &lt;ul&gt;
              {{#each items}}
-                &lt;li class=&quot;myItem&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
+                &lt;li class=&quot;myItem {{#if_eq  fitToWidget true}} fit-to-widget {{/if_eq}}&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
                     
-						&lt;div class=&quot;box {{#if_eq  this.options.box-header "false"}} box-without-header {{/if_eq}}&quot;&gt;
+						&lt;div class=&quot;box {{#if_eq  this.options.boxHeader &quot;false&quot;}} box-without-header {{/if_eq}} {{#if_eq  this.options.boxHeader false}} box-without-header {{/if_eq}}&quot;&gt;
 						  &lt;div class=&quot;box-header&quot;&gt;
 						    &lt;div class=&quot;box-label&quot;&gt;&lt;span tooltip-append-to-body=&quot;true&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot;&gt;{{this.options.boxLabel}}&lt;/span&gt;&lt;/div&gt;
 						  &lt;/div&gt;

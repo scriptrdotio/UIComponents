@@ -455,19 +455,16 @@ module.exports = function(grunt) {
 		               'build/js/directives_1.min.js' : [ 'build/js/directives_1.min.js' ],
 		               'build/js/directives_2.min.js' : [ 'build/js/directives_2.min.js' ],
 		               'build/js/dashboard_builder_constants.min.js' : [ 'build/js/dashboard_builder_constants.min.js' ],
-		               'build/js/UIComponents/Components.min.js' : [ 'build/js/UIComponents/Components.min.js' ],
+		               'build/js/UIComponents/components.min.js' : [ 'build/js/UIComponents/components.min.js'],
+	               	'build/js/UIComponents/editor.min.js' : [ 'build/js/UIComponents/editor.min.js'],
 		            }
 	            }
 	         },
 
 	         cssmin : {
 	            dashboardBuilder : {
-	               src : 'build/css/UIComponents/Components.css',
-	               dest : 'build/css/UIComponents/Components.min.css'
-	            },
-	            dt_cssmin : {
-	               src : 'build/css/UIComponents/dt_components.css',
-	               dest : 'build/css/UIComponents/dt_components.min.css'
+	               src : 'build/css/UIComponents/components.css',
+	               dest : 'build/css/UIComponents/components.min.css'
 	            }
 
 	         },
