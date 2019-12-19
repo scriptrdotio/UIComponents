@@ -551,25 +551,5 @@ module.exports = function(grunt) {
 	      'concat:css',
 	      'uglify:dashboardBuilder', 
 	      'cssmin:dashboardBuilder' ]);
-	grunt.registerTask('dashboardTemplate', [ 
-			'fetchFromCDN', 
-			'fetch_ag_grid',
-	      'ngtemplates',
-	      'ngAnnotate', 
-	      'concat:external_jquery_resources',
-	      'concat:dt_external_libraries1', 
-	      'concat:dt_external_libraries2',
-	      'concat:external_angular_resources_1',
-	      'concat:external_angular_resources_2',
-	      'concat:external_angular_resources_3',
-	      'concat:directives_1',
-	      'concat:directives_2', 
-	      'concat:components',
-	      'concat:editor',
-	      'less:production', 
-	      'concat:dt_css',
-	      'cssmin:dt_cssmin', 
-	      'uglify:dt_uglify' 
-	      ]);
 
 };
