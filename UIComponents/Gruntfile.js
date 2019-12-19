@@ -196,7 +196,27 @@ module.exports = function(grunt) {
 		               'concat/min-safe/thermometer_directive.js' : [ 'dashboard/frontend/components/thermometer/thermometer_directive.js' ],
 		               'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/components/thermometer/thermometer.js' ],
 		               'concat/min-safe/notifications.js' : [ 'dashboard/frontend/components/common/notifications.js' ],
-		               'concat/min-safe/markdown.js' : [ 'dashboardBuilder/lib/markdown/markdown-directive.js' ]
+		               'concat/min-safe/markdown.js' : [ 'dashboardBuilder/lib/markdown/markdown-directive.js' ],
+		               'concat/min-safe/justgauge.js' : [ 'dashboard/frontend/components/gauge/justgauge.js' ],
+		               'concat/min-safe/angular.gauge.min.js' : [ 'dashboard/frontend/components/gauge/angular.gauge.min.js' ],
+	               	'concat/min-safe/angular.metergauge.min.js' : [ 'dashboard/frontend/components/speedometer/angular.metergauge.min.js'],
+	               	'concat/min-safe/odometer.min.js' : [ 'dashboard/frontend/components/odometer/odometer.min.js'],
+               		'concat/min-safe/angular.odometer.min.js' : [ 'dashboard/frontend/components/odometer/angular.odometer.min.js'],
+               		'concat/min-safe/thermometer_directive.js' : [ 'dashboard/frontend/components/thermometer/thermometer_directive.js'],
+               		'concat/min-safe/angular-translate.min.js' : [ 'dashboardBuilder/lib/schemaForm/angular-translate.min.js'],
+               		'concat/min-safe/select.min.js' : [ 'dashboardBuilder/lib/schemaForm/select.min.js'],
+               		'concat/min-safe/angular_toggle_switch.js' : [ 'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js'],
+               		'concat/min-safe/angular-promise-buttons' : [ 'dashboard/frontend/components/button/angular-promise-buttons.js'],
+            			'concat/min-safe/bootstrap-ui-select.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-ui-select.min.js'],
+         				'concat/min-safe/bootstrap-ui-codemirror.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-ui-codemirror.min.js'],
+      					'concat/min-safe/autorefresh.js' : [ 'dashboardBuilder/lib/schemaForm/autorefresh.js'],
+   						'concat/min-safe/angular-strap.js' : [ 'dashboardBuilder/lib/schemaForm/angular-strap.js'],
+							'concat/min-safe/angular-strap.tpl.min.js' : [ 'dashboardBuilder/lib/schemaForm/angular-strap.tpl.min.js'],
+							'concat/min-safe/angular-schema-form-dynamic-select.js' : [ 'dashboardBuilder/lib/schemaForm/angular-schema-form-dynamic-select.js'],
+							'concat/min-safe/markdown-directive.js' : [ 'dashboardBuilder/lib/markdown/markdown-directive.js'],
+							'concat/min-safe/dygraphs-2.1.0.js' : [ 'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js'],
+							'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/components/thermometer/thermometer.js'],
+							'concat/min-safe/progressBar.js' : [ 'dashboard/frontend/components/progressBar/progressBar.js']
 		            }
 	            }
 	         },
@@ -237,22 +257,30 @@ module.exports = function(grunt) {
 	            },
 
 	            external_jquery_resources : {
-	               src : [ 'lib/jquery.min.js', 'lib/jquery-ui.js',
-	                     'lib/jquery.cookie.min.js', 'lib/slick.min.js' ],
+	               src : [ 'lib/jquery.min.js', 
+	               	     'lib/jquery-ui.js',
+	                       'lib/jquery.cookie.min.js', 
+	                       'lib/slick.min.js' ],
 	               dest : 'build/js/external_jquery_resources.min.js'
 	            },
 
 	            external_libraries1 : {
 	               src : [
-	                     'lib/showdown.min.js', 'lib/underscore-min.js', 'lib/handlebars.js',
-	                     'lib/codemirror.js',  'lib/placeholder.min.js', 'lib/javascript.min.js'
+	                     'lib/showdown.min.js', 
+	                     'lib/underscore-min.js', 
+	                     'lib/handlebars.js',
+	                     'lib/codemirror.js',  
+	                     'lib/placeholder.min.js', 
+	                     'lib/javascript.min.js'
 	                     ],
 	               dest : 'build/js/external_libraries1.min.js'
 	            },
 	            
 	            external_libraries2 : {
 	               src : [
-	               		 'lib/moment.min.js', 'lib/moment-timezone-with-data.min.js'],
+	               		 'lib/moment.min.js', 
+	               		 'lib/moment-timezone-with-data.min.js'
+	               		 ],
 	               dest : 'build/js/external_libraries2.min.js'
 	            },
 	            
@@ -273,12 +301,13 @@ module.exports = function(grunt) {
 	            external_angular_resources_2 : {
 	               src : [
 	                     'concat/min-safe/angular-underscore.js',
-	                     'dashboardBuilder/lib/schemaForm/angular-translate.min.js',
-	                     'dashboardBuilder/lib/schemaForm/select.min.js',
+	                     'concat/min-safe/angular-translate.min.js',
+	                     'concat/min-safe/select.min.js',
 	                     'lib/ui-bootstrap.min.js',
 	                     'lib/ui-bootstrap-tpls.min.js',
 	                     'lib/angular-messages.min.js',
-	                     'lib/angular-aria.min.js' ],
+	                     'lib/angular-aria.min.js' 
+	                     ],
 	               dest : 'build/js/angular_resources_2.min.js'
 	            },
 
@@ -294,14 +323,14 @@ module.exports = function(grunt) {
 	                     'lib/raphael-min.js',
 	                     'concat/min-safe/morris.js',
 	                     'concat/min-safe/angular.morris.js',
-	                     'dashboard/frontend/components/gauge/justgauge.js',
-	                     'dashboard/frontend/components/gauge/angular.gauge.min.js',
-	                     'dashboard/frontend/components/speedometer/angular.metergauge.min.js',
+	                     'concat/min-safe/justgauge.js',
+	                     'concat/min-safe/angular.gauge.min.js',
+	                     'concat/min-safe/angular.metergauge.min.js',
 	                     'lib/d3.v4.min.js',
-	                     'dashboard/frontend/components/odometer/odometer.min.js',
-	                     'dashboard/frontend/components/odometer/angular.odometer.min.js',
+	                     'concat/min-safe/odometer.min.js',
+	                     'concat/min-safe/angular.odometer.min.js',
 	                     'concat/min-safe/abn_tree_directive.js',
-	                     'dashboard/frontend/components/thermometer/thermometer_directive.js',
+	                     'concat/min-safe/thermometer_directive.js',
 	                     'lib/ng-map.js' 
 	                     ],
 	               dest :'build/js/directives_1.min.js'
@@ -310,9 +339,9 @@ module.exports = function(grunt) {
 	            directives_2 : {
 	               src : [
 	                     'concat/min-safe/angucomplete.alt.js',
-	                     'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js',
+	                     'concat/min-safe/angular_toggle_switch.js',
 	                     'lib/rzslider.min.js',
-	                     'dashboard/frontend/components/button/angular-promise-buttons.js',
+	                     'concat/min-safe/angular-promise-buttons.js',
 	                     'lib/xeditable.js',
 	                     'concat/min-safe/spectrum.js',
 	                     'concat/min-safe/angular-spectrum-colorpicker.min.js',
@@ -322,13 +351,13 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/schemaForm.js',
 	                     'concat/min-safe/bootstrapDecorator.js',
 	                     'concat/min-safe/bootstrap-colorpicker.min.js',
-	                     'dashboardBuilder/lib/schemaForm/bootstrap-ui-select.min.js',
-	                     'dashboardBuilder/lib/schemaForm/bootstrap-ui-codemirror.min.js',
-	                     'dashboardBuilder/lib/schemaForm/autorefresh.js',
-	                     'dashboardBuilder/lib/schemaForm/angular-strap.js',
-	                     'dashboardBuilder/lib/schemaForm/angular-strap.tpl.min.js',
-	                     'dashboardBuilder/lib/schemaForm/angular-schema-form-dynamic-select.js',
-	                     'dashboardBuilder/lib/markdown/markdown-directive.js'
+	                     'concat/min-safe/bootstrap-ui-select.min.js',
+	                     'concat/min-safe/bootstrap-ui-codemirror.min.js',
+	                     'concat/min-safe/autorefresh.js',
+	                     'concat/min-safe/angular-strap.js',
+	                     'concat/min-safe/angular-strap.tpl.min.js',
+	                     'concat/min-safe/angular-schema-form-dynamic-select.js',
+	                     'concat/min-safe/markdown-directive.js'
 	                     ],
 	               dest : 'build/js/directives_2.min.js'
 	            },
@@ -348,14 +377,14 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/gauge.js',
 	                     'concat/min-safe/ngScriptrAlert.js',
 	                     'concat/min-safe/alert.js',
-	                     'dashboard/frontend/components/thermometer/thermometer.js',
-	                     'dashboard/frontend/components/progressBar/progressBar.js',
+	                     'concat/min-safe/thermometer.js',
+	                     'concat/min-safe/progressBar.js',
 	                     'concat/min-safe/map.js',
 	                     'concat/min-safe/grid.js',
 	                     'concat/min-safe/acl.js',
 	                     'concat/min-safe/autocomplete.js',
 	                     
-	                     'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js',
+	                     'concat/min-safe/dygraphs-2.1.0.js',
 	                     'concat/min-safe/angular_dygraphs.js',
 	                     'concat/min-safe/dygraphs.js',
 
