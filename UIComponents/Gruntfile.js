@@ -286,11 +286,11 @@ module.exports = function(grunt) {
 	                     'lib/angular.min.js',
 	                     'lib/angular-route.js',
 	                     'lib/angular-cookies.js',
-	                     'lib/angular-websocket.js',
+	                     'lib/angular-websocket.min.js',
 	                     'lib/angular-slick.min.js',
 	                     'dashboardBuilder/lib/gridster/angular_gridster.min.js',
-	                     'lib/angular-animate.min.js',
-	                     'lib/angular-sanitize.min.js'],
+	                     'lib/angular-animate.js',
+	                     'lib/angular-sanitize.js'],
 	               dest : 'build/js/angular_resources_1.min.js'
 	            },
 
@@ -308,9 +308,11 @@ module.exports = function(grunt) {
 	            },
 
 	            external_angular_resources_3 : {
-	               src : [ 'lib/angular-material.js',
+	               src : [ 
+	               	   'lib/angular-material.js',
 	                     'concat/min-safe/svg-assets-cache.js',
-	                     'concat/min-safe/markerClusterer.js' ],
+	                     'concat/min-safe/markerClusterer.js' 
+	                     ],
 	               dest : 'build/js/angular_resources_3.min.js'
 	            },
 
@@ -360,9 +362,6 @@ module.exports = function(grunt) {
 
 	            components : {
 	               src : [
-	                     'concat/min-safe/wsProvider.js',
-	                     'concat/min-safe/httpProvider.js',
-	                     'concat/min-safe/dataService.js',
 	                     'concat/min-safe/chart.js',
 	                     'concat/min-safe/odometer.js',
 	                     'concat/min-safe/speedometer.js',
@@ -395,7 +394,10 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/3dsurface.js',
 	                     'concat/min-safe/windrose.js',
 	                     'concat/min-safe/notifications.js',
-	                     'concat/min-safe/templates.js'
+	                     'concat/min-safe/templates.js',
+	                     'concat/min-safe/wsProvider.js',
+	                     'concat/min-safe/httpProvider.js',
+	                     'concat/min-safe/dataService.js',
 	                     ],
 	               dest : 'build/js/UIComponents/Components.min.js'
 	            },
