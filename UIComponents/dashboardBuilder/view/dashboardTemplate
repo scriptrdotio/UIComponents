@@ -1,13 +1,16 @@
 <script type='text/x-handlebars-template' id="handlebar-template">
 &lt;html ng-app=&quot;myApp&quot;&gt;
 &lt;head&gt;
-    &lt;link rel=&quot;icon&quot; href=&quot;data:;base64,iVBORw0KGgo=&quot;&gt;
-    
+	&lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1,user-scalable=no&quot;&gt;
+    &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://www.scriptr.io/themes/scriptr/images/favicon.ico&quot;&gt;
+    &lt;title&gt;Dashboard Builder&lt;/title&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;
     &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;
     &lt;link href=&quot;//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&quot; rel=&quot;stylesheet&quot;&gt;
-    
-   &lt;!-- CSS --&gt;
+  
+    &lt;!-- CSS --&gt;
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css&quot;/&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/chart/chart.css&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/searchBox/abn_tree.css&quot;&gt;
@@ -23,6 +26,7 @@
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/map/map.css&quot;&gt;
     &lt;link href=&quot;/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css&quot; media=&quot;all&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/lib/schemaForm/select.min.css&quot;&gt;
+    
     &lt;link href=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.31/css/colorpicker.min.css&quot; rel=&quot;stylesheet&quot;&gt;
     &lt;link href=&quot;//cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.css&quot; media=&quot;all&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/button/button.css&quot;&gt;
@@ -32,16 +36,19 @@
     &lt;link rel=&quot;stylesheet&quot; href=&quot;//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/codemirror.min.css&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;//cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/theme/neo.min.css&quot;&gt;
   	&lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/dygraphs/dygraphs-2.1.0.css&quot;&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/layout/frontend/components/header/header.css&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/displayCount/count.css&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/slider/slider.css&quot;&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/plotly/windrose.css&quot;&gt;
     
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/plotly/windrose.css&quot;&gt;
+     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboard/frontend/components/common/notifications.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/markdown.css&quot;&gt;
+
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/media.css&quot;&gt;
+     
     &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/{{dashboardSettings.theme}}.css&quot;&gt;
     
-    
-    
-      &lt;!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. --&gt;
+  
+    &lt;!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. --&gt;
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;//code.jquery.com/ui/1.12.1/jquery-ui.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js&quot; &gt;&lt;/script&gt;
@@ -79,12 +86,12 @@
   
     &lt;!-- Directives --&gt;
     &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js&quot;&gt;&lt;/script&gt;
+	&lt;script src=&quot;//d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/chart/morris.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/chart/angular.morris.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/gauge/justgauge.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js&quot;&gt;&lt;/script&gt;
-  	&lt;script src=&quot;//d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/odometer/odometer.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/odometer/angular.odometer.min.js&quot;&gt;&lt;/script&gt;
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js&quot;&gt;&lt;/script&gt;
@@ -132,10 +139,7 @@
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/plotly/windrose.js&quot;&gt;&lt;/script&gt;
     
     &lt;script src=&quot;/UIComponents/dashboard/frontend/components/common/notifications.js&quot;&gt;&lt;/script&gt;
-    &lt;link href=&quot;/UIComponents/dashboard/frontend/components/common/notifications.css&quot;&gt;&lt;/link&gt;
-    
-    &lt;!-- script src=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js&quot; &gt;&lt;/script--&gt;
-    
+        
 &lt;/head&gt; 
   
   
@@ -250,14 +254,14 @@
           		   vm.refreshTimer = null;
           		   vm.data = null;
                    vm.dashboardSettings = {
-                        {{#if dashboardSettings.api}}    "api": "{{dashboardSettings.api}}", {{/if}}
-                        {{#if dashboardSettings.transport}}    "transport": "{{dashboardSettings.transport}}", {{/if}}
-                        {{#if dashboardSettings.msg-tag}}    "msgTag": "{{dashboardSettings.msg-tag}}", {{/if}}
-                        {{#if dashboardSettings.api-params}}    "apiParams": "{{dashboardSettings.api-params}}", {{/if}}
-                        {{#if dashboardSettings.use-window-params}}    "useWindowParams": "{{dashboardSettings.use-window-params}}", {{/if}}
-                        {{#if dashboardSettings.http-method}}    "httpMethod": "{{dashboardSettings.http-method}}", {{/if}}
-                        {{#if dashboardSettings.fetch-data-interval}}"fetchDataInterval": "{{dashboardSettings.fetch-data-interval}}", {{/if}}
-                        "widgetId": $scope.$id
+                        {{#if dashboardSettings.api}}    &quot;api&quot;: &quot;{{dashboardSettings.api}}&quot;, {{/if}}
+                        {{#if dashboardSettings.transport}}    &quot;transport&quot;: &quot;{{dashboardSettings.transport}}&quot;, {{/if}}
+                        {{#if dashboardSettings.msg-tag}}    &quot;msgTag&quot;: &quot;{{dashboardSettings.msg-tag}}&quot;, {{/if}}
+                        {{#if dashboardSettings.api-params}}    &quot;apiParams&quot;: &quot;{{dashboardSettings.api-params}}&quot;, {{/if}}
+                        {{#if dashboardSettings.use-window-params}}    &quot;useWindowParams&quot;: &quot;{{dashboardSettings.use-window-params}}&quot;, {{/if}}
+                        {{#if dashboardSettings.http-method}}    &quot;httpMethod&quot;: &quot;{{dashboardSettings.http-method}}&quot;, {{/if}}
+                        {{#if dashboardSettings.fetch-data-interval}}&quot;fetchDataInterval&quot;: &quot;{{dashboardSettings.fetch-data-interval}}&quot;, {{/if}}
+                        &quot;widgetId&quot;: $scope.$id
                         
                     };
                     
@@ -265,7 +269,7 @@
                     vm.initDashboardDataService();
                     
                     
-                    $scope.$on("waiting-for-data", function() {
+                    $scope.$on(&quot;waiting-for-data&quot;, function() {
                       	vm.consumeData(vm.data)
                     })
            {{/if}}
@@ -275,29 +279,29 @@
             vm.initDashboardDataService =  function() {
 
                         var requestInfo = {
-                                "api": vm.dashboardSettings.api,
-                                "transport": vm.dashboardSettings.transport,
-                                "msgTag": vm.dashboardSettings.msgTag,
-                                "apiParams": vm.dashboardSettings.apiParams,
-                                "useWindowParams": vm.dashboardSettings.useWindowParams,
-                                "httpMethod": vm.dashboardSettings.httpMethod,
-                                "widgetId": vm.dashboardSettings.widgetId
+                                &quot;api&quot;: vm.dashboardSettings.api,
+                                &quot;transport&quot;: vm.dashboardSettings.transport,
+                                &quot;msgTag&quot;: vm.dashboardSettings.msgTag,
+                                &quot;apiParams&quot;: vm.dashboardSettings.apiParams,
+                                &quot;useWindowParams&quot;: vm.dashboardSettings.useWindowParams,
+                                &quot;httpMethod&quot;: vm.dashboardSettings.httpMethod,
+                                &quot;widgetId&quot;: vm.dashboardSettings.widgetId
                            };
                            dataService.scriptrRequest(requestInfo, vm.consumeData.bind(vm));
 
-                          if(vm.dashboardSettings["fetchDataInterval"] != null && vm.refreshTimer == null) {
+                          if(vm.dashboardSettings[&quot;fetchDataInterval&quot;] != null &amp;&amp; vm.refreshTimer == null) {
                               //Assuming this is success
                               self.refreshTimer = $interval(
                                   function(){
                                      vm.initDashboardDataService()
-                                  }, vm.dashboardSettings["fetchDataInterval"]  * 1000);
+                                  }, vm.dashboardSettings[&quot;fetchDataInterval&quot;]  * 1000);
                           }
 
             }
             
              vm.consumeData = function(data, response) {
                 vm.data = data;
-                $scope.$broadcast("update-data", data);
+                $scope.$broadcast(&quot;update-data&quot;, data);
             }
         
          {{/if}}
@@ -333,7 +337,7 @@
              {{#each items}}
                 &lt;li class=&quot;myItem {{#if_eq  fitToWidget true}} fit-to-widget {{/if_eq}}&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
                     
-						&lt;div class=&quot;box {{#if_eq  this.options.boxHeader "false"}} box-without-header {{/if_eq}} {{#if_eq  this.options.boxHeader false}} box-without-header {{/if_eq}}&quot;&gt;
+						&lt;div class=&quot;box {{#if_eq  this.options.boxHeader &quot;false&quot;}} box-without-header {{/if_eq}} {{#if_eq  this.options.boxHeader false}} box-without-header {{/if_eq}}&quot;&gt;
 						  &lt;div class=&quot;box-header&quot;&gt;
 						    &lt;div class=&quot;box-label&quot;&gt;&lt;span tooltip-append-to-body=&quot;true&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot;&gt;{{this.options.boxLabel}}&lt;/span&gt;&lt;/div&gt;
 						  &lt;/div&gt;
