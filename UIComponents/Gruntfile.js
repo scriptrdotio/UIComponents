@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/codemirror.min.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/theme/neo.min.css',
 	                     // JS
-	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js',
+	                     'https://code.jquery.com/jquery-3.3.1.js',
 	                     'https://code.jquery.com/ui/1.12.1/jquery-ui.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js',
 	                     'https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js',
@@ -246,7 +246,7 @@ module.exports = function(grunt) {
 	            },
 
 	            external_jquery_resources : {
-	               src : [ 'lib/jquery.min.js', 
+	               src : [ 'lib/jquery-3.3.1.js', 
 	               	     'lib/jquery-ui.js',
 	                       'lib/jquery.cookie.min.js', 
 	                       'lib/slick.min.js' ],
@@ -382,8 +382,7 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/plotly.js',
 	                     'concat/min-safe/3dsurface.js',
 	                     'concat/min-safe/windrose.js',
-	                     'concat/min-safe/notifications.js',
-	                     'concat/min-safe/templates.js'
+	                     'concat/min-safe/notifications.js'
 	                     ],
 	               dest : 'build/js/UIComponents/components.min.js'
 	            },
