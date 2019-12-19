@@ -89,7 +89,6 @@ module.exports = function(grunt) {
 		                  'dashboard/frontend/components/grid/popup.html',
 		                  'dashboard/frontend/components/list/autocomplete.html',
 		                  'dashboard/frontend/components/map/map.html',
-		                  'dashboard/frontend/components/progressBar/progressBar.html',
 		                  'dashboard/frontend/components/thermometer/thermometer.html',
 		                  'dashboard/frontend/components/thermometer/tg_thermometer_vertical.html',
 		                  'dashboard/frontend/components/odometer/odometer.html',
@@ -103,7 +102,6 @@ module.exports = function(grunt) {
 		                  'dashboard/frontend/components/toggleSwitch/toggle_switch.html',
 		                  'dashboard/frontend/components/plotly/3dsurface.html',
 		                  'dashboard/frontend/components/plotly/windrose.html',
-		                  'dashboard/frontend/components/metricBox/metricBox.html',
 		                  'dashboard/frontend/components/common/notifications.html',
 		                  'dashboardBuilder/javascript/UIComponents/Components/box.html',
 		                  'dashboardBuilder/javascript/UIComponents/Components/dashboard.html',
@@ -153,7 +151,6 @@ module.exports = function(grunt) {
 		               'concat/min-safe/plotly.js' : [ 'dashboard/frontend/components/plotly/plotly.js' ],
 		               'concat/min-safe/3dsurface.js' : [ 'dashboard/frontend/components/plotly/3dsurface.js' ],
 		               'concat/min-safe/windrose.js' : [ 'dashboard/frontend/components/plotly/windrose.js' ],
-		               'concat/min-safe/metricBox.js' : [ 'dashboard/frontend/components/metricBox/metricBox.js' ],
 		               'concat/min-safe/acl.js' : [ 'dashboard/frontend/components/ACL/ACL.js' ],
 		               'concat/min-safe/abn_tree_directive.js' : [ 'dashboard/frontend/components/searchBox/abn_tree_directive.js' ],
 		               'concat/min-safe/markerClusterer.js' : [ 'dashboard/frontend/components/map/markerClusterer.js' ],
@@ -216,7 +213,6 @@ module.exports = function(grunt) {
 							'concat/min-safe/markdown-directive.js' : [ 'dashboardBuilder/lib/markdown/markdown-directive.js'],
 							'concat/min-safe/dygraphs-2.1.0.js' : [ 'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js'],
 							'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/components/thermometer/thermometer.js'],
-							'concat/min-safe/progressBar.js' : [ 'dashboard/frontend/components/progressBar/progressBar.js']
 		            }
 	            }
 	         },
@@ -378,7 +374,6 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/ngScriptrAlert.js',
 	                     'concat/min-safe/alert.js',
 	                     'concat/min-safe/thermometer.js',
-	                     'concat/min-safe/progressBar.js',
 	                     'concat/min-safe/map.js',
 	                     'concat/min-safe/grid.js',
 	                     'concat/min-safe/acl.js',

@@ -45,11 +45,6 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
   );
 
 
-  $templateCache.put('/UIComponents/dashboard/frontend/components/progressBar/progressBar.html',
-    "<uib-progressbar ng-if=!$ctrl.stacked value=$ctrl.value title={{$ctrl.title}} max=$ctrl.max animate=$ctrl.animate type={{$ctrl.type}} class={{$ctrl.class}}></uib-progressbar><uib-progress ng-if=$ctrl.stacked class={{$ctrl.class}}><uib-bar ng-repeat=\"bar in $ctrl.stacked track by $index\" value=bar.value title={{bar.title}} type={{bar.type}}>{{bar.value}}%</uib-bar></uib-progress>"
-  );
-
-
   $templateCache.put('/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
     "<div><scriptr-notifications icon=$ctrl.icon has-data=$ctrl.hasData no-results=$ctrl.noResults stalled-data=$ctrl.stalledData use-popover=$ctrl.usePopover failure-message=$ctrl.dataFailureMessage action-message=$ctrl.actionMessage action-success=$ctrl.actionSuccess></scriptr-notifications><div ng-style=$ctrl.style class=thermowrapper ng-if=$ctrl.value><tg-thermometer-vertical value={{$ctrl.value}} unit={{$ctrl.thermoUnit}} percent={{$ctrl.percent}} sectors=$ctrl.sectors ticks=$ctrl.ticks height={{$ctrl.height}} mercury-color=$ctrl.mercuryColor></tg-thermometer-vertical></div></div>"
   );
@@ -122,11 +117,6 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
 
   $templateCache.put('/UIComponents/dashboard/frontend/components/plotly/windrose.html',
     "<div class=wind-rose><scriptr-notifications icon=$ctrl.icon has-data=$ctrl.hasData no-results=$ctrl.noResults stalled-data=$ctrl.stalledData use-popover=$ctrl.usePopover failure-message=$ctrl.dataFailureMessage action-message=$ctrl.actionMessage action-success=$ctrl.actionSuccess></scriptr-notifications><div ng-show=\"$ctrl.transformedData.length > 0\" ng-style=$ctrl.style class=plotly-chart-wrapper ng-class=\"($ctrl.showLegend) ? 'with-legend' : ' ' \"><div class=plotly-chart-dimension><angular-plotly plotly-data=$ctrl.transformedData plotly-options=$ctrl.options plotly-layout=$ctrl.layout></angular-plotly></div></div><div class=plotly-chart-legend ng-if=\"$ctrl.showLegend && $ctrl.transformedData.length > 0\"><ul ng-repeat=\"entry in $ctrl.plotCustomRanges\" style=\"list-style: none\"><li><span><i class=\"fa fa-square\" style=\"color: {{entry.color}}\"></i> {{entry.lo}} - {{entry.hi}} {{$ctrl.speedUnit}}</span></li></ul></div></div>"
-  );
-
-
-  $templateCache.put('/UIComponents/dashboard/frontend/components/metricBox/metricBox.html',
-    "<div class=metric-box ng-style=\"{ 'border' : '{{$ctrl.borderSize}}px solid {{$ctrl.borderColor}}','background' : '{{$ctrl.backgroundColor}}' }\"><div ng-if=$ctrl.disabled id=disabledOverlay></div><div class=metric-box-head><div class=metric-box-action><img ng-if='$ctrl.actionIcon!=\"\"' ng-click=actionClicked() alt=EI src={{$ctrl.actionIcon}}></div><div class=metric-box-label ng-style=\"{	'font-weight' : '{{$ctrl.labelFontWeight}}', 'font-family' : '{{$ctrl.labelFontFamily}}', 'color' : '{{$ctrl.labelTextColor}}', 'text-align' : '{{$ctrl.labelTextAlignment}}' }\">{{$ctrl.label}}</div></div><div class=metric-box-body><div class=metric-box-value-unit><div class=metric-box-value ng-style=\"{	'font-weight' : '{{$ctrl.valueFontWeight}}', 'font-family' : '{{$ctrl.valueFontFamily}}', 'color' : '{{$ctrl.valueTextColor}}', 'text-align' : '{{$ctrl.valueTextAlignment}}' }\"><div>{{$ctrl.value}}</div></div><div class=metric-box-unit ng-style=\"{ 'font-weight' : '{{$ctrl.unitFontWeight}}', 'font-family' : '{{$ctrl.unitFontFamily}}', 'color' : '{{$ctrl.unitTextColor}}', 'text-align' : '{{$ctrl.unitTextAlignment}}' }\"><div>{{$ctrl.unit}}</div></div></div><div ng-if='$ctrl.icon!=\"\"' class=metric-box-icon><img alt=EI src={{$ctrl.icon}}></div></div></div>"
   );
 
 
