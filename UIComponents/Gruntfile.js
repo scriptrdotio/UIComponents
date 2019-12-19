@@ -355,6 +355,9 @@ module.exports = function(grunt) {
 
 	            components : {
 	               src : [
+	               		'concat/min-safe/wsProvider.js',
+	               		'concat/min-safe/httpProvider.js',
+	               		'concat/min-safe/dataService.js',
 	                     'concat/min-safe/chart.js',
 	                     'concat/min-safe/odometer.js',
 	                     'concat/min-safe/speedometer.js',
@@ -374,7 +377,7 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/thermometer.js',
 	                     'concat/min-safe/map.js',
 	                     'concat/min-safe/grid.js',
-	                     'concat/min-safe/acl.js',
+	                     'concat/min-safe/ACL.js',
 	                     'concat/min-safe/autocomplete.js',
 	                     
 	                     'concat/min-safe/dygraphs-2.1.0.js',
@@ -393,10 +396,7 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/3dsurface.js',
 	                     'concat/min-safe/windrose.js',
 	                     'concat/min-safe/notifications.js',
-	                     'concat/min-safe/templates.js',
-	                     'concat/min-safe/wsProvider.js',
-	                     'concat/min-safe/httpProvider.js',
-	                     'concat/min-safe/dataService.js'
+	                     'concat/min-safe/templates.js'
 	                     ],
 	               dest : 'build/js/UIComponents/Components.min.js'
 	            },
