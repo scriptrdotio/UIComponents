@@ -6,7 +6,9 @@
 
 ## Requirements:
 
-  Bootstrap
+  Bootstrap CSS
+  
+  Underscore
   
   AngularJS v1.5.6+
   
@@ -18,7 +20,11 @@
   
   httpProvider.js
   
+  Bootstrap JS
+  
   ProgressBar.js
+  
+  scriptrTransport.js
   
 ## Getting started:
 
@@ -28,6 +34,12 @@
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   ```
   
+  Include Underscore
+  
+  ```html
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  ```
+  
   Include angular JS with Angular Cookies in your application, as well as the Angular Websocket.
   
   ```html
@@ -35,27 +47,37 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
   <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
   ```
-   
-  Include  Angular UI Bootstrap
-   
+  
+  Include Angular Animate JS
+  
   ```html
-  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+  ```
+   
+  Include Anuglar Sanitize JS
+  
+  ```html
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
   ```
      
-  Include Angular Animate, Angular Sanitize and ProgressBar.js component
-  
-  ```html
-   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
-   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
-   <script src="/UIComponents/dashboard/frontend/components/progressBar/progressBar.js"></script>
-   ```
-  
   Include wsProvider and httpProvider for calling backend API's
   
   ```html
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
   ```
+  
+  Include  Angular UI Bootstrap
+   
+  ```html
+  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+  ```
+   
+   Include ProgressBar.js component
+      
+  ```html
+   <script src="/UIComponents/dashboard/frontend/components/progressBar/progressBar.js"></script>
+   ```
   
   Include scriptrTransport for configuration
   
