@@ -7,19 +7,40 @@
 
 ## Requirements:
   
+  Bootstrap CSS
+  
+  Underscore JS
+  
+  JQuery
+  
   AngularJS v1.5.6+
-    
+  
   wsProvider.js
   
   httpProvider.js
   
   dataService.js
   
+  Bootstrap JS
+  
+  Notifications CSS/JS
+  
     
 ## Getting started:
 
-  Include angular JS  in your application.
+  Include JQuery (ensure it is loaded before the angular.js)
 
+  ```html
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  ```
+
+  Include underscore JS
+
+  ```html
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  ```
+
+  Include angular JS  in your application.
   
   ```html
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
@@ -30,6 +51,7 @@
    
   ```html
     <script src="/UIComponents/dashboard/frontend/components/displayCount/displayCount.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/displayCount/count.css">
   ```
   
   Include wsProvider, httpProvider and dataService for calling backend API's
@@ -40,16 +62,30 @@
     <script src="/UIComponents/dataService.js"></script>
   ```
   
+  Include Bootstrap JS
+  
+  ```html
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  ```
+  
+  Include Notifications CSS/JS
+  
+  ```html
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+  ```
+  
   Include scriptrTransport for configuration
   
   ```html
     <script src="/UIComponents/config/scriptrTransport.js"></script>
   ```
   
-  Add "WsClient", "HttpClient", "DataService", "DisplayCount" to your app module's dependency
+  Add "WsClient", "HttpClient", "DisplayCount" to your app module's dependency
   
   ```
-  angular.module("myApp", ["WsClient", "HttpClient", "DataService" "DisplayCount"])
+  angular.module("myApp", ["WsClient", "HttpClient", "DisplayCount"])
   ```
   
     ## Options 

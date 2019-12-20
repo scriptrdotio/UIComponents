@@ -6,7 +6,7 @@
 
 ## Requirements:
 
-  Bootstrap
+  JQuery
   
   AngularJS v1.5.6+
   
@@ -14,40 +14,64 @@
   
   httpProvider.js
   
-  thermometer.css
+  dataService.js
   
-  thermometer_directive
+  Bootstrap JS
   
-  Thermometer.js
+  Notifications CSS/JS
+
+  Thermometer CSS/modules
   
 ## Getting started:
 
-  Include angular JS with Angular Cookies in your application, as well as the Angular Websocket.
+  Include JQuery (ensure it is loaded before the angular.js)
+
+  ```html
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  ```
+
+  Include underscore JS
+
+  ```html
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  ```
+
+  Include angular JS
   
   ```html
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
   <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
   ```
-   
-  Include  thermometer.css
+
+  Include Thermometer CSS/modules
    
   ```html
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/thermometer/style.css">
-  ```
-     
-  Include thermometer directive and component
-  
-  ```html
     <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer.js"></script>
-   ```
-  
-  Include wsProvider and httpProvider for calling backend API's
+  ```
+
+  Include wsProvider, httpProvider and dataService for calling backend API's
   
   ```html
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
+  ```
+  
+  Include Bootstrap JS
+  
+  ```html
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  ```
+  
+  Include Notifications CSS/JS
+  
+  ```html
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
   ```
   
   Include scriptrTransport for configuration
@@ -56,7 +80,7 @@
     <script src="/UIComponents/config/scriptrTransport.js"></script>
   ```
   
-  Add "WsClient", "HttpClient", "ProgressBar" to your app module's dependency
+  Add "WsClient", "HttpClient", "Thermometer" to your app module's dependency
   
   ```javascript
   angular.module("myApp", ["WsClient", "HttpClient", "Thermometer"])
@@ -93,13 +117,13 @@ Example where data is called from backend
   REST API example:
   
   ```javascript
-   var value = 90; 
+   var value = Math.floor((Math.random() * 100) + 1);
 
    var publishResponse = function(channel, data, request) {
       var message = {"result": data};
 
       //Add a default id to identify the message published over the socket
-      message["id"] = "progressbar";
+      message["id"] = "thermometer";
       publish(channel, message);
    }
 
@@ -108,5 +132,5 @@ Example where data is called from backend
    //Return data when someone calls api over websocket or http
    return value;
   ```
-  Each ProgressBar application subscribed to "responseChannel" with msg-tag = "thermometer" gets updated everytime a rest api is called. 
+  Each Thermometer application subscribed to "responseChannel" with msg-tag = "thermometer" gets updated everytime a rest api is called. 
 

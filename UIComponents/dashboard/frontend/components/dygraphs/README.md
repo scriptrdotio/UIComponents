@@ -7,29 +7,61 @@
 
 ## Requirements:
   
+  Bootstrap CSS
+  
+  Underscore JS
+  
+  JQuery
+  
   AngularJS v1.5.6+
-    
+  
   wsProvider.js
   
   httpProvider.js
   
   dataService.js
   
+  Bootstrap JS
+  
+  Notifications CSS/JS
+  
   dygraphs v2.1.0
  
 ## Getting started:
 
-  Include angular JS  in your application.
+  Include bootstrap CSS
+   
+  ```html
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+  ```
 
+  Include JQuery (ensure it is loaded before the angular.js)
   
   ```html
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
-  <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   ```
+
+  Include underscore JS
+  
+  ```html
+   <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  ```
+
+    Include angular JS
+  
+  ```html
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-mocks.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+      <
   Include Dygraphs modules
    
   ```html
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/dygraphs/dygraphs-2.1.0.css">
     <script src="/UIComponents/dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/dygraphs/angular-dygraphs.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.js"></script>
@@ -43,16 +75,30 @@
     <script src="/UIComponents/dataService.js"></script>
   ```
   
+  Include Bootstrap JS
+  
+  ```html
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  ```
+  
+  Include Notifications CSS/JS
+  
+  ```html
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+  ```
+  
   Include scriptrTransport for configuration
   
   ```html
     <script src="/UIComponents/config/scriptrTransport.js"></script>
   ```
   
-  Add "WsClient", "HttpClient", "DataService", "Dygraphs" to your app module's dependency
+  Add "WsClient", "HttpClient", "Dygraphs" to your app module's dependency
   
   ```
-  angular.module("myApp", ["WsClient", "HttpClient", "DataService" "Dygraphs"])
+  angular.module("myApp", ["WsClient", "HttpClient", "Dygraphs"])
   ```
   
   

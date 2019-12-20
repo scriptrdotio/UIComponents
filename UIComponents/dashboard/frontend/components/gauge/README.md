@@ -6,19 +6,41 @@
 
 ## Requirements:
   
-  AngularJS v1.5.6+
+  Underscore JS
   
-  Gauge Modules
+  JQuery
+  
+  AngularJS v1.5.6+
   
   wsProvider.js
   
   httpProvider.js
   
+  dataService.js
+  
+  Bootstrap JS
+  
+  Notifications CSS/JS
+  
+  Gauge Modules
+  
 ## Getting started:
 
   Include angular JS with angular-gauge.js in your application, as well as the raphael.js and justgage.js directives.
 
-  Include angular JS
+  Include JQuery (ensure it is loaded before the angular.js)
+
+  ```html
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  ```
+
+  Include underscore JS
+
+  ```html
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  ```
+
+  Include angular JS  in your application.
   
   ```html
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
@@ -34,11 +56,26 @@
     <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
   ```
   
-  Include wsProvider and httpProvider for calling backend API's
+  Include wsProvider, httpProvider and dataService for calling backend API's
   
   ```html
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
+  ```
+  
+  Include Bootstrap JS
+  
+  ```html
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  ```
+  
+  Include Notifications CSS/JS
+  
+  ```html
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
   ```
   
   Include scriptrTransport for configuration
@@ -64,7 +101,7 @@ Example where data is static
 
 ```html
  <scriptr-gauge 
-        gauge-value='50'>
+        data='50'>
  </scriptr-gauge>
  ```
  
@@ -72,9 +109,22 @@ Example where data is static
  
  ```html
      <scriptr-gauge 
-              transport='wss' 
-              msg-tag="gauge" 
-              api='UIComponents/dashboard/frontend/examples/gauge/getGaugeVal'
+                transport='wss' 
+                msg-tag="gauge" 
+                title="Title"
+                title-font-color="#aaa"
+                api='UIComponents/dashboard/frontend/examples/gauge/getGaugeVal'
+                title-position="above"
+                hide-inner-shadow="false"
+                shadow-vertical-offset="3"
+                shadow-opacity="0.2"
+                pointer="true"
+                value-font-color="#aff542"
+                hide-inner-shadow="false"
+                start-animation-type="bounce"
+                refresh-animation-type="bounce"
+                relative-gauge-size="true"
+                on-format-data="vm.callback"
     </scriptr-gauge>
   ```
   

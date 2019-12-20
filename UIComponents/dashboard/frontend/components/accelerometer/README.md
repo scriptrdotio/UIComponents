@@ -10,7 +10,7 @@
   
   JQuery
   
-  underscore.js
+  Underscore JS
   
   AngularJS v1.5.6+
   
@@ -106,19 +106,15 @@ scriptr-accelerometer is an element component. you will just have to add it in y
 Example
 
  ```html
-   <scriptr-accelerometer
-										transport='wss'
-										msg-tag='accelerometer'
-										boxLabel='Accelerometer'
-                                  		on-format-data='vm.accelerometerFormatData1'
-                           		>
-                                
-                                   
- 
- 
-          
-                    
-                                </scriptr-accelerometer>
+     <scriptr-accelerometer
+         transport='wss'
+         msg-tag='accelerometer'
+         http-method='GET'
+         boxBorder='true'
+         api='UIComponents/dashboard/frontend/examples/accelerometer/getAccelerometerData'
+         on-format-data='vm.accelerometerFormatData2'
+         >
+     </scriptr-accelerometer>
   ```
 
 

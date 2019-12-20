@@ -1,6 +1,7 @@
 <html ng-app="myApp">
 
 <head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
@@ -11,16 +12,13 @@
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
-  	
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
     <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
-    
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
-    
   
     <script src="/UIComponents/config/scriptrTransport.js"></script>
 </head>  
@@ -49,16 +47,16 @@
                 title="Title"
                 title-font-color="#aaa"
                 api='UIComponents/dashboard/frontend/examples/gauge/getGaugeVal'
-                     title-position="above"
-                     hide-inner-shadow="false"
-                     shadow-vertical-offset="3"
-                     shadow-opacity="0.2"
-                     pointer="true"
-                     value-font-color="#aff542"
-                     hide-inner-shadow="false"
-                     start-animation-type="bounce"
-                     refresh-animation-type="bounce"
-                     relative-gauge-size="true"
+                title-position="above"
+                hide-inner-shadow="false"
+                shadow-vertical-offset="3"
+                shadow-opacity="0.2"
+                pointer="true"
+                value-font-color="#aff542"
+                hide-inner-shadow="false"
+                start-animation-type="bounce"
+                refresh-animation-type="bounce"
+                relative-gauge-size="true"
                 on-format-data="vm.callback">
       </scriptr-gauge>
     </div>

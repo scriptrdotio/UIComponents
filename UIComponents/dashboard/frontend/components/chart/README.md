@@ -6,17 +6,23 @@
 
 ## Requirements:
 
-  Bootstrap
-  
-  AngularJS v1.5.6+
+  Underscore JS
   
   JQuery
   
-  chart Modules
+  AngularJS v1.5.6+
   
   wsProvider.js
   
   httpProvider.js
+  
+  dataService.js
+  
+  Bootstrap JS
+  
+  Notifications CSS/JS
+
+  Chart modules
   
 ## Getting started:
 
@@ -27,6 +33,18 @@
     <script src="//use.fontawesome.com/3d61d6959e.js"></script>
   ```
 
+  Include JQuery (ensure it is loaded before the angular.js)
+
+  ```html
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  ```
+
+  Include underscore JS
+
+  ```html
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  ```
+
   Include angular JS
   
   ```html
@@ -35,25 +53,35 @@
   <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
   ```
 
-  Include JQuery
-  
-  ```html
-   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  ```
-
   Include Chart modules
    
   ```html
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
+	<link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/chart/chart.css">
   ```
 
-  Include wsProvider and httpProvider for calling backend API's
+  Include wsProvider, httpProvider and dataService for calling backend API's
   
   ```html
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
+  ```
+  
+  Include Bootstrap JS
+  
+  ```html
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  ```
+  
+  Include Notifications CSS/JS
+  
+  ```html
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
   ```
   
   Include scriptrTransport for configuration
