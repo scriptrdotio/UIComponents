@@ -2,10 +2,13 @@
 
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>	
+	
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
     <script src="/UIComponents/dataService.js"></script>
@@ -25,39 +28,38 @@
 </head>  
   
 <script>
-      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Odometer"])
-      angular.module('myApp').config(wssConfig);
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Odometer"])
+    angular.module('myApp').config(wssConfig);
     angular.module('myApp').config(httpsConfig);
   
-      angular.module('myApp').controller('testCtrl', function($scope) {
-            var vm = this;
-            vm.odometerFormatData12 = function(data){
-              console.log("data formatter");
-              return data;
-            }
-      });
+    angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.odometerFormatData12 = function(data){
+            console.log("data formatter");
+            return data;
+          }
+    });
 </script>
   
 <body>
   <div ng-controller="testCtrl as vm" >
-   <div style="border: 1px solid red;">
+    <div style="border: 1px solid red;">
         <scriptr-odometer
-										transport='wss'
-										boxLabel='Odometer'
-										msg-tag='odometer'
-										data='28022017'
-										animation='count'
-										on-clicked='return arguments;'
-										duration='1000'
-										size='3'
-										http-method='GET'
-										boxBorder='true'
-										api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
-                                  		on-format-data='vm.odometerFormatData12'
-                           		>
+		transport='wss'
+		boxLabel='Odometer'
+		msg-tag='odometer'
+		data='28022017'
+		animation='count'
+		on-clicked='return arguments;'
+		duration='1000'
+		size='3'
+		http-method='GET'
+		boxBorder='true'
+		api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
+		on-format-data='vm.odometerFormatData12'
+	>
         </scriptr-odometer>
     </div>
   </div>
 </body>
-
 </html>
