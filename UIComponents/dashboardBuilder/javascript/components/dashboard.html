@@ -1,6 +1,6 @@
 <div class="board-menu-base clearfix">
   <!-- begin left side -->
-  <div ng-if="!$ctrl.isInIde && $ctrl.showTree" class="left-dashboard col-xs-3 col-sm-2 pdl0 pdr0">
+  <div ng-if="!$ctrl.isInIde && $ctrl.loadTree" class="left-dashboard col-xs-3 col-sm-2 pdl0 pdr0">
     <div class="devices-models-tree">
       <scriptr-searchbox 
                          transport="https"
@@ -16,7 +16,7 @@
   <!-- end left side -->
 
   <!-- begin dashboard content -->
-  <div class="dashboard-content col-xs-9 col-sm-10 pdr0 pdl0">
+  <div class="dashboard-content pdr0 pdl0" ng-class='{"col-xs-9 col-sm-10": (!$ctrl.isInIde && $ctrl.loadTree), "col-xs-12 col-sm-12": ($ctrl.isInIde || $ctrl.loadTree)}'>
       <!-- begin page header -->
       <div class="page-header col-xs-12" ng-if="!$ctrl.isInIde">
            <div ng-if="$ctrl.show" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')  + ' m10'" close="$ctrl.closeAlert()" dismiss-on-timeout="5000">{{$ctrl.message.content}}</div>
