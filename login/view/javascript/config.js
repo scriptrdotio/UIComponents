@@ -1,5 +1,5 @@
 var config = {
-   redirect: "/apps/carwash/view/index.html",
+   redirect: "/UIComponents/dashboardBuilder/index.html",
    loginPage: "/login/view/login.html"
 }
 
