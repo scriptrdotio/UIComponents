@@ -7,7 +7,8 @@
     &lt;title&gt;Dashboard Builder&lt;/title&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;
     &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;
-
+    &lt;link href=&quot;//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&quot; rel=&quot;stylesheet&quot;&gt;
+  
     &lt;!-- CSS --&gt;
     &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;/UIComponents/build/css/UIComponents/components.min.css&quot;/&gt;
     
@@ -115,6 +116,9 @@
     }]
 
      var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', &quot;ngAnimate&quot;, &quot;ngSanitize&quot;, 'Dygraphs', 'DataService', 'Plotly', 'Alert'])
+     
+     angular.module('myApp').run(cachedTemplates);  
+     
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      

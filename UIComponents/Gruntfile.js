@@ -112,8 +112,9 @@ module.exports = function(grunt) {
 		                  'dashboardBuilder/view/dashboard.html',
 		                  'dashboardBuilder/view/dashboardTemplate.min',
 		                  'dashboardBuilder/ide/dashboardTemplate_ide.min',
+		                  'dashboardBuilder/css/customStyleTemplate.css',
 		                  'dashboardBuilder/view/dashboardsList.html' ],
-		            dest : 'build/js/templates.js',
+		            dest :'build/js/templates.js',
 		            options : {
 		               bootstrap : function(module, script) {
 			               return 'var cachedTemplates = (["$templateCache", function($templateCache) {'
@@ -283,7 +284,8 @@ module.exports = function(grunt) {
 	                     'lib/angular-slick.min.js',
 	                     'dashboardBuilder/lib/gridster/angular_gridster.min.js',
 	                     'lib/angular-animate.js',
-	                     'lib/angular-sanitize.js'],
+	                     'lib/angular-sanitize.js'
+	                     ],
 	               dest : 'build/js/angular_resources_1.min.js'
 	            },
 
@@ -384,7 +386,7 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/windrose.js',
 	                     'concat/min-safe/notifications.js'
 	                     ],
-	               dest : 'build/js/UIComponents/components.min.js'
+	               dest : 'build/js/components.min.js'
 	            },
 	            editor: {
 	            	src: [
@@ -401,7 +403,7 @@ module.exports = function(grunt) {
                      'concat/min-safe/searchBox.js',
                      'concat/min-safe/autocomplete.js'
 	            	],
-	            	dest : 'build/js/UIComponents/editor.min.js'
+	            	dest : 'build/js/editor.min.js'
 	            },
 
 	            css : {
@@ -436,11 +438,9 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/plotly/windrose.css',
 	                     'dashboard/frontend/components/common/notifications.css',
 	                     'dashboardBuilder/css/markdown.css',
-	                     'dashboardBuilder/css/media.css',
-	                     'dashboardBuilder/css/light.css',
-	                     'dashboardBuilder/css/dark.css'
+	                     'dashboardBuilder/css/media.css'
 	                     ],
-	               dest : 'build/css/UIComponents/components.css'
+	               dest : 'build/css/components.css'
 	            }
 	         },
 
@@ -456,16 +456,16 @@ module.exports = function(grunt) {
 		               'build/js/directives_1.min.js' : [ 'build/js/directives_1.min.js' ],
 		               'build/js/directives_2.min.js' : [ 'build/js/directives_2.min.js' ],
 		               'build/js/dashboard_builder_constants.min.js' : [ 'build/js/dashboard_builder_constants.min.js' ],
-		               'build/js/UIComponents/components.min.js' : [ 'build/js/UIComponents/components.min.js'],
-	               	'build/js/UIComponents/editor.min.js' : [ 'build/js/UIComponents/editor.min.js'],
+		               'build/js/components.min.js' : [ 'build/js/components.min.js'],
+	               	'build/js/editor.min.js' : [ 'build/js/editor.min.js']
 		            }
 	            }
 	         },
 
 	         cssmin : {
 	            dashboardBuilder : {
-	               src : 'build/css/UIComponents/components.css',
-	               dest : 'build/css/UIComponents/components.min.css'
+	               src : 'build/css/components.css',
+	               dest : 'build/css/components.min.css'
 	            }
 
 	         },

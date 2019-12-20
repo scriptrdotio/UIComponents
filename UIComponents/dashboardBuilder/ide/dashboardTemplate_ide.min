@@ -1,18 +1,63 @@
 <script type='text/x-handlebars-template' id="handlebar-template">
 &lt;html ng-app=&quot;myApp&quot;&gt;
 &lt;head&gt;
-
-    &lt;link rel=&quot;icon&quot; href=&quot;data:;base64,iVBORw0KGgo=&quot;&gt;
+	&lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1,user-scalable=no&quot;&gt;
+    &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://www.scriptr.io/themes/scriptr/images/favicon.ico&quot;&gt;
+    &lt;title&gt;Dashboard Builder&lt;/title&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;
     &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;
-
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;//{{{staticdomain}}}/lib/UIComponents/build/ide/css//components.min.css&quot;&gt;
+    &lt;link href=&quot;//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&quot; rel=&quot;stylesheet&quot;&gt;
+  
+    &lt;!-- CSS --&gt;
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;/UIComponents/build/css/UIComponents/components.min.css&quot;/&gt;
+    
+    
+     &lt;!-- Theme --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/{{dashboardSettings.theme}}.css&quot;&gt;
+    
+    
+    &lt;!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. --&gt;
+    &lt;script src=&quot;/UIComponents/build/js/external_jquery_resources.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/external_libraries1.min.js&quot;&gt;&lt;/script&gt;	
+    &lt;script src=&quot;/UIComponents/build/js/external_libraries2.min.js&quot;&gt;&lt;/script&gt;	
     
     &lt;script src=&quot;//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&amp;libraries=drawing,visualization&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;//{{{staticdomain}}}/lib/UIComponents/build/ide/js/template_resources.min.js&quot;&gt;&lt;/script&gt;
     
+   
+    &lt;!-- NG material --&gt;
+    &lt;script src=&quot;/UIComponents/build/js/angular_resources_1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/angular_resources_2.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/angular_resources_3.min.js&quot;&gt;&lt;/script&gt;
+    
+    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ag-grid/12.0.0/ag-grid.js?ignore=notused36&quot;&gt;&lt;/script&gt;
+
+    &lt;!-- Directives --&gt;
+    &lt;script src=&quot;/UIComponents/build/js/directives_1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/UIComponents/build/js/directives_2.min.js&quot;&gt;&lt;/script&gt;
+    
+    &lt;!-- Libraries --&gt;
+    &lt;script src=&quot;//cdn.plot.ly/plotly-latest.min.js&quot;&gt;&lt;/script&gt;
+  
+    &lt;!-- Components --&gt;
+    &lt;script src=&quot;/UIComponents/build/js/UIComponents/components.min.js&quot;&gt;&lt;/script&gt;
+    
+    
+    &lt;script src=&quot;/UIComponents/dashboardBuilder/javascript/config/config.js&quot;&gt;&lt;/script&gt;
+    
+    &lt;script src=&quot;/UIComponents/config/scriptrTransport.js&quot;&gt;&lt;/script&gt;
+            
+
 &lt;/head&gt; 
   
+  
+&lt;style&gt;
+  {{compiledCss}}
+&lt;/style&gt;
+&lt;style&gt;
+  {{dashboardSettings.inline-style}}
+&lt;/style&gt;
+
 &lt;script&gt;
 
 (function() {  
@@ -36,9 +81,7 @@
 		}
 		return vars;
 	}
-	  
-
-      
+    
     var underscore = angular.module('underscore', []);
 		underscore.factory('_', ['$window', function($window) {		
   		return $window._; // assumes underscore has already been loaded on the page		
@@ -48,8 +91,8 @@
     var wssConfig = [&quot;wsClientProvider&quot;,function (wsClientProvider) {
    	 	wsClientProvider.setBaseUrl(&quot;wss://&quot; + window.location.host + &quot;/&quot;);   	 
         wsClientProvider.setToken($.urlParam(&quot;auth_token&quot;));
-        wsClientProvider.setPublishChannel(&quot;{{{transport.publishChannel}}}&quot;);
-        wsClientProvider.setSubscribeChannel(&quot;{{{transport.subscribeChannel}}}&quot;);
+        wsClientProvider.setPublishChannel(&quot;{{{dashboardSettings.publishChannel}}}&quot;);
+        wsClientProvider.setSubscribeChannel(&quot;{{{dashboardSettings.subscribeChannel}}}&quot;);
     }];
 
     var httpsConfig = [&quot;httpClientProvider&quot;,function (httpClientProvider) {
@@ -57,10 +100,10 @@
       httpClientProvider.setToken($.urlParam(&quot;auth_token&quot;));
     }]
 
-     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer'])
+     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', &quot;ngAnimate&quot;, &quot;ngSanitize&quot;, 'Dygraphs', 'DataService', 'Plotly', 'Alert'])
      
      angular.module('myApp').run(cachedTemplates);  
-      
+     
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      
@@ -74,21 +117,21 @@
      });
   
   
-     myApp.controller('RootCtrl', function($scope, $interpolate, $location) {
+     myApp.controller('RootCtrl', function($scope, $interpolate, $location, dataService, $interval) {
        var vm = this;
        vm.gridsterOptions = {
-          pushing: false,
-          
+          defaultSizeY: 50,
+          defaultSizeX:50,
           minRows: 1, // the minimum height of the grid, in rows
           maxRows: 100,
-          columns: 5, // the width of the grid, in columns
+          columns: 10, // the width of the grid, in columns
           colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
-          rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+          rowHeight: '50', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
           margins: [10, 10], // the pixel distance between each widget
           defaultSizeX: 2, // the default width of a gridster item, if not specifed
           defaultSizeY: 1, // the default height of a gridster item, if not specified
-          mobileBreakPoint: 1024, // if the screen is not wider that this, remove the grid layout and stack the items
-          minColumns: 1,
+          mobileBreakPoint:480, // if the screen is not wider that this, remove the grid layout and stack the items
+          minColumns: 1, // the minimum columns the grid must have
           resizable: {
             enabled: false
           },
@@ -102,39 +145,132 @@
            	console.log(&quot;{{this}}&quot;, $location.search()[&quot;{{this}}&quot;])
             vm.{{this}} = $location.search()[&quot;{{this}}&quot;]
           {{/each}}
+          
+          {{#if dashboardSettings.transport}}
+          		   vm.refreshTimer = null;
+          		   vm.data = null;
+                   vm.dashboardSettings = {
+                        {{#if dashboardSettings.api}}    &quot;api&quot;: &quot;{{dashboardSettings.api}}&quot;, {{/if}}
+                        {{#if dashboardSettings.transport}}    &quot;transport&quot;: &quot;{{dashboardSettings.transport}}&quot;, {{/if}}
+                        {{#if dashboardSettings.msg-tag}}    &quot;msgTag&quot;: &quot;{{dashboardSettings.msg-tag}}&quot;, {{/if}}
+                        {{#if dashboardSettings.api-params}}    &quot;apiParams&quot;: &quot;{{dashboardSettings.api-params}}&quot;, {{/if}}
+                        {{#if dashboardSettings.use-window-params}}    &quot;useWindowParams&quot;: &quot;{{dashboardSettings.use-window-params}}&quot;, {{/if}}
+                        {{#if dashboardSettings.http-method}}    &quot;httpMethod&quot;: &quot;{{dashboardSettings.http-method}}&quot;, {{/if}}
+                        {{#if dashboardSettings.fetch-data-interval}}&quot;fetchDataInterval&quot;: &quot;{{dashboardSettings.fetch-data-interval}}&quot;, {{/if}}
+                        &quot;widgetId&quot;: $scope.$id
+                        
+                    };
+                    
+                    
+                    vm.initDashboardDataService();
+                    
+                    
+                    $scope.$on(&quot;waiting-for-data&quot;, function() {
+                      	vm.consumeData(vm.data)
+                    })
+           {{/if}}
         }
+        
+        {{#if dashboardSettings.transport}}
+            vm.initDashboardDataService =  function() {
+
+                        var requestInfo = {
+                                &quot;api&quot;: vm.dashboardSettings.api,
+                                &quot;transport&quot;: vm.dashboardSettings.transport,
+                                &quot;msgTag&quot;: vm.dashboardSettings.msgTag,
+                                &quot;apiParams&quot;: vm.dashboardSettings.apiParams,
+                                &quot;useWindowParams&quot;: vm.dashboardSettings.useWindowParams,
+                                &quot;httpMethod&quot;: vm.dashboardSettings.httpMethod,
+                                &quot;widgetId&quot;: vm.dashboardSettings.widgetId
+                           };
+                           dataService.scriptrRequest(requestInfo, vm.consumeData.bind(vm));
+
+                          if(vm.dashboardSettings[&quot;fetchDataInterval&quot;] != null &amp;&amp; vm.refreshTimer == null) {
+                              //Assuming this is success
+                              self.refreshTimer = $interval(
+                                  function(){
+                                     vm.initDashboardDataService()
+                                  }, vm.dashboardSettings[&quot;fetchDataInterval&quot;]  * 1000);
+                          }
+
+            }
+            
+             vm.consumeData = function(data, response) {
+                vm.data = data;
+                $scope.$broadcast(&quot;update-data&quot;, data);
+            }
+        
+         {{/if}}
+        
+        
         {{#each items}}
            	{{#if this.formatFunction}}   
                 vm.{{this.formatFunction}} = function(data){
-                  {{this.formatFunctionValue}}
+                  {{{this.formatFunctionValue}}}
                 }
            	{{/if}} 
         {{/each}}
+        
+        /**{{#each items}}
+           	{{#if this.functions}}   
+            	{{#each this.functions}}
+                    vm.{{this.name}} = function(arguments){
+                      {{{this.value}}}
+                    }
+                 {{/each}}
+           	{{/if}} 
+        {{/each}}**/
      });
         	
 })();
   
 &lt;/script&gt;
 
-    &lt;body&gt;
-      &lt;div ng-controller=&quot;RootCtrl as vm&quot; ng-init=&quot;vm.init();&quot;&gt; 
+   &lt;body class=&quot;dashboard-template dashboardTheme &quot;&gt;
+      &lt;div ng-controller=&quot;RootCtrl as vm&quot; ng-init=&quot;vm.init();&quot; class=&quot;dashboardContainer&quot;&gt; 
 		&lt;div gridster=&quot;vm.gridsterOptions&quot;&gt;
           &lt;ul&gt;
              {{#each items}}
-                &lt;li class=&quot;myItem&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
-                    &lt;div class=&quot;box&quot;&gt;
-                        &lt;div class=&quot;box-content&quot;&gt;
-                          &lt;div  style=&quot;height: 30px;&quot; tooltip-placement=&quot;bottom&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot; class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;
-                          &lt;div  style=&quot;height: calc(100% - 30px)&quot; &gt; &lt;{{type}}
-                           	      {{#buildAttr this.options }}
+                &lt;li class=&quot;myItem {{#if_eq  fitToWidget true}} fit-to-widget {{/if_eq}}&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;
+                    
+						&lt;div class=&quot;box {{#if_eq  this.options.boxHeader &quot;false&quot;}} box-without-header {{/if_eq}} {{#if_eq  this.options.boxHeader false}} box-without-header {{/if_eq}}&quot;&gt;
+						  &lt;div class=&quot;box-header&quot;&gt;
+						    &lt;div class=&quot;box-label&quot;&gt;&lt;span tooltip-append-to-body=&quot;true&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot;&gt;{{this.options.boxLabel}}&lt;/span&gt;&lt;/div&gt;
+						  &lt;/div&gt;
+                          &lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+						  &lt;div class=&quot;box-content&quot;&gt;
+						  		&lt;{{type}}
+                                    {{#buildAttr this.options }}
                                         {{this}}
-                                  {{/buildAttr}}
-                                  {{#if this.formatFunction}}   
+                                    {{/buildAttr}}
+                                    {{#if this.formatFunction}}   
                                   		on-format-data='vm.{{this.formatFunction}}'
-                                  {{/if}} 
-                           &gt;&lt;/{{type}}&gt; &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
+                                    {{/if}} 
+                           		&gt;
+                                
+                                {{#if this.functions}}   
+                                       {{#each this.functions}}
+                                  			{{this.attribute}}='vm.{{this.name}}'
+                                        {{/each}}
+                                    {{/if}} 
+                                   
+ 
+ 
+          
+ 					{{#if this.options.default-info-window}}
+                                &lt;info-window id=&quot;{{this.options.default-info-window.id}}&quot; template=&quot;{{this.options.default-info-window.template}}&quot; max-width=&quot;{{this.options.default-info-window.max-width}}&quot; max-height=&quot;{{this.options.default-info-window.max-height}}&quot;&gt;
+                                 &lt;/info-window&gt;
+                    {{/if}}
+                    
+       			{{#if this.options.source-info-window}}
+                    	{{#each this.options.source-info-window}}
+                        		 &lt;info-window id=&quot;infoWindowTemplate_{{this.source}}&quot; template=&quot;{{this.template}}&quot; max-width=&quot;{{this.max-width}}&quot; max-height=&quot;{{this.max-height}}&quot;&gt;
+                                 &lt;/info-window&gt;
+                        {{/each}}
+                    {{/if}}
+                                &lt;/{{type}}&gt;
+						  &lt;/div&gt;
+						&lt;/div&gt;
                 &lt;/li&gt;
              {{/each}}
           &lt;/ul&gt;
@@ -142,5 +278,5 @@
       &lt;/div&gt;
   &lt;/body&gt;  
 &lt;/html&gt;
- 
 </script>
+  
