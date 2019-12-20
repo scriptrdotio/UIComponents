@@ -147,7 +147,7 @@ angular
               } else {
                   
                   if(typeof self.onFormatData() == "function"){
-                      data = self.onFormatData()(data);
+                      data = self.onFormatData()(data, self);
                   }
                   if(data != null){
                       var x = parseFloat(data.x);

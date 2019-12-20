@@ -555,6 +555,9 @@ angular
                      this.dataFailureMessage = "Failed to update data.";
                  } 
             } else { 
+                if(typeof self.onFormatData() == "function"){
+                  data = self.onFormatData()(data, self);
+                }
                 if(data != null) {
                    if(typeof data == "object" && Array.isArray(data)){
                       if(data.length > 0) {

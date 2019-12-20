@@ -141,7 +141,7 @@ angular
 
                 this.consumeData = function (value, response) {
                     if (typeof self.onFormatData() == "function") {
-                        value = self.onFormatData()(value);
+                        value = self.onFormatData()(value, self);
                     }
                     self.value = value;
                     if (typeof value == "object") {
