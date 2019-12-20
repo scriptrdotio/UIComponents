@@ -46,7 +46,10 @@
     <script src="/UIComponents/build/js/UIComponents/components.min.js"></script>
     <script src="/UIComponents/build/js/UIComponents/editor.min.js"></script>
     
-    <script src="/UIComponents/dashboardBuilder/javascript/config/config.js"></script>
+    
+    <script src="/login/view/javascript/authorization.js"> </script>
+    <script src="/login/view/javascript/config.js"></script>
+    
     <script src="/UIComponents/config/scriptrTransport.js"></script>
     
     <style id="dashboardCustomStyle">
@@ -97,6 +100,13 @@
        			return results[1] || 0;
     		}
 	}
+    
+     var authorization  = $.scriptr.authorization({
+         onTokenValid: function(){ }, 
+         loginPage: config.loginPage,
+         validateTokenApi: login.validateTokenApi
+	 });
+    
 	angular.module('myApp').config(wssConfig);
     angular.module('myApp').config(httpsConfig);
     angular.module('myApp').run(function(editableOptions, editableThemes) {
@@ -106,7 +116,7 @@
      });
   
     
-     angular.module('myApp').config(function($routeProvider){
+    angular.module('myApp').run(cachedTemplates).config(function($routeProvider){
            $routeProvider
             .when("/", {
             	templateUrl: '/UIComponents/dashboardBuilder/view/dashboardsList.html'

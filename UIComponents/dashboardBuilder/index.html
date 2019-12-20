@@ -203,7 +203,10 @@
     <script src="/UIComponents/dashboard/frontend/components/list/autocomplete.js"></script>
     
     
-    <script src="/UIComponents/dashboardBuilder/javascript/config/config.js"></script>
+    
+    <script src="/login/view/javascript/authorization.js"> </script>
+    <script src="/login/view/javascript/config.js"></script>
+    
     <script src="/UIComponents/config/scriptrTransport.js"></script>
     
     <style id="dashboardCustomStyle">
@@ -221,18 +224,7 @@
 </head> 
   
 <script type="text/javascript"> 
-    /*
-     Handlebars.registerHelper('json', function(context) {
-          if(typeof context === "object") {
-               console.log("context object", context);
-            return JSON.stringify(context);
-          } else {
-              console.log("context string", context);
-            return context;
-          }
-    }); 
-    */
-    
+(function ($) { 
     Handlebars.registerHelper('if_eq', function(a, b, opts) {
         if(a === b) // Or === depending on your needs
             return opts.fn(this);
@@ -266,6 +258,15 @@
        			return results[1] || 0;
     		}
 	}
+     
+    var authorization  = $.scriptr.authorization(
+        {
+         	 onTokenValid: function(){ }, 
+             loginPage: config.loginPage,
+             validateTokenApi: login.validateTokenApi
+
+        }
+      )
 	angular.module('myApp').config(wssConfig);
     angular.module('myApp').config(httpsConfig);
     angular.module('myApp').run(function(editableOptions, editableThemes) {
@@ -301,21 +302,10 @@
        })
    	  angular.module('myApp').controller('dashboardCtrl', function($scope, httpClient, $sce, $route, $routeParams) {
           var vm = this;
-          //vm.user = (atob(document.cookie.split("=")[1]).split(":")[1])
       });
-    
-    /**
-    if(!$.urlParam('scriptrIdeRef')) { //if not in IDE open login
-         var authorization  = $.scriptr.authorization(
-        {
-          onTokenValid: function(){ }, 
-          loginPage: login.loginTarget
-        }
-      )
-    } **/
+}(jQuery));     
 </script>
 
-    <!--script src="/UIComponents/dashboardBuilder/javascript/dashboard.js"></script-->
 <body ng-controller="dashboardCtrl as vm" class="dashboardTheme" lang="en">
    <!--header-top user="vm.user" header-items='{
            "appname": "Dashboard Builder",
