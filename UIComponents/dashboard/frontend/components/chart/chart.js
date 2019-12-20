@@ -360,7 +360,7 @@ angular
                  } 
             } else {
                 if(typeof self.onFormatData() == "function"){
-                  data = self.onFormatData()(data);
+                    data = self.onFormatData()(data, self);
                 }
                 if(data != null) {
                    if(typeof data == "object" && Array.isArray(data)){
