@@ -1,27 +1,28 @@
 <html ng-app="myApp">
 
 <head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
-    <script src="/UIComponents/wsProvider.js"></script>
-    <script src="/UIComponents/httpProvider.js"></script>
-    <script src="/UIComponents/dataService.js"></script>
     
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-  
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/thermometer/style.css">
+    <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer.js"></script>
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
   	
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
     <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
     
-    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/thermometer/style.css">
-  
-    <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer_directive.js"></script>
-    <script src="/UIComponents/dashboard/frontend/components/thermometer/thermometer.js"></script>
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
+        
     <script src="/UIComponents/config/scriptrTransport.js"></script>
 </head>  
   
@@ -40,17 +41,21 @@
 </script>
   
 <body>
-  
   <div ng-controller="testCtrl as vm" >
      <div class="centered" style="border: 1px solid red;">
        <div class="col-xs-12 col-sm-6 mb10" style="border: 1px solid green; width: 200px"> 
-           <scriptr-thermometer transport="wss" api="UIComponents/dashboard/frontend/examples/thermometer/getThermometerVal" fetch-data-interval="300" data="20" boxlabel="Thermometer" step="10" unit="°C" custom-sectors='[{"color":"#005588","lo":-30,"hi":40},{"color":"#00953c","lo":40,"hi":80},{"color":"#ce2029","lo":80,"hi":120}]'>
-    </scriptr-thermometer>
+            <scriptr-thermometer 
+            	transport="wss" 
+                api="UIComponents/dashboard/frontend/examples/thermometer/getThermometerVal" 
+                fetch-data-interval="300" 
+                data="20" 
+                boxlabel="Thermometer" 
+                step="10" 
+                unit="°C" 
+                custom-sectors='[{"color":"#005588","lo":-30,"hi":40},{"color":"#00953c","lo":40,"hi":80},{"color":"#ce2029","lo":80,"hi":120}]'>
+    		</scriptr-thermometer>
       </div>
-
 	</div>
   </div>
-  
 </body>
-
 </html>

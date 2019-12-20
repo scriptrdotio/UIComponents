@@ -41,23 +41,23 @@
   Include wsProvider, httpProvider and dataService for calling backend API's
   
   ```html
-    <script src="/UIComponents/wsProvider.js"></script>
-    <script src="/UIComponents/httpProvider.js"></script>
-    <script src="/UIComponents/dataService.js"></script>
+  <script src="/UIComponents/wsProvider.js"></script>
+  <script src="/UIComponents/httpProvider.js"></script>
+  <script src="/UIComponents/dataService.js"></script>
   ```
   
   Include bootstrap
   
   ```html
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
   ```
   
   Include notifications
   
   ```html
-    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
-    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+  <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+  <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
   ```
      
   Include a default theme CSS
@@ -77,7 +77,7 @@
   Include scriptrTransport for configuration
   
   ```html
-    <script src="/UIComponents/config/scriptrTransport.js"></script>
+  <script src="/UIComponents/config/scriptrTransport.js"></script>
   ```
   
   Add "WsClient", "HttpClient", "Odometer" to your app module's dependency
@@ -96,22 +96,29 @@ scriptr-odometer is an element component. you will just have to add it in your h
 Example where data is static
 
  ```html
-     <scriptr-odometer
-           odometer-value="54151">        
-    </scriptr-odometer>
+ <scriptr-odometer
+       odometer-value="54151">        
+ </scriptr-odometer>
   ```
   
 Example where data is called from backend
 
  ```html
-    <scriptr-odometer
-        transport='wss'
-        api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
-        theme='car'
-        msg-tag='odometer'
-        animation='count'
-        duration='1000'> 
-      </scriptr-odometer>
+ <scriptr-odometer
+       transport='wss'
+       boxLabel='Odometer'
+       msg-tag='odometer'
+       data='28022017'
+       animation='count'
+       on-clicked='return arguments;'
+       duration='1000'
+       size='3'
+       http-method='GET'
+       boxBorder='true'
+       api='UIComponents/dashboard/frontend/examples/odometer/getOdometerVal'
+       on-format-data='vm.odometerFormatData12'
+ >
+ </scriptr-odometer>
   ```
   
   REST API example:
