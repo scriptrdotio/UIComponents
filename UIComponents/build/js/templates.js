@@ -116,7 +116,7 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
 
 
   $templateCache.put('/UIComponents/dashboard/frontend/components/plotly/windrose.html',
-    "<div class=wind-rose><scriptr-notifications icon=$ctrl.icon has-data=$ctrl.hasData no-results=$ctrl.noResults stalled-data=$ctrl.stalledData use-popover=$ctrl.usePopover failure-message=$ctrl.dataFailureMessage action-message=$ctrl.actionMessage action-success=$ctrl.actionSuccess></scriptr-notifications><div ng-show=\"$ctrl.transformedData.length > 0\" ng-style=$ctrl.style class=plotly-chart-wrapper ng-class=\"($ctrl.showLegend) ? 'with-legend' : ' ' \"><div class=plotly-chart-dimension><angular-plotly plotly-data=$ctrl.transformedData plotly-options=$ctrl.options plotly-layout=$ctrl.layout></angular-plotly></div></div><div class=plotly-chart-legend ng-if=\"$ctrl.showLegend && $ctrl.transformedData.length > 0\"><ul ng-repeat=\"entry in $ctrl.plotCustomRanges\" style=\"list-style: none\"><li><span><i class=\"fa fa-square\" style=\"color: {{entry.color}}\"></i> {{entry.lo}} - {{entry.hi}} {{$ctrl.speedUnit}}</span></li></ul></div></div>"
+    "<div class=wind-rose style=\"display: inline-block\"><scriptr-notifications icon=$ctrl.icon has-data=$ctrl.hasData no-results=$ctrl.noResults stalled-data=$ctrl.stalledData use-popover=$ctrl.usePopover failure-message=$ctrl.dataFailureMessage action-message=$ctrl.actionMessage action-success=$ctrl.actionSuccess></scriptr-notifications><div ng-show=\"$ctrl.transformedData.length > 0\" ng-style=$ctrl.style class=plotly-chart-wrapper ng-class=\"($ctrl.showLegend) ? 'with-legend' : ' ' \"><div class=plotly-chart-dimension><angular-plotly plotly-data=$ctrl.transformedData plotly-options=$ctrl.options plotly-layout=$ctrl.layout></angular-plotly></div></div><div class=plotly-chart-legend ng-if=\"$ctrl.showLegend && $ctrl.transformedData.length > 0\"><ul ng-repeat=\"entry in $ctrl.plotCustomRanges\" style=\"list-style: none\"><li><span><i class=\"fa fa-square\" style=\"color: {{entry.color}}\"></i> {{entry.lo}} - {{entry.hi}} {{$ctrl.speedUnit}}</span></li></ul></div></div>"
   );
 
 
@@ -269,7 +269,8 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "    &lt;title&gt;Dashboard Builder&lt;/title&gt;\n" +
     "    &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;\n" +
     "    &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;\n" +
-    "\n" +
+    "    &lt;link href=&quot;//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&quot; rel=&quot;stylesheet&quot;&gt;\n" +
+    "  \n" +
     "    &lt;!-- CSS --&gt;\n" +
     "    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;/UIComponents/build/css/UIComponents/components.min.css&quot;/&gt;\n" +
     "    \n" +
@@ -377,6 +378,9 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "    }]\n" +
     "\n" +
     "     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', &quot;ngAnimate&quot;, &quot;ngSanitize&quot;, 'Dygraphs', 'DataService', 'Plotly', 'Alert'])\n" +
+    "     \n" +
+    "     angular.module('myApp').run(cachedTemplates);  \n" +
+    "     \n" +
     "     angular.module('myApp').config(wssConfig);\n" +
     "     angular.module('myApp').config(httpsConfig);\n" +
     "     \n" +
@@ -557,18 +561,63 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
   $templateCache.put('/UIComponents/dashboardBuilder/ide/dashboardTemplate_ide.min',
     "<script type=text/x-handlebars-template id=handlebar-template>&lt;html ng-app=&quot;myApp&quot;&gt;\n" +
     "&lt;head&gt;\n" +
-    "\n" +
-    "    &lt;link rel=&quot;icon&quot; href=&quot;data:;base64,iVBORw0KGgo=&quot;&gt;\n" +
+    "	&lt;meta charset=&quot;UTF-8&quot;&gt;\n" +
+    "    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1,user-scalable=no&quot;&gt;\n" +
+    "    &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://www.scriptr.io/themes/scriptr/images/favicon.ico&quot;&gt;\n" +
+    "    &lt;title&gt;Dashboard Builder&lt;/title&gt;\n" +
     "    &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;\n" +
     "    &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;\n" +
-    "\n" +
-    "    &lt;link rel=&quot;stylesheet&quot; href=&quot;//{{{staticdomain}}}/lib/UIComponents/build/ide/css//components.min.css&quot;&gt;\n" +
+    "    &lt;link href=&quot;//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&quot; rel=&quot;stylesheet&quot;&gt;\n" +
+    "  \n" +
+    "    &lt;!-- CSS --&gt;\n" +
+    "    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;/UIComponents/build/css/UIComponents/components.min.css&quot;/&gt;\n" +
+    "    \n" +
+    "    \n" +
+    "     &lt;!-- Theme --&gt;\n" +
+    "    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/{{dashboardSettings.theme}}.css&quot;&gt;\n" +
+    "    \n" +
+    "    \n" +
+    "    &lt;!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. --&gt;\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/external_jquery_resources.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/external_libraries1.min.js&quot;&gt;&lt;/script&gt;	\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/external_libraries2.min.js&quot;&gt;&lt;/script&gt;	\n" +
     "    \n" +
     "    &lt;script src=&quot;//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&amp;libraries=drawing,visualization&quot;&gt;&lt;/script&gt;\n" +
-    "    &lt;script src=&quot;//{{{staticdomain}}}/lib/UIComponents/build/ide/js/template_resources.min.js&quot;&gt;&lt;/script&gt;\n" +
     "    \n" +
+    "   \n" +
+    "    &lt;!-- NG material --&gt;\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/angular_resources_1.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/angular_resources_2.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/angular_resources_3.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    \n" +
+    "    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ag-grid/12.0.0/ag-grid.js?ignore=notused36&quot;&gt;&lt;/script&gt;\n" +
+    "\n" +
+    "    &lt;!-- Directives --&gt;\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/directives_1.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/directives_2.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    \n" +
+    "    &lt;!-- Libraries --&gt;\n" +
+    "    &lt;script src=&quot;//cdn.plot.ly/plotly-latest.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "  \n" +
+    "    &lt;!-- Components --&gt;\n" +
+    "    &lt;script src=&quot;/UIComponents/build/js/UIComponents/components.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    \n" +
+    "    \n" +
+    "    &lt;script src=&quot;/UIComponents/dashboardBuilder/javascript/config/config.js&quot;&gt;&lt;/script&gt;\n" +
+    "    \n" +
+    "    &lt;script src=&quot;/UIComponents/config/scriptrTransport.js&quot;&gt;&lt;/script&gt;\n" +
+    "            \n" +
+    "\n" +
     "&lt;/head&gt; \n" +
     "  \n" +
+    "  \n" +
+    "&lt;style&gt;\n" +
+    "  {{compiledCss}}\n" +
+    "&lt;/style&gt;\n" +
+    "&lt;style&gt;\n" +
+    "  {{dashboardSettings.inline-style}}\n" +
+    "&lt;/style&gt;\n" +
+    "\n" +
     "&lt;script&gt;\n" +
     "\n" +
     "(function() {  \n" +
@@ -592,9 +641,7 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "		}\n" +
     "		return vars;\n" +
     "	}\n" +
-    "	  \n" +
-    "\n" +
-    "      \n" +
+    "    \n" +
     "    var underscore = angular.module('underscore', []);\n" +
     "		underscore.factory('_', ['$window', function($window) {		\n" +
     "  		return $window._; // assumes underscore has already been loaded on the page		\n" +
@@ -604,8 +651,8 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "    var wssConfig = [&quot;wsClientProvider&quot;,function (wsClientProvider) {\n" +
     "   	 	wsClientProvider.setBaseUrl(&quot;wss://&quot; + window.location.host + &quot;/&quot;);   	 \n" +
     "        wsClientProvider.setToken($.urlParam(&quot;auth_token&quot;));\n" +
-    "        wsClientProvider.setPublishChannel(&quot;{{{transport.publishChannel}}}&quot;);\n" +
-    "        wsClientProvider.setSubscribeChannel(&quot;{{{transport.subscribeChannel}}}&quot;);\n" +
+    "        wsClientProvider.setPublishChannel(&quot;{{{dashboardSettings.publishChannel}}}&quot;);\n" +
+    "        wsClientProvider.setSubscribeChannel(&quot;{{{dashboardSettings.subscribeChannel}}}&quot;);\n" +
     "    }];\n" +
     "\n" +
     "    var httpsConfig = [&quot;httpClientProvider&quot;,function (httpClientProvider) {\n" +
@@ -613,10 +660,10 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "      httpClientProvider.setToken($.urlParam(&quot;auth_token&quot;));\n" +
     "    }]\n" +
     "\n" +
-    "     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Message', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer'])\n" +
+    "     var myApp= angular.module(&quot;myApp&quot;, [&quot;underscore&quot; , &quot;WsClient&quot;, &quot;HttpClient&quot;, &quot;Chart&quot;, 'gridster', 'ui.bootstrap', 'ngRoute', 'Gauge', 'Speedometer', 'Odometer', 'Map', 'Grid', 'toggle-switch', 'Slider', 'Button', 'IFrame', 'Accelerometer', 'Thermometer', 'Display', &quot;ngAnimate&quot;, &quot;ngSanitize&quot;, 'Dygraphs', 'DataService', 'Plotly', 'Alert'])\n" +
     "     \n" +
     "     angular.module('myApp').run(cachedTemplates);  \n" +
-    "      \n" +
+    "     \n" +
     "     angular.module('myApp').config(wssConfig);\n" +
     "     angular.module('myApp').config(httpsConfig);\n" +
     "     \n" +
@@ -630,21 +677,21 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "     });\n" +
     "  \n" +
     "  \n" +
-    "     myApp.controller('RootCtrl', function($scope, $interpolate, $location) {\n" +
+    "     myApp.controller('RootCtrl', function($scope, $interpolate, $location, dataService, $interval) {\n" +
     "       var vm = this;\n" +
     "       vm.gridsterOptions = {\n" +
-    "          pushing: false,\n" +
-    "          \n" +
+    "          defaultSizeY: 50,\n" +
+    "          defaultSizeX:50,\n" +
     "          minRows: 1, // the minimum height of the grid, in rows\n" +
     "          maxRows: 100,\n" +
-    "          columns: 5, // the width of the grid, in columns\n" +
+    "          columns: 10, // the width of the grid, in columns\n" +
     "          colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'\n" +
-    "          rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.\n" +
+    "          rowHeight: '50', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.\n" +
     "          margins: [10, 10], // the pixel distance between each widget\n" +
     "          defaultSizeX: 2, // the default width of a gridster item, if not specifed\n" +
     "          defaultSizeY: 1, // the default height of a gridster item, if not specified\n" +
-    "          mobileBreakPoint: 1024, // if the screen is not wider that this, remove the grid layout and stack the items\n" +
-    "          minColumns: 1,\n" +
+    "          mobileBreakPoint:480, // if the screen is not wider that this, remove the grid layout and stack the items\n" +
+    "          minColumns: 1, // the minimum columns the grid must have\n" +
     "          resizable: {\n" +
     "            enabled: false\n" +
     "          },\n" +
@@ -658,39 +705,132 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "           	console.log(&quot;{{this}}&quot;, $location.search()[&quot;{{this}}&quot;])\n" +
     "            vm.{{this}} = $location.search()[&quot;{{this}}&quot;]\n" +
     "          {{/each}}\n" +
+    "          \n" +
+    "          {{#if dashboardSettings.transport}}\n" +
+    "          		   vm.refreshTimer = null;\n" +
+    "          		   vm.data = null;\n" +
+    "                   vm.dashboardSettings = {\n" +
+    "                        {{#if dashboardSettings.api}}    &quot;api&quot;: &quot;{{dashboardSettings.api}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.transport}}    &quot;transport&quot;: &quot;{{dashboardSettings.transport}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.msg-tag}}    &quot;msgTag&quot;: &quot;{{dashboardSettings.msg-tag}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.api-params}}    &quot;apiParams&quot;: &quot;{{dashboardSettings.api-params}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.use-window-params}}    &quot;useWindowParams&quot;: &quot;{{dashboardSettings.use-window-params}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.http-method}}    &quot;httpMethod&quot;: &quot;{{dashboardSettings.http-method}}&quot;, {{/if}}\n" +
+    "                        {{#if dashboardSettings.fetch-data-interval}}&quot;fetchDataInterval&quot;: &quot;{{dashboardSettings.fetch-data-interval}}&quot;, {{/if}}\n" +
+    "                        &quot;widgetId&quot;: $scope.$id\n" +
+    "                        \n" +
+    "                    };\n" +
+    "                    \n" +
+    "                    \n" +
+    "                    vm.initDashboardDataService();\n" +
+    "                    \n" +
+    "                    \n" +
+    "                    $scope.$on(&quot;waiting-for-data&quot;, function() {\n" +
+    "                      	vm.consumeData(vm.data)\n" +
+    "                    })\n" +
+    "           {{/if}}\n" +
     "        }\n" +
+    "        \n" +
+    "        {{#if dashboardSettings.transport}}\n" +
+    "            vm.initDashboardDataService =  function() {\n" +
+    "\n" +
+    "                        var requestInfo = {\n" +
+    "                                &quot;api&quot;: vm.dashboardSettings.api,\n" +
+    "                                &quot;transport&quot;: vm.dashboardSettings.transport,\n" +
+    "                                &quot;msgTag&quot;: vm.dashboardSettings.msgTag,\n" +
+    "                                &quot;apiParams&quot;: vm.dashboardSettings.apiParams,\n" +
+    "                                &quot;useWindowParams&quot;: vm.dashboardSettings.useWindowParams,\n" +
+    "                                &quot;httpMethod&quot;: vm.dashboardSettings.httpMethod,\n" +
+    "                                &quot;widgetId&quot;: vm.dashboardSettings.widgetId\n" +
+    "                           };\n" +
+    "                           dataService.scriptrRequest(requestInfo, vm.consumeData.bind(vm));\n" +
+    "\n" +
+    "                          if(vm.dashboardSettings[&quot;fetchDataInterval&quot;] != null &amp;&amp; vm.refreshTimer == null) {\n" +
+    "                              //Assuming this is success\n" +
+    "                              self.refreshTimer = $interval(\n" +
+    "                                  function(){\n" +
+    "                                     vm.initDashboardDataService()\n" +
+    "                                  }, vm.dashboardSettings[&quot;fetchDataInterval&quot;]  * 1000);\n" +
+    "                          }\n" +
+    "\n" +
+    "            }\n" +
+    "            \n" +
+    "             vm.consumeData = function(data, response) {\n" +
+    "                vm.data = data;\n" +
+    "                $scope.$broadcast(&quot;update-data&quot;, data);\n" +
+    "            }\n" +
+    "        \n" +
+    "         {{/if}}\n" +
+    "        \n" +
+    "        \n" +
     "        {{#each items}}\n" +
     "           	{{#if this.formatFunction}}   \n" +
     "                vm.{{this.formatFunction}} = function(data){\n" +
-    "                  {{this.formatFunctionValue}}\n" +
+    "                  {{{this.formatFunctionValue}}}\n" +
     "                }\n" +
     "           	{{/if}} \n" +
     "        {{/each}}\n" +
+    "        \n" +
+    "        /**{{#each items}}\n" +
+    "           	{{#if this.functions}}   \n" +
+    "            	{{#each this.functions}}\n" +
+    "                    vm.{{this.name}} = function(arguments){\n" +
+    "                      {{{this.value}}}\n" +
+    "                    }\n" +
+    "                 {{/each}}\n" +
+    "           	{{/if}} \n" +
+    "        {{/each}}**/\n" +
     "     });\n" +
     "        	\n" +
     "})();\n" +
     "  \n" +
     "&lt;/script&gt;\n" +
     "\n" +
-    "    &lt;body&gt;\n" +
-    "      &lt;div ng-controller=&quot;RootCtrl as vm&quot; ng-init=&quot;vm.init();&quot;&gt; \n" +
+    "   &lt;body class=&quot;dashboard-template dashboardTheme &quot;&gt;\n" +
+    "      &lt;div ng-controller=&quot;RootCtrl as vm&quot; ng-init=&quot;vm.init();&quot; class=&quot;dashboardContainer&quot;&gt; \n" +
     "		&lt;div gridster=&quot;vm.gridsterOptions&quot;&gt;\n" +
     "          &lt;ul&gt;\n" +
     "             {{#each items}}\n" +
-    "                &lt;li class=&quot;myItem&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;\n" +
-    "                    &lt;div class=&quot;box&quot;&gt;\n" +
-    "                        &lt;div class=&quot;box-content&quot;&gt;\n" +
-    "                          &lt;div  style=&quot;height: 30px;&quot; tooltip-placement=&quot;bottom&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot; class=&quot;box-label&quot;&gt;{{this.options.boxLabel}}&lt;/div&gt;\n" +
-    "                          &lt;div  style=&quot;height: calc(100% - 30px)&quot; &gt; &lt;{{type}}\n" +
-    "                           	      {{#buildAttr this.options }}\n" +
+    "                &lt;li class=&quot;myItem {{#if_eq  fitToWidget true}} fit-to-widget {{/if_eq}}&quot; gridster-item='{sizeX: {{sizeX}}, sizeY: {{sizeY}}, col: {{col}} , row: {{row}} }'&gt;\n" +
+    "                    \n" +
+    "						&lt;div class=&quot;box {{#if_eq  this.options.boxHeader &quot;false&quot;}} box-without-header {{/if_eq}} {{#if_eq  this.options.boxHeader false}} box-without-header {{/if_eq}}&quot;&gt;\n" +
+    "						  &lt;div class=&quot;box-header&quot;&gt;\n" +
+    "						    &lt;div class=&quot;box-label&quot;&gt;&lt;span tooltip-append-to-body=&quot;true&quot; uib-tooltip=&quot;{{this.options.boxLabel}}&quot;&gt;{{this.options.boxLabel}}&lt;/span&gt;&lt;/div&gt;\n" +
+    "						  &lt;/div&gt;\n" +
+    "                          &lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;\n" +
+    "						  &lt;div class=&quot;box-content&quot;&gt;\n" +
+    "						  		&lt;{{type}}\n" +
+    "                                    {{#buildAttr this.options }}\n" +
     "                                        {{this}}\n" +
-    "                                  {{/buildAttr}}\n" +
-    "                                  {{#if this.formatFunction}}   \n" +
+    "                                    {{/buildAttr}}\n" +
+    "                                    {{#if this.formatFunction}}   \n" +
     "                                  		on-format-data='vm.{{this.formatFunction}}'\n" +
-    "                                  {{/if}} \n" +
-    "                           &gt;&lt;/{{type}}&gt; &lt;/div&gt;\n" +
-    "                        &lt;/div&gt;\n" +
-    "                    &lt;/div&gt;\n" +
+    "                                    {{/if}} \n" +
+    "                           		&gt;\n" +
+    "                                \n" +
+    "                                {{#if this.functions}}   \n" +
+    "                                       {{#each this.functions}}\n" +
+    "                                  			{{this.attribute}}='vm.{{this.name}}'\n" +
+    "                                        {{/each}}\n" +
+    "                                    {{/if}} \n" +
+    "                                   \n" +
+    " \n" +
+    " \n" +
+    "          \n" +
+    " 					{{#if this.options.default-info-window}}\n" +
+    "                                &lt;info-window id=&quot;{{this.options.default-info-window.id}}&quot; template=&quot;{{this.options.default-info-window.template}}&quot; max-width=&quot;{{this.options.default-info-window.max-width}}&quot; max-height=&quot;{{this.options.default-info-window.max-height}}&quot;&gt;\n" +
+    "                                 &lt;/info-window&gt;\n" +
+    "                    {{/if}}\n" +
+    "                    \n" +
+    "       			{{#if this.options.source-info-window}}\n" +
+    "                    	{{#each this.options.source-info-window}}\n" +
+    "                        		 &lt;info-window id=&quot;infoWindowTemplate_{{this.source}}&quot; template=&quot;{{this.template}}&quot; max-width=&quot;{{this.max-width}}&quot; max-height=&quot;{{this.max-height}}&quot;&gt;\n" +
+    "                                 &lt;/info-window&gt;\n" +
+    "                        {{/each}}\n" +
+    "                    {{/if}}\n" +
+    "                                &lt;/{{type}}&gt;\n" +
+    "						  &lt;/div&gt;\n" +
+    "						&lt;/div&gt;\n" +
     "                &lt;/li&gt;\n" +
     "             {{/each}}\n" +
     "          &lt;/ul&gt;\n" +
@@ -698,6 +838,146 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "      &lt;/div&gt;\n" +
     "  &lt;/body&gt;  \n" +
     "&lt;/html&gt;</script>"
+  );
+
+
+  $templateCache.put('/UIComponents/dashboardBuilder/css/customStyleTemplate.css',
+    "<script type=text/x-handlebars-template id=handlebar-customcss-template>.dashboardTheme .dashboardContainer {\n" +
+    "      {{#if_eq style.dashboard.background-type \"solid\"}}\n" +
+    "      	background-color: {{style.dashboard.background-color}};\n" +
+    "      {{/if_eq}}\n" +
+    "      {{#if_eq style.dashboard.background-type \"gradient\"}}\n" +
+    "      	background-image: {{style.dashboard.background-gradient}};\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "    	{{#if_eq style.dashboard.background-type \"image\"}}\n" +
+    "      	background-image: url(\"{{style.dashboard.background-image}}\");\n" +
+    "        background-position-x: {{style.dashboard.background-position-x}};\n" +
+    "        background-position-y: {{style.dashboard.background-position-y}};\n" +
+    "        background-repeat: {{style.dashboard.background-repeat}};\n" +
+    "        background-size: {{style.dashboard.background-size}};\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "       {{#if_eq style.dashboard.border true}}\n" +
+    "      		border: {{style.dashboard.border-width}}px {{style.dashboard.border-style}} {{style.dashboard.border-color}} ;\n" +
+    "      {{/if_eq}}\n" +
+    "      {{#if_eq style.dashboard.border false}}\n" +
+    "      		border: none;\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "      {{#if style.dashboard.border-radius}}\n" +
+    "    		border-radius: {{style.dashboard.border-radius}}px;\n" +
+    "      {{/if}}\n" +
+    "    \n" +
+    "      {{#if_eq style.dashboard.box-shadow \"true\"}}\n" +
+    "    	box-shadow: 2px 2px 12px 0px {{ style.dashboard.box-shadow-color }};\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "       {{#if_eq style.dashboard.box-shadow \"false\"}}\n" +
+    "      		box-shadow: none;\n" +
+    "      {{/if_eq}}\n" +
+    "}\n" +
+    "\n" +
+    ".dashboardTheme .box {\n" +
+    "      {{#if_eq style.box.background-type \"solid\"}}\n" +
+    "      	background-color: {{style.box.background-color}};\n" +
+    "      {{/if_eq}}\n" +
+    "      {{#if_eq style.box.background-type \"gradient\"}}\n" +
+    "      	background-image: {{style.box.background-gradient}};\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "       {{#if_eq style.box.border true}}\n" +
+    "      		border: {{style.box.border-width}}px {{style.box.border-style}} {{style.box.border-color}} ;\n" +
+    "      {{/if_eq}}\n" +
+    "      {{#if_eq style.box.border false}}\n" +
+    "      		border: none;\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "      {{#if style.box.border-radius}}\n" +
+    "    		border-radius: {{style.box.border-radius}}px;\n" +
+    "      {{/if}}\n" +
+    "    \n" +
+    "      {{#if_eq style.box.box-shadow \"true\"}}\n" +
+    "    	box-shadow: 2px 2px 12px 0px {{ style.box.box-shadow-color }};\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "       {{#if_eq style.box.box-shadow \"false\"}}\n" +
+    "      		box-shadow: none;\n" +
+    "      {{/if_eq}}\n" +
+    "}\n" +
+    "\n" +
+    "\n" +
+    ".dashboardTheme .box .box-content {\n" +
+    "      {{#if_eq style.box-content.background-type \"solid\"}}\n" +
+    "      	background-color: {{style.box-content.background-color}};\n" +
+    "      {{/if_eq}}\n" +
+    "      {{#if_eq style.box-content.background-type \"gradient\"}}\n" +
+    "      	background-image: {{style.box-content.background-gradient}};\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "      {{#if_eq style.box-content.border true}}\n" +
+    "      		border: {{style.box-content.border-width}}px {{style.box-content.border-style}} {{style.box-content.border-color}} ;\n" +
+    "      {{/if_eq}}\n" +
+    "      {{#if_eq style.box-content.border false}}\n" +
+    "      		border: none;\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "      {{#if style.box.border-radius}}\n" +
+    "    	border-bottom-left-radius: {{style.box.border-radius}}px;\n" +
+    "    	border-bottom-right-radius: {{style.box.border-radius}}px;\n" +
+    "      {{/if}}\n" +
+    "    \n" +
+    "      {{#if style.box-content.border-radius}}\n" +
+    "    		border-radius: {{style.box-content.border-radius}}px;\n" +
+    "      {{/if}}\n" +
+    "}  \n" +
+    "\n" +
+    ".dashboardTheme .box .box-header {\n" +
+    "    \n" +
+    "     {{#if_eq style.box-header.background-type \"solid\"}}\n" +
+    "      	background-color: {{style.box-header.background-color}};\n" +
+    "      {{/if_eq}}\n" +
+    "      {{#if_eq style.box-header.background-type \"gradient\"}}\n" +
+    "      	background-image: {{style.box-header.background-gradient}};\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "    \n" +
+    "      {{#if_eq style.box-header.border true}}\n" +
+    "      		border: {{style.box-header.border-width}}px {{style.box-header.border-style}} {{style.box-header.border-color}} ;\n" +
+    "      {{/if_eq}}\n" +
+    "      {{#if_eq style.box-header.border false}}\n" +
+    "      		border: none;\n" +
+    "      {{/if_eq}}\n" +
+    "    \n" +
+    "      {{#if style.box.border-radius}}\n" +
+    "    	border-top-left-radius: {{style.box.border-radius}}px;\n" +
+    "    	border-top-right-radius: {{style.box.border-radius}}px;\n" +
+    "      {{/if}}\n" +
+    "    \n" +
+    "      {{#if style.box-header.border-radius}}\n" +
+    "    		border-radius: {{style.box-header.border-radius}}px;\n" +
+    "      {{/if}}\n" +
+    "}  \n" +
+    "\n" +
+    ".dashboardTheme .box .box-header .box-label {\n" +
+    "    \n" +
+    "      {{#if style.box-label.display}}\n" +
+    "      	display: {{style.box-label.display}};\n" +
+    "      {{/if}}\n" +
+    "      {{#if style.box-label.color}}\n" +
+    "      	color: {{style.box-label.color}};\n" +
+    "      {{/if}}\n" +
+    "      {{#if style.box-label.font-size}}\n" +
+    "    	font-size: {{style.box-label.font-size}}px;\n" +
+    "      {{/if}}\n" +
+    "      {{#if style.box-label.font-weight}}\n" +
+    "    	font-weight: {{style.box-label.font-weight}};\n" +
+    "      {{/if}}\n" +
+    "      {{#if style.box-label.text-align}}\n" +
+    "    	text-align: {{style.box-label.text-align}};\n" +
+    "      {{/if}}\n" +
+    "    \n" +
+    "}</script>"
   );
 
 

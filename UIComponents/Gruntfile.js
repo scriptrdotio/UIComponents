@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/codemirror.min.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/theme/neo.min.css',
 	                     // JS
-	                     'https://code.jquery.com/jquery-3.3.1.js',
+	                     'https://code.jquery.com/jquery-3.1.1.js',
 	                     'https://code.jquery.com/ui/1.12.1/jquery-ui.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js',
 	                     'https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js',
