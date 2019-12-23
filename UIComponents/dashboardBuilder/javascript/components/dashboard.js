@@ -42,7 +42,6 @@ angular
       iconExpand: "@",
       iconCollapse: "@",
       loadTree: "<?",
-      showTree: "<",
       devicesModel: "@"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
@@ -58,7 +57,7 @@ angular
       self.counter = 0;  
             
       this.$onInit = function() {
-        self.showTree = (typeof this.showTree != 'undefined')? this.showTree : true,  
+        self.loadTree = (typeof this.loadTree != 'undefined')? this.loadTree : true,  
         self.loading = true;  
         self.showPanelMsg = false;  
           

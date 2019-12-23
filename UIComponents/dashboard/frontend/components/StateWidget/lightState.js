@@ -70,7 +70,7 @@ angular
 
         this.consumeData = function(data, response) {
             if(typeof self.onFormatData() == "function"){
-                data = self.onFormatData()(data);
+                data = self.onFormatData()(data, self);
             }
             
             if(typeof data == "string"){

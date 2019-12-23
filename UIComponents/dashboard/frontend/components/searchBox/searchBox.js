@@ -123,7 +123,7 @@ angular
          
          this.consumeData = function(data, response) {
            if(typeof self.onFormatData() == "function"){
-             data = self.onFormatData()(data);
+             data = self.onFormatData()(data, self);
            }
            console.log("display tree");
            if(typeof data == "object" && data.length > 0){

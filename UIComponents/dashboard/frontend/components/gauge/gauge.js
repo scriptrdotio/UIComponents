@@ -220,7 +220,7 @@ angular
                 }
 
                 this.calculateNotificationsDisplay = function() {
-                    if($element.parent().innerWidth() < 240) {
+                    if($element.parent() && $element.parent().innerWidth() < 240) {
                         self.usePopover = true;
                     } else {
                         self.usePopover = false;
@@ -274,7 +274,7 @@ angular
                          }
                     } else {
                         if(typeof self.onFormatData() == "function"){
-                          data = self.onFormatData()(data);
+                          data = self.onFormatData()(data, self);
                         }
 						if(data != null){
                             data = parseFloat(data);

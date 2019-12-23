@@ -191,8 +191,8 @@ angular
                              self.dataFailureMessage = "Failed to update data.";
                          }
                     } else {
-                        if(typeof this.onFormatData() == "function"){
-                            data = this.onFormatData()(data);
+                        if(typeof self.onFormatData() == "function"){
+                            data = self.onFormatData()(data, self);
                         }
                         if(data != null) {
                          if(typeof data == "object" && data.x != null && Array.isArray(data.x) && data.y !=null && Array.isArray(data.y) && data.z != null && Array.isArray(data.z)) { 
