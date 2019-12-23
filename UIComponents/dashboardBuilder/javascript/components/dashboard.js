@@ -1285,19 +1285,20 @@ angular
               
           }
       };
-            this.highlightTabs = function (formName) {
-        var rootEl = $('form[name="' + formName + '"]');
-        var tabHeaders = rootEl.find('ul li');
-        var tabPanes = rootEl.find('.tab-pane') || [];
-        rootEl.find('ul li a span.badge').remove();
+        
+      this.highlightTabs = function (formName) {
+            var rootEl = $('form[name="' + formName + '"]');
+            var tabHeaders = rootEl.find('ul li');
+            var tabPanes = rootEl.find('.tab-pane') || [];
+            rootEl.find('ul li a span.badge').remove();
 
-        for (var i = 0; i < tabPanes.length; i++) {
-            var errorCount = $(tabPanes[i]).find('div.ng-invalid').length;
-            if (errorCount > 0) {
-                $(tabHeaders[i].childNodes[0]).append('<span class="badge sf-badge-error">' + errorCount + '</span>');
+            for (var i = 0; i < tabPanes.length; i++) {
+                var errorCount = $(tabPanes[i]).find('div.ng-invalid').length;
+                if (errorCount > 0) {
+                    $(tabHeaders[i].childNodes[0]).append('<span class="badge sf-badge-error">' + errorCount + '</span>');
+                }
             }
-        }
-    };
+    	};
     
 
       this.onSubmit = function(form) {
