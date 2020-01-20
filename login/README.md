@@ -16,19 +16,19 @@
   - click on Users tab in the left pane
   - Add, Remove, Edit the system users
 ## Add the Module to your app
-  - click on install module button in the bottme left corner of your IDE screen
+  - click on install module button in the bottom left corner of your IDE screen
   - click on  **Add Custom Module from GitHub**
   - Enter the following info
     - Owner **scriptrdotio**
     - Repository **UIComponents**
-    - Path **UIComponents/login**
+    - Path **login**
     - Branch **master**
     - Destination Folder **login** , or other specific folder
 ## Configure the module
   there are two configuration files: config.js, constants.js
   - navigate to ./view/javascript/config.js
-  - confige the apis paths 
-  - confige the redirect paths 
+  - config the apis paths 
+  - config the redirect paths 
   - navigate to ./view/javascript/constants.js
   - config the constants
     - appTitle is the title shown in the browser tab
