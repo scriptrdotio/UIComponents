@@ -10,11 +10,15 @@
   JQuery
   
   Scriptr Underscore module
+## Add Subdomain
+  - login to your scriptr IDE
+  - under your user name click account>subdomain
+  - enter a subdomain to access login page 
 ## Add Users to the system
   - login to your scriptr IDE
   - click on the tools menu and navigate to data explorer
   - click on Users tab in the left pane
-  - Add, Remove, Edit the system users
+  - Add at least 1 user to login
 ## Add the Module to your app
   - click on install module button in the bottom left corner of your IDE screen
   - click on  **Add Custom Module from GitHub**
