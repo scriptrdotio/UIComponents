@@ -200,6 +200,9 @@ angular
             
             
             self.click = function (transport) {
+            	 if(typeof this.onButtonclick() == "function"){
+                		self.onButtonclick()(self);
+                } 
                 if(!self.isDisabled){
                     var requestInfo = {
                         "api": (self.actionApi) ? self.actionApi : self.api,
