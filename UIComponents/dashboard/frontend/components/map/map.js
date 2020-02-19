@@ -386,7 +386,7 @@ angular
         }
         var assets = data;
        // var id = data.id;
-        var process = function(assets) {
+        var process = function(assets, mapId) {
           if (!self.trackedAsset || self.trackedAsset == key) {
               // Loop on assets
               for (var key in assets) {
@@ -407,7 +407,7 @@ angular
           if(self.mapFitBounds && self.bounds)  {
           	NgMap
             .getMap({
-            	id : 'clustered-'+self.$wdgid //TODO: figure out another thing then id, or pass id as a param
+            	id : mapId //TODO: figure out another thing then id, or pass id as a param
           	})
             .then(
             	function(map) { 
@@ -427,12 +427,12 @@ angular
               if (!self.markerClusterer) {
                 self.buildClusterer(map);
               }
-             process(assets);
+             process(assets, ("clustered"+'-'+self.$wdgid));
             }, function(e) {
               console.log("Clusterer Map error", e)
             });
         } else {
-          process(assets)
+          process(assets, ("detailed"+'-'+self.$wdgid))
         }
     };
         
