@@ -411,6 +411,7 @@ angular
           	})
             .then(
             	function(map) { 
+            		self.mapcenter = self.bounds.getCenter();
                	map.setCenter(self.bounds.getCenter());
         				map.fitBounds(self.bounds);
           	})
