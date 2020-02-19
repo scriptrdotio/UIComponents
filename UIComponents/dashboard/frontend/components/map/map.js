@@ -125,7 +125,10 @@ angular
         "heatmap" : "<?",
         "bounce" : "<?",
         "markerInfoWindow": "<?", //On marker click show info window
+        "markerHoverWindow": "<?", //On marker hover show hover window
         "customDefaultInfoWindow": "@", //id of custom default info window
+        "clickOutsideCloseInfoWindow": "<?",
+        "mapFitBounds": "<?",
         
         
         "data": "<?",
@@ -159,7 +162,7 @@ angular
           self.pathStrokeWeight = (self.pathStrokeWeight) ? self.pathStrokeWeight : 5;
         
           self.maxAssetPoints = (self.maxAssetPoints) ? self.maxAssetPoints : 100;
-          self.defaultcenter = (self.defaultcenter) ? self.defaultcenter : "40.7053111,-74.258188";
+          self.defaultcenter = (self.defaultCenter) ? self.defaultCenter : "40.7053111,-74.258188";
           self.trackedAsset = (self.trackedAsset) ? self.trackedAsset : null;
           self.clusterStyles = (self.clusterStyles) ? self.clusterStyles : [ ];
         
@@ -214,6 +217,15 @@ angular
         
         
         self.markerInfoWindow = (typeof self.markerInfoWindow != "undefined") ? self.markerInfoWindow : true;
+		  self.markerHoverWindow = (typeof self.markerHoverWindow != "undefined") ? self.markerHoverWindow : true;
+		  self.clickOutsideCloseInfoWindow = (typeof self.clickOutsideCloseInfoWindow != "undefined") ? self.clickOutsideCloseInfoWindow : false;
+        
+        self.mapFitBounds = (typeof self.mapFitBounds != "undefined") ? self.mapFitBounds : true;
+       
+        self.bound = null;
+        if(self.mapFitBounds)
+				self.bounds = new google.maps.LatLngBounds();
+
         
         $scope.$on("mapFoucsOnMarker", function(event, data) {
 			self.focusOnAsset(data)
@@ -392,6 +404,17 @@ angular
           if(self.clusteredView && !self.trackedAsset && !self.selectedTrackedAsset)  {
             self.renderClusterer();
           }
+          if(self.mapFitBounds && self.bounds)  {
+          	NgMap
+            .getMap({
+            	id : 'clustered-'+self.$wdgid //TODO: figure out another thing then id, or pass id as a param
+          	})
+            .then(
+            	function(map) { 
+               	map.setCenter(self.bounds.getCenter());
+        				map.fitBounds(self.bounds);
+          	})
+          }   
         };
         
         if (self.clusteredView && !self.markerClusterer && !self.trackedAsset && !self.selectedTrackedAsset) {
@@ -626,7 +649,10 @@ angular
 
               self.addMarkerToMap(key, tripMarker, tripPoint);
               
-             
+              if(self.bounds) {
+               	self.bounds.extend(new google.maps.LatLng(tripPoint.lat.value, tripPoint.long.value));
+              }
+                            
               if (self.mapcenter == null) {
                 self.mapcenter = tripMarker.position;
               }
@@ -743,12 +769,24 @@ angular
       };
 
 
+      /** [04/02/2020] Nad: close info window (when click on map UIComponents/dashboard/frontend/components/map/map.html L.39) */
+      self.hideinfoWindow = function(){
+        if(self.clickOutsideCloseInfoWindow) {
+        		if (self.infoWindow != null) {
+          		self.infoWindow.close();
+        		}
+        } else {
+        		return;
+        }
+        
+      };
+
       //Focus on asset when selected from list box, on when clicked on its marker on map
       //Close all info windows, redraw map with only asset trips tracked
       //If all assets are selected redraw all assets
-      self.focusOnAsset = function(assetKey, marker) {
+      self.focusOnAsset = function(assetKey, marker, onHover) {
         if(self.onSelectAsset && typeof self.onSelectAsset() == "function"){
-            self.onSelectAsset()(marker);
+            self.onSelectAsset()(marker, onHover);
         }
         self.selectedAsset = assetKey;
         console.log("selectedAsset", self.selectedAsset)
@@ -762,18 +800,22 @@ angular
           self.searchText = '';
         } else {
           self.searchText = self.assets[assetKey].latestMarker.display;
-          self.mapcenter = self.assets[self.selectedAsset].latestMarker.position;
-          self.detailedmapzoom = self.focusedMarkerZoom;
+          if(onHover!==true) {// si click, pas hover
+            self.mapcenter = self.assets[self.selectedAsset].latestMarker.position;
+            self.detailedmapzoom = self.focusedMarkerZoom;
+          }
         }
         //self.renderAssets(); //MFE: do not hide remaining asset on focus
       };
 
       //Show asset info in an info window
       self.showAssetInfo = function(event, marker, assetKey, tripKey, id) {
-      	
+        if(event && event.tb.type.toLowerCase() == "mouseover" && self.markerHoverWindow == false) {
+        		return;
+        }
         console.log("Show assetInfo assetKey", assetKey)
         self.selectedAsset = assetKey;
-        self.focusOnAsset(assetKey, marker);
+        self.focusOnAsset(assetKey, marker,  (event && event.tb.type.toLowerCase() == "mouseover"));
         var markerEl = (event) ? this : null;
         console.log("self.$wdgid", self.$wdgid);
         NgMap.getMap({
