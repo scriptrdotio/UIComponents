@@ -230,6 +230,7 @@ angular
         $scope.$on("mapFoucsOnMarker", function(event, data) {
 			self.focusOnAsset(data)
         });
+        self.switchStatus = (self.heatmap === false || self.heatmap === true) ?  self.heatmap : false;
         $scope.$on('mapInitialized', function(event, map) {
               self.map = map;
               if(self.switchStatus == true && self.heatmap){
