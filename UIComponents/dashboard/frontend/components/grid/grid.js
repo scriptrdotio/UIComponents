@@ -297,8 +297,8 @@ angular
                 }   
                 this.refreshOnEdit = (typeof this.refreshOnEdit != "undefined") ? this.refreshOnEdit : false;
                 this.transport = (this.transport) ? this.transport : "wss";
-                this.enableDeleteRow =  (this.enableDeleteRow == true) ? false : true;
-                this.enableAddRow =  (this.enableAddRow == true) ? false : true;
+                this.disableDeleteRow =  (this.enableDeleteRow == true) ? false : true;
+                this.disableAddRow =  (this.enableAddRow == true) ? false : true;
                 this.mode =  (this.gridOptions.rowModelType == 'infinite') ? "infinite" : "normal";
 
                 if(self.msgTag){
