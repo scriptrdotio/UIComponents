@@ -1,5 +1,5 @@
 angular
-  .module("List",[ "angucomplete-alt" ])
+  .module("List", [ "angucomplete-alt", "DataService" ])
   .component(
   'scriptrAutocomplete',
   {
@@ -38,8 +38,6 @@ angular
         "inputClass": "@",	//The classes to use for styling the input box.
         
         "matchClass": "@",	//If it is assigned, matching part of title is highlighted with given class style.
-        
-        "localData": "<?",	//The local data variable to use from your controller. Should be an array of objects.
       
         "searchFields": "@",	//The fields from your local data to search on (comma separate them). Each field can contain dots for accessing nested attribute.
       
@@ -74,17 +72,24 @@ angular
       
         "localSearch": "&",	//A function that search local data. It should take a input string and an array of items as arguments and returns an array of matched items. 
       
-        "transport" : "@",
-      
-        "msgTag" : "@",
-      
+        "transport": "@",
         "api" : "@",
+        "msgTag" : "@",
+        "httpMethod": "@",
+        "apiParams" : "<?",
+        "onFormatData" : "&",
+        "fetchDataInterval": "@",
+        "useWindowParams": "@",
+        "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
+        
+        "localData": "<?",	//The local data variable to use from your controller. Should be an array of objects.
       
-        "onFormatData" : "&"
+      
+      
       
     },
     templateUrl: "/UIComponents/dashboard/frontend/components/list/autocomplete.html",
-    controller: function($scope,wsClient, httpClient) {
+    controller: function($scope, dataService) {
       
          var self = this;
       
@@ -118,33 +123,24 @@ angular
          }
          
          var initDataService = function(transport) {
-           if (transport == "wss") {
-             wsClient.onReady.then(function() {
-               // Subscribe to socket messages with id chart
-               wsClient.subscribe(self.msgTag, self.consumeData.bind(self));
-               if(self.api) {
-                 wsClient.call(self.api, self.apiParams, self.msgTag)
-                   .then(function(data, response) {
-                   self.consumeData(data)
-                 });
-               }
-             });
-           }else {
-                if (transport == "https" && self.api) {
-                    httpClient
-                      .get(self.api, self.apiParams)
-                      .then(
-                      function(data, response) {
-                        self.consumeData(data)
-                      },
-                      function(err) {
-                        console
-                          .log(
-                          "reject published promise",
-                          err);
-                      });
-                }
-              }
+           	var requestInfo = {
+                "api": self.api,
+                "transport": transport,
+                "msgTag": self.msgTag,
+                "apiParams": self.apiParams,
+                "useWindowParams": self.useWindowParams,
+                "httpMethod": self.httpMethod,
+                "widgetId": $scope.$id
+            };
+             dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
+
+             if(self.fetchDataInterval && !self.refreshTimer) {
+                 //Assuming this is success
+                 self.refreshTimer = $interval(
+                     function(){
+                         initDataService(self.transport)
+                     }, self.fetchDataInterval * 1000);
+             }
          }
          
          this.consumeData = function(data, response) {
