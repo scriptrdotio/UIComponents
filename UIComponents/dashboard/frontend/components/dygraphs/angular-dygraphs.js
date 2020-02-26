@@ -57,10 +57,6 @@ angular.module("angular-dygraphs", [
                 delete scope.options.eventLineColors;
                 
                 delete scope.options.legendPosition;
-                
-                
-
-                //scope.options.interactionModel = Dygraph.nonInteractiveModel;   
 
                 var graph = new Dygraph(chartDiv, scope.data, scope.options);
                // setTimeout( function(){ 

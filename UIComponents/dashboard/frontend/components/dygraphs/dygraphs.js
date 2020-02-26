@@ -86,6 +86,7 @@ angular
           "drawPoints": "<?",
           "pointSize": "<?",
           "strokeWidth": "<?",
+          "interaction": "<?"
           //functional data
         //   "useFunctional": "<?",
         //   "functionalDataType": "@",//scattered , range
@@ -388,8 +389,8 @@ angular
              this.options.drawPoints = (this.drawPoints!=null) ? this.drawPoints : true;   
              this.options.strokeWidth = (this.strokeWidth!=null) ? this.strokeWidth : 1;   
              this.options.pointSize = (this.pointSize!=null) ? this.pointSize : 3; 
-              
-             
+           
+             this.options.interactionModel = (this.interaction) ? Dygraph.defaultInteractionModel    :  Dygraph.nonInteractiveModel;
              
              //this.data = JSON.parse(this.data);
              //this.resize = (this.resize) ? this.resize : true;
