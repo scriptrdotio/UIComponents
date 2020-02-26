@@ -601,7 +601,7 @@ height: auto !important;
 .morris-chart-legend::-webkit-scrollbar {width: 12px;}
 
 /*** Diagraph ***/
-.graph.with-legend {
+/**.graph.with-legend {
 	width: calc(100% - 110px)!important;
     left: auto;
     right: auto;
@@ -615,8 +615,15 @@ height: auto !important;
     width: 100px;
     float: right;
     height: calc(100% - 40px);
+}**/
+
+.dygraphs-legend {
+  width: 110px;
 }
 
+.graph.with-legend {
+   right: 120px;
+}
 /*** Morris chart legends and grap ***/
 .morris-chart-legend ul {padding: 0; list-style: none;}
 .morris-chart-wrapper.with-legend {width: calc(100% - 100px); float: left;}
