@@ -54,12 +54,28 @@
 ***/
   /*** Morris chart legends and grap ***/
   /*** Diagraph ***/
+  /**.graph.with-legend {
+	width: calc(100% - 110px)!important;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    float: left;
+    height: 95%!important;
+}
+
+.dygraphs-legend {
+    width: 100px;
+    float: right;
+    height: calc(100% - 40px);
+}**/
   /*** Morris chart legends and grap ***/
   /*** wind rose ***/
   /*** 3D surface ***/
   /***
 ***** Gridster Mobile *****
 ***/
+  /**markdown db**/
 }
 .dashboardTheme body {
   font-family: 'Source Sans Pro', sans-serif !important;
@@ -315,6 +331,7 @@
 }
 .dashboardTheme .page-header .form-group {
   margin-bottom: 0;
+  position: relative;
 }
 .dashboardTheme .page-header .form-control {
   font-size: 13px;
@@ -786,20 +803,11 @@
 .dashboardTheme .morris-chart-legend::-webkit-scrollbar {
   width: 12px;
 }
-.dashboardTheme .graph.with-legend {
-  width: calc(100% - 110px) !important;
-  left: auto;
-  right: auto;
-  top: auto;
-  bottom: auto;
-  position: relative;
-  float: left;
-  height: 95%!important;
-}
 .dashboardTheme .dygraphs-legend {
-  width: 100px;
-  float: right;
-  height: calc(100% - 40px);
+  width: 110px;
+}
+.dashboardTheme .graph.with-legend {
+  right: 120px;
 }
 .dashboardTheme .morris-chart-legend ul {
   padding: 0;
@@ -1034,5 +1042,102 @@
 .dashboardTheme pre.CodeMirror-placeholder {
   font-style: italic;
   font-weight: 100;
-  color: #a9a9a9;
+  color: #f5f5f5;
+}
+.dashboardTheme .select-controller .btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  height: 25px;
+  padding: 0 9px;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+}
+.dashboardTheme .select-controller .btn:hover,
+.dashboardTheme .select-controller .btn:focus,
+.dashboardTheme .select-controller .btn:active {
+  background: #fff;
+  border-color: #ccc;
+  box-shadow: none;
+}
+.dashboardTheme .select-controller .caret {
+  position: absolute;
+  right: 7px;
+  top: 9px;
+}
+.dashboardTheme .select-controller .dropdown-menu li a {
+  cursor: pointer;
+}
+.dashboardTheme .select-controller ul li.active a {
+  background: #fff;
+  color: #262626;
+  cursor: pointer;
+}
+.dashboardTheme .select-controller ul li.active a:hover {
+  background: #ffa500;
+  color: #262626;
+}
+.dashboardTheme .select-controller ul li a:hover {
+  background: #ffa500;
+}
+.dashboardTheme .ui-select-search {
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+.dashboardTheme > .ui-select-bootstrap.open {
+  z-index: 10050;
+}
+.dashboardTheme .ui-select-multiple.ui-select-bootstrap input.ui-select-search {
+  width: auto!important;
+}
+.dashboardTheme .ui-select-multiple.ui-select-bootstrap .ui-select-match .close {
+  line-height: 1;
+}
+.dashboardTheme .ui-select-choices-group-label {
+  font-size: 14px;
+  color: #005588;
+  font-weight: bold;
+}
+.dashboardTheme .ui-select-choices-row div {
+  color: #000;
+  text-indent: 10px;
+  font-size: 13px;
+}
+.dashboardTheme .ui-select-choices-row:hover {
+  background: #f69d51;
+}
+.dashboardTheme .ui-select-bootstrap .ui-select-match-text span {
+  line-height: 1.1em;
+}
+.dashboardTheme .ui-select-bootstrap .ui-select-choices-row span {
+  padding: 3px 0;
+}
+.dashboardTheme .ui-select-bootstrap .ui-select-choices-row span:focus,
+.dashboardTheme .ui-select-bootstrap .ui-select-choices-row span:hover {
+  background: #f69d51;
+}
+.dashboardTheme .ui-select-bootstrap .ui-select-choices-row.active span {
+  background-color: #f48220;
+}
+.dashboardTheme .ui-select-multiple.ui-select-bootstrap .ui-select-match-item {
+  background: #f48220;
+  color: #FFF;
+  border-color: #FFF;
+}
+.dashboardTheme .ui-select-multiple.ui-select-bootstrap .ui-select-match-item:hover,
+.dashboardTheme .ui-select-multiple.ui-select-bootstrap .ui-select-match-item:focus,
+.dashboardTheme .ui-select-multiple.ui-select-bootstrap .ui-select-match-item:active {
+  border-color: #FFF !important;
+}
+.dashboardTheme .ui-select-multiple.ui-select-bootstrap .ui-select-match .close {
+  opacity: 1;
+  color: #FFF;
+}
+.dashboardTheme .markdown-db {
+  padding: 0;
+}
+.dashboardTheme .markdown-db h2 {
+  font-size: 18px;
 }
