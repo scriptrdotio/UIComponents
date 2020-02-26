@@ -228,7 +228,7 @@ border: none;
 background: @gray3;
 }
 
-.page-header .form-group {margin-bottom: 0;}
+.page-header .form-group {margin-bottom: 0;position: relative;}
 .page-header .form-control {font-size: 13px;}
 .page-header .help-block {display: none;}
 :focus {
@@ -607,7 +607,6 @@ height: auto !important;
     right: auto;
     top: auto;
     bottom: auto;
-    position: relative;
     float: left;
     height: 95%!important;
 }
@@ -798,9 +797,56 @@ height: auto !important;
 pre.CodeMirror-placeholder {
     font-style: italic;
     font-weight: 100;
-    color: #a9a9a9;
+    color: @gray4;
 }
 
 
+.select-controller .btn {display: block; width: 100%; text-align: left; height: 25px; padding:0 9px; font-size: 13px; text-overflow: ellipsis; overflow: hidden; position: relative;}
+.select-controller .btn:hover, 
+.select-controller .btn:focus,  
+.select-controller .btn:active {background: #fff; border-color: #ccc; box-shadow: none;}
+.select-controller .caret {position: absolute; right: 7px; top: 9px;}
+.select-controller .dropdown-menu li a {cursor: pointer; }
+.select-controller ul li.active a {background: #fff; color: #262626; cursor: pointer;}
+.select-controller ul li.active a:hover {background: #ffa500; color: #262626;}
+.select-controller ul li a:hover {background: #ffa500;}
+
+
+.ui-select-search {padding: 0 10px;box-sizing: border-box;}
+>.ui-select-bootstrap.open{z-index:10050;}
+.ui-select-multiple.ui-select-bootstrap input.ui-select-search {width: auto!important;}
+.ui-select-multiple.ui-select-bootstrap .ui-select-match .close {line-height:1;}
+.ui-select-choices-group-label {font-size: 14px;color: #005588;font-weight: bold;}
+.ui-select-choices-row div {color: @grayBase;text-indent: 10px;font-size: 13px;}
+.ui-select-choices-row:hover {background: @primaryLighter;}
+.ui-select-bootstrap .ui-select-match-text span {line-height: 1.1em;}
+.ui-select-bootstrap .ui-select-choices-row {
+	span {
+    	padding: 3px 0;
+    &:focus,&:hover {
+    	background: @primaryLighter;
+    }
+    }
+&.active {
+	span {
+    	background-color: @primaryColor;
+    }
+}
+}
+.ui-select-bootstrap .ui-select-choices-row.active > span {}
+.ui-select-multiple.ui-select-bootstrap .ui-select-match-item {
+	background: @primaryColor;
+    color: @lightBase;
+    border-color: @lightBase;
+&:hover,&:focus,&:active {
+	border-color: @lightBase!important;
+}
+}
+
+.ui-select-multiple.ui-select-bootstrap .ui-select-match .close {opacity: 1; color: @lightBase;}
+
+/**markdown db**/
+.markdown-db {padding: 0;}
+.markdown-db h2 {font-size: 18px;}
 
 }
