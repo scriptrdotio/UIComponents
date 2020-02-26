@@ -535,7 +535,7 @@ angular
                };
                dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
                 
-              if(self.fetchDataInterval != null && !self.refreshTimer !=null) {
+              if(self.fetchDataInterval != null && self.refreshTimer !=null) {
                     //Assuming this is success
                     self.refreshTimer = $interval(
                         function(){
