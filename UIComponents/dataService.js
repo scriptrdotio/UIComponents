@@ -4,13 +4,13 @@ angular.module('DataService', [])
             function dataServiceProvider() {
 	            var self = this;
                 
-                this._sendRequestApi = function($q, httpClient, wsClient, $location, request, consumerFnc) {
+                this._sendRequestApi = function($q, httpClient, wsClient, $location, $routeParams, request, consumerFnc) {
 
                     var params = {};
                     var apiParams= (request.apiParams) ? request.apiParams : {};
 
                     if (request.useWindowParams && request.useWindowParams == "true") {
-                        params = angular.merge(apiParams,$location.search())
+                        params = angular.merge(apiParams,$routeParams)
                     } else {
                         params = angular.copy(apiParams);
                     }
@@ -62,11 +62,11 @@ angular.module('DataService', [])
                 }
                 
 	            this.$get = [
-	                  "$q", "httpClient", "wsClient", "$location",
-	                  function dataServiceFactory($q, httpClient, wsClient, $location) {
+	                  "$q", "httpClient", "wsClient", "$location","$routeParams",
+	                  function dataServiceFactory($q, httpClient, wsClient, $location, $routeParams) {
 		                  var methods = {
 		                    scriptrRequest: function (request, consumerFnc) {
-                                 self._sendRequestApi($q, httpClient, wsClient, $location, request, consumerFnc);
+                                 self._sendRequestApi($q, httpClient, wsClient, $location, $routeParams, request, consumerFnc);
                             }
 		                  };
 		                  return methods;

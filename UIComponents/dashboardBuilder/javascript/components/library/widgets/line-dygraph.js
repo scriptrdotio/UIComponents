@@ -10,11 +10,8 @@ const __LINE_DYGRAPH__ = {
         "data-type": "raw",
         "data-format": "dygraphs",
         "schema-for": "line",
-        "display-metric-param": "display_metric",
         "boxLabel": "Line Chart",
         "boxBorder": true,
-        //"transport": "wss",
-        //"msg-tag": "dygraphs",
         "data": "[[1519312895840,10,26,16,20],[1519312896840,11,25,16,20],[1519312897840,10,26,16,20],[1519312898840,11,25,15,20],[1519312899840,10,26,16,21]]",
         "grid-text-family": "Source Sans Pro",
         "x1-axis-label-font-size": 12,
@@ -25,15 +22,7 @@ const __LINE_DYGRAPH__ = {
         "y-axis-label-font-size": 12,
         "independent-ticks": "independent",
         "show-legend": true,
-        "colors-mapping": [{ "labels": "Y1", "colors": "#CC5464", "axisSelection": "y" }, { "labels": "Y2", "colors": "#FCC717", "axisSelection": "y" }, { "labels": "Y3", "colors": "#38B9D6", "axisSelection": "y" }, { "labels": "Y4", "colors": "#1DBC68", "axisSelection": "y" }],
-        // "use-functional":false,
-        // "functional-data-type":"scattered",
-        // "scattered-xdata": "[1,2,3,4,5,6,7,8,9,10]",
-        // "range-min": "1",
-        // "range-max": "10",
-        // "range-step": "1",
-        // "calculate-function": "function(x) {return x;}",
-
+        "colors-mapping": [{ "labels": "Y1", "colors": "#CC5464", "axisSelection": "y" }, { "labels": "Y2", "colors": "#FCC717", "axisSelection": "y" }, { "labels": "Y3", "colors": "#38B9D6", "axisSelection": "y" }, { "labels": "Y4", "colors": "#1DBC68", "axisSelection": "y" }]
     },
     "box": {
         sizeX: 6,
