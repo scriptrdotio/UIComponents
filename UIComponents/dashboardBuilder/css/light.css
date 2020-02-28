@@ -891,9 +891,9 @@
   height: auto;
 }
 .dashboardTheme .gridster-mobile .graph.with-legend {
-  width: 100%!important;
+  width: 90%!important;
   float: none;
-  height: calc(100% - 100px) !important;
+  position: relative;
 }
 .dashboardTheme .gridster-mobile .wind-rose .plotly-chart-wrapper.with-legend {
   width: 100%!important;
@@ -1116,7 +1116,7 @@
 }
 .dashboardTheme .ui-select-bootstrap .ui-select-choices-row span:focus,
 .dashboardTheme .ui-select-bootstrap .ui-select-choices-row span:hover {
-  background: #f69d51;
+  background: #f5f5f5;
 }
 .dashboardTheme .ui-select-bootstrap .ui-select-choices-row.active span {
   background-color: #f48220;
