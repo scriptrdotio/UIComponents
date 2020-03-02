@@ -55,8 +55,8 @@
     <button ng-click="vm.dateHelper.getDateRangeStart()" class="btn btn-default btn-sm">Get Start Date</button>
     <button ng-click="vm.dateHelper.getDateRangeEnd()" class="btn btn-default btn-sm">Get End Date</button>
   
-    <scriptr-date-time-picker
-         type="range"
+    <scriptr-date-time-picker 
+         type="range" layout="horizontal"
          start-date-config="{ startView:'day', minView:'day' }"
          end-date-config="{ startView:'day', minView:'day' }"
          date-helper="vm.dateHelper"      
