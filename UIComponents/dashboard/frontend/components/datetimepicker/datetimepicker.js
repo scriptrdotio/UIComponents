@@ -34,7 +34,7 @@ angular
                  
                 "endDateOnSetTime" : "&",
                    
-                 "layout": "@" //horizontal or vertical, default verticl for bwc
+                "widgetLayout": "@" //horizontal or vertical, default verticl for bwc
                 
                   
 
@@ -64,7 +64,7 @@ angular
                   this.$onInit = function() {
                     this.configuration = (this.config) ? this.config : { dropdownSelector: '#dropdown', startView:'day', minView:'day' };
                       
-                    this._layout = (this.layout) ? this.layout : "vertical";
+                    this._layout = (this.widgetLayout) ? this.widgetLayout : "vertical";
                     if(this.type != "range"){
                       if(typeof this.config != 'undefined'){
                         this.configuration["dropdownSelector"] = "#dropdown";
