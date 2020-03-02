@@ -1,10 +1,10 @@
-angular.module('DataService', [])
+angular.module('DataService', ["ngRoute"])
       .provider(
       		'dataService',
             function dataServiceProvider() {
 	            var self = this;
                 
-                this._sendRequestApi = function($q, httpClient, wsClient, $location, $routeParams, request, consumerFnc) {
+                this._sendRequestApi = function($q, httpClient, wsClient, $routeParams, request, consumerFnc) {
 
                     var params = {};
                     var apiParams= (request.apiParams) ? request.apiParams : {};
@@ -62,11 +62,11 @@ angular.module('DataService', [])
                 }
                 
 	            this.$get = [
-	                  "$q", "httpClient", "wsClient", "$location","$routeParams",
-	                  function dataServiceFactory($q, httpClient, wsClient, $location, $routeParams) {
+	                  "$q", "httpClient", "wsClient","$routeParams",
+	                  function dataServiceFactory($q, httpClient, wsClient, $routeParams) {
 		                  var methods = {
 		                    scriptrRequest: function (request, consumerFnc) {
-                                 self._sendRequestApi($q, httpClient, wsClient, $location, $routeParams, request, consumerFnc);
+                                 self._sendRequestApi($q, httpClient, wsClient, $routeParams, request, consumerFnc);
                             }
 		                  };
 		                  return methods;
