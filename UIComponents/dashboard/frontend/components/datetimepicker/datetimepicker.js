@@ -14,7 +14,7 @@ angular
                  
                 "dateHelper" : "<?", 
                  
-                "date" : "@", 
+                "date" : "<?", 
                  
                 "startDateConfig" : "<?",
                  
@@ -34,7 +34,10 @@ angular
                  
                 "endDateOnSetTime" : "&",
                    
-                "widgetLayout": "@" //horizontal or vertical, default verticl for bwc
+                "widgetLayout": "@", //horizontal or vertical, default verticl for bwc
+                "dateRangeEnd":"<?",
+                "dateRangeStart":"<?"
+                 
                 
                   
 
