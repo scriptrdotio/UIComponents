@@ -1,5 +1,5 @@
 agGrid.initialiseAgGridWithAngular1(angular);
-angular.module('Grid', ['agGrid', 'ui.bootstrap']);
+angular.module('Grid', ['agGrid', 'ui.bootstrap', 'ngRoute']);
 
 angular
     .module("Grid")
@@ -92,11 +92,13 @@ angular
 
             "defaultCellRenderer": "&",  
 
-            "onGridReady" : "&"
+            "onGridReady" : "&",
+            
+            "useWindowParams": "@"
         },
 
         templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
-        controller : function($scope, $window, $uibModal, $timeout, wsClient, dataStore) {
+        controller : function($scope, $window, $uibModal, $timeout, wsClient, dataStore, $routeParams) {
 
             var self = this;
 
@@ -195,6 +197,7 @@ angular
             }
 
             this.$onInit = function() {
+                this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
                 this.gridOptions = {
                     angularCompileRows: true,
                     rowHeight : (this.rowHeight) ? this.rowHeight : 25,
@@ -545,6 +548,9 @@ angular
                     for(var param in this.apiParams){
                         APIParams[param] = this.apiParams[param];
                     }
+                }
+                if (self.useWindowParams && self.useWindowParams == "true") {
+                    APIParams = angular.merge(APIParams,$routeParams)
                 }
                 return APIParams;
             }
