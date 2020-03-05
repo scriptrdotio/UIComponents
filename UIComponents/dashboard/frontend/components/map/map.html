@@ -1,5 +1,5 @@
-<div style="height: 90%;">
-	<section class="map-wrap"
+<div style="height: 90%;" class="map-wrap">
+	<section 
 		ng-if="$ctrl.clusteredView == true && $ctrl.showDetailedMap == false">
 		<ng-map id="{{'clustered-'+$ctrl.$wdgid}}"
 			on-zoom_changed="$ctrl.onClusteredZoomChanged();"
@@ -26,7 +26,7 @@
 			</span>
 		</div>
 	</section>
-	<section class="map-wrap"
+	<section
 		ng-if="$ctrl.clusteredView == false || $ctrl.showDetailedMap == true">
 		<ng-map id="{{'detailed-'+$ctrl.$wdgid}}"
 			on-zoom_changed="$ctrl.onDetailedZoomChanged();"
