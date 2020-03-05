@@ -17,7 +17,7 @@
   <div ng-if="$ctrl.type == 'range'">
     <div class="row">
     <div  ng-class='{"col-xs-12": ($ctrl._layout == "vertical"), "col-xs-6": ($ctrl._layout == "horizontal") }' class="{{$ctrl.startDateClass}}">
-      <div class="dropdown form-group">
+      <div class="dropdown">
           <label ng-if="$ctrl.startDateLabel">{{$ctrl.startDateLabel}}</label>
           <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target="#"
              href="#">
@@ -36,7 +36,7 @@
     </div>
 
     <div class="{{$ctrl.endDateClass}}" ng-class='{"col-xs-12": ($ctrl._layout == "vertical"), "col-xs-6": ($ctrl._layout == "horizontal") }'>
-      <div class="dropdown form-group">
+      <div class="dropdown">
           <label ng-if="$ctrl.endDateLabel">{{$ctrl.endDateLabel}}</label>
           <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="#"
              href="#">
