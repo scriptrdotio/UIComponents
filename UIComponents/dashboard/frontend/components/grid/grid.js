@@ -228,9 +228,9 @@ angular
                             return self.onSelectionChanged()(self.gridOptions, self.gridApi);
                         }
                     },
-                    onCellClicked: function() {
+                    onCellClicked: function(event) {
                         if(self.onCellClicked != null && typeof self.onCellClicked() == "function"){
-                            return self.onCellClicked()(self.gridOptions, self.gridApi);
+                            return self.onCellClicked()(event,self.gridOptions, self.gridApi);
                         }
                     },
                     onRowValueChanged : function(event) { // used for adding/editing a row 
