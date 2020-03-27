@@ -2818,8 +2818,14 @@ angular.module('schemaForm').directive('schemaValidate', ['sfValidator', '$parse
 
         ['$parsers', '$viewChangeListeners', '$formatters'].forEach(function(attr) {
           if (form[attr] && ngModel[attr]) {
-            form[attr].forEach(function(fn) {
+            /**form[attr].forEach(function(fn) {
               ngModel[attr].push(fn);
+            });**/
+              angular.forEach(form[attr], function(fn, name) {
+              //ngModel[attr][name] = fn;
+              ngModel[attr][name] = function(modelValue, viewValue) {
+              	return fn(modelValue, viewValue, scope.model, form);
+              };
             });
           }
         });
