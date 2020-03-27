@@ -70,9 +70,6 @@
     
     <script id="mapsScript" src="//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&libraries=drawing,visualization"></script>
   
-    <!-- Login -->
-    <script src="/modules/login/widgets/authorization.js"></script>
-  
     <!-- NG material -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
@@ -126,6 +123,7 @@
     
     <script src='/UIComponents/dashboardBuilder/lib/schemaForm/angular-strap.js'></script>
     <script src='/UIComponents/dashboardBuilder/lib/schemaForm/angular-strap.tpl.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js'></script>
     <script src='/UIComponents/dashboardBuilder/lib/schemaForm/angular-schema-form-dynamic-select.js'></script>
     
     <script src='/UIComponents/dashboardBuilder/lib/markdown/markdown-directive.js'></script>
@@ -191,7 +189,6 @@
     
     <script src="/UIComponents/dashboardBuilder/javascript/components/module.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/ACL/ACL.js"></script>
-    <script src="/UIComponents/dashboardBuilder/javascript/components/library/devicesConfig.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/commonsConfig.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/commonsActionConfig.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/boxStyleConfig.js"></script>
@@ -297,7 +294,7 @@
               	controllerAs: "vm"
             })
            .when('/logout', {
-              	templateUrl: '/UIComponents/dashboardBuilder/view/logout.html'
+              	templateUrl: '/login/view/logout.html'
             }) 
             .otherwise({redirectTo:'/'})
        })
