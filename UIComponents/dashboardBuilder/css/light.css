@@ -689,8 +689,19 @@
 .dashboardTheme .schema-form-textarea .help-block,
 .dashboardTheme .schema-form-number .help-block,
 .dashboardTheme .schema-form-tabs .tab-content .help-block {
-  color: #333 !important;
+  color: #333;
 }
+
+.dashboardTheme .schema-form-select .has-error .help-block,
+.dashboardTheme .schema-form-group .has-error .help-block,
+.dashboardTheme .schema-form-text .has-error .help-block,
+.dashboardTheme .schema-form-radios-inline .has-error .help-block,
+.dashboardTheme .schema-form-textarea .has-error .help-block,
+.dashboardTheme .schema-form-number .has-error .help-block,
+.dashboardTheme .schema-form-tabs .tab-content .has-error .help-block {
+  color: #aa3322;
+}
+
 .dashboardTheme .schema-form-array .list-group button.close {
   position: absolute!important;
   top: 4px;
