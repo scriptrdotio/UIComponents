@@ -390,7 +390,7 @@ module.exports = function(grunt) {
 	            },
 	            editor: {
 	            	src: [
-	            		'concat/min-safe/module.js',
+	            	 'concat/min-safe/module.js',
                      'concat/min-safe/ACL.js',
                      'dashboardBuilder/javascript/components/library/commonsConfig.js',
                      'dashboardBuilder/javascript/components/library/commonsActionConfig.js',
