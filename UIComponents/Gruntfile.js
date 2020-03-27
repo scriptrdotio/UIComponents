@@ -59,7 +59,7 @@ module.exports = function(grunt) {
 	                     'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js',
 	                     'https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.js',
 	                     'https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js',
-	                     
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js',
 	                     'https://d3js.org/d3.v4.min.js',
 	                     'https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js',
@@ -349,6 +349,7 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/autorefresh.js',
 	                     'concat/min-safe/angular-strap.js',
 	                     'concat/min-safe/angular-strap.tpl.min.js',
+                         'lib/angular-strap.tpl.min.js',
 	                     'concat/min-safe/angular-schema-form-dynamic-select.js',
 	                     'concat/min-safe/markdown-directive.js'
 	                     ],
