@@ -253,7 +253,7 @@ angular
             if(self.selectedTrackedAsset && self.showDetailedMap == true) {
                  $timeout(function() {
                  	if(self.selectedTrackedMarker)
-                        self.showAssetInfo(null, self.selectedTrackedMarker, self.selectedTrackedMarker.assetKey, self.selectedTrackedMarker.tripKey, self.selectedTrackedMarker.id)
+                        self.showAssetInfo(null, null, self.selectedTrackedMarker, self.selectedTrackedMarker.assetKey, self.selectedTrackedMarker.tripKey, self.selectedTrackedMarker.id)
                  },1000);
              }
           });  
@@ -811,13 +811,13 @@ angular
       };
 
       //Show asset info in an info window
-      self.showAssetInfo = function(event, marker, assetKey, tripKey, id) {
-        if(event && event.tb.type.toLowerCase() == "mouseover" && self.markerHoverWindow == false) {
-        		return;
-        }
+      self.showAssetInfo = function(event, eventName, marker, assetKey, tripKey, id) {
+        if(eventName == "mouseover" && self.markerHoverWindow == false) {
+            return;
+         }
         console.log("Show assetInfo assetKey", assetKey)
         self.selectedAsset = assetKey;
-        self.focusOnAsset(assetKey, marker,  (event && event.tb.type.toLowerCase() == "mouseover"));
+        self.focusOnAsset(assetKey, marker,  (eventName == "mouseover"));
         var markerEl = (event) ? this : null;
         console.log("self.$wdgid", self.$wdgid);
         NgMap.getMap({

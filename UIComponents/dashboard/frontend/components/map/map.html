@@ -1,5 +1,5 @@
-<div style="height: 90%;" class="map-wrap">
-	<section 
+<div class="map-wrap">
+	<section   
 		ng-if="$ctrl.clusteredView == true && $ctrl.showDetailedMap == false">
 		<ng-map id="{{'clustered-'+$ctrl.$wdgid}}"
 			on-zoom_changed="$ctrl.onClusteredZoomChanged();"
@@ -53,8 +53,8 @@
 						<marker position="{{marker.position}}" title="{{marker.display}}"
 							animation={{marker.animation}} icon="{{marker.icon}}"
 							data="{{marker.assetKey}}"
-							on-click="$ctrl.showAssetInfo(event, marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')"
-							on-mouseover="$ctrl.showAssetInfo(event, marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')">
+							on-click="$ctrl.showAssetInfo(event, 'click', marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')"
+							on-mouseover="$ctrl.showAssetInfo(event, 'mouseover', marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')">
 						</marker>
 					</div>
 					<div ng-if="$ctrl.trackedAsset !=null">
