@@ -217,7 +217,7 @@ angular
         
         
         self.markerInfoWindow = (typeof self.markerInfoWindow != "undefined") ? self.markerInfoWindow : true;
-		  self.markerHoverWindow = (typeof self.markerHoverWindow != "undefined") ? self.markerHoverWindow : true;
+		  self.markerHoverWindow = (typeof self.markerHoverWindow != "undefined") ? self.markerHoverWindow : false;
 		  self.clickOutsideCloseInfoWindow = (typeof self.clickOutsideCloseInfoWindow != "undefined") ? self.clickOutsideCloseInfoWindow : false;
         
         self.mapFitBounds = (typeof self.mapFitBounds != "undefined") ? self.mapFitBounds : true;
@@ -335,10 +335,10 @@ angular
           initDataService(self.transport);
         
           if(self.assetsData) {
-          	 console.log("static assets data", self.assetsData);
+          	 //console.log("static assets data", self.assetsData);
              self.processAssets(self.assetsData);
           } else if(self.data) {
-         	 console.log("static assets data", self.data);
+         	 //console.log("static assets data", self.data);
              self.processAssets(self.data);
           }
        
@@ -392,7 +392,7 @@ angular
               // Loop on assets
               for (var key in assets) {
                 if (assets.hasOwnProperty(key)) {
-                    console.log(key, assets[key]);
+                    //console.log(key, assets[key]);
                     self.pushAssets(key, assets[key])
                   }
                 }
@@ -455,7 +455,7 @@ angular
      }   
       
      self.buildClusterer = function(map) {
-         console.log(self.clusterStyles);
+         //console.log(self.clusterStyles);
         self.markerClusterer = new MarkerClusterer(
           map,
           _.toArray(self.dynMarkers),
@@ -791,8 +791,8 @@ angular
             self.onSelectAsset()(marker, onHover);
         }
         self.selectedAsset = assetKey;
-        console.log("selectedAsset", self.selectedAsset)
-        console.log("markerInfoWindow", self.markerInfoWindow)
+        //console.log("selectedAsset", self.selectedAsset)
+        //console.log("markerInfoWindow", self.markerInfoWindow)
         self.showDetailedMap = true;
         if (self.infoWindow != null) {
           self.infoWindow.close();
@@ -819,7 +819,7 @@ angular
         self.selectedAsset = assetKey;
         self.focusOnAsset(assetKey, marker,  (eventName == "mouseover"));
         var markerEl = (event) ? this : null;
-        console.log("self.$wdgid", self.$wdgid);
+        //console.log("self.$wdgid", self.$wdgid);
         NgMap.getMap({
           id : 'detailed-'+self.$wdgid //TODO: MAke id parametrable or change selector if possible
         }).then(
@@ -832,9 +832,9 @@ angular
             //In case marker wasn't click markerEl = this would be null
             markerEl = (markerEl) ? markerEl : _.findWhere(map.markers, {data: marker.assetKey})
             var infoWindow = "infoWindowTemplate_"+ $scope.$parent.marker.source;
-            console.log("Info window", infoWindow)
-            console.log("self.markerInfoWindow", self.markerInfoWindow)
-            console.log("$scope.map.infoWindows", map.infoWindows)
+            //console.log("Info window", infoWindow)
+            //console.log("self.markerInfoWindow", self.markerInfoWindow)
+            //console.log("$scope.map.infoWindows", map.infoWindows)
             $scope.map = map;
             if(self.markerInfoWindow) {
                 if($scope.map.infoWindows[infoWindow]) {
@@ -995,7 +995,7 @@ angular
          var geofenceEntry = buildGeofenceEntry(geofence, type, props);
          if(geofenceEntry) {
              self.geoFencesList.push(geofenceEntry);
-             console.log("Push to list: ", self.geoFencesList)
+             //console.log("Push to list: ", self.geoFencesList)
          }
          self.reminderToSave();
      }
@@ -1007,7 +1007,7 @@ angular
                  var geofenceEntry = buildGeofenceEntry(geofence, item.type, geofence.get("dataModel"));
                  if(geofenceEntry) {
                      list[index] = geofenceEntry;
-                     console.log("Push to list: ", self.geoFencesList)
+                     //console.log("Push to list: ", self.geoFencesList)
                  }
              }
          })
