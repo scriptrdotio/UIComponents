@@ -1,0 +1,3 @@
+var mail = {
+    "fromName": "Scriptr Login Module"
+}
