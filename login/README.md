@@ -33,6 +33,8 @@
   - navigate to ./view/javascript/config.js
   - config the apis paths 
   - config the redirect paths 
+  - navigate to ./login/entities/config
+  	- mail fromName is the email sender when sending a forgot password email
   - navigate to ./view/javascript/constants.js
   - config the constants
     - appTitle is the title shown in the browser tab
