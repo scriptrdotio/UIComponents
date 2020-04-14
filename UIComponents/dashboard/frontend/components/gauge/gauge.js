@@ -36,7 +36,7 @@ angular
 
                   "gaugeColor" : "@", // background color of gauge element (string)
 
-                  //"gaugeValue" : "<?", //value to show (float)
+                  "gaugeValue" : "<?", //value to show (float)
                   "data" : "<?",
                   
                   "customSectors": "<?", // array of objects with color, hi, lo attributes ([ of object])
