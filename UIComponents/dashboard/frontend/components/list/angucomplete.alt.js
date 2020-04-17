@@ -270,7 +270,7 @@
           .map(function(field) {
             return extractValue(data, field);
           })
-          .join(' ');
+          .join(((scope.separator) ? (" " + scope.separator + " "): ' '));
       }
 
       function extractValue(obj, key) {
@@ -896,7 +896,8 @@
         fieldTabindex: '@',
         inputName: '@',
         focusFirst: '@',
-        parseInput: '&'
+        parseInput: '&',
+        separator: '@'
       },
       templateUrl: function(element, attrs) {
         return attrs.templateUrl || TEMPLATE_URL;

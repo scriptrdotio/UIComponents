@@ -27,6 +27,8 @@ angular
         
         "titleField": "@",	//The name of the field in the JSON objects returned back that should be used for displaying the title in the autocomplete list. Note, if you want to combine fields together, you can comma separate them here (e.g. for a first and last name combined). If you want to access nested field, use dot to connect attributes (e.g. name.first).
         
+        "separator": "@", //The separator to use when showing multiple title fields
+        
         "descriptionField": "@",	//The name of the field in the JSON objects returned back that should be used for displaying the description in the autocomplete list.
         
         "imageField": "@",	//The name of the field in the JSON objects returned back that should be used for displaying an image in the autocomplete list. example	No	@	pic
