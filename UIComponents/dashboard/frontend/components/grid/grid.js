@@ -9,6 +9,8 @@ angular
         bindings : {
 
             "onLoad" : "&onLoad",
+            
+            "gridDataIdentifierProperty": "@",
 
             "columnsDefinition" : "<columnsDefinition",
             
@@ -197,6 +199,8 @@ angular
             }
 
             this.$onInit = function() {
+                
+                this._dataIdentifierProperty = (this.gridDataIdentifierProperty) ? this.gridDataIdentifierProperty : "key";
                 this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
                 this.gridOptions = {
                     angularCompileRows: true,
@@ -331,7 +335,7 @@ angular
             }
 
             this._saveData = function(event){
-                if(event.data && event.data.key){
+                if(event.data && event.data[self._dataIdentifierProperty]){
                     var params = event.data;
                     params.action = "edit";
                     if(this.editParams){
@@ -431,7 +435,7 @@ angular
                         var selectedNodes = self.gridOptions.api.getSelectedNodes();
                         var selectedKeys = [];
                         for(var i = 0; i < selectedNodes.length; i++){
-                            selectedKeys.push(selectedNodes[i].data.key);
+                           	selectedKeys.push(selectedNodes[i].data[self._dataIdentifierProperty]);
                         }
                         if(selectedKeys.length > 0){
                             self.gridOptions.api.showLoadingOverlay();   
@@ -445,7 +449,7 @@ angular
                                 function(data, response) {
                                     self.gridOptions.api.hideOverlay();     
                                     if (data && (data.result == "success" || data.status == "success")) {
-                                        //     self.showAlert("success", "Row(s) deleted successfuly");
+                                        self.showAlert("success", "Row(s) deleted successfuly");
                                         self.onServerCall(data);
                                     } else {
                                         if(data && data.errorDetail){
