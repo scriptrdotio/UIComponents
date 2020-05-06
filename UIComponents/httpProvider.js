@@ -115,7 +115,7 @@ angular
 			                     return httpRequest(scriptName, config);
 		                     },
 
-		                     post : function(scriptName, data, headers) {
+		                     post : function(scriptName, data, headers, hasAttachments) {
 			                     var config = {
 				                     "method" : "POST"
 			                     };
@@ -125,10 +125,15 @@ angular
 				                     config["headers"] = headers;
 			                     }
 
-			                     config["headers"] = setDefaultObject(
-			                           config["headers"], "Content-Type",
-			                           "application/json");
-
+                                 if(!headers || !headers["Content-Type"]) {
+                                     config["headers"] = setDefaultObject(
+			                        	config["headers"], "Content-Type", "application/json");
+                                 }
+                                 
+                                 if(hasAttachments) {
+                                    config["headers"]["Content-Type"] =  undefined;
+      							 	config["transformRequest"]= angular.identity
+                                 }
 			                     return httpRequest(scriptName, config);
 		                     },
 		                     
