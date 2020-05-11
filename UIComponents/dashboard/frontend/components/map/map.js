@@ -239,6 +239,41 @@ angular
             var marker = self.assets[data]["latestMarker"];
 			self.showAssetInfo(null, null, marker, data, null, marker.id)
         });
+          
+        //Show info window of asset 
+        $scope.$on("mapRerender", function(event) {
+           	rerenderAllAssets();
+            
+            if (self.clusteredView) {
+                self.showDetailedMap = false;
+            	self.clusterZoom =  self.clusteredZoomMax;
+                NgMap
+                    .getMap({
+                    id : 'clustered-'+self.$wdgid //TODO: figure out another thing then id, or pass id as a param
+                })
+                    .then(
+                    function(map) {
+                        map.setCenter(self.bounds.getCenter());
+        			    map.fitBounds(self.bounds);
+                    }, function(e) {
+                        
+               });
+            } else {
+                 NgMap
+                    .getMap({
+                    id : 'detailed-'+self.$wdgid //TODO: figure out another thing then id, or pass id as a param
+                })
+                    .then(
+                    function(map) {
+                        map.setCenter(self.bounds.getCenter());
+        			    map.fitBounds(self.bounds);
+                    }, function(e) {
+                        
+               });
+            }
+
+        });
+          
         self.switchStatus = (self.heatmap === false || self.heatmap === true) ?  self.heatmap : false;
         $scope.$on('mapInitialized', function(event, map) {
               self.map = map;
