@@ -87,8 +87,6 @@ angular
         "localData": "<?",	//The local data variable to use from your controller. Should be an array of objects.
       
       
-      
-      
     },
     templateUrl: "/UIComponents/dashboard/frontend/components/list/autocomplete.html",
     controller: function($scope, dataService) {
@@ -145,15 +143,16 @@ angular
              }
          }
          
-         this.consumeData = function(data, response) {
+         self.consumeData = function(data, response) {
            self.showList = true;  
            if(typeof self.onFormatData() == "function"){
-             data = self.onFormatData()(data);
+             data = self.onFormatData()(data, self);
            }
-           this.localData = data;  
-           if(this.listSelectedObject && this.objects.length > 0){
-                $scope.$broadcast('angucomplete-alt:setData', self.id, this.localData);
-                $scope.$broadcast('angucomplete-alt:setSelectedObjects', self.id, this.objects);
+           
+           self.localData = data;  
+           if(self.listSelectedObject && self.objects.length > 0){
+                $scope.$broadcast('angucomplete-alt:setData', self.id, self.localData);
+                $scope.$broadcast('angucomplete-alt:setSelectedObjects', self.id, self.objects);
            }  
          }
     }
