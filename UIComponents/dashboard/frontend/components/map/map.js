@@ -140,7 +140,9 @@ angular
         "onFormatData" : "&",
         "useWindowParams": "@",
         "serviceTag": "@",
-        "fetchDataInterval": "@"
+        "fetchDataInterval": "@",
+        
+         "renderOnlyClickedAsset": "<?" //Default true, to remove the display of the markers except the clicked marker
         
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
@@ -156,6 +158,7 @@ angular
       self.$onInit = function() {
           var self = this;
           
+          self._renderOnlyClickedAsset = (typeof self.renderOnlyClickedAsset !== 'undefined') ? self.renderOnlyClickedAsset : true;
           self.transport = (self.transport) ? self.transport : "wss";
           self.$wdgid = $scope.$id;
           self.pathStrokeOpacity = (self.pathStrokeOpacity) ? self.pathStrokeOpacity : 0;
@@ -226,9 +229,15 @@ angular
         if(self.mapFitBounds)
 				self.bounds = new google.maps.LatLngBounds();
 
-        
+        //Focus on selected asset
         $scope.$on("mapFoucsOnMarker", function(event, data) {
 			self.focusOnAsset(data)
+        });
+          
+        //Show info window of asset 
+        $scope.$on("mapShowInfoWindowOnMarker", function(event, data) {
+            var marker = self.assets[data]["latestMarker"];
+			self.showAssetInfo(null, null, marker, data, null, marker.id)
         });
         self.switchStatus = (self.heatmap === false || self.heatmap === true) ?  self.heatmap : false;
         $scope.$on('mapInitialized', function(event, map) {
@@ -483,8 +492,12 @@ angular
         if (self.selectedAsset == "all") {
           self.showAllAssets();
         } else { // Remove displaying single asset on select
-          self.displayedAssets = {};
-          self.displayedAssets[self.selectedAsset] = self.assets[self.selectedAsset];
+          if(self._renderOnlyClickedAsset) {
+              self.displayedAssets = {};
+          	  self.displayedAssets[self.selectedAsset] = self.assets[self.selectedAsset];
+          } else {
+              self.showAllAssets();
+          }
         }
       };
 
@@ -832,7 +845,7 @@ angular
                 "id" : id
               })**/
             //In case marker wasn't click markerEl = this would be null
-            markerEl = (markerEl) ? markerEl : _.findWhere(map.markers, {data: marker.assetKey})
+            markerEl = (markerEl) ? markerEl : _.findWhere(map.markers, {data: marker.id})
             var infoWindow = "infoWindowTemplate_"+ $scope.$parent.marker.source;
             //console.log("Info window", infoWindow)
             //console.log("self.markerInfoWindow", self.markerInfoWindow)

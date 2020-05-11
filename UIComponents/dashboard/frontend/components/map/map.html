@@ -52,7 +52,7 @@
 					<div ng-if="$ctrl.trackedAsset == null">
 						<marker position="{{marker.position}}" title="{{marker.display}}"
 							animation={{marker.animation}} icon="{{marker.icon}}"
-							data="{{marker.assetKey}}"
+							data="{{marker.id}}"
 							on-click="$ctrl.showAssetInfo(event, 'click', marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')"
 							on-mouseover="$ctrl.showAssetInfo(event, 'mouseover', marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')">
 						</marker>
