@@ -16,7 +16,7 @@
         <!-- begin items in header -->
         <div class="header-items pull-left">
           <div ng-repeat="item in $ctrl.items track by $index" class="pull-left" ng-if="$ctrl.inGroup(item.roles) || !item.roles">
-              <a ng-click="$ctrl.onItemClick(item)" route="{{item.route}}" index="{{colIndex = $index}}" ng-click="$ctrl.addSelectedClass(colIndex)" href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a>
+              <a ng-click="$ctrl.onItemClick(item)" route="{{item.route}}" index="{{colIndex = $index}}" ng-click="$ctrl.addSelectedClass(colIndex)" ng-class="{'selected': item.route == $ctrl.currentRoute}" href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a>
           </div>
         </div>
         <!-- end items in header -->
@@ -28,7 +28,7 @@
             <i ng-show="$ctrl.user != null" class="fa fa-user-circle"></i> {{$ctrl.user.login || $ctrl.caretlabel }} <span class="caret"></span>
           </button>
           <ul class="dropdown-menu dropdown-menu-right"  uib-dropdown-menu role="menu" aria-labelledby="single-button">
-            <li ng-if="$ctrl.inGroup(item.roles) || !item.roles" role="menuitem" ng-repeat="item in $ctrl.subitems track by $index"><a href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a></li>
+            <li ng-if="$ctrl.inGroup(item.roles) || !item.roles" role="menuitem" ng-repeat="item in $ctrl.subitems track by $index" ng-class="{'selected': item.route == $ctrl.currentRoute}"><a href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a></li>
             <li ng-show="$ctrl.logout && $ctrl.subitems.length > 0" class="divider"></li>
             <li ng-show="$ctrl.logout" role="menuitem" ><a href="{{$ctrl.logout.route}}"><i class="{{$ctrl.logout.icon}}" aria-hidden="true"></i> {{$ctrl.logout.label || "Logout"}}</a></li>
           </ul>
