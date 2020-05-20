@@ -15,7 +15,7 @@
     <div  class="pull-right">
         <!-- begin items in header -->
         <div class="header-items pull-left">
-          <div ng-repeat="item in $ctrl.items track by $index" class="pull-left">
+          <div ng-repeat="item in $ctrl.items track by $index" class="pull-left" ng-if="$ctrl.inGroup(item.roles) || !item.roles">
               <a ng-click="$ctrl.onItemClick(item)" route="{{item.route}}" index="{{colIndex = $index}}" ng-click="$ctrl.addSelectedClass(colIndex)" href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a>
           </div>
         </div>
