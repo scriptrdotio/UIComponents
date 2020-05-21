@@ -5,13 +5,13 @@
     <div class="upload-section">
         <div ngf-drop="selectFile(picFile)" ngf-select="selectFile(picFile)" ngf-model-invalid="invalidFile"  type="file" ngf-multiple="false" ng-model="picFile" name="file" ng-attr-ngf-pattern="{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}" ng-attr-ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" ngf-drag-over-class="dragover"> 
            <div class="default-image fas" ng-if="!picFile && !$$value$$"> 
-               <img ng-if="form.schema.default" ng-src="{{form.schema.default}}" />
+               <img ng-if="form.schema.default" ng-src="{{cdnImagesPath}}{{form.schema.default}}" />
             </div>
             <div ng-if="!picFile && ($$value$$ && $$value$$ != form.schema.default)"  class="default-image fas"> 
                <img ng-src="{{$$value$$}}" />
             </div>
             <div ng-if="!picFile && ($$value$$ && $$value$$ == form.schema.default)"  class="default-image fas"> 
-               <img ng-src="{{form.schema.default}}" />
+               <img ng-src="{{cdnImagesPath}}{{form.schema.default}}" />
             </div>
             <div ng-if="picFile" class="uploaded-image">
                  <div ng-include="'uploadProcess.html'" class="mb"></div>
