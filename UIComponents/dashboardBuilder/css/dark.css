@@ -800,6 +800,9 @@
   height: calc(100% - 40px);
   font-size: 12px;
 }
+.dashboardTheme .morris-chart-wrapper.with-legend ul li span {
+    white-space: pre-wrap;
+}
 .dashboardTheme .morris-chart-legend::-webkit-scrollbar {
   width: 12px;
 }
