@@ -48,4 +48,6 @@ angular.module("DashboardBuilder", [
     'ui.highlight',
     'mgcrea.ngStrap.select',
 	"Display", 
-	"Plotly"]);
+	"Plotly",
+    "ngSchemaFormFile"
+]);
