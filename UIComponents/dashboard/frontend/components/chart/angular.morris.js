@@ -261,7 +261,7 @@
         var OPTION_KEYS = [
             'data', 'xkey', 'ykeys', 'labels', 'barColors', 'stacked', 'hideHover',
             'hoverCallback', 'axes', 'grid', 'gridTextColor', 'gridTextSize', 'gridTextFamily',
-            'gridTextWeight', 'resize',
+            'gridTextWeight', 'resize','dateFormat', 'xLabelFormat', 'yLabelFormat',
             // In spite of being missing in the documentation, these do exist
             // They are part of the base grid: https://github.com/morrisjs/morris.js/blob/master/lib/morris.grid.coffee
             'ymax', 'ymin', 'goals', 'goalStrokeWidth',
@@ -297,6 +297,9 @@
                                 ykeys: scope.barY,
                                 xLabelMargin: 2
                             }, OPTION_KEYS, 'bar', scope);
+
+                            // Checks if there are angular filters available for certain options
+                            angularMorris.processFilterOptions(['dateFormat', 'xLabelFormat', 'yLabelFormat'], options);
 
                             scope.barInstance = new Morris.Bar(options);
                         } else {
@@ -341,7 +344,7 @@
     angular.module("angular.morris").directive('donutChart', /*@ngInject*/function(angularMorris) {
         // List of known option keys for donutChart according to morris.js docs:
         // http://morrisjs.github.io/morris.js/donuts.html
-        var OPTION_KEYS = ['data', 'colors', 'formatter', 'resize', 'backgroundColor', 'labelColor'];
+        var OPTION_KEYS = ['data', 'colors', 'formatter', 'resize', 'backgroundColor', 'labelColor', 'hoverCallback'];
 
         return {
             restrict: 'A',

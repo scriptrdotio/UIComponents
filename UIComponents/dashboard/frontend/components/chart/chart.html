@@ -19,17 +19,17 @@
                      line-ymax='$ctrl.ymax'
                      line-ymin='$ctrl.ymin'
                      line-smooth='$ctrl.smooth'
-                     line-hide-hover='$ctrl.hideHover'
+                     line-hide-hover='$ctrl._hideHover'
                      line-hover-callback='$ctrl.hoverCallback'
                      line-parse-time ='$ctrl.parseTime'
                      line-units='$ctrl.units'
                      line-post-units='$ctrl.postUnits'
                      line-pre-units='$ctrl.preUnits'
-                     line-line-date-format='$ctrl.dateFormat(x)'
+                     line-date-format='$ctrl.dateFormat'
                      line-x-labels='$ctrl.xlabels'
-                     line-x-label-format='$ctrl.xlabelFormat(x)'
+                     line-x-label-format='$ctrl.xlabelFormat'
                      line-x-label-angle = '$ctrl.xlabelAngle'
-                     line-y-label-format ='$ctrl.ylabelFormat(y)'
+                     line-y-label-format ='$ctrl.ylabelFormat'
                      line-goals='$ctrl.goals'
                      line-goal-stroke-width ='$ctrl.goalStrokeWidth'
                      line-goal-line-colors='$ctrl.goalLineColors'
@@ -69,7 +69,7 @@
                      bar-colors='$ctrl.colors'
                      bar-resize="$ctrl.resize"
                      bar-stacked="$ctrl.stacked"
-                     bar-hide-hover='$ctrl.hideHover'
+                     bar-hide-hover='$ctrl._hideHover'
                      bar-hover-callback='$ctrl.hoverCallback'
                      bar-grid='$ctrl.grid'
                      bar-grid-text-color='$ctrl.gridTextColor'
@@ -83,7 +83,9 @@
                      bar-goal-stroke-width ='$ctrl.goalStrokeWidth'
                      bar-goal-line-colors='$ctrl.goalLineColors'
                      bar-x-label-angle = '$ctrl.xlabelAngle'
-                     bar-y-label-format='$ctrl.ylabelFormat(y)'
+                     bar-y-label-format='$ctrl.ylabelFormat'
+                     bar-date-format='$ctrl.dateFormat' 
+                     bar-x-label-format='$ctrl.xlabelFormat'
                      bar-parse-time ='$ctrl.parseTime'
                      bar-events='$ctrl.events'
                      bar-event-stroke-width='$ctrl.eventStrokeWidth'
@@ -120,17 +122,17 @@
                      area-ymax='$ctrl.ymax'
                      area-ymin='$ctrl.ymin'
                      area-smooth='$ctrl.smooth'
-                     area-hide-hover='$ctrl.hideHover'
-                     area-hover-callback='$ctrl.hoverCallback(index, options, content, row)'
+                     area-hide-hover='$ctrl._hideHover'
+                     area-hover-callback='$ctrl.hoverCallback'
                      area-parse-time ='$ctrl.parseTime'
                      area-units='$ctrl.units'
                      area-post-units='$ctrl.postUnits'
                      area-pre-units='$ctrl.preUnits'
-                     area-area-date-format='$ctrl.dateFormat(x)' 
+                     area-date-format='$ctrl.dateFormat' 
                      area-x-labels='$ctrl.xlabels'
-                     area-x-label-format='$ctrl.xlabelFormat(x)'
+                     area-x-label-format='$ctrl.xlabelFormat'
                      area-x-label-angle = '$ctrl.xlabelAngle'
-                     area-y-label-format ='$ctrl.ylabelFormat(y)'
+                     area-y-label-format ='$ctrl.ylabelFormat'
                      area-goals='$ctrl.goals'
                      area-goal-stroke-width ='$ctrl.goalStrokeWidth'
                      area-goal-line-colors='$ctrl.goalLineColors'
@@ -159,15 +161,29 @@
                 </ul>
             </div>
         </div>
+        
+        <div ng-if="$ctrl.type == 'donut'">
+            <div class="morris-chart-wrapper" ng-class="($ctrl.showLegend == 'true' && $ctrl.legendType != 'hover') ? 'with-legend' : ' ' ">  
 
-        <div ng-if="$ctrl.type == 'donut'" style="height: 100%; width: 100%"
-             donut-data='$ctrl.datas'
-             donut-label-color= '$ctrl.labelColor' 
-             donut-background-color='$ctrl.backgroundColor' 
-             donut-colors='$ctrl.colors' 
-             donut-formatter="$ctrl.donutFormatter(y,data)"
-             donut-resize="$ctrl.resize"
-             donut-chart>
-        </div> 
+            <div class="morris-chart-dimension"
+                 donut-data='$ctrl.datas'
+                 donut-hover-callback='$ctrl.hoverCallback'
+                 donut-label-color= '$ctrl.labelColor' 
+                 donut-background-color='$ctrl.backgroundColor' 
+                 donut-colors='$ctrl.colors' 
+                 donut-formatter="$ctrl.donutFormatter(y,data)"
+                 donut-resize="$ctrl.resize"
+                 donut-chart>
+            </div> 
+			<div class="morris-chart-legend" ng-if="$ctrl.showLegend && !$ctrl.noResults">
+              <ul ng-repeat="entry in $ctrl.legendStructure">
+                  <li>
+                      <span><i class="fa fa-square" ng-style="{ 'color' : '{{entry.color}}'}"></i> {{entry.label}}</span>
+                      <span  ng-style="{ 'color' : '{{entry.color}}'}" id="value_{{$index}}_{{$ctrl.ref}}">{{entry.value}}</span>
+                  </li>
+              </ul>
+          </div>
+            </div>
+        </div>
     </div>
 </div>

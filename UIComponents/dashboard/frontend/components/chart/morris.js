@@ -202,7 +202,8 @@ Licensed under the BSD-2-Clause License.
       if (redraw == null) {
         redraw = true;
       }
-      this.options.data = data;
+      //Clone the object to not modify it
+      this.options.data =data; //This is needed in case data is being altered, we removed slicing completely so no need to concat and creating extra object  [].concat(data); 
       if ((data == null) || data.length === 0) {
         this.data = [];
         this.raphael.clear();
@@ -230,15 +231,23 @@ Licensed under the BSD-2-Clause License.
           ret.label = row[this.options.xkey];
           if (this.options.parseTime) {
             ret.x = Morris.parseDate(ret.label);
-            if (this.options.dateFormat) {
-              ret.label = this.options.dateFormat(ret.x);
-            } else if (typeof ret.label === 'number') {
-              ret.label = new Date(ret.label).toString();
+            var prevX = null;
+            if(index > 0) {
+                prevX = Morris.parseDate(data[index - 1][this.options.xkey]);
             }
-          } else {
+            if (this.options.dateFormat) {
+              ret.label = this.options.dateFormat(ret.x, prevX);
+            } else if (typeof ret.label === 'number') {
+              ret.label = moment(ret.label).format("YYYY-MM-DD HH:mm"); //MFE HARDCODE: new Date(ret.label).toString();
+            }
+          } else { 
             ret.x = index;
+            var prev = null;
+            if(index > 0) {
+                prev = data[index - 1][this.options.xkey];
+            }
             if (this.options.xLabelFormat) {
-              ret.label = this.options.xLabelFormat(ret);
+              ret.label = this.options.xLabelFormat(ret, prev);
             }
           }
           total = 0;
@@ -256,18 +265,31 @@ Licensed under the BSD-2-Clause License.
                 yval = null;
               }
               if ((yval != null) && this.hasToShow(idx)) {
-                if (this.cumulative) {
-                  total += yval;
+               if (this.cumulative) {
+                  if (total < 0 && yval > 0) {
+                    total = yval;
+                  } else {
+                      if(yval !== undefined)
+                    	total += yval;
+                  }
                 } else {
-                  if (ymax != null) {
+                  if (ymax != null && yval !== undefined) {
                     ymax = Math.max(yval, ymax);
                     ymin = Math.min(yval, ymin);
                   } else {
-                    ymax = ymin = yval;
+                    if(yval !== undefined )
+                   		ymax = ymin = yval;
                   }
                 }
               }
               if (this.cumulative && (total != null)) {
+                if (ymax != null  && yval !== undefined) {
+                    ymax = Math.max(yval, ymax);
+                    ymin = Math.min(yval, ymin);
+                } else {
+                    if(yval !== undefined)
+                    	ymax = ymin = yval;
+                }
                 ymax = Math.max(total, ymax);
                 ymin = Math.min(total, ymin);
               }
@@ -952,7 +974,8 @@ Licensed under the BSD-2-Clause License.
       content = $("<div class='morris-hover-row-label'>").text(row.label);
       content = content.prop('outerHTML');
       _ref = row.y;
-      for (j = _i = 0, _len = _ref.length; _i < _len; j = ++_i) {
+      for(j = _ref.length - 1; j >= 0; j--){
+      //for (j = _i = 0, _len = _ref.length; _i < _len; j = ++_i) {
         y = _ref[j];
         if (this.options.labels[j] === false) {
           continue;
@@ -1442,7 +1465,8 @@ Licensed under the BSD-2-Clause License.
 
     areaDefaults = {
       fillOpacity: 'auto',
-      behaveLikeLine: false
+      behaveLikeLine: false,
+      fillToZero: true
     };
 
     function Area(options) {
@@ -1515,8 +1539,18 @@ Licensed under the BSD-2-Clause License.
     Area.prototype._drawFillFor = function(index) {
       var path;
       path = this.paths[index];
-      if (path !== null) {
+     /** if (path !== null) {
         path = path + ("L" + (this.transX(this.xmax)) + "," + this.bottom + "L" + (this.transX(this.xmin)) + "," + this.bottom + "Z");
+        return this.drawFilledPath(path, this.fillForSeries(index));
+      }**/
+        
+        
+       if (path !== null) {
+        if (this.options.fillToZero) {
+          path = path + ("L" + (this.transX(this.xmax)) + "," + (this.transY(0)) + "L" + (this.transX(this.xmin)) + "," + (this.transY(0)) + "Z");
+        } else {
+          path = path + ("L" + (this.transX(this.xmax)) + "," + this.bottom + "L" + (this.transX(this.xmin)) + "," + this.bottom + "Z");
+        }
         return this.drawFilledPath(path, this.fillForSeries(index));
       }
     };
@@ -1545,9 +1579,10 @@ Licensed under the BSD-2-Clause License.
       if (!(this instanceof Morris.Bar)) {
         return new Morris.Bar(options);
       }
-      Bar.__super__.constructor.call(this, $.extend({}, options, {
+      Bar.__super__.constructor.call(this, options)
+      /**Bar.__super__.constructor.call(this, $.extend({}, options, {
         parseTime: false
-      }));
+      }));**/
     }
 
     Bar.prototype.init = function() {
@@ -1675,8 +1710,10 @@ Licensed under the BSD-2-Clause License.
     };
 
     Bar.prototype.drawSeries = function() {
-      var barWidth, bottom, groupWidth, i, idx, lastTop, left, leftPadding, numBars, row, sidx, size, spaceLeft, top, ypos, zeroPos, _i, _ref;
-      groupWidth = this.xSize / this.options.data.length;
+      var barWidth, bottom, groupWidth = 1, i, idx, lastBottom, lastTop, left, leftPadding, numBars, row, sidx, size, spaceLeft, top, ypos, zeroPos, _i, _ref;
+      /** fix added for js error in console Error: <rect> attribute width: A negative value is not valid. **/
+      if (this.options.data.length > 0)
+          groupWidth = this.xSize / this.options.data.length;
       if (this.options.stacked) {
         numBars = 1;
       } else {
@@ -1691,6 +1728,15 @@ Licensed under the BSD-2-Clause License.
       if (this.options.barSize) {
         barWidth = Math.min(barWidth, this.options.barSize);
       }
+        /** fix added for js error in console Error: <rect> attribute width: A negative value is not valid. **/
+         if(barWidth <0){
+            var fit_data_length = Math.floor(this.width * this.options.barSizeRatio/(numBars*0.5 + this.options.barGap * (numBars-1)));
+            //data removed from tail
+           //MFE stop removing data from tail and show the complete data series we have
+           //this.options.data.splice(fit_data_length);
+            barWidth=0.5;
+        }
+        /***********/
       spaceLeft = groupWidth - barWidth * numBars - this.options.barGap * (numBars - 1);
       leftPadding = spaceLeft / 2;
       zeroPos = this.ymin <= 0 && this.ymax >= 0 ? this.transY(0) : null;
@@ -1700,14 +1746,47 @@ Licensed under the BSD-2-Clause License.
         _results = [];
         for (idx = _j = 0, _len = _ref1.length; _j < _len; idx = ++_j) {
           row = _ref1[idx];
-          lastTop = 0;
+          lastTop = null;
+          lastBottom = null;
           _results.push((function() {
             var _k, _len1, _ref2, _results1;
             _ref2 = row._y;
+           var ps = [];
+             var ng = [];
+             var psRef = {};
+             var ngRef = {};
+             for(var f = 0; f  <= _ref2.length-1;  f++) {
+                  if(row.y[f] >=0) {
+                      ps.push(_ref2[f]);
+                       psRef[""+(ps.length - 1)] = f ;
+                  } else {
+                      ng.push(_ref2[f]);
+                      ngRef[""+(ng.length - 1)] = f
+                  }
+             }
+             var internalRef = $.extend([], _ref2);
+            // ps.sort(function(a, b){return a - b})
+            // ng.sort(function(a, b){return b - a})
+            _ref2 = ng.concat(ps)
+            
+            var upPsRef = {};
+            if(Object.keys(ngRef).length > 0) {
+                for (var myx in psRef) {
+                    if (psRef.hasOwnProperty(myx)) {
+                       var newKey = parseInt(myx) + ng.length
+                       upPsRef[""+newKey] = psRef[myx];
+                    }
+                }
+            } else {
+               upPsRef = psRef
+            }
+              
+             var mapRef = Object.assign({}, ngRef, upPsRef);
             _results1 = [];
             for (sidx = _k = 0, _len1 = _ref2.length; _k < _len1; sidx = ++_k) {
               ypos = _ref2[sidx];
-              if (!this.hasToShow(sidx)) {
+              var internalIndex = mapRef[""+sidx];//internalRef.indexOf(ypos);
+              if (!this.hasToShow(internalIndex)) {
                 continue;
               }
               if (ypos !== null) {
@@ -1720,7 +1799,7 @@ Licensed under the BSD-2-Clause License.
                 }
                 left = this.xStart + idx * groupWidth + leftPadding;
                 if (!this.options.stacked) {
-                  left += sidx * (barWidth + this.options.barGap);
+                  left += internalIndex * (barWidth + this.options.barGap);
                 }
                 size = bottom - top;
                 if (this.options.verticalGridCondition && this.options.verticalGridCondition(row.x)) {
@@ -1730,15 +1809,30 @@ Licensed under the BSD-2-Clause License.
                     this.drawBar(this.yStart, this.xStart + idx * groupWidth, this.ySize, groupWidth, this.options.verticalGridColor, this.options.verticalGridOpacity, this.options.barRadius);
                   }
                 }
-                if (this.options.stacked) {
-                  top -= lastTop;
-                }
                 if (!this.options.horizontal) {
-                  this.drawBar(left, top, barWidth, size, this.colorFor(row, sidx, 'bar'), this.options.barOpacity, this.options.barRadius);
-                  _results1.push(lastTop += size);
+                  
+                    
+                  if(row.y[internalIndex] < 0) {
+                       if (this.options.stacked && (lastBottom != null)) {
+                        bottom += lastBottom - top;
+                        top = lastBottom
+                      }
+                      this.drawBar(left, top, barWidth, size, this.colorFor(row, internalIndex, 'bar'), this.options.barOpacity, this.options.barRadius);
+                      _results1.push(lastBottom = bottom);
+                  } else {
+                      if (this.options.stacked && (lastTop != null)) {
+                        top += lastTop - bottom;
+                      }
+                      this.drawBar(left, top, barWidth, size, this.colorFor(row, internalIndex, 'bar'), this.options.barOpacity, this.options.barRadius);
+                      _results1.push(lastTop = top);
+                  }
                 } else {
-                  this.drawBar(top, left, size, barWidth, this.colorFor(row, sidx, 'bar'), this.options.barOpacity, this.options.barRadius);
-                  _results1.push(lastTop -= size);
+                  if (this.options.stacked && (lastBottom != null)) {
+                    bottom += lastBottom - top;
+                    top = lastBottom;
+                  }
+                  this.drawBar(top, left, size, barWidth, this.colorFor(row, internalIndex, 'bar'), this.options.barOpacity, this.options.barRadius);
+                  _results1.push(lastBottom = bottom);
                 }
               } else {
                 _results1.push(null);
@@ -1808,7 +1902,8 @@ Licensed under the BSD-2-Clause License.
       content = $("<div class='morris-hover-row-label'>").text(row.label);
       content = content.prop('outerHTML');
       _ref = row.y;
-      for (j = _i = 0, _len = _ref.length; _i < _len; j = ++_i) {
+      //for (j = _i = 0, _len = _ref.length; _i < _len; j = ++_i) {
+        for (j = (_ref.length - 1); j >= 0; j--) {
         y = _ref[j];
         if (this.options.labels[j] === false) {
           continue;

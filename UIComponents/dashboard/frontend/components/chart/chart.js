@@ -105,7 +105,7 @@ angular
         "ymin": "@", 
         "smooth": "@", 
         "hideHover": "@",
-        "parseTime": "@", 
+        "parseTime": "<?", 
         "units": "@", 
         "postUnits": "@", 
         "preUnits": "@", 
@@ -118,8 +118,8 @@ angular
         "goalsconfig" : "<?",
         "events": "@", 
         "eventStrokeWidth": "@", 
-        "eventLineColors": "@", 
-        "eventconfig" : "<?",
+        "eventsLineColors": "@", 
+        "eventsconfig" : "<?",
           
         "continuousLine": "@",
         "axes": "@", 
@@ -140,7 +140,11 @@ angular
         "hoverCallback": "&?", 
         "dateFormat": "&?",
         "xlabelFormat": "&?", 
-        "ylabelFormat": "&?",     
+        "ylabelFormat": "&?",  
+          
+        "xdateMomentFormat": "@",
+        "legendDateMomentFormat": "@",
+        "timeZone": "@",
           
         "showLegend": "@",
         "legendType": "@" //"hover", "right"
@@ -213,11 +217,10 @@ angular
              
              this.showLegend = (this.showLegend) ? this.showLegend : "true"; //Default is true for backward compatibility
              this.legendType = (this.legendType) ? this.legendType : "hover";
-             this.hideHover = (this.hideHover) ? this.hideHover : "auto";
              
              if(this.showLegend && this.showLegend == "true") {
                  if(this.legendType && this.legendType == "right") {
-                     this.hideHover = "always";
+                     this._hideHover = "auto";
                      this.ref = $scope.$id
                      this.legendStructure = []
                      for(var i = 0; i < this.ykeys.length; i++) {
@@ -234,8 +237,12 @@ angular
                      }
                      this.hoverCallback = function (index, options, content, row) {
                             if(self.datas) {
-                                if(row && row.date){
-                                    $scope.$ctrl.legendDate = row[self.xkey];
+                                if(row && row[$scope.$ctrl.xkey]){
+                                    if(self.parseTime) {
+                                           $scope.$ctrl.legendDate = self.dateFormat(row[self.xkey]);
+                                    } else {
+                                        $scope.$ctrl.legendDate = row[self.xkey];
+                                    }  
                                 }
                                  _.mapObject(row, function(val, key) {
                                     var index = _.findIndex($scope.$ctrl.legendStructure, {"key": (self.type != "donut" ? key : val)});
@@ -243,21 +250,71 @@ angular
                                     if(index != -1){
                                         $scope.$ctrl.legendStructure[index]["value"] = (self.type == "donut") ? content : val;
                                         var element = document.getElementById("value_"+index+"_"+self.ref)
-                                        var dateElement = document.getElementById("date_" + self.ref);
                                         if(element)
                                             element.innerHTML = (self.type == "donut") ? content : val;
-                                        if(self.type != "donut" && dateElement)
-                                            dateElement.innerHTML = row[self.xkey];
                                     }
                                 });
                             }
                         }
                  } else {
                       if(this.legendType && this.legendType == "hover") {
-                          console.log("Legend type", this.legendType)
+                         this._hideHover = (this.hideHover) ? this.hideHover : "auto";
                       }
                  }
-             } 
+             } else {
+                 this._hideHover = "always";
+             }
+             
+             
+             if(this.parseTime) {
+                this.dateFormat = function(date) {
+                 	try {
+                        if(self.timeZone){
+                            return moment(date).utcOffset(self.timeZone).format(self.xdateMomentFormat);
+                        }else {
+                             return moment(date).format(self.xdateMomentFormat);
+                        }
+                           
+                    } catch(e) {
+                         console.error("Invalid date format passed", self.xdateMomentFormat);
+                         if(self.timeZone){
+                         	return moment(date).utcOffset(self.timeZone).format("DD-MM-YYYY HH:mm:ss");
+                        } else {
+                            return moment(date).format("DD-MM-YYYY HH:mm:ss");
+                        }
+                    }
+                }
+                
+                this.xlabelFormat = function(date) {
+                 	try {
+                        if(self.timeZone){
+                            return moment(date).utcOffset(self.timeZone).format(self.xdateMomentFormat);
+                        } else {
+                            return moment(date).format(self.xdateMomentFormat);
+                        }
+                    } catch(e) {
+                         console.error("Invalid date format passed", self.xdateMomentFormat);
+                        if(self.timeZone){
+                         	return moment(date).utcOffset(self.timeZone).format("DD-MM-YYYY HH:mm:ss");
+                        } else {
+                            return moment(date).format("DD-MM-YYYY HH:mm:ss");
+                        }
+                    }
+                }
+                /**
+                this.legendDateFormat = function(date) {
+                 	try {
+                        if(self.timeZone){
+                            return moment(date).utcOffset(self.timeZone).format(self.legendDateMomentFormat);
+                        }else
+                            return moment(date).format(self.legendDateMomentFormat);
+                    } catch(e) {
+                         console.error("Invalid date format passed", self.legendDateMomentFormat);
+                         return moment(date).utcOffset(self.timeZone).format("DD-MM-YYYY HH:mm:ss");
+                    }
+                }**/
+             }
+               
        }
          
          this.$postLink = function () {
