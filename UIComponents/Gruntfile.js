@@ -183,6 +183,7 @@ module.exports = function(grunt) {
 		               'concat/min-safe/IFrame.js' : [ 'dashboard/frontend/components/IFrame/IFrame.js' ],
 		               'concat/min-safe/angular-underscore.js' : [ 'dashboardBuilder/lib/schemaForm/angular-underscore.js' ],
 		               'concat/min-safe/svg-assets-cache.js' : [ 'lib/svg-assets-cache.js' ],
+		               'concat/min-safe/angular-ui-utils.min.js' : [ 'lib/angular-ui-utils.min.js' ],
 		               'concat/min-safe/spectrum.js' : [ 'dashboardBuilder/lib/schemaForm/spectrum.js' ],
 		               'concat/min-safe/angular-spectrum-colorpicker.min.js' : [ 'dashboardBuilder/lib/schemaForm/angular-spectrum-colorpicker.min.js' ],
 		               'concat/min-safe/tv4.js' : [ 'dashboardBuilder/lib/schemaForm/tv4.js' ],
@@ -190,6 +191,8 @@ module.exports = function(grunt) {
 		               'concat/min-safe/schemaForm.js' : [ 'dashboardBuilder/lib/schemaForm/schemaForm.js' ],
 		               'concat/min-safe/bootstrapDecorator.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrapDecorator.js' ],
 		               'concat/min-safe/bootstrap-colorpicker.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-colorpicker.min.js' ],
+		               'concat/min-safe/ng-file-upload.js' : [ 'dashboardBuilder/lib/schemaForm/ng-file-upload.js' ],
+		               'concat/min-safe/schema-form-file.js' : [ 'dashboardBuilder/lib/schemaForm/schema-form-file.js' ],
 		               'concat/min-safe/ui-codemirror.js' : [ 'dashboardBuilder/lib/codemirror/js/mode/ui-codemirror.js' ],
 		               'concat/min-safe/thermometer_directive.js' : [ 'dashboard/frontend/components/thermometer/thermometer_directive.js' ],
 		               'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/components/thermometer/thermometer.js' ],
@@ -284,7 +287,8 @@ module.exports = function(grunt) {
 	                     'lib/angular-slick.min.js',
 	                     'dashboardBuilder/lib/gridster/angular_gridster.min.js',
 	                     'lib/angular-animate.js',
-	                     'lib/angular-sanitize.js'
+	                     'lib/angular-sanitize.js',
+	                     'lib/angular-ui-utils.min.js'
 	                     ],
 	               dest : 'build/js/angular_resources_1.min.js'
 	            },
@@ -344,12 +348,13 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/schemaForm.js',
 	                     'concat/min-safe/bootstrapDecorator.js',
 	                     'concat/min-safe/bootstrap-colorpicker.min.js',
+	                     'concat/min-safe/ng-file-upload.js',
+			               'concat/min-safe/schema-form-file.js',
 	                     'concat/min-safe/bootstrap-ui-select.min.js',
 	                     'concat/min-safe/bootstrap-ui-codemirror.min.js',
 	                     'concat/min-safe/autorefresh.js',
 	                     'concat/min-safe/angular-strap.js',
 	                     'concat/min-safe/angular-strap.tpl.min.js',
-                         'lib/angular-strap.tpl.min.js',
 	                     'concat/min-safe/angular-schema-form-dynamic-select.js',
 	                     'concat/min-safe/markdown-directive.js'
 	                     ],
@@ -391,7 +396,7 @@ module.exports = function(grunt) {
 	            },
 	            editor: {
 	            	src: [
-	            	 'concat/min-safe/module.js',
+	            	   'concat/min-safe/module.js',
                      'concat/min-safe/ACL.js',
                      'dashboardBuilder/javascript/components/library/commonsConfig.js',
                      'dashboardBuilder/javascript/components/library/commonsActionConfig.js',
@@ -439,7 +444,8 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/plotly/windrose.css',
 	                     'dashboard/frontend/components/common/notifications.css',
 	                     'dashboardBuilder/css/markdown.css',
-	                     'dashboardBuilder/css/media.css'
+	                     'dashboardBuilder/css/media.css',
+	                     'dashboardBuilder/lib/schemaForm/schema-form-file.css'
 	                     ],
 	               dest : 'build/css/components.css'
 	            }
@@ -553,5 +559,26 @@ module.exports = function(grunt) {
 	      'concat:css',
 	      'uglify:dashboardBuilder', 
 	      'cssmin:dashboardBuilder' ]);
+	
+	grunt.registerTask('UIComponents', [ 
+		'fetchFromCDN', 
+		'fetch_ag_grid',
+      'ngtemplates', 
+      'ngAnnotate', 
+      'concat:external_jquery_resources',
+      'concat:external_libraries1', 
+      'concat:external_libraries2', 
+      'concat:external_angular_resources_1',
+      'concat:external_angular_resources_2',
+      'concat:external_angular_resources_3', 
+      'concat:directives_1',
+      'concat:directives_2', 
+      'concat:components',
+      'concat:editor',
+      'concat:dashboard_builder_constants', 
+      'less:production', 
+      'concat:css',
+      'uglify:dashboardBuilder', 
+      'cssmin:dashboardBuilder' ]);
 
 };
