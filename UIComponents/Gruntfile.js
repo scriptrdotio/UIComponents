@@ -109,11 +109,14 @@ module.exports = function(grunt) {
 		                  'dashboardBuilder/javascript/components/deletePopup.html',
 		                  'dashboardBuilder/javascript/components/confirmation.html',
 		                  'dashboardBuilder/javascript/components/myModalContent.html',
+		                  'layout/frontend/components/header/header.html',
+		                  'layout/frontend/components/menu/menu.html',
 		                  'dashboardBuilder/view/dashboard.html',
 		                  'dashboardBuilder/view/dashboardTemplate.min',
 		                  'dashboardBuilder/ide/dashboardTemplate_ide.min',
 		                  'dashboardBuilder/css/customStyleTemplate.css',
-		                  'dashboardBuilder/view/dashboardsList.html' ],
+		                  'dashboardBuilder/view/dashboardsList.html',
+		                  'dashboardBuilder/lib/schemaForm/nwp-file.html'],
 		            dest :'build/js/templates.js',
 		            options : {
 		               bootstrap : function(module, script) {
@@ -134,7 +137,9 @@ module.exports = function(grunt) {
 			               return url.replace('dashboard/',
 			                     '/UIComponents/dashboard/').replace(
 			                     'dashboardBuilder/',
-			                     '/UIComponents/dashboardBuilder/');
+			                     '/UIComponents/dashboardBuilder/').replace(
+			                     'layout/',
+			                     '/UIComponents/layout/');
 		               }
 		            }
 		         }
@@ -217,6 +222,10 @@ module.exports = function(grunt) {
 							'concat/min-safe/markdown-directive.js' : [ 'dashboardBuilder/lib/markdown/markdown-directive.js'],
 							'concat/min-safe/dygraphs-2.1.0.js' : [ 'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js'],
 							'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/components/thermometer/thermometer.js'],
+							'concat/min-safe/menu.js' : [ 'layout/frontend/components/menu/menu.js'],
+						   'concat/min-safe/header.js' : [ 'layout/frontend/components/header/header.js'],
+						   'concat/min-safe/layoutmodule.js' : [ 'layout/frontend/components/module.js']
+							
 		            }
 	            }
 	         },
@@ -390,7 +399,10 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/plotly.js',
 	                     'concat/min-safe/3dsurface.js',
 	                     'concat/min-safe/windrose.js',
-	                     'concat/min-safe/notifications.js'
+	                     'concat/min-safe/notifications.js',
+	                     'concat/min-safe/layoutmodule.js',
+	                     'concat/min-safe/header.js', 
+	                     'concat/min-safe/menu.js' 
 	                     ],
 	               dest : 'build/js/components.min.js'
 	            },
@@ -445,7 +457,9 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/common/notifications.css',
 	                     'dashboardBuilder/css/markdown.css',
 	                     'dashboardBuilder/css/media.css',
-	                     'dashboardBuilder/lib/schemaForm/schema-form-file.css'
+	                     'dashboardBuilder/lib/schemaForm/schema-form-file.css',
+	                     'layout/frontend/components/header/header.css',
+	                     'layout/frontend/components/menu/menu.css'
 	                     ],
 	               dest : 'build/css/components.css'
 	            }
@@ -470,9 +484,17 @@ module.exports = function(grunt) {
 	         },
 
 	         cssmin : {
-	            dashboardBuilder : {
+	            components : {
 	               src : 'build/css/components.css',
 	               dest : 'build/css/components.min.css'
+	            },
+	            light: {
+	            	src : 'dashboardBuilder/css/light.css',
+	               dest : 'build/css/light.min.css'
+	            },
+	            dark: {
+	            	src : 'dashboardBuilder/css/dark.css',
+	               dest : 'build/css/dark.min.css'
 	            }
 
 	         },
@@ -558,7 +580,10 @@ module.exports = function(grunt) {
 	      'less:production', 
 	      'concat:css',
 	      'uglify:dashboardBuilder', 
-	      'cssmin:dashboardBuilder' ]);
+	      'cssmin:components',
+	      'cssmin:light',
+	      'cssmin:dark'
+	      ]);
 	
 	grunt.registerTask('UIComponents', [ 
 		'fetchFromCDN', 
@@ -579,6 +604,8 @@ module.exports = function(grunt) {
       'less:production', 
       'concat:css',
       'uglify:dashboardBuilder', 
-      'cssmin:dashboardBuilder' ]);
+      'cssmin:components',
+      'cssmin:light',
+      'cssmin:dark' ]);
 
 };

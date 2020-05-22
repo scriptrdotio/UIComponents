@@ -689,7 +689,16 @@
 .dashboardTheme .schema-form-textarea .help-block,
 .dashboardTheme .schema-form-number .help-block,
 .dashboardTheme .schema-form-tabs .tab-content .help-block {
-  color: #64717f !important;
+  color: #64717f;
+}
+.dashboardTheme .schema-form-select .has-error .help-block,
+.dashboardTheme .schema-form-group .has-error .help-block,
+.dashboardTheme .schema-form-text .has-error .help-block,
+.dashboardTheme .schema-form-radios-inline .has-error .help-block,
+.dashboardTheme .schema-form-textarea .has-error .help-block,
+.dashboardTheme .schema-form-number .has-error .help-block,
+.dashboardTheme .schema-form-tabs .tab-content .has-error .help-block {
+  color: #aa3322;
 }
 .dashboardTheme .schema-form-array .list-group button.close {
   position: absolute!important;
@@ -800,8 +809,13 @@
   height: calc(100% - 40px);
   font-size: 12px;
 }
-.dashboardTheme .morris-chart-wrapper.with-legend ul li span {
-    white-space: pre-wrap;
+.dashboardTheme .morris-chart-legend ul li span {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.dashboardTheme .morris-chart-legend div {
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 .dashboardTheme .morris-chart-legend::-webkit-scrollbar {
   width: 12px;
@@ -1114,7 +1128,7 @@
   line-height: 1.1em;
 }
 .dashboardTheme .ui-select-bootstrap .ui-select-choices-row span {
-  padding: 3px 0;
+  padding: 3px;
 }
 .dashboardTheme .ui-select-bootstrap .ui-select-choices-row span:focus,
 .dashboardTheme .ui-select-bootstrap .ui-select-choices-row span:hover {

@@ -3576,3 +3576,141 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   .slick-slide img {max-width: 100%;}
   .slick-label {line-height: inherit; display: block;}
 }
+
+.file-upload {
+    margin-bottom: 15px;
+}
+.file-upload .dragAndDropDescription {
+  border: 3px dashed #e1e2e3;
+  vertical-align: middle;
+  padding: 0 20px;
+}
+
+.file-upload .dragAndDropDescription p {
+  vertical-align: middle;
+  color: #1567ce;
+  font-weight: 400;
+  line-height: 1.3em;
+  margin: 40px auto 40px;
+  display: block;
+}
+
+.file-upload .progress-bar {
+  min-width: 2em;
+}
+
+.file-upload label {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.file-upload .filename {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.file-upload .errorMsg {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.file-upload > .row {
+  margin-bottom: 10px;
+}
+.file-upload > .list-group > .list-group-item {
+  margin: 0;
+}
+.file-upload > .list-group > .list-group-item .mb-sm{
+  margin: 0;
+}
+.file-upload #fileInputButton {
+  margin-top: 15px;  
+}
+.has-error.border-danger {
+  border-color: #f05050;
+}
+.mb0 {
+  margin-bottom: 0 !important;
+}
+.mb {
+  margin-bottom: 10px !important;
+}
+/*** header ***/
+header {background: #283746;}
+header {height: 45px; position: fixed; top: 0; z-index: 999; width: 100%;}
+
+/*** logo ***/
+.logo {background: #5477a0; width: 200px; height: 45px; text-align: center; padding: 9px 0 0 20px;}
+.username {background: #5477a0;}
+#username-button {line-height: 2.4; border: none; background: none; box-shadow: none;}
+
+/*** logout ***/
+.logout a:link, .logout a:visited {height: 45px; border: none; color: #fff; display: block; padding: 10px 13px 13px 12px;}
+.logout {border-left: 1px solid rgba(255,255,255,0.5);}
+.logout:hover, .logout:focus {background: #64798e;}
+
+/*** header items ***/
+.header-items {padding-right: 5px;}
+.header-items a {color: #fff; padding: 12px 13px 12px 12px; display: block; font-size: 15px; font-weight: bold;}
+.header-items a:hover {background: #64798e; text-decoration: none;}
+.header-items a.selected {background: #64798e; text-decoration: none;}
+.header-items i {margin-right: 4px;}
+.header-items .item {margin-right: 10px;}
+
+/*** appname ***/
+.appname {padding-top: 14px; color: #fff;}
+body {font-family: 'Josefin Sans', sans-serif; background: #f1f4f9;}
+
+.side-bar {position: relative; transition: 0.5s; height: 100%;}
+.side-bar .nav li strong {}
+.side-bar .nav>li>a {color: #fff; border-radius: 0;}
+.side-bar .nav>li>a:focus, .side-bar .nav>li>a:hover {text-decoration: none;background-color: rgba(255,255,255,0.2);}
+.side-bar .nav>li.active>a { background-color: rgba(255,255,255,0.2);}
+.side-bar .nav-pills>li+li {margin-left: 0;}
+.menu-wrap {margin: 0; padding: 0;}
+
+
+/*** media queries ***/
+@media (min-width:320px) and (max-width: 767px) { 
+.side-bar .nav-pills>li a {padding: 10px 10px;}
+.side-bar .nav li strong {margin-left: 8px;}
+}
+
+@media (min-width:768px) {
+.side-bar {float: left;}
+.side-bar .nav-pills>li {float: none; text-align: left;}
+.side-bar .nav-pills>li a {padding: 10px 0;}
+.side-bar{
+    display: block;
+    z-index: 10;
+}
+.side-bar.sm {width: 40px;}
+.side-bar.sm .nav-pills>li {width: 40px;}
+.side-bar.sm .nav-pills>li strong {display: none;}
+.side-bar.sm .nav-pills>li a {text-indent: 5px;}
+
+.side-bar.md {width: 200px;}
+.side-bar.md .nav-pills>li {width: 200px;}
+.side-bar.md .nav-pills>li strong {display: inline;}
+.side-bar.md .nav-pills>li a {text-indent: 8px;}
+  
+.side-bar .nav-pills>li i {font-size: 1.2em; margin-right: 5px;}
+/*.side-bar .nav-pills {position: fixed; overflow-y: auto;}*/
+.side-bar .nav-pills>li .sub-menu-indicator{float: right; margin-right: 18px; margin-top: 3px; }  
+.side-bar.sm .nav-pills>li .sub-menu-indicator {display: none;}  
+ 
+/** generic style for height, they change per application ***/
+.menu-wrap {height: 100vh;}
+.menu-wrap > div {height: 100%}
+}
+
+
+.level-bg-0 {background: #344555;}
+.level-bg-1 {background: #4c5d6f;}
+.level-bg-2 {background: #64798e;}
+
+
+
