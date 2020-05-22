@@ -25,6 +25,25 @@ angular
                        this.items = (this.headerItems && this.headerItems.items) ?  this.headerItems.items : null;
                        this.subitems = (this.headerItems && this.headerItems.subitems) ?  this.headerItems.subitems : null;
                        this.caretlabel =  (this.headerItems && this.headerItems.caretlabel) ?  this.headerItems.caretlabel : null;
+                       
+                       $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
+                          console.log("next", next);
+                          if(next && next.$$route && next.$$route.originalPath != "") {
+                             console.log("current", next.$$route);
+                          	this.currentRoute =  "#"+next.$$route.originalPath;
+                             var list = document.getElementsByTagName("a");
+                             for (var i = 0; i < list.length; i++){
+                                  if(list[i].getAttribute("route") == this.currentRoute){
+                                    list[i].className = list[i].className = "selected";
+                                  }else{
+                                     list[i].className = list[i].className = "";
+                                  }
+                              }
+                          } else {
+                            console.log("Missing route definition");
+                            //angularEvent.preventDefault();
+                          }
+                      });
  	               }
                    this.onItemClick = function(item){
                      if(typeof self.onHeaderItemClick(item) == "function"){
@@ -75,24 +94,6 @@ angular
                        return inRole;
                    }
                     
-                   $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
-                         console.log("next", next);
-                         if(next && next.$$route && next.$$route.originalPath != "") {
-                            console.log("current", next.$$route);
-                         	this.currentRoute =  "#"+next.$$route.originalPath;
-                            var list = document.getElementsByTagName("a");
-                            for (var i = 0; i < list.length; i++){
-                                 if(list[i].getAttribute("route") == this.currentRoute){
-                                   list[i].className = list[i].className = "selected";
-                                 }else{
-                                    list[i].className = list[i].className = "";
-                                 }
-                             }
-                         } else {
-                           console.log("Missing route definition");
-                           angularEvent.preventDefault();
-                         }
- 					   });
             
                }
             });
