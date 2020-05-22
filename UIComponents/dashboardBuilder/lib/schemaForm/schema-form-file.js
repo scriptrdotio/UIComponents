@@ -89,16 +89,17 @@ angular
          link:     function (scope, element, attrs, ngModel) {
             scope.url = scope.form && scope.form.endpoint;
             scope.isSinglefileUpload = scope.form && scope.form.schema && scope.form.schema.format === 'singlefile';
-            scope.cdnImagesPath = cdnImagesPath;
+            //scope.cdnImagesPath = cdnImagesPath;
              
             scope.selectFile  = function (file) {
                scope.picFile = file;
-               scope.$parent.model["image"] = file
+               scope.$parent.model[Object.keys(scope.schema.properties)[0]] = file;
+               scope.uploadForm.file.$setDirty(true);
             };
              
             scope.removeFile  = function () {
                scope.picFile = null;
-               scope.$parent.model["image"] = null;
+               scope.$parent.model[Object.keys(scope.schema.properties)[0]] = null;
                scope.uploadForm.file.$setDirty(true);
             };
              
@@ -166,3 +167,22 @@ angular
          }
       };
    }]);
+
+
+angular
+   .module('ngSchemaFormFile').config(['$translateProvider', function($translateProvider) {
+        $translateProvider.translations('en', {
+            'modules.upload.dndNotSupported': 'Drag n drop not surpported by your browser',
+            'modules.attribute.fields.required.caption': 'Required',
+            'modules.upload.descriptionSinglefile': 'Drop your file here',
+            'modules.upload.descriptionMultifile': 'Drop your file(s) here',
+            'buttons.add': 'Open file browser',
+            'modules.upload.field.filename': 'Filename',
+            'modules.upload.field.preview': 'Preview',
+            'modules.upload.multiFileUpload': 'Multifile upload',
+            'modules.upload.field.progress': 'Progress',
+            'buttons.upload': 'Upload'
+        });
+        $translateProvider.preferredLanguage('en');
+
+    }]);
