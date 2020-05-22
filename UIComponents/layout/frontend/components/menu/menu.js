@@ -31,7 +31,7 @@ angular
                         self.currentRoute =  "#"+next.$$route.originalPath;
                     } else {
                         console.log("Missing route definition");
-                        angularEvent.preventDefault();
+                        //angularEvent.preventDefault();
                     }
                 });
             };
