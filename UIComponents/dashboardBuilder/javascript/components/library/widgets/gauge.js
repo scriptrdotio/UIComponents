@@ -5,12 +5,11 @@ const __GAUGE__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        //"transport": "wss",
+        "data-format": "gauge",
+        "multiple-data-points": "false",
         "on-format-data": "return data;",
         "boxLabel": "Gauge",
-        //"msg-tag": "gauge",
         "data" : "30",
-        //"api": "UIComponents/dashboard/frontend/examples/gauge/getGaugeVal"
     },
     "box": {
         sizeX: 2,
@@ -488,7 +487,7 @@ const __GAUGE__ = {
         "properties": {
             "data": {
                 "title": "Static data",
-                "type": "number",
+                "type": "integer",
                 "description": "Gauge static value to show",
                 "codemirrorOptions": {
                     "placeholder": "24"
@@ -753,12 +752,19 @@ const __GAUGE__ = {
                 "default": "false",
                 "description": "Set to true to show value pointer."
             },
-
             "counter": {
                 "title": "Counter",
                 "type": "boolean",
                 "default": "false",
                 "description": "Set to true to increase numbers one by one."
+            },
+            "data-format": {
+                "type": "hidden",
+                "default": "gauge"
+            },
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "false"
             }
         },
         "required": ["level-colors"]

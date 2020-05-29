@@ -1,44 +1,3 @@
-const __onLineArraysChanged__ = function (modelValue, form, model) {
-    //if yconfig streatch it to individuals 
-    if (model.yconfig) {
-        var ykeys = [];
-        var ylabels = [];
-        var ycolors = [];
-        model.yconfig.forEach(function (e) {
-            ykeys.push(e.key);
-            ylabels.push(e.label);
-            ycolors.push(e.color);
-        });
-        model.ykeys = ykeys;
-        model.labels = ylabels;
-        model.colors = ycolors;
-    }
-
-    //if eventConfig streatch it to individuals 
-    if (model.goalsconfig) {
-        var goals = [];
-        var gColors = [];
-        model.goalsconfig.forEach(function (e) {
-            goals.push(e.goal);
-            gColors.push(e.lineColor);
-        });
-        model.goals = goals;
-        model['goal-line-colors'] = gColors;
-    }
-    //if goalsConfig streatch it to individuals 
-    if (model.eventsconfig) {
-        var events = [];
-        var eColors = [];
-        model.eventsconfig.forEach(function (e) {
-            events.push(e.event);
-            eColors.push(e.lineColor);
-        });
-        model.events = events;
-        model['event-line-colors'] = eColors;
-    }
-}
-
-
 const __LINE__ = {
     "name": "line",
     "label": "Line Chart",
@@ -46,17 +5,14 @@ const __LINE__ = {
     "commonData": true,
     "show": true,
     "defaults": {
+        "data-format": "line",
+        "multiple-data-points": "true",
         "type": "line",
         "on-format-data": "return data;",
         "boxLabel": "Line Chart",
         "xkey": "y",
-        "ykeys": "[\"a\", \"b\"]",
-        "labels": "[\"Serie A\", \"Serie B\"]",
-        "colors": ["#FCC717", "#38B9D6"],
-        //"transport": "wss",
-        //"api" : "UIComponents/dashboard/frontend/examples/chart/getChartData",
-        //"msg-tag": "chart",
-        "data": '[{"y": 2006, "a": 2, "b": 3 }, { "y": 2007, "a": 82, "b": 68 }, { "y": 2009, "a": 70, "b": 99 }, { "y":2010, "a": 30, "b": 64 }, { "y": 2011, "a": 72, "b":100 }, { "y": 2012, "a": 81, "b": 81 }, { "y": 2013,"a": 52, "b": 39 } ]',
+        "yconfig": [{"key": "a", "label": "Series A", "color": "#FCC717"},{"key": "b", "label": "Series B", "color": "#38B9D6"}],
+        "data": '[{"y": "2006", "a": 2, "b": 3 }, { "y": "2007", "a": 82, "b": 68 }, { "y": "2009", "a": 70, "b": 99 }, { "y":"2010", "a": 30, "b": 64 }, { "y": "2011", "a": 72, "b":100 }, { "y": "2012", "a": 81, "b": 81 }, { "y": "2013","a": 52, "b": 39 } ]',
         "grid-text-family": "Source Sans Pro"
     },
     "box": {
@@ -69,8 +25,6 @@ const __LINE__ = {
     "form": [{
         type: "tabs",
         tabs: [
-
-
             {
                 title: "X",
                 items: [{
@@ -83,14 +37,666 @@ const __LINE__ = {
                             "xkey",
                             "xlabel-angle",
                             {
-
-                                key: "parse-time",
-
+                                "type": "section",
+                                "htmlClass": "row",
+                                "items": [
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-6",
+                                        "items": [{
+                                            key: "parse-time",
+                                        }]
+                                    },
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-6",
+                                        "items": [{
+                                            key: "xlabels",
+                                            "type": "strapselect",
+                                            "titleMap" : [{
+                                                "value": "auto",
+                                                "name": "auto"
+                                            }, {
+                                                "value": "decade",
+                                                "name": "decade"
+                                            }, {
+                                                "value": "year",
+                                                "name": "year"
+                                            }, {
+                                                "value": "month",
+                                                "name": "month"
+                                            }, {
+                                                "value": "week",
+                                                "name": "week"
+                                            }, {
+                                                "value": "day",
+                                                "name": "day"
+                                            }, {
+                                                "value": "hour",
+                                                "name": "hour"
+                                            }, {
+                                                "value": "30min",
+                                                "name": "30min"
+                                            }, {
+                                                "value": "15min",
+                                                "name": "15min"
+                                            }, {
+                                                "value": "10min",
+                                                "name": "10min"
+                                            }, {
+                                                "value": "5min",
+                                                "name": "5min"
+                                            }, {
+                                                "value": "minute",
+                                                "name": "minute"
+                                            }, {
+                                                "value": "30sec",
+                                                "name": "30sec"
+                                            }, {
+                                                "value": "15sec",
+                                                "name": "15sec"
+                                            }, {
+                                                "value": "10sec",
+                                                "name": "10sec"
+                                            }, {
+                                                "value": "5sec",
+                                                "name": "5sec"
+                                            }, {
+                                                "value": "second",
+                                                "name": "second"
+                                            }]
+                                        }]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "row",
+                                "items": [
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-6",
+                                        "items": [{
+                                            key :"xdate-moment-format",
+                                            condition: "model['parse-time'] == true"
+                                        }]
+                                    },
+                                    {
+                                        "type": "section",
+                                        "htmlClass": "col-xs-6",
+                                        "items": [{
+                                            "key": "time-zone",
+                                            "placeholder" : "Time Zone",
+                                            "type": "strapselect",
+                                            "titleMap" : [ 
+                                                {
+                                                    "value":"UTC",
+                                                    "name": "UTC"
+                                                },
+                                                {
+                                                    "value":"America/New_York",
+                                                    "name": "USA & Canada, Eastern Time"
+                                                },
+                                                {
+                                                    "value":"America/Indiana/Indianapolis",
+                                                    "name": "USA, Indiana (East)"
+                                                },
+                                                {
+                                                    "value":"America/Chicago",
+                                                    "name": "USA & Canada, Central Time"
+                                                },
+                                                {
+                                                    "value":"America/Denver",
+                                                    "name": "USA & Canada, Mountain Time"
+                                                },
+                                                {
+                                                    "value":"America/Phoenix",
+                                                    "name": "USA, Arizona"
+                                                },
+                                                {
+                                                    "value":"America/Los_Angeles",
+                                                    "name": "USA & Canada, Pacific Time"
+                                                },
+                                                {
+                                                    "value":"America/Juneau",
+                                                    "name": "USA, Alaska"
+                                                },
+                                                {
+                                                    "value":"Pacific/Honolulu",
+                                                    "name": "USA, Hawaii"
+                                                },
+                                                {
+                                                    "value":"America/Argentina/Buenos_Aires",
+                                                    "name": "Argentina, Buenos Aires"
+                                                },
+                                                {
+                                                    "value":"Asia/Yerevan",
+                                                    "name": "Armenia, Yerevan"
+                                                },
+                                                {
+                                                    "value":"Australia/Brisbane",
+                                                    "name": "Australia, Brisbane"
+                                                },
+                                                {
+                                                    "value":"Australia/Hobart",
+                                                    "name": "Australia, Hobart"
+                                                },
+                                                {
+                                                    "value":"Australia/Melbourne",
+                                                    "name": "Australia, Melbourne"
+                                                },
+                                                {
+                                                    "value":"Australia/Perth",
+                                                    "name": "Australia, Perth"
+                                                },
+                                                {
+                                                    "value":"Australia/Sydney",
+                                                    "name": "Australia, Sydney"
+                                                },
+                                                {
+                                                    "value":"Europe/Vienna",
+                                                    "name": "Austria, Vienna"
+                                                },
+                                                {
+                                                    "value":"Asia/Baku",
+                                                    "name": "Azerbaijan, Baku"
+                                                },
+                                                {
+                                                    "value":"Atlantic/Azores",
+                                                    "name": "Azores"
+                                                },
+                                                {
+                                                    "value":"Asia/Dhaka",
+                                                    "name": "Bangladesh, Dhaka"
+                                                },
+                                                {
+                                                    "value":"Europe/Minsk",
+                                                    "name": "Belarus, Minsk"
+                                                },
+                                                {
+                                                    "value":"Europe/Brussels",
+                                                    "name": "Belgium, Brussels"
+                                                },
+                                                {
+                                                    "value":"America/La_Paz",
+                                                    "name": "Bolivia, La Paz"
+                                                },
+                                                {
+                                                    "value":"Europe/Sarajevo",
+                                                    "name": "Bosnia & Herzegovina, Sarajevo"
+                                                },
+                                                {
+                                                    "value":"Europe/Sofia",
+                                                    "name": "Bulgaria, Sofia"
+                                                },
+                                                {
+                                                    "value":"America/Halifax",
+                                                    "name": "Canada, Atlantic Time"
+                                                },
+                                                {
+                                                    "value":"America/Regina",
+                                                    "name": "Canada, Saskatchewan"
+                                                },
+                                                {
+                                                    "value":"Atlantic/Cape_Verde",
+                                                    "name": "Cape Verde Islands"
+                                                },
+                                                {
+                                                    "value":"America/Guatemala",
+                                                    "name": "Central America"
+                                                },
+                                                {
+                                                    "value":"America/Santiago",
+                                                    "name": "Chile, Santiago"
+                                                },
+                                                {
+                                                    "value":"Asia/Shanghai",
+                                                    "name": "China, Beijing"
+                                                },
+                                                {
+                                                    "value":"Asia/Chongqing",
+                                                    "name": "China, Chongqing"
+                                                },
+                                                {
+                                                    "value":"Asia/Hong_Kong",
+                                                    "name": "China, Hong Kong"
+                                                },
+                                                {
+                                                    "value":"Asia/Taipei",
+                                                    "name": "China, Taipei"
+                                                },
+                                                {
+                                                    "value":"Asia/Urumqi",
+                                                    "name": "China, Urumqi"
+                                                },
+                                                {
+                                                    "value":"America/Bogota",
+                                                    "name": "Colombia, Bogota"
+                                                },
+                                                {
+                                                    "value":"Europe/Zagreb",
+                                                    "name": "Croatia, Zagreb"
+                                                },
+                                                {
+                                                    "value":"Europe/Prague",
+                                                    "name": "Czech Republic, Prague"
+                                                },
+                                                {
+                                                    "value":"Europe/Copenhagen",
+                                                    "name": "Denmark, Copenhagen"
+                                                },
+                                                {
+                                                    "value":"Africa/Cairo",
+                                                    "name": "Egypt, Cairo"
+                                                },
+                                                {
+                                                    "value":"Europe/Tallinn",
+                                                    "name": "Estonia, Tallinn"
+                                                },
+                                                {
+                                                    "value":"Pacific/Fiji",
+                                                    "name": "Fiji"
+                                                },
+                                                {
+                                                    "value":"Europe/Helsinki",
+                                                    "name": "Finland, Helsinki"
+                                                },
+                                                {
+                                                    "value":"Europe/Paris",
+                                                    "name": "France, Paris"
+                                                },
+                                                {
+                                                    "value":"Asia/Tbilisi",
+                                                    "name": "Georgia, Tbilisi"
+                                                },
+                                                {
+                                                    "value":"Europe/Berlin",
+                                                    "name": "Germany, Berlin"
+                                                },
+                                                {
+                                                    "value":"Europe/Athens",
+                                                    "name": "Greece, Athens"
+                                                },
+                                                {
+                                                    "value":"America/Godthab",
+                                                    "name": "Greenland"
+                                                },
+                                                {
+                                                    "value":"Pacific/Guam",
+                                                    "name": "Guam"
+                                                },
+                                                {
+                                                    "value":"America/Guyana",
+                                                    "name": "Guyana, Georgetown"
+                                                },
+                                                {
+                                                    "value":"Europe/Budapest",
+                                                    "name": "Hungary, Budapest"
+                                                },
+                                                {
+                                                    "value":"Asia/Jakarta",
+                                                    "name": "Indonesia, Jakarta"
+                                                },
+                                                {
+                                                    "value":"Asia/Baghdad",
+                                                    "name": "Iraq, Baghdad"
+                                                },
+                                                {
+                                                    "value":"Europe/Dublin",
+                                                    "name": "Ireland, Dublin"
+                                                },
+                                                {
+                                                    "value":"Asia/Jerusalem",
+                                                    "name": "Israel, Jerusalem"
+                                                },
+                                                {
+                                                    "value":"Europe/Rome",
+                                                    "name": "Italy, Rome"
+                                                },
+                                                {
+                                                    "value":"Asia/Tokyo",
+                                                    "name": "Japan, Tokyo"
+                                                },
+                                                {
+                                                    "value":"Asia/Almaty",
+                                                    "name": "Kazakhstan, Almaty"
+                                                },
+                                                {
+                                                    "value":"Africa/Nairobi",
+                                                    "name": "Kenya, Nairobi"
+                                                },
+                                                {
+                                                    "value":"Asia/Seoul",
+                                                    "name": "Korea, Seoul"
+                                                },
+                                                {
+                                                    "value":"Asia/Kuwait",
+                                                    "name": "Kuwait"
+                                                },
+                                                {
+                                                    "value":"Europe/Riga",
+                                                    "name": "Latvia, Riga"
+                                                },
+                                                {
+                                                    "value":"Africa/Monrovia",
+                                                    "name": "Liberia, Monrovia"
+                                                },
+                                                {
+                                                    "value":"Europe/Vilnius",
+                                                    "name": "Lithuania, Vilnius"
+                                                },
+                                                {
+                                                    "value":"Europe/Skopje",
+                                                    "name": "Macedonia, Skopje"
+                                                },
+                                                {
+                                                    "value":"Asia/Kuala_Lumpur",
+                                                    "name": "Malaysia, Kuala Lumpur"
+                                                },
+                                                {
+                                                    "value":"Pacific/Majuro",
+                                                    "name": "Marshall Islands"
+                                                },
+                                                {
+                                                    "value":"America/Chihuahua",
+                                                    "name": "Mexico, Chihuahua"
+                                                },
+                                                {
+                                                    "value":"America/Mazatlan",
+                                                    "name": "Mexico, Mazatlan"
+                                                },
+                                                {
+                                                    "value":"America/Mexico_City",
+                                                    "name": "Mexico, Mexico City"
+                                                },
+                                                {
+                                                    "value":"America/Monterrey",
+                                                    "name": "Mexico, Monterrey"
+                                                },
+                                                {
+                                                    "value":"America/Tijuana",
+                                                    "name": "Mexico, Tijuana"
+                                                },
+                                                {
+                                                    "value":"Atlantic/South_Georgia",
+                                                    "name": "Mid-Atlantic"
+                                                },
+                                                {
+                                                    "value":"Pacific/Midway",
+                                                    "name": "Midway Island"
+                                                },
+                                                {
+                                                    "value":"Asia/Ulaanbaatar",
+                                                    "name": "Mongolia, Ulaan Bataar"
+                                                },
+                                                {
+                                                    "value":"Africa/Casablanca",
+                                                    "name": "Morocco, Casablanca"
+                                                },
+                                                {
+                                                    "value":"Europe/Amsterdam",
+                                                    "name": "The Netherlands, Amsterdam"
+                                                },
+                                                {
+                                                    "value":"Pacific/Noumea",
+                                                    "name": "New Caledonia"
+                                                },
+                                                {
+                                                    "value":"Pacific/Auckland",
+                                                    "name": "New Zealand, Auckland"
+                                                },
+                                                {
+                                                    "value":"Asia/Muscat",
+                                                    "name": "Oman, Muscat"
+                                                },
+                                                {
+                                                    "value":"Pacific/Port_Moresby",
+                                                    "name": "Papua New Guinea, Port Moresby"
+                                                },
+                                                {
+                                                    "value":"Asia/Karachi",
+                                                    "name": "Pakistan, Karachi"
+                                                },
+                                                {
+                                                    "value":"America/Lima",
+                                                    "name": "Peru, Lima"
+                                                },
+                                                {
+                                                    "value":"Europe/Warsaw",
+                                                    "name": "Poland, Warsaw"
+                                                },
+                                                {
+                                                    "value":"Europe/Lisbon",
+                                                    "name": "Portugal, Lisbon"
+                                                },
+                                                {
+                                                    "value":"Europe/Bucharest",
+                                                    "name": "Romania, Bucharest"
+                                                },
+                                                {
+                                                    "value":"Asia/Yekaterinburg",
+                                                    "name": "Russia, Ekaterinburg"
+                                                },
+                                                {
+                                                    "value":"Asia/Kamchatka",
+                                                    "name": "Russia, Kamchatka"
+                                                },
+                                                {
+                                                    "value":"Asia/Magadan",
+                                                    "name": "Russia, Magadan"
+                                                },
+                                                {
+                                                    "value":"Europe/Moscow",
+                                                    "name": "Russia, Moscow"
+                                                },
+                                                {
+                                                    "value":"Asia/Novosibirsk",
+                                                    "name": "Russia, Novosibirsk"
+                                                },
+                                                {
+                                                    "value":"Asia/Vladivostok",
+                                                    "name": "Russia, Vladivostok"
+                                                },
+                                                {
+                                                    "value":"Asia/Yakutsk",
+                                                    "name": "Russia, Yakutsk"
+                                                },
+                                                {
+                                                    "value":"Pacific/Pago_Pago",
+                                                    "name": "Samoa"
+                                                },
+                                                {
+                                                    "value":"Asia/Riyadh",
+                                                    "name": "Saudi Arabia, Riyadh"
+                                                },
+                                                {
+                                                    "value":"Europe/Belgrade",
+                                                    "name": "Serbia, Belgrade"
+                                                },
+                                                {
+                                                    "value":"Asia/Irkutsk",
+                                                    "name": "Siberia, Irkutsk"
+                                                },
+                                                {
+                                                    "value":"Asia/Krasnoyarsk",
+                                                    "name": "Siberia, Krasnoyarsk"
+                                                },
+                                                {
+                                                    "value":"Asia/Singapore",
+                                                    "name": "Singapore"
+                                                },
+                                                {
+                                                    "value":"Europe/Bratislava",
+                                                    "name": "Slovakia, Bratislava"
+                                                },
+                                                {
+                                                    "value":"Europe/Ljubljana",
+                                                    "name": "Slovenia, Ljubljana"
+                                                },
+                                                {
+                                                    "value":"Africa/Johannesburg",
+                                                    "name": "South Africa, Pretoria"
+                                                },
+                                                {
+                                                    "value":"Europe/Madrid",
+                                                    "name": "Spain, Madrid"
+                                                },
+                                                {
+                                                    "value":"Europe/Stockholm",
+                                                    "name": "Sweden, Stockholm"
+                                                },
+                                                {
+                                                    "value":"Asia/Bangkok",
+                                                    "name": "Thailand, Bangkok"
+                                                },
+                                                {
+                                                    "value":"Pacific/Tongatapu",
+                                                    "name": "Tonga, Nuku\'alofa"
+                                                },
+                                                {
+                                                    "value":"Europe/Istanbul",
+                                                    "name": "Turkey, Istanbul"
+                                                },
+                                                {
+                                                    "value":"Europe/Kiev",
+                                                    "name": "Ukraine, Kyev"
+                                                },
+                                                {
+                                                    "value":"Europe/London",
+                                                    "name": "United Kingdom, London"
+                                                },
+                                                {
+                                                    "value":"Asia/Tashkent",
+                                                    "name": "Uzbekistan, Tashkent"
+                                                },
+                                                {
+                                                    "value":"America/Caracas",
+                                                    "name": "Venezuela, Caracas"
+                                                },
+                                                {
+                                                    "value":"Africa/Algiers",
+                                                    "name": "West Central Africa"
+                                                },
+                                                {
+                                                    "value":"Africa/Harare",
+                                                    "name": "Zimbabwe, Harare"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+12",
+                                                    "name": "GMT-12:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+11",
+                                                    "name": "GMT-11:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+10",
+                                                    "name": "GMT-10:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+9",
+                                                    "name": "GMT-09:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+8",
+                                                    "name": "GMT-08:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+7",
+                                                    "name": "GMT-07:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+6",
+                                                    "name": "GMT-06:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+5",
+                                                    "name": "GMT-05:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+4",
+                                                    "name": "GMT-04:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+3",
+                                                    "name": "GMT-03:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+2",
+                                                    "name": "GMT-02:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT+1",
+                                                    "name": "GMT-01:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT",
+                                                    "name": "GMT+00:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-1",
+                                                    "name": "GMT+01:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-2",
+                                                    "name": "GMT+02:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-3",
+                                                    "name": "GMT+03:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-4",
+                                                    "name": "GMT+04:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-5",
+                                                    "name": "GMT+05:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-6",
+                                                    "name": "GMT+06:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-7",
+                                                    "name": "GMT+07:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-8",
+                                                    "name": "GMT+08:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-9",
+                                                    "name": "GMT+09:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-10",
+                                                    "name": "GMT+10:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-11",
+                                                    "name": "GMT+11:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-12",
+                                                    "name": "GMT+12:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-13",
+                                                    "name": "GMT+13:00"
+                                                },
+                                                {
+                                                    "value":"Etc/GMT-14",
+                                                    "name": "GMT+14:00"
+                                                }]
+                                        }]
+                                    }
+                                ]
                             },
                             {
                                 key: "_dummy",
                                 "htmlClass": "hidden",
-                                onFieldLoad: function (modelValue, form, model) {
+                                onFieldLoad: function (modelValue, form, model) { //This is for backward compatibility
                                     //build yconfig
                                     if (!model.yconfig || !model.yconfig.length) {
                                         var ykeys = JSON.parse(model.ykeys);
@@ -110,54 +716,52 @@ const __LINE__ = {
                                             };
                                             model.yconfig.push(e);
                                         }
+                                    } else {
+                                        delete model.colors;
+                                        delete model.labels;
+                                        delete model.ykeys;
                                     }
-
-
                                     //build goals
                                     if (!model.goalsconfig || !model.goalsconfig.length) {
-                                        if(model.goals == null){
-                                            model.goals=[];
-                                        }
-                                        var goalsNum = model.goals.length;
-                                        // clean the array
-                                        model.goals = [];
-                                        for (var i = 0; i < goalsNum; i++) {
-                                            if (model.goals[i]) {
-                                                var e = {
-                                                    goal: model.goals[i],
-                                                    //storkeWidth: model['goal-stroke-width'],
-                                                    lineColor: model['goal-line-colors'][i],
-                                                };
-                                                model.goalsconfig.push(e);
+                                        if(model.goals && model.goals.length > 0){
+                                            var goalsNum = model.goals.length;
+                                            // clean the array
+                                            for (var i = 0; i < goalsNum; i++) {
+                                                if (model.goals[i]) {
+                                                    var e = {
+                                                        goal: model.goals[i],
+                                                        lineColor: ((model['goal-line-colors'] && model['goal-line-colors'][i]) ? model['goal-line-colors'][i] : null),
+                                                    };
+                                                    model.goalsconfig.push(e);
+                                                }
                                             }
-
-                                        }
+                                        } 
+                                    } else {
+                                        delete model.goals;
+                                        delete model['goal-line-colors'];
                                     }
-
                                     //build events
                                     if (!model.eventsconfig || !model.eventsconfig.length) {
-                                        if(model.events == null){
-                                            model.events=[];
-                                        }
-                                        var eventsNum = model.events.length;
-                                        // clean the array
-                                        model.events = [];
-                                        for (var i = 0; i < eventsNum; i++) {
-                                            if (model.events[i]) {
-                                                var e = {
-                                                    event: model.events[i],
-                                                    //storkeWidth: model['event-stroke-width'],
-                                                    lineColor: model['event-line-colors'][i],
-                                                };
-                                                model.eventsconfig.push(e);
+                                        if(model.events && model.events.length > 0){
+                                            var eventsNum = model.events.length;
+                                            // clean the array
+                                            for (var i = 0; i < eventsNum; i++) {
+                                                if (model.events[i]) {
+                                                    var e = {
+                                                        event: model.events[i],
+                                                        //storkeWidth: model['event-stroke-width'],
+                                                        lineColor: ((model['event-line-colors'] && model['event-line-colors'][i]) ? model['event-line-colors'][i] : null),
+                                                    };
+                                                    model.eventsconfig.push(e);
+                                                }
                                             }
-
                                         }
+                                    } else {
+                                        delete model.events;
+                                        delete model['event-line-colors'];
                                     }
-
                                 }
                             }
-
                         ]
                     }]
                 }]
@@ -165,7 +769,6 @@ const __LINE__ = {
             {
                 title: "Y",
                 items: [
-
                     {
                         "type": "section",
                         "htmlClass": "row",
@@ -178,7 +781,6 @@ const __LINE__ = {
                                         key: "yconfig",
                                         title: "Y Configuration",
                                         startEmpty: true,
-                                        onChange: __onLineArraysChanged__,
                                         items: [{
                                             "type": "section",
                                             "htmlClass": "row",
@@ -187,16 +789,14 @@ const __LINE__ = {
                                                     "type": "section",
                                                     "htmlClass": "col-sm-4",
                                                     "items": [{
-                                                        key: "yconfig[].key",
-                                                        onChange: __onLineArraysChanged__
+                                                        key: "yconfig[].key"
                                                     }]
                                                 },
                                                 {
                                                     "type": "section",
                                                     "htmlClass": "col-sm-4",
                                                     "items": [{
-                                                        key: "yconfig[].label",
-                                                        onChange: __onLineArraysChanged__
+                                                        key: "yconfig[].label"
                                                     }]
                                                 },
                                                 {
@@ -204,13 +804,11 @@ const __LINE__ = {
                                                     "htmlClass": "col-sm-4",
                                                     "items": [{
                                                         key: "yconfig[].color",
-                                                        "colorFormat": "hex",
-                                                        onChange: __onLineArraysChanged__
+                                                        "colorFormat": "hex"
                                                     }]
                                                 }]
                                         }
-                                        ],
-
+                                               ],
                                     },
                                 ]
                             },
@@ -218,38 +816,9 @@ const __LINE__ = {
                                 "type": "section",
                                 "htmlClass": "col-xs-6",
                                 "items": [
-
                                     "pre-units",
-                                    "ymin",
-                                    {
-
-                                        key: "show-legend",
-
-                                    },
-                                    {
-                                        type: "radios-inline",
-                                        key: "legend-type",
-                                        condition: "model['show-legend'] ==true",
-                                        titleMap: [{
-                                            value: "hover",
-                                            name: "Hover"
-                                        }, {
-                                            value: "right",
-                                            name: "Right"
-                                        }]
-                                    },
-                                    {
-                                        type: "radios-inline",
-                                        key: "hide-hover",
-                                        condition: "model['show-legend'] ==true && model['legend-type'] =='hover'",
-                                        titleMap: [{
-                                            value: "auto",
-                                            name: "Auto"
-                                        }, {
-                                            value: "never",
-                                            name: "Always"
-                                        }]
-                                    }]
+                                    "ymin"
+                                ]
                             },
                             {
                                 "type": "section",
@@ -261,6 +830,52 @@ const __LINE__ = {
                     }]
             },
             {
+                title: "Legend",
+                items: [{
+                    "type": "section",
+                    "htmlClass": "row",
+                    "items": [
+                        {
+                            "type": "section",
+                            "htmlClass": "col-xs-12",
+                            "items": [
+                                {
+                                    key: "show-legend"
+                                },
+                                {
+                                    type: "radios-inline",
+                                    key: "legend-type",
+                                    condition: "model['show-legend'] == true",
+                                    titleMap: [{
+                                        value: "hover",
+                                        name: "Hover"
+                                    }, {
+                                        value: "right",
+                                        name: "Right"
+                                    }]
+                                },
+                                {
+                                    type: "radios-inline",
+                                    key: "hide-hover",
+                                    condition: "model['show-legend'] ==true && model['legend-type'] =='hover'",
+                                    titleMap: [{
+                                        value: "auto",
+                                        name: "Auto"
+                                    }, {
+                                        value: "false",
+                                        name: "Always"
+                                    }]
+                                },
+                                /** {
+                                    key :"legend-date-moment-format",
+                                    condition: "model['show-legend'] == true && model['legend-type'] =='right' && model['parse-time'] == true"
+                                }**/
+                            ]
+                        }
+                    ]
+                }]
+            },
+            {
                 title: "Grid",
                 items: [{
                     "type": "section",
@@ -270,13 +885,9 @@ const __LINE__ = {
                             "type": "section",
                             "htmlClass": "col-xs-6",
                             "items": [{
-
                                 key: "grid",
-
                             }, {
-
                                 key: "axes",
-
                             }, {
                                 "key": "grid-text-color",
                                 "colorFormat": "hex3"
@@ -338,19 +949,19 @@ const __LINE__ = {
                                     "name": "Source Sans Pro"
                                 }]
                             }
-                                ,
-                            {
-                                "key": "grid-text-weight",
-                                "type": 'strapselect',
-                                "titleMap": [{
-                                    "value": "normal",
-                                    "name": "Normal"
-                                }, {
-                                    "value": "bold",
-                                    "name": "Bold"
-                                }]
-                            },
-                                "grid-text-size"]
+                                      ,
+                                      {
+                                          "key": "grid-text-weight",
+                                          "type": 'strapselect',
+                                          "titleMap": [{
+                                              "value": "normal",
+                                              "name": "Normal"
+                                          }, {
+                                              "value": "bold",
+                                              "name": "Bold"
+                                          }]
+                                      },
+                                      "grid-text-size"]
                         }]
                 }]
             },
@@ -363,9 +974,7 @@ const __LINE__ = {
                         "type": "section",
                         "htmlClass": "col-xs-6",
                         "items": ["line-width", {
-
                             key: "smooth",
-
                         }]
                     }, {
                         "type": "section",
@@ -400,7 +1009,6 @@ const __LINE__ = {
                                     key: "goalsconfig",
                                     title: "Goals Configuration",
                                     startEmpty: true,
-                                    onChange: __onLineArraysChanged__,
                                     items: [{
                                         "type": "section",
                                         "htmlClass": "row",
@@ -409,8 +1017,7 @@ const __LINE__ = {
                                                 "type": "section",
                                                 "htmlClass": "col-sm-4",
                                                 "items": [{
-                                                    key: "goalsconfig[].goal",
-                                                    onChange: __onLineArraysChanged__
+                                                    key: "goalsconfig[].goal"
                                                 }]
                                             },
                                             {
@@ -418,13 +1025,11 @@ const __LINE__ = {
                                                 "htmlClass": "col-sm-4",
                                                 "items": [{
                                                     key: "goalsconfig[].lineColor",
-                                                    "colorFormat": "hex",
-                                                    onChange: __onLineArraysChanged__
+                                                    "colorFormat": "hex"
                                                 }]
                                             }]
                                     }
-                                    ],
-
+                                           ],
                                 },
                             ]
                         },]
@@ -450,7 +1055,6 @@ const __LINE__ = {
                                     key: "eventsconfig",
                                     title: "Events Configuration",
                                     startEmpty: true,
-                                    onChange: __onLineArraysChanged__,
                                     items: [{
                                         "type": "section",
                                         "htmlClass": "row",
@@ -459,8 +1063,7 @@ const __LINE__ = {
                                                 "type": "section",
                                                 "htmlClass": "col-sm-4",
                                                 "items": [{
-                                                    key: "eventsconfig[].event",
-                                                    onChange: __onLineArraysChanged__
+                                                    key: "eventsconfig[].event"
                                                 }]
                                             },
                                             {
@@ -468,13 +1071,11 @@ const __LINE__ = {
                                                 "htmlClass": "col-sm-4",
                                                 "items": [{
                                                     key: "eventsconfig[].lineColor",
-                                                    "colorFormat": "hex",
-                                                    onChange: __onLineArraysChanged__
+                                                    "colorFormat": "hex"
                                                 }]
                                             }]
                                     }
-                                    ],
-
+                                           ],
                                 },
                             ]
                         },]
@@ -513,7 +1114,7 @@ const __LINE__ = {
                 "type": "array",
                 "description": "Array containing colors for the series lines/points.",
                 "default": ["#CC5464", "#FCC717", "#38B9D6",
-                    "#1DBC68", "#E90088"],
+                            "#1DBC68", "#E90088"],
                 "items": {
                     "format": "color",
                     "type": "string"
@@ -606,64 +1207,10 @@ const __LINE__ = {
                 "description": "Set to a string value (eg: '$') to add a label prefix all y-labels."
             },
             "xlabels": {
-                "title": "X labels",
+                "title": "X labels date interval",
                 "type": "string",
                 "default": "auto",
                 "description": "Sets the x axis labelling interval. By default the interval will be automatically computed.",
-                // "format": 'uiselect',
-                // "placeholder": " ",
-                // "items": [{
-                //     "value": "auto",
-                //     "label": "auto"
-                // }, {
-                //     "value": "decade",
-                //     "label": "decade"
-                // }, {
-                //     "value": "year",
-                //     "label": "year"
-                // }, {
-                //     "value": "month",
-                //     "label": "month"
-                // }, {
-                //     "value": "week",
-                //     "label": "week"
-                // }, {
-                //     "value": "day",
-                //     "label": "day"
-                // }, {
-                //     "value": "hour",
-                //     "label": "hour"
-                // }, {
-                //     "value": "30min",
-                //     "label": "30min"
-                // }, {
-                //     "value": "15min",
-                //     "label": "15min"
-                // }, {
-                //     "value": "10min",
-                //     "label": "10min"
-                // }, {
-                //     "value": "5min",
-                //     "label": "5min"
-                // }, {
-                //     "value": "minute",
-                //     "label": "minute"
-                // }, {
-                //     "value": "30sec",
-                //     "label": "30sec"
-                // }, {
-                //     "value": "15sec",
-                //     "label": "15sec"
-                // }, {
-                //     "value": "10sec",
-                //     "label": "10sec"
-                // }, {
-                //     "value": "5sec",
-                //     "label": "5sec"
-                // }, {
-                //     "value": "second",
-                //     "label": "second"
-                // }]
             },
             "xlabel-angle": {
                 "title": "X label angle",
@@ -681,55 +1228,17 @@ const __LINE__ = {
                 "type": "string",
                 "description": "A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; }"
             },
-            "goals": {
-                "title": "Goals",
-                "type": "array",
-                "description": "A list of y-values to draw as horizontal 'goal' lines on the chart. goals: [1.0, -1.0]",
-                "items": {
-                    "type": "number"
-                }
-            },
             "goal-stroke-width": {
                 "title": "Goal stroke width",
                 "type": "number",
                 "default": 1.0,
                 "description": "Width, in pixels, of the goal lines."
             },
-            "goal-line-colors": {
-                "title": "Goal line colors",
-                "type": "array",
-                "default": ['#666633', '#999966', '#cc6666',
-                    '#663333'],
-                "description": "Array of color values to use for the goal line colors. If you list fewer colors here than you have lines in goals, then the values will be cycled.",
-                "items": {
-                    "format": "color",
-                    "type": "string"
-                }
-            },
-            "events": {
-                "title": "Events",
-                "type": "array",
-                "description": "A list of x-values to draw as vertical 'event' lines on the chart. ex: ['2012-01-01', '2012-02-01']",
-                "items": {
-                    "type": "string"
-                }
-            },
             "event-stroke-width": {
                 "title": "Event stroke width",
                 "type": "number",
                 "default": 1.0,
                 "description": "Width, in pixels, of the event lines."
-            },
-            "event-line-colors": {
-                "title": "Event line colors",
-                "type": "array",
-                "default": ['#005a04', '#ccffbb', '#3a5f0b',
-                    '#005502'],
-                "description": "Array of color values to use for the event line colors. If you list fewer colors here than you have lines in events, then the values will be cycled.",
-                "items": {
-                    "format": "color",
-                    "type": "string"
-                }
             },
             "axes": {
                 "title": "Axes",
@@ -761,20 +1270,37 @@ const __LINE__ = {
                 "type": "string",
                 "description": "Set the font family of the axis labels (default: sans-serif).",
                 "default": "Source Sans Pro",
-
             },
             "grid-text-weight": {
                 "title": "Grid text weight",
                 "type": "string",
                 "description": "Set the font weight of the axis labels (default: normal).",
                 "default": "normal",
-
             },
             "date-format": {
                 "title": "Date format",
                 "type": "string",
                 "description": "A function that accepts millisecond timestamps and formats them for display as chart labels. default is function (x) { return new Date(x).toString() }."
-            }, "yconfig": {
+            }, 
+            /**  "legend-date-moment-format": {
+                "title": "Legend Date Format",
+                "type": "string",
+                "description": "Set a valid MomentJs Date Format",
+                 "default": "DD-MM-YYYY HH:mm:ss"
+            },**/
+            "time-zone": {
+                "title" : "Time Zone",
+                "type" : "string",
+                "description" : "",
+                "placeholder" : "Time Zone "
+            },
+            "xdate-moment-format": {
+                "title": "X axis Date Format",
+                "type": "string",
+                "description": "Set a valid MomentJs Date Format",
+                "default": "DD-MM-YYYY HH:mm:ss"
+            },
+            "yconfig": {
                 "type": "array",
                 "default": [],
                 "items": {
@@ -805,7 +1331,6 @@ const __LINE__ = {
                             "title": "goal",
                             "type": "string"
                         },
-
                         "lineColor": {
                             "title": "Line Color",
                             "type": "string",
@@ -823,7 +1348,6 @@ const __LINE__ = {
                             "title": "event",
                             "type": "string"
                         },
-
                         "lineColor": {
                             "title": "Line Color",
                             "type": "string",
@@ -831,9 +1355,18 @@ const __LINE__ = {
                         }
                     }
                 }
-            }, "_dummy": {
+            },
+            "_dummy": { //For backward compatibility after introducing the field groups for goals, events, etc..
                 "title": "Dummy not used Value",
                 "type": "string",
+            },
+            "data-format": {
+                "type": "hidden",
+                "default": "line"
+            },
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "true"
             }
         },
         "required": ["xkey", "ykeys"]

@@ -10,6 +10,7 @@ const __TOGGLE_SWITCH__ = {
         "knob-label": "Light",
         "on-label": "ON",
         "off-label": "OFF",
+        "data":'{"state":false, disabled:false}',
         "on-format-data": "return data;",
         //"transport": "wss",
         //"msg-tag": "toggle",

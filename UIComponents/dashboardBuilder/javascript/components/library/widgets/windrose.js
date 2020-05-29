@@ -5,9 +5,11 @@ const __WINDROSE__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        //"transport": "wss",
+        "data-format": "windrose",
+        "multiple-data-points": "true",
         "data-type": "raw",
         "schema-for": "windrose",
+        "type": "windrose",
         "data-format": "windrose",
         "speed-unit": "km/h",
         "on-format-data": "return data;",
@@ -171,6 +173,14 @@ const __WINDROSE__ = {
                         }
                     }
                 }
+            },
+            "data-format": {
+                "type": "hidden",
+                "default": "windrose"
+            },
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "true"
             }
         },
         "required": ["windSpeed", "windDirection"]

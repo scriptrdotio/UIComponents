@@ -12,9 +12,11 @@ angular
                     __BAR__,
                     __AREA__,
                     __LINE__,
+                    __GRID__,
                     __DONUT__,
                     __WINDROSE__,
                     __3DSURFACE__,
+                    __MAP__,
                     __GAUGE__,
                     __SPEEDOMETER__,
                     __THERMOMETER__,
@@ -26,8 +28,6 @@ angular
                     __BUTTON__,
                     __TOGGLE_SWITCH__,
                     __SLIDER__,
-                    __GRID__,
-                    __MAP__,
                     __IFRAME__
                     //,__METRIC_BOX__
                 ]

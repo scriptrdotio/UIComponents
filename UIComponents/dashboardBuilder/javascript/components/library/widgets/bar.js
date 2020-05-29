@@ -1,43 +1,3 @@
-const __onBarArraysChanged__ = function (modelValue, form, model) {
-    //if yconfig streatch it to individuals 
-    if (model.yconfig) {
-        var ykeys = [];
-        var ylabels = [];
-        var ycolors = [];
-        model.yconfig.forEach(function (e) {
-            ykeys.push(e.key);
-            ylabels.push(e.label);
-            ycolors.push(e.color);
-        });
-        model.ykeys = ykeys;
-        model.labels = ylabels;
-        model.colors = ycolors;
-    }
-
-    //if eventConfig streatch it to individuals 
-    if (model.goalsconfig) {
-        var goals = [];
-        var gColors = [];
-        model.goalsconfig.forEach(function (e) {
-            goals.push(e.goal);
-            gColors.push(e.lineColor);
-        });
-        model.goals = goals;
-        model['goal-line-colors'] = gColors;
-    }
-    //if goalsConfig streatch it to individuals 
-    // if (model.eventsconfig) {
-    //     var events = [];
-    //     var eColors = [];
-    //     model.eventsconfig.forEach(function (e) {
-    //         events.push(e.event);
-    //         eColors.push(e.lineColor);
-    //     });
-    //     model.events = events;
-    //     model['event-line-colors'] = eColors;
-    // }
-}
-
 const __BAR__ = {
     "name": "bar",
     "label": "Bar Chart",
@@ -47,15 +7,12 @@ const __BAR__ = {
     "defaults": {
         "type": "bar",
         "boxLabel": "Bar Chart",
+        "data-format": "bar",
+        "multiple-data-points": "true",
         "stacked": true,
         "xkey": "y",
-        "ykeys": "[\"a\", \"b\"]",
-        "labels": "[\"Serie A\", \"Serie B\"]",
-        "colors": ["#7ed38c", "#dd7ca7"],
-        //"transport": "wss",
-        //"msg-tag": "chart",
+        "yconfig": [{"key": "a", "label": "Series A", "color":"#7ed38c"}, {"key": "b", "label": "Series B", "color":"#dd7ca7"}],
         "on-format-data": "return data;",
-        //"api" : "UIComponents/dashboard/frontend/examples/chart/getChartData",
         "data": '[{"y":"2006","a":88,"b":20},{"y":"2007","a":30,"b":34},{"y":"2008","a":90,"b":42},{"y":"2009","a":89,"b":59},{"y":"2010","a":43,"b":61},{"y":"2011","a":85,"b":69},{"y":"2012","a":29,"b":65}]',
         "grid-text-family": "Source Sans Pro"
     },
@@ -78,68 +35,69 @@ const __BAR__ = {
                         "type": "section",
                         "htmlClass": "col-xs-12",
                         "items": [
-                            
                             "xkey", "xlabel-angle", {
-                            key: "parse-time",
-                           
-                        },
-                        {
-                            key: "_dummy",
-                            "htmlClass": "hidden",
-                            onFieldLoad: function (modelValue, form, model) {
-                                //build yconfig
-                                if (!model.yconfig || !model.yconfig.length) {
-                                    var ykeys = JSON.parse(model.ykeys);
-                                    var ylabels = JSON.parse(model.labels);
-                                    var ycolors = model.colors;
-                                    if(ykeys == null){
+                                key: "parse-time",
+                            }, 
+                            {
+                                key :"xdate-moment-format",
+                                condition: "model['parse-time'] == true"
+                            },
+                            {
+                                key: "_dummy",
+                                "htmlClass": "hidden",
+                                onFieldLoad: function (modelValue, form, model) { //This is for backward compatibility
+                                    //build yconfig
+                                    if (!model.yconfig || !model.yconfig.length) {
+                                        var ykeys = JSON.parse(model.ykeys);
+                                        var ylabels = JSON.parse(model.labels);
+                                        var ycolors = model.colors;
+                                        if(ykeys == null){
                                             ykeys=[];
                                         }
-                                    var keysNum = ykeys.length;
-                                    // clean the array
-                                    model.yconfig = [];
-                                    for (var i = 0; i < keysNum; i++) {
-                                        var e = {
-                                            key: ykeys[i],
-                                            color: ycolors[i],
-                                            label: ylabels[i],
-                                        };
-                                        model.yconfig.push(e);
-                                    }
-                                }
-
-
-                                //build goals
-                                if (!model.goalsconfig || !model.goalsconfig.length) {
-                                    if(model.goals == null){
-                                            model.goals=[];
-                                        }
-                                    var goalsNum = model.goals.length;
-                                    // clean the array
-                                    model.goals = [];
-                                    for (var i = 0; i < goalsNum; i++) {
-                                        if (model.goals[i]) {
+                                        var keysNum = ykeys.length;
+                                        // clean the array
+                                        model.yconfig = [];
+                                        for (var i = 0; i < keysNum; i++) {
                                             var e = {
-                                                goal: model.goals[i],
-                                                //storkeWidth: model['goal-stroke-width'],
-                                                lineColor: model['goal-line-colors'][i],
+                                                key: ykeys[i],
+                                                color: ycolors[i],
+                                                label: ylabels[i],
                                             };
-                                            model.goalsconfig.push(e);
+                                            model.yconfig.push(e);
                                         }
-
+                                    } else {
+                                        delete model.colors;
+                                        delete model.labels;
+                                        delete model.ykeys;
+                                    }
+                                    //build goals
+                                    if (!model.goalsconfig || !model.goalsconfig.length) {
+                                        if(model.goals && model.goals.length > 0){
+                                            var goalsNum = model.goals.length;
+                                            // clean the array
+                                            for (var i = 0; i < goalsNum; i++) {
+                                                if (model.goals[i]) {
+                                                    var e = {
+                                                        goal: model.goals[i],
+                                                        lineColor: ((model['goal-line-colors'] && model['goal-line-colors'][i]) ? model['goal-line-colors'][i] : null),
+                                                    };
+                                                    model.goalsconfig.push(e);
+                                                }
+                                            }
+                                        } 
+                                    } else {
+                                        delete model.goals;
+                                        delete model['goal-line-colors'];
                                     }
                                 }
                             }
-                        }
-                    
-                    ]
+                        ]
                     }]
                 }]
             },
             {
                 title: "Y",
                 items: [
-
                     {
                         "type": "section",
                         "htmlClass": "row",
@@ -152,7 +110,6 @@ const __BAR__ = {
                                         key: "yconfig",
                                         title: "Y Configuration",
                                         startEmpty: true,
-                                        onChange: __onBarArraysChanged__,
                                         items: [{
                                             "type": "section",
                                             "htmlClass": "row",
@@ -161,16 +118,14 @@ const __BAR__ = {
                                                     "type": "section",
                                                     "htmlClass": "col-sm-4",
                                                     "items": [{
-                                                        key: "yconfig[].key",
-                                                        onChange: __onBarArraysChanged__
+                                                        key: "yconfig[].key"
                                                     }]
                                                 },
                                                 {
                                                     "type": "section",
                                                     "htmlClass": "col-sm-4",
                                                     "items": [{
-                                                        key: "yconfig[].label",
-                                                        onChange: __onBarArraysChanged__
+                                                        key: "yconfig[].label"
                                                     }]
                                                 },
                                                 {
@@ -178,13 +133,11 @@ const __BAR__ = {
                                                     "htmlClass": "col-sm-4",
                                                     "items": [{
                                                         key: "yconfig[].color",
-                                                        "colorFormat": "hex",
-                                                        onChange: __onBarArraysChanged__
+                                                        "colorFormat": "hex"
                                                     }]
                                                 }]
                                         }
-                                        ],
-
+                                               ],
                                     },
                                 ]
                             },
@@ -196,35 +149,8 @@ const __BAR__ = {
                                     "ymin",
                                     {
                                         "key": "stacked"
-                                      
-                                    },
-                                    {
-                                        key: "show-legend"
-                                    },
-                                    {
-                                        type: "radios-inline",
-                                        key: "legend-type",
-                                        condition: "model['show-legend'] == true",
-                                        titleMap: [{
-                                            value: "hover",
-                                            name: "Hover"
-                                        }, {
-                                            value: "right",
-                                            name: "Right"
-                                        }]
-                                    },
-                                    {
-                                        type: "radios-inline",
-                                        key: "hide-hover",
-                                        condition: "model['show-legend'] ==true && model['legend-type'] =='hover'",
-                                        titleMap: [{
-                                            value: "auto",
-                                            name: "Auto"
-                                        }, {
-                                            value: "never",
-                                            name: "Always"
-                                        }]
-                                    }]
+                                    }
+                                ]
                             },
                             {
                                 "type": "section",
@@ -232,10 +158,56 @@ const __BAR__ = {
                                 "items": [
                                     "post-units",
                                     "ymax",
-                                     // ,"ylabel-format"
+                                    // ,"ylabel-format"
                                 ]
                             }]
                     }]
+            },
+            {
+                title: "Legend",
+                items: [{
+                    "type": "section",
+                    "htmlClass": "row",
+                    "items": [
+                        {
+                            "type": "section",
+                            "htmlClass": "col-xs-12",
+                            "items": [
+                                {
+                                    key: "show-legend"
+                                },
+                                {
+                                    type: "radios-inline",
+                                    key: "legend-type",
+                                    condition: "model['show-legend'] == true",
+                                    titleMap: [{
+                                        value: "hover",
+                                        name: "Hover"
+                                    }, {
+                                        value: "right",
+                                        name: "Right"
+                                    }]
+                                },
+                                {
+                                    type: "radios-inline",
+                                    key: "hide-hover",
+                                    condition: "model['show-legend'] ==true && model['legend-type'] =='hover'",
+                                    titleMap: [{
+                                        value: "auto",
+                                        name: "Auto"
+                                    }, {
+                                        value: "false",
+                                        name: "Always"
+                                    }]
+                                },
+                                /** {
+                                    key :"legend-date-moment-format",
+                                    condition: "model['show-legend'] == true && model['legend-type'] =='right' && model['parse-time'] == true"
+                                }**/
+                            ]
+                        }
+                    ]
+                }]
             },
             {
                 title: "Grid",
@@ -247,13 +219,9 @@ const __BAR__ = {
                             "type": "section",
                             "htmlClass": "col-xs-6",
                             "items": [{
-                               
                                 key: "grid",
-                                
                             }, {
-                                
                                 key: "axes",
-                                
                             }, {
                                 "key": "grid-text-color",
                                 "colorFormat": "hex3"
@@ -315,19 +283,19 @@ const __BAR__ = {
                                     "name": "Source Sans Pro"
                                 }]
                             }
-                                ,
-                            {
-                                "key":"grid-text-weight",
-                                "type": 'strapselect',
-                                "titleMap": [{
-                                    "value": "normal",
-                                    "name": "Normal"
-                                }, {
-                                    "value": "bold",
-                                    "name": "Bold"
-                                }]
-                        },
-                            "grid-text-size"]
+                                      ,
+                                      {
+                                          "key":"grid-text-weight",
+                                          "type": 'strapselect',
+                                          "titleMap": [{
+                                              "value": "normal",
+                                              "name": "Normal"
+                                          }, {
+                                              "value": "bold",
+                                              "name": "Bold"
+                                          }]
+                                      },
+                                      "grid-text-size"]
                         }]
                 }]
             },
@@ -351,7 +319,6 @@ const __BAR__ = {
                                     key: "goalsconfig",
                                     title: "Goals Configuration",
                                     startEmpty: true,
-                                    onChange: __onBarArraysChanged__,
                                     items: [{
                                         "type": "section",
                                         "htmlClass": "row",
@@ -360,8 +327,7 @@ const __BAR__ = {
                                                 "type": "section",
                                                 "htmlClass": "col-sm-4",
                                                 "items": [{
-                                                    key: "goalsconfig[].goal",
-                                                    onChange: __onBarArraysChanged__
+                                                    key: "goalsconfig[].goal"
                                                 }]
                                             },
                                             {
@@ -369,18 +335,17 @@ const __BAR__ = {
                                                 "htmlClass": "col-sm-4",
                                                 "items": [{
                                                     key: "goalsconfig[].lineColor",
-                                                    "colorFormat": "hex",
-                                                    onChange: __onBarArraysChanged__
+                                                    "colorFormat": "hex"
                                                 }]
                                             }]
                                     }
-                                    ]
-
+                                           ]
                                 }
                             ]
                         }]
                 }]
-            }]
+            }
+        ]
     }],
     "schema": {
         "type": "object",
@@ -413,13 +378,12 @@ const __BAR__ = {
                 "title": "Colors",
                 "type": "array",
                 "default": ["#CC5464", "#FCC717", "#38B9D6",
-                    "#1DBC68", "#E90088"],
+                            "#1DBC68", "#E90088"],
                 "description": "Array containing colors for the series bars.",
                 "items": {
                     "type": "string",
                     "format": "color"
                 }
-
             },
             "stacked": {
                 "title": "Stacked",
@@ -479,16 +443,13 @@ const __BAR__ = {
                 "description": "Set the font family of the axis labels (default: sans-serif).",
                 "default": "Source Sans Pro",
                 "placeholder": " ",
-               
             },
             "grid-text-weight": {
                 "title": "Grid text weight",
                 "type": "string",
                 "description": "Set the font weight of the axis labels (default: normal).",
                 "default": "normal",
-                
                 "placeholder": " ",
-                
             },
             "parse-time": {
                 "title": "Parse time",
@@ -529,14 +490,17 @@ const __BAR__ = {
                 "type": "string",
                 "description": "A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; }"
             },
-            "goals": {
-                "title": "Goals",
-                "type": "array",
-                "description": "A list of y-values to draw as horizontal 'goal' lines on the chart. goals: [1.0, -1.0]",
-                "items": {
-                    "type": "number"
-                }
-
+            "legend-date-moment-format": {
+                "title": "Legend Date Format",
+                "type": "string",
+                "description": "Set a valid MomentJs Date Format",
+                 "default": "DD-MM-YYYY HH:mm:ss"
+            },
+            "xdate-moment-format": {
+                "title": "X axis Date Format",
+                "type": "string",
+                "description": "Set a valid MomentJs Date Format",
+                 "default": "DD-MM-YYYY HH:mm:ss"
             },
             "goal-stroke-width": {
                 "title": "Goal stroke width",
@@ -544,17 +508,7 @@ const __BAR__ = {
                 "default": 1.0,
                 "description": "Width, in pixels, of the goal lines."
             },
-            "goal-line-colors": {
-                "title": "Goal line colors",
-                "type": "array",
-                "default": ['#666633', '#999966', '#cc6666',
-                    '#663333'],
-                "description": "Array of color values to use for the goal line colors.",
-                "items": {
-                    "format": "color",
-                    "type": "string"
-                }
-            }, "yconfig": {
+            "yconfig": {
                 "type": "array",
                 "default": [],
                 "items": {
@@ -585,7 +539,6 @@ const __BAR__ = {
                             "title": "goal",
                             "type": "string"
                         },
-
                         "lineColor": {
                             "title": "Line Color",
                             "type": "string",
@@ -593,31 +546,21 @@ const __BAR__ = {
                         }
                     }
                 }
-            }, 
-            // "eventsconfig": {
-            //     "type": "array",
-            //     "default": [],
-            //     "items": {
-            //         "type": "object",
-            //         "properties": {
-            //             "event": {
-            //                 "title": "event",
-            //                 "type": "string"
-            //             },
-
-            //             "lineColor": {
-            //                 "title": "Line Color",
-            //                 "type": "string",
-            //                 "format": "color",
-            //             }
-            //         }
-            //     }
-            // }, 
+            },
             "_dummy": {
                 "title": "Dummy not used Value",
                 "type": "string",
+            },
+            "data-format": {
+                "type": "hidden",
+                "default": "bar"
+            },
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "true"
             }
+            
         },
-        "required": ["xkey", "ykeys", "labels"]
+        "required": ["xkey"]
     }
 };

@@ -1,43 +1,3 @@
-const __onAreaArraysChanged__ = function (modelValue, form, model) {
-    //if yconfig streatch it to individuals 
-    if (model.yconfig) {
-        var ykeys = [];
-        var ylabels = [];
-        var ycolors = [];
-        model.yconfig.forEach(function (e) {
-            ykeys.push(e.key);
-            ylabels.push(e.label);
-            ycolors.push(e.color);
-        });
-        model.ykeys = ykeys;
-        model.labels = ylabels;
-        model.colors = ycolors;
-    }
-
-    //if eventConfig streatch it to individuals 
-    if (model.goalsconfig) {
-        var goals = [];
-        var gColors = [];
-        model.goalsconfig.forEach(function (e) {
-            goals.push(e.goal);
-            gColors.push(e.lineColor);
-        });
-        model.goals = goals;
-        model['goal-line-colors'] = gColors;
-    }
-    //if goalsConfig streatch it to individuals 
-    if (model.eventsconfig) {
-        var events = [];
-        var eColors = [];
-        model.eventsconfig.forEach(function (e) {
-            events.push(e.event);
-            eColors.push(e.lineColor);
-        });
-        model.events = events;
-        model['event-line-colors'] = eColors;
-    }
-}
-
 const __AREA__ = {
     "name": "area",
     "label": "Area Chart",
@@ -46,16 +6,13 @@ const __AREA__ = {
     "show": true,
     "defaults": {
         "type": "area",
+        "data-format": "area",
         "on-format-data": "return data;",
         "boxLabel": "Area Chart",
         "xkey": "y",
-        "ykeys": "[\"a\", \"b\"]",
-        "labels": "[\"Serie A\", \"Serie B\"]",
-        "colors": ["#CC5464", "#38B9D6"],
-        //"transport": "wss",
-        //"msg-tag": "chart",
+        "yconfig": [{"key": "a", "label": "Series A", "color": "#FCC717"},{"key": "b", "label": "Series B", "color": "#38B9D6"}],
         "grid-text-family": "Source Sans Pro",
-        "data": '[{"y":2000,"a":64,"b":82},{"y":2003,"a":53,"b":48},{"y":2004,"a":81,"b":58},{"y":2005,"a":68,"b":72},{"y":2008,"a":52,"b":60},{"y":20011,"a":55,"b":30},{"y":2013,"a":79,"b":40}]'
+        "data": '[{"y":"2000","a":64,"b":82},{"y":"2003","a":53,"b":48},{"y":"2004","a":81,"b":58},{"y":"2005","a":68,"b":72},{"y":"2008","a":52,"b":60},{"y":"2011","a":55,"b":30},{"y":"2013","a":79,"b":40}]'
     },
     "box": {
         sizeX: 4,
@@ -76,89 +33,88 @@ const __AREA__ = {
                         "type": "section",
                         "htmlClass": "col-xs-12",
                         "items": ["xkey", "xlabel-angle", {
-                            
                             key: "parse-time",
-                           
                         },
-                        {
-                            key: "_dummy",
-                            "htmlClass": "hidden",
-                            onFieldLoad: function (modelValue, form, model) {
-                                //build yconfig
-                                if (!model.yconfig || !model.yconfig.length) {
-                                    var ykeys = JSON.parse(model.ykeys);
-                                    var ylabels = JSON.parse(model.labels);
-                                    var ycolors = model.colors;
-                                    if(ykeys == null){
-                                            ykeys=[];
-                                        }
-                                    var keysNum = ykeys.length;
-                                    // clean the array
-                                    model.yconfig = [];
-                                    for (var i = 0; i < keysNum; i++) {
-                                        var e = {
-                                            key: ykeys[i],
-                                            color: ycolors[i],
-                                            label: ylabels[i],
-                                        };
-                                        model.yconfig.push(e);
-                                    }
-                                }
-
-
-                                //build goals
-                                if (!model.goalsconfig || !model.goalsconfig.length) {
-                                    if(model.goals == null){
-                                            model.goals=[];
-                                        }
-                                    var goalsNum = model.goals.length;
-                                    // clean the array
-                                    model.goals = [];
-                                    for (var i = 0; i < goalsNum; i++) {
-                                        if (model.goals[i]) {
-                                            var e = {
-                                                goal: model.goals[i],
-                                                //storkeWidth: model['goal-stroke-width'],
-                                                lineColor: model['goal-line-colors'][i],
-                                            };
-                                            model.goalsconfig.push(e);
-                                        }
-
-                                    }
-                                }
-
-                                //build events
-                                if (!model.eventsconfig || !model.eventsconfig.length) {
-                                     if(model.events == null){
-                                            model.events=[];
-                                        }
-                                    var eventsNum = model.events.length;
-                                    // clean the array
-                                    model.events = [];
-                                    for (var i = 0; i < eventsNum; i++) {
-                                        if (model.events[i]) {
-                                            var e = {
-                                                event: model.events[i],
-                                                //storkeWidth: model['event-stroke-width'],
-                                                lineColor: model['event-line-colors'][i],
-                                            };
-                                            model.eventsconfig.push(e);
-                                        }
-
-                                    }
-                                }
-
-                            }
-                        }
-                    
-                    ]
+                                  {
+                                      key :"xdate-moment-format",
+                                      condition: "model['parse-time'] == true"
+                                  },
+                                  {
+                                      key: "_dummy",
+                                      "htmlClass": "hidden",
+                                      onFieldLoad: function (modelValue, form, model) { //This is for backward compatibility
+                                          //build yconfig
+                                          if (!model.yconfig || !model.yconfig.length) {
+                                              var ykeys = JSON.parse(model.ykeys);
+                                              var ylabels = JSON.parse(model.labels);
+                                              var ycolors = model.colors;
+                                              if(ykeys == null){
+                                                  ykeys=[];
+                                              }
+                                              var keysNum = ykeys.length;
+                                              // clean the array
+                                              model.yconfig = [];
+                                              for (var i = 0; i < keysNum; i++) {
+                                                  var e = {
+                                                      key: ykeys[i],
+                                                      color: ycolors[i],
+                                                      label: ylabels[i],
+                                                  };
+                                                  model.yconfig.push(e);
+                                              }
+                                          } else {
+                                              delete model.colors;
+                                              delete model.labels;
+                                              delete model.ykeys;
+                                          }
+                                          //build goals
+                                          if (!model.goalsconfig || !model.goalsconfig.length) {
+                                              if(model.goals && model.goals.length > 0){
+                                                  var goalsNum = model.goals.length;
+                                                  // clean the array
+                                                  for (var i = 0; i < goalsNum; i++) {
+                                                      if (model.goals[i]) {
+                                                          var e = {
+                                                              goal: model.goals[i],
+                                                              lineColor: ((model['goal-line-colors'] && model['goal-line-colors'][i]) ? model['goal-line-colors'][i] : null),
+                                                          };
+                                                          model.goalsconfig.push(e);
+                                                      }
+                                                  }
+                                              } 
+                                          } else {
+                                              delete model.goals;
+                                              delete model['goal-line-colors'];
+                                          }
+                                          //build events
+                                          if (!model.eventsconfig || !model.eventsconfig.length) {
+                                              if(model.events && model.events.length > 0){
+                                                  var eventsNum = model.events.length;
+                                                  // clean the array
+                                                  for (var i = 0; i < eventsNum; i++) {
+                                                      if (model.events[i]) {
+                                                          var e = {
+                                                              event: model.events[i],
+                                                              //storkeWidth: model['event-stroke-width'],
+                                                              lineColor: ((model['event-line-colors'] && model['event-line-colors'][i]) ? model['event-line-colors'][i] : null),
+                                                          };
+                                                          model.eventsconfig.push(e);
+                                                      }
+                                                  }
+                                              }
+                                          } else {
+                                              delete model.events;
+                                              delete model['event-line-colors'];
+                                          }
+                                      }
+                                  }
+                                 ]
                     }]
                 }]
             },
             {
                 title: "Y",
                 items: [
-
                     {
                         "type": "section",
                         "htmlClass": "row",
@@ -171,7 +127,6 @@ const __AREA__ = {
                                         key: "yconfig",
                                         title: "Y Configuration",
                                         startEmpty: true,
-                                        onChange: __onAreaArraysChanged__,
                                         items: [{
                                             "type": "section",
                                             "htmlClass": "row",
@@ -180,16 +135,14 @@ const __AREA__ = {
                                                     "type": "section",
                                                     "htmlClass": "col-sm-4",
                                                     "items": [{
-                                                        key: "yconfig[].key",
-                                                        onChange: __onAreaArraysChanged__
+                                                        key: "yconfig[].key"
                                                     }]
                                                 },
                                                 {
                                                     "type": "section",
                                                     "htmlClass": "col-sm-4",
                                                     "items": [{
-                                                        key: "yconfig[].label",
-                                                        onChange: __onAreaArraysChanged__
+                                                        key: "yconfig[].label"
                                                     }]
                                                 },
                                                 {
@@ -197,13 +150,11 @@ const __AREA__ = {
                                                     "htmlClass": "col-sm-4",
                                                     "items": [{
                                                         key: "yconfig[].color",
-                                                        "colorFormat": "hex",
-                                                        onChange: __onAreaArraysChanged__
+                                                        "colorFormat": "hex"
                                                     }]
                                                 }]
                                         }
-                                        ],
-
+                                               ],
                                     },
                                 ]
                             },
@@ -211,37 +162,9 @@ const __AREA__ = {
                                 "type": "section",
                                 "htmlClass": "col-xs-6",
                                 "items": [
-                                    
                                     "pre-units",
-                                    "ymin",
-                                    {
-                                        key: "show-legend",
-                                       
-                                    },
-                                    {
-                                        type: "radios-inline",
-                                        key: "legend-type",
-                                        condition: "model['show-legend'] ==true",
-                                        titleMap: [{
-                                            value: "hover",
-                                            name: "Hover"
-                                        }, {
-                                            value: "right",
-                                            name: "Right"
-                                        }]
-                                    },
-                                    {
-                                        type: "radios-inline",
-                                        key: "hide-hover",
-                                        condition: "model['show-legend'] ==true && model['legend-type'] =='hover'",
-                                        titleMap: [{
-                                            value: "auto",
-                                            name: "Auto"
-                                        }, {
-                                            value: "never",
-                                            name: "Always"
-                                        }]
-                                    }]
+                                    "ymin"
+                                ]
                             },
                             {
                                 "type": "section",
@@ -253,6 +176,52 @@ const __AREA__ = {
                     }]
             },
             {
+                title: "Legend",
+                items: [{
+                    "type": "section",
+                    "htmlClass": "row",
+                    "items": [
+                        {
+                            "type": "section",
+                            "htmlClass": "col-xs-12",
+                            "items": [
+                                {
+                                    key: "show-legend"
+                                },
+                                {
+                                    type: "radios-inline",
+                                    key: "legend-type",
+                                    condition: "model['show-legend'] == true",
+                                    titleMap: [{
+                                        value: "hover",
+                                        name: "Hover"
+                                    }, {
+                                        value: "right",
+                                        name: "Right"
+                                    }]
+                                },
+                                {
+                                    type: "radios-inline",
+                                    key: "hide-hover",
+                                    condition: "model['show-legend'] ==true && model['legend-type'] =='hover'",
+                                    titleMap: [{
+                                        value: "auto",
+                                        name: "Auto"
+                                    }, {
+                                        value: "false",
+                                        name: "Always"
+                                    }]
+                                },
+                                /** {
+                                    key :"legend-date-moment-format",
+                                    condition: "model['show-legend'] == true && model['legend-type'] =='right' && model['parse-time'] == true"
+                                }**/
+                            ]
+                        }
+                    ]
+                }]
+            },
+            {
                 title: "Grid",
                 items: [{
                     "type": "section",
@@ -262,13 +231,9 @@ const __AREA__ = {
                             "type": "section",
                             "htmlClass": "col-xs-6",
                             "items": [{
-                                
                                 key: "grid",
-                              
                             }, {
-                                
                                 key: "axes",
-                              
                             }, {
                                 "key": "grid-text-color",
                                 "colorFormat": "hex3"
@@ -331,7 +296,7 @@ const __AREA__ = {
                                         "name": "Source Sans Pro"
                                     }]
                                 }
-                                    ,
+                                ,
                                 {
                                     "key":"grid-text-weight",
                                     "type": 'strapselect',
@@ -342,7 +307,7 @@ const __AREA__ = {
                                         "value": "bold",
                                         "name": "Bold"
                                     }]
-                            },
+                                },
                                 "grid-text-size"]
                         }]
                 }]
@@ -356,9 +321,7 @@ const __AREA__ = {
                         "type": "section",
                         "htmlClass": "col-xs-6",
                         "items": ["line-width", {
-                           
                             key: "smooth",
-                           
                         }]
                     }, {
                         "type": "section",
@@ -379,22 +342,19 @@ const __AREA__ = {
                     "type": "section",
                     "htmlClass": "row",
                     "items": [{
-
                         "type": "section",
                         "htmlClass": "col-xs-6",
                         "items": [{
-                            
                             key: "behave-like-line",
-                            
                         }, {
                             "key": "fill-opacity",
                             "step": "0.1"
                         }]
                     }
-                        // "date-format",
-                        // "xlabel-format",
-                        // "ylabel-format"
-                    ]
+                              // "date-format",
+                              // "xlabel-format",
+                              // "ylabel-format"
+                             ]
                 },]
             },
             {
@@ -417,7 +377,6 @@ const __AREA__ = {
                                     key: "goalsconfig",
                                     title: "Goals Configuration",
                                     startEmpty: true,
-                                    onChange: __onAreaArraysChanged__,
                                     items: [{
                                         "type": "section",
                                         "htmlClass": "row",
@@ -426,8 +385,7 @@ const __AREA__ = {
                                                 "type": "section",
                                                 "htmlClass": "col-sm-4",
                                                 "items": [{
-                                                    key: "goalsconfig[].goal",
-                                                    onChange: __onAreaArraysChanged__
+                                                    key: "goalsconfig[].goal"
                                                 }]
                                             },
                                             {
@@ -435,13 +393,11 @@ const __AREA__ = {
                                                 "htmlClass": "col-sm-4",
                                                 "items": [{
                                                     key: "goalsconfig[].lineColor",
-                                                    "colorFormat": "hex",
-                                                    onChange: __onAreaArraysChanged__
+                                                    "colorFormat": "hex"
                                                 }]
                                             }]
                                     }
-                                    ],
-
+                                           ],
                                 },
                             ]
                         },]
@@ -467,7 +423,6 @@ const __AREA__ = {
                                     key: "eventsconfig",
                                     title: "Events Configuration",
                                     startEmpty: true,
-                                    onChange: __onAreaArraysChanged__,
                                     items: [{
                                         "type": "section",
                                         "htmlClass": "row",
@@ -476,8 +431,7 @@ const __AREA__ = {
                                                 "type": "section",
                                                 "htmlClass": "col-sm-4",
                                                 "items": [{
-                                                    key: "eventsconfig[].event",
-                                                    onChange: __onAreaArraysChanged__
+                                                    key: "eventsconfig[].event"
                                                 }]
                                             },
                                             {
@@ -485,13 +439,11 @@ const __AREA__ = {
                                                 "htmlClass": "col-sm-4",
                                                 "items": [{
                                                     key: "eventsconfig[].lineColor",
-                                                    "colorFormat": "hex",
-                                                    onChange: __onAreaArraysChanged__
+                                                    "colorFormat": "hex"
                                                 }]
                                             }]
                                     }
-                                    ],
-
+                                           ],
                                 },
                             ]
                         },]
@@ -507,34 +459,13 @@ const __AREA__ = {
                 "type": "string",
                 "description": "Data series in case of static data.",
                 "codemirrorOptions": {
-                	"placeholder": "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
-            	}
+                    "placeholder": "[{ y: '2006', a: 100, b: 90 },{ y: '2007', a: 75,  b: 65 }, { y: '2008', a: 50,  b: 40 }]"
+                }
             },
             "xkey": {
                 "title": "X key",
                 "type": "string",
                 "description": "A string containing the name of the attribute that contains date (X) values. Timestamps are accepted in the form of millisecond timestamps (as returned by Date.getTime() or as strings in the following formats: 2012, 2012 Q1, 2012 W1, 2012-02, 2012-02-24, 2012-02-24 15:00, 2012-02-24 15:00:00, 2012-02-24 15:00:00.000. date/time strings can optionally contain a T between the date and time parts, and/or a Z suffix, for compatibility with ISO-8601 dates."
-            },
-            "ykeys": {
-                "title": "Y keys",
-                "type": "string",
-                "description": "A list of strings containing names of attributes that contain Y values (one for each series of data to be plotted)."
-            },
-            "labels": {
-                "title": "Labels",
-                "type": "string",
-                "description": "A list of strings containing labels for the data series to be plotted (corresponding to the values in the ykeys option)."
-            },
-            "colors": {
-                "title": "Colors",
-                "type": "array",
-                "description": "Array containing colors for the series lines/points.",
-                "default": ["#CC5464", "#FCC717", "#38B9D6",
-                    "#1DBC68", "#E90088"],
-                "items": {
-                    "format": "color",
-                    "type": "string"
-                }
             },
             "line-width": {
                 "title": "Line width",
@@ -596,10 +527,10 @@ const __AREA__ = {
                 "default": "hover",
             },
             "hide-hover": {
-                "title": "Hide hover",
-                "default": "false",
+                "title": "Hover style",
+                "default": "auto",
                 "type": "string",
-                "description": "Set to Never to always show a hover legend. Set to 'auto' to only show the hover legend when the mouse cursor is over the chart. Set to 'always' to never show a hover legend."
+                "description": "Set to 'Always' to always show a hover legend. Set to 'Auto' to only show the hover legend when the mouse cursor is over the chart."
             },
             "hover-callback": {
                 "title": "Hover callback",
@@ -698,13 +629,17 @@ const __AREA__ = {
                 "type": "string",
                 "description": "A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; }"
             },
-            "goals": {
-                "title": "Goals",
-                "type": "array",
-                "description": "A list of y-values to draw as horizontal 'goal' lines on the chart. goals: [1.0, -1.0]",
-                "items": {
-                    "type": "number"
-                }
+            "legend-date-moment-format": {
+                "title": "Legend Date Format",
+                "type": "string",
+                "description": "Set a valid MomentJs Date Format",
+                "default": "DD-MM-YYYY HH:mm:ss"
+            },
+            "xdate-moment-format": {
+                "title": "X axis Date Format",
+                "type": "string",
+                "description": "Set a valid MomentJs Date Format",
+                "default": "DD-MM-YYYY HH:mm:ss"
             },
             "goal-stroke-width": {
                 "title": "Goal stroke width",
@@ -712,41 +647,11 @@ const __AREA__ = {
                 "default": 1.0,
                 "description": "Width, in pixels, of the goal lines."
             },
-            "goal-line-colors": {
-                "title": "Goal line colors",
-                "type": "array",
-                "default": ['#666633', '#999966', '#cc6666',
-                    '#663333'],
-                "description": "Array of color values to use for the goal line colors. If you list fewer colors here than you have lines in goals, then the values will be cycled.",
-                "items": {
-                    "format": "color",
-                    "type": "string"
-                }
-            },
-            "events": {
-                "title": "Events",
-                "type": "array",
-                "description": "A list of x-values to draw as vertical 'event' lines on the chart. ex: ['2012-01-01', '2012-02-01']",
-                "items": {
-                    "type": "string"
-                }
-            },
             "event-stroke-width": {
                 "title": "Event stroke width",
                 "type": "number",
                 "default": 1.0,
                 "description": "Width, in pixels, of the event lines."
-            },
-            "event-line-colors": {
-                "title": "Event line colors",
-                "type": "array",
-                "default": ['#005a04', '#ccffbb', '#3a5f0b',
-                    '#005502'],
-                "description": "Array of color values to use for the event line colors. If you list fewer colors here than you have lines in events, then the values will be cycled.",
-                "items": {
-                    "format": "color",
-                    "type": "string"
-                }
             },
             "axes": {
                 "title": "Axes",
@@ -778,9 +683,7 @@ const __AREA__ = {
                 "type": "string",
                 "description": "Set the font family of the axis labels (default: sans-serif).",
                 "default": "Source Sans Pro",
-                
                 "placeholder": " ",
-                
             },
             "grid-text-weight": {
                 "title": "Grid text weight",
@@ -789,7 +692,6 @@ const __AREA__ = {
                 "default": "normal",
                 "format": 'uiselect',
                 "placeholder": " ",
-                
             },
             "fill-opacity": {
                 "title": "Fill opacity",
@@ -840,7 +742,6 @@ const __AREA__ = {
                             "title": "goal",
                             "type": "string"
                         },
-
                         "lineColor": {
                             "title": "Line Color",
                             "type": "string",
@@ -858,7 +759,6 @@ const __AREA__ = {
                             "title": "event",
                             "type": "string"
                         },
-
                         "lineColor": {
                             "title": "Line Color",
                             "type": "string",
@@ -869,6 +769,14 @@ const __AREA__ = {
             }, "_dummy": {
                 "title": "Dummy not used Value",
                 "type": "string",
+            },
+            "data-format": {
+                "type": "hidden",
+                "default": "area"
+            },
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "true"
             }
         },
         "required": ["xkey", "ykeys"]

@@ -41,8 +41,7 @@ angular
       treeSearchCriteria: "@",
       iconExpand: "@",
       iconCollapse: "@",
-      loadTree: "<?",
-      devicesModel: "@"
+      loadTree: "<?"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/dashboard.html',
     controller: function($scope, $rootScope, $timeout, $interval, $sce, $window, httpClient, wsClient, $cookies, common, commonAction, widgetsConfig, widgetsDocs, $uibModal, scriptrService, $route, $routeParams, $q, _, boxStyle, dashboardConfig, dataService) {
@@ -55,7 +54,29 @@ angular
       var self = this;
       self.acls;  
       self.counter = 0;  
-            
+      
+        
+      $rootScope.loadDevices = function() {
+          var requestInfo = {
+              "api": self.dashboardSettings.defaults.devicesListApi,
+              "transport": "https",
+              "httpMethod": "GET", 
+              "widgetId": $scope.$id
+          };
+          dataService.scriptrRequest(requestInfo, function(data, response) {
+               window.localStorage.setItem("devices", JSON.stringify(data));
+          });
+      }
+      
+      this.setDevicesModelProperties = function(data) {
+           var devicesModel = {}
+           devicesModel.devicesListApi = data["devicesListApi"];
+           devicesModel.devicesAttributesHistoryApi = data["devicesAttributesHistoryApi"];
+       	   devicesModel.devicesAttributesLatestApi = data["devicesAttributesLatestApi"];
+          
+           window.localStorage.setItem("devicesModel", JSON.stringify(devicesModel));
+      }
+      
       this.$onInit = function() {
         self.loadTree = (typeof this.loadTree != 'undefined')? this.loadTree : true,  
         self.loading = true;  
@@ -66,7 +87,14 @@ angular
           icon : "fa fa-group"    
         }];
           
-        self.onACLChange = function(acls){
+        
+       self.setDevicesModelProperties({ 
+    		"devicesListApi": "app/api/getDevices",
+    		"devicesAttributesHistoryApi": "app/api/getDevicesSensorsHistory",
+    		"devicesAttributesLatestApi": "app/api/getDeviceSensorsLatest"
+		});
+       
+       self.onACLChange = function(acls){
             self.acls = acls.join(";");
             var d = $q.defer(); 
             self.saveScript(null, null, true).then(
@@ -100,7 +128,10 @@ angular
         var scriptName = $routeParams.scriptName;
         if(scriptName) {
           this.openEditor(scriptName);
-        } 
+        } else {
+           $rootScope.loadDevices();
+        }
+       
         
         this.slickConfig = {
             enabled: true,
@@ -312,14 +343,18 @@ angular
                   var schema =  angular.copy(widgetDefinition.schema);
                   var defaults = angular.copy(widgetDefinition.defaults);
 
+                    
+                  //Cater for fit-to-widget
+                  if(widgetDefinition.box && widgetDefinition.box.fitToWidget && !wdg.fitToWidget) {
+                      wdg.fitToWidget = widgetDefinition.box.fitToWidget;
+                  }  
+                    
                   if(widgetDefinition.commonActionData){
                       form[0].tabs = angular.copy([commonAction.formTab].concat(form[0].tabs));
                       schema.properties =  merge_options(schema.properties,commonAction.schemaFields); 
                   }
                     
                   if(widgetDefinition.commonData){ 
-                    
-                       
                       form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs));
                       schema.properties =  merge_options(common.schemaFields,schema.properties); 
                   }
@@ -343,7 +378,9 @@ angular
                //this.widgets = JSON.parse(pluginContent.metadata.plugindata).wdg; //This needs fixing
                this.urlParams = JSON.parse(pluginContent.metadata.plugindata).urlParams;
                this.dashboardSettings.defaults = JSON.parse(pluginContent.metadata.plugindata).settings;
+               
                  
+               $rootScope.loadDevices();
                this.initDashboardDataService();
                  
                //Generate & apply the custom style
@@ -412,9 +449,12 @@ angular
           if(wdg.commonActionData){
                form[0].tabs = angular.copy([commonAction.formTab].concat(form[0].tabs));
                schema.properties =  merge_options(schema.properties,commonAction.schemaFields); 
-           }
+          }
           
-           if(wdg.commonData){
+          //form[0].tabs = angular.copy([devicesConfig.formTab].concat(form[0].tabs))
+          //schema.properties =  merge_options(devicesConfig.schemaFields, schema.properties); 
+          
+          if(wdg.commonData){
              form[0].tabs = angular.copy([common.formTab].concat(form[0].tabs))
              schema.properties =  merge_options(common.schemaFields, schema.properties); 
           }
@@ -457,9 +497,6 @@ angular
           this.isManualAdd = true;
           this.notifyDashboardChange();
       };
-        
-        
-      
       
       var applyInlineStyle = function (style) {
           var styleElement = angular.element(document.querySelector('#dashboardInlineStyle'));
@@ -601,6 +638,12 @@ angular
                   
                 
                 self.dashboardSettings.defaults = angular.copy(dashboardSettingsModel);
+                  
+                self.setDevicesModelProperties({ 
+                    "devicesListApi":  self.dashboardSettings.defaults["devicesListApi"],
+                    "devicesAttributesHistoryApi": self.dashboardSettings.defaults["devicesAttributesHistoryApi"],
+                    "devicesAttributesLatestApi": self.dashboardSettings.defaults["devicesAttributesLatestApi"]
+                });
                   
                //Generate & apply the custom style
            	   var compiledCss  = generateCustomStyle(dashboardSettingsModel); 
@@ -1029,7 +1072,7 @@ angular
       "widget": "<"
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/box.html',
-    controller: function($rootScope,$scope, $compile, $element, $uibModal) {
+    controller: function($rootScope,$scope, $compile, $element, $uibModal, dataService) {
       
       var boxSelf = this;
         
@@ -1109,6 +1152,8 @@ angular
           self.updateWidget(event, data)
         })**/
       };
+      
+      
       
       this.openSettings = function() {
         var self = this;
@@ -1255,10 +1300,11 @@ angular
       dismiss: '&'
     },
     templateUrl: '/UIComponents/dashboardBuilder/javascript/components/myModalContent.html',
-    controller: function ($scope) {
+    controller: function ($scope, dataService) {
         
         var self=this;
-      this.$onInit = function () {
+        
+        this.$onInit = function () {
           
         this.widget = this.resolve.widget;
         
@@ -1286,19 +1332,48 @@ angular
           }
       };
         
-      this.highlightTabs = function (formName) {
+        
+      $scope.loadDevicesCallback = function(options,search) {
+         return JSON.parse(window.localStorage.getItem("devices"));
+      }
+      
+      $scope.loadDeviceSensorsCallback = function(options,search) {
+         var deviceSensors = JSON.parse(window.localStorage.getItem("devices"));
+		 var tmp = [];
+         _.map(deviceSensors, function(item) {
+             var keys = _.keys(item);
+             _.forEach(keys, function(key){
+                 tmp.push({"value": key, "name": key, "device": item.id});
+             })
+         })
+         return tmp;
+      }
+      
+      //used to highlight error on schemaform validate
+      this.highlightTabs = function (formName) { //This assumes we only have 2 level tabs
             var rootEl = $('form[name="' + formName + '"]');
-            var tabHeaders = rootEl.find('ul li');
-            var tabPanes = rootEl.find('.tab-pane') || [];
+            var tabHeaders = rootEl.find('ul li').not(".sub-tabs ul li");
+            var tabPanes = rootEl.find('.tab-pane').not(".sub-tabs .tab-pane")|| [];
             rootEl.find('ul li a span.badge').remove();
 
             for (var i = 0; i < tabPanes.length; i++) {
                 var errorCount = $(tabPanes[i]).find('div.ng-invalid').length;
                 if (errorCount > 0) {
                     $(tabHeaders[i].childNodes[0]).append('<span class="badge sf-badge-error">' + errorCount + '</span>');
+                    
+                   var subTabPanes =  $(tabPanes[i]).find('.tab-pane');
+                   var subTabHeaders = $(tabPanes[i]).find('ul li');
+                   for (var i = 0; i < subTabPanes.length; i++) {
+                         var errorCount = $(subTabPanes[i]).find('div.ng-invalid').length;
+                            if (errorCount > 0) {
+                                $(subTabHeaders[i].childNodes[0]).append('<span class="badge sf-badge-error">' + errorCount + '</span>');
+                            }
+                   }
+
                 }
             }
     	};
+    
     
 
       this.onSubmit = function(form) {

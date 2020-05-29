@@ -5,12 +5,11 @@ const __SPEEDOMETER__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        //"transport": "wss",
+        "data-format": "speedometer",
+        "multiple-data-points": "false",
         "boxLabel": "Speedometer",
         "on-format-data": "return data;",
         "data": "45",
-        //"msg-tag": "speedometer",
-        //"api" : "UIComponents/dashboard/frontend/examples/speedometer/getSpeedometerVal"
     },
     "box": {
         sizeX: 3,
@@ -232,6 +231,14 @@ const __SPEEDOMETER__ = {
                 "description": "Sets the default fonts in gauge.",
                 "default": "Source Sans Pro",
                
+            },
+            "data-format": {
+                "type": "hidden",
+                "default": "speedometer"
+            },
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "false"
             }
         }
     }

@@ -5,11 +5,10 @@ const __ODOMETER__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        //"transport": "wss",
+        "data-format": "odometer",
+        "multiple-data-points": "false",
         "boxLabel": "Odometer",
-        //"msg-tag": "odometer",
         "data": "200",
-        // "api" : "UIComponents/dashboard/frontend/examples/odometer/getOdometerVal",
         "animation": "count",
         "theme": "car",
         "on-format-data": "return data;",
@@ -120,6 +119,15 @@ const __ODOMETER__ = {
                 "description": "Select an odometer theme.",
                 "default": "car",
             },
+            "data-format": {
+                "type": "hidden",
+                "default": "odometer"
+            },
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "false"
+            }
+            
         },
         "required": []
     }

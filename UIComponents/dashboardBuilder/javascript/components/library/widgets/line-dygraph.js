@@ -5,11 +5,13 @@ const __LINE_DYGRAPH__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        "type": "line",
+        "data-format": "dygraphs",
+        "multiple-data-points": "true",
+        "type": "dygraphs",
         "on-format-data": "return data;",
         "data-type": "raw",
-        "data-format": "dygraphs",
         "schema-for": "line",
+        "display-metric-param": "display_metric",
         "boxLabel": "Line Chart",
         "boxBorder": true,
         "data": "[[1519312895840,10,26,16,20],[1519312896840,11,25,16,20],[1519312897840,10,26,16,20],[1519312898840,11,25,15,20],[1519312899840,10,26,16,21]]",
@@ -22,7 +24,7 @@ const __LINE_DYGRAPH__ = {
         "y-axis-label-font-size": 12,
         "independent-ticks": "independent",
         "show-legend": true,
-        "colors-mapping": [{ "labels": "Y1", "colors": "#CC5464", "axisSelection": "y" }, { "labels": "Y2", "colors": "#FCC717", "axisSelection": "y" }, { "labels": "Y3", "colors": "#38B9D6", "axisSelection": "y" }, { "labels": "Y4", "colors": "#1DBC68", "axisSelection": "y" }]
+        "colors-mapping": [{ "labels": "Y1", "colors": "#CC5464", "axisSelection": "y" }, { "labels": "Y2", "colors": "#FCC717", "axisSelection": "y" }, { "labels": "Y3", "colors": "#38B9D6", "axisSelection": "y" }, { "labels": "Y4", "colors": "#1DBC68", "axisSelection": "y" }],
     },
     "box": {
         sizeX: 6,
@@ -1280,6 +1282,14 @@ const __LINE_DYGRAPH__ = {
                 "default": 1,
                 "description": "Data Lines widtth in Px. Set to 0 to hide the line"
             },
+            "data-format": {
+                "type": "hidden",
+                "default": "dygraphs"
+            },
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "true"
+            }
             // "calculate-function": {
             //     "title": "Function",
             //     "type": "string",

@@ -5,10 +5,10 @@ const __THERMOMETER__ = {
     "commonData": true,
     "show": true,
     "defaults": {
-        //"transport": "wss",
+        "data-format": "thermometer",
+        "multiple-data-points": "false",
         "on-format-data": "return data;",
         "schema-for": "thermometer",
-        //"fetch-data-interval": 300, // in seconds
         "data": "20",
         "boxLabel": "Thermometer",
         "boxBorder": true,
@@ -145,7 +145,7 @@ const __THERMOMETER__ = {
             },
             "unit": {
                 "title": "Unit",
-                "type": "hidden",
+                "type": "string",
                 "default": "°C",
                 "description": "Set the unit value of Thermometer."
             },
@@ -185,6 +185,14 @@ const __THERMOMETER__ = {
                 "title": "Interval",
                 "type": "number",
                 "description": "Set the interval value between ticks."
+            },
+            "data-format": {
+                "type": "hidden",
+                "default": "thermometer"
+            },
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "false"
             }
         },
         "required": []

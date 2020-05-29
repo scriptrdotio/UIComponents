@@ -3,30 +3,31 @@ const __GRID__ = {
     "label": "Grid",
     "class": "scriptr-grid",
     "show": true,
+    "commonData" :"true",
     "defaults": {
+        "data-format": "grid",
+        "multiple-data-points": "true",
         "columns-definition": '[{headerName: "Name", field: "name"},{headerName: "Model", field: "model"},{headerName: "Price", field: "price"}]',
-        "row-data": '[{name: "Toyota", model: "Celica", price: 35000},{name: "Ford", model: "Mondeo", price: 32000},{name: "Porsche", model: "Boxter", price: 72000}]',
-        "enable-sorting": "true",
-        // "api":'UIComponents/dashboard/frontend/examples/grid/gridAPI',
-        "enable-delete-row": 'true',
+        "data": '[{name: "Toyota", model: "Celica", price: 35000},{name: "Ford", model: "Mondeo", price: 32000},{name: "Porsche", model: "Boxter", price: 72000}]',
         "boxLabel": "Grid",
-        // "row-model-type":'pagination',
-        // "grid-height":"300",
+        "row-model-type":'pagination',
         "fixed-height": "false",
-        "enable-add-row": 'true',
-        "msg-tag": "grid",
         "on-format-data": "return data;",
-        "cell-editable": 'true',
-        "enable-client-side-filter": 'true',
         "enable-server-side-filter": 'false',
         "enable-server-side-sorting": 'false',
-        "row-model-selection": 'multiple',
         "pagination-page-size": '20',
-        "transport": 'https'
+        "cell-editable": 'false',
+        "editable" : "false",
+        "enable-sorting":"false", //Client side sorting
+        
+        
+        "suppress-row-click-selection": "true",
+        "suppress-cell-selection":"true"
+        
     },
     "box": {
-        sizeX: 4,
-        sizeY: 5,
+        sizeX: 6,
+        sizeY: 6,
         minSizeX: 4,
         minSizeY: 2,
     },
@@ -36,40 +37,8 @@ const __GRID__ = {
         type: "tabs",
         tabs: [
             {
-                title: "Data",
+                title: "Columns",
                 items: [
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-6",
-                                "items": ["transport"]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-6",
-                                "items": [
-                                    {
-                                        "key": "msg-tag",
-                                        "condition": "model.transport=='wss'"
-                                    }]
-                            }]
-                    },
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [{
-                            "type": "section",
-                            "htmlClass": "col-xs-6",
-                            "items": ["api"]
-                        }, {
-                            "type": "section",
-                            "htmlClass": "col-xs-6",
-                            "items": ["api-params"]
-                        }]
-                    },
                     {
                         "type": "section",
                         "htmlClass": "row",
@@ -78,37 +47,10 @@ const __GRID__ = {
                             "htmlClass": "col-xs-12",
                             "items": [{
                                 "key": "columns-definition"
-                            }, {
-                                "key": "row-data"
-                            } // ,"on-format-data"
+                            }
                             ]
                         }]
-                    },
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [{
-                            "type": "section",
-                            "htmlClass": "col-xs-12",
-                            "items": [{
-                                "type": "help",
-                                "helpvalue": "<hr>"
-                            }]
-                        }]
-                    },
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [{
-                            "type": "section",
-                            "htmlClass": "col-xs-12",
-                            "items": [{
-                                "type": "help",
-                                "helpvalue": "<div class=\"alert alert-info\"><ul><li>Messages published over the subscibe channel need to have the following format in order to be consumed by a widget:<ul><li>{“id”: “&lt;message tag value&gt;”, “result”: “&lt;static data structure&gt;”}</li></ul></li><li>A script would publish a message  over the subscribe channel as follow:<ul><li>publish(“responseChannel”, {“id”: “&lt;message tag value&gt;”, “result”: “&lt;static data structure&gt;”});</li></ul></li><li>Whether https or wss transport is used, Sciptr API should return the static data structure for widget initial load:<ul><li>return &lt;static data structure&gt;;</li></ul></li></ul></div>"
-                            }]
-                        }]
                     }
-
                 ]
             },
             {
@@ -122,8 +64,20 @@ const __GRID__ = {
                             "htmlClass": "col-xs-6",
                             "items": [
                                 {
-                                    "key": "pagination",
-                                    
+                                    "key": "row-model-type",
+                                    "placeholder": " ",
+                                    "type": 'strapselect',
+                                    "titleMap": [
+                                        {"value": "infinite",
+                                         "name": "infinite"
+                                     }, {
+                                         "value": "pagination",
+                                         "name": "pagination"
+                                     }]
+                                },
+                                {
+                                    "condition": "model['api'] && model['api'] != null && model['row-model-type'] == 'pagination'",
+                                    "key": "pagination-page-size"
                                 }
                             ]
                         }]
@@ -137,47 +91,8 @@ const __GRID__ = {
                                 "htmlClass": "col-xs-6",
                                 "items": [
                                     {
-                                        "key": "row-model-selection",
-                                        "type": 'strapselect',
-                                        "placeholder": " ",
-                                        "titleMap": [{
-                                            "value": "single",
-                                            "name": "single"
-                                        }, {
-                                            "value": "multiple",
-                                            "name": "multiple"
-                                        }]
+                                        "key": "pagination",
                                     },
-                                    {
-                                        "key": "enable-client-side-sorting",
-                                        
-                                    },
-                                    {
-                                        "key": "enable-client-side-filter",
-                                       
-                                    },
-                                    {
-                                        "key": "suppress-filter",
-                                        
-                                    },
-                                    {
-                                        "key": "enable-add-row",
-                                       
-                                    },
-                                    {
-                                        "key": "enable-delete-row",
-                                       
-                                    },
-                                    {
-                                        "key": "cell-editable",
-                                       
-                                    },]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-6",
-                                "items": [
-                                    "pagination-page-size",
                                     {
                                         "key": "enable-server-side-sorting",
                                        
@@ -189,9 +104,7 @@ const __GRID__ = {
                                     {
                                         "key": "enable-col-resize",
                                         
-                                    }, "add-params",
-                                    "delete-params",
-                                    "edit-params"]
+                                    }]
                             }]
                     }]
             },
@@ -216,49 +129,24 @@ const __GRID__ = {
                     "placeholder": "[{'headerName': 'Name', 'field': 'name'}, {'headerName': 'Model', 'field': 'model'}, {'headerName': 'Price', 'field': 'price', 'type': 'numeric'}]"
                 }
             },
-            "row-data": {
-                "title": "Row data",
+            "data": {
+                "title": "Data",
                 "type": "string",
-                "description": "You pass static data to the grid.",
-                "x-schema-form": {
-                    "type": "textarea",
+                "description": "Data series in case of static data.",
+                "codemirrorOptions": {
                     "placeholder": "[{'name': 'Golf', 'model': 'GT', 'price' : '10000'}, {'name': 'BMW', 'model': 'Z3', 'price' : '20000'}]"
                 }
             },
-            "enable-client-side-sorting": {
-                "title": "Enable client Side Sorting",
-                "type": "boolean",
-                "description": "Turn on client sorting for the grid."
-            },
+
             "enable-server-side-sorting": {
-                "title": "Enable Server Side Sorting",
+                "title": "Enable Sorting",
                 "type": "boolean",
                 "description": "Turn on server sorting for the grid."
             },
-            "enable-client-side-filter": {
-                "title": "Enable Client Side Filter",
-                "type": "boolean",
-                "description": "Turn on client side filter."
-            },
             "enable-server-side-filter": {
-                "title": "Enable Server Side Filter",
+                "title": "Enable Filter",
                 "type": "boolean",
-                "description": "Turn on server side filter."
-            },
-            "enable-add-row": {
-                "title": "Enable Add Row",
-                "type": "boolean",
-                "description": "Turn on insert row."
-            },
-            "enable-delete-row": {
-                "title": "Enable Delete Row",
-                "type": "boolean",
-                "description": "Turn on delete row."
-            },
-            "cell-editable": {
-                "title": "Cell Editable",
-                "type": "boolean",
-                "description": "Turn on cell editing."
+                "description": "Turn on server side filtering."
             },
             "enable-col-resize": {
                 "title": "Enable Column Resize",
@@ -273,25 +161,8 @@ const __GRID__ = {
             "row-model-type": {
                 "title": "Row Model Type",
                 "type": "string",
-                "description": "The supported ways are 'virtual' and 'pagination' for only non-static data",
+                "description": "The supported ways are 'infinite' and 'pagination' for only non-static data",
                 "default": "pagination",
-                // "format": 'uiselect',
-                // "placeholder": " ",
-                // "items": [{
-                //     "value": "virtual",
-                //     "label": "virtual"
-                // }, {
-                //     "value": "pagination",
-                //     "label": "pagination"
-                // }]
-
-            },
-            "row-model-selection": {
-                "title": "Row Model Selection",
-                "type": "string",
-                "description": "Set to either 'single' or 'multiple' in case of backend data.",
-                "default": "Source Sans Pro",
-
             },
             "pagination-page-size": {
                 "title": "Pagination Page Size",
@@ -303,61 +174,13 @@ const __GRID__ = {
                 "type": "boolean",
                 "description": "Hide column filter."
             },
-            "api": {
-                "title": "Api",
-                "type": "string",
-                "description": "Name of the api to get data.",
-                "x-schema-form": {
-                    "placeholder": "UIComponents/dashboard/frontend/examples/grid/getCarsInfo"
-                }
+            "data-format": {
+                "type": "hidden",
+                "default": "line"
             },
-            "on-format-data": {
-                "title": "Format Data",
-                "type": "string",
-                "description": "Callback function to be called after data is returned from backend."
-            },
-            "transport": {
-                "title": "Transport",
-                "type": "string",
-                "enum": ["wss", "https"],
-                "description": "Method used to call api (can take 'http' or 'wss')."
-            },
-            "msg-tag": {
-                "title": "Message Tag",
-                "type": "string",
-                "description": "Subscribe to socket messages with tag name."
-            },
-            "api-params": {
-                "title": "Api Params",
-                "type": "string",
-                "description": "Api parameters.",
-                "x-schema-form": {
-                    "placeholder": "Ex: {'id' : '599865'}"
-                }
-            },
-            "add-params": {
-                "title": "on-add API Params",
-                "type": "string",
-                "description": "On add API params.",
-                "x-schema-form": {
-                    "placeholder": "Ex: {'id' : '599865'}"
-                }
-            },
-            "delete-params": {
-                "title": "on-delete API Params",
-                "type": "string",
-                "description": "On delete API params.",
-                "x-schema-form": {
-                    "placeholder": "Ex: {'id' : '599865'}"
-                }
-            },
-            "edit-params": {
-                "title": "on-edit API Params",
-                "type": "string",
-                "description": "On edit API params.",
-                "x-schema-form": {
-                    "placeholder": "Ex: {'id' : '599865'}"
-                }
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "true"
             }
         },
         "required": ["columns-definition"]

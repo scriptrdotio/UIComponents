@@ -7,6 +7,8 @@ const __ACCELEROMETER__ = {
     "defaults": {
         //"transport": "wss",
        // "msg-tag": "accelerometer",
+        "data-format": "accelerometer",
+        "multiple-data-points": "false",
         "data": {
 		"x": 52,
 		"y": 13,
@@ -39,6 +41,14 @@ const __ACCELEROMETER__ = {
                 "codemirrorOptions": {
                     "placeholder": "{'x': 52, 'y': 13, 'z': 44}"
                 }
+            },
+            "data-format": {
+                "type": "hidden",
+                "default": "accelerometer"
+            },
+            "multiple-data-points": {
+                "type": "hidden",
+                "default": "false"
             }
         },
         "required": []

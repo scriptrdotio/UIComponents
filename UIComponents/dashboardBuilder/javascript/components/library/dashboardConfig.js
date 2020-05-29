@@ -6,11 +6,39 @@ angular
         return {
             "script": {
                 "form": [
-                    {
-                        "key": "scriptName",
-                        "notitle": true,
-                        "placeholder": "Script name"
+                    {"type": "section",
+                     "htmlClass": "row",
+                     "items": [
+                         {
+                             "type": "section",
+                             "htmlClass": "col-xs-10",
+                             "items": [{
+                                    "key": "scriptName",
+                                    "notitle": true,
+                                    "placeholder": "Script name"
+                                }]
+                         },
+                         {
+                             "type": "section",
+                             "htmlClass": "col-xs-2",
+                             "items":[{
+                                    "key": "image",
+                                    "type": "nwpFileUpload",
+                                    "i18n": {
+                                        "add": "Open file browser",
+                                        "preview": "Preview Upload",
+                                        "filename": "File Name",
+                                        "progress": "Progress Status",
+                                        "upload": "Upload",
+                                        "dragorclick": "Drag and drop your file here or click here"
+                                    },
+                                    "notitle": true
+                                }]
+                         }
+                     ]
                     }
+                    
+                    
                 ],
                 "schema": {
                     "type": "object",
@@ -19,7 +47,25 @@ angular
                         "scriptName": {
                             "type": "string",
                             "fieldHtmlClass": "script-name-input"
+                        },
+                        "image": {
+                            "title": "Image",
+                            "type": "array",
+                            "format": "singlefile",
+                            "default": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/fileattach.png",
+                            "x-schema-form": {
+                               "type": "array"
+                            },
+                            "pattern":       {
+                               "mimeType":          "image/*",
+                               "validationMessage": "Wrong File Type. Allowed types ",
+                            },
+                            "maxSize":       {
+                               "maximum":            "1MB",
+                               "validationMessage":  "File exceeded allowed size of "
+                            }
                         }
+                        
                     },
                     "required": [
                         "scriptName"
@@ -34,13 +80,33 @@ angular
                     "subscribeChannel": "responseChannel",
                     "theme": "light",
                     "style": __defaultsThemeStyles__["light"],
-                    "deactivateExternalDataHandler": true
+                    "deactivateExternalDataHandler": true,
+                    "devicesListApi": "app/api/getDevices",
+                    "devicesAttributesHistoryApi":"app/api/getDeviceSensorsHistory",
+                    "devicesAttributesLatestApi": "app/api/getDeviceSensorsLatest"
                 },
                 "form": [
                     {
                         "type": "tabs",
                         "selectedTabIndex": 0,
                         "tabs": [
+                            { 
+                                "title": "Devices Configuration",
+                                "items": [
+                                   {
+                                       "key": "devicesListApi",
+                                    	"placeholder": "app/api/getDevices"
+                                   },
+                                   {
+                                       	"key": "devicesAttributesHistoryApi",
+                                   		"placeholder": "app/api/getDeviceSensorsHistory"
+                                   },
+                                   {
+                                   		"key": "devicesAttributesLatestApi",
+                                    	"placeholder": "app/api/getDeviceSensorsLatest"
+                                   }
+                                ]
+                            },
                             {
                                 "title": "Channels",
                                 "items": [
@@ -1487,6 +1553,27 @@ angular
                             "title": "Define your own style",
                             "type": "string",
                             "description": "ex: .dashboardTheme .dashboardContainer {background-color: red;}"
+                        },
+                        
+                        "devicesListApi" : {
+                            "title": "Devices & atttibutes list api",
+                			"type": "string",
+                            "default": "app/api/getDevices",
+                			"description": "Name of the scriptr api (script name) responsible for publishing or returning the devices list and their corresponding attributes."
+                        },
+                        
+                        "devicesAttributesHistoryApi": {
+                            "title": "Devices historical data api",
+                			"type": "string",
+                            "default": "app/api/getDeviceSensorsHistory",
+                			"description": "Name of the scriptr api (script name) responsible for publishing or returning the devices attributes historical data."
+                        }, 
+                        
+                        "devicesAttributesLatestApi": {
+                            "title": "Devices latest data api",
+                			"type": "string",
+                            "default": "app/api/getDeviceSensorsLatest",
+                			"description": "Name of the scriptr api (script name) responsible for publishing or returning the devices attributes latest data."
                         }
                     },
                     "required": [
