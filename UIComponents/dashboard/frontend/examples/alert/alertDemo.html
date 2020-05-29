@@ -9,7 +9,8 @@
         <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
         <!-- Adding Angular -->
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-mocks.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
@@ -63,7 +64,7 @@
             underscore.factory('_', ['$window', function($window) {		
                 return $window._; // assumes underscore has already been loaded on the page		
             }]);
-            var myApp= angular.module("myApp", [ "WsClient", "HttpClient", "Alert"])
+            var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Alert"])
             angular.module('myApp').config(wssConfig);
             angular.module('myApp').config(httpsConfig);
             myApp.config(function($interpolateProvider, $locationProvider) {

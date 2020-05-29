@@ -60,8 +60,8 @@ angular
                 this.actionParams = (this.actionParams != "undefined") ? this.actionParams : ((this.apiParams) ? this.apiParams : {});
                 this.msgTag = (this.msgTag) ? this.msgTag : null;
                 this.type = (this.type) ? this.type : "btn-success";
-                this.size = (this.size) ? this.size : "";
-                this.class = this.type + " " + this.size;
+               // this.size = (this.size) ? this.size : "";
+                this.class = this.type; //+ " " + this.size;
                 
                 this.style = {};
                 
