@@ -716,9 +716,9 @@ const __LINE_DYGRAPH__ = {
                                     "items": [
                                         {
                                             "type": "section",
-                                            "htmlClass": "col-xs-6",
+                                            "htmlClass": "col-xs-4",
                                             "items": [{
-                                                "key": "custom-goals[].goal-line-colors",
+                                                "key": "custom-goals[].color",
                                                 "title": "Color",
                                                 "colorFormat": "hex3",
                                                 "spectrumOptions": {
@@ -733,23 +733,20 @@ const __LINE_DYGRAPH__ = {
                                                 }
                                             }]
                                         },
+                                         {
+                                            "type": "section",
+                                            "htmlClass": "col-xs-4",
+                                            "items": [{
+                                                "key": "custom-goals[].size",
+                                                "title": "Line size"
+                                            }]
+                                        },
                                         {
                                             "type": "section",
-                                            "htmlClass": "col-xs-6",
+                                            "htmlClass": "col-xs-4",
                                             "items": [{
-                                                "key": "custom-goals[].goals",
-                                                "title": "Goal",
-                                                "onFieldLoad": function (modelValue, form, model) {
-                                                    if (!isNaN(modelValue) && model["default-metric-value"] && model["default-metric-value"] != model["display-metric-value"]) {
-                                                        if (model["available-units"] && model["is-scaled"] == "false") {
-                                                            var from_unit = model["available-units"][model["default-metric-value"]];
-                                                            var to_unit = model["available-units"][model["display-metric-value"]];
-                                                            if (from_unit !== to_unit) {
-                                                                model[form.key[0]][form.key[1]][form.key[2]] = getConversionFunction(from_unit, to_unit)(model[form.key[0]][form.key[1]][form.key[2]])
-                                                            }
-                                                        }
-                                                    }
-                                                }
+                                                "key": "custom-goals[].goal",
+                                                "title": "Goal"
                                             }]
                                         }
                                     ]
@@ -778,7 +775,7 @@ const __LINE_DYGRAPH__ = {
                                     "items": [
                                         {
                                             "type": "section",
-                                            "htmlClass": "col-xs-6",
+                                            "htmlClass": "col-xs-4",
                                             "items": [{
                                                 "key": "custom-events[].color",
                                                 "title": "Color",
@@ -797,7 +794,17 @@ const __LINE_DYGRAPH__ = {
                                         },
                                         {
                                             "type": "section",
-                                            "htmlClass": "col-xs-6",
+                                            "htmlClass": "col-xs-4",
+                                            "items": [{
+                                                "key": "custom-events[].size",
+                                                "title": "Line size",
+
+
+                                            }]
+                                        },
+                                        {
+                                            "type": "section",
+                                            "htmlClass": "col-xs-4",
                                             "items": [{
                                                 "key": "custom-events[].event",
                                                 "title": "Event",
@@ -896,22 +903,29 @@ const __LINE_DYGRAPH__ = {
             "custom-goals": {
                 "title": "Goals",
                 "type": "array",
-                "default": [{ "goal-line-colors": "#f0f0f0", "goals": "" }],
-                "description": "Color: Color of goal line.<br/>Goal: Y value to draw as horizontal 'goal' line.",
+                "default": [{ "color": "#f0f0f0", "goal": "", "size": 3 }],
+                "description": "Color: Color of goal line.<br/>Goal: Y value to draw as horizontal 'goal' line.<br> Pixel size of the goal line. If empty, a rectangle fill will be rendered to represent goal.",
                 "items": {
                     "type": "object",
                     "properties": {
-                        "goal-line-colors": {
-                            "title": "Colors",
+                        "color": {
+                            "title": "Color",
                             "type": "string",
                             "format": "color",
                             "validationMessage": "Invalid Color",
                             "default": "#F0F0F0"
                         },
-                        "goals": {
-                            "title": "Goals",
+                        "goal": {
+                            "title": "Goal",
                             "type": "number",
                             "default": 0
+                        },
+                        "size": {
+                            "title": "Size",
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 10,
+                            "default": 3
                         }
                     }
                 }
@@ -919,8 +933,8 @@ const __LINE_DYGRAPH__ = {
             "custom-events": {
                 "title": "Events",
                 "type": "array",
-                "default": [{ "color": "#f0f0f0", "event": "" }],
-                "description": "List of x-values to draw as vertical 'event' lines on the chart, Color:Event Line Colors.",
+                "default": [{ "color": "#f0f0f0", "event": "", "size": 3}],
+                "description": "List of x-values to draw as vertical 'event' lines on the chart, Color: Event Line Colors, Size: Pixel size of the goal line",
                 "items": {
                     "type": "object",
                     "properties": {
@@ -933,31 +947,18 @@ const __LINE_DYGRAPH__ = {
                         },
                         "event": {
                             "title": "Event",
+                            "type": "string",
+                            "default": 0,
+                            "description": "Needs to be a valid moment date format."
+                        },
+                        "size": {
+                            "title": "Size",
                             "type": "number",
-                            "default": 0
+                            "minimum": 0,
+                            "maximum": 10,
+                            "default": 3
                         }
                     }
-                }
-            },
-            "events": {
-                "title": "Events",
-                "type": "array",
-                "default": ['2010-02-02'],
-                "description": "List of x-values to draw as vertical 'event' lines on the chart.",
-                "items": {
-                    "type": "string"
-                }
-
-            },
-            "event-line-colors": {
-                "title": "Event Line Colors",
-                "type": "array",
-                "default": ["#ffffff"],
-                "description": "List of color values to use for the event line colors.",
-                "items": {
-                    "format": "color",
-                    "type": "string",
-                    "validationMessage": "Invalid Color"
                 }
             },
             "colors": {

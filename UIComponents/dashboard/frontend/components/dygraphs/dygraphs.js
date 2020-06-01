@@ -61,10 +61,12 @@ angular
           "rangeSelectorPlotFillGradientColor": "@",
           "rangeSelectorPlotLineWidth": "@",
           "rangeSelectorPlotStrokeColor": "@",
+         /** 
           "goals": "<?", 
           "goalLineColors": "<?",
           "events": "<?", 
-          "eventLineColors": "<?",          
+          "eventLineColors": "<?",   
+          **/       
           "legendPosition": "@",
           "showLegend": "@" ,
           "x1DrawGrid": "@",
@@ -169,13 +171,13 @@ angular
 	             this.options.labels = this.legendLabels;
              }
              
-             this.customGoals = (this.customGoals) ? _.reject(this.customGoals, function(item) {return (item.goals === "" || item.goals == null)}) : [];
-             this.goalLineColors = _.pluck(this.customGoals, "goal-line-colors");
-             this.goals = _.pluck(this.customGoals, "goals");     
+             this.options.customGoals = (this.customGoals) ? _.reject(this.customGoals, function(item) {return (item.goal === "" || item.goal == null)}) : [];
+            // this.goalLineColors = _.pluck(this.customGoals, "goal-line-colors");
+            // this.goals = _.pluck(this.customGoals, "goals");     
              
-             this.customEvents = (this.customEvents) ? _.reject(this.customEvents, function(item) {return (item.events === "" || item.events == null)}) : [];
-             this.eventLineColors = _.pluck(this.customEvents, "event-line-colors");
-             this.events = _.pluck(this.customEvents, "events");  
+             this.options.customEvents = (this.customEvents) ? _.reject(this.customEvents, function(item) {return (item.event === "" || item.event == null)}) : [];
+             //this.eventLineColors = _.pluck(this.customEvents, "event-line-colors");
+             //this.events = _.pluck(this.customEvents, "events");  
 
              //this.events = (this.events) ? this.events : [];   
              //this.eventLineColors = (this.eventLineColors) ? this.eventLineColors : ["#ffffff"];   
@@ -378,11 +380,11 @@ angular
         	
             
              
-             this.options.goals = (this.goals) ? this.goals : [];   
-             this.options.goalLineColors = (this.goalLineColors) ? this.goalLineColors : ["#ffffff"];   
+             //this.options.goals = (this.goals) ? this.goals : [];   
+             //this.options.goalLineColors = (this.goalLineColors) ? this.goalLineColors : ["#ffffff"];   
 
-             this.options.events = (this.events) ? this.events : [];   
-             this.options.eventLineColors = (this.eventLineColors) ? this.eventLineColors : ["#ffffff"];   
+             //this.options.events = (this.events) ? this.events : [];   
+             //this.options.eventLineColors = (this.eventLineColors) ? this.eventLineColors : ["#ffffff"];   
         
              //Usually, when Dygraphs encounters a missing value in a data series, it interprets this as a gap and draws it as such. If, instead, the missing values represents an x-value for which only a different series has data, then you'll want to connect the dots by setting this to true. To explicitly include a gap with this option set, use a value of NaN.
              this.options.connectSeparatedPoints = (this.connectSeparatedPoints!=null) ? this.connectSeparatedPoints : true;   

@@ -44,17 +44,25 @@ angular.module("angular-dygraphs", [
                 }
                 
                 scope.options.labelsSeparateLines = true;
-                scope.goals = scope.options.goals;
-                scope.goalLineColors = scope.options.goalLineColors;
                 
-                delete scope.options.goals;
-                delete scope.options.goalLineColors;
+                //scope.goals = scope.options.goals;
+                //scope.goalLineColors = scope.options.goalLineColors;
                 
-                scope.events = scope.options.events;
-                scope.eventLineColors = scope.options.eventLineColors;
+                //delete scope.options.goals;
+                //delete scope.options.goalLineColors;
                 
-                delete scope.options.events;
-                delete scope.options.eventLineColors;
+                //scope.events = scope.options.events;
+                //scope.eventLineColors = scope.options.eventLineColors;
+                
+                //delete scope.options.events;
+                //delete scope.options.eventLineColors;
+                
+                scope.customGoals = scope.options.customGoals;
+                scope.customEvents = scope.options.customEvents;
+                
+                delete scope.options.customGoals;
+                delete scope.options.customEvents
+                
                 
                 delete scope.options.legendPosition;
 
@@ -82,71 +90,52 @@ angular.module("angular-dygraphs", [
                /** scope.zoomCallback = function(){
                     return;
                 };**/
+                
 				scope.underlayCallback = function(canvas, area, g){
                     //fill the goals colors
-                    var goals = angular.copy(scope.goals);
-                    if(goals && goals.length > 0){
-                        var goalLineColors = angular.copy(scope.goalLineColors);
-
-                        var colorsMapping = {};
-                        //map the goals to their corresponding colors in an object before sorting the goals
-                        for(var x=0; x<goals.length; x++){
-                            if(goalLineColors[x]){
-                                colorsMapping[goals[x]] = goalLineColors[x];
-                            }
+                    var goals = _.sortBy(angular.copy(scope.customGoals), "goal").reverse(); //To get it in descending order
+                    _.forEach(goals, function(item){
+                        var splitDate = moment().valueOf();
+                        var coords = g.toDomCoords(splitDate, item.goal);
+                        // splitX and splitY are the coordinates on the canvas for (2006-11-19, 2.25).
+                        var splitX = coords[0];
+                        var splitY = coords[1];
+                        canvas.fillStyle = item.color;
+                        var topHeight = splitY - area.y;
+                        if(!item.size || item.size == 0) {
+                            var bottomHeight = area.h - topHeight;
+                        	canvas.fillRect(area.x, splitY, area.w, bottomHeight);    
+                        } else {
+                            canvas.fillRect(area.x, splitY, area.w, item.size);   
                         }
-                        goals.sort(function(a, b){return a - b})
-                        for(var x=goals.length-1; x>=0; x--){
-                        	var goal = goals[x];
-                            if(colorsMapping[goal]){
-                                var splitDate = moment().valueOf();
-                                var coords = g.toDomCoords(splitDate, goal);
-                                // splitX and splitY are the coordinates on the canvas for (2006-11-19, 2.25).
-                                var splitX = coords[0];
-                                var splitY = coords[1];
-                                canvas.fillStyle = colorsMapping[goal];
-                                var topHeight = splitY - area.y;
-                                var bottomHeight = area.h - topHeight;
-                                canvas.fillRect(area.x, splitY, area.w, bottomHeight);    
+                        
 
-                            }
-                        }
-                    }
+                    });
+                    
+                    
                     //Fill the events colors   
-                    var events = eval(scope.events);
-                    if(false){
-                        var eventLineColors = eval(scope.eventLineColors);
+                    var events = _.sortBy(angular.copy(scope.customEvents), "event").reverse(); //To get it in descending order;
+                     _.forEach(events, function(item){
+                         canvas.fillStyle = item.color;
+                         var dayOne = moment(item.event).add(-0.25, 'days');
+                         var firstDateTime = dayOne.valueOf();
 
-                        var colorsMapping = {};
-                        //map the events to their corresponding colors in an object before sorting the events
-                        for(var x=0; x<events.length; x++){
-                            if(eventLineColors[x]){
-                                colorsMapping[events[x]] = eventLineColors[x];
-                            }
+                         var nextDay = moment(item.event).add(0.25, 'days');
+                         var nextDateTime = nextDay.valueOf();
+
+                         var canvas_left_x = g.toDomXCoord(firstDateTime);
+                         var canvas_right_x = g.toDomXCoord(nextDateTime);
+                         var canvas_width = canvas_right_x - canvas_left_x;
+                         
+                          if(!item.size || item.size == 0) {
+                        	canvas.fillRect(canvas_left_x, area.y, canvas_width, area.h);
+                        } else {
+                            canvas.fillRect(canvas_left_x, area.y, item.size, area.h);   
                         }
-                        events.sort();
-                        for(var x=events.length-1; x>=0; x--){
-                            if(colorsMapping[events[x]]){
-                                
-                                canvas.fillStyle = colorsMapping[events[x]];
-                                
-                                var dayOne = new Date(events[x]);
-                                dayOne.setDate(dayOne.getDate() - 0.25);
-                                var firstDateTime = dayOne.getTime();
-                                
-                                var nextDay = new Date(events[x]);
-								nextDay.setDate(nextDay.getDate() + 0.25);
-                                var nextDateTime = nextDay.getTime();
-                                
-                                var canvas_left_x = g.toDomXCoord(firstDateTime);
-				                var canvas_right_x = g.toDomXCoord(nextDateTime);
-                                var canvas_width = canvas_right_x - canvas_left_x;
-                                canvas.fillRect(canvas_left_x, area.y, canvas_width, area.h);
-                                
-                            }
-                        }
-                    }
-					
+                         
+                         
+                     })
+                    
                 };
                 /*resize();
                 function resize() {
