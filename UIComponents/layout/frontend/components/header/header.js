@@ -74,6 +74,12 @@ angular
                  }
                    
                    this.inGroup = function(roles){
+                       //No roles are required for menu entry
+                       if(!roles || roles.length == 0) 
+                           return true;
+                       //If roles is required for user but no user defined, or no groups for user
+                       if(roles && roles.length > 0 && (!self.user || (self.user && !self.user.groups))) 
+                           return false;
                        var groups = self.user.groups;
                        if (self.user.groups == null) {
                            groups = [];
