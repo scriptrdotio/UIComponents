@@ -29,8 +29,8 @@ angular
                        $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
                           console.log("next", next);
                           if(next && next.$$route && next.$$route.originalPath != "") {
-                             console.log("current", next.$$route);
-                          	this.currentRoute =  "#"+next.$$route.originalPath;
+                            console.log("current", next.$$route);
+                          	self.currentRoute =  "#"+next.$$route.originalPath;
                              var list = document.getElementsByTagName("a");
                              for (var i = 0; i < list.length; i++){
                                   if(list[i].getAttribute("route") == this.currentRoute){
@@ -92,6 +92,15 @@ angular
                            inRole = true;
                        }
                        return inRole;
+                   }
+                   
+                   
+                   self.checkIfSelected = function(subitems) {
+                       for(var i = 0; i < subitems.length; i++) {
+                           if(subitems.route == self.currentRoute)
+                               return true;
+                       }
+                       return false;
                    }
                     
             

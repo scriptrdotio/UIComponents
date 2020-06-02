@@ -16,7 +16,15 @@
         <!-- begin items in header -->
         <div class="header-items pull-left">
           <div ng-repeat="item in $ctrl.items track by $index" class="pull-left" ng-if="$ctrl.inGroup(item.roles) || !item.roles">
-              <a ng-click="$ctrl.onItemClick(item)" route="{{item.route}}" index="{{colIndex = $index}}" ng-click="$ctrl.addSelectedClass(colIndex)" ng-class="{'selected': item.route == $ctrl.currentRoute}" href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a>
+              <a ng-click="$ctrl.onItemClick(item)" route="{{item.route}}" index="{{colIndex = $index}}" ng-click="$ctrl.addSelectedClass(colIndex)" ng-class="{'selected': item.route == $ctrl.currentRoute}" href="{{item.route}}" ng-if="!item.subitems || item.subitems.length == 0"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a>
+              <div class="btn-group" uib-dropdown ng-if="item.subitems && item.subitems.length > 0" >
+                  <button type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled" ng-class="{'selected': $ctrl.checkIfSelected(item.subitems)}">
+                     <i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}} 
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-left"  uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                      <li ng-if="$ctrl.inGroup(subitem.roles) || !subitem.roles" role="menuitem" ng-repeat="subitem in item.subitems track by $index" ng-class="{'selected': subitem.route == $ctrl.currentRoute}"><a href="{{subitem.route}}"><i class="{{subitem.icon}}" aria-hidden="true"></i>{{subitem.label}}</a></li> 
+                  </ul>
+              </div>
           </div>
         </div>
         <!-- end items in header -->
