@@ -17,12 +17,12 @@
         <div class="header-items pull-left">
           <div ng-repeat="item in $ctrl.items track by $index" class="pull-left" ng-if="$ctrl.inGroup(item.roles) || !item.roles">
               <a ng-click="$ctrl.onItemClick(item)" route="{{item.route}}" index="{{colIndex = $index}}" ng-click="$ctrl.addSelectedClass(colIndex)" ng-class="{'selected': item.route == $ctrl.currentRoute}" href="{{item.route}}" ng-if="!item.subitems || item.subitems.length == 0"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a>
-              <div class="btn-group" uib-dropdown ng-if="item.subitems && item.subitems.length > 0" >
-                  <button type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled" ng-class="{'selected': $ctrl.checkIfSelected(item.subitems)}">
-                     <i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}} 
+              <div class="btn-group dropdownContainer" uib-dropdown ng-if="item.subitems && item.subitems.length > 0" >
+                  <button type="button" class="menuContent" uib-dropdown-toggle ng-disabled="disabled" ng-class="{'selected': $ctrl.checkIfSelected(item.subitems)}">
+                     <i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}} <span class="caret"></span>
                   </button>
-                  <ul class="dropdown-menu dropdown-menu-left"  uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                      <li ng-if="$ctrl.inGroup(subitem.roles) || !subitem.roles" role="menuitem" ng-repeat="subitem in item.subitems track by $index" ng-class="{'selected': subitem.route == $ctrl.currentRoute}"><a href="{{subitem.route}}"><i class="{{subitem.icon}}" aria-hidden="true"></i>{{subitem.label}}</a></li> 
+                  <ul class="subMenu dropdown-menu dropdown-menu-left"  uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                      <li ng-if="$ctrl.inGroup(subitem.roles) || !subitem.roles" role="menuitem" ng-repeat="subitem in item.subitems track by $index"><a href="{{subitem.route}}" ng-class="{'selected': $ctrl.checkIfSelected([subitem]) }"><i class="{{subitem.icon}}" aria-hidden="true"></i>{{subitem.label}}</a></li> 
                   </ul>
               </div>
           </div>
@@ -36,7 +36,7 @@
             <i ng-show="$ctrl.user != null" class="fa fa-user-circle"></i> {{$ctrl.user.login || $ctrl.caretlabel }} <span class="caret"></span>
           </button>
           <ul class="dropdown-menu dropdown-menu-right"  uib-dropdown-menu role="menu" aria-labelledby="single-button">
-            <li ng-if="$ctrl.inGroup(item.roles) || !item.roles" role="menuitem" ng-repeat="item in $ctrl.subitems track by $index" ng-class="{'selected': item.route == $ctrl.currentRoute}"><a href="{{item.route}}"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a></li>
+            <li ng-if="$ctrl.inGroup(item.roles) || !item.roles" role="menuitem" ng-repeat="item in $ctrl.subitems track by $index" ><a href="{{item.route}}" ng-class="{'selected': $ctrl.checkIfSelected([item])}"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a></li>
             <li ng-show="$ctrl.logout && $ctrl.subitems.length > 0" class="divider"></li>
             <li ng-show="$ctrl.logout" role="menuitem" ><a href="{{$ctrl.logout.route}}"><i class="{{$ctrl.logout.icon}}" aria-hidden="true"></i> {{$ctrl.logout.label || "Logout"}}</a></li>
           </ul>

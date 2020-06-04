@@ -31,14 +31,14 @@ angular
                           if(next && next.$$route && next.$$route.originalPath != "") {
                             console.log("current", next.$$route);
                           	self.currentRoute =  "#"+next.$$route.originalPath;
-                             var list = document.getElementsByTagName("a");
+                            /** var list = document.getElementsByTagName("a");
                              for (var i = 0; i < list.length; i++){
                                   if(list[i].getAttribute("route") == this.currentRoute){
                                     list[i].className = list[i].className = "selected";
                                   }else{
                                      list[i].className = list[i].className = "";
                                   }
-                              }
+                              }**/
                           } else {
                             console.log("Missing route definition");
                             //angularEvent.preventDefault();
@@ -103,7 +103,7 @@ angular
                    
                    self.checkIfSelected = function(subitems) {
                        for(var i = 0; i < subitems.length; i++) {
-                           if(subitems.route == self.currentRoute)
+                           if(subitems[i].route == self.currentRoute)
                                return true;
                        }
                        return false;
