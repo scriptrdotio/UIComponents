@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"  ng-app="myApp">
   <head>
     <meta charset="utf-8">
     <title>My HTML File</title>
@@ -15,8 +15,14 @@
     <!-- font awesome.css -->
   
     
+    <!-- JQuery -->  
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+      
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
 
     <script src="/UIComponents/layout/frontend/components/module.js"></script>
     <script src="/UIComponents/layout/frontend/components/header/header.js"></script>
@@ -27,21 +33,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.4.0.js"></script>
  
-    
-    <body ng-app="myApp">  
-       <header-top header-items='{
-          "items": [
-            {"icon": "fa fa-ticket", "label": "Documentation", "route":"#/documentation", "class": "pull-left"},
-            {"icon": "fa fa-ticket", "label": "API Explorer", "route":"#/apiexplorer", "class": "pull-left"},
-            {"icon": "fa fa-ticket", "label": "Logs", "route":"#/logs", "class": "pull-left"}
-          ],
-          "subitems": [
-            {"icon": "fa fa-ticket", "label": "Settings", "route":"#/settings", "class": "pull-left"},
-           ],                      
-          "appname": "Log analyser",
-           "caretlabel": "test"                  
-        }'></header-top>
-    </body>
     <script>
       var underscore = angular.module('underscore',  []);
       underscore.factory('_', ['$window', function($window) {		
@@ -49,6 +40,35 @@
       }]);
       
       var myApp = angular.module('myApp', ["Layout"]);
+        
+      angular.module('myApp').controller('headerCtrl', function($scope, $sce) {
+    	var vm = this;  
+        if($.cookie('user')) {
+        	vm.user = JSON.parse($.cookie('user'));
+        } else {
+          	vm.user = {}
+        }
+     });	
    
     </script>
+    <body ng-controller="headerCtrl as vm">  
+       <header-top header-items='{
+          "items": [
+            {"icon": "fa fa-ticket", "label": "Documentation", "route":"#/documentation", "class": "pull-left"},
+            {"icon": "fa fa-ticket", "label": "API Explorer", "route":"#/apiexplorer", "class": "pull-left"},
+            {"icon": "fa fa-ticket", "label": "Logs", "route":"#/logs", "class": "pull-left", 
+              "subitems": [
+                   {"icon": "fa fa-ticket", "label": "submenu1", "route":"#/submenu1", "class": "pull-left"},
+                   {"icon": "fa fa-ticket", "label": "submenu2", "route":"#/submenu2", "class": "pull-left"}
+              ]
+            }
+          ],
+          "subitems": [
+            {"icon": "fa fa-ticket", "label": "Settings", "route":"#/settings", "class": "pull-left"},
+           ],                      
+          "appname": "Log analyser",
+           "caretlabel": "test",
+           "logout": {"icon": "fa fa-sign-out", "label": "Logout", "route":"#/logout"}
+        }'  user="vm.user" ></header-top>
+    </body>
     </html>
