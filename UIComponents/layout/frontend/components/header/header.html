@@ -19,7 +19,7 @@
               <a ng-click="$ctrl.onItemClick(item)" route="{{item.route}}" index="{{colIndex = $index}}" ng-click="$ctrl.addSelectedClass(colIndex)" ng-class="{'selected': item.route == $ctrl.currentRoute}" href="{{item.route}}" ng-if="!item.subitems || item.subitems.length == 0"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a>
               <div class="btn-group dropdownContainer" uib-dropdown ng-if="item.subitems && item.subitems.length > 0" >
                   <button type="button" class="menuContent" uib-dropdown-toggle ng-disabled="disabled" ng-class="{'selected': $ctrl.checkIfSelected(item.subitems)}">
-                     <i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}} <span class="caret"></span>
+                     <i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}
                   </button>
                   <ul class="subMenu dropdown-menu dropdown-menu-left"  uib-dropdown-menu role="menu" aria-labelledby="single-button">
                       <li ng-if="$ctrl.inGroup(subitem.roles) || !subitem.roles" role="menuitem" ng-repeat="subitem in item.subitems track by $index"><a href="{{subitem.route}}" ng-class="{'selected': $ctrl.checkIfSelected([subitem]) }"><i class="{{subitem.icon}}" aria-hidden="true"></i>{{subitem.label}}</a></li> 
@@ -31,7 +31,7 @@
         <!-- begin header side items -->
         <div class="pull-left username">
         <!-- Single button -->
-        <div class="btn-group" uib-dropdown is-open="status.isopen">
+        <div class="btn-group">
           <button id="username-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
             <i ng-show="$ctrl.user != null" class="fa fa-user-circle"></i> {{$ctrl.user.login || $ctrl.caretlabel }} <span class="caret"></span>
           </button>
