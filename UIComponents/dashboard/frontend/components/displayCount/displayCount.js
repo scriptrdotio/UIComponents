@@ -69,7 +69,16 @@ angular
             this.messageFontWeight = (this.messageFontWeight) ? this.messageFontWeight : "600";             
             this.messageTextColor = (this.messageTextColor) ? this.messageTextColor : "#686868";             
             this.messageBackgroundColor = (this.messageBackgroundColor) ? this.messageBackgroundColor : "white";                          
-            this.messageTextAlignment = (this.messageTextAlignment) ? this.messageTextAlignment : "center";       
+            this.messageTextAlignment = (this.messageTextAlignment) ? this.messageTextAlignment : "center";   
+             
+             
+            this.numberStyle = { 
+                'background' : this.numberBackgroundColor, 
+                'font-family' : this.numberFontFamily, 
+                'font-weight' : this.numberFontWeight, 
+                'color' : this.numberTextColor, 
+                'text-align' : this.numberTextAlignment 
+           }
              
              this.rerender();
              
@@ -95,7 +104,8 @@ angular
                  });
              }
              if(match!=null){
-                 s.numberBackgroundColor=match.color;
+                 self.numberStyle.background = match.color;
+                 self.numberBackgroundColor=match.color;
              }
          }
          
