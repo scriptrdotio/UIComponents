@@ -49,7 +49,7 @@ module.exports = function(grunt) {
 	                     'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js',
 	                     'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js',
 	                     'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js',
-	                     'https://cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-websocket/1.0.9/angular-websocket.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-slick-carousel/3.1.7/angular-slick.min.js',
 	                     'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js',
 	                     'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js',
@@ -259,7 +259,7 @@ module.exports = function(grunt) {
 	            },
 
 	            external_jquery_resources : {
-	               src : [ 'lib/jquery-3.3.1.js', 
+	               src : [ 'lib/jquery-3.1.1.js', 
 	               	     'lib/jquery-ui.js',
 	                       'lib/jquery.cookie.min.js', 
 	                       'lib/slick.min.js' ],
