@@ -94,11 +94,11 @@ angular
          
          this.findBackgroundColor =function(s){
              var match=null;
-             if(typeof s.value === 'string'){
+             if(typeof s.value === 'string' && s.numberBackgroundColors){
                  match=_.find(s.numberBackgroundColors,function(e){
                      return e.value==s.value;
                  });
-             }else if(typeof s.value === 'number'){
+             }else if(typeof s.value === 'number' && s.numberBackgroundColors){
                  match=_.find(s.numberBackgroundColors.reverse(),function(e){
                      return s.value>=e.value;
                  });

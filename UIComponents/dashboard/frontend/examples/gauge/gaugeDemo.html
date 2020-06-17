@@ -5,6 +5,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
@@ -44,9 +45,31 @@
       <scriptr-gauge 
                 transport='wss' 
                 msg-tag="gauge" 
+                 
                 title="Title"
                 title-font-color="#aaa"
                 api='UIComponents/dashboard/frontend/examples/gauge/getGaugeVal'
+                title-position="above"
+                hide-inner-shadow="false"
+                shadow-vertical-offset="3"
+                shadow-opacity="0.2"
+                pointer="true"
+                value-font-color="#aff542"
+                hide-inner-shadow="false"
+                start-animation-type="bounce"
+                refresh-animation-type="bounce"
+                relative-gauge-size="true"
+                on-format-data="vm.callback">
+      </scriptr-gauge>
+    </div>
+      
+        <div style="border: 1px solid #eee; text-align: center;">            
+      <scriptr-gauge 
+                data=45
+                 
+                title="Title"
+                title-font-color="#aaa"
+               
                 title-position="above"
                 hide-inner-shadow="false"
                 shadow-vertical-offset="3"

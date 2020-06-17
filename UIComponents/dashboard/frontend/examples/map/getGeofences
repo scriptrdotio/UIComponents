@@ -19,6 +19,7 @@ var response = documents.query({"query":'type = "geofence"', "fields":"data"});
 	]
 **/
 
+
 if(response.metadata.status == "success") {
     var geofencesData = response.result.documents[0].data;
     return (typeof geofencesData == "string") ? [geofencesData]  :  geofencesData;

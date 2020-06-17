@@ -1,8 +1,11 @@
+<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+</scriptr-notifications>
+
 <div class="metric-box" ng-style="{ 'border' : '{{$ctrl.borderSize}}px solid {{$ctrl.borderColor}}','background' : '{{$ctrl.backgroundColor}}' }" >
 	<div ng-if="$ctrl.disabled" id="disabledOverlay"></div>
 	<div class="metric-box-head">
 		<div class="metric-box-action" >
-			<img ng-if='$ctrl.actionIcon!=""' ng-click="actionClicked()" alt="EI" src="{{$ctrl.actionIcon}}" />
+			<img ng-if='$ctrl.actionIcon!=""' ng-click="actionClicked()" alt="EI" ng-src="{{$ctrl.actionIcon}}" />
 		</div>
 		<div class="metric-box-label" ng-style="{	'font-weight' : '{{$ctrl.labelFontWeight}}', 'font-family' : '{{$ctrl.labelFontFamily}}', 'color' : '{{$ctrl.labelTextColor}}', 'text-align' : '{{$ctrl.labelTextAlignment}}' }">
 				{{$ctrl.label}}
@@ -21,7 +24,7 @@
 		</div>
 
 		<div ng-if='$ctrl.icon!=""' class="metric-box-icon">
-			 <img alt="EI" src="{{$ctrl.icon}}" />
+			 <img alt="EI" ng-src="{{$ctrl.icon}}" />
 		</div>
 	</div>
 </div>

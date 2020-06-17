@@ -9,6 +9,7 @@
     <!-- Adding Angular -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
     
     <!-- Charts used in historical angular.morris -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
@@ -76,13 +77,13 @@
           vm.testDonutFormatter = function (y, data) {
             return '$' +(2*y) 
           };
-      
+      		
       	  vm.hoverCallback =function(index, options, content){
-   			var row = options.data[index]
-            month = 'Y: ' + row.y
-           	line1 = 'A: ' + row.a
-           	line2 = 'B: ' + row.b
-           	return [month, line1, line2].join('<br/>')
+              var row = options.data[index]
+              month = 'Y: ' + row.y
+              line1 = 'A: ' + row.a
+              line2 = 'B: ' + row.b
+              return [month, line1, line2].join('<br/>')
            }
           
           vm.dateFormat = function(x) {

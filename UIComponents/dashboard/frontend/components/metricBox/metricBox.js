@@ -8,6 +8,18 @@ angular
 
             bindings: {
                 
+                "transport": "@",
+                  "api" : "@",
+                  "msgTag" : "@",
+                  "httpMethod": "@",
+                  "apiParams" : "<?",
+                  "onFormatData" : "&",
+                  "fetchDataInterval": "@",
+                  "useWindowParams": "@",
+                  "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
+
+
+                
                 "value": "<?",
               	"disabled": "<?",
                 "label": "@",
@@ -121,7 +133,20 @@ angular
                 }
 
                 var initDataService = function (transport) {
-                    dataService .getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
+                    
+                    var requestInfo = {
+                       "api": self.api,
+                       "transport": transport,
+                       "msgTag": self.msgTag,
+                       "apiParams": self.apiParams,
+                       "useWindowParams": self.useWindowParams,
+                       "httpMethod": self.httpMethod,
+                       "widgetId": $scope.$id
+                   };
+                   dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
+                    
+                    // getData is an old function that does not exist anymore
+                    //dataService .getData(transport, self.api, self.apiParams, self.useWindowParams, self.msgTag, self.consumeData.bind(self), self.fetchDataInterval, $scope.$id);
 
                     if (self.fetchDataInterval && !self.refreshTimer) {
                         //Assuming this is success
