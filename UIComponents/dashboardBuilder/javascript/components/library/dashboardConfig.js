@@ -11,7 +11,7 @@ angular
                      "items": [
                          {
                              "type": "section",
-                             "htmlClass": "col-xs-10",
+                             "htmlClass": "col-xs-6",
                              "items": [{
                                     "key": "scriptName",
                                     "notitle": true,
@@ -20,10 +20,12 @@ angular
                          },
                          {
                              "type": "section",
-                             "htmlClass": "col-xs-2",
+                             "htmlClass": "col-xs-6",
                              "items":[{
                                     "key": "image",
                                     "type": "nwpFileUpload",
+                                    "showProgress": false,
+                                    "simpleImageUpload": true,
                                     "i18n": {
                                         "add": "Open file browser",
                                         "preview": "Preview Upload",
@@ -52,7 +54,7 @@ angular
                             "title": "Image",
                             "type": "array",
                             "format": "singlefile",
-                            "default": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/fileattach.png",
+                            //"default": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/fileattach.png",
                             "x-schema-form": {
                                "type": "array"
                             },
