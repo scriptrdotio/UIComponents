@@ -213,11 +213,16 @@ angular
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
            
-             
-             
              this.showLegend = (this.showLegend) ? this.showLegend : "true"; //Default is true for backward compatibility
              this.legendType = (this.legendType) ? this.legendType : "hover";
              
+            if(this.hoverCallback) {
+                  this.onHoverCallback = function (index, options, content, row) {
+                    return self.hoverCallback()(index, options, content, row); 
+                  	//return self.hoverCallback({index:index, options: options, content: content, row: row})
+                  }
+             }
+
              if(this.showLegend && this.showLegend == "true") {
                  if(this.legendType && this.legendType == "right") {
                      this._hideHover = "auto";
@@ -235,7 +240,8 @@ angular
                              tmp["color"] = this.colors[i];
                          this.legendStructure.push(tmp);
                      }
-                     this.hoverCallback = function (index, options, content, row) {
+                     
+                     this.onHoverCallback = function (index, options, content, row) {
                             if(self.datas) {
                                 if(row && row[$scope.$ctrl.xkey]){
                                     if(self.parseTime) {
@@ -264,10 +270,27 @@ angular
              } else {
                  this._hideHover = "always";
              }
+            
+             if(this.dateFormat) {
+                this.onDateFormat = function(date) {
+                    return self.dateFormat()(date);
+                }
+             }
              
+             if(this.xlabelFormat) {
+                 this.onXlabelFormat = function(date) {
+                    return self.xlabelFormat()(date);
+                }
+             }
+             
+             if(this.ylabelFormat){
+                 this.onYlabelFormat = function(y) {
+                    return self.ylabelFormat()(y);
+                }
+             }
              
              if(this.parseTime) {
-                this.dateFormat = function(date) {
+                this.onDateFormat = function(date) {
                  	try {
                         if(self.timeZone){
                             return moment(date).utcOffset(self.timeZone).format(self.xdateMomentFormat);
@@ -285,7 +308,7 @@ angular
                     }
                 }
                 
-                this.xlabelFormat = function(date) {
+                this.onXlabelFormat = function(date) {
                  	try {
                         if(self.timeZone){
                             return moment(date).utcOffset(self.timeZone).format(self.xdateMomentFormat);
