@@ -93,7 +93,7 @@ angular
              
             scope.selectFile  = function (file) {
                scope.picFile = file;
-               scope.$parent.model[Object.keys(scope.schema.properties)[0]] = file;
+               scope.$parent.model[Object.keys(scope.form.key)[0]] = file;
                scope.uploadForm.file.$setDirty(true);
             };
              

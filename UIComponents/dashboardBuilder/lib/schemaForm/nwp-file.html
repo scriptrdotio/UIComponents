@@ -1,4 +1,4 @@
-<ng-form class="file-upload mb-lg" ng-schema-file ng-model="$$value$$" name="uploadForm">
+<ng-form class="file-upload mb-lg" ng-if="!form.simpleImageUpload" ng-schema-file ng-model="$$value$$" name="uploadForm">
     <label ng-show="form.title && form.notitle !== true" class="control-label" for="fileInputButton" ng-class="{'sr-only': !showTitle(), 'text-danger': uploadForm.$error.required && !uploadForm.$pristine}">
         {{ form.title }}<i ng-show="form.required">&nbsp;*</i>
     </label>
@@ -31,16 +31,16 @@
             <label title="{{ form.i18n.filename ? form.i18n.filename : ('modules.upload.field.filename' | translate)  }}" class="text-info">{{ form.i18n.filename ? form.i18n.filename : ('modules.upload.field.filename' | translate)}}</label>
             <div class="filename" title="{{ picFile.name }}">{{ picFile.name }}</div>
         </div>
-        <!--div class="col-sm-4 mb-sm">
+        <div class="col-sm-4 mb-sm" ng-if="form.showProgress == true">
             <label title="{{ form.i18n.progress ? form.i18n.progress : ('modules.upload.field.progress' | translate)  }}" class="text-info">{{ form.i18n.progress ? form.i18n.progress : ('modules.upload.field.progress' | translate) }}</label>
             <div class="progress">
                 <div class="progress-bar progress-bar-striped" role="progressbar" ng-class="{'progress-bar-success': picFile.progress == 100}" ng-style="{width: picFile.progress + '%'}">
                     {{ picFile.progress }} %
                 </div>
             </div>
-            <button class="btn btn-primary btn-sm" type="button" ng-click="uploadFile(picFile)" ng-disabled="!picFile || picFile.$error">{{ form.i18n.upload ? form.i18n.upload : ('buttons.upload' | translate) }}
-            </button>
-        </div-->
+            <!--button class="btn btn-primary btn-sm" type="button" ng-click="uploadFile(picFile)" ng-disabled="!picFile || picFile.$error">{{ form.i18n.upload ? form.i18n.upload : ('buttons.upload' | translate) }}
+            </button-->
+        </div>
     </div>
     <div ng-messages="uploadForm.$error" ng-messages-multiple="">
         <div class="text-danger errorMsg" ng-message="maxSize">{{ form[picFile.$error].validationMessage | translate }} <strong>{{picFile.$errorParam}}</strong>. ({{ form[picFile.$error].validationMessage2 | translate }} <strong>{{picFile.size / 1000000|number:1}}MB</strong>)</div>
@@ -70,23 +70,26 @@
         {{form.i18n.add ? form.i18n.add : ('buttons.add' | translate)}}
     </button>
 </script>
-<!--ng-form class="file-upload mb-lg" ng-schema-file ng-model="$$value$$" name="uploadForm">
+
+
+<ng-form class="simple-image-upload mb-lg" ng-schema-file ng-model="$$value$$" name="uploadForm" ng-if="form.simpleImageUpload">
     <label ng-show="form.title && form.notitle !== true" class="control-label" for="fileInputButton" ng-class="{'sr-only': !showTitle(), 'text-danger': uploadForm.$error.required && !uploadForm.$pristine}">
         {{ form.title }}<i ng-show="form.required">&nbsp;*</i>
     </label>
     <div class="upload-section">
         <div ngf-drop="selectFile(picFile)" ngf-select="selectFile(picFile)" ngf-model-invalid="invalidFile"  type="file" ngf-multiple="false" ng-model="picFile" name="file" ng-attr-ngf-pattern="{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}" ng-attr-ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" ngf-drag-over-class="dragover"> 
            <div class="default-image fas" ng-if="!picFile && !$$value$$"> 
-               <img ng-if="form.schema.default" ng-src="{{cdnImagesPath}}{{form.schema.default}}" />
+               <img ng-if="form.schema.default" ng-src="{{form.schema.default}}" />
+               <i ng-if="!form.schema.default" class="fa fa-paperclip pdt6" aria-hidden="true"></i>
             </div>
             <div ng-if="!picFile && ($$value$$ && $$value$$ != form.schema.default)"  class="default-image fas"> 
                <img ng-src="{{$$value$$}}" />
             </div>
             <div ng-if="!picFile && ($$value$$ && $$value$$ == form.schema.default)"  class="default-image fas"> 
-               <img ng-src="{{cdnImagesPath}}{{form.schema.default}}" />
+               <img ng-src="{{form.schema.default}}" />
             </div>
             <div ng-if="picFile" class="uploaded-image">
-                 <div ng-include="'uploadProcess.html'" class="mb"></div>
+                 <div ng-include="'simpleUploadProcess.html'" class="mb"></div>
             </div>
         </div>
         <div class="remove-file" ng-show="picFile || ($$value$$ && $$value$$ != form.schema.default)">
@@ -98,14 +101,13 @@
         <div class="text-danger errorMsg" ng-message="pattern">{{ form.schema[invalidFile.$error].validationMessage | translate }} <strong>{{invalidFile.$errorParam}}</strong>.</div>
         <div class="text-danger errorMsg" ng-show="errorMsg">{{errorMsg}}</div>
     </div>
-    
-    
-    </div>
+  </div>
 </ng-form>
-<script type='text/ng-template' id="uploadProcess.html">
+
+<script type='text/ng-template' id="simpleUploadProcess.html">
     <div class="table-display">
         <div class="cell-display">
             <img ngf-src="picFile" class="img-responsive">
         </div>
     </div>
-</script-->
+</script>
