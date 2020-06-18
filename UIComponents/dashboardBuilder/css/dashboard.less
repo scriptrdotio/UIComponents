@@ -43,6 +43,8 @@ html {background: @themeBase;}
 
 .pdt5 {padding-top: 5px;}
 .pdb5 {padding-bottom: 5px;}
+.pdt6 {padding-top: 6px;}
+
 
 .pdl0 {padding-left: 0px;}
 .ml5 {margin-left: 5px;}
@@ -865,5 +867,47 @@ pre.CodeMirror-placeholder {
 /**markdown db**/
 .markdown-db {padding: 0;}
 .markdown-db h2 {font-size: 18px;}
+
+
+/*** Upload file ***/
+
+.simple-image-upload .default-image {width: 30px; height: 30px; border-radius: 50%;  background: #fff; border: 1px solid #d7d7d7; position: relative; text-align: center; cursor: pointer; overflow:hidden;}
+.simple-image-upload .default-image img {max-width: 67%; height: auto; margin: 0 auto; padding-top: 6px;}
+.simple-image-upload .default-image:before {opacity: 0; background: rgba(0,0,0,0.5); content:""; width: 30px; height: 15px; position: absolute; bottom: 0;
+border-radius: 0 0 20px 20px; left: 0;}  
+
+.simple-image-upload .default-image:after, 
+.simple-image-upload .uploaded-image:after {
+    font-family:Font Awesome\ 5 Free;
+    content: "\f030"; 
+	font-weight: 900;
+    opacity: 0; top: 15px; font-size: 11px; left: 8px; color: #fff; position: absolute; 
+}
+.simple-image-upload .uploaded-image:after {top: 13px;}
+.simple-image-upload .default-image:hover:after, 
+.simple-image-upload .default-image:hover:before,
+.simple-image-upload .uploaded-image:hover:after,
+.simple-image-upload .uploaded-image:hover:before {opacity: 1;}  
+
+.simple-image-upload .uploaded-image {width: 30px; height: 30px; background: rgb(255, 255, 255); border-radius: 50%; border: 1px solid #d7d7d7;
+overflow: hidden; position: relative; cursor: pointer;}
+.simple-image-upload .uploaded-image .table-display {display: table; width: 100%; height: 100%;}
+.simple-image-upload .uploaded-image .cell-display {display: table-cell; vertical-align: middle;}
+.simple-image-upload .uploaded-image:before {opacity: 0; background: rgba(0,0,0,0.5); content:""; width: 30px; height: 15px; position: absolute; bottom: 0;
+border-radius: 0 0 20px 20px; left: 0;}   2px 2px 12px 0px rgba(51,51,51,0.3);
+
+.simple-image-upload .remove-file {position: absolute; cursor: pointer; box-shadow: 0px 0px 4px rgba(51,51,51,0.3); background: @primaryColor; border-radius: 50%; width: 15px; height: 15px; text-align: center;}
+
+.simple-image-upload .remove-file a {display:block; color: @primaryColor;}
+.simple-image-upload .remove-file i {font-size: 10px; padding-top: 1px;}
+.simple-image-upload .errorMsg {display: block;margin: 0;font-size: 12px;margin-top: 2px;}
+
+
+
+
+
+
+
+
 
 }
