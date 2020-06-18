@@ -1,2 +1,2 @@
-<iframe style="height: 90%; width: 100%" ng-if="$ctrl.link" src="{{$ctrl.trustSrc($ctrl.link)}}" frameborder="0" allowfullscreen></iframe>
+<iframe ng-if="$ctrl.link" src="{{$ctrl.trustSrc($ctrl.link)}}" frameborder="0" allowfullscreen></iframe>
 <h3 ng-if="!$ctrl.link">No URL set</h3>
