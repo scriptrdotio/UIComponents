@@ -30,6 +30,7 @@ angular.module("DashboardBuilder", [
 	"Chart", 
 	"gridster",
 	"Gauge",
+    "Grideye",
 	"Speedometer", 
 	"Odometer",
 	"SearchBox", 

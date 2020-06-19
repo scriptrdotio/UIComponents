@@ -1,0 +1,62 @@
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>GridEye</title>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/examples/grideye/style.css">
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/grideye/angular-p5.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/grideye/grideye.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/grideye/cell.js"></script>
+    
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+</head>
+
+<script>
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Grideye"])
+      angular.module('myApp').config(wssConfig);
+      angular.module('myApp').config(httpsConfig);
+  
+      angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.callback = function(data){
+            console.log("data formatter");
+            return data;
+          }
+      });
+</script>
+<body>
+    <div style="border: 1px solid #eee; text-align: center;">            
+      <scriptr-grideye 
+                transport='wss' 
+                msg-tag="grideye" 
+                 
+                title="Grideye"
+                title-font-color="#aaa"
+                api='UIComponents/dashboard/frontend/examples/grideye/getGrideyeData'
+                
+                on-format-data="vm.callback">
+      </scriptr-grideye>
+    </div>
+
+</body>
+
+</html>
