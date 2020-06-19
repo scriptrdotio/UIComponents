@@ -49,6 +49,7 @@ angular
                 "displayData":"/UIComponents/dashboard/frontend/components/displayCount/properties.md",
                 "donut":"/UIComponents/dashboard/frontend/components/chart/properties.md",
                 "gauge":"/UIComponents/dashboard/frontend/components/gauge/properties.md",
+                "grideye":"/UIComponents/dashboard/frontend/components/grideye/properties.md",
                 "grid":"/UIComponents/dashboard/frontend/components/grid/properties.md",
                 "iframe":"/UIComponents/dashboard/frontend/components/IFrame/properties.md",
                 "line":"/UIComponents/dashboard/frontend/components/chart/properties.md",
