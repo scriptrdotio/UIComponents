@@ -199,7 +199,7 @@ angular.module('Grideye').component('scriptrGrideye',{
             }
         }
         
-        var sketch = (p5) => {
+        var sketch =  function (p5) {
             var randChanges = [];
             var randChangeSpeed = .1;
             var noData = false;
