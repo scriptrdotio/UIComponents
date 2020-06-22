@@ -8,6 +8,7 @@
 
 'use strict';
 
+
 module.exports = function(grunt) {
 
 	grunt
@@ -64,7 +65,8 @@ module.exports = function(grunt) {
 	                     'https://d3js.org/d3.v4.min.js',
 	                     'https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js'
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js'
 	               ]
 	            }
 	         },
@@ -116,7 +118,9 @@ module.exports = function(grunt) {
 		                  'dashboardBuilder/ide/dashboardTemplate_ide.min',
 		                  'dashboardBuilder/css/customStyleTemplate.css',
 		                  'dashboardBuilder/view/dashboardsList.html',
-		                  'dashboardBuilder/lib/schemaForm/nwp-file.html'],
+		                  'dashboardBuilder/lib/schemaForm/nwp-file.html',
+		                  'dashboard/frontend/components/grideye/grideye.html'],
+		                
 		            dest :'build/js/templates.js',
 		            options : {
 		               bootstrap : function(module, script) {
@@ -224,7 +228,10 @@ module.exports = function(grunt) {
 							'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/components/thermometer/thermometer.js'],
 							'concat/min-safe/menu.js' : [ 'layout/frontend/components/menu/menu.js'],
 						   'concat/min-safe/header.js' : [ 'layout/frontend/components/header/header.js'],
-						   'concat/min-safe/layoutmodule.js' : [ 'layout/frontend/components/module.js']
+						   'concat/min-safe/layoutmodule.js' : [ 'layout/frontend/components/module.js'],
+						   'concat/min-safe/angular-p5.js' : [ 'dashboard/frontend/components/grideye/angular-p5.js'],
+						   'concat/min-safe/cell.js' : [ 'dashboard/frontend/components/grideye/cell.js'],
+						   'concat/min-safe/grideye.js' : [ 'dashboard/frontend/components/grideye/grideye.js']
 							
 		            }
 	            }
@@ -253,7 +260,9 @@ module.exports = function(grunt) {
 	                     'dashboardBuilder/javascript/components/library/widgets/alert.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/display-data.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/windrose.js',
-	                     'dashboardBuilder/javascript/components/library/widgets/3dsurface.js'
+	                     'dashboardBuilder/javascript/components/library/widgets/3dsurface.js',
+	                     'dashboardBuilder/javascript/components/library/widgets/grideye.js'
+	                     
 	                     ],
 	               dest : 'build/js/dashboard_builder_constants.min.js'
 	            },
@@ -319,7 +328,11 @@ module.exports = function(grunt) {
 	               src : [ 
 	               	   'lib/angular-material.js',
 	                     'concat/min-safe/svg-assets-cache.js',
-	                     'concat/min-safe/markerClusterer.js' 
+	                     'concat/min-safe/markerClusterer.js' ,
+	                     'lib/p5.js',
+	                     'concat/min-safe/angular-p5.js',
+							   'concat/min-safe/cell.js',
+							   'concat/min-safe/grideye.js'
 	                     ],
 	               dest : 'build/js/angular_resources_3.min.js'
 	            },
