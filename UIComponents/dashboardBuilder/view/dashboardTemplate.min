@@ -10,7 +10,7 @@
     &lt;link href=&quot;//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&quot; rel=&quot;stylesheet&quot;&gt;
   
     &lt;!-- CSS --&gt;
-    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;/UIComponents/build/css/UIComponents/components.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;/UIComponents/build/css/components.min.css&quot;/&gt;
     
     
      &lt;!-- Theme --&gt;
