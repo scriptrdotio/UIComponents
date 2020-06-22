@@ -256,7 +256,7 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
 
 
   $templateCache.put('/UIComponents/layout/frontend/components/header/header.html',
-    "<header><div class={{$ctrl.class}}><div class=\"logo pull-left\"><img src={{$ctrl.logo}} class=img-responsive></div><div class=\"pull-left appname\">{{$ctrl.appname}}</div><div class=pull-right><div class=\"header-items pull-left\"><div ng-repeat=\"item in $ctrl.items track by $index\" class=pull-left ng-if=\"$ctrl.inGroup(item.roles) || !item.roles\"><a ng-click=$ctrl.onItemClick(item) route={{item.route}} index=\"{{colIndex = $index}}\" ng-click=$ctrl.addSelectedClass(colIndex) ng-class=\"{'selected': item.route == $ctrl.currentRoute}\" href={{item.route}}><i class={{item.icon}} aria-hidden=true></i> {{item.label}}</a></div></div><div class=\"pull-left username\"><div class=btn-group uib-dropdown is-open=status.isopen><button id=username-button type=button class=\"btn btn-primary\" uib-dropdown-toggle ng-disabled=disabled><i ng-show=\"$ctrl.user != null\" class=\"fa fa-user-circle\"></i> {{$ctrl.user.login || $ctrl.caretlabel }} <span class=caret></span></button><ul class=\"dropdown-menu dropdown-menu-right\" uib-dropdown-menu role=menu aria-labelledby=single-button><li ng-if=\"$ctrl.inGroup(item.roles) || !item.roles\" role=menuitem ng-repeat=\"item in $ctrl.subitems track by $index\" ng-class=\"{'selected': item.route == $ctrl.currentRoute}\"><a href={{item.route}}><i class={{item.icon}} aria-hidden=true></i> {{item.label}}</a></li><li ng-show=\"$ctrl.logout && $ctrl.subitems.length > 0\" class=divider></li><li ng-show=$ctrl.logout role=menuitem><a href={{$ctrl.logout.route}}><i class={{$ctrl.logout.icon}} aria-hidden=true></i> {{$ctrl.logout.label || \"Logout\"}}</a></li></ul></div></div></div></div></header>"
+    "<header><div class={{$ctrl.class}}><div class=\"logo pull-left\"><img src={{$ctrl.logo}} class=img-responsive></div><div class=\"pull-left appname\">{{$ctrl.appname}}</div><div class=pull-right><div class=\"header-items pull-left\"><div ng-repeat=\"item in $ctrl.items track by $index\" class=pull-left ng-if=\"$ctrl.inGroup(item.roles) || !item.roles\"><a ng-click=$ctrl.onItemClick(item) route={{item.route}} index=\"{{colIndex = $index}}\" ng-click=$ctrl.addSelectedClass(colIndex) ng-class=\"{'selected': item.route == $ctrl.currentRoute}\" href={{item.route}} ng-if=\"!item.subitems || item.subitems.length == 0\"><i class={{item.icon}} aria-hidden=true></i> {{item.label}}</a><div class=\"btn-group dropdownContainer\" uib-dropdown ng-if=\"item.subitems && item.subitems.length > 0\"><button type=button class=menuContent uib-dropdown-toggle ng-disabled=disabled ng-class=\"{'selected': $ctrl.checkIfSelected(item.subitems)}\"><i class={{item.icon}} aria-hidden=true></i> {{item.label}}</button><ul class=\"subMenu dropdown-menu dropdown-menu-left\" uib-dropdown-menu role=menu aria-labelledby=single-button><li ng-if=\"$ctrl.inGroup(subitem.roles) || !subitem.roles\" role=menuitem ng-repeat=\"subitem in item.subitems track by $index\"><a href={{subitem.route}} ng-class=\"{'selected': $ctrl.checkIfSelected([subitem]) }\"><i class={{subitem.icon}} aria-hidden=true></i>{{subitem.label}}</a></li></ul></div></div></div><div class=\"pull-left username\"><div class=btn-group><button id=username-button type=button class=\"btn btn-primary\" uib-dropdown-toggle ng-disabled=disabled><i ng-show=\"$ctrl.user != null\" class=\"fa fa-user-circle\"></i> {{$ctrl.user.login || $ctrl.caretlabel }} <span class=caret></span></button><ul class=\"dropdown-menu dropdown-menu-right\" uib-dropdown-menu role=menu aria-labelledby=single-button><li ng-if=\"$ctrl.inGroup(item.roles) || !item.roles\" role=menuitem ng-repeat=\"item in $ctrl.subitems track by $index\"><a href={{item.route}} ng-class=\"{'selected': $ctrl.checkIfSelected([item])}\"><i class={{item.icon}} aria-hidden=true></i> {{item.label}}</a></li><li ng-show=\"$ctrl.logout && $ctrl.subitems.length > 0\" class=divider></li><li ng-show=$ctrl.logout role=menuitem><a href={{$ctrl.logout.route}}><i class={{$ctrl.logout.icon}} aria-hidden=true></i> {{$ctrl.logout.label || \"Logout\"}}</a></li></ul></div></div></div></div></header>"
   );
 
 
@@ -1008,16 +1008,16 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "            <label title=\"{{ form.i18n.filename ? form.i18n.filename : ('modules.upload.field.filename' | translate)  }}\" class=\"text-info\">{{ form.i18n.filename ? form.i18n.filename : ('modules.upload.field.filename' | translate)}}</label>\n" +
     "            <div class=\"filename\" title=\"{{ picFile.name }}\">{{ picFile.name }}</div>\n" +
     "        </div>\n" +
-    "        <!--div class=\"col-sm-4 mb-sm\">\n" +
+    "        <div class=\"col-sm-4 mb-sm\" ng-if=\"form.showProgress == true\">\n" +
     "            <label title=\"{{ form.i18n.progress ? form.i18n.progress : ('modules.upload.field.progress' | translate)  }}\" class=\"text-info\">{{ form.i18n.progress ? form.i18n.progress : ('modules.upload.field.progress' | translate) }}</label>\n" +
     "            <div class=\"progress\">\n" +
     "                <div class=\"progress-bar progress-bar-striped\" role=\"progressbar\" ng-class=\"{'progress-bar-success': picFile.progress == 100}\" ng-style=\"{width: picFile.progress + '%'}\">\n" +
     "                    {{ picFile.progress }} %\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "            <button class=\"btn btn-primary btn-sm\" type=\"button\" ng-click=\"uploadFile(picFile)\" ng-disabled=\"!picFile || picFile.$error\">{{ form.i18n.upload ? form.i18n.upload : ('buttons.upload' | translate) }}\n" +
-    "            </button>\n" +
-    "        </div-->\n" +
+    "            <!--button class=\"btn btn-primary btn-sm\" type=\"button\" ng-click=\"uploadFile(picFile)\" ng-disabled=\"!picFile || picFile.$error\">{{ form.i18n.upload ? form.i18n.upload : ('buttons.upload' | translate) }}\n" +
+    "            </button-->\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "    <div ng-messages=\"uploadForm.$error\" ng-messages-multiple=\"\">\n" +
     "        <div class=\"text-danger errorMsg\" ng-message=\"maxSize\">{{ form[picFile.$error].validationMessage | translate }} <strong>{{picFile.$errorParam}}</strong>. ({{ form[picFile.$error].validationMessage2 | translate }} <strong>{{picFile.size / 1000000|number:1}}MB</strong>)</div>\n" +
@@ -1039,6 +1039,10 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "    <button ngf-select=\"selectFiles(picFiles)\" type=\"file\" ngf-multiple=\"true\" multiple ng-model=\"picFiles\" name=\"files\" accept=\"{{form.schema.pattern && form.schema.pattern.mimeType}}\" ngf-pattern=\"'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'\" ngf-accept=\"'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'\" ngf-max-size=\"{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}\" ng-required=\"form.required\" ng-model-options=\"form.ngModelOptions\" id=\"fileInputButton\" class=\"btn btn-primary btn-block {{form.htmlClass}} mt-lg mb\">\n" +
     "        <fa fw=\"fw\" name=\"upload\" class=\"mr-sm\"></fa>\n" +
     "        {{form.i18n.add ? form.i18n.add : ('buttons.add' | translate)}}\n" +
-    "    </button></script>"
+    "    </button></script><script type=text/ng-template id=simpleUploadProcess.html><div class=\"table-display\">\n" +
+    "        <div class=\"cell-display\">\n" +
+    "            <img ngf-src=\"picFile\" class=\"img-responsive\">\n" +
+    "        </div>\n" +
+    "    </div></script>"
   );
 }])
