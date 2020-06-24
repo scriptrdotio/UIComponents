@@ -60,11 +60,7 @@ iframe {width: 100%; height: 100%;}
 .index-summary .icon {margin: 0 auto 4px auto; float: none;}
 .index-summary .fnt20 {font-size: 16px;}
 
-ng-map {
-  width:100%; 
-  height:100%;
-  /**position: absolute;**/
-}
+ng-map {width:100%; height:100%;position: absolute;}
 
 /** drawing map buttons **/
 .drawingmanager-buttons {

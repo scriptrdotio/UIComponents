@@ -234,6 +234,12 @@ angular
 			self.focusOnAsset(data)
         });
           
+          
+        $scope.$on("mapRemoveAssets", function(event, data) {
+			self.removeAssets(data)
+        });
+          
+          
         //Show info window of asset 
         $scope.$on("mapShowInfoWindowOnMarker", function(event, data) {
             var marker = self.assets[data]["latestMarker"];
@@ -423,6 +429,20 @@ angular
 
       }
         
+      self.removeAssets = function(assets) {
+         for (var key in assets) {
+             if (assets.hasOwnProperty(key)) {
+                 var assetKey  = buildAssetKey(key, assets[key]);
+				 delete self.assets[assetKey];
+                 delete self.displayedAssets[assetKey];
+				 delete self.dynMarkers[assetKey];
+                 self.markerClusterer.clearMarkers();
+          		 self.markerClusterer.addMarkers( _.toArray(self.dynMarkers), false);
+          		 self.markerClusterer.repaint();
+             }
+         }
+         
+     }
 
       //Call when receiving a new asset, or a set of assets
       self.processAssets = function(data) {
@@ -589,6 +609,9 @@ angular
         }
       };
       
+      var buildAssetKey = function(assetId, trips) {
+         return trips.source + "_" + assetId;
+      }
       // Add an asset marker point to map
       // Example of pushed of asset trips: {"tripId":[{"lat":{"value": "51.650359051036","long": {"value":"-0.055656842290684",....},
       // "source":{"value":"stream"}}],"source":"stream","order":["0"]}

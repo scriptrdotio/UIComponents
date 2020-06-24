@@ -72,14 +72,20 @@
   		angular.module('myApp').config(wssConfig);
       	angular.module('myApp').config(httpsConfig);
     
-      myApp.controller('testCtrl', function($scope, $controller, wsClient, mapConstants, $sce) {
+      myApp.controller('testCtrl', function($scope, $controller, wsClient, mapConstants, $sce, $timeout) {
           var vm = this;
+          var toRemoveAsset = {"253812": {"source": "simulator"}, "253816":  {"source": "simulator"} , "253831":  {"source": "simulator"} };
           vm.init = function() {
               wsClient.onReady.then(function() {});
               vm.sources = {"simulator": {
       "label": "ddd",
       "icon": { "url": "//icons.iconarchive.com/icons/graphicloads/flat-finance/32/lock-icon.png"}}};
-              vm.icons = mapConstants.infoWindows.icons
+              vm.icons = mapConstants.infoWindows.icons;
+              
+              $timeout(function() {
+                  $scope.$broadcast("mapRemoveAssets",toRemoveAsset )
+ 
+              }, 10000);
           }
 
           vm.showAssetDashboard = function(id) {
@@ -92,7 +98,7 @@
       });
   </script>
   <body>
-     <div ng-controller="testCtrl as vm" ng-init="vm.init()">
+     <div ng-controller="testCtrl as vm" ng-init="vm.init()" style="height: calc(100% - 40px);">
         <scriptr-map bounce="true" heatmap="false"  heat-map-weight="200" default-center="33.888630,35.495480" transport="https" sources-info="vm.sources" clustered-view="true" cluster-zoom="8" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" api="UIComponents/dashboard/frontend/examples/map/simulatorData" api-params='{"timeframe" : "this_1_years", "limit" : "20"}' msg-tag="everyone-main-live" geofence-manager="true" api-geofence="UIComponents/dashboard/frontend/examples/map/saveGeofence" geofence-data="{loadGeofenceApi: 'UIComponents/dashboard/frontend/examples/map/getGeofence', saveGeofenceApi:'UIComponents/dashboard/frontend/examples/map/saveGeofence', geofenceApiParams: {'id': vm.selectedAsset} }" >
           <div>
             <info-window id="infoWindowTemplate_simulator" template="/UIComponents/dashboard/frontend/examples/map/info_simulator.html" max-width="600"></info-window>
