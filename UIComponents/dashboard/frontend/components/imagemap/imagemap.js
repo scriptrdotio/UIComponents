@@ -77,7 +77,7 @@ angular.module('Imagemap').component('scriptrImagemap',{
                             type: 'div',
                             iconUrl: theMarker.icon.url,
                             unit: theMarker.icon.unit,
-                            html: "<div style='background-color:#96c0d0;' class='marker-pin'><div class='markerContent'><img width='32px' height='32px' class='markerImg' src='" + theMarker.icon.url + "'/><span class='indicator-value' style='right: 0px;'></div></div>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + " " + theMarker.icon.unit + "</span>",
+                            html: "<div style='background-color:#96c0d0;' class='marker-pin'><div class='markerContent'><img width='32px' height='32px' class='markerImg' src='" + theMarker.icon.url + "'/><span class='indicator-value' style='right: 0px;'>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + " " + theMarker.icon.unit + "</span></div></div>",
                             iconSize: [90, 120],
                             iconAnchor: [0, 0],
                             popupAnchor:  [15, -30]
@@ -198,7 +198,7 @@ angular.module('Imagemap').component('scriptrImagemap',{
                         for(var i = 0; i < dataKeys.length; i++){
                             var dataKey = dataKeys[i];
                             if(self.markers[dataKey]){
-                                self.markers[dataKey].icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='markerContent'><img width='32px' height='32px' class='markerImg' src='" + self.markers[dataKey].icon.iconUrl + "'/><span class='indicator-value' style='right: 0px;'></div></div>" + data[dataKey] + " " + self.markers[dataKey].icon.unit + "</span>";
+                                self.markers[dataKey].icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='markerContent'><img width='32px' height='32px' class='markerImg' src='" + self.markers[dataKey].icon.iconUrl + "'/><span class='indicator-value' style='right: 0px;'>" + data[dataKey] + " " + self.markers[dataKey].icon.unit + "</span></div></div>";
                             }
                         }
                     }
