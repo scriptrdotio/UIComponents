@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/map/map.css">
     <link href="/UIComponents/dashboard/frontend/components/toggleSwitch/angular_toggle_switch.css" media="all" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/schemaForm/select.min.css">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/examples/imageMap/imageMap.css">
     
     <link href="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.31/css/colorpicker.min.css" rel="stylesheet">
     <link href="//cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.css" media="all" rel="stylesheet" type="text/css">
@@ -95,6 +96,13 @@
     <!-- Directives -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+    
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-leaflet-directive/0.10.0/angular-leaflet-directive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
 	<script src="//d3js.org/d3.v4.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/chart/morris.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/chart/angular.morris.js"></script>
@@ -102,6 +110,7 @@
     <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/grideye/angular-p5.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/grideye/cell.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/imagemap.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/speedometer/angular.metergauge.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/odometer/odometer.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/odometer/angular.odometer.min.js"></script>
@@ -141,6 +150,7 @@
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgets/donut.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgets/gauge.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgets/grideye.js"></script>
+    <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgets/imagemap.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgets/speedometer.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgets/thermometer.js"></script>
     <script src="/UIComponents/dashboardBuilder/javascript/components/library/widgets/odometer.js"></script>

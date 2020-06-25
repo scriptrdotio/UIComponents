@@ -1,0 +1,119 @@
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>Imagemap</title>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>	
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-leaflet-directive/0.10.0/angular-leaflet-directive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+    
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/imagemap.js"></script>
+    
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/examples/imageMap/imageMap.css">
+</head>
+
+<script>
+      var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Imagemap"])
+      angular.module('myApp').config(wssConfig);
+      angular.module('myApp').config(httpsConfig);
+  
+      angular.module('myApp').controller('testCtrl', function($scope) {
+          var vm = this;
+          vm.callback = function(data){
+            console.log("data formatter");
+            return data;
+          }
+          
+          vm.markersData = [
+                {
+                    key: 'temperature',
+                    lat: 100, 
+                    lng: 50,
+                    draggable: true,
+                    group: 'testers',
+                    icon: {
+                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/accelerometer.png',
+                        unit: '°C'
+                    }
+                },
+                {
+                    key: 'pressure',
+                    lat: 150, 
+                    lng: 150,
+                    draggable: true,
+                    group: 'testers',
+                    icon: {
+                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/pressure.png',
+                        unit: 'Pa'
+                    }
+                },
+                {
+                    key: 'co2',
+                    lat: 150, 
+                    lng: 60,
+                    draggable: true,
+                    group: 'testers',
+                    icon: {
+                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/co2.svg',
+                        unit: 'ppm'
+                    }
+                },
+                {
+                    key: 'batata',
+                    lat: 250, 
+                    lng: 60,
+                    draggable: true,
+                    group: 'testers',
+                    icon: {
+                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/co2.svg',
+                        unit: 'ppm'
+                    }
+                }
+            ]
+      });
+    
+</script>
+<body ng-controller="testCtrl as vm">          
+      <scriptr-imagemap 
+                        transport='wss' 
+                        msg-tag="imagemap" 
+
+                        title="Imagemap"
+                        title-font-color="#aaa"
+                        api='UIComponents/dashboard/frontend/examples/imageMap/getImagemapData'
+                        
+                        image-url='//s3.amazonaws.com/scriptr-cdn/compagno/HVAC-system-7.png'
+                        width='640'
+                        height='571'
+                        min-zoom='0'
+                        max-zoom='2'
+                        markers-data="vm.markersData"
+                        data="{temperature: 24,pressure: 40,co2: 40}"
+
+                        on-format-data="vm.callback">
+      </scriptr-imagemap>
+</body>
+
+</html>

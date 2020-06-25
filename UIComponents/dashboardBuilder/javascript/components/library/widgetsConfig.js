@@ -19,6 +19,7 @@ angular
                     __MAP__,
                     __GAUGE__,
                     __GRIDEYE__,
+                    __IMAGEMAP__,
                     __SPEEDOMETER__,
                     __THERMOMETER__,
                     __ODOMETER__,

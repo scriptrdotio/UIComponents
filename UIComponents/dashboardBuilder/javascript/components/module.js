@@ -31,6 +31,7 @@ angular.module("DashboardBuilder", [
 	"gridster",
 	"Gauge",
     "Grideye",
+    "Imagemap",
 	"Speedometer", 
 	"Odometer",
 	"SearchBox", 
