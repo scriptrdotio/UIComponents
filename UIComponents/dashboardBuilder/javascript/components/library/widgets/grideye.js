@@ -18,7 +18,7 @@ const __GRIDEYE__ = {
         "minSizeY": 2
     },
     "imgCls": "gridye-img",
-    "imgSrc": "//img.icons8.com/plasticine/2x/heat-map.png",
+    "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/grideye.png",
     "form": [{
         "type": "tabs",
         "tabs": [{

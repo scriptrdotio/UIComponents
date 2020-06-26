@@ -36,6 +36,7 @@ angular.module('Grideye').component('scriptrGrideye',{
             this.height = $element[0].parentElement.clientHeight;
             this.square_width = this.width / this.gridXCount;
             this.square_height = this.height / this.gridYCount;
+            this.icon = (this.icon)? this.icon : '//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/grideye-bg.svg';
             
             this.customSectors = (this.customSectors) ? this.customSectors : {
                 ranges: [{

@@ -37,6 +37,8 @@ angular.module('Imagemap').component('scriptrImagemap',{
             self.msgTag = (self.msgTag) ? self.msgTag : null;
             self.useWindowParams = (self.useWindowParams) ? self.useWindowParams : "true";
             
+            self.icon = (self.icon)? self.icon : '//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/imagemap-bg.svg';
+            
             self.defaults = {
                 crs: 'Simple',
                 maxZoom: self.maxZoom

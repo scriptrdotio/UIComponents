@@ -18,7 +18,7 @@ const __IMAGEMAP__ = {
         "minSizeY": 2
     },
     "imgCls": "imagemap-img",
-    "imgSrc": "//img.icons8.com/plasticine/2x/heat-map.png",
+    "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/imagemap.png",
     "form": [{
         "type": "tabs",
         "tabs": [{
