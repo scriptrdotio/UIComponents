@@ -119,7 +119,9 @@ module.exports = function(grunt) {
 		                  'dashboardBuilder/css/customStyleTemplate.css',
 		                  'dashboardBuilder/view/dashboardsList.html',
 		                  'dashboardBuilder/lib/schemaForm/nwp-file.html',
-		                  'dashboard/frontend/components/grideye/grideye.html'],
+		                  'dashboard/frontend/components/grideye/grideye.html',
+		                  'dashboard/frontend/components/imagemap/imagemap.html'
+		                  ],
 		                
 		            dest :'build/js/templates.js',
 		            options : {
@@ -231,7 +233,8 @@ module.exports = function(grunt) {
 						   'concat/min-safe/layoutmodule.js' : [ 'layout/frontend/components/module.js'],
 						   'concat/min-safe/angular-p5.js' : [ 'dashboard/frontend/components/grideye/angular-p5.js'],
 						   'concat/min-safe/cell.js' : [ 'dashboard/frontend/components/grideye/cell.js'],
-						   'concat/min-safe/grideye.js' : [ 'dashboard/frontend/components/grideye/grideye.js']
+						   'concat/min-safe/grideye.js' : [ 'dashboard/frontend/components/grideye/grideye.js'],
+						   'concat/min-safe/imagemap.js' : [ 'dashboard/frontend/components/imagemap/imagemap.js']
 							
 		            }
 	            }
@@ -334,6 +337,7 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/angular-p5.js',
 						   'concat/min-safe/cell.js',
 						   'concat/min-safe/grideye.js',
+						   'concat/min-safe/imagemap.js',
 						   
 	                     ],
 	               dest : 'build/js/angular_resources_3.min.js'
