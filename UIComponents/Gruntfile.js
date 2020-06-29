@@ -501,18 +501,31 @@ module.exports = function(grunt) {
 		            }
 	            }
 	         },
-
+	         
+	         stripCssComments : {
+	         	options: {
+	               preserve: false 
+	             },
+	             dist: {
+	                files: {
+	                    'build/css/components.stripped.css': 'build/css/components.css',
+	                    'build/css/light.stripped.css': 'dashboardBuilder/css/light.css',
+	                    'build/css/dark.stripped.css': 'dashboardBuilder/css/dark.css'
+	                    
+	                }
+	            }
+	         },
 	         cssmin : {
 	            components : {
-	               src : 'build/css/components.css',
+	               src : 'build/css/components.stripped.css',
 	               dest : 'build/css/components.min.css'
 	            },
 	            light: {
-	            	src : 'dashboardBuilder/css/light.css',
+	            	src : 'build/css/light.stripped.css',
 	               dest : 'build/css/light.min.css'
 	            },
 	            dark: {
-	            	src : 'dashboardBuilder/css/dark.css',
+	            	src : 'build/css/dark.stripped.css',
 	               dest : 'build/css/dark.min.css'
 	            }
 
@@ -577,6 +590,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-angular-templates');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-strip-css-comments');
 
 	// Run the tasks
 	grunt.registerTask('buildCss', [ 'less:production' ]);
@@ -599,6 +613,7 @@ module.exports = function(grunt) {
 	      'less:production', 
 	      'concat:css',
 	      'uglify:dashboardBuilder', 
+	      'stripCssComments',
 	      'cssmin:components',
 	      'cssmin:light',
 	      'cssmin:dark'
@@ -623,6 +638,7 @@ module.exports = function(grunt) {
       'less:production', 
       'concat:css',
       'uglify:dashboardBuilder', 
+      'stripCssComments',
       'cssmin:components',
       'cssmin:light',
       'cssmin:dark' ]);
