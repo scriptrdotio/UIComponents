@@ -332,8 +332,10 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/markerClusterer.js' ,
 	                     'lib/p5.js',
 	                     'concat/min-safe/angular-p5.js',
-							   'concat/min-safe/cell.js',
-							   'concat/min-safe/grideye.js'
+						   'concat/min-safe/cell.js',
+						   'concat/min-safe/grideye.js',
+						   'concat/min-safe/imagemap.js',
+						   
 	                     ],
 	               dest : 'build/js/angular_resources_3.min.js'
 	            },
