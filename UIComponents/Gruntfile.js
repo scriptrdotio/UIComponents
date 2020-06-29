@@ -261,7 +261,8 @@ module.exports = function(grunt) {
 	                     'dashboardBuilder/javascript/components/library/widgets/display-data.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/windrose.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/3dsurface.js',
-	                     'dashboardBuilder/javascript/components/library/widgets/grideye.js'
+	                     'dashboardBuilder/javascript/components/library/widgets/grideye.js',
+	                     'dashboardBuilder/javascript/components/library/widgets/imagemap.js'
 	                     
 	                     ],
 	               dest : 'build/js/dashboard_builder_constants.min.js'
