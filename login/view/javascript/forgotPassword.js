@@ -1,3 +1,5 @@
+//merged with login.js
+
 /**
 	login widget that gives you instant scriptr device/user login form
 	you just need a form with two inputs. Check ../test/login.html

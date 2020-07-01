@@ -127,3 +127,8 @@ html, body, .wrap {
 .btn-default { border-radius: 8px; padding: 12px 0;}
 .doors-img img{ margin: auto; position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 90%;}
 .powered {position: absolute; bottom: 12px; right: 24px;}
+
+/* for new login */
+#forgot-password-wrap{
+    display: none;
+}
