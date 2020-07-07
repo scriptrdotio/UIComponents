@@ -65,7 +65,12 @@ angular.module('Imagemap').component('scriptrImagemap',{
                 }
             };
             
+            $scope.$on('leafletDirectiveMarker.dragend', function(event, args){
+                console.log(args.leafletObject._latlng); 
+            });
+            
             if(self.markersData){
+                
                 self.markers = {};
                 for(var i = 0; i < self.markersData.length; i++){
                     var theMarker = self.markersData[i];
@@ -85,26 +90,31 @@ angular.module('Imagemap').component('scriptrImagemap',{
                             popupAnchor:  [15, -30]
                         },
                     };
+                    
+                    
                 }
             }
         }
         
         self.$postLink = function() {
+            console.log('entered post function')
             self.timeoutId = $timeout(self.resize.bind(self), 100);
             angular.element($window).on('resize', self.onResize);
             if ((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) { //Fetch data from backend
                 initDataService(this.transport);
             } else if (self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
+                
                 $scope.$watch(function($scope) {
                     // wait for the timeout
                     if ($scope.$ctrl.data) {
+                        
                         return $scope.$ctrl.data
                     }
                 }, function(newVal, oldVal) {
                     if (JSON.stringify(newVal)) {
                         self.consumeData(newVal);
                     }
-                });
+                }, true);
             } else {
                 //Listen on update-data event to build data
                 $scope.$on("update-data", function(event, data) {
@@ -188,12 +198,12 @@ angular.module('Imagemap').component('scriptrImagemap',{
                     data = self.onFormatData()(data, self);
                 }
                 if (data) {
-                    console.log('data fetched');
-                    console.log(data);
                     self.hasData = true;
                     self.noResults = false;
                     self.stalledData = false;
                     self.data = data;
+                    
+                    console.log('consuming data');
                     
                     if(self.markers){
                         var dataKeys = Object.keys(data);
@@ -203,6 +213,8 @@ angular.module('Imagemap').component('scriptrImagemap',{
                                 self.markers[dataKey].icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='markerContent'><img width='32px' height='32px' class='markerImg' src='" + self.markers[dataKey].icon.iconUrl + "'/><span class='indicator-value' style='right: 0px;'>" + data[dataKey] + " " + self.markers[dataKey].icon.unit + "</span></div></div>";
                             }
                         }
+                    }else{
+                        console.log('no markers')
                     }
                     
                 } else {
