@@ -275,8 +275,7 @@ module.exports = function(grunt) {
 	               src : [ 'lib/jquery-3.1.1.js', 
 	               	     'lib/jquery-ui.js',
 	                       'lib/jquery.cookie.min.js', 
-	                       'lib/slick.min.js',
-	                       'lib/p5.js' ],
+	                       'lib/slick.min.js'],
 	               dest : 'build/js/external_jquery_resources.min.js'
 	            },
 
@@ -333,12 +332,7 @@ module.exports = function(grunt) {
 	               src : [ 
 	               	   'lib/angular-material.js',
 	                     'concat/min-safe/svg-assets-cache.js',
-	                     'concat/min-safe/markerClusterer.js' ,
-	                     'concat/min-safe/angular-p5.js',
-						   'concat/min-safe/cell.js',
-						   'concat/min-safe/grideye.js',
-						   'concat/min-safe/imagemap.js'
-						   
+	                     'concat/min-safe/markerClusterer.js' 
 	                     ],
 	               dest : 'build/js/angular_resources_3.min.js'
 	            },
@@ -388,6 +382,15 @@ module.exports = function(grunt) {
 	                     ],
 	               dest : 'build/js/directives_2.min.js'
 	            },
+	            
+	            
+	            directives_3 : {
+	            	src:[
+	            		'lib/p5.js',
+	            		'concat/min-safe/angular-p5.js'
+	            	],
+	            	dest : 'build/js/directives_3.min.js'
+	            },
 
 	            components : {
 	               src : [
@@ -421,7 +424,10 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/notifications.js',
 	                     'concat/min-safe/layoutmodule.js',
 	                     'concat/min-safe/header.js', 
-	                     'concat/min-safe/menu.js' 
+	                     'concat/min-safe/menu.js',
+	                     'concat/min-safe/cell.js',
+	      			      'concat/min-safe/grideye.js',
+	      			      'concat/min-safe/imagemap.js'
 	                     ],
 	               dest : 'build/js/components.min.js'
 	            },
@@ -495,6 +501,7 @@ module.exports = function(grunt) {
 		               'build/js/angular_resources_3.min.js' : [ 'build/js/angular_resources_3.min.js' ],
 		               'build/js/directives_1.min.js' : [ 'build/js/directives_1.min.js' ],
 		               'build/js/directives_2.min.js' : [ 'build/js/directives_2.min.js' ],
+		               'build/js/directives_3.min.js' : [ 'build/js/directives_3.min.js' ],
 		               'build/js/dashboard_builder_constants.min.js' : [ 'build/js/dashboard_builder_constants.min.js' ],
 		               'build/js/components.min.js' : [ 'build/js/components.min.js'],
 	               	'build/js/editor.min.js' : [ 'build/js/editor.min.js']
@@ -607,6 +614,7 @@ module.exports = function(grunt) {
 	      'concat:external_angular_resources_3', 
 	      'concat:directives_1',
 	      'concat:directives_2', 
+	      'concat:directives_3', 
 	      'concat:components',
 	      'concat:editor',
 	      'concat:dashboard_builder_constants', 
@@ -631,7 +639,8 @@ module.exports = function(grunt) {
       'concat:external_angular_resources_2',
       'concat:external_angular_resources_3', 
       'concat:directives_1',
-      'concat:directives_2', 
+      'concat:directives_2',
+      'concat:directives_3',
       'concat:components',
       'concat:editor',
       'concat:dashboard_builder_constants', 
