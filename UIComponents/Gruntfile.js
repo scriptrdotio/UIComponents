@@ -275,7 +275,8 @@ module.exports = function(grunt) {
 	               src : [ 'lib/jquery-3.1.1.js', 
 	               	     'lib/jquery-ui.js',
 	                       'lib/jquery.cookie.min.js', 
-	                       'lib/slick.min.js' ],
+	                       'lib/slick.min.js',
+	                       'lib/p5.js' ],
 	               dest : 'build/js/external_jquery_resources.min.js'
 	            },
 
@@ -333,11 +334,10 @@ module.exports = function(grunt) {
 	               	   'lib/angular-material.js',
 	                     'concat/min-safe/svg-assets-cache.js',
 	                     'concat/min-safe/markerClusterer.js' ,
-	                     'lib/p5.js',
 	                     'concat/min-safe/angular-p5.js',
 						   'concat/min-safe/cell.js',
 						   'concat/min-safe/grideye.js',
-						   'concat/min-safe/imagemap.js',
+						   'concat/min-safe/imagemap.js'
 						   
 	                     ],
 	               dest : 'build/js/angular_resources_3.min.js'
