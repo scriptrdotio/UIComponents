@@ -48,5 +48,7 @@ body {font-family: 'Josefin Sans', sans-serif; background: #f1f4f9;}
 .level-bg-1 {background: #4c5d6f;}
 .level-bg-2 {background: #64798e;}
 
-
+.menu-entry {
+	cursor: pointer;
+}
 
