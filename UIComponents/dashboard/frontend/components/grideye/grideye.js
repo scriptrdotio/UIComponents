@@ -224,6 +224,24 @@ angular.module('Grideye').component('scriptrGrideye',{
                 }
                 
                 self.cells = [];
+                for(var i = 0; i < self.gridYCount; i++){
+                    self.cells[i] = [];
+                    for(var j = 0; j < self.gridXCount; j++){
+                        var x = j * self.square_width;
+                        var y = i * self.square_height;
+                        var cellData = null;
+                        if(self.data){
+                            if(self.data[i]){
+                                cellData = self.data[i][j];
+                            }
+                        }
+                        var cell = new Cell(x, y, self.square_width, self.square_height, cellData);
+                        cell.setTempColors(self.customSectors);
+                        self.cells[i].push(cell);
+                    }
+                    
+                }
+                /*
                 for(var i = 0; i < (self.gridXCount * self.gridYCount); i++){
                     var xIndex = i % self.gridXCount;
                     var yIndex = Math.floor(i / self.gridXCount);
@@ -232,7 +250,7 @@ angular.module('Grideye').component('scriptrGrideye',{
                     var cell = new Cell(x, y, self.square_width, self.square_height, self.data[i]);
                     cell.setTempColors(self.customSectors);
                     self.cells.push(cell);
-                }
+                }*/
                 /*
                 for(var i = 0; i < (self.gridXCount * self.gridYCount); i++){
                     randChanges.push(-randChangeSpeed);
@@ -257,7 +275,9 @@ angular.module('Grideye').component('scriptrGrideye',{
                     noData = false;
                 }
                 for (var i = 0; i < self.cells.length; i++) {
-                    self.cells[i].update(self.data[i]);
+                    for (var j = 0; j < self.cells[i].length; j++) {
+                        self.cells[i][j].update(self.data[i][j]);
+                    }
                 }
                 p5.show();
             }
@@ -265,7 +285,9 @@ angular.module('Grideye').component('scriptrGrideye',{
             //function that draws the grid in the canvas
             p5.show = function() {
                 for (var i = 0; i < self.cells.length; i++) {
-                    self.cells[i].show(p5);	
+                    for (var j = 0; j < self.cells[i].length; j++) {
+                    	self.cells[i][j].show(p5);	
+                    }
                 }
             }
         }
