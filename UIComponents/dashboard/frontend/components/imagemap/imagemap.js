@@ -65,6 +65,14 @@ angular.module('Imagemap').component('scriptrImagemap',{
                 }
             };
             
+            //timer needs to be one second in order to wait not only for the map to load but also the markers to load
+            setTimeout(function(){
+                leafletData.getMap().then(function(map) {
+                    console.log('invalidating size');
+                    map.invalidateSize(false);
+                });
+            }, 1000);
+            
             $scope.$on('leafletDirectiveMarker.dragend', function(event, args){
                 console.log(args.leafletObject._latlng); 
             });
