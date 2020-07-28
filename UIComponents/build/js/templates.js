@@ -261,7 +261,7 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
 
 
   $templateCache.put('/UIComponents/layout/frontend/components/menu/menu.html',
-    "<div><div id=\"{{colIndex = $index}}\" ng-class=\"{'side-bar sm level-bg-{{$index}}' : col.class == 'sm', 'side-bar md level-bg-{{$index}}' : col.class == 'md'}\" ng-repeat=\"col in $ctrl.cols track by $index\"><ul class=\"nav nav-pills\" ng-if=$ctrl.currentRoute><li ng-if=\"col.class == 'sm' && ($ctrl.inGroup(item.roles) || !item.roles)\" tooltip-placement=right-top tooltip-append-to-body=true uib-tooltip={{item.label}} index=\"{{liIndex = $index}}\" ng-repeat=\"item in $ctrl.menuItems[col.key] track by $index\" ng-class=\"(item.route == $ctrl.currentRoute) ? 'active' : ''\"><a href={{item.route}}/{{$ctrl.lockId.value}} ng-click=\"$ctrl.route(item, $event, col.key, colIndex, liIndex)\"><i aria-hidden=true class={{item.iconClass}}></i><strong>{{item.label}}</strong> <i ng-show=item.sub aria-hidden=true class=\"fa fa-angle-right sub-menu-indicator\"></i></a></li><li ng-if=\"col.class == 'md' && ($ctrl.inGroup(item.roles) || !item.roles)\" index=\"{{liIndex = $index}}\" ng-repeat=\"item in $ctrl.menuItems[col.key] track by $index\" class=tool-tip ng-class=\"(item.route == $ctrl.currentRoute) ? 'active' : ''\"><a href={{item.route}}/{{$ctrl.lockId.value}} ng-click=\"$ctrl.route(item, $event, col.key, colIndex, liIndex)\" title={{item.label}}><i aria-hidden=true class={{item.iconClass}}></i><strong>{{item.label}}</strong> <i ng-show=item.sub aria-hidden=true class=\"fa fa-angle-right sub-menu-indicator\"></i></a></li></ul></div></div>"
+    "<div><div id=\"{{colIndex = $index}}\" ng-class=\"{'side-bar sm level-bg-{{$index}}' : col.class == 'sm', 'side-bar md level-bg-{{$index}}' : col.class == 'md'}\" ng-repeat=\"col in $ctrl.cols track by $index\"><ul class=\"nav nav-pills\" ng-if=$ctrl.currentRoute><li class=menu-entry ng-if=\"col.class == 'sm' && ($ctrl.inGroup(item.roles) || !item.roles)\" tooltip-placement=right-top tooltip-append-to-body=true uib-tooltip={{item.label}} index=\"{{liIndex = $index}}\" ng-repeat=\"item in $ctrl.menuItems[col.key] track by $index\" ng-class=\"(item.route == $ctrl.currentRoute) ? 'active' : ''\"><a ng-if=item.route ng-href={{item.route}}/{{$ctrl.lockId.value}} ng-click=\"$ctrl.route(item, $event, col.key, colIndex, liIndex)\"><i aria-hidden=true class={{item.iconClass}}></i><strong>{{item.label}}</strong> <i ng-show=item.sub aria-hidden=true class=\"fa fa-angle-right sub-menu-indicator\"></i> </a><a ng-if=!item.route ng-click=\"$ctrl.route(item, $event, col.key, colIndex, liIndex)\"><i aria-hidden=true class={{item.iconClass}}></i><strong>{{item.label}}</strong> <i ng-show=item.sub aria-hidden=true class=\"fa fa-angle-right sub-menu-indicator\"></i></a></li><li class=menu-entry ng-if=\"col.class == 'md' && ($ctrl.inGroup(item.roles) || !item.roles)\" index=\"{{liIndex = $index}}\" ng-repeat=\"item in $ctrl.menuItems[col.key] track by $index\" class=tool-tip ng-class=\"(item.route == $ctrl.currentRoute) ? 'active' : ''\"><a ng-if=item.route ng-href={{item.route}}/{{$ctrl.lockId.value}} ng-click=\"$ctrl.route(item, $event, col.key, colIndex, liIndex)\" title={{item.label}}><i aria-hidden=true class={{item.iconClass}}></i><strong>{{item.label}}</strong> <i ng-show=item.sub aria-hidden=true class=\"fa fa-angle-right sub-menu-indicator\"></i> </a><a ng-if=!item.route ng-click=\"$ctrl.route(item, $event, col.key, colIndex, liIndex)\" title={{item.label}}><i aria-hidden=true class={{item.iconClass}}></i><strong>{{item.label}}</strong> <i ng-show=item.sub aria-hidden=true class=\"fa fa-angle-right sub-menu-indicator\"></i></a></li></ul></div></div>"
   );
 
 
@@ -281,41 +281,42 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
     "    &lt;script src=&quot;//use.fontawesome.com/3d61d6959e.js&quot;&gt;&lt;/script&gt;\n" +
     "    &lt;link href=&quot;//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&quot; rel=&quot;stylesheet&quot;&gt;\n" +
     "  \n" +
-    "    &lt;!-- CSS --&gt;\n" +
-    "    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;/UIComponents/build/css/components.min.css&quot;/&gt;\n" +
+    "      &lt;!-- CSS --&gt;\n" +
+    "    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/css/components.min.css&quot;/&gt;\n" +
     "    \n" +
-    "    \n" +
-    "     &lt;!-- Theme --&gt;\n" +
-    "    &lt;link rel=&quot;stylesheet&quot; href=&quot;/UIComponents/dashboardBuilder/css/{{dashboardSettings.theme}}.css&quot;&gt;\n" +
-    "    \n" +
-    "    \n" +
+    "    &lt;link name=&quot;light&quot; rel=&quot;stylesheet&quot; href=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/css/light.min.css&quot;&gt; \n" +
+    "    &lt;link name=&quot;dark&quot; disabled=&quot;true&quot; rel=&quot;stylesheet&quot; href=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/css/dark.min.css&quot;&gt; &lt;!-- this the default theme --&gt;\n" +
+    "      \n" +
     "    &lt;!-- JQUERY Material  To use jQuery, simply ensure it is loaded before the angular.js file. --&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/external_jquery_resources.min.js&quot;&gt;&lt;/script&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/external_libraries1.min.js&quot;&gt;&lt;/script&gt;	\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/external_libraries2.min.js&quot;&gt;&lt;/script&gt;	\n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/external_jquery_resources.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/external_libraries1.min.js&quot;&gt;&lt;/script&gt;	\n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/external_libraries2.min.js&quot;&gt;&lt;/script&gt;	\n" +
     "    \n" +
     "    &lt;script src=&quot;//maps.google.com/maps/api/js?key=AIzaSyBcPYghFh_BXz4dDz-TXTHbU2iV3Wbf57I&amp;libraries=drawing,visualization&quot;&gt;&lt;/script&gt;\n" +
     "    \n" +
-    "   \n" +
     "    &lt;!-- NG material --&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/angular_resources_1.min.js&quot;&gt;&lt;/script&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/angular_resources_2.min.js&quot;&gt;&lt;/script&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/angular_resources_3.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/angular_resources_1.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/angular_resources_2.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/angular_resources_3.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.js&quot;&gt;&lt;/script&gt;  \n" +
+    "      \n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/templates.js&quot;&gt;&lt;/script&gt;\n" +
     "    \n" +
     "    &lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/ag-grid/12.0.0/ag-grid.js?ignore=notused36&quot;&gt;&lt;/script&gt;\n" +
     "\n" +
+    "	&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js&quot;&gt;&lt;/script&gt;\n" +
     "    &lt;!-- Directives --&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/directives_1.min.js&quot;&gt;&lt;/script&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/directives_2.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/directives_1.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/directives_2.min.js&quot;&gt;&lt;/script&gt;\n" +
     "    \n" +
     "    &lt;!-- Libraries --&gt;\n" +
     "    &lt;script src=&quot;//cdn.plot.ly/plotly-latest.min.js&quot;&gt;&lt;/script&gt;\n" +
     "  \n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/dashboard_builder_constants.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    \n" +
     "    &lt;!-- Components --&gt;\n" +
-    "    &lt;script src=&quot;/UIComponents/build/js/UIComponents/components.min.js&quot;&gt;&lt;/script&gt;\n" +
-    "    \n" +
-    "    \n" +
-    "    &lt;script src=&quot;/UIComponents/dashboardBuilder/javascript/config/config.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/components.min.js&quot;&gt;&lt;/script&gt;\n" +
+    "    &lt;script src=&quot;//scriptr-cdn.s3.amazonaws.com/creatr/dist/javascript/editor.min.js&quot;&gt;&lt;/script&gt;\n" +
     "    \n" +
     "    &lt;script src=&quot;/UIComponents/config/scriptrTransport.js&quot;&gt;&lt;/script&gt;\n" +
     "            \n" +
