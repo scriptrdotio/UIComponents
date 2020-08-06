@@ -420,9 +420,9 @@ angular
               $scope.$on("update-data", function(event, data) {
                   if(data) {
                       if(data[self.serviceTag])
-                          self.consumeData(data[self.serviceTag]);
+                          self.processAssets(data[self.serviceTag]);
                       else
-                          self.consumeData(data);
+                          self.processAssets(data);
                   }
               });
           }
@@ -465,9 +465,11 @@ angular
                  self.pushAssets(self.trackedAsset, assets[self.trackedAsset])
                }
           }
-          self.renderAssets();
-          if(self.clusteredView && !self.trackedAsset && !self.selectedTrackedAsset)  {
-            self.renderClusterer();
+          if(!self.heatmap && !self.swithcStatus) {
+              self.renderAssets();
+              if(self.clusteredView && !self.trackedAsset && !self.selectedTrackedAsset)  {
+                self.renderClusterer();
+              }
           }
           if(self.mapFitBounds && self.bounds)  {
           	NgMap
@@ -496,11 +498,18 @@ angular
                 self.buildClusterer(map);
               }
              process(assets, ("clustered"+'-'+self.$wdgid));
+             if(self.switchStatus == true && self.heatmap){
+                self.activateHeatMap(true);
+             }
             }, function(e) {
               console.log("Clusterer Map error", e)
             });
         } else {
           process(assets, ("detailed"+'-'+self.$wdgid))
+          if(self.switchStatus == true && self.heatmap){
+          	self.activateHeatMap(true);
+            
+          }
         }
     };
         
@@ -513,9 +522,14 @@ angular
                opacity: self.heatMapOpacity   
            });
            heatmap.setMap(self.map);
+           self.showDetailedMap = false;
+           self.markerClusterer.clearMarkers();
+           self.markerClusterer.repaint();
        }else{
            if(typeof heatmap != 'undefined'){
                heatmap.setMap(null);
+               self.showDetailedMap = false;
+               self.renderClusterer();
            }
        }
      }   
@@ -572,7 +586,7 @@ angular
 
       // Change map on zoom threshold
       self.onClusteredZoomChanged = function() {
-        if (!self.trackedAsset && !self.selectedTrackedAsset) {
+        if (!self.trackedAsset && !self.selectedTrackedAsset && !self.heatmap && !self.switchStatus) {
           NgMap.getMap({
             id : 'clustered-'+self.$wdgid
           }).then(function(map) {
@@ -582,10 +596,10 @@ angular
                   self.mapcenter = map.getCenter();
                   self.detailedmapzoom = self.detailedZoomMin;
               } else {
-              self.showDetailedMap = false;
-              if(self.markerClusterer) 
-                self.markerClusterer.setMap(map);
-              rerenderAllAssets();
+              	self.showDetailedMap = false;
+              	if(self.markerClusterer) 
+                	self.markerClusterer.setMap(map);
+              	rerenderAllAssets();
             }
           });
         }
@@ -593,7 +607,7 @@ angular
 
       //Change map on zoom threshold
       self.onDetailedZoomChanged = function() {
-        if (!self.trackedAsset && !self.selectedTrackedAsset && self.clusteredView == true) {
+        if (!self.trackedAsset && !self.selectedTrackedAsset && self.clusteredView == true && !self.heatmap && !self.switchStatus) {
           NgMap.getMap({
             id : 'detailed-'+self.$wdgid
           }).then(function(map) {
@@ -784,6 +798,7 @@ angular
                 dynMkr.position = new google.maps.LatLng(tripPoint.lat.value, tripPoint.long.value);
                 var tmp = new google.maps.Marker(dynMkr);
                 self.dynMarkers[key] = tmp;
+                
                 var heatmap = {};
                 heatmap.location = dynMkr.position;
                 heatmap.weight = (self.heatMapWeight) ? self.heatMapWeight : 40;

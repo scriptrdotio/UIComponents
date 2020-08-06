@@ -2,7 +2,7 @@
 <html ng-app="myApp">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon">
     <title>Map demo</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
@@ -85,7 +85,7 @@
               $timeout(function() {
                   $scope.$broadcast("mapRemoveAssets",toRemoveAsset )
  
-              }, 20000);
+              }, 10000);
           }
 
           vm.showAssetDashboard = function(id) {
@@ -99,7 +99,7 @@
   </script>
   <body>
      <div ng-controller="testCtrl as vm" ng-init="vm.init()" style="height: calc(100% - 40px);">
-        <scriptr-map bounce="true" heatmap="false"  heat-map-weight="5" default-center="33.888630,35.495480" transport="https" sources-info="vm.sources" clustered-view="true" cluster-zoom="8" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" api="UIComponents/dashboard/frontend/examples/map/simulatorData" api-params='{"timeframe" : "this_1_years", "limit" : "20"}' msg-tag="everyone-main-live" geofence-manager="false" api-geofence="UIComponents/dashboard/frontend/examples/map/saveGeofence" geofence-data="{loadGeofenceApi: 'UIComponents/dashboard/frontend/examples/map/getGeofence', saveGeofenceApi:'UIComponents/dashboard/frontend/examples/map/saveGeofence', geofenceApiParams: {'id': vm.selectedAsset} }" >
+        <scriptr-map bounce="true" heatmap="true"  heat-map-weight="5" default-center="33.888630,35.495480" transport="https" sources-info="vm.sources" clustered-view="true" cluster-zoom="8" path-stroke-opacity="0.5" path-stroke-weight="10" summary-icons="vm.icons" api="UIComponents/dashboard/frontend/examples/map/simulatorData" api-params='{"timeframe" : "this_1_years", "limit" : "20"}' msg-tag="everyone-main-live" geofence-manager="false">
           <div>
             <info-window id="infoWindowTemplate_simulator" template="/UIComponents/dashboard/frontend/examples/map/info_simulator.html" max-width="600"></info-window>
             <info-window id="infoWindowTemplate_stream" template="/UIComponents/dashboard/frontend/examples/map/info_stream.html" max-width="300"></info-window>

@@ -42,7 +42,7 @@
 			circleOptions="{{$ctrl.overlaySettings}}">
 		</drawing-manager>
 		<div>
-			<div ng-repeat="(key, asset) in $ctrl.displayedAssets">
+			<div ng-repeat="(key, asset) in $ctrl.displayedAssets" ng-if="$ctrl.heatmap != true && $ctrl.switchStatus != true">
 				<shape name="polyline" path="{{asset.path}}"
 					stroke-color="{{asset.pathColor}}"
 					stroke-opacity="{{asset.strokeOpacity}}"
