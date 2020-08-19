@@ -1,0 +1,15 @@
+<div class="plotly-dot-graph" style="display: inline-block;">
+    <scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+</scriptr-notifications>
+    
+    
+	<div  ng-show="$ctrl.transformedData.length > 0" ng-style="$ctrl.style" class="plotly-chart-wrapper" ng-class="($ctrl.showLegend) ? 'with-legend' : ' ' " >
+        <div class="plotly-chart-dimension">
+            <angular-plotly
+                            plotly-data="$ctrl.transformedData"
+                            plotly-options="$ctrl.options"
+                            plotly-layout="$ctrl._layout">
+            </angular-plotly> 
+        </div>
+    </div>
+</div>

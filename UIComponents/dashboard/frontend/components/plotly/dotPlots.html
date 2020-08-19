@@ -1,0 +1,23 @@
+<div class="plotly-dot-graph" style="display: inline-block;">
+    <scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+</scriptr-notifications>
+    
+    
+	<div  ng-show="$ctrl.transformedData.length > 0" ng-style="$ctrl.style" class="plotly-chart-wrapper" ng-class="($ctrl.showLegend) ? 'with-legend' : ' ' " >
+        <div class="plotly-chart-dimension">
+            <angular-plotly
+                            plotly-data="$ctrl.transformedData"
+                            plotly-marker ="$ctrl.tracesConfig"
+                            plotly-options="$ctrl.options"
+                            plotly-layout="$ctrl._layout">
+            </angular-plotly> 
+        </div>
+    </div>
+    <div  class="plotly-chart-legend" ng-if="$ctrl.showLegend && $ctrl.transformedData.length > 0">
+        <ul ng-repeat="entry in $ctrl.legendProperties" style="list-style: none">
+            <li>
+                <span><i class="fa fa-circle" style="color: {{entry.color}}"></i> {{entry.name}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
