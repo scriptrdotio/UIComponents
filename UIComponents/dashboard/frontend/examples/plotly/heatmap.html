@@ -1,0 +1,79 @@
+<html ng-app="myApp">
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <!-- Adding JQUERY To use jQuery, simply ensure it is loaded before the angular.js file. -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <!-- Adding Angular -->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+        <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+
+        <script src="/UIComponents/wsProvider.js"></script>
+        <script src="/UIComponents/httpProvider.js"></script>
+        <script src="/UIComponents/dataService.js"></script>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+
+        <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+        <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+
+        <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="/UIComponents/dashboard/frontend/components/plotly/angular-plotly.js"></script>
+        <script src="/UIComponents/dashboard/frontend/components/plotly/plotly.js"></script>
+        <script src="/UIComponents/dashboard/frontend/components/plotly/heatmap.js"></script>
+
+        <script src="/UIComponents/config/scriptrTransport.js"></script>
+    </head>
+    <script>
+        (function () {
+            var myApp = angular.module("myApp", ["WsClient", "HttpClient", 'Plotly'])
+            angular.module('myApp').config(wssConfig);
+            angular.module('myApp').config(httpsConfig);
+            myApp.config(function ($interpolateProvider, $locationProvider) {
+                $interpolateProvider.startSymbol('{[{');
+                $interpolateProvider.endSymbol('}]}');
+                $locationProvider.html5Mode({
+                    enabled: true,
+                    requireBase: false
+                });
+            });
+            myApp.controller('RootCtrl', function ($scope, $interpolate, $location) {
+                var vm = this;
+                vm.init = function () {
+                }
+                vm.plotlyFormatData1 = function (data) {
+
+                    return data;
+                }
+              /*  vm.xaxis = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+                vm.yaxis = ['Morning', 'Afternoon', 'Evening'];
+                vm.zaxis = [[1, null, 30, 50, 1], [20, 1, 60, 80, 30], [30, 60, 1, -10, 20]];
+                vm.data = {x : vm.xaxis, y:vm.yaxis, z: vm.zaxis};*/
+
+            });
+        })();
+    </script>
+    <body class="dashboard-template light" ng-controller="RootCtrl as vm" ng-init="vm.init();">
+        <div  style="min-width: 300px;"> 
+
+
+            <scriptr-heatmap
+                             transport='https'
+                             api = 'UIComponents/dashboard/frontend/examples/plotly/getHeatmapData'
+                             show-bar = 'true'
+                             >
+
+
+            </scriptr-heatmap>
+        </div>
+    </body>  
+</html>
+
