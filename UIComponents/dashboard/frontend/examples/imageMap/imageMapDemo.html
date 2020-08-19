@@ -22,7 +22,11 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-leaflet-directive/0.10.0/angular-leaflet-directive.min.js"></script>
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/angular-leaflet-directive/0.10.0/angular-leaflet-directive.min.js"></script-->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-simple-logger/0.1.7/angular-simple-logger.min.js" integrity="sha512-VFZk5ZmmVOtV6fdYZ6Ls67VApw1M3ZMxc4lqnRq8f8MPrXd1Xu0D4c0tiT+fTIMUAdw3vsvh4mr+dq2MYRP4uA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ui-leaflet/1.0.3/ui-leaflet.min.js" integrity="sha512-nDjxQTB4dDNiXOtq/eK+EyTgwigqiHmHQ0WfOOrAhYtH5yZP/ZaJaI2Q/kLw7D9+YKdrIQxAsLemed5eMmEMrA==" crossorigin="anonymous"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
@@ -31,7 +35,7 @@
     <script src="/UIComponents/dashboard/frontend/components/imagemap/imagemap.js"></script>
     
     <script src="/UIComponents/config/scriptrTransport.js"></script>
-    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/examples/imageMap/imageMap.css">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/imagemap/imageMap.css">
 </head>
 
 <script>
@@ -60,8 +64,8 @@
                 },
                 {
                     key: 'pressure',
-                    lat: 150, 
-                    lng: 150,
+                    lat: 383, 
+                    lng: 181,
                     draggable: true,
                     group: 'testers',
                     icon: {
@@ -71,8 +75,8 @@
                 },
                 {
                     key: 'co2',
-                    lat: 150, 
-                    lng: 60,
+                    lat: 272.75, 
+                    lng: 87.25,
                     draggable: true,
                     group: 'testers',
                     icon: {
@@ -104,11 +108,11 @@
                         title-font-color="#aaa"
                         api='UIComponents/dashboard/frontend/examples/imageMap/getImagemapData'
                         
-                        image-url='//s3.amazonaws.com/scriptr-cdn/compagno/HVAC-system-7.png'
+                        image-url='//s3.amazonaws.com/scriptr-cdn/hvac-monitoring/images/HVAC-system-7.png'
                         width='640'
                         height='571'
                         min-zoom='0'
-                        max-zoom='2'
+                        max-zoom='14'
                         markers-data="vm.markersData"
                         data="{temperature: 24,pressure: 40,co2: 40}"
 

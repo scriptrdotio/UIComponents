@@ -1,4 +1,4 @@
-angular.module("Imagemap", ['leaflet-directive', 'ComponentsCommon', 'DataService']);
+angular.module("Imagemap", ['ui-leaflet', 'ComponentsCommon', 'DataService']);
 angular.module('Imagemap').component('scriptrImagemap',{
 	bindings: {
         "onLoad" : "&onLoad",   
@@ -26,13 +26,78 @@ angular.module('Imagemap').component('scriptrImagemap',{
         var self = this;
         
         self.$onInit = function(){
+            
+            self.cw = $element.parent().width();
+            self.ch = $element.parent().height();
+            var iw = (self.width)? parseInt(self.width) : 500;
+            var ih = (self.height)? parseInt(self.height) : 500;
+            var maxZoom = Math.ceil( Math.log( (self.cw/iw > self.ch/ih ? iw/self.cw : ih/self.ch) ) / Math.log(2) );
+            
             self.minZoom = (self.minZoom)? parseInt(self.minZoom) : 0;
             self.maxZoom = (self.maxZoom)? parseInt(self.maxZoom) : 3;
             self.width = (self.width)? parseInt(self.width) : 500;
             self.height = (self.height)? parseInt(self.height) : 500;
+            self.id = "imagemap-"+$scope.$id;
             
-            self.maxBounds = leafletBoundsHelpers.createBoundsFromArray([[self.width, 0], [0, self.height]]);
-            console.log(self.width, self.height);
+             //timer needs to be one second in order to wait not only for the map to load but also the markers to load
+            setTimeout(function(){
+                leafletData.getMap(self.id).then(function(map) {
+                    console.log('invalidating size');
+                    map.invalidateSize(false);
+                    
+                     if(self.markersData){
+                
+                self.markers = {};
+                for(var i = 0; i < self.markersData.length; i++){
+                    var theMarker = self.markersData[i];
+                    var tmp = {
+                        lat: theMarker.lat, 
+                        lng: theMarker.lng,
+                        icon: {
+                        	className: 'custom-div-icon',
+                            type: 'div',
+                            html: "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><span class='indicator-value' style='right: 0px;'>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + "</span></div></div>",
+                            iconSize: [90, 90],
+                            iconAnchor: [0, 0],
+                            popupAnchor:  [15, -30]
+                        },
+                    };
+                    if(theMarker.draggable && (theMarker.draggable == "true" || theMarker.draggable == true)) {
+                        tmp["draggable"] =  true;
+                    }
+                    if(theMarker.group) {
+                         tmp["group"] =  theMarker.group;
+                    }
+                    if(theMarker.icon && theMarker.icon.url) {
+                        tmp.icon["iconUrl"] = theMarker.icon.url;
+                    }
+                    if(theMarker.icon && theMarker.icon.unit) {
+                        tmp.icon["unit"] = theMarker.icon.unit;
+                    }
+                    
+                    if(theMarker.icon && theMarker.icon.unit && theMarker.icon.url ) {
+                        tmp.icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><img width='32px' height='32px' class='markerImg' src='" + theMarker.icon.url + "'/><span class='indicator-value' style='right: 0px;'>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + " " + theMarker.icon.unit + "</span></div></div>"
+                    }
+                    
+                    if(theMarker.icon && theMarker.icon.unit && !theMarker.icon.url ) {
+                        tmp.icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><span class='indicator-value' style='right: 0px;'>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + " " + theMarker.icon.unit + "</span></div></div>"
+                    }
+                    
+                    if(theMarker.icon && !theMarker.icon.unit && theMarker.icon.url ) {
+                        tmp.icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><img width='32px' height='32px' class='markerImg' src='" + theMarker.icon.url + "'/><span class='indicator-value' style='right: 0px;'>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + "</span></div></div>"
+                    }
+                    
+                    self.markers[theMarker.key] = tmp;
+                }
+            }
+                    
+                });
+            }, 1000);
+
+            $scope.$on('leafletDirectiveMarker.'+self.id+'.dragend', function(event, args){
+                console.log(args.leafletObject._latlng); 
+            });
+            
             self.transport = (self.transport) ? self.transport : null;
             self.msgTag = (self.msgTag) ? self.msgTag : null;
             self.useWindowParams = (self.useWindowParams) ? self.useWindowParams : "true";
@@ -40,72 +105,36 @@ angular.module('Imagemap').component('scriptrImagemap',{
             self.icon = (self.icon)? self.icon : '//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/imagemap-bg.svg';
             
             self.defaults = {
-                crs: 'Simple',
+                crs: L.CRS.Simple,
                 maxZoom: self.maxZoom
             };
             self.center = {
                 lat: 0,
                 lng: 0,
-                zoom: 0
+                zoom: self.minZoom
             };
-            self.maxBounds = self.maxBounds;
-            self.imageUrl='//s3.amazonaws.com/scriptr-cdn/compagno/HVAC-system-7.png';
+            
+            self.imageUrl= (self.imageUrl) ? self.imageUrl : '//s3.amazonaws.com/scriptr-cdn/compagno/HVAC-system-7.png';
+            
             self.layers = {
-                baselayers: {
-                    myLayer: {
-                        name: 'My Layer',
-                        type: 'imageOverlay',
-                        url: self.imageUrl,
-                        bounds: [[self.width, 0], [0, self.height]],
-                        layerParams: {
-                            showOnSelector: false,
-                            noWrap: true,
+                    baselayers: {
+                        myLayer: {
+                            name: 'My Layer',
+                            type: 'imageOverlay',
+                            url: self.imageUrl,
+                            bounds: [[self.width,0], [0, self.height]],
+                            layerParams: {
+                                showOnSelector: false,
+                                noWrap: true,
+                            }
                         }
                     }
                 }
-            };
-            
-            //timer needs to be one second in order to wait not only for the map to load but also the markers to load
-            setTimeout(function(){
-                leafletData.getMap().then(function(map) {
-                    console.log('invalidating size');
-                    map.invalidateSize(false);
-                });
-            }, 1000);
-            
-            $scope.$on('leafletDirectiveMarker.dragend', function(event, args){
-                console.log(args.leafletObject._latlng); 
-            });
-            
-            if(self.markersData){
-                
-                self.markers = {};
-                for(var i = 0; i < self.markersData.length; i++){
-                    var theMarker = self.markersData[i];
-                    self.markers[theMarker.key] = {
-                        lat: theMarker.lat, 
-                        lng: theMarker.lng,
-                        draggable: theMarker.draggable,
-                        group: theMarker.group,
-                        icon: {
-                        	className: 'custom-div-icon',
-                            type: 'div',
-                            iconUrl: theMarker.icon.url,
-                            unit: theMarker.icon.unit,
-                            html: "<div style='background-color:#96c0d0;' class='marker-pin'><div class='markerContent'><img width='32px' height='32px' class='markerImg' src='" + theMarker.icon.url + "'/><span class='indicator-value' style='right: 0px;'>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + " " + theMarker.icon.unit + "</span></div></div>",
-                            iconSize: [90, 120],
-                            iconAnchor: [0, 0],
-                            popupAnchor:  [15, -30]
-                        },
-                    };
-                    
-                    
-                }
-            }
+           
+           self.maxBounds = leafletBoundsHelpers.createBoundsFromArray([[self.width, 0], [0, self.height]]);
         }
         
         self.$postLink = function() {
-            console.log('entered post function')
             self.timeoutId = $timeout(self.resize.bind(self), 100);
             angular.element($window).on('resize', self.onResize);
             if ((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) { //Fetch data from backend
@@ -151,6 +180,8 @@ angular.module('Imagemap').component('scriptrImagemap',{
         }
         
         self.resize = function() {
+            self.cw = $element.parent().width();
+            self.ch = $element.parent().height();
             self.calculateNotificationsDisplay();
         }
         
@@ -218,7 +249,7 @@ angular.module('Imagemap').component('scriptrImagemap',{
                         for(var i = 0; i < dataKeys.length; i++){
                             var dataKey = dataKeys[i];
                             if(self.markers[dataKey]){
-                                self.markers[dataKey].icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='markerContent'><img width='32px' height='32px' class='markerImg' src='" + self.markers[dataKey].icon.iconUrl + "'/><span class='indicator-value' style='right: 0px;'>" + data[dataKey] + " " + self.markers[dataKey].icon.unit + "</span></div></div>";
+                                self.markers[dataKey].icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><img width='32px' height='32px' class='markerImg' src='" + self.markers[dataKey].icon.iconUrl + "'/><span class='indicator-value' style='right: 0px;'>" + data[dataKey] + " " + self.markers[dataKey].icon.unit + "</span></div></div>";
                             }
                         }
                     }else{

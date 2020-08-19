@@ -1,0 +1,62 @@
+.leaflet-container {
+    background: #fff;
+}
+
+.leaflet-marker-icon.leaflet-interactive {/* position: relative; *//* height: 100%!important; */}
+
+
+.custom-div-icon .markerImg {
+    position: relative;
+    z-index: 1;
+    /* margin: -10px 0 10px 41px; */
+}
+.indicator-value {
+    position: relative;
+    font-weight: 800;
+    z-index: 1;
+    display: block;
+    padding: 0 12px;
+    line-height: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    word-break: break-all;
+    margin: 10px 0 0 0px; 
+}
+
+.marker-pin {
+  width: 90px;
+  height: 90px;
+  border-radius: 50% 50% 50% 0;
+  background: #96c0d0;
+  position: absolute;
+  transform: rotate(-45deg);
+  margin: -110px 0px 0px -47px;
+  text-align: center;
+}
+
+.marker-pin::after {
+    content: '';
+    width: 84px;
+    height: 84px;
+    margin: 3px 0 0 3px;
+    background: #ff8f80;
+    position: absolute;
+    border-radius: 50%;
+    left: 0;
+    top: 0;
+}
+        
+
+.marker-content {
+  width: 100%;
+  height: 95%;
+  position: relative;
+  text-align: center;
+  transform: rotate(45deg);
+  z-index: 1;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
