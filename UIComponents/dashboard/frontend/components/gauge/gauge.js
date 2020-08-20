@@ -136,18 +136,7 @@ angular
                       this.hasData = (!isNaN(parseFloat(this.gaugeValue)) && isFinite(this.gaugeValue)) ?  true : false;
                        
                        this.heightUnit = (this.heightUnit) ? this.heightUnit : "px";
-		               this.customSectors = (this.customSectors) ? this.customSectors
-		                     : {  percents: true,
-                                  ranges: [{
-                                    color : "#A3CD3B",
-                                    lo : 0,
-                                    hi : 25
-                                  },{
-                                    color : "#FF4A43",
-                                    lo : 25,
-                                    hi : 100
-                                  }]
-                                };
+		               this.customSectors = (this.customSectors) ? this.customSectors : {  percents: true, ranges: []};
 		               this.valueFontColor = (this.valueFontColor) ? this.valueFontColor
 		                     : "#999";
 		               this.min = (this.min) ? this.min : 0;
