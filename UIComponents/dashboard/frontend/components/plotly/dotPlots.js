@@ -296,7 +296,7 @@ angular
                                 self.transformedData.push({
                                     x: data[i].x,
                                     y: data[i].y,
-                                    showlegend : self.showLegend,
+                                    //showlegend : self.showLegend,
                                     hoverinfo:"skip",
                                     type: 'scatter',
                                     name: (self.tracesConfig[i].name) ? self.tracesConfig[i].name : "Dot Plots Graph",
