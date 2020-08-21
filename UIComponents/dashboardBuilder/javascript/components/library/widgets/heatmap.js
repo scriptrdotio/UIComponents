@@ -359,7 +359,7 @@ const __HEATMAP__ = {
                                                     "items": [
                                                         {
                                                             "type":"section",
-                                                            "htmlClass": "col-xs-12 col-sm-2",
+                                                            "htmlClass": "col-xs-12 col-sm-3",
                                                             "items": ["layout-config.xaxis.title"]
 
                                                         },
@@ -426,7 +426,7 @@ const __HEATMAP__ = {
 
                                                 {
                                                     "type":"section",
-                                                    "htmlClass": "col-xs-12 col-sm-2",
+                                                    "htmlClass": "col-xs-12 col-sm-3",
                                                     "items": ["layout-config.yaxis.title"]
 
                                                 },
@@ -521,52 +521,6 @@ const __HEATMAP__ = {
                                         }
 
                         ]
-            },
-            {
-                title: "Legend",
-                items: [{
-                    "type": "section",
-                    "htmlClass": "row",
-                    "items": [
-                        {
-                            "type": "section",
-                            "htmlClass": "col-xs-12",
-                            "items": [
-                                {
-                                    key: "show-legend"
-                                },
-                                {
-                                    type: "radios-inline",
-                                    key: "legend-type",
-                                    condition: "model['show-legend'] == true",
-                                    titleMap: [{
-                                        value: "hover",
-                                        name: "Hover"
-                                    }, {
-                                        value: "right",
-                                        name: "Right"
-                                    }]
-                                },
-                                {
-                                    type: "radios-inline",
-                                    key: "hide-hover",
-                                    condition: "model['show-legend'] ==true && model['legend-type'] =='hover'",
-                                    titleMap: [{
-                                        value: "auto",
-                                        name: "Auto"
-                                    }, {
-                                        value: "false",
-                                        name: "Always"
-                                    }]
-                                },
-                                /** {
-                                    key :"legend-date-moment-format",
-                                    condition: "model['show-legend'] == true && model['legend-type'] =='right' && model['parse-time'] == true"
-                                }**/
-                            ]
-                        }
-                    ]
-                }]
             },
             {
                 title: "Mode Bar",
