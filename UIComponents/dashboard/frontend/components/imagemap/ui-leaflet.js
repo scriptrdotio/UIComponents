@@ -2990,7 +2990,7 @@ angular.module('ui-leaflet').directive('bounds', ["leafletLogger", "$timeout", "
 
 'use strict';
 
-var centerDirectiveTypes = ['center', 'lfCenter'],
+var centerDirectiveTypes = [/**'center',**/ 'lfCenter'],
     centerDirectives = {};
 
 centerDirectiveTypes.forEach(function (directiveName) {
