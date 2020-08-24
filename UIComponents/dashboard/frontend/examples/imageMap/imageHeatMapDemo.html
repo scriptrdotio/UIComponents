@@ -102,17 +102,16 @@
       <scriptr-imagemap 
                         transport='wss' 
                         msg-tag="imagemap" 
-						heatmap="false"
+						heatmap="true"
                         title="Imagemap"
                         title-font-color="#aaa"
-                        api='UIComponents/dashboard/frontend/examples/imageMap/getImagemapData'
-                        image-url='//s3.amazonaws.com/scriptr-cdn/hvac-monitoring/images/HVAC-system-7.png'
-                        width='640'
-                        height='571'
+                        api='UIComponents/dashboard/frontend/examples/imageMap/getImageHeatmapData'
+                        image-url='//s3.amazonaws.com/scriptr-cdn/rbc/dev/images/floorplan-L1.jpg'
+                        width='563'
+                        height='337'
                         min-zoom='0'
-                        max-zoom='14'
-                        markers-data="vm.markersData"
-                        data="{temperature: 24,pressure: 40,co2: 40}"
+                        fetch-data-interval="20"
+                        max-zoom='3'
                         on-format-data="vm.callback">
       </scriptr-imagemap>
 </body>
