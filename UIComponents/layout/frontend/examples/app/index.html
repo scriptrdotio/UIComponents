@@ -49,19 +49,23 @@
     <script src="/UIComponents/userManagement/frontend/components/groups/groupDetails.js"></script>
     <script src="/UIComponents/userManagement/frontend/components/groups/container.js"></script>
    
-    <script src="/UIComponents/layout/frontend/examples/app/config.js"></script>
+    <script src="/UIComponents/layout/frontend/examples/app/layout.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
     
     
-    <script src="/modules/login/widgets/authorization.js" ></script>
+    <script src="/login/view/javascript/authorization.js"> </script>
+    <script src="/login/view/javascript/config.js"> </script>
+
     <link rel="stylesheet" href="/UIComponents/layout/frontend/examples/app/style.css">
     
     <script type="text/javascript"> 
+      
       var authorization  = $.scriptr.authorization(
-        {
-          onTokenValid: function(){ }, 
-          loginPage: login.loginTarget
-        }
+          {
+              onTokenValid: function(){ }, 
+              loginPage: config.loginPage,
+              validateTokenApi: login.validateTokenApi
+          }
       );
     </script>
     
@@ -104,7 +108,7 @@
           var vm = this 
           vm.menuItems = menuItemsJson
           vm.headerItems = headerItemsJson
-          vm.user = (atob(document.cookie.split("=")[1]).split(":")[1])
+          vm.user = JSON.parse($.cookie('user'));
       });
   </script>
 </html>
