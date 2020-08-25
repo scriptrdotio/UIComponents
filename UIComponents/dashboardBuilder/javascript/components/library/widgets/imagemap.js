@@ -12,10 +12,10 @@ const __IMAGEMAP__ = {
         "data" : "{temperature: 24,pressure: 40,co2: 40}"
     },
     "box": {
-        "sizeX": 2,
-        "sizeY": 4,
-        "minSizeX": 2,
-        "minSizeY": 2
+        "sizeX": 6,
+        "sizeY": 6,
+        "minSizeX": 6,
+        "minSizeY": 6
     },
     "imgCls": "imagemap-img",
     "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/imagemap.png",
