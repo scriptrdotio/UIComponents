@@ -165,7 +165,7 @@ angular
           self.pathStrokeWeight = (self.pathStrokeWeight) ? self.pathStrokeWeight : 5;
         
           self.maxAssetPoints = (self.maxAssetPoints) ? self.maxAssetPoints : 100;
-          self.defaultcenter = (self.defaultCenter) ? self.defaultCenter : "40.7053111,-74.258188";
+          self.defaultcenter = (self.defaultCenter) ? self.defaultCenter : null;
           self.trackedAsset = (self.trackedAsset) ? self.trackedAsset : null;
           self.clusterStyles = (self.clusterStyles) ? self.clusterStyles : [ ];
         
@@ -225,9 +225,9 @@ angular
         
         self.mapFitBounds = (typeof self.mapFitBounds != "undefined") ? self.mapFitBounds : true;
        
-        self.bound = null;
+        self.bounds = null;
         if(self.mapFitBounds)
-				self.bounds = new google.maps.LatLngBounds();
+			self.bounds = new google.maps.LatLngBounds();
 
         //Focus on selected asset
         $scope.$on("mapFoucsOnMarker", function(event, data) {
@@ -480,9 +480,9 @@ angular
             	function(map) { 
                      if(!self.mapcenter)  {
             				self.mapcenter = self.bounds.getCenter();
-               				map.setCenter(self.bounds.getCenter());
-        					map.fitBounds(self.bounds);
                      }
+                     map.setCenter(self.bounds.getCenter());
+        			 map.fitBounds(self.bounds);
           	})
           }   
         };
@@ -740,9 +740,7 @@ angular
               
               if(self.bounds) {
                	self.bounds.extend(new google.maps.LatLng(tripPoint.lat.value, tripPoint.long.value));
-              }
-                            
-              if (self.mapcenter == null) {
+              } else if (self.mapcenter == null) {
                 self.mapcenter = tripMarker.position;
               }
             } //End looping on asset's trip's points
