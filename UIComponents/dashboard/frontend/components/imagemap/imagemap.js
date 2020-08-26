@@ -18,6 +18,7 @@ angular.module('Imagemap').component('scriptrImagemap',{
         "minZoom": "@",
         "maxZoom": "@",
         "imageUrl": "@",
+        "heatmapOptions": "<?",
         "markersData": "<?" //object of objects with key and: lat, lng, group(optional), icon(url, unit} 
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/imagemap/imagemap.html',
@@ -126,21 +127,23 @@ angular.module('Imagemap').component('scriptrImagemap',{
             }
             self.layers.overlays = {};
             if(self.heatmap) {
+                var _heatmapDefaultOptions = {
+                    minOpacity: 0.05,
+                    maxZoom: 0,
+                    radius: 30,
+                    blur: 15,
+                    max: 1.0,
+                    gradient: {
+                        0.1: 'blue',
+                        0.6: 'lime', 
+                        1: 'red'
+                    }
+                }
+                var _heatmapOptions = (self.heatmapOptions) ? (_.extend(_heatmapDefaultOptions, self.heatmapOptions)) : _heatmapDefaultOptions;
                 self.heatLayerInfo = {
                         name: 'Heat Map',
                         type: 'heat',
-                        layerOptions: {
-                            minOpacity: 0.05,
-                            maxZoom: 0,
-                            radius: 30,
-                            blur: 15,
-                            max: 1.0,
-                            gradient: {
-                                0.1: 'blue',
-                                0.6: 'lime', 
-                                1: 'red'
-                            }
-                		},
+                        layerOptions: _heatmapOptions ,
                         visible: true
                 };
             }
@@ -241,8 +244,6 @@ angular.module('Imagemap').component('scriptrImagemap',{
                     self.hasData = true;
                     self.noResults = false;
                     self.stalledData = false;
-                    self.data = data;
-                    console.log('consuming data');
                     if(self.markers){
                         var dataKeys = Object.keys(data);
                         for(var i = 0; i < dataKeys.length; i++){
