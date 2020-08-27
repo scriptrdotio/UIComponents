@@ -2,7 +2,7 @@
 </scriptr-notifications>
        
 
-<div style="width: {{$ctrl.width}}%; height: {{$ctrl.height}}{{$ctrl.heightUnit}};" class="gauge" ng-if="$ctrl.gaugeValue">
+<div style="width: {{$ctrl.width}}%; height: {{$ctrl.height}}{{$ctrl.heightUnit}};" class="gauge" ng-if="$ctrl.gaugeValue !== undefined && $ctrl.gaugeValue !== null">
     <div 
          value={{$ctrl.gaugeValue}}
          value-font-color={{$ctrl.valueFontColor}}
