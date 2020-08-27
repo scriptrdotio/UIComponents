@@ -99,7 +99,7 @@ angular
                      return e.value==s.value;
                  });
              }else if(typeof s.value === 'number' && s.numberBackgroundColors){
-                 match=_.find(s.numberBackgroundColors.reverse(),function(e){
+                 match=_.find(s.numberBackgroundColors.slice().reverse(),function(e){
                      return s.value>=e.value;
                  });
              }
