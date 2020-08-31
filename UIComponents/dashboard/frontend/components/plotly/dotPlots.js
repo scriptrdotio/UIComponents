@@ -62,7 +62,7 @@ angular
                     modeBarButtonsToRemove: self.modeBarButtonsToRemove, 
                     displaylogo: self.displaylogo,
                 };
-                this.showLegend = this.showLegend ? this.showLegend : false;
+                this.showLegend = this.showLegend ? this.showLegend : true;
                 this.paper_bgcolor = this.paper_bgcolor ? this.paper_bgcolor : 'rgb(254, 247, 234)';
                 this.plot_bgcolor = this.plot_bgcolor ? this.plot_bgcolor : 'rgb(254, 247, 234)';
                 this.defaultMarker ={
@@ -78,6 +78,7 @@ angular
                 this.tracesConfig =(this.tracesConfig) ? this.tracesConfig : this.defaultMarker;
                 var defaultLayout = {
                     					"title":"The title of the graph",
+                    					"showlegend":true,
                                         "margin":{
                                             "l":140,
                                             "r":40,
