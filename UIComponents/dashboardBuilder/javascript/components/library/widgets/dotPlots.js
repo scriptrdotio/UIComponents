@@ -26,6 +26,7 @@ const __DOTPLOTS__ = {
         "show-legend": "false",
         "layout-config": {
             "title":"The default of the graph",
+            "showlegend":true,
             "margin":{
                 "l":140,
                 "r":40,
@@ -35,7 +36,7 @@ const __DOTPLOTS__ = {
             "xaxis":{
                 "showline": true,
                 "showgrid":false,
-                "title":"The title of xaxis",
+                "title":"Title of xaxis",
                 "linecolor":"rgb(204, 204, 204)",
                 "ticks":"outside",
                 "autotick": false,
@@ -45,7 +46,7 @@ const __DOTPLOTS__ = {
             "yaxis":{
                 "showline": true,
                 "showgrid":false,
-                "title":"The title of yaxis",
+                "title":"Title of yaxis",
                 "linecolor":"rgb(204, 204, 204)",
                 "ticks":"outside",
                 "autotick": false,
@@ -142,52 +143,6 @@ const __DOTPLOTS__ = {
                 }
                        ]
             },
-                       /* {
-                title: "Legend",
-                items: [{
-                    "type": "section",
-                    "htmlClass": "row",
-                    "items": [
-                        {
-                            "type": "section",
-                            "htmlClass": "col-xs-12",
-                            "items": [
-                                {
-                                    key: "show-legend"
-                                },
-                                {
-                                    type: "radios-inline",
-                                    key: "legend-type",
-                                    condition: "model['show-legend'] == true",
-                                    titleMap: [{
-                                        value: "hover",
-                                        name: "Hover"
-                                    }, {
-                                        value: "right",
-                                        name: "Right"
-                                    }]
-                                },
-                                {
-                                    type: "radios-inline",
-                                    key: "hide-hover",
-                                    condition: "model['show-legend'] ==true && model['legend-type'] =='hover'",
-                                    titleMap: [{
-                                        value: "auto",
-                                        name: "Auto"
-                                    }, {
-                                        value: "false",
-                                        name: "Always"
-                                    }]
-                                },
-                                /** {
-                                    key :"legend-date-moment-format",
-                                    condition: "model['show-legend'] == true && model['legend-type'] =='right' && model['parse-time'] == true"
-                                }**/
-                           /* ]
-                        }
-                    ]
-                }]
-            },*/
             {
                 title: "Layout",
                 items: [
@@ -460,7 +415,14 @@ const __DOTPLOTS__ = {
                                     "items":[
                                         {
                                             "type":"section",
-                                            "htmlClass": "col-xs-12 col-sm-3",
+                                            "htmlClass": "col-xs-12 col-sm-2",
+                                            "key": "layout-config",
+                                            "items": ["layout-config.showlegend"]
+
+                                        },
+                                        {
+                                            "type":"section",
+                                            "htmlClass": "col-xs-12 col-sm-2",
                                             "key": "layout-config",
                                             "items": ["layout-config.legend.font.size"]
 
@@ -711,6 +673,11 @@ const __DOTPLOTS__ = {
             "layout-config":{
                 "type":"object",
                 "properties":{
+                     "showlegend":{
+                                 "title": "Show Legend",
+                                 "type": "boolean",
+                                 "default": "true"
+                            },
                     "title":{
                         "title":"Title",
                         "type":"string",
@@ -750,7 +717,8 @@ const __DOTPLOTS__ = {
                                         "type":"number",
                                         "title":"Size",
                                         "default":16,
-                                        "placeholder":16
+                                        "placeholder":16,
+                                        "description":"size of the legend",
                                     }
                                 }
                             },
@@ -784,7 +752,8 @@ const __DOTPLOTS__ = {
                                 "description":"Sets the orientation of the legend.",
                                 "default":"v"
                             }
-                        }
+                        },
+                        
                     
                     },
                     "xaxis":{
@@ -792,7 +761,7 @@ const __DOTPLOTS__ = {
                         "type":"object",
                         "properties":{
                             "title":{
-                                "title":"The title of the Xaxis",
+                                "title":"Title of Xaxis",
                                 "type":"string"
                             },
                             "showgrid":{
@@ -828,23 +797,6 @@ const __DOTPLOTS__ = {
                                 "format": "color",
                                 "default": "#CC5464"
                             },
-                          /*  "tickfont":{
-                                "type":"object",
-                                "properties":{
-                                    "font":{
-                                        "type":"object",
-                                         "properties":{
-                                             "color":{
-                                                 "title": "Tick Color",
-                                                 "type": "string",
-                                                 "format": "color",
-                                                 "default": "#CC5464"
-                                             }
-                                         }
-                                    }
-                                }
-                            },*/
-                            
                         }
                     },
                     "yaxis":{
@@ -852,7 +804,7 @@ const __DOTPLOTS__ = {
                         "type":"object",
                         "properties":{
                             "title":{
-                                "title":"The title of the Yaxis",
+                                "title":"Title of Yaxis",
                                 "type":"string"
                             },
                             "showgrid":{
@@ -887,33 +839,6 @@ const __DOTPLOTS__ = {
                                 "format": "color",
                                 "default": "#CC5464"
                             },
-                           /* "font":{
-                                "type":"object",
-                                "properties":{
-                                    "color":{
-                                        "title": "Title Color",
-                                        "type": "string",
-                                        "format": "color",
-                                        "default": "#CC5464"
-                                    }
-                                }
-                            },*/
-                           /* "tickfont":{
-                                "type":"object",
-                                "properties":{
-                                    "font":{
-                                        "type":"object",
-                                         "properties":{
-                                             "color":{
-                                                 "title": "Tick Color",
-                                                 "type": "string",
-                                                 "format": "color",
-                                                 "default": "#CC5464"
-                                             }
-                                         }
-                                    }
-                                }
-                            },*/
                         }
                     }
                 }
