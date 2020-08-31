@@ -1,0 +1,108 @@
+<html ng-app="myApp">
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <!-- Adding JQUERY To use jQuery, simply ensure it is loaded before the angular.js file. -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <!-- Adding Angular -->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+        <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+
+        <script src="/UIComponents/wsProvider.js"></script>
+        <script src="/UIComponents/httpProvider.js"></script>
+        <script src="/UIComponents/dataService.js"></script>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+
+        <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+        <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+
+        <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="/UIComponents/dashboard/frontend/components/plotly/angular-plotly.js"></script>
+        <script src="/UIComponents/dashboard/frontend/components/plotly/plotly.js"></script>
+        <script src="/UIComponents/dashboard/frontend/components/plotly/dotPlots.js"></script>
+
+        <script src="/UIComponents/config/scriptrTransport.js"></script>
+    </head>
+    <script>
+        (function () {
+            var myApp = angular.module("myApp", ["WsClient", "HttpClient", 'Plotly'])
+            angular.module('myApp').config(wssConfig);
+            angular.module('myApp').config(httpsConfig);
+            myApp.config(function ($interpolateProvider, $locationProvider) {
+                $interpolateProvider.startSymbol('{[{');
+                $interpolateProvider.endSymbol('}]}');
+                $locationProvider.html5Mode({
+                    enabled: true,
+                    requireBase: false
+                });
+            });
+            myApp.controller('RootCtrl', function ($scope, $interpolate, $location) {
+                var vm = this;
+                vm.init = function () {
+                }
+                vm.plotlyFormatData1 = function (data) {
+
+                    return data;
+                }
+                vm.country = ['Switzerland (2011)', 'Chile (2013)', 'Japan (2014)', 'United States (2012)', 'Slovenia (2014)', 'Canada (2011)', 'Poland (2010)', 'Estonia (2015)', 'Luxembourg (2013)', 'Portugal (2011)'];
+                vm.votingPop = [40, 45.7, 52, 53.6, 54.1, 54.2, 54.5, 54.7, 55.1, 56.6];
+                vm.regVoters = [49.1, 42, 52.7, 84.3, 51.7, 61.1, 55.3, 64.2, 91.1, 58.9];
+                vm.tracesConfig = [{
+                    			name :"Name of trace1",
+                               color: "rgba(156, 165, 196, 0.95)",
+                               line: {
+                                  color: "rgba(156, 165, 196, 0.95)",
+                                  width: "1"
+                               },
+                               symbol: "circle",
+                               size: "16"
+                            },{
+                                name :"Name of trace2",
+                                color: "rgba(204, 204, 204, 0.95)",
+                                line: {
+                                    color: "rgba(217, 217, 217, 1.0)",
+                                    width: "1"
+                                },
+                                symbol: "circle",
+                                size: "16"
+                            }
+                            ];
+                vm.legend = {
+                            "font": {
+                                "size": 10
+                            },
+                            "yanchor": "middle",
+                            "xanchor": "left"
+                        };
+               //vm.name = ["Percent of estimated voting age population","Percent of estimated registered voters"];
+               vm.traces = [{x: vm.votingPop, y:vm.country}, {x: vm.regVoters, y:vm.country} ];
+                
+              //  vm.layout= {"title":"The graph","margin":{"l":140,"r":40,"b":50,"t":80},"xaxis":{"showline":true,"showgrid":false,"title":"The title of xaxis","titlefont":{"font":{"color":"rgb(204, 204, 204)"}},"tickfont":{"font":{"color":"rgb(102, 102, 102)"}},"ticks":"outside","tickcolor":"rgb(102, 102, 102)","autotick":false,"dtick":10},"yaxis":{"title":"The title of yaxis","titlefont":{"font":{"color":"rgb(204, 204, 204)"}}},"hovermode":"closest","legend":{"font":{"size":10},"yanchor":"right","xanchor":"right"}};
+            });
+        })();
+    </script>
+    <body class="dashboard-template light" ng-controller="RootCtrl as vm" ng-init="vm.init();">
+        <div  style="min-width: 300px;"> 
+
+
+            <scriptr-dot-plots
+                               transport='https'
+                               traces-config = 'vm.tracesConfig'
+                               data = "vm.traces"
+                               >
+
+
+            </scriptr-dot-plots>
+        </div>
+    </body>  
+</html>
+
