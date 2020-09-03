@@ -18,6 +18,7 @@ angular.module('Imagemap').component('scriptrImagemap',{
         "minZoom": "@",
         "maxZoom": "@",
         "imageUrl": "@",
+        "imageRatio": "@",
         "heatmapOptions": "<?",
         "markersData": "<?" //object of objects with key and: lat, lng, group(optional), icon(url, unit} 
     },
@@ -34,15 +35,16 @@ angular.module('Imagemap').component('scriptrImagemap',{
             self.cw = $element.parent().width();
             self.ch = $element.parent().height();
             
-            var iw = (self.width)? parseInt(self.width) : 500;
-            var ih = (self.height)? parseInt(self.height) : 500;
-            var maxZoom = Math.ceil( Math.log( (self.cw/iw > self.ch/ih ? iw/self.cw : ih/self.ch) ) / Math.log(2) );
+            //var iw = (self.width)? parseInt(self.width) : 500;
+            //var ih = (self.height)? parseInt(self.height) : 500;
+            //var maxZoom = Math.ceil( Math.log( (self.cw/iw > self.ch/ih ? iw/self.cw : ih/self.ch) ) / Math.log(2) );
             
             self.minZoom = (self.minZoom)? parseInt(self.minZoom) : 0;
             self.maxZoom = (self.maxZoom)? parseInt(self.maxZoom) : 3;
             
-            self.width = (self.width)? parseInt(self.width) : 500;
-            self.height = (self.height)? parseInt(self.height) : 500;
+            self.imageRatio = (self.imageRatio)? parseFloat(self.imageRatio) : 1;
+            self.width = (self.width)? (parseInt(self.width) * self.imageRatio) : 500;
+            self.height = (self.height)? (parseInt(self.height) * self.imageRatio) : 500;
             
             self.id = "imagemap-"+$scope.$id;
             
@@ -90,7 +92,7 @@ angular.module('Imagemap').component('scriptrImagemap',{
             //timer needs to be one second in order to wait not only for the map to load but also the markers to load
             setTimeout(function(){
                 leafletData.getMap(self.id).then(function(map) {
-                   // map.invalidateSize(false);
+                    map.invalidateSize(false);
                 });
             }, 1000);
             
@@ -257,9 +259,19 @@ angular.module('Imagemap').component('scriptrImagemap',{
                             if(self.heatLayer) {
                                 leafletLayerHelpers.safeRemoveLayer(map, self.heatLayer);
                             }
-                            self.heatLayerInfo["data"] = data
+                            
+                            _data = _.map(data, function(entry){ return [entry[0]*self.imageRatio, entry[1]*self.imageRatio, entry[2]]})
+                            self.heatLayerInfo["data"] = _data
                             self.heatLayer = leafletLayerHelpers.createLayer(self.heatLayerInfo)
-                            leafletLayerHelpers.safeAddLayer(map, self.heatLayer);
+                            try {
+                                leafletLayerHelpers.safeAddLayer(map, self.heatLayer);
+                            }catch(e){
+                                console.error(e);
+                                setTimeout(function(){
+                                    leafletLayerHelpers.safeAddLayer(map, self.heatLayer);
+                                }, 1000);
+                            }
+                            
                      });
                        
                     }
