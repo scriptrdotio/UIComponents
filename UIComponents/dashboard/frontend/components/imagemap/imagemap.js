@@ -12,6 +12,9 @@ angular.module('Imagemap').component('scriptrImagemap',{
         "useWindowParams": "@",
         "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
         "heatmap": "<?",
+        "dynamicMarkers": "@", 
+      	"draggableMarkers": "@", 
+	    "dragApi":"@",
         "data" : "<?",
         "width": "@",
         "height": "@",
@@ -47,7 +50,12 @@ angular.module('Imagemap').component('scriptrImagemap',{
             self.height = (self.height)? (parseInt(self.height) * self.imageRatio) : 500;
             
             self.id = "imagemap-"+$scope.$id;
-            
+            if(self.draggableMarkers!=null && self.draggableMarkers){
+              $scope.$on('leafletDirectiveMarker.'+self.id+'.dragend', function(event, args){
+                  console.log(args.leafletObject._latlng); 
+                  updateMarker(args.modelName, args.model.lng, args.model.lat)
+              });
+            }
             if(self.markersData){
                 self.markers = {};
                 for(var i = 0; i < self.markersData.length; i++){
@@ -215,6 +223,22 @@ angular.module('Imagemap').component('scriptrImagemap',{
             }
             angular.element($window).off('resize', self.onResize);
         }
+        
+        var updateMarker = function(id, lng, lat) {
+          if(self.draggableMarkers){
+            var requestInfo = {
+                "api": self.dragApi,
+                "transport": self.transport,
+                "msgTag": self.msgTag,
+                "apiParams": {xAxis: lng, yAxis: lat, id: id},
+                "useWindowParams": self.useWindowParams,
+                "httpMethod": self.httpMethod,
+                "widgetId": $scope.$id
+            };
+            dataService.scriptrRequest(requestInfo);
+          }
+        }
+        
         var initDataService = function(transport) {
             var requestInfo = {
                 "api": self.api,
@@ -246,15 +270,50 @@ angular.module('Imagemap').component('scriptrImagemap',{
                     self.hasData = true;
                     self.noResults = false;
                     self.stalledData = false;
-                    if(self.markers){
-                        var dataKeys = Object.keys(data);
-                        for(var i = 0; i < dataKeys.length; i++){
-                            var dataKey = dataKeys[i];
-                            if(self.markers[dataKey]){
-                                self.markers[dataKey].icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><img width='32px' height='32px' class='markerImg' src='" + self.markers[dataKey].icon.iconUrl + "'/><span class='indicator-value' style='right: 0px;'>" + data[dataKey] + " " + self.markers[dataKey].icon.unit + "</span></div></div>";
-                            }
+                   
+                    if(!self.heatmap){
+                        if(self.dynamicMarkers){
+                            self.markers = {};
+                            self.markersData = data;
+                            for(var i = 0; i < self.markersData.length; i++){
+                                var theMarker = self.markersData[i];
+                                var tmp = {
+                                    lat: theMarker.lat, 
+                                    lng: theMarker.lng,
+                                    icon: {
+                                      className: 'custom-div-icon',
+                                        type: 'div',
+                                        html: "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><span class='indicator-value' style='right: 0px;'>" + theMarker.key + "</span></div></div>",
+                                        iconSize: [90, 90],
+                                        iconAnchor: [0, 0],
+                                        popupAnchor:  [15, -30]
+                                    },
+                                };
+                                if(theMarker.draggable && (theMarker.draggable == "true" || theMarker.draggable == true)) {
+                                    tmp["draggable"] =  true;
+                                }
+                                if(theMarker.icon && theMarker.icon.url) {
+                                    tmp.icon["iconUrl"] = theMarker.icon.url;
+                                }
+                                if(theMarker.icon && theMarker.icon.unit) {
+                                    tmp.icon["unit"] = theMarker.icon.unit;
+                                }
+                                if(theMarker.icon && theMarker.icon.unit && theMarker.icon.url ) {
+                                    tmp.icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><img width='32px' height='32px' class='markerImg' src='" + theMarker.icon.url + "'/><span class='indicator-value' style='right: 0px;'>" + theMarker.key + " " + theMarker.icon.unit + "</span></div></div>"
+                                }
+
+                                  self.markers[theMarker.key] = tmp;
+                              }                          
+                            }else{
+                              var dataKeys = Object.keys(data);
+                              for(var i = 0; i < dataKeys.length; i++){
+                                  var dataKey = dataKeys[i];
+                                  if(self.markers[dataKey]){
+                                      self.markers[dataKey].icon.html = "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><img width='32px' height='32px' class='markerImg' src='" + self.markers[dataKey].icon.iconUrl + "'/><span class='indicator-value' style='right: 0px;'>" + data[dataKey] + " " + self.markers[dataKey].icon.unit + "</span></div></div>";
+                                  }
+                              }
                         }
-                    }else if (self.heatmap) {
+                    }else{
                      	leafletData.getMap(self.id).then(function(map) {
                             if(self.heatLayer) {
                                 leafletLayerHelpers.safeRemoveLayer(map, self.heatLayer);
