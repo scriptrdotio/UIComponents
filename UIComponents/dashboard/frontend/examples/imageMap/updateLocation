@@ -1,0 +1,13 @@
+var documents = require("document");
+var result = documents.query({"query":'type = "tracking_QWEASDZXCQWE"', "fields":"*"});
+
+if(result.result && result.result.documents && result.result.documents.length>0){
+		var anchorData = {};
+      	anchorData = request.parameters; 
+    	var fields = {};
+        fields.key = result.result.documents[0].key;
+        fields.xAxis = anchorData.xAxis?anchorData.xAxis:0;
+        fields.yAxis = anchorData.yAxis?anchorData.yAxis:0;
+        return documents.save(fields);
+}
+  return {status:"failure"};

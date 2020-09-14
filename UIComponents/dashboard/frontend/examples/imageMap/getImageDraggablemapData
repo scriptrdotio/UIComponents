@@ -1,0 +1,44 @@
+var documents = require("document");
+var response = documents.query({"query":'type = "tracking_QWEASDZXCQWE"', "fields":"*"});
+if(!response.result || !response.result.documents || response.result.documents.length==0){
+    var fields = {};
+      fields["type"] = "tracking_QWEASDZXCQWE";
+      fields["xAxis"] = 0;
+      fields["yAxis"] = 0;
+      documents.save(fields);
+}
+var docs = response.result.documents;
+var xAxis = docs[0].xAxis;
+var yAxis = docs[0].yAxis;
+var value =  [
+                {
+                    key: 'temperature',
+                  	value: 10,
+                    lat:  parseInt(yAxis), 
+                    lng:  parseInt(xAxis),
+                    draggable: true,
+                    group: 'testers',
+                    icon: {
+                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/accelerometer.png',
+                        unit: '°C'
+                    }
+                }
+            ]; 
+return value;
+var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
+var requestParams = typeof(body) == "string" ? JSON.parse(body) : body;
+
+var publishResponse = function(channel, data, request) {
+   var message = {"result": data};
+   if(body && body.id) {
+     message["id"] = body.id;
+   } else {
+     //Add a default id to identify the message published over the socket
+      message["id"] = "grideye";
+   }
+   publish(channel, message);
+}
+
+publishResponse("responseChannel", value, request);
+
+return value;
