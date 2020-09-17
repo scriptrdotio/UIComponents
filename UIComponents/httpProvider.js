@@ -89,7 +89,10 @@ angular
 						                              d.reject(data.metadata,
 						                                    response);
 					                              }
-				                              }
+				                              } else { // It's not a scriptr structure response, resolve and let caller handle the data
+                                                  console.debug("Not the excpected scriptr response format", response)
+                                                  d.resolve(response);
+                                              }
 			                              }, function(err) {
                                               console.log("ERROR", err)
                                               if(err.status == "429") {
