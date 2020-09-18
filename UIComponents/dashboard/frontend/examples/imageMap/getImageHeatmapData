@@ -2,11 +2,23 @@ var log = require("log");
 log.setLevel("INFO");
 
 var value =   [  
-                [Math.floor(Math.random() * 300) + 100 , Math.floor(Math.random() * 280) + 50 , 0.4],
-                [Math.floor(Math.random() * 300) + 100 ,  Math.floor(Math.random() * 280) + 50, 0.4],
-                [Math.floor(Math.random() * 300) + 100 ,  Math.floor(Math.random() * 280) + 50, 0.6],
-                [Math.floor(Math.random() * 300) + 100 ,  Math.floor(Math.random() * 280) + 50, 1],
-                [Math.floor(Math.random() * 300) + 100 ,  Math.floor(Math.random() * 280) + 50, 1]
+    			[Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.2],
+    			[Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.3],
+                [Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.4],
+                [Math.floor(Math.random() * 100) + 105 ,  Math.floor(Math.random() * 280) + 270, 0.4],
+                [Math.floor(Math.random() * 100) + 105 ,  Math.floor(Math.random() * 280) + 270, 0.6],
+    			[Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.7],
+    			[Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.8],
+    			[Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.9],
+    [Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.9],
+    [Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.9],
+    [Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.9],
+    [Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.9],
+	 [Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.9],
+    [Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.9],
+    [Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.9],
+    [Math.floor(Math.random() * 100) + 105 , Math.floor(Math.random() * 280) + 270 , 0.9],
+    [Math.floor(Math.random() * 100) + 105 ,  Math.floor(Math.random() * 280) + 270, 1]
             ] 
 
 var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
@@ -18,7 +30,7 @@ var publishResponse = function(channel, data, request) {
      message["id"] = body.id;
    } else {
      //Add a default id to identify the message published over the socket
-      message["id"] = "grideye";
+      message["id"] = "imagemap";
    }
    publish(channel, message);
 }

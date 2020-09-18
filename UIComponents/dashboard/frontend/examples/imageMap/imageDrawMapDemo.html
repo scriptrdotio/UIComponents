@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/imagemap/leaflet.css"/>
     <script src="/UIComponents/dashboard/frontend/components/imagemap/leaflet-src.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/imagemap/leaflet-heat.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/leaflet-draw.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/imagemap/leaflet-draw.css"/>
     <script src="/UIComponents/dashboard/frontend/components/imagemap/0.1.7/angular-simple-logger.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/imagemap/ui-leaflet.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/imagemap/ui-leaflet-layers.min.js"></script>
@@ -51,52 +53,6 @@
             return data;
           }
           
-          vm.markersData = [
-                {
-                    key: 'temperature',
-                    lat: 100, 
-                    lng: 50,
-                    draggable: true,
-                    group: 'testers',
-                    icon: {
-                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/accelerometer.png',
-                        unit: '°C'
-                    }
-                },
-                {
-                    key: 'pressure',
-                    lat: 383, 
-                    lng: 181,
-                    draggable: true,
-                    group: 'testers',
-                    icon: {
-                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/pressure.png',
-                        unit: 'Pa'
-                    }
-                },
-                {
-                    key: 'co2',
-                    lat: 272.75, 
-                    lng: 87.25,
-                    draggable: true,
-                    group: 'testers',
-                    icon: {
-                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/co2.svg',
-                        unit: 'ppm'
-                    }
-                },
-                {
-                    key: 'batata',
-                    lat: 250, 
-                    lng: 60,
-                    draggable: true,
-                    group: 'testers',
-                    icon: {
-                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/co2.svg',
-                        unit: 'ppm'
-                    }
-                }
-            ]
       });
     
 </script>
@@ -104,29 +60,16 @@
       <scriptr-imagemap 
                         transport='wss' 
                         msg-tag="imagemap" 
-						heatmap="true"
+						draw="true"
+                        data="[]"
                         title="Imagemap"
                         title-font-color="#aaa"
-                        api='UIComponents/dashboard/frontend/examples/imageMap/getImageHeatmapData'
                         image-url='//s3.amazonaws.com/scriptr-cdn/rbc/dev/images/floorplan-L1.jpg'
                         width='563'
                         height='337'
                         min-zoom='0'
                         fetch-data-interval="10"
                         max-zoom='3'
-                        heatmap-options="{
-                            minOpacity: 0.05,
-                            maxZoom: 0,
-                            radius: 30,
-                            blur: 15,
-                            max: 1.0,
-                            gradient: {
-                                0.1: 'orange',
-                                0.6: 'yellow', 
-                                0.4: 'blue',
-                                1: 'pink'
-                            }
-                		}"
                         on-format-data="vm.callback">
       </scriptr-imagemap>
 </body>
