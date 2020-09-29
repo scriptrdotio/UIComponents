@@ -42,17 +42,15 @@
       var myApp = angular.module('myApp', ["Layout"]);
         
       angular.module('myApp').controller('headerCtrl', function($scope, $sce) {
-    	var vm = this;  
+    	
+        var vm = this;  
         if($.cookie('user')) {
         	vm.user = JSON.parse($.cookie('user'));
         } else {
           	vm.user = {}
         }
-     });	
-   
-    </script>
-    <body ng-controller="headerCtrl as vm">  
-       <header-top header-items='{
+        
+        vm.header = {
           "items": [
             {"icon": "fa fa-ticket", "label": "Documentation", "route":"#/documentation", "class": "pull-left"},
             {"icon": "fa fa-ticket", "label": "API Explorer", "route":"#/apiexplorer", "class": "pull-left"},
@@ -69,6 +67,11 @@
           "appname": "Log analyser",
            "caretlabel": "test",
            "logout": {"icon": "fa fa-sign-out", "label": "Logout", "route":"#/logout"}
-        }'  user="vm.user" ></header-top>
+        };
+     });	
+   
+    </script>
+    <body ng-controller="headerCtrl as vm">  
+       <header-top header-items='vm.header'  user="vm.user" ></header-top>
     </body>
     </html>
