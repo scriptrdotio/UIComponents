@@ -53,24 +53,19 @@ angular.module('Imagemap').component('scriptrImagemap',{
             self.height = (self.height)? (parseInt(self.height) * self.imageRatio) : 500;
             
             self.id = "imagemap-"+$scope.$id;
-            if(self.draggableMarkers!=null && self.draggableMarkers){
-              $scope.$on('leafletDirectiveMarker.'+self.id+'.dragend', function(event, args){
-                  console.log(args.leafletObject._latlng); 
-                  updateMarker(args.modelName, args.model.lng, args.model.lat)
-              });
-            }
+           
             if(self.markersData){
                 self.markers = {};
                 for(var i = 0; i < self.markersData.length; i++){
                     var theMarker = self.markersData[i];
+                    var markerValue = ((self.data[theMarker.key])? self.data[theMarker.key] : null);
                     var tmp = {
-                        lat: theMarker.lat, 
-                        lng: theMarker.lng,
+                        lat: theMarker.lat * self.imageRatio, 
+                        lng: theMarker.lng * self.imageRatio, 
                         icon: {
                             className: 'custom-div-icon',
                             type: 'div',
-                            html: "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><span class='indicator-value' style='right: 0px;'>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + "</span></div></div>",
-                            iconSize: [90, 90],
+                            html: "<div class='marker-pin'><div class='marker-content'><span class='indicator-value'>" + ((markerValue)? markerValue : "?") + "</span></div></div>",
                             iconAnchor: [0, 0],
                             popupAnchor:  [15, -30]
                         },
@@ -87,16 +82,11 @@ angular.module('Imagemap').component('scriptrImagemap',{
                     if(theMarker.icon && theMarker.icon.unit) {
                         tmp.icon["unit"] = theMarker.icon.unit;
                     }
-                    if(theMarker.icon && theMarker.icon.unit && theMarker.icon.url ) {
-                        tmp.icon.html = "<div class='marker-pin'><div class='marker-content'><img class='markerImg' src='" + theMarker.icon.url + "'/><span class='indicator-value'>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + " " + theMarker.icon.unit + "</span></div></div>"
+                    if(theMarker.class) {
+                        tmp["class"] = theMarker.class;
                     }
-                    if(theMarker.icon && theMarker.icon.unit && !theMarker.icon.url ) {
-                        tmp.icon.html = "<div class='marker-pin'><div class='marker-content'><span class='indicator-value'>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + " " + theMarker.icon.unit + "</span></div></div>"
-                    }
-                    if(theMarker.icon && !theMarker.icon.unit && theMarker.icon.url ) {
-                        tmp.icon.html = "<div class='marker-pin'><div class='marker-content'><img class='markerImg' src='" + theMarker.icon.url + "'/><span class='indicator-value'>" + ((self.data[theMarker.key])? self.data[theMarker.key] : "?") + "</span></div></div>"
-                    }
-                    self.markers[theMarker.key] = tmp;
+                    tmp.icon.html = buildMarkerHtml(tmp,  markerValue);
+                    self.markers[theMarker.key] =  tmp;
                 }
             }
             
@@ -117,23 +107,25 @@ angular.module('Imagemap').component('scriptrImagemap',{
                    });
                });
             }, 1000);
-            
-            $scope.$on('leafletDirectiveMarker.'+self.id+'.dragend', function(event, args){
-                console.log(args.leafletObject._latlng); 
-            });
+
+            //if(self.draggableMarkers!=null && self.draggableMarkers){
+                  $scope.$on('leafletDirectiveMarker.'+self.id+'.dragend', function(event, args){
+                      console.log(args.leafletObject._latlng); 
+                     // updateMarker(args.modelName, args.model.lng, args.model.lat)
+                  });
+           // }
             
             
             self.defaults = {
                 crs: L.CRS.Simple,
                 maxZoom: self.maxZoom
             };
+            
             self.center = {
                 lat: 0,
                 lng: 0,
                 zoom: self.minZoom
             };
-            
-            
             
             self.imageUrl= (self.imageUrl) ? self.imageUrl : '//s3.amazonaws.com/scriptr-cdn/compagno/HVAC-system-7.png';
             
@@ -153,7 +145,7 @@ angular.module('Imagemap').component('scriptrImagemap',{
             }
             self.layers.overlays = {};
             
-            if(self.draw) {
+            if(self.draw) { //Show draw controls
                 self.controls =  {
                     draw: {}
                 };
@@ -167,7 +159,8 @@ angular.module('Imagemap').component('scriptrImagemap',{
                     }
                 }
             }
-            if(self.heatmap) {
+            
+            if(self.heatmap) { //Show heatmap layer
                 var _heatmapDefaultOptions = {
                     minOpacity: 0.05,
                     maxZoom: 0,
@@ -180,6 +173,7 @@ angular.module('Imagemap').component('scriptrImagemap',{
                         1: 'red'
                     }
                 }
+                
                 var _heatmapOptions = (self.heatmapOptions) ? (_.extend(_heatmapDefaultOptions, self.heatmapOptions)) : _heatmapDefaultOptions;
                 self.heatLayerInfo = {
                         name: 'Heat Map',
@@ -188,6 +182,7 @@ angular.module('Imagemap').component('scriptrImagemap',{
                         visible: true
                 };
             }
+            
             self.maxBounds = leafletBoundsHelpers.createBoundsFromArray([[self.height, 0], [0, self.width]]);
         }
         self.$postLink = function() {
@@ -270,6 +265,19 @@ angular.module('Imagemap').component('scriptrImagemap',{
           }
         }
         
+        var buildMarkerHtml = function(theMarker, markerValue) {
+            var html = "<div class='"+ ((theMarker.class) ? theMarker.class : "") +" marker-pin'><div class='marker-content'>";
+            
+            if(theMarker.icon && theMarker.icon.iconUrl ) {
+                html +="<img class='markerImg' src='" + theMarker.icon.iconUrl + "'/>";
+            }
+            
+            html +="<span class='indicator-value'>" + ((markerValue)? markerValue : "?") + ((theMarker.icon && theMarker.icon.unit) ?  ("<br/>(" + theMarker.icon.unit + ")" )  : "") + "</span>";
+           
+            html += "</div></div>";
+            return html;
+        }
+        
         var initDataService = function(transport) {
             var requestInfo = {
                 "api": self.api,
@@ -289,6 +297,8 @@ angular.module('Imagemap').component('scriptrImagemap',{
                     }, self.fetchDataInterval * 1000);
             }
         }
+        
+        
         self.consumeData = function(data, response) {
             if (data.status && data.status == "failure") {
                 self.noResults = true;
@@ -314,7 +324,7 @@ angular.module('Imagemap').component('scriptrImagemap',{
                                     icon: {
                                       className: 'custom-div-icon',
                                         type: 'div',
-                                        html: "<div style='background-color:#96c0d0;' class='marker-pin'><div class='marker-content'><span class='indicator-value' style='right: 0px;'>" + theMarker.key + "</span></div></div>",
+                                        html: "<div class='marker-pin'><div class='marker-content'><span class='indicator-value'>" + theMarker.key + "</span></div></div>",
                                         iconSize: [90, 90],
                                         iconAnchor: [0, 0],
                                         popupAnchor:  [15, -30]
@@ -340,7 +350,8 @@ angular.module('Imagemap').component('scriptrImagemap',{
                               for(var i = 0; i < dataKeys.length; i++){
                                   var dataKey = dataKeys[i];
                                   if(self.markers[dataKey]){
-                                      self.markers[dataKey].icon.html = "<div class='marker-pin'><div class='marker-content'><img class='markerImg' src='" + self.markers[dataKey].icon.iconUrl + "'/><span class='indicator-value'>" + data[dataKey] + " " + self.markers[dataKey].icon.unit + "</span></div></div>";
+                                      var tmp = buildMarkerHtml( self.markers[dataKey],  data[dataKey]);
+                                      self.markers[dataKey].icon.html = buildMarkerHtml( self.markers[dataKey],  data[dataKey]);
                                   }
                               }
                         }
