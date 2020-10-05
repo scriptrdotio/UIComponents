@@ -478,11 +478,11 @@ angular
           	})
             .then(
             	function(map) { 
-                     if(!self.mapcenter)  {
-            				self.mapcenter = self.bounds.getCenter();
-                     }
-                     map.setCenter(self.bounds.getCenter());
-        			 map.fitBounds(self.bounds);
+                   if(!self.mapcenter)  {
+            			self.mapcenter = self.bounds.getCenter().lat()+","+self.bounds.getCenter().lng();
+                        map.setCenter(self.bounds.getCenter());
+                    	map.fitBounds(self.bounds);
+                    }
           	})
           }   
         };
