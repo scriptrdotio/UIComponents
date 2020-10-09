@@ -34,7 +34,7 @@ angular.module('Imagemap').constant(
   bindings: {
     "onLoad": "&onLoad",
     "api": "@",
-    "apiTransport": "@",
+    "transport": "@",
     "apiParams": "<?",
     "apiHttpMethod": "@",
     "msgTag": "@",
@@ -75,7 +75,7 @@ angular.module('Imagemap').constant(
   controller: function ($scope, httpClient, wsClient, $interval, dataService, $timeout, $window, $element, leafletData, leafletBoundsHelpers, leafletLayerHelpers, leafletControlHelpers, $uibModal, geofenceDetails) {
     var self = this;
     self.$onInit = function () {
-      self.apiTransport = (self.apiTransport) ? self.apiTransport : null;
+      self.transport = (self.transport) ? self.transport : null;
       self.msgTag = (self.msgTag) ? self.msgTag : null;
       self.useWindowParams = (self.useWindowParams) ? self.useWindowParams : "true";
       self.icon = (self.icon) ? self.icon : '//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/imagemap-bg.svg';
@@ -246,7 +246,7 @@ angular.module('Imagemap').constant(
       if ((self.getDrawApiTransport == "wss" || self.getDrawApiTransport == "https") && self.draw && self.getDrawApi != null)
 
         initDrawDataService();
-      if ((self.apiTransport == "wss" && (self.api || self.msgTag)) || (self.apiTransport == "https" && self.api)) { // Fetch
+      if ((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) { // Fetch
         // data
         // from
         // backend
@@ -380,7 +380,7 @@ angular.module('Imagemap').constant(
     var initDataService = function () {
       var requestInfo = {
         "api": self.api,
-        "transport": self.apiTransport,
+        "transport": self.transport,
         "msgTag": self.msgTag,
         "apiParams": self.apiParams,
         "useWindowParams": self.useWindowParams,
