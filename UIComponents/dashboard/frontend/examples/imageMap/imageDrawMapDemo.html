@@ -11,6 +11,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
     <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
     
+
+    
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
     <script src="/UIComponents/dataService.js"></script>
@@ -38,7 +40,49 @@
     <script src="/UIComponents/dashboard/frontend/components/imagemap/imagemap.js"></script>
     
     <script src="/UIComponents/config/scriptrTransport.js"></script>
+      <script src="//angular-ui.github.io/ui-leaflet/bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+    	<script src="//angular-ui.github.io/ui-leaflet/bower_components/leaflet-plugins/layer/Icon.Canvas.js"></script>
+  	<link rel="stylesheet" href="//angular-ui.github.io/ui-leaflet/bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
+
+  	<script src="/UIComponents/dashboard/frontend/components/imagemap/edit/handler/Edit.Poly.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/edit/handler/Edit.SimpleShape.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/edit/handler/Edit.Circle.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/edit/handler/Edit.Rectangle.js"></script>
+
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/draw/handler/Draw.Feature.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/draw/handler/Draw.Polyline.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/draw/handler/Draw.Polygon.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/draw/handler/Draw.SimpleShape.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/draw/handler/Draw.Rectangle.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/draw/handler/Draw.Circle.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/draw/handler/Draw.Marker.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/TouchEvents.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/LatLngUtil.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/GeometryUtil.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/LineUtil.Intersect.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/Polyline.Intersect.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/Polygon.Intersect.js"></script>
+
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/Control.Draw.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/Tooltip.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/Toolbar.js"></script>
+
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/draw/DrawToolbar.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/edit/EditToolbar.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/edit/handler/EditToolbar.Edit.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/edit/handler/EditToolbar.Delete.js"></script>
     
+  	<script src="/UIComponents/dashboardBuilder/lib/schemaForm/angular-underscore.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/angular-translate.min.js"></script>
+    <script src='/UIComponents/dashboardBuilder/lib/schemaForm/select.min.js'></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/tv4.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/objectPath.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/schemaForm.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/bootstrapDecorator.js"></script>
+  
+	  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
 </head>
 
 <script>
@@ -58,9 +102,12 @@
 </script>
 <body ng-controller="testCtrl as vm">          
       <scriptr-imagemap 
-                        transport='wss' 
+                        get-draw-api-transport='https' 
+                        get-draw-api='UIComponents/dashboard/frontend/examples/imageMap/getImagemapDrawData'
+                        update-draw-api-transport='https' 
+                        update-draw-api='UIComponents/dashboard/frontend/examples/imageMap/updateImagemapDrawData'
                         msg-tag="imagemap" 
-						draw="true"
+												draw="true"
                         data="[]"
                         title="Imagemap"
                         title-font-color="#aaa"
@@ -69,9 +116,11 @@
                         height='337'
                         min-zoom='0'
                         fetch-data-interval="10"
-                        max-zoom='3'
+                        max-zoom='0'
                         on-format-data="vm.callback">
       </scriptr-imagemap>
 </body>
 
 </html>
+
+

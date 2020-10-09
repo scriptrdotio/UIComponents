@@ -1,0 +1,5 @@
+var documents = require("document");
+var response = documents.query({"query":'type = "tracking_ASDASDASDADSDASADS"', "fields":"*"});
+var docs = response.result.documents;
+var zones = docs[0].zones;
+return JSON.parse(zones);

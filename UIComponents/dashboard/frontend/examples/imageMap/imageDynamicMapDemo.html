@@ -36,6 +36,35 @@
     <script src="/UIComponents/dashboard/frontend/components/imagemap/imagemap.js"></script>
     
     <script src="/UIComponents/config/scriptrTransport.js"></script>
+  
+  
+  
+  
+  
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/TouchEvents.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/LatLngUtil.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/GeometryUtil.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/LineUtil.Intersect.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/Polyline.Intersect.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/ext/Polygon.Intersect.js"></script>
+
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/Control.Draw.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/Tooltip.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/Toolbar.js"></script>
+
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/draw/DrawToolbar.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/edit/EditToolbar.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/edit/handler/EditToolbar.Edit.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/imagemap/edit/handler/EditToolbar.Delete.js"></script>
+    
+  	<script src="/UIComponents/dashboardBuilder/lib/schemaForm/angular-underscore.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/angular-translate.min.js"></script>
+    <script src='/UIComponents/dashboardBuilder/lib/schemaForm/select.min.js'></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/tv4.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/objectPath.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/schemaForm.js"></script>
+    <script src="/UIComponents/dashboardBuilder/lib/schemaForm/bootstrapDecorator.js"></script>
+  
     
 </head>
 
@@ -87,7 +116,7 @@
                 },
                 {
                     key: 'batata',
-                    lat: 250, 
+                    lat: 250,  
                     lng: 60,
                     draggable: true,
                     group: 'testers',
@@ -102,7 +131,8 @@
 </script>
 <body ng-controller="testCtrl as vm">          
       <scriptr-imagemap 
-                        transport='https' 
+                        api-transport="https"
+                        test="tt"
                         msg-tag="imagemap" 
 												heatmap="false"
                         title="Imagemap"

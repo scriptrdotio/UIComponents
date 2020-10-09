@@ -1,0 +1,8 @@
+var documents = require("document");
+
+var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
+var requestParams = typeof(body) == "string" ? JSON.parse(body) : body;
+var fields = {};
+fields["type"] = "tracking_ASDASDASDADSDASADS";
+fields["zones"] = JSON.stringify(requestParams);
+return documents.save(fields);
