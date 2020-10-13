@@ -34,7 +34,7 @@ angular.module('Imagemap').constant(
   bindings: {
     "onLoad": "&onLoad",
     "api": "@",
-    "transport": "@",
+    "apiTransport": "@",
     "apiParams": "<?",
     "apiHttpMethod": "@",
     "msgTag": "@",
@@ -75,7 +75,7 @@ angular.module('Imagemap').constant(
   controller: function ($scope, httpClient, wsClient, $interval, dataService, $timeout, $window, $element, leafletData, leafletBoundsHelpers, leafletLayerHelpers, leafletControlHelpers, $uibModal, geofenceDetails) {
     var self = this;
     self.$onInit = function () {
-      self.transport = (self.transport) ? self.transport : null;
+      self.apiTransport = (self.apiTransport) ? self.apiTransport : null;
       self.msgTag = (self.msgTag) ? self.msgTag : null;
       self.useWindowParams = (self.useWindowParams) ? self.useWindowParams : "true";
       self.icon = (self.icon) ? self.icon : '//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/imagemap-bg.svg';
@@ -246,7 +246,7 @@ angular.module('Imagemap').constant(
       if ((self.getDrawApiTransport == "wss" || self.getDrawApiTransport == "https") && self.draw && self.getDrawApi != null)
 
         initDrawDataService();
-      if ((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) { // Fetch
+      if ((self.apiTransport == "wss" && (self.api || self.msgTag)) || (self.apiTransport == "https" && self.api)) { // Fetch
         // data
         // from
         // backend
@@ -380,7 +380,7 @@ angular.module('Imagemap').constant(
     var initDataService = function () {
       var requestInfo = {
         "api": self.api,
-        "transport": self.transport,
+        "transport": self.apiTransport,
         "msgTag": self.msgTag,
         "apiParams": self.apiParams,
         "useWindowParams": self.useWindowParams,
@@ -413,6 +413,56 @@ angular.module('Imagemap').constant(
             //map.addLayer(layer);
             leafletLayerHelpers.safeAddLayer(map, layer);
             layer.getLayers()[0].getElement().setAttribute("identifier", key);
+            layer.addEventListener('contextmenu', function(e){
+              //alert(4444);
+              var id = e.target.getLayers()[0].getElement().getAttribute("identifier");
+              var model = {};
+              var inUseIdentifiers = _.pluck(self.geoFencesList, "id");
+              model.identifier = id;
+              model.inUseIdentifiers = inUseIdentifiers;
+              self.editedGeofenceId = id;
+              /** ****** */
+              var modalInstance = $uibModal.open({
+                animation: true,
+                component: 'mapModalComponent',
+                size: 'md',
+                scope: $scope,
+                resolve: {
+                  widget: function () {
+                    return {
+                      "label": "Geofence Properties",
+                      "model": model,
+                      "schema": angular.copy(geofenceDetails.schema),
+                      "form": angular.copy(geofenceDetails.form)
+                    }
+                  }
+                }
+              });
+              modalInstance.result.then(function (dataModel) {
+                if (dataModel != "cancel") {
+                  for (var x = 0; x < self.geoFencesList.length; x++) {
+                    if (self.geoFencesList[x].id == self.editedGeofenceId) {
+                      var oldId = self.geoFencesList[x].id;
+                      self.geoFencesList[x].id = dataModel.identifier;
+                      var layers = self.drawnItems.getLayers();
+                      for (var i = 0; i < layers.length; i++) {
+                        if (layers[i]._layers==null && layers[i].getElement().getAttribute("identifier") == oldId) {
+                          layers[i].getElement().setAttribute("identifier", dataModel.identifier);
+                          break;
+                        }
+                      }
+                      break;
+                    }
+                  }
+                  // delete dataModel["inUseIdentifiers"];
+                  // self.rightClickedOverlay.set("dataModel", dataModel);
+                  // self.updateLocalGeofence(beforeUpdateIdentifier,
+                  // self.rightClickedOverlay);
+                }
+              }, function () {
+                console.info('modal-component for widget update dismissed at: ' + new Date());
+              });
+						});
             self.drawnItems.addLayer(layer.getLayers()[0]);
           }
           map.addLayer(self.drawnItems);
@@ -470,6 +520,58 @@ angular.module('Imagemap').constant(
             var type = e.layerType,
               layer = e.layer;
 
+            layer.addEventListener('contextmenu', function(e){
+              //alert(4444);
+              var id = e.target.getElement().getAttribute("identifier");
+              var model = {};
+              var inUseIdentifiers = _.pluck(self.geoFencesList, "id");
+              model.identifier = id;
+              model.inUseIdentifiers = inUseIdentifiers;
+              self.editedGeofenceId = id;
+              /** ****** */
+              var modalInstance = $uibModal.open({
+                animation: true,
+                component: 'mapModalComponent',
+                size: 'md',
+                scope: $scope,
+                resolve: {
+                  widget: function () {
+                    return {
+                      "label": "Geofence Properties",
+                      "model": model,
+                      "schema": angular.copy(geofenceDetails.schema),
+                      "form": angular.copy(geofenceDetails.form)
+                    }
+                  }
+                }
+              });
+              modalInstance.result.then(function (dataModel) {
+                if (dataModel != "cancel") {
+                  for (var x = 0; x < self.geoFencesList.length; x++) {
+                    if (self.geoFencesList[x].id == self.editedGeofenceId) {
+                      var oldId = self.geoFencesList[x].id;
+                      self.geoFencesList[x].id = dataModel.identifier;
+                      var layers = self.drawnItems.getLayers();
+                      for (var i = 0; i < layers.length; i++) {
+                        if (layers[i]._layers==null && layers[i].getElement().getAttribute("identifier") == oldId) {
+                          layers[i].getElement().setAttribute("identifier", dataModel.identifier);
+                          break;
+                        }
+                      }
+                      break;
+                    }
+                  }
+                  // delete dataModel["inUseIdentifiers"];
+                  // self.rightClickedOverlay.set("dataModel", dataModel);
+                  // self.updateLocalGeofence(beforeUpdateIdentifier,
+                  // self.rightClickedOverlay);
+                }
+              }, function () {
+                console.info('modal-component for widget update dismissed at: ' + new Date());
+              });
+
+            });
+            
             if (type === 'marker') {
               layer.bindPopup('A popup!');
             }
