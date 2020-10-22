@@ -1,6 +1,36 @@
+const __onModeBarButtonChange__ = function (modelValue, form, model) {
+    console.log("model is"+model);
+    var arr = [];
+    var buttons=[ 
+        'toImage',
+        'zoom2d',
+        'select2d',
+        'lasso2d',
+        'zoomIn2d',
+        'zoomOut2d',
+        'autoScale2d',
+        'resetScale2d',
+        'pan2d',
+        'toggleSpikelines',
+        'hoverClosestCartesian',
+        'hoverCompareCartesian'
+    ];
+    var obj = model.options["modeBarButtonsToRemoveWrapper"];
+    buttons.forEach(function (element) {
+        if (obj.hasOwnProperty(element)) {
+            if (!obj[element]) {
+                arr.push(element);
+            }
+        }else{
+            arr.push(element);
+        }
+    });
+    model.options["modeBarButtonsToRemove"] = arr;
+};
+
 const __DOTPLOTS__ = {
     "name": "dotPlots",
-    "label": "dotPlots",
+    "label": "Dot Plots",
     "class": "scriptr-dot-plots",
     "commonData": true,
     "show": true,
@@ -10,23 +40,33 @@ const __DOTPLOTS__ = {
         "data-type": "raw",
         "schema-for": "dotPlots",
         "type": "dotPlots",
-        "mode-bar-buttons-to-remove-wrapper": {
-            "toImage": true,
-            "tableRotation": true,
-            "orbitRotation": true,
-            "resetCameraDefault3d": true,
-            "resetCameraLastSave3d": true,
-            "hoverClosest3d": true,
-            "pan3d": true,
-            "zoom3d": true
+        "options" :{
+            "displayModeBar": false,
+            "modeBarButtonsToRemove":[], 
+            "displaylogo": false,
+            "modeBarButtonsToRemoveWrapper": {
+                "toImage": true,
+                "hoverClosestCartesian": true,
+                "toggleSpikelines": true,
+                "pan2d": true,
+                "zoom2d": true,
+                "resetScale2d":true,
+                "select2d":true,
+                "lasso2d":true,
+                "hoverCompareCartesian":true,
+                "autoScale2d":true,
+                "zoomOut2d":true,
+                "zoomIn2d":true
+            },
+            "scrollZoom":false,
+            "editable":false,
+            "staticPlot":false
         },
         "on-format-data": "return data;",
         "boxLabel": "dotPlots",
-        "show-bar": "false",
-        "show-legend": "false",
         "layout-config": {
             "title":"The default of the graph",
-            "showlegend":true,
+            "showlegend":false,
             "margin":{
                 "l":140,
                 "r":40,
@@ -55,6 +95,8 @@ const __DOTPLOTS__ = {
                 
             },
             "hovermode": 'closest',
+            "paper_bgcolor": 'rgb(253, 254, 254)',
+            "plot_bgcolor": 'rgb(253, 254, 254)',
             "legend":{
                 "font":{
                     "size":10
@@ -66,7 +108,32 @@ const __DOTPLOTS__ = {
                 "orientation":"v"
             }
         },
-        "traces-config": [{ "name":"trace1", "color": "rgba(156, 165, 196, 0.95)", "symbol": "circle", "size": 16 }, { "name":"trace1", "color": "rgba(204, 204, 204, 0.95)", "symbol": "circle", "size": 16 }],
+        "traces-config": [{ 
+            "name":"trace1",
+            "mode": 'markers',
+            "marker": {
+                "color": "rgba(156, 165, 196, 0.95)",
+                "line": {
+                    "color": "rgba(156, 165, 196, 1.0)",
+                    "width": "1"
+                },
+            "symbol": "circle", 
+            "size": 16
+            }
+        }, { 
+            "name":"trace2", 
+            "mode": 'markers',
+            "marker": {
+                "color": 'rgba(156, 165, 0.95)',
+                "line": {
+                    "color": 'rgba(156, 165, 196, 1.0)',
+                    "width": 1,
+                },
+               "symbol": "circle", 
+           	   "size": 16 
+            }
+        }
+          ],
         "data": '[{"x": [40, 45.7, 52, 53.6, 54.1, 54.2, 54.5, 54.7, 55.1, 56.6], "y": ["Switzerland (2011)", "Chile (2013)", "Japan (2014)", "United States (2012)", "Slovenia (2014)", "Canada (2011)", "Poland (2010)", "Estonia (2015)", "Luxembourg (2013)", "Portugal (2011)"]},{"x": [49.1, 42, 52.7, 84.3, 51.7, 61.1, 55.3, 64.2, 91.1, 58.9], "y":["Switzerland (2011)", "Chile (2013)", "Japan (2014)", "United States (2012)", "Slovenia (2014)", "Canada (2011)", "Poland (2010)", "Estonia (2015)", "Luxembourg (2013)", "Portugal (2011)"]}]'
     },
     "box": {
@@ -76,12 +143,12 @@ const __DOTPLOTS__ = {
         minSizeY: 4
     },
     "imgCls": "",
-    "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/wind-rose.svg",
+    "imgSrc": "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/dotplots.svg",
     "form": [{
         type: "tabs",
         tabs: [
             {
-                title: "Format",
+                title: "Traces",
                 items: [{
                     "type": "section",
                     "htmlClass": "",
@@ -95,7 +162,7 @@ const __DOTPLOTS__ = {
                                 "type": "section",
                                 "htmlClass": "col-xs-6 col-sm-3",
                                 "items": [{
-                                    "key": "traces-config[].color",
+                                    "key": "traces-config[].marker.color",
                                     "title": "color",
                                     "colorFormat": "hex3",
                                     "spectrumOptions": {
@@ -114,7 +181,7 @@ const __DOTPLOTS__ = {
                                           "type": "section",
                                           "htmlClass": "col-xs-6 col-sm-3",
                                           "items": [{
-                                              "key": "traces-config[].symbol",
+                                              "key": "traces-config[].marker.symbol",
                                               "title": "trace symbol",
 
                                           }]
@@ -132,10 +199,65 @@ const __DOTPLOTS__ = {
                                           "type": "section",
                                           "htmlClass": "col-xs-6 col-sm-3",
                                           "items": [{
-                                              "key": "traces-config[].size",
+                                              "key": "traces-config[].marker.size",
                                               "title": "size"
                                           }]
-                                      }
+                                      },
+                                        { 
+                                          "type": "section",
+                                          "htmlClass": "col-xs-6 col-sm-3",
+                                          "items": [{
+                                              "key": "traces-config[].mode",
+                                              "title": "mode",
+                                              "type": 'strapselect',
+                                                "titleMap": [{
+                                                    "value": "lines",
+                                                    "name": "lines"
+                                                }, 
+                                                {
+                                                    "value": "markers",
+                                                    "name": "markers"
+                                                 },
+                                                 {
+                                                    "value": "lines+markers",
+                                                    "name": "lines+markers"
+                                                 },
+                                                 {
+                                                    "value": "lines+markers+text",
+                                                    "name": "lines+markers+text"
+                                                 },
+                                                 {
+                                                    "value": "none",
+                                                    "name": "none"
+                                                 }
+                                                   
+                                                ]
+                                          }]
+                                      },
+                                      {
+                                          "type": "section",
+                                          "htmlClass": "col-xs-6 col-sm-3",
+                                          "items": [{
+                                              "key": "traces-config[].hoverinfo",
+                                              "title": "hoverinfo"
+                                          }]
+                                      },
+                                       {
+                                          "type": "section",
+                                          "htmlClass": "col-xs-6 col-sm-3",
+                                          "items": [{
+                                              "key": "traces-config[].marker.line.color",
+                                              "title": "Line Color"
+                                          }]
+                                      },
+                                       {
+                                          "type": "section",
+                                          "htmlClass": "col-xs-6 col-sm-3",
+                                          "items": [{
+                                              "key": "traces-config[].marker.line.width",
+                                              "title": "Line Width"
+                                          }]
+                                      },
 
                                      ]
                         }]
@@ -156,13 +278,15 @@ const __DOTPLOTS__ = {
                                 "items": [
                                     { "type": "section",
                                      "htmlClass": "col-xs-12 col-sm-3",
-                                    },
-                                    { "type": "section",
-                                     "htmlClass": "col-xs-12 col-sm-6",
                                      "items":["layout-config.title"]
                                     },
                                     { "type": "section",
+                                     "htmlClass": "col-xs-12 col-sm-6",
+                                     "items":["layout-config.paper_bgcolor"]
+                                    },
+                                    { "type": "section",
                                      "htmlClass": "col-xs-12 col-sm-3",
+                                     "items":["layout-config.plot_bgcolor"]
                                     }
                                 ]
                             }
@@ -335,7 +459,7 @@ const __DOTPLOTS__ = {
                                         "type": 'strapselect',
                                         "titleMap": [{
                                             "value": "outside",
-                                            "name": "outide"
+                                            "name": "outside"
                                         }, {
                                             "value": "inside",
                                             "name": "inside"
@@ -415,15 +539,18 @@ const __DOTPLOTS__ = {
                                     "items":[
                                         {
                                             "type":"section",
-                                            "htmlClass": "col-xs-12 col-sm-2",
-                                            "key": "layout-config",
-                                            "items": ["layout-config.showlegend"]
-
+                                            "htmlClass": "row",
+                                            "items": [ {
+                                                "key":"layout-config.showlegend",
+                                                "htmlClass": "col-xs-12",
+                                            }
+                                                     ]
                                         },
-                                        {
+                                   		 {
                                             "type":"section",
                                             "htmlClass": "col-xs-12 col-sm-2",
                                             "key": "layout-config",
+                                            "condition":"model['layout-config']['showlegend']",
                                             "items": ["layout-config.legend.font.size"]
 
                                         },
@@ -431,7 +558,8 @@ const __DOTPLOTS__ = {
                                             "type":"section",
                                             "htmlClass": "col-xs-12 col-sm-2",
                                             "key": "layout-config",
-                                             "items": [
+                                            "condition":"model['layout-config']['showlegend']",
+                                            "items": [
                                                  {
                                                      "key":"layout-config.legend.yanchor",
                                                      "type": 'strapselect',
@@ -459,6 +587,7 @@ const __DOTPLOTS__ = {
                                             "type":"section",
                                             "htmlClass": "col-xs-12 col-sm-2",
                                             "key": "layout-config",
+                                            "condition":"model['layout-config']['showlegend']",
                                             "items": ["layout-config.legend.y"]
 
                                         },
@@ -466,6 +595,7 @@ const __DOTPLOTS__ = {
                                             "type":"section",
                                             "htmlClass": "col-xs-12 col-sm-2",
                                             "key": "layout-config",
+                                            "condition":"model['layout-config']['showlegend']",
                                             "items": [
                                                 {
                                                      "key":"layout-config.legend.xanchor",
@@ -494,6 +624,7 @@ const __DOTPLOTS__ = {
                                             "type":"section",
                                             "htmlClass": "col-xs-12 col-sm-2",
                                             "key": "layout-config",
+                                            "condition":"model['layout-config']['showlegend']",
                                             "items": ["layout-config.legend.x"]
 
                                         },
@@ -501,6 +632,7 @@ const __DOTPLOTS__ = {
                                             "type":"section",
                                             "htmlClass": "col-xs-12 col-sm-2",
                                             "key": "layout-config",
+                                            "condition":"model['layout-config']['showlegend']",
                                             "items": [
                                                 {
                                                      "key":"layout-config.legend.orientation",
@@ -520,64 +652,89 @@ const __DOTPLOTS__ = {
                                          },
                                   	  ]
                                     }
-                                ]
+                                ]				
                             }
                 ]				
-			},
+			},      
             {
-                title: "Mode Bar",
+                title: "Options",
                 items: [
-                    {
+                {
                         "type": "section",
                         "htmlClass": "row",
                         "items": [
                             {
                                 "type": "section",
                                 "htmlClass": "col-xs-12 col-sm-6",
+                                "key":"options",
                                 "items": [
                                     {
-                                        "key": "show-mode-bar"
+                                        "key":"options.displayModeBar"
                                     },
                                     {
-                                        "key": "displaylogo",
-                                        "condition": "model['show-mode-bar']"
+                                        "key": "options.displaylogo",
+                                        "condition": "model.options['displayModeBar']"
+                                    },
+                                    {
+                                        "key": "options.staticPlot",
+                                    },
+                                    {
+                                        "key": "options.editable",
+                                    },
+                                    {
+                                        "key": "options.scrollZoom",
+                                        "condition":"!model.options['staticPlot']",
                                     }
 
                                 ]
                             },
-                            {
+                                {
                                 "type": "section",
-                                "htmlClass": "col-xs-12 col-sm-6",
+                                "htmlClass": "row",
+                                "key":"options",
                                 "items": [
-                                    {
-                                        "key": "mode-bar-buttons-to-remove-wrapper",
-                                        "condition": "model['show-mode-bar']",
+                                    { 
+                                        "key": "options.modeBarButtonsToRemoveWrapper",
+                                        "condition":"model.options['displayModeBar']",
                                         "items": [
                                             {
-                                                key:"mode-bar-buttons-to-remove-wrapper.toImage",
-                                                onChange: __onModeBarButtonsChange__
+                                                key:"options.modeBarButtonsToRemoveWrapper.toImage",
+                                                onChange: __onModeBarButtonChange__
                                             },{
-                                                key:"mode-bar-buttons-to-remove-wrapper.tableRotation",
-                                                onChange: __onModeBarButtonsChange__
+                                                key:"options.modeBarButtonsToRemoveWrapper.hoverClosestCartesian",
+                                                onChange: __onModeBarButtonChange__
                                             },{
-                                                key:"mode-bar-buttons-to-remove-wrapper.orbitRotation",
-                                                onChange: __onModeBarButtonsChange__
+                                                key:"options.modeBarButtonsToRemoveWrapper.toggleSpikelines",
+                                                onChange: __onModeBarButtonChange__
                                             },{
-                                                key:"mode-bar-buttons-to-remove-wrapper.resetCameraDefault3d",
-                                                onChange: __onModeBarButtonsChange__
+                                                key:"options.modeBarButtonsToRemoveWrapper.zoom2d",
+                                                onChange: __onModeBarButtonChange__
                                             },{
-                                                key:"mode-bar-buttons-to-remove-wrapper.resetCameraLastSave3d",
-                                                onChange: __onModeBarButtonsChange__
+                                                key:"options.modeBarButtonsToRemoveWrapper.pan2d",
+                                                onChange: __onModeBarButtonChange__
                                             },{
-                                                key:"mode-bar-buttons-to-remove-wrapper.hoverClosest3d",
-                                                onChange: __onModeBarButtonsChange__
+                                                key:"options.modeBarButtonsToRemoveWrapper.resetScale2d",
+                                                onChange: __onModeBarButtonChange__
                                             },{
-                                                key:"mode-bar-buttons-to-remove-wrapper.pan3d",
-                                                onChange: __onModeBarButtonsChange__
+                                                key:"options.modeBarButtonsToRemoveWrapper.select2d",
+                                                onChange: __onModeBarButtonChange__
                                             },{
-                                                key:"mode-bar-buttons-to-remove-wrapper.zoom3d",
-                                                onChange: __onModeBarButtonsChange__
+                                                key:"options.modeBarButtonsToRemoveWrapper.lasso2d",
+                                                onChange: __onModeBarButtonChange__
+                                            },{
+                                                key:"options.modeBarButtonsToRemoveWrapper.hoverCompareCartesian",
+                                                onChange: __onModeBarButtonChange__
+                                            },{
+                                                key:"options.modeBarButtonsToRemoveWrapper.autoScale2d",
+                                                onChange: __onModeBarButtonChange__
+                                            },{
+                                                key:"options.modeBarButtonsToRemoveWrapper.zoomOut2d",
+                                                onChange: __onModeBarButtonChange__
+                                            },{
+                                                key:"options.modeBarButtonsToRemoveWrapper.zoomIn2d",
+                                                onChange: __onModeBarButtonChange__
                                             },
+                                            
                                         ]
 
                                     }
@@ -589,11 +746,10 @@ const __DOTPLOTS__ = {
 
                 ]
             }
-
-        ]
-
+            ]
     }
-            ],
+             ]
+,
     "schema": {
         "type": "object",
         "title": "Schema",
@@ -606,35 +762,105 @@ const __DOTPLOTS__ = {
                     "placeholder": '[{"x": [40, 45.7, 52, 53.6, 54.1, 54.2, 54.5, 54.7, 55.1, 56.6], "y": ["Switzerland (2011)", "Chile (2013)", "Japan (2014)", "United States (2012)", "Slovenia (2014)", "Canada (2011)", "Poland (2010)", "Estonia (2015)", "Luxembourg (2013)", "Portugal (2011)"]},{"x": [49.1, 42, 52.7, 84.3, 51.7, 61.1, 55.3, 64.2, 91.1, 58.9], "y":["Switzerland (2011)", "Chile (2013)", "Japan (2014)", "United States (2012)", "Slovenia (2014)", "Canada (2011)", "Poland (2010)", "Estonia (2015)", "Luxembourg (2013)", "Portugal (2011)"]}]'
                 }
             },
-            "font-size": {
-                "title": "Font Size",
-                "type": "number",
-                "default": 16,
-                "description": "Set the font size of the wind rose (in px)."
-            },
-            "show-legend": {
-                "title": "Show Legend",
-                "type": "boolean",
-                "default": "false",
-                "description": "Set visibility of the legend."
-            },
-            "show-mode-bar": {
-                "title": "Show Mode Bar",
-                "type": "boolean",
-                "description": "Mode Bar is the set of functional icons shown at the top of the chart.",
-                "placeholder": " "
-            },
-            "displaylogo": {
-                "title": "Display Plotly Logo",
-                "type": "boolean",
-                "description": "",
-                "placeholder": " "
-            }, 
-            "mode-bar-buttons-to-remove": {
-                "type": "array",
-                "default": [],
-                "items": {
-                    "type": "string",
+            "options":{
+                "type":"object",
+                "properties":{
+                    "displayModeBar":{
+                        "title": "Show Mode Bar",
+                        "type": "boolean",
+                        "default": "false",
+                        "description": "Mode Bar is the set of functional icons shown at the top of the chart.",
+                    },
+                    "modeBarButtonsToRemove":{
+                        "title":"Mode Bar Buttons To Remove",
+                        "type":"array",
+                        "default": [],
+                        "items": {
+                            "type": "string",
+                        }
+                    },
+                    "displaylogo":{
+                        "title": "Display Plotly Logo",
+                        "type":"boolean",
+                        "description":"Display Plotly Logo on the Modebar",
+                    },
+                     "staticPlot":{
+                        "title": "Static Plot",
+                        "type":"boolean",
+                        "description":"Making a Static Chart",
+                    },
+                     "scrollZoom":{
+                        "title": "Scroll Zoom",
+                        "type":"boolean",
+                        "description":"Mousewheel or two-finger scroll zooms the plot",
+                    },
+                     "editable":{
+                        "title": "Editable Mode",
+                        "type":"boolean",
+                        "description":"Edit the chart title, axis labels and trace names in the legend.",
+                    },
+                    "modeBarButtonsToRemoveWrapper":{
+                        "title": "Buttons To show on the mode bar",
+                        "type": "object",
+                        "default": {},
+                        "properties": {
+                            "toImage": {
+                                "title": "To Image",
+                                "type": "boolean",
+                            },
+                            "hoverClosestCartesian": {
+                                "title": "Hover Closest Cartesian",
+                                "type": "boolean",
+                            },
+                            "toggleSpikelines": {
+                                "title": "Toggle Spike Lines",
+                                "type": "boolean",
+                            },
+                            "resetScale2d": {
+                                "title": "Reset Scale 2d",
+                                "type": "boolean",
+                            },
+                            "pan2d": {
+                                "title": "Pan 2d",
+                                "type": "boolean",
+                            },
+                            "zoom2d": {
+                                "title": "Zoom 2d",
+                                "type": "boolean",
+
+                            },
+                            "select2d": {
+                                "title": "Select 2d",
+                                "type": "boolean",
+
+                            },
+                            "lasso2d": {
+                                "title": "Lasso 2d",
+                                "type": "boolean",
+
+                            },
+                            "hoverCompareCartesian": {
+                                "title": "Hover Compare Cartesian",
+                                "type": "boolean",
+
+                            },
+                            "autoScale2d": {
+                                "title": "Auto Scale 2d",
+                                "type": "boolean",
+
+                            },
+                            "zoomOut2d": {
+                                "title": "zoomOut 2d",
+                                "type": "boolean",
+
+                            },
+                            "zoomIn2d": {
+                                "title": "zoomIn 2d",
+                                "type": "boolean",
+
+                            },
+                        },
+                    }
                 }
             },
             "traces-config": {
@@ -645,27 +871,57 @@ const __DOTPLOTS__ = {
                 "items": {
                     "type": "object",
                     "properties": {
-                        "color": {
-                            "title": "Colors",
-                            "type": "string",
-                            "format": "color",
-                            "default": "#CC5464",
-                            "validationMessage": "Invalid Color"
-                        },
-                        "symbol": {
-                            "title": "Symbol",
-                            "type": "string",
-                            "default": "circle"
+                        "marker":{
+                            "type":"object",
+                            "properties":{
+                                "color": {
+                                    "title": "Colors",
+                                    "type": "string",
+                                    "format": "color",
+                                    "default": "#CC5464",
+                                    "validationMessage": "Invalid Color"
+                                },
+                                "symbol": {
+                                    "title": "Symbol",
+                                    "type": "string",
+                                    "default": "circle"
+                                },
+                                "size": {
+                                    "title": "Size",
+                                    "type": "number",
+                                    "default":16
+                                },
+                                "line":{
+                                    "type":"object",
+                                    "properties":{
+                                        "color":{
+                                            "title": "Colors",
+                                            "type": "string",
+                                            "format": "color",
+                                            "default": "#CC5464",
+                                            "validationMessage": "Invalid Color"
+                                        },
+                                        "width":{
+                                            "title": "Line's Width",
+                                            "type": "number",
+                                            "default":1
+                                        }
+                                    },
+                                }
+                            }
                         },
                         "Name": {
                             "title": "Name",
                             "type": "string",
                             "default": "trace1"
                         },
-                        "size": {
-                            "title": "Size",
-                            "type": "number",
-                            "default":16
+                        "mode": {
+                            "title": "Mode",
+                            "type": "string",
+                        },
+                        "hoverinfo": {
+                            "title": "hoverinfo",
+                            "type": "string",
                         }
                     }
                 }
@@ -673,15 +929,27 @@ const __DOTPLOTS__ = {
             "layout-config":{
                 "type":"object",
                 "properties":{
-                     "showlegend":{
-                                 "title": "Show Legend",
-                                 "type": "boolean",
-                                 "default": "true"
-                            },
+                    "showlegend":{
+                        "title": "Show Legend",
+                        "type": "boolean",
+                        "default": "true"
+                    },
                     "title":{
                         "title":"Title",
                         "type":"string",
                         "description":"Title shown above the chart",
+                    },
+                    "plot_bgcolor":{
+                        "title": "plot bgcolor",
+                        "type": "string",
+                        "format": "color",
+                        "default": "#CC5464"
+                    },
+                    "paper_bgcolor":{
+                        "title": "paper bgcolor",
+                        "type": "string",
+                        "format": "color",
+                        "default": "#CC5464"
                     },
                     "margin":{
                         "title":"Margin",
@@ -843,87 +1111,9 @@ const __DOTPLOTS__ = {
                     }
                 }
             },
-            "show-legend": {
-                "title": "Show Legend",
-                "type": "boolean",
-                "default": "false",
-            },
-            "legend-type": {
-                "title": "Legend type",
-                "type": "string",
-                "default": "hover",
-            },
-            "hide-hover": {
-                "title": "Hover style",
-                "default": "auto",
-                "type": "string",
-                "description": "Set to 'Always' to always show a hover legend. Set to 'Auto' to only show the hover legend when the mouse cursor is over the chart."
-            },
-            "hover-callback": {
-                "title": "Hover callback",
-                "type": "string",
-                "description": "Provide a function on this option to generate custom hover legends. The function will be called with the index of the row under the hover legend, the options object passed to the constructor as arguments, a string containing the default generated hover legend content HTML, and an object containing the original data for the row as passed in the data option. hoverCallback: function (index, options, content, row) {return 'sin(' + row.x + ')='+ row.y}"
-            },
             "data-format": {
                 "type": "hidden",
                 "default": "dotPlots"
-            },
-            "show-mode-bar": {
-                "title": "Show Mode Bar",
-                "type": "boolean",
-                "description": "Mode Bar is the set of functional icons shown at the top of the chart.",
-                "placeholder": " "
-            },
-            "displaylogo": {
-                "title": "Display Plotly Logo",
-                "type": "boolean",
-                "description": "",
-                "placeholder": " "
-            }, "mode-bar-buttons-to-remove": {
-                "type": "array",
-                "default": [],
-                "items": {
-                    "type": "string",
-                }
-            }, "mode-bar-buttons-to-remove-wrapper": {
-                "title": "Buttons To show on the mode bar",
-                "type": "object",
-                "default": {},
-                "properties": {
-                    "toImage": {
-                        "title": "To Image",
-                        "type": "boolean",
-                    },
-                    "tableRotation": {
-                        "title": "Table Rotation",
-                        "type": "boolean",
-                    },
-                    "orbitRotation": {
-                        "title": "Orbit Rotation",
-                        "type": "boolean",
-                    },
-                    "resetCameraDefault3d": {
-                        "title": "Reset Camera Default 3d",
-                        "type": "boolean",
-                    },
-                    "resetCameraLastSave3d": {
-                        "title": "Reset Camera Last Saved 3d",
-                        "type": "boolean",
-                    },
-                    "hoverClosest3d": {
-                        "title": "Hover Closest 3d",
-                        "type": "boolean",
-                    },
-                    "pan3d": {
-                        "title": "Pan 3d",
-                        "type": "boolean",
-                    },
-                    "zoom3d": {
-                        "title": "Zoom 3d",
-                        "type": "boolean",
-
-                    },
-                }
             },
             "multiple-data-points": {
                 "type": "hidden",
@@ -932,5 +1122,4 @@ const __DOTPLOTS__ = {
         },
         "required": []
     }
-
 };
