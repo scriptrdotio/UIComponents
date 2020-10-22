@@ -52,7 +52,6 @@
                 vm.plotlyFormatData1 = function (data) {
                     return data;
                 }
-                vm.colorScale=[[0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']];
             });
         })();
     </script>
@@ -68,13 +67,6 @@
                     <div class='box-content box-content-with-header'>
                         <scriptr-three-d-surface transport='https' on-format-data='vm.plotlyFormatData1'
                             api='UIComponents/dashboard/frontend/examples/plotly/get3dSurfaceData'
-                            title='Test 3d Surface'
-                            width='500'
-                            height='500'
-                            color-scale='vm.colorScale'
-                            bar-title='Pressure'
-                            bar-thickness='15'
-                            xaxis='Tem' yaxis='Hum' zaxis='Pre'
                         >
                         </scriptr-three-d-surface>
                     </div>
