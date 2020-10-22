@@ -8,25 +8,12 @@ angular
 
             "onLoad": "&onLoad",
             "type" : "@",
-            "title" : "@",
-            "showLegend" : "<",
             "data" : "<?",
-            "hideHover": "@",
-            "hoverinfo":"<",
             "options": "<?",
-            "showgrid" : "@",
-            //extras
-            "showModeBar": "<?",
-            "modeBarButtonsToRemove": "<?",
             "layoutConfig":"<?", 
-            "mode":"@",
-            "paper_bgcolor" : "@",
-            "plot_bgcolor" : "@",
             "tracesConfig":"<?",
             "transport": "@",
             "api" : "@",
-            "hoverCallback": "&?", 
-            "legendType": "@",
             "msgTag" : "@",
             "httpMethod": "@",
             "apiParams" : "<?",
@@ -48,37 +35,36 @@ angular
 
                 this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/wind-rose-bg.svg";
                 self.data = self.data ? self.data : [];
-
                 this.hasData = (this.transformedData != null  && this.transformedData.length > 0) ?  true : false;
-
                 this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
-
-                //this.legendProperties =   (this.legend && this.legend.length > 0) ? this.legend : [{"color":'rgba(156, 165, 196, 0.95)', "name":"Percent of estimated voting age population"}, {"color": "rgba(204, 204, 204, 0.95)", "name":"Percent of estimated registered voters"}];
-                //this.showModeBar = this.showModeBar ? this.showModeBar : true;
-                //this.modeBarButtonsToRemove = this.modeBarButtonsToRemove ? this.modeBarButtonsToRemove : true;
-                self.modeBarButtonsToRemove = self.modeBarButtonsToRemove ? self.modeBarButtonsToRemove :[];
                 self.options = self.options ? self.options :{
-                    displayModeBar: self.showModeBar, 
-                    modeBarButtonsToRemove: self.modeBarButtonsToRemove, 
-                    displaylogo: self.displaylogo,
+                    "displayModeBar": false,
+                    "modeBarButtonsToRemove":[], 
+                    "displaylogo": false,
+                    "scrollZoom":false,
+                    "editable":false,
+                    "staticPlot":false,
                 };
-                this.showLegend = this.showLegend ? this.showLegend : true;
-                this.paper_bgcolor = this.paper_bgcolor ? this.paper_bgcolor : 'rgb(254, 247, 234)';
-                this.plot_bgcolor = this.plot_bgcolor ? this.plot_bgcolor : 'rgb(254, 247, 234)';
-                this.defaultMarker ={
+                this.defaultTrace ={
+                    "type": "scatter",
                     "name" : "Name of the trace",
-                    "color": "rgba(156, 165, 196, 0.95)",
-                    "line": {
-                        "color": "rgba(156, 165, 196, 1.0)",
-                        "width": "1"
-                    },
-                    "symbol": "circle",
-                    "size": 16
-                                    };
-                this.tracesConfig =(this.tracesConfig) ? this.tracesConfig : this.defaultMarker;
+                    "mode": 'markers',
+                    "marker": {
+                        "color": "rgba(156, 165, 196, 0.95)",
+                        "line": {
+                            "color": "rgba(156, 165, 196, 1.0)",
+                            "width": "1"
+                        },
+                    	"symbol": "circle",
+                    	"size": 16
+                    }
+                };
+                
+                this.tracesConfig =(this.tracesConfig) ? this.tracesConfig : [];
+               
                 var defaultLayout = {
                     					"title":"The title of the graph",
-                    					"showlegend":true,
+                    					"showlegend":false,
                                         "margin":{
                                             "l":140,
                                             "r":40,
@@ -117,6 +103,8 @@ angular
                                             }
                                         },
                                         "hovermode": 'closest',
+                                        "paper_bgcolor": 'rgb(254, 247, 234)',
+                                        "plot_bgcolor": 'rgb(254, 247, 234)',
                                         "legend":{
                                             "font":{
                                                 "size":10
@@ -128,61 +116,8 @@ angular
                                             "orientation":"v"
                                         }
                     				};
-                this._layout = (this.layoutConfig) ? _.extend(defaultLayout, this.layoutConfig) : defaultLayout;
-                if(this.hoverCallback) {
-                  this.onHoverCallback = function (index, options, content, row) {
-                    return self.hoverCallback()(index, options, content, row); 
-                  	//return self.hoverCallback({index:index, options: options, content: content, row: row})
-                  }
-             }
+                this._layout = (this.layoutConfig) ? angular.merge({}, defaultLayout, this.layoutConfig) : defaultLayout;
 
-             if(this.showLegend && this.showLegend == "true") {
-                 if(this.legendType && this.legendType == "right") {
-                     this._hideHover = "auto";
-                     this.ref = $scope.$id
-                     this.legendStructure = []
-                     for(var i = 0; i < this.ykeys.length; i++) {
-                         var tmp = {}
-                         tmp["key"] = this.ykeys[i];
-                         if(this.labels && this.labels[i]) 
-                             tmp["label"] = this.labels[i];
-                         else
-                             tmp["label"] = this.ykeys[i];
-
-                         if(this.colors && this.colors[i]) 
-                             tmp["color"] = this.colors[i];
-                         this.legendStructure.push(tmp);
-                     }
-                     
-                     this.onHoverCallback = function (index, options, content, row) {
-                            if(self.datas) {
-                                if(row && row[$scope.$ctrl.xkey]){
-                                    if(self.parseTime) {
-                                           $scope.$ctrl.legendDate = self.dateFormat(row[self.xkey]);
-                                    } else {
-                                        $scope.$ctrl.legendDate = row[self.xkey];
-                                    }  
-                                }
-                                 _.mapObject(row, function(val, key) {
-                                    var index = _.findIndex($scope.$ctrl.legendStructure, {"key": (self.type != "donut" ? key : val)});
-
-                                    if(index != -1){
-                                        $scope.$ctrl.legendStructure[index]["value"] = (self.type == "donut") ? content : val;
-                                        var element = document.getElementById("value_"+index+"_"+self.ref)
-                                        if(element)
-                                            element.innerHTML = (self.type == "donut") ? content : val;
-                                    }
-                                });
-                            }
-                        }
-                 } else {
-                      if(this.legendType && this.legendType == "hover") {
-                         this._hideHover = (this.hideHover) ? this.hideHover : "auto";
-                      }
-                 }
-             } else {
-                 this._hideHover = "always";
-             }
             }
 
 
@@ -294,20 +229,10 @@ angular
                         for (var i = 0; i<data.length; i++){
                             if(typeof data == "object" && data[i].x != null && Array.isArray(data[i].x) && data[i].y !=null && Array.isArray(data[i].y)){
 
-                                self.transformedData.push({
-                                    x: data[i].x,
-                                    y: data[i].y,
-                                    //showlegend : self.showLegend,
-                                    hoverinfo:"skip",
-                                    type: 'scatter',
-                                    name: (self.tracesConfig[i].name) ? self.tracesConfig[i].name : "Dot Plots Graph",
-                                    mode: 'markers',
-                                    marker: (self.tracesConfig[i]) ? self.tracesConfig[i] : this.defaultMarker
-                                });
+                                var currentTrace = (self.tracesConfig[i]) ? angular.merge({}, self.defaultTrace, self.tracesConfig[i]) : self.defaultTrace;
+                                self.transformedData.push(angular.merge({}, currentTrace, data[i]));
                             }
-
-                        
-                    }
+                    	}
                         self.hasData = true;
                         self.noResults = false;
                         self.stalledData = false;

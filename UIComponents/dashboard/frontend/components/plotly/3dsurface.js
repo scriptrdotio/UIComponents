@@ -11,25 +11,10 @@ angular
                 "onLoad": "&onLoad",
                 
                 "data": "<?",
-                "layout": "<?",
                 "options": "<?",
-
+				"layoutConfig":"<?", 
+            	"tracesConfig":"<?",
                 //extras
-                "title": "@",
-                //"width": "<?",
-                //"height": "<?",
-                "xaxis": "@",
-                "yaxis": "@",
-                "zaxis": "@",
-                "barTitle": "@",
-                "barThickness": "<?",
-                "showBar": "<?",
-                "displaylogo": "<?",
-                "showModeBar": "<?",
-                "modeBarButtonsToRemove": "<?",
-                "colorScale": "<?",
-                "contours": "<?",
-                
                 "transport": "@",
                 "api" : "@",
                 "msgTag" : "@",
@@ -59,38 +44,72 @@ angular
                     //self.width = self.width ? self.width : 400;
                     //self.height = self.height ? self.height :400;
                     self.contours = self.contours ? self.contours :{};
-                    self.modeBarButtonsToRemove = self.modeBarButtonsToRemove ? self.modeBarButtonsToRemove :[];
                     self.options = self.options ? self.options :{
-                         displayModeBar: self.showModeBar, 
-                         modeBarButtonsToRemove: self.modeBarButtonsToRemove, 
-                         displaylogo: self.displaylogo,
+                        "displayModeBar": false,
+                        "modeBarButtonsToRemove":[], 
+                        "displaylogo": false,
+                        "scrollZoom":false,
+                        "staticPlot":false,
                     };
-                    //self.staticData = angular.copy(self.data);
-                    //self.transformedData = angular.copy(self.data);
                     angular.element($window).on('resize', self.onResize);
                     self.style={};
-                    self.layout = self.layout ? self.layout :{
-                        //title: self.title,
-                        autosize: true,
-                        height: $element.parent().height(),
-                        width: $element.parent().width(),
-                        scene: {
-                            xaxis: { title: self.xaxis },
-                            yaxis: { title: self.yaxis },
-                            zaxis: { title: self.zaxis },
+                    var defaultLayout = {
+                        "autosize":true,
+                        "title":"3dSurface's Title",
+                        "scene": {
+                            "xaxis": { "title": "Temperature" },
+                            "yaxis": { "title":"Humidity" },
+                            "zaxis": { "title": "Pressure" },
                         },
-                         margin: {
-                            l: 5,
-                            r: 5,
-                            b: 5,
-                            t: 5,
+                        "margin": {
+                            "l": 5,
+                            "r": 5,
+                            "b": 5,
+                            "t": 5,
                         }
                     };
+                    
+                    this._layout = (this.layoutConfig) ? angular.merge({}, defaultLayout, this.layoutConfig) : defaultLayout;
+                
+                    this.defaultTrace ={
+                        "type": "surface",
+                        "showscale" : true,
+                        "contours": {},
+                        "colorscale" : [[0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']],
+                        "colorbar" :  {
+                            "thickness":20,
+                            "outlinecolor":"#E2E913",
+                            "bgcolor" :"rgba(0,0,0,0)",
+                            "ticks":'outside',
+                            "tickcolor":'#C8CE1B',
+                            "showticklabels" : true,
+                            "title":{
+                                "text":'',
+                                "font":{
+                                    "family":'Times New Roman',
+                                    "size":15,
+                                    "color":'#C8CE1B'
+                                },
+                                "side":"top"
+                            },
+                        },
+                        "hoverinfo":"x+y+z",
+                        "hoverongaps" : false,
+                        "hoverlabel" : {
+                            "bgcolor":'#C8CE1B'
+                        },
+                    };
+                
+                    this.tracesConfig =(this.tracesConfig) ? this.tracesConfig : {};
                 }
-
+    
+                
+				
+                
+                
                 self.resize = function () {
-                    self.layout.height =  $element.parent().height();
-                    self.layout.width = $element.parent().width();
+                    self._layout.height =  $element.parent().height();
+                    self._layout.width = $element.parent().width();
                     self.calculateNotificationsDisplay()
                 }
                 
@@ -153,7 +172,7 @@ angular
                    angular.element($window).off('resize', self.onResize);
                 }
 
-                self.onResize = function () {
+                this.onResize = function () {
                     if (self.timeoutId != null) {
                         $timeout.cancel(self.timeoutId);
                     }
@@ -195,20 +214,10 @@ angular
                             data = self.onFormatData()(data, self);
                         }
                         if(data != null) {
+                            self.transformedData = [];
                          if(typeof data == "object" && data.x != null && Array.isArray(data.x) && data.y !=null && Array.isArray(data.y) && data.z != null && Array.isArray(data.z)) { 
-                                self.transformedData=[{
-                                    showscale:self.showBar,
-                                    colorscale:self.colorScale,
-                                    colorbar: {
-                                      title: self.barTitle,
-                                      thickness:self.barThickness
-                                    },
-                                    contours:self.contours,
-                                    z: data.z,
-                                    x: data.x,
-                                    y: data.y,
-                                    type: 'surface'
-                                  }];
+                             var currentTrace = (self.tracesConfig) ? angular.merge({}, self.defaultTrace, self.tracesConfig) : self.defaultTrace;
+                             self.transformedData.push(angular.merge({}, currentTrace, data));
 
                               	  self.hasData = true;
                                   self.noResults = false;
