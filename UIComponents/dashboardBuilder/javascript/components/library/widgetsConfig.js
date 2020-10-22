@@ -32,7 +32,8 @@ angular
                     __SLIDER__,
                     __IFRAME__,
                     __DOTPLOTS__,
-                    __HEATMAP__
+                    __HEATMAP__,
+                    __BUBBLECHART__
                     
                     //,__METRIC_BOX__
                 ]
@@ -66,7 +67,8 @@ angular
                 "toggleSwitch":"/UIComponents/dashboard/frontend/components/toggleSwitch/properties.md",
                 "windrose":"/UIComponents/dashboard/frontend/components/plotly/windrose_properties.md",
                 "dotPlots" : "/UIComponents/dashboard/frontend/components/plotly/dotPlots_properties.md",
-                "heatmap" : "/UIComponents/dashboard/frontend/components/plotly/heatmap_properties.md"
+                "heatmap" : "/UIComponents/dashboard/frontend/components/plotly/heatmap_properties.md",
+                "bubbleChart" : "/UIComponents/dashboard/frontend/components/plotly/bubbleChart_properties.md"
             }
             
             
