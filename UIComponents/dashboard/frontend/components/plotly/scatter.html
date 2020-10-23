@@ -1,0 +1,11 @@
+<div class="surface">
+    <scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+        
+	</scriptr-notifications>
+    
+    <angular-plotly
+    	plotly-data="$ctrl.transformedData"
+        plotly-options="$ctrl.options"
+        plotly-layout="$ctrl.layout">
+    </angular-plotly> 
+</div>
