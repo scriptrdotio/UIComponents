@@ -34,7 +34,7 @@ const __BUBBLECHART__ = {
             "editable":false,
             "staticPlot":false
         },
-        "layout-config": {
+       /* "layout-config-form": {
             "title":"The default of the graph",
             "showlegend":false,
             "margin":{
@@ -62,7 +62,7 @@ const __BUBBLECHART__ = {
                 "autotick": false,
                 "dtick": 0,
                 "tickcolor":'rgb(102, 102, 102)'
-                
+
             },
             "hovermode": 'closest',
             "paper_bgcolor": 'rgb(253, 254, 254)',
@@ -78,7 +78,7 @@ const __BUBBLECHART__ = {
                 "orientation":"v"
             }
         },
-        "traces-config": [
+        "traces-config-form": [
             {
                 "name":"trace0",
                 "marker": {
@@ -104,7 +104,7 @@ const __BUBBLECHART__ = {
                     "bgcolor":'#C8CE1B'
                 },
             }
-                         ],
+        ],*/
         "data": '[{"x": [1, 2, 3, 4], "y": [10, 11, 12, 13], "w":[20, 30, 40, 50]},{"x": [1, 2, 3, 4], "y": [14, 15, 16, 17], "w":[10, 20, 30, 40]}]'
     },
     "box": {
@@ -120,301 +120,110 @@ const __BUBBLECHART__ = {
         tabs: [
             {
                 title: "Traces",
-                items: [{
-                    "type": "section",
-                    "htmlClass": "",
-                    "items": [{
-                        "key": "traces-config",
-                        "title": "Traces Details",
-                        "items": [{
-                            "type": "section",
-                            "htmlClass": "row",
-                            "items": [ {
-                                "type": "section",
-                                "htmlClass": "col-xs-6 col-sm-3",
-                                "items": [{
-                                    "key": "traces-config[].marker.color",
-                                    "title": "Color",
-                                    "colorFormat": "hex3",
-                                    "spectrumOptions": {
-                                        showInput: true,
-                                        showAlpha: false,
-                                        allowEmpty: true,
-                                        showPalette: true,
-                                        preferredFormat: 'hex3',
-                                        palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                                  ['#8ae234', '#729fcf', '#ad7fa8'],
-                                                  ['#ef2929', '#888a85', '#deface']]
-                                            }
-                                        }]
-                                    },
-                                      {
-                                          "type": "section",
-                                          "htmlClass": "col-xs-6 col-sm-3",
-                                          "items": [{
-                                              "key": "traces-config[].name",
-                                              "title": "Name"
-
-                                          }]
-                                      },
-                                      {
-                                          "type": "section",
-                                          "htmlClass": "col-xs-6 col-sm-3",
-                                          "items": [{
-                                              "key": "traces-config[].marker.opacity",
-                                              "title": "Opacity",
-
-                                          }]
-                                      },
-                                      {
-                                          "type": "section",
-                                          "htmlClass": "col-xs-6 col-sm-3",
-                                          "items": [{
-                                              "key": "traces-config[].marker.symbol",
-                                              "title": "Symbol",
-
-                                          }]
-                                      },
-                                      {
-                                          "type": "section",
-                                          "htmlClass": "col-xs-6 col-sm-3",
-                                          "items": [{
-                                              "key": "traces-config[].hoverlabel.bgcolor",
-                                              "title": "Hoverlabel",
-                                              "colorFormat": "hex3",
-                                              "spectrumOptions": {
-                                                  showInput: true,
-                                                  showAlpha: false,
-                                                  allowEmpty: true,
-                                                  showPalette: true,
-                                                  preferredFormat: 'hex3',
-                                                  palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                                            ['#8ae234', '#729fcf', '#ad7fa8'],
-                                                            ['#ef2929', '#888a85', '#deface']]
-                                              }
-
-                                          }]
-                                      },
-                                       {
-                                          "type": "section",
-                                          "htmlClass": "col-xs-6 col-sm-3",
-                                          "items": [{
-                                              "key": "traces-config[].marker.line.color",
-                                              "title": "Line Color",
-
-                                          }]
-                                      },
-                                      {
-                                          "type": "section",
-                                              "htmlClass": "col-xs-6 col-sm-3",
-                                                  "items": [{
-                                                      "key": "traces-config[].marker.line.width",
-                                                      "title": "Line Width",
-
-                                                  }]
-                                      },
-                                      {
-                                          "type": "section",
-                                          "htmlClass": "col-xs-6 col-sm-3",
-                                          "items": [{
-                                              "key": "traces-config[].marker.sizeref",
-                                              "title": "Size Ref",
-
-                                          }]
-                                      },
-                                      {
-                                          "type": "section",
-                                          "htmlClass": "col-xs-6 col-sm-3",
-                                          "items": [{
-                                              "key": "traces-config[].marker.sizemode",
-                                              "title": "Size Mode",
-                                              "type": 'strapselect',
-                                                "titleMap": [{
-                                                    "value": "area",
-                                                    "name": "area"
-                                                }, {
-                                                    "value": "diameter",
-                                                    "name": "diameter"
-                                                    }
-                                                ]
-
-                                          }]
-                                      },
-                                     ]
-                        }]
-                    }]
-                }
-                       ]
-            },
-{
-                title: "Layout",
                 items: [
                     {
                         "type": "section",
+                        "htmlClass": "row",
                         "items": [
                             {
-
                                 "type": "section",
-                                "htmlClass": "row",
+                                "htmlClass": "col-xs-12",
                                 "items": [
-                                    { "type": "section",
-                                     "htmlClass": "col-xs-12 col-sm-3",
-                                     "items":["layout-config.title"]
-                                    },
-                                    { "type": "section",
-                                     "htmlClass": "col-xs-12 col-sm-6",
-                                     "items":["layout-config.paper_bgcolor"]
-                                    },
-                                    { "type": "section",
-                                     "htmlClass": "col-xs-12 col-sm-3",
-                                     "items":["layout-config.plot_bgcolor"]
+                                    {
+                                        type: "radios-inline",
+                                        key: "legend-type",
+                                        onChange: __onRadioButtonChangeForTraces__,
+                                        titleMap: [{
+                                            value: "form",
+                                            name: "form"
+                                        }, {
+                                            value: "json",
+                                            name: "json"
+                                        }]
                                     }
                                 ]
                             }
-                            ]
+                        ]
                     },
-                            
-                            {
+                    {
+                        "type": "section",
+                        "htmlClass": "",
+                        "condition": "model['legend-type'] =='json'",
+                        "items": [{
+                            "type": "textarea",
+                            "title": "Traces Configuration",
+                            "key":"json-config",
+                            onChange: __onRadioButtonChangeForTraces__,
+                        }
+                                 ]
+                    },
+                    {
+                        "type": "section",
+                        "htmlClass": "",
+                        "items": [{
+                            "key": "traces-config-form",
+                            "title": "Traces Details",
+                            "condition": "model['legend-type'] =='form'",
+                            onChange: __onRadioButtonChangeForTraces__,
+                            "items": [{
                                 "type": "section",
                                 "htmlClass": "row",
-                                "items": [
-                                    {
-                                        "key":"layout-config",
-                                        "htmlClass": "col-xs-12",
-                                		"title":"Xaxis Properties",
-                                        "items": [
-                                            {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                "items": ["layout-config.xaxis.title"]
+                                "items": [ {
+                                    "type": "section",
+                                    "htmlClass": "col-xs-6 col-sm-3",
+                                    "items": [{
+                                        "key": "traces-config-form[].marker.color",
+                                        onChange: __onRadioButtonChangeForTraces__,
+                                        "title": "Color",
+                                        "colorFormat": "hex3",
+                                        "spectrumOptions": {
+                                            showInput: true,
+                                            showAlpha: false,
+                                            allowEmpty: true,
+                                            showPalette: true,
+                                            preferredFormat: 'hex3',
+                                            palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                      ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                      ['#ef2929', '#888a85', '#deface']]
+                                        }
+                                    }]
+                                },
+                                          {
+                                              "type": "section",
+                                              "htmlClass": "col-xs-6 col-sm-3",
+                                              "items": [{
+                                                  "key": "traces-config-form[].name",
+                                                  onChange: __onRadioButtonChangeForTraces__,
+                                                  "title": "Name"
 
-                                            },
-                                            {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                "items":[
-                                                    {
-                                                        "key": "layout-config.xaxis.linecolor",
-                                                        "colorFormat": "hex3",
-                                                        "spectrumOptions": {
-                                                            showInput: true,
-                                                            showAlpha: false,
-                                                            allowEmpty: true,
-                                                            showPalette: true,
-                                                            preferredFormat: 'hex3',
-                                                            palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                                                      ['#8ae234', '#729fcf', '#ad7fa8'],
-                                                                      ['#ef2929', '#888a85', '#deface']]
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                              {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                  "items":[
-                                                      {
-                                                          "key": "layout-config.xaxis.tickcolor",
-                                                          "colorFormat": "hex3",
-                                                          "spectrumOptions": {
-                                                              showInput: true,
-                                                              showAlpha: false,
-                                                              allowEmpty: true,
-                                                              showPalette: true,
-                                                              preferredFormat: 'hex3',
-                                                              palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                                                        ['#8ae234', '#729fcf', '#ad7fa8'],
-                                                                        ['#ef2929', '#888a85', '#deface']]
-                                                          }
-                                                      }
-                                                  ]
-                                                       
+                                              }]
+                                          },
+                                          {
+                                              "type": "section",
+                                              "htmlClass": "col-xs-6 col-sm-3",
+                                              "items": [{
+                                                  "key": "traces-config-form[].marker.opacity",
+                                                  onChange: __onRadioButtonChangeForTraces__,
+                                                  "title": "Opacity",
 
-                                            },
-                                            {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                "items": [
-                                                    {
-                                                    "key":"layout-config.xaxis.ticks",
-                                                "type": 'strapselect',
-                                                "titleMap": [{
-                                                    "value": "outside",
-                                                    "name": "outside"
-                                                }, {
-                                                    "value": "inside",
-                                                    "name": "inside"
-                                                    }
-                                                ]
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                "items": ["layout-config.xaxis.showline"]
+                                              }]
+                                          },
+                                          {
+                                              "type": "section",
+                                              "htmlClass": "col-xs-6 col-sm-3",
+                                              "items": [{
+                                                  "key": "traces-config-form[].marker.symbol",
+                                                  "title": "Symbol",
 
-                                            },
-                                             {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                "items": ["layout-config.xaxis.showgrid"]
-
-                                            },
-                                             {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                "items": ["layout-config.xaxis.dtick"]
-                                            }
-                                        ]
-                                    }
-                                  ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "row",
-                                "items": [
-                                    {
-                                    "key":"layout-config",
-                                    "htmlClass": "col-xs-12",
-                                    "title":"Yaxis Properties",
-                                    "items":[
-                                    
-                                    {
-                                        "type":"section",
-                                        "htmlClass": "col-xs-12 col-sm-3",
-                                        "items": ["layout-config.yaxis.title"]
-
-                                    },
-                                     {
-                                        "type":"section",
-                                        "htmlClass": "col-xs-12 col-sm-3",
-                                         "items":[
-                                             {
-                                                 "key": "layout-config.yaxis.linecolor",
-                                                 "colorFormat": "hex3",
-                                                 "spectrumOptions": {
-                                                     showInput: true,
-                                                     showAlpha: false,
-                                                     allowEmpty: true,
-                                                     showPalette: true,
-                                                     preferredFormat: 'hex3',
-                                                     palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
-                                                               ['#8ae234', '#729fcf', '#ad7fa8'],
-                                                               ['#ef2929', '#888a85', '#deface']]
-                                                 }
-                                             }
-                                         ]
-                                             
-                                         
-
-                                    },
-                                      {
-                                        "type":"section",
-                                        "htmlClass": "col-xs-12 col-sm-3",
-                                          "items":[
-                                              {
-                                                  "key": "layout-config.yaxis.tickcolor",
+                                              }]
+                                          },
+                                          {
+                                              "type": "section",
+                                              "htmlClass": "col-xs-6 col-sm-3",
+                                              "items": [{
+                                                  "key": "traces-config-form[].hoverlabel.bgcolor",
+                                                  onChange: __onRadioButtonChangeForTraces__,
+                                                  "title": "Hoverlabel",
                                                   "colorFormat": "hex3",
                                                   "spectrumOptions": {
                                                       showInput: true,
@@ -426,221 +235,513 @@ const __BUBBLECHART__ = {
                                                                 ['#8ae234', '#729fcf', '#ad7fa8'],
                                                                 ['#ef2929', '#888a85', '#deface']]
                                                   }
-                                              }
-                                               
-                                              
-                                          ]
-                                    },
-                                    {
-                                        "type":"section",
-                                        "htmlClass": "col-xs-12 col-sm-3",
-                                        "items": [
-                                            {
-                                            "key":"layout-config.yaxis.ticks",
-                                        "type": 'strapselect',
-                                        "titleMap": [{
-                                            "value": "outside",
-                                            "name": "outside"
-                                        }, {
-                                            "value": "inside",
-                                            "name": "inside"
-                                            }
-                                        ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "type":"section",
-                                        "htmlClass": "col-xs-12 col-sm-3",
-                                        "items": ["layout-config.yaxis.showline"]
 
-                                    },
-                                     {
-                                        "type":"section",
-                                        "htmlClass": "col-xs-12 col-sm-3",
-                                        "items": ["layout-config.yaxis.showgrid"]
+                                              }]
+                                          },
+                                          {
+                                              "type": "section",
+                                              "htmlClass": "col-xs-6 col-sm-3",
+                                              "items": [{
+                                                  "key": "traces-config-form[].marker.line.color",
+                                                  onChange: __onRadioButtonChangeForTraces__,
+                                                  "title": "Line Color",
 
-                                    },
-                                     {
-                                        "type":"section",
-                                        "htmlClass": "col-xs-12 col-sm-3",
-                                        "items": ["layout-config.yaxis.dtick"]
+                                              }]
+                                          },
+                                          {
+                                              "type": "section",
+                                              "htmlClass": "col-xs-6 col-sm-3",
+                                              "items": [{
+                                                  "key": "traces-config-form[].marker.line.width",
+                                                  onChange: __onRadioButtonChangeForTraces__,
+                                                  "title": "Line Width",
 
-                                     }
-                        			]
-                                    }
-                                ]
-                            },
+                                              }]
+                                          },
+                                          {
+                                              "type": "section",
+                                              "htmlClass": "col-xs-6 col-sm-3",
+                                              "items": [{
+                                                  "key": "traces-config-form[].marker.sizeref",
+                                                  onChange: __onRadioButtonChangeForTraces__,
+                                                  "title": "Size Ref",
+
+                                              }]
+                                          },
+                                          {
+                                              "type": "section",
+                                              "htmlClass": "col-xs-6 col-sm-3",
+                                              "items": [{
+                                                  "key": "traces-config-form[].marker.sizemode",
+                                                  onChange: __onRadioButtonChangeForTraces__,
+                                                  "title": "Size Mode",
+                                                  "type": 'strapselect',
+                                                  "titleMap": [{
+                                                      "value": "area",
+                                                      "name": "area"
+                                                  }, {
+                                                      "value": "diameter",
+                                                      "name": "diameter"
+                                                  }
+                                                              ]
+
+                                              }]
+                                          },
+                                         ]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            {
+                title: "Layout",
+                items: [
+                    {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
                             {
                                 "type": "section",
-                                "htmlClass": "row",
-                                "items":[
-                                    {
-                                        "key":"layout-config",
-                                        "htmlClass": "col-xs-12",
-                                        "title":"Margins",
-                                        "items": [
-                                            {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                "items": ["layout-config.margin.l"]
-
-                                            },
-                                            {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                "items": [ "layout-config.margin.r"]
-
-                                            },
-                                            {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                "items": ["layout-config.margin.t"]
-
-                                            },
-                                            {
-                                                "type":"section",
-                                                "htmlClass": "col-xs-12 col-sm-3",
-                                                "items": ["layout-config.margin.b"]
-
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            
-                            {
-                                "type": "section",
-                                "htmlClass": "row",
+                                "htmlClass": "col-xs-12",
                                 "items": [
                                     {
-                                    "key":"layout-config",
-                                    "htmlClass": "col-xs-12",
-                                    "title":"Legend",
-                                    "items":[
-                                        {
-                                            "type":"section",
-                                            "htmlClass": "row",
-                                            "items": [ {
-                                                "key":"layout-config.showlegend",
-                                                "htmlClass": "col-xs-12",
-                                            }
-                                                     ]
-                                        },
-                                   		 {
-                                            "type":"section",
-                                            "htmlClass": "col-xs-12 col-sm-2",
-                                            "key": "layout-config",
-                                            "condition":"model['layout-config']['showlegend']",
-                                            "items": ["layout-config.legend.font.size"]
-
-                                        },
-                                         {
-                                            "type":"section",
-                                            "htmlClass": "col-xs-12 col-sm-2",
-                                            "key": "layout-config",
-                                            "condition":"model['layout-config']['showlegend']",
-                                            "items": [
-                                                 {
-                                                     "key":"layout-config.legend.yanchor",
-                                                     "type": 'strapselect',
-                                                     "titleMap": [{
-                                                         "value": "auto",
-                                                         "name": "auto"
-                                                     }, {
-                                                         "value": "top",
-                                                         "name": "top"
-                                                     },
-                                                     {
-                                                        "value": "middle",
-                                                        "name": "middle"
-                                                     },
-                                                     {
-                                                       "value": "bottom",
-                                                        "name": "bottom"
-                                                      }
-                                                                 ]
-                                                 }
-                                             ]
-
-                                        },
-                                        {
-                                            "type":"section",
-                                            "htmlClass": "col-xs-12 col-sm-2",
-                                            "key": "layout-config",
-                                            "condition":"model['layout-config']['showlegend']",
-                                            "items": ["layout-config.legend.y"]
-
-                                        },
-                                         {
-                                            "type":"section",
-                                            "htmlClass": "col-xs-12 col-sm-2",
-                                            "key": "layout-config",
-                                            "condition":"model['layout-config']['showlegend']",
-                                            "items": [
-                                                {
-                                                     "key":"layout-config.legend.xanchor",
-                                                     "type": 'strapselect',
-                                                     "titleMap": [{
-                                                         "value": "auto",
-                                                         "name": "auto"
-                                                     }, {
-                                                         "value": "top",
-                                                         "name": "top"
-                                                     },
-                                                     {
-                                                        "value": "middle",
-                                                        "name": "middle"
-                                                     },
-                                                     {
-                                                       "value": "bottom",
-                                                        "name": "bottom"
-                                                      }
-                                                                 ]
-                                                 }
-                                            ]
-
-                                        },
-                                        {
-                                            "type":"section",
-                                            "htmlClass": "col-xs-12 col-sm-2",
-                                            "key": "layout-config",
-                                            "condition":"model['layout-config']['showlegend']",
-                                            "items": ["layout-config.legend.x"]
-
-                                        },
-                                         {
-                                            "type":"section",
-                                            "htmlClass": "col-xs-12 col-sm-2",
-                                            "key": "layout-config",
-                                            "condition":"model['layout-config']['showlegend']",
-                                            "items": [
-                                                {
-                                                     "key":"layout-config.legend.orientation",
-                                                     "type": 'strapselect',
-                                                     "titleMap": [{
-                                                         "value": "v",
-                                                         "name": "vertical"
-                                                     }, {
-                                                         "value": "h",
-                                                         "name": "horizontal"
-                                                     }
-                                                   
-                                                                 ]
-                                                 }
-                                            ]
-
-                                         },
-                                  	  ]
+                                        type: "radios-inline",
+                                        key: "legend-type",
+                                        onChange: __onRadioButtonChangeForLayout__,
+                                        titleMap: [{
+                                            value: "form",
+                                            name: "form"
+                                        }, {
+                                            value: "json",
+                                            name: "json"
+                                        }]
                                     }
-                                ]				
+                                ]
                             }
+                        ]
+                    },
+                    {
+                        "type": "section",
+                        "htmlClass": "",
+                        "condition": "model['legend-type'] =='json'",
+                        "items": [{
+                            "type": "textarea",
+                            "title": "Layout Configuration",
+                            "key":"json-config",
+                            onChange: __onRadioButtonChangeForLayout__,
+                        }
+                                 ]
+                    },
+                    {
+                        "type": "section",
+                        "htmlClass": "",
+                        "condition": "model['legend-type'] =='form'",
+                        "key":"layout-config-form",
+                        "onChange": __onRadioButtonChangeForLayout__,
+                        "items": [{
+                            "type": "section",
+                            "items": [
+                                {
+
+                                    "type": "section",
+                                    "htmlClass": "row",
+                                    "items": [
+                                        { "type": "section",
+                                         "htmlClass": "col-xs-12 col-sm-3",
+                                         "items":[{"key":"layout-config-form.title","onChange": __onRadioButtonChangeForLayout__}]
+                                        },
+                                        { "type": "section",
+                                         "htmlClass": "col-xs-12 col-sm-6",
+                                         "items":[{"key":"layout-config-form.paper_bgcolor","onChange": __onRadioButtonChangeForLayout__}]
+                                        },
+                                        { "type": "section",
+                                         "htmlClass": "col-xs-12 col-sm-3",
+                                         "items":[{"key":"layout-config-form.plot_bgcolor","onChange": __onRadioButtonChangeForLayout__}]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+
+                                  {
+                                      "type": "section",
+                                      "htmlClass": "row",
+                                      "items": [
+                                          {
+                                              "key":"layout-config-form",
+                                              "htmlClass": "col-xs-12",
+                                              "title":"Xaxis Properties",
+                                              "items": [
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.xaxis.title","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items":[
+                                                          {
+                                                              "key": "layout-config-form.xaxis.linecolor",
+                                                              "onChange": __onRadioButtonChangeForLayout__,
+                                                              "colorFormat": "hex3",
+                                                              "spectrumOptions": {
+                                                                  showInput: true,
+                                                                  showAlpha: false,
+                                                                  allowEmpty: true,
+                                                                  showPalette: true,
+                                                                  preferredFormat: 'hex3',
+                                                                  palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                            ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                            ['#ef2929', '#888a85', '#deface']]
+                                                              }
+                                                          }
+                                                      ]
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items":[
+                                                          {
+                                                              "key": "layout-config-form.xaxis.tickcolor",
+                                                              "onChange": __onRadioButtonChangeForLayout__,
+                                                              "colorFormat": "hex3",
+                                                              "spectrumOptions": {
+                                                                  showInput: true,
+                                                                  showAlpha: false,
+                                                                  allowEmpty: true,
+                                                                  showPalette: true,
+                                                                  preferredFormat: 'hex3',
+                                                                  palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                            ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                            ['#ef2929', '#888a85', '#deface']]
+                                                              }
+                                                          }
+                                                      ]
+
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [
+                                                          {
+                                                              "key":"layout-config-form.xaxis.ticks",
+                                                              "onChange": __onRadioButtonChangeForLayout__,
+                                                              "type": 'strapselect',
+                                                              "titleMap": [{
+                                                                  "value": "outside",
+                                                                  "name": "outside"
+                                                              }, {
+                                                                  "value": "inside",
+                                                                  "name": "inside"
+                                                              }
+                                                                          ]
+                                                          }
+                                                      ]
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.xaxis.showline","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.xaxis.showgrid","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.xaxis.dtick","onChange": __onRadioButtonChangeForLayout__}]
+                                                  }
+                                              ]
+                                          }
+                                      ]
+                                  },
+                                  {
+                                      "type": "section",
+                                      "htmlClass": "row",
+                                      "items": [
+                                          {
+                                              "key":"layout-config-form",
+                                              "htmlClass": "col-xs-12",
+                                              "title":"Yaxis Properties",
+                                              "items":[
+
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.yaxis.title","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items":[
+                                                          {
+                                                              "key": "layout-config-form.yaxis.linecolor",
+                                                              "onChange": __onRadioButtonChangeForLayout__,
+                                                              "colorFormat": "hex3",
+                                                              "spectrumOptions": {
+                                                                  showInput: true,
+                                                                  showAlpha: false,
+                                                                  allowEmpty: true,
+                                                                  showPalette: true,
+                                                                  preferredFormat: 'hex3',
+                                                                  palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                            ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                            ['#ef2929', '#888a85', '#deface']]
+                                                              }
+                                                          }
+                                                      ]
+
+
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items":[
+                                                          {
+                                                              "key": "layout-config-form.yaxis.tickcolor",
+                                                              "onChange": __onRadioButtonChangeForLayout__,
+                                                              "colorFormat": "hex3",
+                                                              "spectrumOptions": {
+                                                                  showInput: true,
+                                                                  showAlpha: false,
+                                                                  allowEmpty: true,
+                                                                  showPalette: true,
+                                                                  preferredFormat: 'hex3',
+                                                                  palette: [['#fce94f', '#fcaf3e', '#e9b96e'],
+                                                                            ['#8ae234', '#729fcf', '#ad7fa8'],
+                                                                            ['#ef2929', '#888a85', '#deface']]
+                                                              }
+                                                          }
+
+
+                                                      ]
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [
+                                                          {
+                                                              "key":"layout-config-form.yaxis.ticks",
+                                                              "onChange": __onRadioButtonChangeForLayout__,
+                                                              "type": 'strapselect',
+                                                              "titleMap": [{
+                                                                  "value": "outside",
+                                                                  "name": "outside"
+                                                              }, {
+                                                                  "value": "inside",
+                                                                  "name": "inside"
+                                                              }
+                                                                          ]
+                                                          }
+                                                      ]
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key": "layout-config-form.yaxis.showline","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.yaxis.showgrid","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.yaxis.dtick","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  }
+                                              ]
+                                          }
+                                      ]
+                                  },
+                                  {
+                                      "type": "section",
+                                      "htmlClass": "row",
+                                      "items":[
+                                          {
+                                              "key":"layout-config-form",
+                                              "htmlClass": "col-xs-12",
+                                              "title":"Margins",
+                                              "items": [
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.margin.l","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.margin.r","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.margin.t","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-3",
+                                                      "items": [{"key":"layout-config-form.margin.b","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  }
+                                              ]
+                                          }
+                                      ]
+                                  },
+
+                                  {
+                                      "type": "section",
+                                      "htmlClass": "row",
+                                      "items": [
+                                          {
+                                              "key":"layout-config-form",
+                                              "htmlClass": "col-xs-12",
+                                              "title":"Legend",
+                                              "items":[
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "row",
+                                                      "items": [ {
+                                                          "key":"layout-config-form.showlegend",
+                                                          "onChange": __onRadioButtonChangeForLayout__,
+                                                          "htmlClass": "col-xs-12",
+                                                      }
+                                                               ]
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-2",
+                                                      "key": "layout-config-form",
+                                                      "condition":"model['layout-config-form']['showlegend']",
+                                                      "items": [{"key":"layout-config-form.legend.font.size","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-2",
+                                                      "key": "layout-config-form",
+                                                      "condition":"model['layout-config-form']['showlegend']",
+                                                      "items": [
+                                                          {
+                                                              "key":"layout-config-form.legend.yanchor",
+                                                              "onChange": __onRadioButtonChangeForLayout__,
+                                                              "type": 'strapselect',
+                                                              "titleMap": [{
+                                                                  "value": "auto",
+                                                                  "name": "auto"
+                                                              }, {
+                                                                  "value": "top",
+                                                                  "name": "top"
+                                                              },
+                                                                           {
+                                                                               "value": "middle",
+                                                                               "name": "middle"
+                                                                           },
+                                                                           {
+                                                                               "value": "bottom",
+                                                                               "name": "bottom"
+                                                                           }
+                                                                          ]
+                                                          }
+                                                      ]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-2",
+                                                      "key": "layout-config-form",
+                                                      "condition":"model['layout-config-form']['showlegend']",
+                                                      "items": [{"key":"layout-config-form.legend.y","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-2",
+                                                      "key": "layout-config-form",
+                                                      "condition":"model['layout-config-form']['showlegend']",
+                                                      "items": [
+                                                          {
+                                                              "key":"layout-config-form.legend.xanchor",
+                                                              "onChange": __onRadioButtonChangeForLayout__,
+                                                              "type": 'strapselect',
+                                                              "titleMap": [{
+                                                                  "value": "auto",
+                                                                  "name": "auto"
+                                                              }, {
+                                                                  "value": "top",
+                                                                  "name": "top"
+                                                              },
+                                                                           {
+                                                                               "value": "middle",
+                                                                               "name": "middle"
+                                                                           },
+                                                                           {
+                                                                               "value": "bottom",
+                                                                               "name": "bottom"
+                                                                           }
+                                                                          ]
+                                                          }
+                                                      ]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-2",
+                                                      "key": "layout-config-form",
+                                                      "condition":"model['layout-config-form']['showlegend']",
+                                                      "items": [{"key":"layout-config-form.legend.x","onChange": __onRadioButtonChangeForLayout__}]
+
+                                                  },
+                                                  {
+                                                      "type":"section",
+                                                      "htmlClass": "col-xs-12 col-sm-2",
+                                                      "key": "layout-config-form",
+                                                      "condition":"model['layout-config-form']['showlegend']",
+                                                      "items": [
+                                                          {
+                                                              "key":"layout-config-form.legend.orientation",
+                                                              "onChange": __onRadioButtonChangeForLayout__,
+                                                              "type": 'strapselect',
+                                                              "titleMap": [{
+                                                                  "value": "v",
+                                                                  "name": "vertical"
+                                                              }, {
+                                                                  "value": "h",
+                                                                  "name": "horizontal"
+                                                              }
+
+                                                                          ]
+                                                          }
+                                                      ]
+
+                                                  },
+                                              ]
+                                          }
+                                      ]				
+                                  }
+                                 ]
+                    }
                 ]
-},      
+            },      
             {
                 title: "Options",
                 items: [
-                {
+                    {
                         "type": "section",
                         "htmlClass": "row",
                         "items": [
@@ -669,7 +770,7 @@ const __BUBBLECHART__ = {
 
                                 ]
                             },
-                                {
+                            {
                                 "type": "section",
                                 "htmlClass": "row",
                                 "key":"options",
@@ -715,7 +816,7 @@ const __BUBBLECHART__ = {
                                                 key:"options.modeBarButtonsToRemoveWrapper.zoomIn2d",
                                                 onChange: __onModeBarButtonChange__
                                             },
-                                            
+
                                         ]
 
                                     }
@@ -724,12 +825,12 @@ const __BUBBLECHART__ = {
                             },
                         ]
                     },
-        ]
+                ]
 
+            }
+        ]
     }
-            ]
-    }
-             ],
+            ],
     "schema": {
         "type": "object",
         "title": "Schema",
@@ -742,7 +843,7 @@ const __BUBBLECHART__ = {
                     "placeholder": '[{"x": [1, 2, 3, 4], "y": [10, 11, 12, 13], "w":[20, 30, 40, 50]},{"x": [1, 2, 3, 4], "y": [14, 15, 16, 17], "w":[10, 20, 30, 40]}]'
                 }
             },
-            "traces-config": {
+            "traces-config-form": {
                 "title": "Traces Configuration",
                 "type": "array",
                 "description": "",
@@ -763,12 +864,8 @@ const __BUBBLECHART__ = {
                                 "name": {
                                     "title": "Name",
                                     "type": "string",
-                                    "default": "trace1"
+                                  //  "default": "trace1"
                                 },
-                                /*"mode": {
-                                    "title": "Mode",
-                                    "type": "string",
-                                },*/
                                 "opacity": {
                                     "title": "Opacity",
                                     "type": "string",
@@ -776,7 +873,7 @@ const __BUBBLECHART__ = {
                                 "sizemode": {
                                     "title": "Size Mode",
                                     "type": "string",
-                                    "default":'area'
+                                  //  "default":'area'
                                 },
                                 "sizeref": {
                                     "title": "Size Ref",
@@ -785,7 +882,7 @@ const __BUBBLECHART__ = {
                                 "symbol": {
                                     "title": "trace symbol",
                                     "type": "string",
-                                    "default":"circle",
+                                   // "default":"circle",
                                 },
                                 "line": {
                                     "title":"line",
@@ -797,7 +894,7 @@ const __BUBBLECHART__ = {
                                             "type": "string",
                                             "format": "color",
                                         },
-                                         "width": {
+                                        "width": {
                                             "title": "width",
                                             "type": "number",
                                         }
@@ -812,7 +909,7 @@ const __BUBBLECHART__ = {
                                     "title": "Background Color",
                                     "type": "string",
                                     "format": "color",
-                                    "default": "#C8CE1B"
+                                 //   "default": "#C8CE1B"
                                 }
                             }
                         },
@@ -829,13 +926,13 @@ const __BUBBLECHART__ = {
                     "displayModeBar":{
                         "title": "Show Mode Bar",
                         "type": "boolean",
-                        "default": "false",
+                       // "default": "false",
                         "description": "Mode Bar is the set of functional icons shown at the top of the chart.",
                     },
                     "modeBarButtonsToRemove":{
                         "title":"Mode Bar Buttons To Remove",
                         "type":"array",
-                        "default": [],
+                     //   "default": [],
                         "items": {
                             "type": "string",
                         }
@@ -845,17 +942,17 @@ const __BUBBLECHART__ = {
                         "type":"boolean",
                         "description":"Display Plotly Logo on the Modebar",
                     },
-                     "staticPlot":{
+                    "staticPlot":{
                         "title": "Static Plot",
                         "type":"boolean",
                         "description":"Making a Static Chart",
                     },
-                     "scrollZoom":{
+                    "scrollZoom":{
                         "title": "Scroll Zoom",
                         "type":"boolean",
                         "description":"Mousewheel or two-finger scroll zooms the plot",
                     },
-                     "editable":{
+                    "editable":{
                         "title": "Editable Mode",
                         "type":"boolean",
                         "description":"Edit the chart title, axis labels and trace names in the legend.",
@@ -924,13 +1021,13 @@ const __BUBBLECHART__ = {
                     }
                 }
             },
-            "layout-config":{
+            "layout-config-form":{
                 "type":"object",
                 "properties":{
                     "showlegend":{
                         "title": "Show Legend",
                         "type": "boolean",
-                        "default": "true"
+                       // "default": "true"
                     },
                     "title":{
                         "title":"Title",
@@ -941,13 +1038,13 @@ const __BUBBLECHART__ = {
                         "title": "plot bgcolor",
                         "type": "string",
                         "format": "color",
-                        "default": "#CC5464"
+                     //   "default": "#CC5464"
                     },
                     "paper_bgcolor":{
                         "title": "paper bgcolor",
                         "type": "string",
                         "format": "color",
-                        "default": "#CC5464"
+                       // "default": "#CC5464"
                     },
                     "margin":{
                         "title":"Margin",
@@ -1019,8 +1116,6 @@ const __BUBBLECHART__ = {
                                 "default":"v"
                             }
                         },
-                        
-                    
                     },
                     "xaxis":{
                         "title":"Xaxis",
@@ -1035,7 +1130,7 @@ const __BUBBLECHART__ = {
                                 "description":"Determines whether or not grid lines are drawn on xaxis",
                                 "type":"boolean"
                             },
-                             "ticks":{
+                            "ticks":{
                                 "tilte":"Ticks",
                                 "description":"Determines the position of the ticks on the xaxis",
                                 "type":"string"
@@ -1055,13 +1150,13 @@ const __BUBBLECHART__ = {
                                 "title": "Line Color",
                                 "type": "string",
                                 "format": "color",
-                                "default": "#CC5464"
+                             //   "default": "#CC5464"
                             },
                             "tickcolor":{
                                 "title": "Tick Color",
                                 "type": "string",
                                 "format": "color",
-                                "default": "#CC5464"
+                              //  "default": "#CC5464"
                             },
                         }
                     },
@@ -1097,17 +1192,34 @@ const __BUBBLECHART__ = {
                                 "title": "Tick Color",
                                 "type": "string",
                                 "format": "color",
-                                "default": "#CC5464"
+                               // "default": "#CC5464"
                             },
                             "linecolor":{
                                 "title": "Line Color",
                                 "type": "string",
                                 "format": "color",
-                                "default": "#CC5464"
+                               // "default": "#CC5464"
                             },
                         }
                     }
                 }
+            },
+            'json-config': {
+                'title': 'Json Configuration',
+                'type': 'string',
+                'x-schema-form': {
+                    'type': 'textarea',
+                },
+            },
+            "layout-config": {
+                "type": "hidden",
+            },
+            "legend-type": {
+                "title": "Legend type",
+                "type": "string",
+            },
+            "traces-config": {
+                "type": "hidden",
             },
             "multiple-data-points": {
                 "type": "hidden",
