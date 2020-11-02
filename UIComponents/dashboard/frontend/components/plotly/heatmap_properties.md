@@ -13,7 +13,7 @@
   fetch-data-interval |  null     | 	the refresh interval in case of https transport.	 | int | NO
   use-window-params |  null     | 	If true the widget will merge the defined api-params with the params passed in the URL query params	 | boolean | NO
   
-  For more info, visit the following links to add more attributes to the above objects :
+  For more info, visit the following links if you wish to add more attributes to the above objects :
 **traces-config** : <https://plotly.com/javascript/reference/heatmap/>
 **layout-config** : <https://plotly.com/javascript/reference/layout/>
 **options** : <https://plotly.com/javascript/configuration-options/>

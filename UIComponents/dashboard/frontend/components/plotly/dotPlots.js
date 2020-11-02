@@ -12,6 +12,7 @@ angular
             "options": "<?",
             "layoutConfig":"<?", 
             "tracesConfig":"<?",
+            "jsonLayout":"<?",
             "transport": "@",
             "api" : "@",
             "msgTag" : "@",
@@ -89,7 +90,7 @@ angular
                                         },
                                         "yaxis":{
                                             "showgrid": false,
-                                            "showline": false,
+                                            "showline": true,
                                             "title":"The title of yaxis",
                                             "titlefont":{
                                                 "font":{
@@ -105,16 +106,6 @@ angular
                                         "hovermode": 'closest',
                                         "paper_bgcolor": 'rgb(254, 247, 234)',
                                         "plot_bgcolor": 'rgb(254, 247, 234)',
-                                        "legend":{
-                                            "font":{
-                                                "size":10
-                                            },
-                                            "yanchor":"top",
-                                            "y":0.99,
-                                            "xanchor":"left",
-                                            "x":0.01,
-                                            "orientation":"v"
-                                        }
                     				};
                 this._layout = (this.layoutConfig) ? angular.merge({}, defaultLayout, this.layoutConfig) : defaultLayout;
 

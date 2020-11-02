@@ -43,13 +43,7 @@ angular
 
                 this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
                 
-               // this.legendgroup = (this.legendgroup) ? this.legendgroup : "show",
-                this.showModeBar = this.showModeBar ? this.showModeBar : true;
                 this.showNumbers = this.showNumbers ? this.showNumbers : false;
-                //this.hoverinfo = (this.hoverinfo) ? this.hoverinfo : "x+y+z";
-               // this.hoverongaps = (this.hoverongaps) ? this.hoverongaps : false;
-                this.modeBarButtonsToRemove = this.modeBarButtonsToRemove ? this.modeBarButtonsToRemove : [];
-                this.displaylogo = this.displaylogo ? this.displaylogo : true;
                 self.options = self.options ? self.options :{
                     "displayModeBar": false,
                     "modeBarButtonsToRemove":[], 

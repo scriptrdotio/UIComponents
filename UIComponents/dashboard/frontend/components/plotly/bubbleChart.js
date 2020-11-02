@@ -40,7 +40,6 @@ angular
 
                 this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
 
-                self.modeBarButtonsToRemove = self.modeBarButtonsToRemove ? self.modeBarButtonsToRemove :[];
                 self.options = self.options ? self.options :{
                     "displayModeBar": false,
                     "modeBarButtonsToRemove":[], 
@@ -49,7 +48,6 @@ angular
                     "editable":false,
                     "staticPlot":false,
                 };
-                this.showLegend = this.showLegend ? this.showLegend : true;
                 this.defaultTrace ={
                     "type": "scatter",
                     "name" : "Name of the trace",
@@ -87,7 +85,7 @@ angular
                                         },
                                         "yaxis":{
                                             "showgrid": false,
-                                            "showline": false,
+                                            "showline": true,
                                             "title":"The title of yaxis",
                                             "titlefont":{
                                                 "font":{
