@@ -1025,6 +1025,7 @@ const __HEATMAP__ = {
             "legend-type": {
                 "title": "Legend type",
                 "type": "string",
+                "default":"form"
             },
             "traces-config": {
                 "type": "hidden",
