@@ -1,6 +1,6 @@
 angular.module("Imagemap", ['ui-leaflet', 'ComponentsCommon', 'DataService', 'schemaForm', "angular-underscore/filters", "pascalprecht.translate"]);
 angular.module('Imagemap').constant(
-  "geofenceDetails", {
+  "zoneDetails", {
     "form": [{
       "type": "section",
       "htmlClass": "col-xs-12",
@@ -33,24 +33,12 @@ angular.module('Imagemap').constant(
   }).component('scriptrImagemap', {
   bindings: {
     "onLoad": "&onLoad",
-    "api": "@",
-    "apiTransport": "@",
-    "apiParams": "<?",
-    "apiHttpMethod": "@",
     "msgTag": "@",
     "onFormatData": "&",
     "fetchDataInterval": "@",
     "useWindowParams": "@",
-    "serviceTag": "@", // Service Tag is use on the update-data event, as a
-    // key to retrieve from the data. If not available
-    // all passed data will be consumed
+    "serviceTag": "@", // Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
     "heatmap": "<?",
-    "dynamicMarkers": "@",
-    "draggableMarkers": "@",
-    "dragApi": "@",
-    "dragApiTransport": "@",
-    "dragApiParams": "<?",
-    "dragApiHttpMethod": "@",
     "data": "<?",
     "width": "@",
     "height": "@",
@@ -59,23 +47,19 @@ angular.module('Imagemap').constant(
     "imageUrl": "@",
     "imageRatio": "@",
     "heatmapOptions": "<?",
-    "markersData": "<?", // object of objects with key and: lat, lng,
-    // group(optional), icon(url, unit}
-    "draw": "<?", // True/false to activate control of drawing over map
-    "updateDrawApi": "@", // api to load, save drawing data
-    "updateDrawApiTransport": "@", // api to load, save drawing data
-    "updateDrawApiParams": "<?",
-    "updateDrawHttpMethod": "@",
-    "getDrawApi": "@", // api to load, save drawing data
-    "getDrawApiTransport": "@", // api to load, save drawing data
-    "getDrawApiParams": "<?",
-    "getDrawApiHttpMethod": "@"
+    "markersData": "<?", // object of objects with key and: lat, lng,// group(optional), icon(url, unit}
+    "volatileMarkers": "@",
+    "showMarkers": "<?",
+    "markersConfig": "<?", //markersApi @, markersApiTransport @, markersApiParams <?, markersApiHttpMethod
+    "enableDrag": "<?", //True/false
+    "dragConfig": "<?",//dragApi @, dragApiTransport @, dragApiParams <?, dragApiHttpMethod @,
+    "enableDraw": "<?", // True/false to activate control of drawing over map
+    "drawConfig": "<?" //updateZonesApi, getZonesApi, updateZonesApiTransport, getZonesApiTransport,updateZonesApiParams, getZonesApiParams, updateZonesApiHttpMethod, getZonesApiHttpMethod
   },
   templateUrl: '/UIComponents/dashboard/frontend/components/imagemap/imagemap.html',
-  controller: function ($scope, httpClient, wsClient, $interval, dataService, $timeout, $window, $element, leafletData, leafletBoundsHelpers, leafletLayerHelpers, leafletControlHelpers, $uibModal, geofenceDetails) {
+  controller: function ($scope, httpClient, wsClient, $interval, dataService, $timeout, $window, $element, leafletData, leafletBoundsHelpers, leafletLayerHelpers, leafletControlHelpers, $uibModal, zoneDetails) {
     var self = this;
     self.$onInit = function () {
-      self.apiTransport = (self.apiTransport) ? self.apiTransport : null;
       self.msgTag = (self.msgTag) ? self.msgTag : null;
       self.useWindowParams = (self.useWindowParams) ? self.useWindowParams : "true";
       self.icon = (self.icon) ? self.icon : '//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/imagemap-bg.svg';
@@ -84,11 +68,6 @@ angular.module('Imagemap').constant(
       self.cw = $element.parent().width();
       self.ch = $element.parent().height();
 
-      // var iw = (self.width)? parseInt(self.width) : 500;
-      // var ih = (self.height)? parseInt(self.height) : 500;
-      // var maxZoom = Math.ceil( Math.log( (self.cw/iw > self.ch/ih ?
-      // iw/self.cw : ih/self.ch) ) / Math.log(2) );
-
       self.minZoom = (self.minZoom) ? parseInt(self.minZoom) : 0;
       self.maxZoom = (self.maxZoom) ? parseInt(self.maxZoom) : 3;
 
@@ -96,9 +75,9 @@ angular.module('Imagemap').constant(
       self.width = (self.width) ? (parseInt(self.width) * self.imageRatio) : 500;
       self.height = (self.height) ? (parseInt(self.height) * self.imageRatio) : 500;
 
-      self.geoFencesList = [];
-      self.geofencesIncrement = 0;
-      self.editedGeofenceId = "";
+      self.zonesList = [];
+      self.zonesIncrement = 0;
+      self.editedZoneId = "";
 
       self.id = "imagemap-" + $scope.$id;
 
@@ -134,7 +113,7 @@ angular.module('Imagemap').constant(
           if(theMarker.class) {
             tmp["class"] = theMarker.class;
           }
-          tmp.icon.html = buildMarkerHtml(tmp,  markerValue);
+          tmp.icon.html = self.buildMarkerHtml(tmp,  markerValue);
           self.markers[theMarker.key] =  tmp;
         }
       }
@@ -145,20 +124,18 @@ angular.module('Imagemap').constant(
         leafletData.getMap(self.id).then(function (map) {
           map.invalidateSize(false);
           /*
-           * leafletData.getLayers().then(function(baselayers) {
-           * if(self.draw) { var drawnItems =
-           * baselayers.overlays.draw; map.on('draw:created', function
-           * (e) { var layer = e.layer; drawnItems.addLayer(layer);
-           * console.log(".... " + JSON.stringify(layer.toGeoJSON()));
-           * }); } });
-           */
+			 * leafletData.getLayers().then(function(baselayers) { if(self.enableDraw) {
+			 * var drawnItems = baselayers.overlays.draw; map.on('draw:created',
+			 * function (e) { var layer = e.layer; drawnItems.addLayer(layer);
+			 * console.log(".... " + JSON.stringify(layer.toGeoJSON())); }); }
+			 * });
+			 */
         });
       }, 1000);
 
-      //if(self.draggableMarkers!=null && self.draggableMarkers){
       $scope.$on('leafletDirectiveMarker.'+self.id+'.dragend', function(event, args){
         console.log(args.leafletObject._latlng); 
-        // updateMarker(args.modelName, args.model.lng, args.model.lat)
+        // self.updateMarker(args.modelName, args.model.lng, args.model.lat)
       });
       // }
 
@@ -177,26 +154,29 @@ angular.module('Imagemap').constant(
       self.imageUrl = (self.imageUrl) ? self.imageUrl : '//s3.amazonaws.com/scriptr-cdn/compagno/HVAC-system-7.png';
 
 
-      self.layers = {
-        baselayers: {
-          myLayer: {
-            name: 'Base Layer',
-            type: 'imageOverlay',
-            url: self.imageUrl,
-            bounds: [
-              [self.height, 0],
-              [0, self.width]
-            ],
-            layerParams: {
-              showOnSelector: false,
-              noWrap: true,
-            }
-          }
-        }
-      }
-      self.layers.overlays = {};
+      
       // add draw layer in case enabled
-
+      if (true) {
+    	  self.layers = {
+			  baselayers: {
+				  myLayer: {
+					  name: 'Base Layer',
+					  type: 'imageOverlay',
+					  url: self.imageUrl,
+					  bounds: [
+						  [self.height, 0],
+						  [0, self.width]
+						  ],
+						  layerParams: {
+							  showOnSelector: false,
+							  noWrap: true,
+						  }
+				  }
+			  }
+    	  }
+    	  self.layers.overlays = {};
+      }
+      
       if (self.heatmap) {
         var _heatmapDefaultOptions = {
           minOpacity: 0.05,
@@ -218,39 +198,21 @@ angular.module('Imagemap').constant(
           visible: true
         };
       }
+      
       self.maxBounds = leafletBoundsHelpers.createBoundsFromArray([
         [self.height, 0],
         [0, self.width]
       ]);
     };
 
-    self.saveAllGeofences = function (e) {
-      var layers = self.drawnItems.getLayers();
-      var requestData = [];
-      for (var x = 0; x < layers.length; x++) {
-        var layer = layers[x];
-        var geoJSON = layer.toGeoJSON();
-        var obj = {
-          "type": geoJSON.geometry.type,
-          "coordinates": geoJSON.geometry.coordinates
-        };
-        requestData[layer.getElement().getAttribute("identifier")] = obj;
-      }
-      updateDrawDataService(requestData);
-
-    };
-
+    
     self.$postLink = function () {
       self.timeoutId = $timeout(self.resize.bind(self), 100);
       angular.element($window).on('resize', self.onResize);
-      if ((self.getDrawApiTransport == "wss" || self.getDrawApiTransport == "https") && self.draw && self.getDrawApi != null)
-
-        initDrawDataService();
-      if ((self.apiTransport == "wss" && (self.api || self.msgTag)) || (self.apiTransport == "https" && self.api)) { // Fetch
-        // data
-        // from
-        // backend
-        initDataService();
+      if (self.enableDraw)
+        self.initDrawDataService();
+      if (self.showMarkers) { // Fetch data from the backend
+        self.initDataService();
       } else if (self.data != null) { // set datas info when data binding
         // is changed, this allows the user
         // to change the data through a
@@ -270,9 +232,8 @@ angular.module('Imagemap').constant(
         $scope.$on("update-data", function (event, data) {
           if (data == null) {
             /*
-             * if (self.markersData == null) { self.noResults =
-             * true; }
-             */
+			 * if (self.markersData == null) { self.noResults = true; }
+			 */
           } else {
             if (data[self.serviceTag]) {
               self.consumeData(data[self.serviceTag]);
@@ -284,6 +245,25 @@ angular.module('Imagemap').constant(
         $scope.$emit("waiting-for-data");
       }
     };
+    
+    self.saveAllZones = function (e) {
+    	//prepare data to save to the backend
+        var layers = self.drawnItems.getLayers();
+        var requestData = [];
+        for (var x = 0; x < layers.length; x++) {
+          var layer = layers[x];
+          var geoJSON = layer.toGeoJSON();
+          var obj = {
+            "type": geoJSON.geometry.type,
+            "coordinates": geoJSON.geometry.coordinates
+          };
+          requestData[layer.getElement().getAttribute("identifier")] = obj;
+        }
+        //send data to the backend to be saved
+        self.updateDrawDataService(requestData);
+
+      };
+
     self.onResize = function () {
       if (self.timeoutId != null) {
         $timeout.cancel(self.timeoutId);
@@ -315,48 +295,47 @@ angular.module('Imagemap').constant(
       angular.element($window).off('resize', self.onResize);
     };
 
-    var updateMarker = function (id, lng, lat) {
+    self.updateMarker = function (id, lng, lat) {
 
-      if (self.draggableMarkers) {
+      if (self.enableDrag) {
         var requestInfo = {
-          "api": self.dragApi,
-          "transport": self.dragApiTransport,
+          "api": self.dragConfig.dragApi,
+          "transport": self.dragConfig.dragApiTransport,
           "msgTag": self.msgTag,
           "apiParams": angular.merge({
             xAxis: lng,
             yAxis: lat,
             id: id
-          }, self.dragApiParams),
+          }, self.dragConfig.dragApiParams),
           "useWindowParams": self.useWindowParams,
-          "httpMethod": self.dragApiHttpMethod,
+          "httpMethod": self.dragConfig.dragApiHttpMethod,
           "widgetId": $scope.$id
         };
         dataService.scriptrRequest(requestInfo);
       }
     };
 
-    var updateDrawDataService = function (req) {
+    self.updateDrawDataService = function (req) {
       var requestInfo = {
-        "api": self.updateDrawApi,
-        "transport": self.updateDrawApiTransport,
+        "api": self.drawConfig.updateZonesApi,
+        "transport": self.drawConfig.updateZonesApiTransport,
         "msgTag": self.msgTag,
-        "apiParams": angular.merge(req, self.updateDrawApiParams),
+        "apiParams": angular.merge(req, self.drawConfig.updateZonesApiParams),
         "useWindowParams": self.useWindowParams,
-        "httpMethod": self.updateDrawApiHttpMethod,
+        "httpMethod": self.drawConfig.updateZonesApiHttpMethod,
         "widgetId": $scope.$id
       };
       dataService.scriptrRequest(requestInfo, self.consumeUpdateDrawData.bind(self));
     };
 
-    var initDrawDataService = function () {
-
+    self.initDrawDataService = function () {
       var requestInfo = {
-        "api": self.getDrawApi,
-        "transport": self.getDrawApiTransport,
+        "api": self.drawConfig.getZonesApi,
+        "transport": self.drawConfig.getZonesApiTransport,
         "msgTag": self.msgTag,
-        "apiParams": self.getDrawApiParams,
+        "apiParams": self.drawConfig.getZonesApiParams,
         "useWindowParams": self.useWindowParams,
-        "httpMethod": self.getDrawApiHttpMethod,
+        "httpMethod": self.drawConfig.getZonesApiHttpMethod,
         "widgetId": $scope.$id
       };
       dataService.scriptrRequest(requestInfo, self.consumeDrawData.bind(self));
@@ -364,7 +343,7 @@ angular.module('Imagemap').constant(
 
     };
 
-    var buildMarkerHtml = function(theMarker, markerValue) {
+    self.buildMarkerHtml = function(theMarker, markerValue) {
       var html = "<div class='"+ ((theMarker.class) ? theMarker.class : "") +" marker-pin'><div class='marker-content'>";
 
       if(theMarker.icon && theMarker.icon.iconUrl ) {
@@ -377,14 +356,14 @@ angular.module('Imagemap').constant(
       return html;
     }
 
-    var initDataService = function () {
+    self.initDataService = function () {
       var requestInfo = {
-        "api": self.api,
-        "transport": self.apiTransport,
+        "api": self.markersConfig.markersApi,
+        "transport": self.markersConfig.markersApiTransport,
         "msgTag": self.msgTag,
-        "apiParams": self.apiParams,
+        "apiParams": self.markersConfig.markersApiParams,
         "useWindowParams": self.useWindowParams,
-        "httpMethod": self.apiHttpMethod,
+        "httpMethod": self.markersConfig.markersApiHttpMethod,
         "widgetId": $scope.$id
       };
       dataService.scriptrRequest(requestInfo, self.consumeData.bind(self));
@@ -392,16 +371,59 @@ angular.module('Imagemap').constant(
         // Assuming this is success
         self.refreshTimer = $interval(
           function () {
-            initDataService()
+            self.initDataService()
           }, self.fetchDataInterval * 1000);
       }
     };
 
     self.consumeUpdateDrawData = function (data) {
+    	//TODO: display a message that the data was successfully saved to the backend
     };
     
+    self.openModal = function(model){
+    	
+    	 /** ****** */
+        var modalInstance = $uibModal.open({
+          animation: true,
+          component: 'mapModalComponent',
+          size: 'md',
+          scope: $scope,
+          resolve: {
+            widget: function () {
+              return {
+                "label": "Zone Properties",
+                "model": model,
+                "schema": angular.copy(zoneDetails.schema),
+                "form": angular.copy(zoneDetails.form)
+              }
+            }
+          }
+        });
+        modalInstance.result.then(function (dataModel) {
+          if (dataModel != "cancel") {
+            for (var x = 0; x < self.zonesList.length; x++) {
+              if (self.zonesList[x].id == self.editedZoneId) {
+                var oldId = self.zonesList[x].id;
+                self.zonesList[x].id = dataModel.identifier;
+                var layers = self.drawnItems.getLayers();
+                for (var i = 0; i < layers.length; i++) {
+                  if (layers[i]._layers==null && layers[i].getElement().getAttribute("identifier") == oldId) {
+                    layers[i].getElement().setAttribute("identifier", dataModel.identifier);
+                    break;
+                  }
+                }
+                break;
+              }
+            }
+          }
+        }, function () {
+          console.info('modal-component for widget update dismissed at: ' + new Date());
+        });
+        /** ****** */
+    }
+    
     self.consumeDrawData = function (data) {
-      if (self.draw) {
+      if (self.enableDraw) {
         leafletData.getMap(self.id).then(function (map) {
           self.drawnItems = new L.FeatureGroup();
 
@@ -409,61 +431,43 @@ angular.module('Imagemap').constant(
             var jsonData = JSON.parse(data[key]);
             var layer = new L.GeoJSON(jsonData);
             jsonData.id = key;
-            self.geoFencesList.push(jsonData);
-            //map.addLayer(layer);
+            self.zonesList.push(jsonData);
+            // map.addLayer(layer);
             leafletLayerHelpers.safeAddLayer(map, layer);
             layer.getLayers()[0].getElement().setAttribute("identifier", key);
             layer.addEventListener('contextmenu', function(e){
-              //alert(4444);
-              var id = e.target.getLayers()[0].getElement().getAttribute("identifier");
-              var model = {};
-              var inUseIdentifiers = _.pluck(self.geoFencesList, "id");
-              model.identifier = id;
-              model.inUseIdentifiers = inUseIdentifiers;
-              self.editedGeofenceId = id;
-              /** ****** */
-              var modalInstance = $uibModal.open({
-                animation: true,
-                component: 'mapModalComponent',
-                size: 'md',
-                scope: $scope,
-                resolve: {
-                  widget: function () {
-                    return {
-                      "label": "Geofence Properties",
-                      "model": model,
-                      "schema": angular.copy(geofenceDetails.schema),
-                      "form": angular.copy(geofenceDetails.form)
-                    }
-                  }
-                }
-              });
-              modalInstance.result.then(function (dataModel) {
-                if (dataModel != "cancel") {
-                  for (var x = 0; x < self.geoFencesList.length; x++) {
-                    if (self.geoFencesList[x].id == self.editedGeofenceId) {
-                      var oldId = self.geoFencesList[x].id;
-                      self.geoFencesList[x].id = dataModel.identifier;
-                      var layers = self.drawnItems.getLayers();
-                      for (var i = 0; i < layers.length; i++) {
-                        if (layers[i]._layers==null && layers[i].getElement().getAttribute("identifier") == oldId) {
-                          layers[i].getElement().setAttribute("identifier", dataModel.identifier);
-                          break;
-                        }
-                      }
-                      break;
-                    }
-                  }
-                  // delete dataModel["inUseIdentifiers"];
-                  // self.rightClickedOverlay.set("dataModel", dataModel);
-                  // self.updateLocalGeofence(beforeUpdateIdentifier,
-                  // self.rightClickedOverlay);
-                }
-              }, function () {
-                console.info('modal-component for widget update dismissed at: ' + new Date());
-              });
+              // alert(4444);
+            	var id = e.target.getLayers()[0].getElement().getAttribute("identifier");
+            	self.editedZoneId = id;
+            	var model = {};
+                var inUseIdentifiers = _.pluck(self.zonesList, "id");
+                model.identifier = id;
+                model.inUseIdentifiers = inUseIdentifiers;
+            	self.openModal(model);
 						});
             self.drawnItems.addLayer(layer.getLayers()[0]);
+            /*
+            var jsonData = {"type":"Feature","properties":{},"geometry":{"type":"Circle","coordinates":[100,51.53]}};
+            var layer = new L.GeoJSON(jsonData);
+            jsonData.id = "11111";
+            self.zonesList.push(jsonData);
+            // map.addLayer(layer);
+            leafletLayerHelpers.safeAddLayer(map, layer);
+            layer.getLayers()[0].getElement().setAttribute("identifier", key);
+            layer.addEventListener('contextmenu', function(e){
+              // alert(4444);
+            	var id = e.target.getLayers()[0].getElement().getAttribute("identifier");
+            	self.editedZoneId = id;
+            	var model = {};
+                var inUseIdentifiers = _.pluck(self.zonesList, "id");
+                model.identifier = id;
+                model.inUseIdentifiers = inUseIdentifiers;
+            	self.openModal(model);
+						});
+            
+            self.drawnItems.addLayer(layer.getLayers()[0]);
+            */
+           
           }
           map.addLayer(self.drawnItems);
           var drawControl = new L.Control.Draw({
@@ -506,9 +510,9 @@ angular.module('Imagemap').constant(
               self.drawnItems.removeLayer(layer);
               var layerId = layer.getElement().getAttribute("identifier")
               if(layerId!=null){
-                for (var x = 0; x < self.geoFencesList.length; x++) {
-                  if (self.geoFencesList[x].id == layerId) {
-                    self.geoFencesList.splice(x, 1);
+                for (var x = 0; x < self.zonesList.length; x++) {
+                  if (self.zonesList[x].id == layerId) {
+                    self.zonesList.splice(x, 1);
                     break;
                   }
                 }
@@ -521,55 +525,14 @@ angular.module('Imagemap').constant(
               layer = e.layer;
 
             layer.addEventListener('contextmenu', function(e){
-              //alert(4444);
-              var id = e.target.getElement().getAttribute("identifier");
-              var model = {};
-              var inUseIdentifiers = _.pluck(self.geoFencesList, "id");
-              model.identifier = id;
-              model.inUseIdentifiers = inUseIdentifiers;
-              self.editedGeofenceId = id;
-              /** ****** */
-              var modalInstance = $uibModal.open({
-                animation: true,
-                component: 'mapModalComponent',
-                size: 'md',
-                scope: $scope,
-                resolve: {
-                  widget: function () {
-                    return {
-                      "label": "Geofence Properties",
-                      "model": model,
-                      "schema": angular.copy(geofenceDetails.schema),
-                      "form": angular.copy(geofenceDetails.form)
-                    }
-                  }
-                }
-              });
-              modalInstance.result.then(function (dataModel) {
-                if (dataModel != "cancel") {
-                  for (var x = 0; x < self.geoFencesList.length; x++) {
-                    if (self.geoFencesList[x].id == self.editedGeofenceId) {
-                      var oldId = self.geoFencesList[x].id;
-                      self.geoFencesList[x].id = dataModel.identifier;
-                      var layers = self.drawnItems.getLayers();
-                      for (var i = 0; i < layers.length; i++) {
-                        if (layers[i]._layers==null && layers[i].getElement().getAttribute("identifier") == oldId) {
-                          layers[i].getElement().setAttribute("identifier", dataModel.identifier);
-                          break;
-                        }
-                      }
-                      break;
-                    }
-                  }
-                  // delete dataModel["inUseIdentifiers"];
-                  // self.rightClickedOverlay.set("dataModel", dataModel);
-                  // self.updateLocalGeofence(beforeUpdateIdentifier,
-                  // self.rightClickedOverlay);
-                }
-              }, function () {
-                console.info('modal-component for widget update dismissed at: ' + new Date());
-              });
-
+              // alert(4444);
+            	var id = e.target.getElement().getAttribute("identifier");
+            	self.editedZoneId = id;
+            	var model = {};
+            	var inUseIdentifiers = _.pluck(self.zonesList, "id");
+            	model.identifier = id;
+            	model.inUseIdentifiers = inUseIdentifiers;
+            	self.openModal(model);
             });
             
             if (type === 'marker') {
@@ -578,62 +541,20 @@ angular.module('Imagemap').constant(
 
             self.drawnItems.addLayer(layer);
             console.log(".... " + JSON.stringify(layer.toGeoJSON()));
-            var geoFenceEntry = layer.toGeoJSON();
-            var inUseIdentifiers = _.pluck(self.geoFencesList, "id");
+            var zoneEntry = layer.toGeoJSON();
+            var inUseIdentifiers = _.pluck(self.zonesList, "id");
             do {
-              self.geofencesIncrement++;
-              var defaultIdentifier = "Geofence_" + self.geofencesIncrement;
+              self.zonesIncrement++;
+              var defaultIdentifier = "Zone_" + self.zonesIncrement;
             } while (inUseIdentifiers.indexOf(defaultIdentifier) > -1)
-              geoFenceEntry.id = defaultIdentifier;
-            self.geoFencesList.push(geoFenceEntry);
-            self.editedGeofenceId = defaultIdentifier;
+            	zoneEntry.id = defaultIdentifier;
+            self.zonesList.push(zoneEntry);
+            self.editedZoneId = defaultIdentifier;
             layer.getElement().setAttribute("identifier", defaultIdentifier);
-
             var model = {};
             model.identifier = defaultIdentifier;
             model.inUseIdentifiers = inUseIdentifiers;
-            /** ****** */
-            var modalInstance = $uibModal.open({
-              animation: true,
-              component: 'mapModalComponent',
-              size: 'md',
-              scope: $scope,
-              resolve: {
-                widget: function () {
-                  return {
-                    "label": "Geofence Properties",
-                    "model": model,
-                    "schema": angular.copy(geofenceDetails.schema),
-                    "form": angular.copy(geofenceDetails.form)
-                  }
-                }
-              }
-            });
-            modalInstance.result.then(function (dataModel) {
-              if (dataModel != "cancel") {
-                for (var x = 0; x < self.geoFencesList.length; x++) {
-                  if (self.geoFencesList[x].id == self.editedGeofenceId) {
-                    var oldId = self.geoFencesList[x].id;
-                    self.geoFencesList[x].id = dataModel.identifier;
-                    var layers = self.drawnItems.getLayers();
-                    for (var i = 0; i < layers.length; i++) {
-                      if (layers[i]._layers==null && layers[i].getElement().getAttribute("identifier") == oldId) {
-                        layers[i].getElement().setAttribute("identifier", dataModel.identifier);
-                        break;
-                      }
-                    }
-                    break;
-                  }
-                }
-                // delete dataModel["inUseIdentifiers"];
-                // self.rightClickedOverlay.set("dataModel", dataModel);
-                // self.updateLocalGeofence(beforeUpdateIdentifier,
-                // self.rightClickedOverlay);
-              }
-            }, function () {
-              console.info('modal-component for widget update dismissed at: ' + new Date());
-            });
-            /** ****** */
+            self.openModal(model);
           });
 
         });
@@ -654,48 +575,53 @@ angular.module('Imagemap').constant(
           self.stalledData = false;
 
           if (!self.heatmap) {
-            if (self.dynamicMarkers) {
-              self.markers = {};
-              self.markersData = data;
-              for (var i = 0; i < self.markersData.length; i++) {
-                var theMarker = self.markersData[i];
-                var tmp = {
-                  lat: theMarker.lat,
-                  lng: theMarker.lng,
-                  icon: {
-                    className: 'custom-div-icon',
-                    type: 'div',
-                    html: "<div class='marker-pin'><div class='marker-content'><span class='indicator-value'>" + theMarker.key + "</span></div></div>",
-                    iconSize: [90, 90],
-                    iconAnchor: [0, 0],
-                    popupAnchor: [15, -30]
-                  }
-                };
-                if (theMarker.draggable && (theMarker.draggable == "true" || theMarker.draggable == true)) {
-                  tmp["draggable"] = true;
-                }
-                if (theMarker.icon && theMarker.icon.url) {
-                  tmp.icon["iconUrl"] = theMarker.icon.url;
-                }
-                if (theMarker.icon && theMarker.icon.unit) {
-                  tmp.icon["unit"] = theMarker.icon.unit;
-                }
-                if (theMarker.icon && theMarker.icon.unit && theMarker.icon.url) {
-                  tmp.icon.html = "<div class='marker-pin'><div class='marker-content'><img class='markerImg' src='" + theMarker.icon.url + "'/><span class='indicator-value'>" + theMarker.key + " " + theMarker.icon.unit + "</span></div></div>"
-                }
-
-                self.markers[theMarker.key] = tmp;
-              }
-            } else {
-              var dataKeys = Object.keys(data);
-              for (var i = 0; i < dataKeys.length; i++) {
-                var dataKey = dataKeys[i];
-                if (self.markers[dataKey]) {
-                  var tmp = buildMarkerHtml( self.markers[dataKey],  data[dataKey]);
-                                      self.markers[dataKey].icon.html = buildMarkerHtml( self.markers[dataKey],  data[dataKey]);
-                }
-              }
-            }
+        	var newmarkers = {};
+        	 self.markersData = data;
+        	 for (var i = 0; i < self.markersData.length; i++) {
+        		 var theMarker = self.markersData[i];
+        		 var key = theMarker.key;
+        		 var value = theMarker.value;
+        		 var volatile = Boolean(theMarker.volatile);
+        		 var draggable = theMarker.draggable;
+        		 var iconUrl = (theMarker.icon && theMarker.icon.url) ? theMarker.icon.url : "";
+        		 var iconUnit = (theMarker.icon && theMarker.icon.unit) ? theMarker.icon.unit : "";
+        		 var clss = (theMarker.class) ? theMarker.class : "";
+        		 var group = theMarker.group;
+        		 var lat = theMarker.lat;
+        		 var lng = theMarker.lng;
+        		 var tmp = {};
+        		 
+        		 if(volatile || (!volatile && (!self.markers || !self.markers[key]))){
+        			 if(lat!=null && lng!=null){
+            			 tmp = {
+    	                  lat: lat,
+    	                  lng: lng,
+    	                  icon: {
+    	                    className: 'custom-div-icon',
+    	                    type: 'div',
+    	                    html: "<div class='marker-pin'><div class='marker-content'><span class='indicator-value'>" + value + "</span></div></div>",
+    	                    iconSize: [90, 90],
+    	                    iconAnchor: [0, 0],
+    	                    popupAnchor: [15, -30]
+    	                  }
+    	                };
+        			 }
+        			 if (draggable && (draggable == "true" || draggable == true)) {
+        				 tmp["draggable"] = true;
+        			 }
+    				 tmp.icon["iconUrl"] = iconUrl;
+    				 tmp.icon["unit"] = iconUnit;
+    				 tmp.icon["class"] = clss;
+    				 tmp.icon.html = self.buildMarkerHtml( tmp,  value);
+        		 }else{
+        			 tmp = self.markers[key];
+        			 if(tmp!=null){
+        				 tmp.icon.html =  self.buildMarkerHtml(tmp, value);
+        			 }
+        		 }
+        		 newmarkers[theMarker.key] = tmp;
+        	 }
+        	 self.markers = newmarkers;
           } else {
             leafletData.getMap(self.id).then(function (map) {
               if (self.heatLayer) {

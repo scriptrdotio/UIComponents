@@ -79,72 +79,25 @@
             console.log("data formatter");
             return data;
           }
-          
-          vm.markersData = [
-                {
-                    key: 'temperature',
-                    lat: 100, 
-                    lng: 50,
-                    draggable: true,
-                    group: 'testers',
-                    icon: {
-                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/accelerometer.png',
-                        unit: '°C'
-                    }
-                },
-                {
-                    key: 'pressure',
-                    lat: 383, 
-                    lng: 181,
-                    draggable: true,
-                    group: 'testers',
-                    icon: {
-                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/pressure.png',
-                        unit: 'Pa'
-                    }
-                },
-                {
-                    key: 'co2',
-                    lat: 272.75, 
-                    lng: 87.25,
-                    draggable: true,
-                    group: 'testers',
-                    icon: {
-                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/co2.svg',
-                        unit: 'ppm'
-                    }
-                },
-                {
-                    key: 'batata',
-                    lat: 250,  
-                    lng: 60,
-                    draggable: true,
-                    group: 'testers',
-                    icon: {
-                        url: '//s3.amazonaws.com/scriptr-cdn/compagno/co2.svg',
-                        unit: 'ppm'
-                    }
-                }
-            ]
       });
     
 </script>
 <body ng-controller="testCtrl as vm">          
       <scriptr-imagemap 
-                        transport="https"
                         test="tt"
                         msg-tag="imagemap" 
 												heatmap="false"
                         title="Imagemap"
                         title-font-color="#aaa"
-                        api='UIComponents/dashboard/frontend/examples/imageMap/getImageDynamicmapData'
                         image-url='//s3.amazonaws.com/scriptr-cdn/hvac-monitoring/images/HVAC-system-7.png'
                         width='824'
+                        show-markers="true"
+                        markers-config="{markersApiTransport:'https', markersApi:'UIComponents/dashboard/frontend/examples/imageMap/getImageDynamicmapData'}"
                         height='414'
                         min-zoom='0'
                         fetch-data-interval='2'
                         refresh-timer=false
-                        dynamic-markers="true"
+                        volatile-markers="true"
                         max-zoom='14'
                         on-format-data="vm.callback">
       </scriptr-imagemap>

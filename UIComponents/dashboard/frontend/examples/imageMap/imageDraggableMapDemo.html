@@ -110,22 +110,21 @@
 </script>
 <body ng-controller="testCtrl as vm">          
       <scriptr-imagemap 
-                        transport='https' 
                         msg-tag="imagemap" 
-						heatmap="false"
+												heatmap="false"
                         title="Imagemap"
-                        title-font-color="#aaa"
-                        api='UIComponents/dashboard/frontend/examples/imageMap/getImageDraggablemapData'
+                        title-font-color="#aaa" 
                         image-url='//s3.amazonaws.com/scriptr-cdn/hvac-monitoring/images/HVAC-system-7.png'
                         width='824'
                         height='414'
                         min-zoom='0'
                         fetch-data-interval='2'
                         refresh-timer=false
-                        dynamic-markers="true"
-                        draggable-markers="true"
-                        drag-api-transport="https"
-                        drag-api='UIComponents/dashboard/frontend/examples/imageMap/updateLocation'
+                        show-markers="true"
+                        markers-config="{markersApiTransport:'https', markersApi:'UIComponents/dashboard/frontend/examples/imageMap/getImageDraggablemapData'}"
+                        volatile-markers="false"
+                        drag-config="{dragApiTransport:'https', dragApi:'UIComponents/dashboard/frontend/examples/imageMap/updateLocation'}"
+                        enable-drag="true"
                         max-zoom='14'
                         on-format-data="vm.callback">
       </scriptr-imagemap>

@@ -8,6 +8,7 @@ var value =  [
                     lat: Math.floor(Math.random() * 300) + 100, 
                     lng: Math.floor(Math.random() * 280) + 50,
                     draggable: true,
+                  	volatile: true,                  
                     group: 'testers',
                     icon: {
                         url: '//s3.amazonaws.com/scriptr-cdn/compagno/accelerometer.png',
@@ -20,6 +21,7 @@ var value =  [
                     lat: Math.floor(Math.random() * 300) + 100, 
                     lng: Math.floor(Math.random() * 280) + 50,
                     draggable: true,
+                  	volatile: true,                  
                     group: 'testers',
                     icon: {
                         url: '//s3.amazonaws.com/scriptr-cdn/compagno/pressure.png',
@@ -32,6 +34,7 @@ var value =  [
                     lat: Math.floor(Math.random() * 300) + 100, 
                     lng: Math.floor(Math.random() * 280) + 50,
                     draggable: true,
+                  	volatile: true,                  
                     group: 'testers',
                     icon: {
                         url: '//s3.amazonaws.com/scriptr-cdn/compagno/co2.svg',
