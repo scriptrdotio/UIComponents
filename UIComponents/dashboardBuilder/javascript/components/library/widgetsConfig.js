@@ -33,7 +33,8 @@ angular
                     __IFRAME__,
                     __DOTPLOTS__,
                     __HEATMAP__,
-                    __BUBBLECHART__
+                    __BUBBLECHART__,
+                    __SCATTERPLOTS__
                     
                     //,__METRIC_BOX__
                 ]

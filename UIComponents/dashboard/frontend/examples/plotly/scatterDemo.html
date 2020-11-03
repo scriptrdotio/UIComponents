@@ -1,38 +1,38 @@
 <html ng-app="myApp">
     <head>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
         <script src="//use.fontawesome.com/3d61d6959e.js"></script>
-        
+
         <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <!-- Adding JQUERY To use jQuery, simply ensure it is loaded before the angular.js file. -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-            <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-        
+        <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+
         <!-- Adding Angular -->
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
         <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
-        
+
         <script src="/UIComponents/wsProvider.js"></script>
         <script src="/UIComponents/httpProvider.js"></script>
         <script src="/UIComponents/dataService.js"></script>
-        
+
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
-        
+
         <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
         <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
-        
+
         <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
         <script src="/UIComponents/dashboard/frontend/components/plotly/angular-plotly.js"></script>
         <script src="/UIComponents/dashboard/frontend/components/plotly/plotly.js"></script>
         <script src="/UIComponents/dashboard/frontend/components/plotly/scatter.js"></script>
-        
+
         <script src="/UIComponents/config/scriptrTransport.js"></script>
     </head>
     <script>
@@ -55,10 +55,41 @@
                 vm.plotlyFormatData1 = function (data) {
                     return data;
                 }
-                vm.colorScale=[[0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']];
+
+                vm.tracesConfig = [
+                    {
+                        marker:{
+                            color: "hsl(0,100,40)",
+                            opacity: 0.6,
+                            sizeref: 6,
+                         //   sizemode: 'area'
+                        },
+                        hovertemplate: "x: %{x},y:%{y},weight: %{marker.size},<extra>%{fullData.marker.color}</extra>",
+
+                    },
+                    {
+                        marker: {
+                            sizeref: 6,
+                            color: 'rgb(31, 119, 180)',
+                            symbol: 'circle',
+                        },
+                        hovertemplate: "x: %{x},y:%{y},weight: %{marker.size},<extra>%{fullData.marker.symbol}</extra>",      
+
+                    },
+                ];
+                vm.layoutConfig = {
+                    xaxis: {
+                        range: [ 0.25, 150 ]
+                    },
+                    yaxis: {
+                        range: [0, 150]
+                    },
+                };
+
+                
             });
         })();
-        
+
     </script>
     <body class="dashboard-template light">
         <div ng-controller="RootCtrl as vm" ng-init="vm.init();" class="dashboardContainer">
@@ -70,14 +101,14 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class='box-content box-content-with-header'>
-                        <scriptr-scatter transport='https' on-format-data='vm.plotlyFormatData1'
-                            api='UIComponents/dashboard/frontend/examples/plotly/getScatterData'
-                            title='Test scatter'
-                            width='500'
-                            height='500'
-                            xaxis='Temperature' yaxis='Humidity'
-                            color="#00ff00" series="nest"
-                        >
+                        <scriptr-scatter 
+                                         transport='https' 
+                                         on-format-data='vm.plotlyFormatData1'
+                                         api='UIComponents/dashboard/frontend/examples/plotly/getScatterData'
+                                         traces-config = 'vm.tracesConfig'
+                                         layout-config = 'vm.layoutConfig'
+
+                                         >
                         </scriptr-scatter>
                     </div>
                 </div>

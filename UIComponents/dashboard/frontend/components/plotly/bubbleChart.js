@@ -56,62 +56,64 @@ angular
                     "marker": {
                         "color": 'hsl(0,100,40)',
                     }
-                                    };
-                 this.tracesConfig =(this.tracesConfig) ? this.tracesConfig : [];
-               	 var defaultLayout = {
-                    					"title":"The title of the graph",
-                    					"showlegend":false,
-                                        "margin":{
-                                            "l":140,
-                                            "r":40,
-                                            "b":50,
-                                            "t":80
-                                        },
-                                        "xaxis":{
-                                            "showgrid":false,
-                                            "showline": true,
-                                            "title":"The title of xaxis",
-                                            "titlefont":{
-                                                "font":{
-                                                    "color":"rgb(204, 204, 204)"
-                                                }
-                                            },
-                                            "tickfont":{
-                                                "font":{
-                                                    "color":"rgb(102, 102, 102)"
-                                                }
-                                            },
-                                            "ticks":"outside"
-                                        },
-                                        "yaxis":{
-                                            "showgrid": false,
-                                            "showline": true,
-                                            "title":"The title of yaxis",
-                                            "titlefont":{
-                                                "font":{
-                                                    "color":"rgb(204, 204, 204)"
-                                                }
-                                            },
-                                            "tickfont":{
-                                                "font":{
-                                                    "color":"rgb(102, 102, 102)"
-                                                }
-                                            }
-                                        },
-                                        "hovermode": 'closest',
-                                        "paper_bgcolor": 'rgb(254, 247, 234)',
-                                        "plot_bgcolor": 'rgb(254, 247, 234)',
-                                        "legend":{
-                                            "font":{
-                                                "size":10
-                                            },
-                                            "yanchor":"top",
-                                            "y":0.99,
-                                            "xanchor":"left",
-                                            "x":0.01,
-                                            "orientation":"v"
-                                        }
-                    				};               
+                };
+                
+                this.tracesConfig =(this.tracesConfig) ? this.tracesConfig : [];
+                
+                var defaultLayout = {
+                    "title":"The title of the graph",
+                    "showlegend":false,
+                    "margin":{
+                        "l":140,
+                        "r":40,
+                        "b":50,
+                        "t":80
+                    },
+                    "xaxis":{
+                        "showgrid":false,
+                        "showline": true,
+                        "title":"The title of xaxis",
+                        "titlefont":{
+                            "font":{
+                                "color":"rgb(204, 204, 204)"
+                            }
+                        },
+                        "tickfont":{
+                            "font":{
+                                "color":"rgb(102, 102, 102)"
+                            }
+                        },
+                        "ticks":"outside"
+                    },
+                    "yaxis":{
+                        "showgrid": false,
+                        "showline": true,
+                        "title":"The title of yaxis",
+                        "titlefont":{
+                            "font":{
+                                "color":"rgb(204, 204, 204)"
+                            }
+                        },
+                        "tickfont":{
+                            "font":{
+                                "color":"rgb(102, 102, 102)"
+                            }
+                        }
+                    },
+                    "hovermode": 'closest',
+                    "paper_bgcolor": 'rgb(254, 247, 234)',
+                    "plot_bgcolor": 'rgb(254, 247, 234)',
+                    "legend":{
+                        "font":{
+                            "size":10
+                        },
+                        "yanchor":"top",
+                        "y":0.99,
+                        "xanchor":"left",
+                        "x":0.01,
+                        "orientation":"v"
+                    }
+                };               
                 this._layout = (this.layoutConfig) ? angular.merge({}, defaultLayout, this.layoutConfig) : defaultLayout;
             }
 
@@ -218,28 +220,35 @@ angular
                     if(typeof this.onFormatData() == "function"){
                         data = this.onFormatData()(data);
                     }
-                    if(data != null && data.length >0){
-                        self.dataFailureMessage = "Success";
-                        self.transformedData = [];
-                        for (var i = 0; i<data.length; i++){
+                    if (data != null) {
+                        self.transformedData = []
+                        for (var i = 0; i<data.length; i++) {
                             if(typeof data == "object" && data[i].x != null && Array.isArray(data[i].x) && data[i].y !=null && Array.isArray(data[i].y) && data[i].w !=null && Array.isArray(data[i].w)){
-
-                        		var size = data[i].w;
+                                
+                                var size = data[i].w;
                                 var currentTrace = (self.tracesConfig[i]) ? angular.merge({}, self.defaultTrace, self.tracesConfig[i]) : self.defaultTrace;
                                 currentTrace.marker.size = size
                                 self.transformedData.push(angular.merge({}, currentTrace, data[i]));
+                                
+                                self.hasData = true;
+                                self.noResults = false;
+                                self.stalledData = false;
+                            
+                            } else {
+                                self.noResults = true;
+                                if (self.transformedData != null && self.transformedData.length > 0) {
+                                    self.stalledData = true;
+                                }
+                                self.dataFailureMessage = "Failed to update data, invalid data format.";
                             }
                         }
-                        self.hasData = true;
-                        self.noResults = false;
-                        self.stalledData = false;
 
                     } else {
                         self.noResults = true;
-                        if(self.transformedData != null  && self.transformedData.length > 0) {
+                        if (self.transformedData != null && self.transformedData.length > 0) {
                             self.stalledData = true;
-                        } 
-                        self.dataFailureMessage = "Failed to update data, invalid data format.";
+                        }
+                        self.dataFailureMessage = "Failed to update data, no data returned.";
                     }
 
                 }
