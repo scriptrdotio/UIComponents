@@ -69,7 +69,8 @@ angular
                 "windrose":"/UIComponents/dashboard/frontend/components/plotly/windrose_properties.md",
                 "dotPlots" : "/UIComponents/dashboard/frontend/components/plotly/dotPlots_properties.md",
                 "heatmap" : "/UIComponents/dashboard/frontend/components/plotly/heatmap_properties.md",
-                "bubbleChart" : "/UIComponents/dashboard/frontend/components/plotly/bubbleChart_properties.md"
+                "bubbleChart" : "/UIComponents/dashboard/frontend/components/plotly/bubbleChart_properties.md",
+                "scatterPlots":"/UIComponents/dashboard/frontend/components/plotly/scatter_properties.md"
             }
             
             
