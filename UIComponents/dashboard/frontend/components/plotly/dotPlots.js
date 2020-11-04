@@ -12,7 +12,6 @@ angular
             "options": "<?",
             "layoutConfig":"<?", 
             "tracesConfig":"<?",
-            "jsonLayout":"<?",
             "transport": "@",
             "api" : "@",
             "msgTag" : "@",
