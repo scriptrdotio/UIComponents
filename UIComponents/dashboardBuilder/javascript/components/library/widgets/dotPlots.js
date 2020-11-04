@@ -43,7 +43,6 @@ const __DOTPLOTS__ = {
             "displayModeBar": false,
             "modeBarButtonsToRemove":[], 
             "displaylogo": false,
-            "layout-config":{},
             "modeBarButtonsToRemoveWrapper": {
                 "toImage": true,
                 "hoverClosestCartesian": true,
