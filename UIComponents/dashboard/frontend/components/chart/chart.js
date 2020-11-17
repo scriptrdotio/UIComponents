@@ -147,7 +147,8 @@ angular
         "timeZone": "@",
           
         "showLegend": "@",
-        "legendType": "@" //"hover", "right"
+        "legendType": "@", //"hover", "right"
+          "horizontal": "@"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
       controller: function(httpClient, wsClient, $scope, $element, $timeout, $window, $interval, dataService) {
@@ -215,6 +216,7 @@ angular
            
              this.showLegend = (this.showLegend) ? this.showLegend : "true"; //Default is true for backward compatibility
              this.legendType = (this.legendType) ? this.legendType : "hover";
+             this.horizontal = this.horizontal ? this.horizontal : "false";
              
             if(this.hoverCallback) {
                   this.onHoverCallback = function (index, options, content, row) {

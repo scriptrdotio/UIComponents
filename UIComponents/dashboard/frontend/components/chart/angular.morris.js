@@ -266,7 +266,7 @@
             // They are part of the base grid: https://github.com/morrisjs/morris.js/blob/master/lib/morris.grid.coffee
             'ymax', 'ymin', 'goals', 'goalStrokeWidth',
             'goalLineColors', 'yLabelAlign', 'parseTime', 'postUnits', 'preUnits',
-            'xLabelAngle', 'yLabelFormat', 'events', 'eventStrokeWidth', 'eventLineColors'
+            'xLabelAngle', 'yLabelFormat', 'events', 'eventStrokeWidth', 'eventLineColors', "horizontal"
         ];
 
         return {
