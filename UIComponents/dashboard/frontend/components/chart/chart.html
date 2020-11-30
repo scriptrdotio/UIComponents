@@ -1,12 +1,12 @@
-<div style="position: relative">
+<div class="morris-chart-container">
     <scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
     </scriptr-notifications>
 
 
-    <div ng-if="$ctrl.datas.length > 0">
+    <div ng-if="$ctrl.datas.length > 0"  class="fullHeight">
          <div ng-if="$ctrl.type == 'line'">
             <div class="morris-chart-wrapper" ng-class="($ctrl.showLegend == 'true' && $ctrl.legendType != 'hover') ? 'with-legend' : ' ' ">  
-                  <div style="height: 100%; width: 100%"
+                  <div
                      line-data='$ctrl.datas'
                      line-xkey= {{$ctrl.xkey}}
                      line-ykeys='$ctrl.ykeys'
@@ -49,19 +49,21 @@
                 </div>
           </div>
           <div class="morris-chart-legend" ng-if="$ctrl.showLegend && $ctrl.legendType != 'hover'">
-                <div id="date_{{$ctrl.ref}}">{{$ctrl.legendDate}}</div>
-                <ul ng-repeat="entry in $ctrl.legendStructure">
-                    <li>
-                        <span><i class="fa fa-square" ng-style="{ 'color' : '{{entry.color}}'}"></i> {{entry.label}}</span>
-                        <span  ng-style="{ 'color' : '{{entry.color}}'}" id="value_{{$index}}_{{$ctrl.ref}}">{{entry.value}}</span>
-                    </li>
-                </ul>
-            </div>
+             <div id="date_{{$ctrl.ref}}">{{$ctrl.legendDate}}</div>
+             <ul ng-repeat="entry in $ctrl.legendStructure">
+                 <li>
+                     <span><i class="fa fa-square" ng-style="{ 'color' : '{{entry.color}}'}"></i> {{entry.label}}</span>
+                     <span  ng-style="{ 'color' : '{{entry.color}}'}" id="value_{{$index}}_{{$ctrl.ref}}">{{entry.value}}</span>
+                 </li>
+             </ul>
+      		</div>
         </div>
+        
+      
 
          <div ng-if="$ctrl.type == 'bar'">
             <div class="morris-chart-wrapper" ng-class="($ctrl.showLegend == 'true' && $ctrl.legendType != 'hover') ? 'with-legend' : ' ' ">  
-                <div style="height: 100%; width: 100%"
+                <div 
                      bar-data='$ctrl.datas'
                      bar-x= {{$ctrl.xkey}}
                      bar-y='$ctrl.ykeys'
@@ -109,7 +111,7 @@
 
          <div ng-if="$ctrl.type == 'area'">
             <div class="morris-chart-wrapper" ng-class="($ctrl.showLegend == 'true' && $ctrl.legendType != 'hover') ? 'with-legend' : ' ' ">  
-                <div style="height: 100%; width: 100%"
+                <div
                      area-chart 
                      line-colors='$ctrl.colors'
                      area-data='$ctrl.datas'
@@ -164,8 +166,7 @@
         </div>
         
         <div ng-if="$ctrl.type == 'donut'">
-            <div class="morris-chart-wrapper" ng-class="($ctrl.showLegend == 'true' && $ctrl.legendType != 'hover') ? 'with-legend' : ' ' ">  
-
+            <div class="morris-chart-wrapper" ng-class="($ctrl.showLegend == 'true' && $ctrl.legendType != 'hover') ? 'with-legend' : ' ' " >  
             <div class="morris-chart-dimension"
                  donut-data='$ctrl.datas'
                  donut-hover-callback='$ctrl.onHoverCallback'

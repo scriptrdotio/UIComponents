@@ -10,3 +10,5 @@ body {background: #eee;}
 
 .morris-chart-dimension {width: 100%; height: 100%;}
 .morris-chart-legend ul {list-style: none; padding: 0;}
+.morris-chart-container,.fullHeight, .fullHeight div {height: 100%;}
+.morris-hover.morris-default-style,.morris-hover.morris-default-style div,.morris-chart-legend div {height: auto;}
