@@ -112,14 +112,8 @@ angular
                   "onAnimationEnd" : "&", // function applied after animation is done (func)
                  
                   "pointer" : "<?", // show value pointer
-                 
-                 
-                  "heightUnit" : "@",
 
                   "counter" : "@", // increase numbers one by one (bool)
-                  "width": "@", //  gauge width in % (int)
-                  "height": "@" // gauge height in px (int)
-
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/gauge/gauge.html',
                controller : function($scope, httpClient, wsClient, $interval, dataService, $timeout, $window, $element) {
@@ -135,7 +129,6 @@ angular
                        
                       this.hasData = (!isNaN(parseFloat(this.gaugeValue)) && isFinite(this.gaugeValue)) ?  true : false;
                        
-                       this.heightUnit = (this.heightUnit) ? this.heightUnit : "px";
 		               this.customSectors = (this.customSectors) ? this.customSectors : {  percents: true, ranges: []};
 		               this.valueFontColor = (this.valueFontColor) ? this.valueFontColor
 		                     : "#999";
@@ -159,7 +152,7 @@ angular
 		               this.transport = (this.transport) ? this.transport : null;
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
                        this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
-
+                       this.relativeGaugeSize = true;
 	               }
                    
                  this.$postLink = function () {
