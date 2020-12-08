@@ -88,7 +88,10 @@ angular
           "drawPoints": "<?",
           "pointSize": "<?",
           "strokeWidth": "<?",
-          "interaction": "<?"
+          "interaction": "<?",
+          
+          
+          "xaxisLabelFormatter": "&"
           //functional data
         //   "useFunctional": "<?",
         //   "functionalDataType": "@",//scattered , range
@@ -272,8 +275,12 @@ angular
              this.options.axes.x.axisLabelFormatter = function(d, gran, opts) {
                  if(self.x1MinGranularity && gran < self.x1MinGranularity)
                  	return Dygraph.dateAxisLabelFormatter(new Date(d), this.x1MinGranularity, opts);
-                 else
-                    return Dygraph.dateAxisLabelFormatter(new Date(d), gran, opts);
+                 else if(typeof self.xaxisLabelFormatter() == "function"){
+                     return self.xaxisLabelFormatter()(d, gran, opts)
+                 } else {
+                     return Dygraph.dateAxisLabelFormatter(new Date(d), gran, opts);
+                 }
+                   
              }   
              
              this.options.axes.x.valueFormatter = function(d) {
