@@ -70,8 +70,7 @@ angular
 						                              if (data.result
 						                                    && data.result.metadata) {
 							                              // Check for nested scriptr response
-							                              if (data.result.statusCode == "200"
-							                                    && data.result.status == "success") {
+							                              if (data.result.metadata.status == "success") {
 								                              d.resolve(
 								                                    data.result.result,
 								                                    response);
@@ -145,5 +144,5 @@ angular
 		                     }
 		                  };
 		                  return methods;
-	                  }];
+	                  }]; 
             });
