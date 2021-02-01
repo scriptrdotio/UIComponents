@@ -1,4 +1,4 @@
-<div class="row">  
+<div class="row" ng-show="$ctrl.showFilter == 'true'">  
   <div class="col-xs-12 col-md-8">
     <input type="text" class="form-control input-sm" ng-keyup="$event.keyCode == 13 ? $ctrl.onFilterChanged() : null" ng-model="$ctrl.searchValue"  placeholder="{{$ctrl.searchText}}" />
   </div>

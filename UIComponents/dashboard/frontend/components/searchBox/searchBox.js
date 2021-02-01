@@ -28,6 +28,8 @@ angular
         "apiParams" : "<?",
       
         "loadTree" : "<?",
+        
+        "showFilter": "<?",
       
         "treeSearchCriteria" : "@",
       
