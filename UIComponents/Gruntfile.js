@@ -127,7 +127,7 @@ module.exports = function(grunt) {
 		                  'dashboardBuilder/css/customStyleTemplate.css',
 		                  'dashboardBuilder/view/dashboardsList.html',
 		                  'dashboardBuilder/lib/schemaForm/nwp-file.html',
-		                  'dashboard/frontend/components/grideye/grideye.html',
+		                  //'dashboard/frontend/components/grideye/grideye.html',
 		                  'dashboard/frontend/components/imagemap/imagemap.html',
 		                  'dashboard/frontend/components/displayCount/displayCount.html'
 		                  ],
@@ -245,9 +245,9 @@ module.exports = function(grunt) {
 							'concat/min-safe/menu.js' : [ 'layout/frontend/components/menu/menu.js'],
 						   'concat/min-safe/header.js' : [ 'layout/frontend/components/header/header.js'],
 						   'concat/min-safe/layoutmodule.js' : [ 'layout/frontend/components/module.js'],
-						   'concat/min-safe/angular-p5.js' : [ 'dashboard/frontend/components/grideye/angular-p5.js'],
-						   'concat/min-safe/cell.js' : [ 'dashboard/frontend/components/grideye/cell.js'],
-						   'concat/min-safe/grideye.js' : [ 'dashboard/frontend/components/grideye/grideye.js'],
+						   //'concat/min-safe/angular-p5.js' : [ 'dashboard/frontend/components/grideye/angular-p5.js'],
+						   //'concat/min-safe/cell.js' : [ 'dashboard/frontend/components/grideye/cell.js'],
+						   //'concat/min-safe/grideye.js' : [ 'dashboard/frontend/components/grideye/grideye.js'],
 		               //'concat/min-safe/leaflet-src.js' : [ 'dashboard/frontend/components/imagemap/leaflet-src.js'],
 		               //'concat/min-safe/leaflet-heat.js' : [ 'dashboard/frontend/components/imagemap/leaflet-heat.js'],
 		               //'concat/min-safe/leaflet-draw.js' : [ 'dashboard/frontend/components/imagemap/leaflet-draw.js'],
@@ -284,7 +284,7 @@ module.exports = function(grunt) {
 	                     'dashboardBuilder/javascript/components/library/widgets/display-data.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/windrose.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/3dsurface.js',
-	                     'dashboardBuilder/javascript/components/library/widgets/grideye.js',
+	                     //'dashboardBuilder/javascript/components/library/widgets/grideye.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/imagemap.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/dotPlots.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/heatmap.js',
@@ -362,7 +362,7 @@ module.exports = function(grunt) {
 	               	   'lib/angular-material.js',
 	                     'concat/min-safe/svg-assets-cache.js',
 	                     'concat/min-safe/markerClusterer.js' ,
-	                     'concat/min-safe/angular-p5.js',
+	                     //'concat/min-safe/angular-p5.js',
 	                     'concat/min-safe/angular-simple-logger.min.js'
 	                     ],
 	               dest : 'build/js/angular_resources_3.min.js'
@@ -454,8 +454,8 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/layoutmodule.js',
 	                     'concat/min-safe/header.js', 
 	                     'concat/min-safe/menu.js',
-	                     'concat/min-safe/cell.js',
-							   'concat/min-safe/grideye.js',
+	                     //'concat/min-safe/cell.js',
+							  //'concat/min-safe/grideye.js',
 							   'concat/min-safe/imagemap.js'
 	                     ],
 	               dest : 'build/js/components.min.js'
