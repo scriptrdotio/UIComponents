@@ -32,10 +32,12 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/codemirror.min.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/theme/neo.min.css',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css',
+	                     'https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css',
+	                     
+	                     //'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css',
+	                     //'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css',
 	                     // JS
-	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js',
 	                     'https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js',
@@ -68,7 +70,8 @@ module.exports = function(grunt) {
 	                     'https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'
+	                     '//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-datetimepicker/1.1.3/js/datetimepicker.templates.min.js'//,
+	                     //'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'
 	               ]
 	            }
 	         },
@@ -107,6 +110,8 @@ module.exports = function(grunt) {
 		                  'dashboard/frontend/components/plotly/3dsurface.html',
 		                  'dashboard/frontend/components/plotly/windrose.html',
 		                  'dashboard/frontend/components/plotly/heatmap.html',
+		                  'dashboard/frontend/components/plotly/bubbleChart.html',
+		                  'dashboard/frontend/components/plotly/scatter.html',
 		                  'dashboard/frontend/components/common/notifications.html',
 		                  'dashboardBuilder/javascript/components/box.html',
 		                  'dashboardBuilder/javascript/components/dashboard.html',
@@ -168,6 +173,8 @@ module.exports = function(grunt) {
 		               'concat/min-safe/3dsurface.js' : [ 'dashboard/frontend/components/plotly/3dsurface.js' ],
 		               'concat/min-safe/windrose.js' : [ 'dashboard/frontend/components/plotly/windrose.js' ],
 		               'concat/min-safe/heatmap.js' : [ 'dashboard/frontend/components/plotly/heatmap.js' ],
+		               'concat/min-safe/bubbleChart.js' : [ 'dashboard/frontend/components/plotly/bubbleChart.js' ],
+		               'concat/min-safe/scatter.js' : [ 'dashboard/frontend/components/plotly/scatter.js' ],
 		               'concat/min-safe/acl.js' : [ 'dashboard/frontend/components/ACL/ACL.js' ],
 		               'concat/min-safe/abn_tree_directive.js' : [ 'dashboard/frontend/components/searchBox/abn_tree_directive.js' ],
 		               'concat/min-safe/markerClusterer.js' : [ 'dashboard/frontend/components/map/markerClusterer.js' ],
@@ -209,6 +216,8 @@ module.exports = function(grunt) {
 		               'concat/min-safe/bootstrap-colorpicker.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-colorpicker.min.js' ],
 		               'concat/min-safe/ng-file-upload.js' : [ 'dashboardBuilder/lib/schemaForm/ng-file-upload.js' ],
 		               'concat/min-safe/schema-form-file.js' : [ 'dashboardBuilder/lib/schemaForm/schema-form-file.js' ],
+		               'concat/min-safe/schema-form-date-time-picker.min.js':['dashboardBuilder/lib/schemaForm/schema-form-date-time-picker.min.js'],
+		               'concat/min-safe/ui.sortable.js':['dashboardBuilder/lib/schemaForm/ui.sortable.js'],
 		               'concat/min-safe/ui-codemirror.js' : [ 'dashboardBuilder/lib/codemirror/js/mode/ui-codemirror.js' ],
 		               'concat/min-safe/thermometer_directive.js' : [ 'dashboard/frontend/components/thermometer/thermometer_directive.js' ],
 		               'concat/min-safe/thermometer.js' : [ 'dashboard/frontend/components/thermometer/thermometer.js' ],
@@ -223,7 +232,7 @@ module.exports = function(grunt) {
                		'concat/min-safe/angular-translate.min.js' : [ 'dashboardBuilder/lib/schemaForm/angular-translate.min.js'],
                		'concat/min-safe/select.min.js' : [ 'dashboardBuilder/lib/schemaForm/select.min.js'],
                		'concat/min-safe/angular_toggle_switch.js' : [ 'dashboard/frontend/components/toggleSwitch/angular_toggle_switch.js'],
-               		'concat/min-safe/angular-promise-buttons' : [ 'dashboard/frontend/components/button/angular-promise-buttons.js'],
+               		'concat/min-safe/angular-promise-buttons.js' : [ 'dashboard/frontend/components/button/angular-promise-buttons.js'],
             			'concat/min-safe/bootstrap-ui-select.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-ui-select.min.js'],
          				'concat/min-safe/bootstrap-ui-codemirror.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-ui-codemirror.min.js'],
       					'concat/min-safe/autorefresh.js' : [ 'dashboardBuilder/lib/schemaForm/autorefresh.js'],
@@ -239,13 +248,13 @@ module.exports = function(grunt) {
 						   'concat/min-safe/angular-p5.js' : [ 'dashboard/frontend/components/grideye/angular-p5.js'],
 						   'concat/min-safe/cell.js' : [ 'dashboard/frontend/components/grideye/cell.js'],
 						   'concat/min-safe/grideye.js' : [ 'dashboard/frontend/components/grideye/grideye.js'],
-		               'concat/min-safe/leaflet-src.js' : [ 'dashboard/frontend/components/imagemap/leaflet-src.js'],
-		               'concat/min-safe/leaflet-heat.js' : [ 'dashboard/frontend/components/imagemap/leaflet-heat.js'],
-		               'concat/min-safe/leaflet-draw.js' : [ 'dashboard/frontend/components/imagemap/leaflet-draw.js'],
+		               //'concat/min-safe/leaflet-src.js' : [ 'dashboard/frontend/components/imagemap/leaflet-src.js'],
+		               //'concat/min-safe/leaflet-heat.js' : [ 'dashboard/frontend/components/imagemap/leaflet-heat.js'],
+		               //'concat/min-safe/leaflet-draw.js' : [ 'dashboard/frontend/components/imagemap/leaflet-draw.js'],
 		               'concat/min-safe/angular-simple-logger.min.js' : [ 'dashboard/frontend/components/imagemap/0.1.7/angular-simple-logger.min.js'],
-		               'concat/min-safe/ui-leaflet.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet.js'],
-		               'concat/min-safe/ui-leaflet-layers.min.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet-layers.min.js'],
-						   'concat/min-safe/imagemap.js' : [ 'dashboard/frontend/components/imagemap/imagemap.js']
+		               //'concat/min-safe/ui-leaflet.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet.js'],
+		               //'concat/min-safe/ui-leaflet-layers.min.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet-layers.min.js'],
+						   //'concat/min-safe/imagemap.js' : [ 'dashboard/frontend/components/imagemap/imagemap.js']
 							
 		            }
 	            }
@@ -278,21 +287,24 @@ module.exports = function(grunt) {
 	                     'dashboardBuilder/javascript/components/library/widgets/grideye.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/imagemap.js',
 	                     'dashboardBuilder/javascript/components/library/widgets/dotPlots.js',
-	                     'dashboardBuilder/javascript/components/library/widgets/heatmap.js'
+	                     'dashboardBuilder/javascript/components/library/widgets/heatmap.js',
+	                     'dashboardBuilder/javascript/components/library/widgets/bubbleChart.js',
+	                     'dashboardBuilder/javascript/components/library/widgets/scatter.js'
 	                     
 	                     ],
 	               dest : 'build/js/dashboard_builder_constants.min.js'
 	            },
 
 	            external_jquery_resources : {
-	               src : [ 'lib/jquery-3.1.1.js', 
-	               	     'lib/jquery-ui.js',
+	               src : [ 'lib/jquery.min.js', 
+	               	     'lib/jquery-ui.min.js',
 	                       'lib/jquery.cookie.min.js', 
 	                       'lib/slick.min.js',
+	                       'lib/datetimepicker.templates.min.js'/*,
 	                       'concat/min-safe/leaflet-src.js',
 	               		  'concat/min-safe/leaflet-heat.js',
 	               		  'concat/min-safe/leaflet-draw.js',
-	               		  'lib/leaflet.markercluster.js' ],
+	               		  'lib/leaflet.markercluster.js' */],
 	               dest : 'build/js/external_jquery_resources.min.js'
 	            },
 
@@ -397,9 +409,11 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/angular-strap.js',
 	                     'concat/min-safe/angular-strap.tpl.min.js',
 	                     'concat/min-safe/angular-schema-form-dynamic-select.js',
-	                     'concat/min-safe/markdown-directive.js',
-	                     'concat/min-safe/ui-leaflet.js',
-	                     'concat/min-safe/ui-leaflet-layers.min.js'
+	                     'concat/min-safe/schema-form-date-time-picker.min.js',
+	                     'concat/min-safe/ui.sortable.js',
+	                     'concat/min-safe/markdown-directive.js'//,
+	                     //'concat/min-safe/ui-leaflet.js',
+	                     //'concat/min-safe/ui-leaflet-layers.min.js'
 	                     ],
 	               dest : 'build/js/directives_2.min.js'
 	            },
@@ -434,6 +448,8 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/3dsurface.js',
 	                     'concat/min-safe/windrose.js',
 	                     'concat/min-safe/heatmap.js',
+	                     'concat/min-safe/bubbleChart.js',
+	                     'concat/min-safe/scatter.js',
 	                     'concat/min-safe/notifications.js',
 	                     'concat/min-safe/layoutmodule.js',
 	                     'concat/min-safe/header.js', 
@@ -465,6 +481,7 @@ module.exports = function(grunt) {
 	            css : {
 	               src : [
 	                     'lib/slick.css',
+	                     'lib/slick-theme.css',
 	                     'lib/morris.css',
 	                     'dashboard/frontend/components/chart/chart.css',
 	                     'dashboard/frontend/components/searchBox/abn_tree.css',
@@ -498,11 +515,11 @@ module.exports = function(grunt) {
 	                     'dashboardBuilder/lib/schemaForm/schema-form-file.css',
 	                     'layout/frontend/components/header/header.css',
 	                     'layout/frontend/components/menu/menu.css',
-	                     'dashboard/frontend/components/imagemap/leaflet.css',
-	                     'dashboard/frontend/components/imagemap/leaflet-draw.css',
-	                     'lib/MarkerCluster.css',
-	                     'lib/MarkerCluster.Default.css',
-	                     'dashboard/frontend/components/imagemap/imageMap.css'
+	                     //'dashboard/frontend/components/imagemap/leaflet.css',
+	                     //'dashboard/frontend/components/imagemap/leaflet-draw.css',
+	                     //'lib/MarkerCluster.css',
+	                     //'lib/MarkerCluster.Default.css',
+	                     //'dashboard/frontend/components/imagemap/imageMap.css'
 	                     ],
 	               dest : 'build/css/components.css'
 	            }
