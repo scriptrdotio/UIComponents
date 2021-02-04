@@ -70,7 +70,6 @@ module.exports = function(grunt) {
 	                     'https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-datetimepicker/1.1.3/js/datetimepicker.templates.min.js'//,
 	                     //'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'
 	               ]
 	            }
@@ -129,7 +128,8 @@ module.exports = function(grunt) {
 		                  'dashboardBuilder/lib/schemaForm/nwp-file.html',
 		                  //'dashboard/frontend/components/grideye/grideye.html',
 		                  'dashboard/frontend/components/imagemap/imagemap.html',
-		                  'dashboard/frontend/components/displayCount/displayCount.html'
+		                  'dashboard/frontend/components/displayCount/displayCount.html',
+		                  'dashboard/frontend/components/datetimepicker/datetimepicker_directive.html'
 		                  ],
 		                
 		            dest :'build/js/templates.js',
@@ -245,6 +245,9 @@ module.exports = function(grunt) {
 							'concat/min-safe/menu.js' : [ 'layout/frontend/components/menu/menu.js'],
 						   'concat/min-safe/header.js' : [ 'layout/frontend/components/header/header.js'],
 						   'concat/min-safe/layoutmodule.js' : [ 'layout/frontend/components/module.js'],
+						   'concat/min-safe/datetimepicker_directive.js' : [ 'dashboard/frontend/components/datetimepicker/datetimepicker_directive.js'],
+						   'concat/min-safe/dateTimeInput.js' : [ 'dashboard/frontend/components/datetimepicker/dateTimeInput.js'],
+						   'concat/min-safe/datetimepicker.js' : [ 'dashboard/frontend/components/datetimepicker/datetimepicker.js'],
 						   //'concat/min-safe/angular-p5.js' : [ 'dashboard/frontend/components/grideye/angular-p5.js'],
 						   //'concat/min-safe/cell.js' : [ 'dashboard/frontend/components/grideye/cell.js'],
 						   //'concat/min-safe/grideye.js' : [ 'dashboard/frontend/components/grideye/grideye.js'],
@@ -299,8 +302,7 @@ module.exports = function(grunt) {
 	               src : [ 'lib/jquery.min.js', 
 	               	     'lib/jquery-ui.min.js',
 	                       'lib/jquery.cookie.min.js', 
-	                       'lib/slick.min.js',
-	                       'lib/datetimepicker.templates.min.js'/*,
+	                       'lib/slick.min.js'/*,
 	                       'concat/min-safe/leaflet-src.js',
 	               		  'concat/min-safe/leaflet-heat.js',
 	               		  'concat/min-safe/leaflet-draw.js',
@@ -398,6 +400,7 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/tv4.js',
 	                     'concat/min-safe/objectPath.js',
 	                     'concat/min-safe/ui-codemirror.js',
+	                     'concat/min-safe/ui.sortable.js',
 	                     'concat/min-safe/schemaForm.js',
 	                     'concat/min-safe/bootstrapDecorator.js',
 	                     'concat/min-safe/bootstrap-colorpicker.min.js',
@@ -410,8 +413,8 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/angular-strap.tpl.min.js',
 	                     'concat/min-safe/angular-schema-form-dynamic-select.js',
 	                     'concat/min-safe/schema-form-date-time-picker.min.js',
-	                     'concat/min-safe/ui.sortable.js',
-	                     'concat/min-safe/markdown-directive.js'//,
+	                     'concat/min-safe/markdown-directive.js',
+	                     'concat/min-safe/datetimepicker_directive.js',
 	                     //'concat/min-safe/ui-leaflet.js',
 	                     //'concat/min-safe/ui-leaflet-layers.min.js'
 	                     ],
@@ -454,9 +457,11 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/layoutmodule.js',
 	                     'concat/min-safe/header.js', 
 	                     'concat/min-safe/menu.js',
+	                     'concat/min-safe/datetimepicker.js',
+	                     'concat/min-safe/dateTimeInput.js'
 	                     //'concat/min-safe/cell.js',
 							  //'concat/min-safe/grideye.js',
-							   'concat/min-safe/imagemap.js'
+						     //'concat/min-safe/imagemap.js',
 	                     ],
 	               dest : 'build/js/components.min.js'
 	            },
@@ -515,6 +520,7 @@ module.exports = function(grunt) {
 	                     'dashboardBuilder/lib/schemaForm/schema-form-file.css',
 	                     'layout/frontend/components/header/header.css',
 	                     'layout/frontend/components/menu/menu.css',
+	                     'dashboard/frontend/components/datetimepicker/datetimepicker.css'
 	                     //'dashboard/frontend/components/imagemap/leaflet.css',
 	                     //'dashboard/frontend/components/imagemap/leaflet-draw.css',
 	                     //'lib/MarkerCluster.css',
