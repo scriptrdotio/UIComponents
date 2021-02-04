@@ -8,7 +8,7 @@ angular
                     "name": "displaybox"
                 },
                 "widgets": [
-					__LINE_DYGRAPH__,
+               	  __LINE_DYGRAPH__,
                     __BAR__,
                     __AREA__,
                     __LINE__,
@@ -18,7 +18,7 @@ angular
                     __3DSURFACE__,
                     __MAP__,
                     __GAUGE__,
-                    __GRIDEYE__,
+                    //__GRIDEYE__,
                     __IMAGEMAP__,
                     __SPEEDOMETER__,
                     __THERMOMETER__,
