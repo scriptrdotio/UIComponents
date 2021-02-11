@@ -69,7 +69,7 @@ module.exports = function(grunt) {
 	                     'https://d3js.org/d3.v4.min.js',
 	                     'https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js'//,
 	                     //'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'
 	               ]
 	            }
@@ -254,7 +254,7 @@ module.exports = function(grunt) {
 		               //'concat/min-safe/leaflet-src.js' : [ 'dashboard/frontend/components/imagemap/leaflet-src.js'],
 		               //'concat/min-safe/leaflet-heat.js' : [ 'dashboard/frontend/components/imagemap/leaflet-heat.js'],
 		               //'concat/min-safe/leaflet-draw.js' : [ 'dashboard/frontend/components/imagemap/leaflet-draw.js'],
-		               'concat/min-safe/angular-simple-logger.min.js' : [ 'dashboard/frontend/components/imagemap/0.1.7/angular-simple-logger.min.js'],
+		               'concat/min-safe/angular-simple-logger.min.js' : [ 'dashboard/frontend/components/imagemap/0.1.7/angular-simple-logger.min.js']//,
 		               //'concat/min-safe/ui-leaflet.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet.js'],
 		               //'concat/min-safe/ui-leaflet-layers.min.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet-layers.min.js'],
 						   //'concat/min-safe/imagemap.js' : [ 'dashboard/frontend/components/imagemap/imagemap.js']
@@ -414,7 +414,7 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/angular-schema-form-dynamic-select.js',
 	                     'concat/min-safe/schema-form-date-time-picker.min.js',
 	                     'concat/min-safe/markdown-directive.js',
-	                     'concat/min-safe/datetimepicker_directive.js',
+	                     'concat/min-safe/datetimepicker_directive.js'
 	                     //'concat/min-safe/ui-leaflet.js',
 	                     //'concat/min-safe/ui-leaflet-layers.min.js'
 	                     ],

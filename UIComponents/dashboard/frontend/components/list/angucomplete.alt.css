@@ -86,7 +86,6 @@
     background: #f9f9f9;
     cursor: default;
     display: inline-block;
-    max-width: 600px;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: auto;
