@@ -101,7 +101,12 @@
           // remove scope listener
           unbindInitialValue();
           // change input
-          handleInputChange(newval, true);
+          try {
+              handleInputChange(JSON.parse(newval), true);
+          } catch(e){
+              handleInputChange(newval, true);
+          }
+          
         }
       });
 
