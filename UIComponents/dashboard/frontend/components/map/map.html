@@ -50,7 +50,7 @@
 				</shape>
 				<div ng-repeat="marker in asset.markers track by $index">
 					<div ng-if="$ctrl.trackedAsset == null">
-						<marker position="{{marker.position}}" title="{{marker.details.name.value}}"
+						<marker position="{{marker.position}}" title="{{marker.display}}"
 							animation={{marker.animation}} icon="{{marker.icon}}"
 							data="{{marker.id}}"
 							on-click="$ctrl.showAssetInfo(event, 'click', marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')"
