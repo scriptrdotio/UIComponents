@@ -142,7 +142,9 @@ angular
         "serviceTag": "@",
         "fetchDataInterval": "@",
         
-         "renderOnlyClickedAsset": "<?" //Default true, to remove the display of the markers except the clicked marker
+         "renderOnlyClickedAsset": "<?", //Default true, to remove the display of the markers except the clicked marker
+        
+         "onBuildAssetTitle": "&?" //To set the title on the hover of the marker
         
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
@@ -689,7 +691,7 @@ angular
               : "";
               assetMake = (tripMarker.details && tripMarker.details.make) ? tripMarker.details.make.value
               : "";
-              tripMarker.display = buildAssetLabel(assetMake, assetModel, assetId);
+              tripMarker.display = buildAssetLabel(assetMake, assetModel, assetId, tripPoint);
 
               //If Asset doesn't exist on map yet
               if (!prevLatestMarker && prevLatestMarker == null) {
@@ -849,11 +851,16 @@ angular
       };
 
       //Build asset label
-      var buildAssetLabel = function(make, model, assetId) {
-        var assetLabel = (make) ? (make + " ") : "";
-        assetLabel += (model) ? (model + "-") : "";
-        assetLabel += assetId;
-        return assetLabel;
+      var buildAssetLabel = function(make, model, assetId, tripPoint) {
+        if(self.onBuildAssetTitle && typeof self.onBuildAssetTitle() == "function") {
+            return self.onBuildAssetTitle()(tripPoint);
+        } else {
+            var assetLabel = (make) ? (make + " ") : "";
+            assetLabel += (model) ? (model + "-") : "";
+            assetLabel += assetId;
+            return assetLabel;
+        }
+        
       };
 
 
