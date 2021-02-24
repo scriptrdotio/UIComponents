@@ -43,6 +43,7 @@
     	var vm = this;  
         vm.login = constants.login;
         vm.appTitle = constants.appTitle;
+        vm.showLang = constants.showLang;
         angular.forEach(vm.login, function(value, key) {
            vm.login[key] = $sce.trustAsHtml(value);
         });
@@ -68,7 +69,14 @@
                           <div class="form-group">
                               <i class="fa fa-lock login-icon" aria-hidden="true"></i>
                               <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-                          </div>
+                      </div>
+                    <div class="form-group" ng-if="vm.showLang">
+                      <select class="form-control" name="langSelect" id="langSelect">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                      </select>
+                    </div>	
 
                           <button id="submitBtn"  class="btn btn-primary btn-block text-uppercase" >Login</button>
                           <span class="text-primary text-center pull-right"><a href="" id="forgot_password_anchor"><small>Forgot
