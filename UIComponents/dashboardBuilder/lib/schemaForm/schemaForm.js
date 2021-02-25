@@ -381,9 +381,9 @@ angular.module('schemaForm').provider('schemaFormDecorators',
    var createDirective = function(name) {
      $compileProvider.directive(name,
       ['$parse', '$compile', '$http', '$templateCache', '$interpolate', '$q', 'sfErrorMessage',
-       'sfPath','sfSelect',
+       'sfPath','sfSelect', '$translate',
       function($parse,  $compile,  $http,  $templateCache, $interpolate, $q, sfErrorMessage,
-               sfPath, sfSelect) {
+               sfPath, sfSelect, $translate) {
 
         return {
           restrict: 'AE',
@@ -403,7 +403,7 @@ angular.module('schemaForm').provider('schemaFormDecorators',
 
             //Keep error prone logic from the template
             scope.showTitle = function() {
-              return scope.form && scope.form.notitle !== true && scope.form.title;
+              return scope.form && scope.form.notitle !== true && $translate.instant(scope.form.title);
             };
 
             scope.listToCheckboxValues = function(list) {
@@ -481,7 +481,7 @@ angular.module('schemaForm').provider('schemaFormDecorators',
              * @return {Any} The result of the expression or `undefined`.
              */
             scope.interp = function(expression, locals) {
-              return (expression && $interpolate(expression)(locals));
+              return (expression && $interpolate($translate(expression))(locals));
             };
 
             //This works since we ot the ngModel from the array or the schema-validate directive.
@@ -940,7 +940,7 @@ angular.module('schemaForm').provider('sfErrorMessage', function() {
     defaultMessages[error] = msg;
   };
 
-  this.$get = ['$interpolate', function($interpolate) {
+  this.$get = ['$interpolate', '$translate', function($interpolate, $translate) {
 
     var service = {};
     service.defaultMessages = defaultMessages;
@@ -970,29 +970,39 @@ angular.module('schemaForm').provider('sfErrorMessage', function() {
       // First find apropriate message or function
       var message = validationMessage['default'] || global['default'] || '';
 
-      [validationMessage, global, defaultMessages].some(function(val) {
-        if (angular.isString(val) || angular.isFunction(val)) {
-          message = val;
-          return true;
-        }
-        if (val && val[error]) {
-          message = val[error];
-          return true;
-        }
-      });
-
       var context = {
         error: error,
         value: value,
         viewValue: viewValue,
         form: form,
         schema: form.schema,
-        title: form.title || (form.schema && form.schema.title)
+        title: (form.title) ? $translate.instant(form.title) : ((form.schema && form.schema.title) ?$translate.instant(form.schema.title) : null)
       };
+        
+        
+      [validationMessage, global, defaultMessages].some(function(val) {
+        if (angular.isString(val)) {
+          message = $translate.instant(val, context); 
+          return true;
+        }
+        if(angular.isFunction(val)) {
+            message = val;
+          	return true;
+        }
+        if (val && val[error]) {
+          message = $translate.instant("sfErrorMessage.defaultMessages."+error, context); 
+          if(message == "sfErrorMessage.defaultMessages."+error) {
+              message = $interpolate(val[error])(context) ;
+          }
+          return true;
+        }
+      });
+
+      
       if (angular.isFunction(message)) {
         return message(context);
       } else {
-        return $interpolate(message)(context);
+        return message;
       }
     };
 
@@ -1299,7 +1309,7 @@ angular.module('schemaForm').provider('schemaForm',
   this.createStandardForm = stdFormObj;
   /* End Provider API */
 
-  this.$get = function() {
+  this.$get = ["$translate", function($translate) {
 
     var service = {};
 
@@ -1477,7 +1487,7 @@ angular.module('schemaForm').provider('schemaForm',
     };
 
     return service;
-  };
+  }];
 
 }]);
 
@@ -1936,9 +1946,9 @@ angular.module('schemaForm').directive('sfChanged', function() {
 
 angular.module('schemaForm').directive('sfField',
     ['$parse', '$compile', '$http', '$templateCache', '$interpolate', '$q', 'sfErrorMessage',
-     'sfPath','sfSelect',
+     'sfPath','sfSelect', '$translate',
     function($parse,  $compile,  $http,  $templateCache, $interpolate, $q, sfErrorMessage,
-             sfPath, sfSelect) {
+             sfPath, sfSelect, $translate) {
 
       return {
         restrict: 'AE',
@@ -2040,7 +2050,7 @@ angular.module('schemaForm').directive('sfField',
              * @return {Any} The result of the expression or `undefined`.
              */
             scope.interp = function(expression, locals) {
-              return (expression && $interpolate(expression)(locals));
+              return (expression && $interpolate($translate(expression))(locals));
             };
 
             //This works since we get the ngModel from the array or the schema-validate directive.

@@ -116,6 +116,18 @@ angular
                   doUpload(file);
                });
             };
+             
+           scope.isEmptyObject = function(obj) {
+               if(obj && angular.equals({}, obj)) {
+                   return true;
+               } else {
+                   if(obj) {
+                       return false;
+                   } else {
+                       return true;
+                   }
+               }
+           }
 
             function doUpload(file) {
                if (file && !file.$error && scope.url) {
@@ -179,10 +191,10 @@ angular
             'buttons.add': 'Open file browser',
             'modules.upload.field.filename': 'Filename',
             'modules.upload.field.preview': 'Preview',
+            'modules.upload.field.nopreview': 'No preview available',
             'modules.upload.multiFileUpload': 'Multifile upload',
             'modules.upload.field.progress': 'Progress',
             'buttons.upload': 'Upload'
         });
         $translateProvider.preferredLanguage('en');
-
     }]);
