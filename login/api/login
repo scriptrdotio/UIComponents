@@ -15,7 +15,7 @@ if(jsonResult.metadata.status == "success"){
             var userData = getUser.result;
             delete userData.tokens;
             data["user"] = userData;
-          data["lang"] = langSelect;
+          	data["lang"] = langSelect;
             var tokens = getUser.result.tokens;
             if(tokens && Array.isArray(tokens)) {
                 data["token"] = tokens[0]["auth_token"];
@@ -31,11 +31,18 @@ if(jsonResult.metadata.status == "success"){
                 } 
             }
            writeResponse(data, authKey, id);
+           updateUserLang(data,id);
         } 
 
     	return data;
 } else{
     return jsonResult;
+}
+
+
+// Add language to user document 
+function updateUserLang(data,id){
+    user.update({"id": id, "lang": data["lang"]});
 }
 
 //Add to response the cookie data, and logged in user details
@@ -60,10 +67,10 @@ function writeResponse(data, authKey, id){
                  };
     var cookieHeader = {"Set-Cookie": "token=" + data["token"] + ";expires=" + date.toUTCString()+ ";Path=/;Secure"};
     var cookieHeader2 = {"Set-Cookie": "user=" + JSON.stringify(data["user"]) + ";expires=" + date.toUTCString()+ ";Path=/;Secure"};
-  var cookieHeader3 = {"Set-Cookie": "lang=" + data["lang"] + ";expires=" + date.toUTCString()+ ";Path=/;Secure"};
+    var cookieHeader3 = {"Set-Cookie": "lang=" + data["lang"] + ";expires=" + date.toUTCString()+ ";Path=/;Secure"};
     response.addHeaders(cookieHeader);
     response.addHeaders(cookieHeader2);
-  response.addHeaders(cookieHeader3);
+    response.addHeaders(cookieHeader3);
     response.addHeaders({"access-control-allow-headers": "Set-Cookie"});
     response.addHeaders(configuration.crossDomainHeaders);
     response.setHeader("content-type","application/json;charset=UTF-8")
