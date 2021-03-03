@@ -17,6 +17,7 @@ angular
 	            var _token = null;
 	            var _socketUrl = null;
 	            var _socketSession = null;
+                var _queueingInterval = 100; //in ms
 	            
 	            // Keep all pending requests here until they get responses
 	            var callbacks = {};
@@ -27,8 +28,15 @@ angular
 	            var currentSubscriberId = 0;
 	            var subscribersRegistry = {};
 
-	            
+	             var queuedCalls = [];
 
+                
+                /** This section for setting queuing interval in ms * */
+	            this.setQueueingInterval = function(textNumber) {
+		            _queueingInterval = textNumber;
+	            };
+	            
+                
 	            /** This section for subscribe* */
 	            this.setBaseUrl = function(textString) {
 		            _baseUrl = textString;
@@ -86,8 +94,9 @@ angular
 	                  "$cookies",
 	                  "$q",
 	                  "$rootScope",
-                      "_",
-	                  function wsFactory($websocket, $cookies, $q, $rootScope, _) {
+                      "_", 
+                      "$interval",
+	                  function wsFactory($websocket, $cookies, $q, $rootScope, _, $interval) {
 
 		                  // In case we have a cookie with a token, update the token
 		                  if ($cookies.get("token")) {
@@ -96,6 +105,14 @@ angular
 
 		                  _buildSocketUrl();
 
+                          $interval(function() {
+                              if(ready.promise && queuedCalls.length >0) {
+                                  var task = queuedCalls[0];
+                                  dataStream.send(task)
+                                  queuedCalls.shift();
+                              }
+                          }, _queueingInterval);
+                          
 		                  // Open a WebSocket connection
 		                  var dataStream = $websocket(_socketUrl);
 
@@ -346,7 +363,10 @@ angular
 			                     request["id"] = _getRequestCallId(callbackId, prefix);
 			                     console.log('Sending call api request over socket.', request);
                                
-			                     dataStream.send(request);
+			                     //dataStream.send(request);
+                                 
+                                 queuedCalls.push(request);
+                                 
 			                     return defer.promise;
 		                     },
                             
