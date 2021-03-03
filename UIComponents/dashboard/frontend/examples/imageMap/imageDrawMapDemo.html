@@ -102,12 +102,10 @@
 </script>
 <body ng-controller="testCtrl as vm">          
       <scriptr-imagemap 
-                        get-draw-api-transport='https' 
-                        get-draw-api='UIComponents/dashboard/frontend/examples/imageMap/getImagemapDrawData'
-                        update-draw-api-transport='https' 
-                        update-draw-api='UIComponents/dashboard/frontend/examples/imageMap/updateImagemapDrawData'
+                        
                         msg-tag="imagemap" 
-												draw="true"
+                        draw-config="{getZonesApiTransport:'https', getZonesApi:'UIComponents/dashboard/frontend/examples/imageMap/getImagemapDrawData', updateZonesApiTransport:'https', updateZonesApi:'UIComponents/dashboard/frontend/examples/imageMap/updateImagemapDrawData'}"
+												enable-draw="true"
                         data="[]"
                         title="Imagemap"
                         title-font-color="#aaa"
