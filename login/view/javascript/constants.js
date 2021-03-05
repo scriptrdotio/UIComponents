@@ -5,5 +5,5 @@ myApp.constant("constants", {
     "logo": '//scriptr-cdn.s3.amazonaws.com/carwash/images/powered-by-scriptr.png',
     "poweredBy": '//scriptr-cdn.s3.amazonaws.com/carwash/images/powered-by-scriptr.png'
   },
-  showLang : true
+  showLang : false
 })

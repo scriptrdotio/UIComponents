@@ -40,7 +40,7 @@ html, body, .wrap {
   padding: 0;
 }
 
-.wrap h3 { font-family: 'texgyreherosbold'; text-align: center;}
+.wrap h3 { font-family: 'texgyreherosbold'; margin-top: 0;font-size: 1.7em;text-align: center}
 
 /*** Form centering ***/
 .form-wrap {
@@ -112,12 +112,6 @@ html, body, .wrap {
     color: #039c27;
 }
 
-
-@media only screen and (max-width: 480px) {
-    html, body {height: auto;}
-    .element {display: block;}
-}
-
 .form-wrap { padding: 40px 30px; }
 .loginForm {padding-top: 15px; }
 .login-icon { position: absolute; top:15px; left:15px; font-size: 16px; }
@@ -128,3 +122,43 @@ html, body, .wrap {
 .doors-img img{ margin: auto; position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 90%;}
 .powered {position: absolute; bottom: 12px; right: 24px;}
 
+select.form-control {
+    border: none;
+    padding: 0;
+    color: #333;
+    width: auto;
+    font-size: 13px;
+    background-color: transparent;
+    display: inline-block;
+}
+select.form-control:focus {color: #000;outline: 0;box-shadow: none;}
+select.form-control:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    content: “\f0ac”;
+}
+select::-ms-expand {
+    display: none;
+}
+.language {text-align: center;}
+.language .login-icon {display: inline-block;position: relative;top: auto;left: auto;width: 15px;margin-top: -4px;}
+input.form-control:-internal-autofill-selected {
+	background-color: transparent!important;
+}
+
+@media only screen and (max-width: 480px) {
+    html, body {height: auto;}
+    .element {display: block;}
+}
+
+@media (min-width:1200px) {
+    .wrap h3.col-lg-7 {text-align: left;margin-bottom: 20px;}
+    .language .form-group {text-align: right;margin-bottom: 0px;margin-top: 4px;}
+}
