@@ -17,7 +17,7 @@ angular
              defaultMaxItemsMsg = 'You can\'t upload more than one file.';
 
          var nwpSinglefileUpload = function (name, schema, options) {
-            if (schema.type === 'array' && schema.format === 'singlefile') {
+            if (schema.type === 'object') {
                if (schema.pattern && schema.pattern.mimeType && !schema.pattern.validationMessage) {
                   schema.pattern.validationMessage = defaultPatternMsg;
                }
@@ -40,10 +40,10 @@ angular
             }
          };
 
-         schemaFormProvider.defaults.array.unshift(nwpSinglefileUpload);
+         schemaFormProvider.defaults.object.unshift(nwpSinglefileUpload);
 
          var nwpMultifileUpload = function (name, schema, options) {
-            if (schema.type === 'array' && schema.format === 'multifile') {
+            if (schema.type === 'array') {
                if (schema.pattern && schema.pattern.mimeType && !schema.pattern.validationMessage) {
                   schema.pattern.validationMessage = defaultPatternMsg;
                }
@@ -79,122 +79,51 @@ angular
 angular
    .module('ngSchemaFormFile', [
       'ngFileUpload',
-      'ngMessages'
+      'ngMessages',
+      'underscore'
    ])
-   .directive('ngSchemaFile', ['Upload', '$timeout', '$q', function (Upload, $timeout, $q) {
+   .directive('ngSchemaFile', ["_",function (_) {
       return {
          restrict: 'A',
          scope:    true,
-         require:  'ngModel',
-         link:     function (scope, element, attrs, ngModel) {
-            scope.url = scope.form && scope.form.endpoint;
-            scope.isSinglefileUpload = scope.form && scope.form.schema && scope.form.schema.format === 'singlefile';
-            //scope.cdnImagesPath = cdnImagesPath;
+         link:     function (scope, element, attrs) {
              
-            scope.selectFile  = function (file) {
-               scope.picFile = file;
-               scope.$parent.model[Object.keys(scope.form.key)[0]] = file;
-               scope.uploadForm.file.$setDirty(true);
-            };
-             
-            scope.removeFile  = function () {
-               scope.picFile = null;
-               scope.$parent.model[Object.keys(scope.schema.properties)[0]] = null;
-               scope.uploadForm.file.$setDirty(true);
-            };
-             
-            scope.selectFiles = function (files) {
-               scope.picFiles = files;
-            };
-
-            scope.uploadFile = function (file) {
-               file && doUpload(file);
-            };
-
-            scope.uploadFiles = function (files) {
-               files.length && angular.forEach(files, function (file) {
-                  doUpload(file);
-               });
-            };
-             
-           scope.isEmptyObject = function(obj) {
-               if(obj && angular.equals({}, obj)) {
-                   return true;
-               } else {
-                   if(obj) {
-                       return false;
+             scope.selectFile  = function (files,  invalidFiles) {
+               if(invalidFiles) {
+                   if(Array.isArray(invalidFiles)) {
+                       scope.invalidFiles = invalidFiles;
                    } else {
-                       return true;
-                   }
-               }
-           }
-
-            function doUpload(file) {
-               if (file && !file.$error && scope.url) {
-                  var options = {
-                     url: scope.url,
-                     file: {}
-                  };
-                  options.file[scope.form.fileName || 'file'] = file;
-                  file.upload = Upload.upload(options);
-
-                  file.upload.then(function (response) {
-                     $timeout(function () {
-                        file.result = response.data;
-                     });
-                     var result = scope.form.post ? scope.form.post(response.data) : response.data;
-                     ngModel.$setViewValue(result);
-                     ngModel.$commitViewValue();
-                  }, function (response) {
-                     if (response.status > 0) {
-                        scope.errorMsg = response.status + ': ' + response.data;
-                     }
-                  });
-
-                  file.upload.progress(function (evt) {
-                     file.progress = Math.min(100, parseInt(100.0 *
-                        evt.loaded / evt.total));
-                  });
-               }
-            }
-
-            scope.validateField = function () {
-               if (scope.uploadForm.file && scope.uploadForm.file.$valid && scope.picFile && !scope.picFile.$error) {
-                  //console.log('singlefile-form is invalid');
-               } else if (scope.uploadForm.files && scope.uploadForm.files.$valid && scope.picFiles && !scope.picFiles.$error) {
-                  //console.log('multifile-form is  invalid');
+                       scope.invalidFiles = [invalidFiles];
+               	   }
                } else {
-                  //console.log('single- and multifile-form are valid');
+                   scope.invalidFiles = [];
+               }
+               if(files) {
+                 if(Array.isArray(files)) {
+                   scope.files = files;
+                  } else {
+                   scope.files = [files];
+               	 }
+               } else {
+                   scope.files = [];
                }
             };
-            scope.submit        = function () {
-               if (scope.uploadForm.file && scope.uploadForm.file.$valid && scope.picFile && !scope.picFile.$error) {
-                  scope.uploadFile(scope.picFile);
-               } else if (scope.uploadForm.files && scope.uploadForm.files.$valid && scope.picFiles && !scope.picFiles.$error) {
-                  scope.uploadFiles(scope.picFiles);
-               }
+             
+            scope.removeFile  = function (file) { 
+                if(file && Array.isArray(scope.ngModel.$viewValue)) {
+                   scope.files = _.filter(scope.ngModel.$viewValue, function(entry){return entry["$$hashKey"] != file.$$hashKey})
+                   scope.$parent.ngModel.$setViewValue(scope.files);
+                   scope.$parent.ngModel.$commitViewValue();
+
+            	}  else {
+                    scope.$parent.ngModel.$setViewValue();
+               		scope.$parent.ngModel.$commitViewValue();
+               		scope.files = [];
+                }
+               
             };
-            scope.$on('schemaFormValidate', scope.validateField);
-            scope.$on('schemaFormFileUploadSubmit', scope.submit);
+             
+            scope.$on('schemaFormValidate', function(){ scope.invalidFiles = [];})
          }
       };
    }]);
-
-
-angular
-   .module('ngSchemaFormFile').config(['$translateProvider', function($translateProvider) {
-        $translateProvider.translations('en', {
-            'modules.upload.dndNotSupported': 'Drag n drop not surpported by your browser',
-            'modules.attribute.fields.required.caption': 'Required',
-            'modules.upload.descriptionSinglefile': 'Drop your file here',
-            'modules.upload.descriptionMultifile': 'Drop your file(s) here',
-            'buttons.add': 'Open file browser',
-            'modules.upload.field.filename': 'Filename',
-            'modules.upload.field.preview': 'Preview',
-            'modules.upload.field.nopreview': 'No preview available',
-            'modules.upload.multiFileUpload': 'Multifile upload',
-            'modules.upload.field.progress': 'Progress',
-            'buttons.upload': 'Upload'
-        });
-        $translateProvider.preferredLanguage('en');
-    }]);
