@@ -12,6 +12,7 @@ angular
             "options": "<?",
             "layoutConfig":"<?", 
             "tracesConfig":"<?",
+            "icon": "@",
             "transport": "@",
             "api" : "@",
             "msgTag" : "@",

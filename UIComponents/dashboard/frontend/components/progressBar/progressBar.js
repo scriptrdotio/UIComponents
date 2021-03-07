@@ -12,6 +12,7 @@ angular
         
         "value" : "@", // The current value of progress bar.
         "data": "@",
+        "icon": "@",
         
         "type" : "@", // Bootstrap style type. Possible values are 'success', 'info', 'warning', and, 'danger' to use Bootstrap's pre-existing styling, or any desired custom suffix.
         

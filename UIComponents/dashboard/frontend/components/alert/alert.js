@@ -8,7 +8,8 @@ angular
   
       bindings : {
         "data": "<?",
-        "type": "@",  
+        "type": "@",
+        "icon": "@",
         "transport": "@",
           "api" : "@",
           "msgTag" : "@",

@@ -27,7 +27,7 @@ angular
                 "onSetTime" : "&",
                  
                 "startDateClass" : "@",
-                 
+                "icon": "@",
                 "endDateClass" : "@",
                  
                 "startDateOnSetTime" : "&",

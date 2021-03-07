@@ -26,6 +26,7 @@ angular
         "messageTextColor": "@",                   
         "messageBackgroundColor": "@",  
         "messageTextAlignment": "@", 
+        "icon": "@",
           
           "transport": "@",
           "api" : "@",

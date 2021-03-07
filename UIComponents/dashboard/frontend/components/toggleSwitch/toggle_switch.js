@@ -19,6 +19,7 @@ angular
                   "knobLabel" : "@",
                   "isDisabled" : "<?",
                   "onSwitchChange" : "&", 
+                  "icon": "@",
                    
 				  "transport": "@",
                   "api" : "@",

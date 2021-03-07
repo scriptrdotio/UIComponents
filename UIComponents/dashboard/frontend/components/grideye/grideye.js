@@ -13,6 +13,7 @@ angular.module('Grideye').component('scriptrGrideye',{
         "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
 
         "data" : "<?",
+        "icon": "@",
         "customSectors": "<?", // array of objects with color, hi, lo attributes ([ of object])
 		"width": "@", //  gauge width in % (int)
         "height": "@", // gauge height in px (int)

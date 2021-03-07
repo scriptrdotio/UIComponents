@@ -81,7 +81,7 @@ angular
           
           
         "resize": "<?",
-        
+        "icon": "@",
         "data": "<?",
         
         "type" : "@",

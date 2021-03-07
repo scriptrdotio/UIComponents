@@ -17,6 +17,7 @@ angular
                 //extras
                 "transport": "@",
                 "api" : "@",
+                "icon": "@",
                 "msgTag" : "@",
                 "httpMethod": "@",
                 "apiParams" : "<?",

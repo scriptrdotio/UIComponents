@@ -19,7 +19,7 @@ angular
           "useWindowParams": "@",
           "serviceTag": "@",
           "delta": "<?",
-          
+          "icon": "@",
           "resize": "<?",
           "data": "<?",
           "legend": '<?',

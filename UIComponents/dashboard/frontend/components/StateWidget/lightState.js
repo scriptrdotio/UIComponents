@@ -9,6 +9,7 @@ angular
       bindings : {
         "data": "@",
         "size": "@", // "small", "medium", "large"
+        "icon": "@",
         "shadow": "@", // "true", "false"
         "threeDimensional": "@", //"true", false
         "api": "@",

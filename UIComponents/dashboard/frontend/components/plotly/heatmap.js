@@ -13,6 +13,7 @@ angular
             "title" : "@",
             "layoutConfig":"<?", 
             "showNumbers": "<",
+            "icon": "@",
             "showNumbersFunc":"&",
             "tracesConfig":"<?",
             "transport": "@",

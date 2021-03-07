@@ -28,7 +28,8 @@ angular
                    
                   "outOfRangeColor": "@",
                    
-                  "ticks": "<?", 
+                  "ticks": "<?",
+                  "icon": "@",
                    
                   "percent": "@", 
                    

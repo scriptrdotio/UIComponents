@@ -21,6 +21,7 @@ angular
           "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
         
         "gaugeRadius" : "<?",
+        "icon": "@",
         
         "theme" : "@",
         

@@ -7,7 +7,8 @@ angular
      {
   
       bindings : {
-         "data" : "<?",
+          "data" : "<?",
+          "icon": "@",
           "transport": "@",
           "api" : "@",
           "msgTag" : "@",

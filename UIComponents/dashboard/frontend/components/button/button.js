@@ -15,6 +15,7 @@ angular
             "onButtonclick" : "&",
             "onSuccess": "&",
             "onFailure": "&",
+            "icon": "@",
             
             "data": "<?",
             "transport": "@",

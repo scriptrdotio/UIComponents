@@ -9,6 +9,7 @@ angular
                bindings : {
 
                   "onLoad" : "&onLoad",
+                  "icon": "@",
                    
                   "transport": "@",
                   "api" : "@",

@@ -28,7 +28,7 @@ angular
         "apiParams" : "<?",
       
         "loadTree" : "<?",
-        
+        "icon": "@",
         "showFilter": "<?",
       
         "treeSearchCriteria" : "@",

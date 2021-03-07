@@ -16,6 +16,7 @@ angular
                 "showLegend" : "@",
                 "speedUnit" : "@",
                 "fontSize" : "@",
+                "icon": "@",
                 
                 "transport": "@",
                 "api" : "@",
