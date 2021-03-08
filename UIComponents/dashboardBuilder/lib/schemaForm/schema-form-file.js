@@ -17,7 +17,7 @@ angular
              defaultMaxItemsMsg = 'You can\'t upload more than one file.';
 
          var nwpSinglefileUpload = function (name, schema, options) {
-            if (schema.type === 'object') {
+            if (schema.type === 'array' && schema.format === 'singlefile') {
                if (schema.pattern && schema.pattern.mimeType && !schema.pattern.validationMessage) {
                   schema.pattern.validationMessage = defaultPatternMsg;
                }
@@ -40,10 +40,10 @@ angular
             }
          };
 
-         schemaFormProvider.defaults.object.unshift(nwpSinglefileUpload);
+         schemaFormProvider.defaults.array.unshift(nwpSinglefileUpload);
 
          var nwpMultifileUpload = function (name, schema, options) {
-            if (schema.type === 'array') {
+            if (schema.type === 'array' && schema.format === 'multifile') {
                if (schema.pattern && schema.pattern.mimeType && !schema.pattern.validationMessage) {
                   schema.pattern.validationMessage = defaultPatternMsg;
                }
@@ -86,6 +86,7 @@ angular
       return {
          restrict: 'A',
          scope:    true,
+         require:  'ngModel',
          link:     function (scope, element, attrs) {
              
              scope.selectFile  = function (files,  invalidFiles) {
@@ -95,8 +96,6 @@ angular
                    } else {
                        scope.invalidFiles = [invalidFiles];
                	   }
-               } else {
-                   scope.invalidFiles = [];
                }
                if(files) {
                  if(Array.isArray(files)) {
@@ -104,22 +103,20 @@ angular
                   } else {
                    scope.files = [files];
                	 }
-               } else {
-                   scope.files = [];
+                 scope.ngModel.$setViewValue(scope.files);
+                 scope.ngModel.$commitViewValue();
                }
             };
              
             scope.removeFile  = function (file) { 
-                if(file && Array.isArray(scope.ngModel.$viewValue)) {
                    scope.files = _.filter(scope.ngModel.$viewValue, function(entry){return entry["$$hashKey"] != file.$$hashKey})
-                   scope.$parent.ngModel.$setViewValue(scope.files);
-                   scope.$parent.ngModel.$commitViewValue();
-
-            	}  else {
-                    scope.$parent.ngModel.$setViewValue();
-               		scope.$parent.ngModel.$commitViewValue();
-               		scope.files = [];
-                }
+                   if(scope.files.length > 0)
+                       scope.ngModel.$setViewValue(scope.files);
+                   else
+                       scope.ngModel.$setViewValue();
+                	
+                   scope.ngModel.$commitViewValue();
+            	
                
             };
              
