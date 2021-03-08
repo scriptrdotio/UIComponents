@@ -109,6 +109,13 @@ angular
         "units": "@", 
         "postUnits": "@", 
         "preUnits": "@", 
+          
+          
+         "barSize": "<?", //20
+         "barSizeRatio": "<?",//0.75,
+         "barGap": "<?", //3,
+         "barOpacity": "<?",//1.0,
+      	 "barRadius":"<?", //[0,0,0,0]
         
         "xlabels": "@", 
         "xlabelAngle": "<?", 
