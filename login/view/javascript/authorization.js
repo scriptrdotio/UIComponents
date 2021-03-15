@@ -75,6 +75,7 @@ $.widget( "scriptr.authorization", {
     logout:function(){
         $.removeCookie('user',{'path':'/'});
         $.removeCookie('token',{'path':'/'});
+        window.localStorage.clear();
         location.href= this.loginPage;
     }
 });
