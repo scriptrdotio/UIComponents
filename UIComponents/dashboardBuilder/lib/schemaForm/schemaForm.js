@@ -481,7 +481,7 @@ angular.module('schemaForm').provider('schemaFormDecorators',
              * @return {Any} The result of the expression or `undefined`.
              */
             scope.interp = function(expression, locals) {
-              return (expression && $interpolate($translate(expression))(locals));
+              return (expression && $interpolate($translate.instant(expression,locals))(locals));
             };
 
             //This works since we ot the ngModel from the array or the schema-validate directive.
@@ -2050,7 +2050,7 @@ angular.module('schemaForm').directive('sfField',
              * @return {Any} The result of the expression or `undefined`.
              */
             scope.interp = function(expression, locals) {
-              return (expression && $interpolate($translate(expression))(locals));
+              return (expression && $interpolate($translate.instant(expression,locals))(locals));
             };
 
             //This works since we get the ngModel from the array or the schema-validate directive.
