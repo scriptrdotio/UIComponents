@@ -1675,6 +1675,16 @@ angular.module('schemaForm').directive('sfArray', ['sfSelect', 'schemaForm', 'sf
                   }
               }
           };
+            
+          var onFieldLoadFn = function() {
+            if (scope.form && scope.form.onFieldLoad) {
+                if (angular.isFunction(scope.form.onFieldLoad)) {
+                    scope.form.onFieldLoad(cope.modelArray, scope.form, scope.model);
+                } else {
+                    scope.evalExpr(scope.form.onFieldLoad, {'modelValue':scope.modelArray, form: form, model: scope.model});
+                }
+            }
+          }
           // An array model always needs a key so we know what part of the model
           // to look at. This makes us a bit incompatible with JSON Form, on the
           // other hand it enables two way binding.
@@ -1771,6 +1781,7 @@ angular.module('schemaForm').directive('sfArray', ['sfSelect', 'schemaForm', 'sf
             // Trigger validation.
             scope.validateArray();
               onChangeFn()
+              onFieldLoadFn();
             return list;
           };
 
