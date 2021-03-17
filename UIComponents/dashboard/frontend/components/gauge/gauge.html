@@ -3,6 +3,7 @@
        
 
 <div style="width: 100%; height: 100%;" class="gauge" ng-if="$ctrl.gaugeValue !== undefined && $ctrl.gaugeValue !== null">
+    <h2 ng-show="$ctrl.title" ng-style="{ 'background' : '{{$ctrl.titleBackgroundColor}}', 'font-weight' : '{{$ctrl.titleFontWeight}}','font-size' : '{{$ctrl.titleFontSize}}', 'font-family' : '{{$ctrl.titleFontFamily}}', 'color' : '{{$ctrl.titleFontColor}}', 'text-align' : '{{$ctrl.titlePosition}}', 'text-shadow' : '{{$ctrl.titleShadow}}', 'text-transform' : '{{$ctrl.titleTextTransform}}', 'padding' : '{{$ctrl.titlePadding}}', 'height' : '{{$ctrl.titleHeight}}', 'margin' : '{{$ctrl.titleMargin}}' }" >{{$ctrl.title}}</h2>
     <div 
          value={{$ctrl.gaugeValue}}
          value-font-color={{$ctrl.valueFontColor}}

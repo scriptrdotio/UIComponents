@@ -54,23 +54,36 @@ angular
 
                   "refreshAnimationType" : "@", // type of refresh animation (linear, >, <, <>, bounce) (string)
                  
-                   /** Title removed in latest justgage revision 1.2.9
-                 /** "title" : "@", // gauge title text
+                   /** Title removed in latest justgage revision 1.2.9 **/ 
+                  "title" : "@", // gauge title text
                  
                   "titleFontColor" : "@", // color of the title text
+                   
+                  "titleBackgroundColor": "@",
+                   
+                  "titleMargin": "@",
+                   
+                  "titleFontWeight": "@", // weight of the title's font
+                   
+                  "titleShadow": "@", 
                  
                   "titleFontFamily" : "@", // font-family of the title text
                  
-                  "titlePosition" : "@", // "above" or "below" the gauge 
-                  "titleMinFontSize" : "@", // absolute minimum font size for the title
-                  **/ 
+                  "titlePosition" : "@", // "left", "center", or "right"
+                   
+                  "titleFontSize" : "@", // absolute minimum font size for the title
+                   
+                  "titleTextTransform": "@",
+                   
+                  "titlePadding": "@",
+                   
+                  "titleHeight": "@",
                  
                   "valueFontFamily" : "@", // font-family of the value text (string)
                  
                   "relativeGaugeSize" : "@", // true if the gauge has to grow with the container (bool)
                  
                   "valueMinFontSize" : "@", // absolute minimum font size for the value (int)
-                  
                  
                   "hideMinMax" : "@",
                  
@@ -154,6 +167,19 @@ angular
 		               this.msgTag = (this.msgTag) ? this.msgTag : null;
                        this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
                        this.relativeGaugeSize = true;
+                       
+                       //title attributes
+                       this.titleFontSize = this.titleFontSize ? this.titleFontSize : "17px";
+                       this.titlePosition = this.titlePosition ? this.titlePosition : "center";
+                       this.titleFontFamily = this.titleFontFamily ? this.titleFontFamily : "";
+                       this.titleFontColor = this.titleFontColor ? this.titleFontColor : "#000";
+                       this.titleShadow = this.titleShadow ? this.titleShadow : "";
+                       this.titleFontWeight = this.titleFontWeight ? this.titleFontWeight : "bold";
+                       this.titleBackgroundColor = this.titleBackgroundColor ? this.titleBackgroundColor : "";
+                       this.titleTextTransform = this.titleTextTransform ? this.titleTextTransform : "capitalize";
+                       this.titlePadding = this.titlePadding ? this.titlePadding : "10px";
+                       this.titleHeight = this.titleHeight ? this.titleHeight : "40px";
+                       this.titleMargin = this.titleMargin ? this.titleMargin : "0";
 	               }
                    
                  this.$postLink = function () {
