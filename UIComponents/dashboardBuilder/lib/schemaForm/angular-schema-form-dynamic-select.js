@@ -335,11 +335,13 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
             var finalOptions = $scope.getOptions(form.options, search);
             var params = $scope.$parent.$eval(finalOptions.httpGet.parameter);
             var minSearch = finalOptions.httpGet.minSearch;
-            if(minSearch && search.length >= minSearch)
-                params.queryFilter = search;
-            else{
-                form.titleMap = [];
-                return;
+            if(minSearch){
+                if(search.length >= minSearch)
+                    params.queryFilter = search;
+                else{
+                    form.titleMap = [];
+                    return;
+                }
             }
             return  httpClient
                 .get(finalOptions.httpGet.url, params).then(
