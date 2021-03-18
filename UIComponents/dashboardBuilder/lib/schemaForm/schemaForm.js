@@ -1679,7 +1679,7 @@ angular.module('schemaForm').directive('sfArray', ['sfSelect', 'schemaForm', 'sf
           var onFieldLoadFn = function() {
             if (scope.form && scope.form.onFieldLoad) {
                 if (angular.isFunction(scope.form.onFieldLoad)) {
-                    scope.form.onFieldLoad(cope.modelArray, scope.form, scope.model);
+                    scope.form.onFieldLoad(scope.modelArray, scope.form, scope.model);
                 } else {
                     scope.evalExpr(scope.form.onFieldLoad, {'modelValue':scope.modelArray, form: form, model: scope.model});
                 }
