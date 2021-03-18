@@ -337,8 +337,10 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
             var minSearch = finalOptions.httpGet.minSearch;
             if(minSearch && search.length >= minSearch)
                 params.queryFilter = search;
-            else
+            else{
+                form.titleMap = [];
                 return;
+            }
             return  httpClient
                 .get(finalOptions.httpGet.url, params).then(
                 function (data, response) {
