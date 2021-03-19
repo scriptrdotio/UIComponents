@@ -3,7 +3,7 @@
     <label class="control-label {{form.labelHtmlClass}}"
 		ng-class="{'sr-only': !showTitle()}" for="{{form.key.slice(-1)[0]}}">{{form.title | translate}}</label>
     
-    <div class="row mb" ng-if="$$value$$">
+    <div class="row mb" ng-if="$$value$$ && $$value$$.length > 0">
         <div class="col-sm-5 mb-sm">
             <label title="{{ form.i18n.preview? form.i18n.preview : ('modules.upload.field.preview' | translate)}}" class="text-info">{{ form.i18n.preview? (form.i18n.preview | translate) : ('modules.upload.field.preview' | translate)}}</label>
         </div>
@@ -48,11 +48,11 @@
 </div>
 
 <script type='text/ng-template' id="singleFileUpload.html">
-    <div ngf-drop ngf-select ngf-change="selectFile($file, $invalidFile)" ngf-multiple="false" ngf-pattern="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-accept="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" ngf-drag-over-class="dragover" class="drop-box dragAndDropDescription">
+    <div ngf-drop ngf-select ngf-change="selectFile($files, $invalidFiles)" type="file" ngf-multiple="false" ngf-pattern="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-accept="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" ngf-drag-over-class="dragover" class="drop-box dragAndDropDescription">
         <p class="text-center" >{{form.i18n.dragorclick ? (form.i18n.dragorclick | translate):('modules.upload.descriptionSinglefile' | translate)}}</p>
     </div>
     <div ngf-no-file-drop>{{ 'modules.upload.dndNotSupported' | translate}}</div>
-    <button ngf-select ngf-change="selectFile($file, $invalidFile)" ngf-multiple="false" ngf-pattern="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-accept="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" class="btn btn-primary btn-block {{form.htmlClass}} mt-lg mb">
+    <button ngf-select ngf-change="selectFile($files, $invalidFiles)" ngf-multiple="false" ngf-pattern="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-accept="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" class="btn btn-primary btn-block {{form.htmlClass}} mt-lg mb">
         <fa fw="fw" name="upload" class="mr-sm"></fa>
         {{form.i18n.add ? (form.i18n.add | translate ) : ('buttons.add' | translate)}}
     </button>
@@ -71,29 +71,26 @@
 
 
 <div class="form-group schema-form-{{form.type}} {{form.htmlClass}} simple-image-upload mb-lg"
-	ng-class="{'has-error border-danger': form.disableErrorState !== true && hasError() && errorMessage(schemaError()), 'has-success': form.disableSuccessState !== true && hasSuccess(), 'has-feedback': form.feedback !== false }" ng-schema-file ng-if="form.simpleImageUpload">
+	ng-class="{'has-error border-danger': form.disableErrorState !== true && hasError() && errorMessage(schemaError()), 'has-success': form.disableSuccessState !== true && hasSuccess(), 'has-feedback': form.feedback !== false }"ng-schema-file ng-if="form.simpleImageUpload"  ng-model="$$value$$" sf-changed="form" schema-validate="form">
     <label class="control-label {{form.labelHtmlClass}}"
 		ng-class="{'sr-only': !showTitle()}" for="{{form.key.slice(-1)[0]}}">{{form.title | translate}}</label>
     <div class="upload-section">
-        <div ngf-select="selectFile($$value$$, $invalidFile)" type="file" ngf-multiple="false" ngf-model-invalid="invalidFile"  type="file" ngf-multiple="false"  ng-model="$$value$$"  sf-changed="form" schema-validate="form" ng-attr-ngf-pattern="{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}" ng-attr-ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" ngf-drag-over-class="dragover"> 
-           <div class="default-image fas" ng-if="!$$value$$"> 
+        <div ngf-drop ngf-select ngf-change="selectFile($files, $invalidFiles)" type="file" ngf-multiple="form.schema.format == 'multifile'" ngf-pattern="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-accept="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" ngf-drag-over-class="dragover" class="drop-box dragAndDropDescription"> 
+           <div class="default-image fas" ng-if="!$$value$$ || $$value$$.length == 0"> 
                <img ng-if="form.schema.default" ng-src="{{form.schema.default}}" />
                <i ng-if="!form.schema.default" class="fa fa-paperclip pdt6" aria-hidden="true"></i>
             </div>
-            <!--div ng-if="$$value$$"  class="default-image fas"> 
-               <img ng-src="{{$$value$$}}" />
-            </div-->
-            <div ng-if="$$value$$" class="uploaded-image">
+            <div ng-if="$$value$$ && $$value$$.length > 0" class="uploaded-image">
                 <div class="mb">
                     <div class="table-display">
                         <div class="cell-display">
-                            <img ngf-src="$$value$$" class="img-responsive">
+                            <img ngf-src="$$value$$[0]" class="img-responsive">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="remove-file" ng-show="($$value$$ && $$value$$ != form.schema.default)">
+        <div class="remove-file" ng-show="$$value$$ && $$value$$.length > 0">
            <a ng-click="removeFile()" uib-tooltip="Remove Image" tooltip-placement="auto" tooltip-append-to-body="true"><i class="fa fa-times" aria-hidden="true"></i></a>
         </div> 
     </div>

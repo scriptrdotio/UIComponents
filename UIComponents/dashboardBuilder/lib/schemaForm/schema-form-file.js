@@ -103,9 +103,13 @@ angular
                   } else {
                    scope.files = [files];
                	 }
-                 scope.ngModel.$setViewValue(scope.files);
+                 if(files.length == 0) {
+                     scope.ngModel.$setViewValue();
+                 } else {
+                     scope.ngModel.$setViewValue(scope.files);
+                 }
                  scope.ngModel.$commitViewValue();
-               }
+               } 
             };
              
             scope.removeFile  = function (file) { 
@@ -116,8 +120,6 @@ angular
                        scope.ngModel.$setViewValue();
                 	
                    scope.ngModel.$commitViewValue();
-            	
-               
             };
              
             scope.$on('schemaFormValidate', function(){ scope.invalidFiles = [];})
