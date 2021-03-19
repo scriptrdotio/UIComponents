@@ -34,8 +34,8 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.27.4/theme/neo.min.css',
 	                     'https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css',
 	                     
-	                     //'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css',
-	                     //'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css',
 	                     // JS
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js',
@@ -76,8 +76,8 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/legacy.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.date.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.time.js'//,
-	                     //'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'
+	                     'https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.time.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'
 	               ]
 	            }
 	         },
@@ -223,7 +223,7 @@ module.exports = function(grunt) {
 		               'concat/min-safe/bootstrap-colorpicker.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-colorpicker.min.js' ],
 		               'concat/min-safe/ng-file-upload.js' : [ 'dashboardBuilder/lib/schemaForm/ng-file-upload.js' ],
 		               'concat/min-safe/schema-form-file.js' : [ 'dashboardBuilder/lib/schemaForm/schema-form-file.js' ],
-		               //'concat/min-safe/schema-form-date-time-picker.min.js':['dashboardBuilder/lib/schemaForm/schema-form-date-time-picker.min.js'],
+		               'concat/min-safe/schema-form-date-time-picker.min.js':['dashboardBuilder/lib/schemaForm/schema-form-date-time-picker.min.js'],
 		              'concat/min-safe/bootstrap-picker.js':['dashboardBuilder/lib/schemaForm/bootstrap-picker.js'],		               'concat/min-safe/ui.sortable.js':['dashboardBuilder/lib/schemaForm/ui.sortable.js'],
 		               'concat/min-safe/ui-codemirror.js' : [ 'dashboardBuilder/lib/codemirror/js/mode/ui-codemirror.js' ],
 		               'concat/min-safe/thermometer_directive.js' : [ 'dashboard/frontend/components/thermometer/thermometer_directive.js' ],
@@ -258,13 +258,13 @@ module.exports = function(grunt) {
 						   //'concat/min-safe/angular-p5.js' : [ 'dashboard/frontend/components/grideye/angular-p5.js'],
 						   //'concat/min-safe/cell.js' : [ 'dashboard/frontend/components/grideye/cell.js'],
 						   //'concat/min-safe/grideye.js' : [ 'dashboard/frontend/components/grideye/grideye.js'],
-		               //'concat/min-safe/leaflet-src.js' : [ 'dashboard/frontend/components/imagemap/leaflet-src.js'],
-		               //'concat/min-safe/leaflet-heat.js' : [ 'dashboard/frontend/components/imagemap/leaflet-heat.js'],
-		               //'concat/min-safe/leaflet-draw.js' : [ 'dashboard/frontend/components/imagemap/leaflet-draw.js'],
-		               'concat/min-safe/angular-simple-logger.min.js' : [ 'dashboard/frontend/components/imagemap/0.1.7/angular-simple-logger.min.js']//,
-		               //'concat/min-safe/ui-leaflet.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet.js'],
-		               //'concat/min-safe/ui-leaflet-layers.min.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet-layers.min.js'],
-						   //'concat/min-safe/imagemap.js' : [ 'dashboard/frontend/components/imagemap/imagemap.js']
+		               'concat/min-safe/leaflet-src.js' : [ 'dashboard/frontend/components/imagemap/leaflet-src.js'],
+		               'concat/min-safe/leaflet-heat.js' : [ 'dashboard/frontend/components/imagemap/leaflet-heat.js'],
+		               'concat/min-safe/leaflet-draw.js' : [ 'dashboard/frontend/components/imagemap/leaflet-draw.js'],
+		               'concat/min-safe/angular-simple-logger.min.js' : [ 'dashboard/frontend/components/imagemap/0.1.7/angular-simple-logger.min.js'],
+		               'concat/min-safe/ui-leaflet.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet.js'],
+		               'concat/min-safe/ui-leaflet-layers.min.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet-layers.min.js'],
+						   'concat/min-safe/imagemap.js' : [ 'dashboard/frontend/components/imagemap/imagemap.js']
 							
 		            }
 	            }
@@ -309,11 +309,11 @@ module.exports = function(grunt) {
 	               src : [ 'lib/jquery.min.js', 
 	               	     'lib/jquery-ui.min.js',
 	                       'lib/jquery.cookie.min.js', 
-	                       'lib/slick.min.js'/*,
+	                       'lib/slick.min.js',
 	                       'concat/min-safe/leaflet-src.js',
 	               		  'concat/min-safe/leaflet-heat.js',
 	               		  'concat/min-safe/leaflet-draw.js',
-	               		  'lib/leaflet.markercluster.js' */],
+	               		  'lib/leaflet.markercluster.js'],
 	               dest : 'build/js/external_jquery_resources.min.js'
 	            },
 
@@ -419,16 +419,16 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/angular-strap.js',
 	                     'concat/min-safe/angular-strap.tpl.min.js',
 	                     'concat/min-safe/angular-schema-form-dynamic-select.js',
-	                     //'concat/min-safe/schema-form-date-time-picker.min.js',
+	                     'concat/min-safe/schema-form-date-time-picker.min.js',
 	                     'lib/picker.js',
 	                     'lib/legacy.js',
 	                     'lib/picker.data.js',
 	                     'lib.picker.time.js',
 	                     'concat/min-safe/bootstrap-picker.js',
 	                     'concat/min-safe/markdown-directive.js',
-	                     'concat/min-safe/datetimepicker_directive.js'
-	                     //'concat/min-safe/ui-leaflet.js',
-	                     //'concat/min-safe/ui-leaflet-layers.min.js'
+	                     'concat/min-safe/datetimepicker_directive.js',
+	                     'concat/min-safe/ui-leaflet.js',
+	                     'concat/min-safe/ui-leaflet-layers.min.js'
 	                     ],
 	               dest : 'build/js/directives_2.min.js'
 	            },
@@ -470,10 +470,10 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/header.js', 
 	                     'concat/min-safe/menu.js',
 	                     'concat/min-safe/datetimepicker.js',
-	                     'concat/min-safe/dateTimeInput.js'
-	                     //'concat/min-safe/cell.js',
-							  //'concat/min-safe/grideye.js',
-						     //'concat/min-safe/imagemap.js',
+	                     'concat/min-safe/dateTimeInput.js',
+						      'concat/min-safe/imagemap.js',
+						       //'concat/min-safe/cell.js',
+								  //'concat/min-safe/grideye.js',
 	                     ],
 	               dest : 'build/js/components.min.js'
 	            },
@@ -536,11 +536,11 @@ module.exports = function(grunt) {
 	                     'lib/classic.css',
 	                     'lib/classic.date.css',
 	                     'lib/classic.time.css',
-	                     //'dashboard/frontend/components/imagemap/leaflet.css',
-	                     //'dashboard/frontend/components/imagemap/leaflet-draw.css',
-	                     //'lib/MarkerCluster.css',
-	                     //'lib/MarkerCluster.Default.css',
-	                     //'dashboard/frontend/components/imagemap/imageMap.css'
+	                     'dashboard/frontend/components/imagemap/leaflet.css',
+	                     'dashboard/frontend/components/imagemap/leaflet-draw.css',
+	                     'lib/MarkerCluster.css',
+	                     'lib/MarkerCluster.Default.css',
+	                     'dashboard/frontend/components/imagemap/imageMap.css'
 	                     ],
 	               dest : 'build/css/components.css'
 	            }
