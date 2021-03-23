@@ -16,7 +16,7 @@ angular
             "onSuccess": "&",
             "onFailure": "&",
             "icon": "@",
-            
+            "loadingMessage": "@",
             "data": "<?",
             "transport": "@",
             "api" : "@",
@@ -44,7 +44,7 @@ angular
                 
                 
                this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/button-bg.svg";
-                       
+               this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";        
                this.hasData = (this.label != null && this.label != "") ?  true : false;
                 
                 //For backward compatibility 

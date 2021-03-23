@@ -13,6 +13,7 @@ angular
             "layoutConfig":"<?", 
             "tracesConfig":"<?",
             "icon": "@",
+            "loadingMessage": "@",
 
             "transport": "@",
             "api": "@",
@@ -34,6 +35,7 @@ angular
 
             this.$onInit = function () {
                 this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/bubble.svg",
+                this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
                 this.hasData = (this.transformedData != null && this.transformedData.length > 0) ? true : false;
                 this._apiParams = (this.apiParams) ? angular.copy(this.apiParams) : [];
 

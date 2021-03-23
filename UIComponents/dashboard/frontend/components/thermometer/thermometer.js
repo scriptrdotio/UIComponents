@@ -23,7 +23,7 @@ angular
                   "data" : "<?",
 
                   "step" : "<?", 
-                   
+                  "loadingMessage": "@", 
                   "customSectors": "<?",
                    
                   "outOfRangeColor": "@",
@@ -47,7 +47,7 @@ angular
 	               this.$onInit = function() {
                        
                       this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/thermometer-bg.svg";
-                       
+                      this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data"; 
                       this.hasData = (!isNaN(parseFloat(this.value)) && isFinite(this.value)) ?  true : false;
 	               	  this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
                       this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;

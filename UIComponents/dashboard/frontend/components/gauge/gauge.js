@@ -10,7 +10,7 @@ angular
 
                   "onLoad" : "&onLoad",
                   "icon": "@",
-                   
+                  "loadingMessage": "@",
                   "transport": "@",
                   "api" : "@",
                   "msgTag" : "@",
@@ -141,8 +141,8 @@ angular
 		               
                        this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/gauge-bg.svg";
                        
-                      this.hasData = (!isNaN(parseFloat(this.gaugeValue)) && isFinite(this.gaugeValue)) ?  true : false;
-                       
+                       this.hasData = (!isNaN(parseFloat(this.gaugeValue)) && isFinite(this.gaugeValue)) ?  true : false;
+                       this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
 		               this.customSectors = (this.customSectors) ? this.customSectors : {  percents: true, ranges: []};
 		               this.valueFontColor = (this.valueFontColor) ? this.valueFontColor
 		                     : "#999";

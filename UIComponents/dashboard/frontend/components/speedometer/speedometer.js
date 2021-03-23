@@ -22,7 +22,7 @@ angular
         
         "gaugeRadius" : "<?",
         "icon": "@",
-        
+        "loadingMessage": "@",
         "theme" : "@",
         
         "minValue" : "<?",
@@ -66,7 +66,7 @@ angular
             this.speedoConfig = {};
            
             this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/speedometer-bg.svg";
-                       
+             this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";          
              this.hasData = (!isNaN(parseFloat(this.speedoConfig.needleVal)) && isFinite(this.speedoConfig.needleVal)) ?  true : false;
              
             if(this.theme == "speed" || typeof this.theme == 'undefined'){

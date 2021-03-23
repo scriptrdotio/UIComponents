@@ -66,8 +66,8 @@ angular
   
       bindings : {
         
-        "onLoad" : "&onLoad",
-         
+          "onLoad" : "&onLoad",
+          "loadingMessage": "@",
           "transport": "@",
           "api" : "@",
           "msgTag" : "@",
@@ -77,84 +77,84 @@ angular
           "fetchDataInterval": "@",
           "useWindowParams": "@",
           "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
-           "delta": "<?",
-          
-          
-        "resize": "<?",
-        "icon": "@",
-        "data": "<?",
-        
-        "type" : "@",
-        
-        "xkey" : "@",
-        "yconfig" : "<?",
-        
-        "ykeys" : "<?",
-         
-        "stacked": "<?",
-        
-        "labels" : "<?",
-        
-        "colors" : "<?",
-        
-        "lineWidth": "@", 
-        "pointSize": "@",
-        "pointFillColors" : "@", 
-        "pointStrokeColors" : "@", 
-        "ymax" : "@", 
-        "ymin": "@", 
-        "smooth": "@", 
-        "hideHover": "@",
-        "parseTime": "<?", 
-        "units": "@", 
-        "postUnits": "@", 
-        "preUnits": "@", 
-          
-          
-         "barSize": "<?", //20
-         "barSizeRatio": "<?",//0.75,
-         "barGap": "<?", //3,
-         "barOpacity": "<?",//1.0,
-      	 "barRadius":"<?", //[0,0,0,0]
-        
-        "xlabels": "@", 
-        "xlabelAngle": "<?", 
-        "goals": "@", 
-        "goalStrokeWidth": "@",
-        "goalLineColors": "@", 
-        "goalsconfig" : "<?",
-        "events": "@", 
-        "eventStrokeWidth": "@", 
-        "eventsLineColors": "@", 
-        "eventsconfig" : "<?",
-          
-        "continuousLine": "@",
-        "axes": "@", 
-        "grid": "@", 
-        "gridTextColor": "@", 
-        "gridTextSize": "@", 
-        "gridTextFamily": "@", 
-        "gridTextWeight": "@",
-        "fillOpacity": "@", 
-        "resize": "@", 
-        "behaveLikeLine": "@",
-        
-        //With donut
-        "labelColor": "@",
-        "donutFormatter": "&", 
-        "backgroundColor": "@",
-        
-        "hoverCallback": "&?", 
-        "dateFormat": "&?",
-        "xlabelFormat": "&?", 
-        "ylabelFormat": "&?",  
-          
-        "xdateMomentFormat": "@",
-        "legendDateMomentFormat": "@",
-        "timeZone": "@",
-          
-        "showLegend": "@",
-        "legendType": "@", //"hover", "right"
+          "delta": "<?",
+
+
+          "resize": "<?",
+          "icon": "@",
+          "data": "<?",
+
+          "type" : "@",
+
+          "xkey" : "@",
+          "yconfig" : "<?",
+
+          "ykeys" : "<?",
+
+          "stacked": "<?",
+
+          "labels" : "<?",
+
+          "colors" : "<?",
+
+          "lineWidth": "@", 
+          "pointSize": "@",
+          "pointFillColors" : "@", 
+          "pointStrokeColors" : "@", 
+          "ymax" : "@", 
+          "ymin": "@", 
+          "smooth": "@", 
+          "hideHover": "@",
+          "parseTime": "<?", 
+          "units": "@", 
+          "postUnits": "@", 
+          "preUnits": "@", 
+
+
+          "barSize": "<?", //20
+          "barSizeRatio": "<?",//0.75,
+          "barGap": "<?", //3,
+          "barOpacity": "<?",//1.0,
+          "barRadius":"<?", //[0,0,0,0]
+
+          "xlabels": "@", 
+          "xlabelAngle": "<?", 
+          "goals": "@", 
+          "goalStrokeWidth": "@",
+          "goalLineColors": "@", 
+          "goalsconfig" : "<?",
+          "events": "@", 
+          "eventStrokeWidth": "@", 
+          "eventsLineColors": "@", 
+          "eventsconfig" : "<?",
+
+          "continuousLine": "@",
+          "axes": "@", 
+          "grid": "@", 
+          "gridTextColor": "@", 
+          "gridTextSize": "@", 
+          "gridTextFamily": "@", 
+          "gridTextWeight": "@",
+          "fillOpacity": "@", 
+          "resize": "@", 
+          "behaveLikeLine": "@",
+
+          //With donut
+          "labelColor": "@",
+          "donutFormatter": "&", 
+          "backgroundColor": "@",
+
+          "hoverCallback": "&?", 
+          "dateFormat": "&?",
+          "xlabelFormat": "&?", 
+          "ylabelFormat": "&?",  
+
+          "xdateMomentFormat": "@",
+          "legendDateMomentFormat": "@",
+          "timeZone": "@",
+
+          "showLegend": "@",
+          "legendType": "@", //"hover", "right"
           "horizontal": "@"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
@@ -164,7 +164,7 @@ angular
         
          this.$onInit = function() {
              
-             
+             this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
              this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/"+this.type+"-chart-bg.svg";
                        
              this.hasData = (this.datas && this.datas.length > 0) ?  true : false;

@@ -9,6 +9,7 @@ angular
       bindings : {
           "data" : "<?",
           "icon": "@",
+          "loadingMessage": "@",
           "transport": "@",
           "api" : "@",
           "msgTag" : "@",
@@ -37,7 +38,7 @@ angular
             	if(this.data.z) this.angle = "rotateZ("+ Math.round(this.data.z) + "deg )"; 
               }**/
               
-            
+              this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
               this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/accelerometer-bg.svg";
                        
               this.hasData = ((!isNaN(self.xLine) && isFinite(self.xLine)) && (!isNaN(self.yLine) && isFinite(self.yLine)) && (!isNaN(self.zLine) && isFinite(self.zLine)))  ?  true : false;

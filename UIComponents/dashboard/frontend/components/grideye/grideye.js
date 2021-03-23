@@ -13,6 +13,7 @@ angular.module('Grideye').component('scriptrGrideye',{
         "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
 
         "data" : "<?",
+        "loadingMessage": "@",
         "icon": "@",
         "customSectors": "<?", // array of objects with color, hi, lo attributes ([ of object])
 		"width": "@", //  gauge width in % (int)
@@ -38,7 +39,7 @@ angular.module('Grideye').component('scriptrGrideye',{
             this.square_width = this.width / this.gridXCount;
             this.square_height = this.height / this.gridYCount;
             this.icon = (this.icon)? this.icon : '//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/grideye-bg.svg';
-            
+            this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
             this.customSectors = (this.customSectors) ? this.customSectors : {
                 ranges: [{
                     color: "#00FF00", //green

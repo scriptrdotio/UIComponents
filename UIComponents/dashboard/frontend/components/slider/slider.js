@@ -14,6 +14,7 @@ angular
                    
                 "id": "@",
                 "icon": "@",
+                "loadingMessage": "@",
 
                 "min" : "<?",
 
@@ -103,7 +104,7 @@ angular
                        
                        
                       this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/slider-bg.svg";
-                       
+                      this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data"; 
                       this.hasData = (!isNaN(parseFloat(this.min)) && isFinite(this.min)) ?  true : false;
                        
                        //For backward compatibility 

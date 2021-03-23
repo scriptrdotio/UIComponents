@@ -7,10 +7,11 @@ angular
      {
   
       bindings : {
-        "data": "<?",
-        "type": "@",
-        "icon": "@",
-        "transport": "@",
+          "data": "<?",
+          "type": "@",
+          "icon": "@",
+          "transport": "@",
+          "loadingMessage": "@",
           "api" : "@",
           "msgTag" : "@",
           "httpMethod": "@",
@@ -26,7 +27,7 @@ angular
           
          this.$onInit = function() {
             this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/alert-bg.svg";
-                       
+            this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";           
             this.hasData = (this.message != null && this.message != "") ?  true : false;
             this.type = (this.type) ? this.type : "info";
             //this.data = (this.data) ? this.data : "Waiting for info...";

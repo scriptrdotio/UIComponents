@@ -42,6 +42,7 @@ angular.module('Imagemap').constant(
     "data": "<?",
     "width": "@",
     "height": "@",
+    "loadingMessage": "@",
     "minZoom": "@",
     "maxZoom": "@",
     "imageUrl": "@",
@@ -63,6 +64,7 @@ angular.module('Imagemap').constant(
       self.msgTag = (self.msgTag) ? self.msgTag : null;
       self.useWindowParams = (self.useWindowParams) ? self.useWindowParams : "true";
       self.icon = (self.icon) ? self.icon : '//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/imagemap-bg.svg';
+      self.loadingMessage = (self.loadingMessage) ? self.loadingMessage : "Waiting for data";
 
       self.heatmap = (self.heatmap) ? self.heatmap : false;
       self.cw = $element.parent().width();

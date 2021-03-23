@@ -1,5 +1,5 @@
 <div class="data-notification center"  ng-hide="$ctrl.hasData || $ctrl.noResults">
-    <i class="fa fa-spinner fa-spin fa-1x"></i> <div ng-if="!$ctrl.usePopover">Waiting for data</div>
+    <i class="fa fa-spinner fa-spin fa-1x"></i> <div ng-if="!$ctrl.usePopover">{{$ctrl.loadingMessage}}</div>
 </div>
 
 <div class="data-notification" ng-if="!$ctrl.usePopover && $ctrl.noResults" ng-class="{'center': !$ctrl.stalledData, 'bottom': $ctrl.stalledData}" >

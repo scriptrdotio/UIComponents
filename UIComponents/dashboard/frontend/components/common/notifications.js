@@ -11,6 +11,7 @@ angular
         "noResults": "<?",
         "stalledData": "<?",
         "usePopover": "<?",
+        "loadingMessage": "@",
         "failureMessage": "<?",
         "actionMessage": "<?",
         "actionSuccess": "<?",

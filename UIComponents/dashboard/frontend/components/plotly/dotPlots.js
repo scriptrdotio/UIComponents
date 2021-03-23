@@ -12,6 +12,7 @@ angular
             "options": "<?",
             "layoutConfig":"<?", 
             "tracesConfig":"<?",
+            "loadingMessage": "@",
             "icon": "@",
             "transport": "@",
             "api" : "@",
@@ -35,6 +36,7 @@ angular
             self.$onInit = function(){
 
                 this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/dotplots.svg",
+                this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
                 self.data = self.data ? self.data : [];
                 this.hasData = (this.transformedData != null  && this.transformedData.length > 0) ?  true : false;
                 this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];

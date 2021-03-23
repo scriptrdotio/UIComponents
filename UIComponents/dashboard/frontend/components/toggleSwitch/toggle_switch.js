@@ -20,7 +20,7 @@ angular
                   "isDisabled" : "<?",
                   "onSwitchChange" : "&", 
                   "icon": "@",
-                   
+                  "loadingMessage": "@", 
 				  "transport": "@",
                   "api" : "@",
                   "msgTag" : "@",
@@ -46,7 +46,7 @@ angular
                      
                        
                       this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/toggle-switch-bg.svg";
-                       
+                      this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data"; 
                		  this.hasData = (this.switchStatus === false || this.switchStatus === true) ?  true : false;
                        
                        //For backward compatibility 

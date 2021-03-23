@@ -25,7 +25,8 @@ angular
           "animation" : "@",
           "odometerValue" : "<?",
           "data": "<?",
-          "size": "<?"
+          "size": "<?",
+          "loadingMessage": "@"
 
         },
         templateUrl: '/UIComponents/dashboard/frontend/components/odometer/odometer.html',
@@ -36,7 +37,7 @@ angular
            this.$onInit = function() {
                
               this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/odometer-bg.svg";
-                       
+             this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";         
              this.hasData = (!isNaN(parseFloat(this.odometerValue)) && isFinite(this.odometerValue)) ?  true : false;
              
              this.config = {

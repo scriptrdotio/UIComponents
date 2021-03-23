@@ -27,6 +27,7 @@ angular
         "messageBackgroundColor": "@",  
         "messageTextAlignment": "@", 
         "icon": "@",
+        "loadingMessage": "@",
           
           "transport": "@",
           "api" : "@",
@@ -51,7 +52,7 @@ angular
             this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/display-data-bg.svg";
                        
             this.hasData = (this.value != null && this.value != "") ?  true : false;
-            
+            this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
             this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
             this.widgetLayout = (this.widgetLayout=="vertical") ? this.widgetLayout : "horizontal";
             //this.data = (this.data) ? (isNaN(this.data) ? "0": this.data) : "0";

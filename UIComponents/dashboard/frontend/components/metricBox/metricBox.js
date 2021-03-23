@@ -19,7 +19,7 @@ angular
                   "serviceTag": "@", //Service Tag is use on the update-data event, as a key to retrieve from the data. If not available all passed data will be consumed
 
 
-                
+                "loadingMessage": "@",
                 "value": "<?",
               	"disabled": "<?",
                 "label": "@",
@@ -69,6 +69,7 @@ angular
                 this.$onInit = function () {
                  
                     this._apiParams = (this.apiParams) ? angular.copy(this.apiParams) : [];
+                    this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
                     this.widgetLayout = (this.widgetLayout == "vertical") ? this.widgetLayout : "horizontal";
                     this.value = (this.value) ? (isNaN(this.value) ? "0" : this.value) : "0";
                     this.label = (this.label) ? this.label : "Items";

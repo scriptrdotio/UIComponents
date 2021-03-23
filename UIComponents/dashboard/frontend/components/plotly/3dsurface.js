@@ -14,6 +14,7 @@ angular
                 "options": "<?",
 				"layoutConfig":"<?", 
             	"tracesConfig":"<?",
+                "loadingMessage": "@",
                 //extras
                 "transport": "@",
                 "api" : "@",
@@ -37,7 +38,7 @@ angular
                     
                     
                     this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/3dsurface-bg.svg";
-                       
+                    this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";   
                     this.hasData = (this.transformedData != null  && this.transformedData.length > 0) ?  true : false;
                     
                     self._apiParams = (self.apiParams) ? angular.copy(self.apiParams) : [];
