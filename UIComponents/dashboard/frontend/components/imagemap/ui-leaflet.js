@@ -1,5 +1,5 @@
 /*!
-*  ui-leaflet 2.0.0 2016-10-04
+*  ui-leaflet 2.0.0 2018-01-05
 *  ui-leaflet - An AngularJS directive to easily interact with Leaflet maps
 *  git: https://github.com/angular-ui/ui-leaflet
 */
@@ -312,6 +312,7 @@ angular.module('ui-leaflet').factory('leafletBoundsHelpers', ["leafletLogger", "
 angular.module('ui-leaflet').factory('leafletControlHelpers', ["$rootScope", "leafletLogger", "leafletHelpers", "leafletLayerHelpers", "leafletMapDefaults", function ($rootScope, leafletLogger, leafletHelpers, leafletLayerHelpers, leafletMapDefaults) {
     var isDefined = leafletHelpers.isDefined,
         isObject = leafletHelpers.isObject,
+        get = leafletHelpers.get,
         createLayer = leafletLayerHelpers.createLayer,
         _controls = {},
         errorHeader = leafletHelpers.errorHeader + ' [Controls] ',
@@ -319,7 +320,7 @@ angular.module('ui-leaflet').factory('leafletControlHelpers', ["$rootScope", "le
 
     var _controlLayersMustBeVisible = function _controlLayersMustBeVisible(baselayers, overlays, mapId) {
         var defaults = leafletMapDefaults.getDefaults(mapId);
-        if (!defaults.controls.layers.visible) {
+        if (!get(defaults, 'controls.layers.visible')) {
             return false;
         }
 
@@ -357,7 +358,7 @@ angular.module('ui-leaflet').factory('leafletControlHelpers', ["$rootScope", "le
         angular.extend(controlOptions, defaults.controls.layers.options);
 
         var control;
-        if (defaults.controls.layers && isDefined(defaults.controls.layers.control)) {
+        if (!!get(defaults, 'controls.layers.control')) {
             control = defaults.controls.layers.control.apply(this, [[], [], controlOptions]);
         } else {
             control = new L.control.layers([], [], controlOptions);
@@ -534,8 +535,8 @@ angular.module('ui-leaflet').service('leafletData', ["leafletLogger", "$q", "lea
         _private[itemName] = {};
     });
 
-    this.unresolveMap = function (scopeId) {
-        var id = leafletHelpers.obtainEffectiveMapId(_private.map, scopeId);
+    this.unresolveMap = function (mapId) {
+        var id = leafletHelpers.obtainEffectiveMapId(_private.map, mapId);
         _privateItems.forEach(function (itemName) {
             _private[itemName][id] = undefined;
         });
@@ -544,14 +545,14 @@ angular.module('ui-leaflet').service('leafletData', ["leafletLogger", "$q", "lea
     //int repetitive stuff (get and sets)
     _privateItems.forEach(function (itemName) {
         var name = upperFirst(itemName);
-        self['set' + name] = function (lObject, scopeId) {
-            var defer = getUnresolvedDefer(_private[itemName], scopeId);
+        self['set' + name] = function (lObject, mapId) {
+            var defer = getUnresolvedDefer(_private[itemName], mapId);
             defer.resolve(lObject);
-            setResolvedDefer(_private[itemName], scopeId);
+            setResolvedDefer(_private[itemName], mapId);
         };
 
-        self['get' + name] = function (scopeId) {
-            var defer = getDefer(_private[itemName], scopeId);
+        self['get' + name] = function (mapId) {
+            var defer = getDefer(_private[itemName], mapId);
             return defer.promise;
         };
     });
@@ -568,7 +569,7 @@ angular.module('ui-leaflet').service('leafletDirectiveControlsHelpers', ["leafle
 
     var _errorHeader = _mainErrorHeader + '[leafletDirectiveControlsHelpers';
 
-    var _extend = function _extend(id, thingToAddName, createFn, cleanFn) {
+    var extend = function extend(id, thingToAddName, createFn, cleanFn) {
         var _fnHeader = _errorHeader + '.extend] ';
         var extender = {};
         if (!_isDefined(thingToAddName)) {
@@ -589,14 +590,14 @@ angular.module('ui-leaflet').service('leafletDirectiveControlsHelpers', ["leafle
         }
 
         //add external control to create / destroy markers without a watch
-        leafletData.getDirectiveControls().then(function (controls) {
+        leafletData.getDirectiveControls(id).then(function (controls) {
             angular.extend(controls, extender);
             leafletData.setDirectiveControls(controls, id);
         });
     };
 
     return {
-        extend: _extend
+        extend: extend
     };
 }]);
 
@@ -683,7 +684,7 @@ angular.module('ui-leaflet').service('leafletHelpers', ["$q", "$log", "$timeout"
     var _clone = _copy;
     /*
     For parsing paths to a field in an object
-     Example:
+      Example:
     var obj = {
         bike:{
          1: 'hi'
@@ -692,21 +693,16 @@ angular.module('ui-leaflet').service('leafletHelpers', ["$q", "$log", "$timeout"
     };
     _getObjectValue(obj,"bike.1") returns 'hi'
     this is getPath in ui-gmap
+      like _.get
+    http://stackoverflow.com/questions/2631001/javascript-test-for-existence-of-nested-object-key?page=1&tab=active#tab-top
      */
-    var _getObjectValue = function _getObjectValue(object, pathStr) {
-        var obj;
-        if (!object || !angular.isObject(object)) return;
-        //if the key is not a sting then we already have the value
-        if (pathStr === null || !angular.isString(pathStr)) {
-            return pathStr;
-        }
-        obj = object;
-        pathStr.split('.').forEach(function (value) {
-            if (obj) {
-                obj = obj[value];
-            }
-        });
-        return obj;
+    var _getObjectValue = function _getObjectValue(object, path) {
+        if (!object) return;
+        path = path.split('.');
+        var obj = object[path.shift()];
+        while (obj && path.length) {
+            obj = obj[path.shift()];
+        }return obj;
     };
 
     /*
@@ -733,18 +729,21 @@ angular.module('ui-leaflet').service('leafletHelpers', ["$q", "$log", "$timeout"
     };
 
     function _obtainEffectiveMapId(d, mapId) {
-        var id, i;
+        var id,
+            keys = Object.keys(d);
+
         if (!angular.isDefined(mapId)) {
-            if (Object.keys(d).length === 0) {
+            if (keys.length === 0 || keys.length === 1 && keys[0] === 'main') {
+                //default non id attribute map
+                // OR one key 'main'
+                /*
+                    Main Reason:
+                    Initally if we have only one map and no "id" then d will be undefined initially.
+                    On subsequent runs it will be just d.main so we need to return the last map.
+                */
                 id = "main";
-            } else if (Object.keys(d).length >= 1) {
-                for (i in d) {
-                    if (d.hasOwnProperty(i)) {
-                        id = i;
-                    }
-                }
             } else {
-                $log.error(_errorHeader + "- You have more than 1 map on the DOM, you must provide the map ID to the leafletData.getXXX call");
+                throw new Error(_errorHeader + "- You have more than 1 map on the DOM, you must provide the map ID to the leafletData.getXXX call. Where one of the following mapIds " + Object.keys(d).join(',') + ' are available.');
             }
         } else {
             id = mapId;
@@ -809,6 +808,7 @@ angular.module('ui-leaflet').service('leafletHelpers', ["$q", "$log", "$timeout"
     var directiveNormalize = function directiveNormalize(name) {
         return camelCase(name.replace(PREFIX_REGEXP, ""));
     };
+
     // END AngularJS port
 
     var _watchTrapDelayMilliSec = 10;
@@ -834,6 +834,7 @@ angular.module('ui-leaflet').service('leafletHelpers', ["$q", "$log", "$timeout"
         clone: _clone,
         errorHeader: _errorHeader,
         getObjectValue: _getObjectValue,
+        get: _getObjectValue,
         getObjectArrayPath: _getObjectArrayPath,
         getObjectDotPath: _getObjectDotPath,
         defaultTo: function defaultTo(val, _default) {
@@ -2882,28 +2883,40 @@ angular.module('ui-leaflet').service('leafletLogger', ["nemSimpleLogger", functi
   return nemSimpleLogger.spawn();
 }]);
 
-'use strict';
+"use strict";
 
-angular.module('ui-leaflet').factory('nominatimService', ["$q", "$http", "leafletHelpers", "leafletMapDefaults", function ($q, $http, leafletHelpers, leafletMapDefaults) {
-    var isDefined = leafletHelpers.isDefined;
-
+angular.module("ui-leaflet").factory("nominatimService", ["$q", "$http", "leafletHelpers", "leafletMapDefaults", function ($q, $http, leafletHelpers, leafletMapDefaults) {
     return {
         query: function query(address, mapId) {
             var defaults = leafletMapDefaults.getDefaults(mapId);
             var url = defaults.nominatim.server;
             var df = $q.defer();
 
-            $http.get(url, { params: { format: 'json', limit: 1, q: address } }).success(function (data) {
-                if (data.length > 0 && isDefined(data[0].boundingbox)) {
-                    df.resolve(data[0]);
-                } else {
-                    df.reject('[Nominatim] Invalid address');
-                }
-            });
-
+            if (angular.version.major === 1 && angular.version.minor < 6) {
+                $http.get(url, {
+                    params: { format: "json", limit: 1, q: address }
+                }).success(function (data) {
+                    resolvePromise(data, df);
+                });
+            } else {
+                $http.get(url, {
+                    params: { format: "json", limit: 1, q: address }
+                }).then(function (response) {
+                    resolvePromise(response.data, df);
+                });
+            }
             return df.promise;
         }
     };
+
+    function resolvePromise(data, promise) {
+        var isDefined = leafletHelpers.isDefined;
+        if (data.length > 0 && isDefined(data[0].boundingbox)) {
+            promise.resolve(data[0]);
+        } else {
+            promise.reject("[Nominatim] Invalid address");
+        }
+    }
 }]);
 
 'use strict';
@@ -3907,6 +3920,10 @@ angular.module('ui-leaflet').directive('layers', ["leafletLogger", "$q", "leafle
                                 safeRemoveLayer(map, leafletLayers.overlays[name], options);
                             }
                             // TODO: Depending on the layer type we will have to delete what's included on it
+                            var oldLayer = oldOverlayLayers[name];
+                            if (isDefined(oldLayer) && oldLayer.hasOwnProperty("cleanupAction")) {
+                                oldLayer.cleanupAction(leafletLayers.overlays[name]);
+                            }
                             delete leafletLayers.overlays[name];
 
                             if (newOverlayLayers[name] && newOverlayLayers[name].doRefresh) {
@@ -4215,6 +4232,12 @@ angular.module('ui-leaflet').directive('markers', ["leafletLogger", "$rootScope"
                     }
                     _setLMarker(marker, leafletMarkers, newName, maybeLayerName);
 
+                    
+                    // Bind tooltip
+                    if (isDefined(model.tooltip)) {
+                        marker.bindTooltip(model.tooltip.text, model.tooltip.options);
+                    }
+                    
                     // Bind message
                     if (isDefined(model.message)) {
                         marker.bindPopup(model.message, model.popupOptions);
@@ -4732,7 +4755,7 @@ angular.module('ui-leaflet').factory('leafletEventsHelpersFactory', ["$rootScope
      }
      //would yield name of
      name = "m1"
-      If nested:
+       If nested:
      markerModel : {
      cars: {
      m1: { lat:_, lon: _}
@@ -4797,7 +4820,12 @@ angular.module('ui-leaflet').factory('leafletEventsHelpersFactory', ["$rootScope
                 // Event propadation logic
                 if (isDefined(leafletScope.eventBroadcast[this.lObjectType].logic)) {
                     // We take care of possible propagation logic
-                    if (leafletScope.eventBroadcast[_this.lObjectType].logic !== "emit" && leafletScope.eventBroadcast[_this.lObjectType].logic !== "broadcast") $log.warn(errorHeader + "Available event propagation logic are: 'emit' or 'broadcast'.");
+                    var configuredLogic = leafletScope.eventBroadcast[_this.lObjectType].logic;
+                    if (configuredLogic !== "emit" && configuredLogic !== "broadcast") {
+                        $log.warn(errorHeader + "Available event propagation logic are: 'emit' or 'broadcast'.");
+                    } else {
+                        logic = configuredLogic;
+                    }
                 }
                 // Enable / Disable
                 var eventsEnable = false,
@@ -4903,36 +4931,36 @@ angular.module('ui-leaflet').factory('leafletGeoJsonEvents', ["$rootScope", "$q"
 'use strict';
 
 angular.module('ui-leaflet').factory('leafletLabelEvents', ["$rootScope", "$q", "leafletLogger", "leafletHelpers", "leafletEventsHelpersFactory", function ($rootScope, $q, leafletLogger, leafletHelpers, leafletEventsHelpersFactory) {
-    var Helpers = leafletHelpers,
-        EventsHelper = leafletEventsHelpersFactory;
-    //$log = leafletLogger;
+        var Helpers = leafletHelpers,
+            EventsHelper = leafletEventsHelpersFactory;
+        //$log = leafletLogger;
 
-    var LabelEvents = function LabelEvents() {
-        EventsHelper.call(this, 'leafletDirectiveLabel', 'markers');
-    };
-    LabelEvents.prototype = new EventsHelper();
+        var LabelEvents = function LabelEvents() {
+                EventsHelper.call(this, 'leafletDirectiveLabel', 'markers');
+        };
+        LabelEvents.prototype = new EventsHelper();
 
-    LabelEvents.prototype.genDispatchEvent = function (maybeMapId, eventName, logic, leafletScope, lObject, name, model, layerName) {
-        var markerName = name.replace('markers.', '');
-        return EventsHelper.prototype.genDispatchEvent.call(this, maybeMapId, eventName, logic, leafletScope, lObject, markerName, model, layerName);
-    };
+        LabelEvents.prototype.genDispatchEvent = function (maybeMapId, eventName, logic, leafletScope, lObject, name, model, layerName) {
+                var markerName = name.replace('markers.', '');
+                return EventsHelper.prototype.genDispatchEvent.call(this, maybeMapId, eventName, logic, leafletScope, lObject, markerName, model, layerName);
+        };
 
-    LabelEvents.prototype.getAvailableEvents = function () {
-        return ['click', 'dblclick', 'mousedown', 'mouseover', 'mouseout', 'contextmenu'];
-    };
+        LabelEvents.prototype.getAvailableEvents = function () {
+                return ['click', 'dblclick', 'mousedown', 'mouseover', 'mouseout', 'contextmenu'];
+        };
 
-    LabelEvents.prototype.genEvents = function (maybeMapId, eventName, logic, leafletScope, lObject, name, model, layerName) {
-        var _this = this;
-        var labelEvents = this.getAvailableEvents();
-        var scopeWatchName = Helpers.getObjectArrayPath("markers." + name);
-        labelEvents.forEach(function (eventName) {
-            lObject.label.on(eventName, _this.genDispatchEvent(maybeMapId, eventName, logic, leafletScope, lObject.label, scopeWatchName, model, layerName));
-        });
-    };
+        LabelEvents.prototype.genEvents = function (maybeMapId, eventName, logic, leafletScope, lObject, name, model, layerName) {
+                var _this = this;
+                var labelEvents = this.getAvailableEvents();
+                var scopeWatchName = Helpers.getObjectArrayPath("markers." + name);
+                labelEvents.forEach(function (eventName) {
+                        lObject.label.on(eventName, _this.genDispatchEvent(maybeMapId, eventName, logic, leafletScope, lObject.label, scopeWatchName, model, layerName));
+                });
+        };
 
-    LabelEvents.prototype.bindEvents = function (maybeMapId, lObject, name, model, leafletScope, layerName) {};
+        LabelEvents.prototype.bindEvents = function (maybeMapId, lObject, name, model, leafletScope, layerName) {};
 
-    return new LabelEvents();
+        return new LabelEvents();
 }]);
 
 'use strict';
@@ -4946,10 +4974,12 @@ angular.module('ui-leaflet').factory('leafletMapEvents', ["$rootScope", "$q", "l
     };
 
     var _genDispatchMapEvent = function _genDispatchMapEvent(scope, eventName, logic, maybeMapId) {
+       
         if (maybeMapId) {
             maybeMapId = maybeMapId + '.';
         }
         return function (e) {
+             console.log('MFE leafletDirectiveMap.' + maybeMapId + eventName)
             // Put together broadcast name
             var broadcastName = 'leafletDirectiveMap.' + maybeMapId + eventName;
             leafletLogger.debug(broadcastName);
@@ -5049,7 +5079,7 @@ angular.module('ui-leaflet').factory('leafletMarkerEvents', ["$rootScope", "$q",
 
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 angular.module('ui-leaflet').factory('leafletPathEvents', ["$rootScope", "$q", "leafletLogger", "leafletHelpers", "leafletLabelEvents", "leafletEventsHelpers", function ($rootScope, $q, leafletLogger, leafletHelpers, leafletLabelEvents, leafletEventsHelpers) {
     var isDefined = leafletHelpers.isDefined,
