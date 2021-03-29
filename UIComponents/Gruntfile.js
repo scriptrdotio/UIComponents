@@ -264,6 +264,7 @@ module.exports = function(grunt) {
 		               'concat/min-safe/angular-simple-logger.min.js' : [ 'dashboard/frontend/components/imagemap/0.1.7/angular-simple-logger.min.js'],
 		               'concat/min-safe/ui-leaflet.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet.js'],
 		               'concat/min-safe/ui-leaflet-layers.min.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet-layers.min.js'],
+		               'concat/min-safe/ui-leaflet-draw.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet-draw.js'],
 						   'concat/min-safe/imagemap.js' : [ 'dashboard/frontend/components/imagemap/imagemap.js']
 							
 		            }
@@ -428,7 +429,8 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/markdown-directive.js',
 	                     'concat/min-safe/datetimepicker_directive.js',
 	                     'concat/min-safe/ui-leaflet.js',
-	                     'concat/min-safe/ui-leaflet-layers.min.js'
+	                     'concat/min-safe/ui-leaflet-layers.min.js',
+	                     'concat/min-safe/ui-leaflet-draw.js'
 	                     ],
 	               dest : 'build/js/directives_2.min.js'
 	            },
