@@ -130,7 +130,7 @@ angular
                   "counter" : "@", // increase numbers one by one (bool)
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/gauge/gauge.html',
-               controller : function($scope, httpClient, wsClient, $interval, dataService, $timeout, $window, $element) {
+               controller : function($translate,$rootScope, $scope, httpClient, wsClient, $interval, dataService, $timeout, $window, $element) {
 
 	               var self = this;
 
@@ -138,7 +138,7 @@ angular
 	               	   
                        //if(this.data)
 		               //this.gaugeValue = (this.gaugeValue) ? this.gaugeValue : ((this.data) ? this.data : 0 );
-		               
+		               $translate.use($rootScope.lang);
                        this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/gauge-bg.svg";
                        
                        this.hasData = (!isNaN(parseFloat(this.gaugeValue)) && isFinite(this.gaugeValue)) ?  true : false;
@@ -154,7 +154,7 @@ angular
 		               this.gaugeColor = (this.gaugeColor) ? this.gaugeColor
 		                     : "#e9e9e9";
 		               this.shadowSize = (this.shadowSize) ? this.shadowSize : 0;
-		               this.label = (this.label) ? this.label : "";
+		               this.label = $translate.instant(this.label) ? $translate.instant(this.label) : "";
 		               this.labelFontColor = (this.labelFontColor) ? this.labelFontColor
 		                     : "#666";
 		               this.startAnimationType = (this.startAnimationType) ? this.startAnimationType

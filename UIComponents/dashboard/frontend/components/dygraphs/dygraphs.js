@@ -103,7 +103,7 @@ angular
         //   "rangeStep": "<?",
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.html',
-      controller: function($rootScope, httpClient, wsClient, $scope, $element, $timeout, $interval, $window, dataService) {
+      controller: function($translate, $rootScope, httpClient, wsClient, $scope, $element, $timeout, $interval, $window, dataService) {
         
          var self = this;
          this.$onInit = function() {
@@ -112,7 +112,7 @@ angular
              
              
              //this.evalFuncionalData();
-             
+             $translate.use($rootScope.lang);
              this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/dygraphs-line-bg.svg";
              this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";        
              this.hasData = (this.datas != null  && this.datas.length > 0) ?  true : false;
@@ -140,7 +140,13 @@ angular
                  this.colors = _.pluck(this.colorsMapping, "colors");
                  this.legendLabels = ["x"];
                  this.legendLabels = this.legendLabels.concat(_.pluck(this.colorsMapping, "labels"));
-                 
+                 var legendLabelsArray = angular.copy(this.legendLabels);
+                 var translatedArray = [];
+                 legendLabelsArray.forEach(function(label){
+                     var translatedLabel = $translate.instant(label)
+                     translatedArray.push(translatedLabel)
+                 });
+                 this.legendLabels = translatedArray;
                  this.legendMapping = ["X"];
                  this.legendMapping = this.legendMapping.concat(_.pluck(this.colorsMapping, "axisSelection"));
                  this.legendUnitsMapping = _.pluck(this.colorsMapping, "unit");
@@ -148,8 +154,8 @@ angular
                      if(this.legendUnitsMapping[i-1] && this.legendUnitsMapping[i-1] != "")
                          this.legendLabels[i] = this.legendLabels[i] + " (" + this.legendUnitsMapping[i-1] + ")";
                  }
-                  
                  this.legendLabels = (this.legendLabels) ? this.legendLabels : ["X", "Y1", "Y2", "Y3", "Y4"];   
+                 //this.legendLabels = $translate.instant(this.legendLabels) 
                  console.log("labels",  this.legendLabels)
                  this.legendMapping = (this.legendMapping) ? this.legendMapping : ["x", "y", "y", "y2", "y2"];  
 

@@ -158,15 +158,15 @@ angular
           "horizontal": "@"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
-      controller: function(httpClient, wsClient, $scope, $element, $timeout, $window, $interval, dataService) {
+      controller: function($translate, httpClient,$rootScope, wsClient, $scope, $element, $timeout, $window, $interval, dataService) {
         
          var self = this;
         
          this.$onInit = function() {
-             
+             $translate.use($rootScope.lang);
              this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
              this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/"+this.type+"-chart-bg.svg";
-                       
+                     
              this.hasData = (this.datas && this.datas.length > 0) ?  true : false;
              //if yconfig streatch it to individuals 
              if(self.yconfig){
@@ -212,11 +212,9 @@ angular
              this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];
              this.stacked = (this.stacked) ? this.stacked : false;
              this.resize = (this.resize) ? this.resize : true;
-             
              // donut config
              this.labelColor = (this.labelColor) ? this.labelColor : "#eee";
              this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#fff";
-         
              this.transport = (this.transport) ? this.transport : null;
 		     this.msgTag = (this.msgTag) ? this.msgTag : null;
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";

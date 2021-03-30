@@ -18,11 +18,11 @@ angular
         "icon": "<?"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/common/notifications.html',
-      controller: function($scope) {
+      controller: function($translate, $rootScope, $scope) {
          var self = this;
           
          this.$onInit = function() {
-
+		 $translate.use($rootScope.lang);
       	 }
          
           this.$postLink = function () {

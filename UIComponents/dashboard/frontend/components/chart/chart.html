@@ -6,7 +6,7 @@
     <div ng-if="$ctrl.datas.length > 0"  class="fullHeight">
          <div ng-if="$ctrl.type == 'line'">
             <div class="morris-chart-wrapper" ng-class="($ctrl.showLegend == 'true' && $ctrl.legendType != 'hover') ? 'with-legend' : ' ' ">  
-                  <div
+                  <div 
                      line-data='$ctrl.datas'
                      line-xkey= {{$ctrl.xkey}}
                      line-ykeys='$ctrl.ykeys'
@@ -45,7 +45,8 @@
                      line-grid-text-weight='$ctrl.gridTextWeight'
                      line-fill-opacity='$ctrl.fillOpacity'
                      line-resize='$ctrl.resize'
-                     line-chart>
+                     line-chart
+                     >
                 </div>
           </div>
           <div class="morris-chart-legend" ng-if="$ctrl.showLegend && $ctrl.legendType != 'hover'">

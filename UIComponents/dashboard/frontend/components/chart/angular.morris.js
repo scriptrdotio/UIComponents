@@ -255,7 +255,7 @@
 "use strict";
 /* global Morris */
 (function () {
-    angular.module("angular.morris").directive('barChart', /*@ngInject*/function (angularMorris) {
+    angular.module("angular.morris").directive('barChart', /*@ngInject*/function (angularMorris, $translate) {
         // List of known option keys for barChart according to morris.js docs:
         // http://morrisjs.github.io/morris.js/bars.html
         var OPTION_KEYS = [
@@ -278,7 +278,19 @@
                         if (typeof scope.barY === 'string')
                             scope.barY = JSON.parse(scope.barY);
                         if (typeof scope.barLabels === 'string')
-                            scope.barLabels = JSON.parse(scope.barLabels);
+                            scope.barLabels = $translate.instant(JSON.parse(scope.barLabels));
+                        else {
+                           // var barLabels = $translate.instant(scope.barLabels[0]);
+                           // scope.barLabels = barLabels;
+                            var labels = angular.copy(scope.barLabels);
+                            var translatedArray = [];
+                            labels.forEach(function(label){
+                                var translatedLabel = $translate.instant(label)
+                                translatedArray.push(translatedLabel)
+                            });
+
+                            scope.barLabels = translatedArray;
+                        }
                         if (typeof scope.barData === 'string')
                             scope.barData = JSON.parse(scope.barData);
                         if (typeof scope.barColors === 'string')

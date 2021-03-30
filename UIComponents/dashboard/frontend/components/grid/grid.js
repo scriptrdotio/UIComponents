@@ -65,7 +65,7 @@ angular
             "enableRangeSelection":"<?",
         },
         templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
-        controller : function($scope, $window, $uibModal, $timeout, wsClient, dataStore, $routeParams) {
+        controller : function($translate, $scope, $window, $uibModal, $timeout, wsClient, dataStore, $routeParams) {
             var self = this;
             self.broadcastData = null;
             
@@ -257,7 +257,15 @@ angular
                     },
                     onGridSizeChanged: function(event){
                         self.gridOptions.api.sizeColumnsToFit();
-                    }
+                    },
+                    headerCellRenderer: function(params) { //MFE: this is deprecated but I need it for faster translation https://www.ag-grid.com/archive/12.0.0/javascript-grid-header-rendering/?framework=all#gsc.tab=0 
+                        if(self.onHeaderCellRenderer != null && typeof self.onHeaderCellRenderer() == "function"){
+                            return self.onHeaderCellRenderer()(params);
+                        } else {
+                            return $translate.instant(params.colDef.headerName);
+                        }
+                        
+                    },
                 };
                 this.fixedHeight = (typeof this.fixedHeight != 'undefined') ? this.fixedHeight : true;   
                 this.style = {};   
