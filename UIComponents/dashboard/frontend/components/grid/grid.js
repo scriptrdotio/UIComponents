@@ -58,14 +58,15 @@ angular
             "class" : "@",
             "defaultCellRenderer": "&",  
             "onGridReady" : "&",
-            
-            
+            "customNoRowsLabel": "@",
+            "showLoadingOverlay": "<?",
+            "customLoadingLabel": "@",
             "suppressRowClickSelection": "<?",
             "suppressCellSelection":"<?",
             "enableRangeSelection":"<?",
         },
         templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
-        controller : function($translate, $scope, $window, $uibModal, $timeout, wsClient, dataStore, $routeParams) {
+        controller : function($translate, $rootScope, $scope, $window, $uibModal, $timeout, wsClient, dataStore, $routeParams) {
             var self = this;
             self.broadcastData = null;
             
@@ -97,7 +98,8 @@ angular
                             return self.onFormatData()(data); // Or we can have it as self.onFormatData({"data":data}) and pass it in the on-format-update as: vm.callback(data)
                         }
                     }
-                    
+                    if(self.showLoadingOverlay)
+                    	self.gridOptions.api.showLoadingOverlay();
                     dataStore.getGridData(api, APIParams, transport, tmp).then(
                         function(data, response) {
                             if (data && data.documents) {
@@ -161,10 +163,14 @@ angular
             }
             
             this.$onInit = function() {
+                $translate.use($rootScope.lang);
                 this.hasData = (this.rowData && this.rowData.length > 0) ?  true : false;
                 if(this.data && this.data.length > 0) {
                     this.rowData = angular.copy(this.data);
                 }
+                this.noRowsLabel = this.customNoRowsLabel ? this.customNoRowsLabel : $translate.instant("DASHBOARDS.SOCIAL_DISTANCING.GRID.NO_RESULTS_FOUND");
+                this.showLoadingOverlay = (this.showLoadingOverlay !== undefined) ? this.showLoadingOverlay : false;
+                this.loadingLabel = this.customLoadingLabel ? this.customLoadingLabel : $translate.instant("DASHBOARDS.SOCIAL_DISTANCING.GRID.CUSTOM_LOADING_MESSAGE");
                 this._dataIdentifierProperty = (this.gridDataIdentifierProperty) ? this.gridDataIdentifierProperty : "key";
                 this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
                 this.gridOptions = {
@@ -186,7 +192,8 @@ angular
                     rowModelType : (this.api) ? "infinite" : "",
                     rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
                     paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
-                    overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> Please wait while your rows are loading</span>',
+                    overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> '+$translate.instant(this.loadingLabel)+'</span>',
+                    overlayNoRowsTemplate: '<span class="ag-overlay-no-rows-center">'+$translate.instant(this.noRowsLabel)+'</span>',
                     defaultColDef : {
                         filterParams : {
                             apply : true

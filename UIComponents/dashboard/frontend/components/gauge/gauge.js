@@ -10,6 +10,9 @@ angular
 
                   "onLoad" : "&onLoad",
                   "icon": "@",
+                  "dataFailureMessage": "@",
+                  "stalledDataMessage": "@",
+                  "invalidData": "@",
                   "loadingMessage": "@",
                   "transport": "@",
                   "api" : "@",
@@ -276,10 +279,10 @@ angular
                this.consumeData = function(data, response) {
                    if(data.status && data.status == "failure") {
                          self.noResults = true;
-                         self.dataFailureMessage = "Failed to fetch data.";
+                         self.dataFailureMessage = $translate.instant(this.dataFailureMessage)
                          if(self.gaugeValue) {
                              self.stalledData = true;
-                             self.dataFailureMessage = "Failed to update data.";
+                             self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
                          }
                     } else {
                         if(typeof self.onFormatData() == "function"){
@@ -298,14 +301,14 @@ angular
                                   if(self.gaugeValue != null) {
                                       self.stalledData = true;
                                   } 
-                                  self.dataFailureMessage = "Failed to update data, invalid data format.";
+                                  self.invalidData = $translate.instant(this.invalidData);
                               }
                         } else {
                             self.noResults = true;
                             if(self.gaugeValue != null) {
                                  self.stalledData = true;
                              } 
-                            self.dataFailureMessage = "Failed to update data, invalid data format.";
+                            self.invalidData = $translate.instant(this.invalidData);
                             console.log(e);
                         }
                         

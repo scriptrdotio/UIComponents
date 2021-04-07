@@ -127,7 +127,9 @@ angular
           "eventStrokeWidth": "@", 
           "eventsLineColors": "@", 
           "eventsconfig" : "<?",
-
+          "dataFailureMessage": "@",
+          "stalledDataMessage": "@",
+          "invalidData": "@",
           "continuousLine": "@",
           "axes": "@", 
           "grid": "@", 
@@ -440,10 +442,10 @@ angular
           this.consumeData = function(data, response) {
             if(data.status && data.status == "failure") {
                  this.noResults = true;
-                 this.dataFailureMessage = "Failed to fetch data.";
+                 self.dataFailureMessage = $translate.instant(this.dataFailureMessage)
                  if(this.datas && this.datas.length > 0) {
                      this.stalledData = true;
-                     this.dataFailureMessage = "Failed to update data.";
+                     self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
                  } 
             } else {
                 if(typeof self.onFormatData() == "function"){
@@ -465,21 +467,21 @@ angular
                           if(self.datas != null  && self.datas.length > 0) {
                               self.stalledData = true;
                           } 
-                          self.dataFailureMessage = "Failed to update data, no data returned.";
+                          self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
                       }
                    } else {
                        self.noResults = true;
                        if(self.datas != null  && self.datas.length > 0) {
                           self.stalledData = true;
                         } 
-                        self.dataFailureMessage = "Failed to update data, invalid data format.";
+                        self.invalidData = $translate.instant(this.invalidData);
                    }
                 }else{
                   	self.noResults = true;
                     if(self.datas != null  && self.datas.length > 0) {
                         self.stalledData = true;
                     } 
-                    self.dataFailureMessage = "Failed to update data, invalid data format.";
+                    self.invalidData = $translate.instant(this.invalidData);
                 } 
             }
           }
