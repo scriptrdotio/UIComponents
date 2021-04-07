@@ -4,12 +4,12 @@
 
 <div class="data-notification" ng-if="!$ctrl.usePopover && $ctrl.noResults" ng-class="{'center': !$ctrl.stalledData, 'bottom': $ctrl.stalledData}" >
     <div uib-alert ng-class="{'alert-warning': $ctrl.stalledData, 'alert-danger': !$ctrl.stalledData}">
-        <i class="fa fa-exclamation-triangle fa-1x"></i>{{$ctrl.failureMessage || ('DASHBOARDS.OCCUPANCY.HISTORICAl.GAUGE.INVALID_DATA') | translate}}
+        <i class="fa fa-exclamation-triangle fa-1x"></i>{{$ctrl.failureMessage || ('DASHBOARDS.GLOBAL.DEFAULT_FAILURE_MESSAGE') | translate}}
     </div>
 </div>
 
 <div class="data-notification bottom" ng-if="$ctrl.usePopover && $ctrl.noResults" ng-class="{'danger': ($ctrl.noResults && !$ctrl.stalledData), 'warning': $ctrl.stalledData}"  ng-init="$ctrl.popClass = (($ctrl.noResults && !$ctrl.stalledData) ? 'data-notification-popup alert alert-danger' : (($ctrl.stalledData) ? 'data-notification-popup alert alert-warning' : 'data-notification-popup alert alert-info'))">
-    <div translate uib-popover="{{$ctrl.failureMessage || ('DASHBOARDS.OCCUPANCY.HISTORICAl.GAUGE.INVALID_DATA') | translate}}" popover-placement="auto right" popover-append-to-body="true" popover-class="{{$ctrl.popClass}}" popover-trigger="'outsideClick'">
+    <div translate uib-popover="{{$ctrl.failureMessage || ('DASHBOARDS.GLOBAL.DEFAULT_FAILURE_MESSAGE') | translate}}" popover-placement="auto right" popover-append-to-body="true" popover-class="{{$ctrl.popClass}}" popover-trigger="'outsideClick'">
         <i class="fa fa-exclamation-triangle fa-1x"></i>
     </div>
 </div>
