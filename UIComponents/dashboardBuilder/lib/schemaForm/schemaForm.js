@@ -990,19 +990,16 @@ angular.module('schemaForm').provider('sfErrorMessage', function() {
                 return true;
             }
             if (val && val[error]) {
-                if(Object.keys(validationMessage).length === 0)
-                    message = $translate.instant("sfErrorMessage.defaultMessages."+error, context);
-                else 
-                    message = $translate.instant("sfErrorMessage.customMessages."+error, context); 
-
-                if(message == "sfErrorMessage.defaultMessages."+error) {
-                    message = $interpolate(val[error])(context) ;
-                }
-                else if(message == "sfErrorMessage.customMessages."+error) {
-                    message = $interpolate(val[error])(context) ;
+                if(Object.keys(validationMessage).indexOf(error) == -1) {
+                	message = $translate.instant("sfErrorMessage.defaultMessages."+error, context);
+                    if(message == "sfErrorMessage.defaultMessages."+error) { 
+                        message = $interpolate(val[error])(context) ;
+                    }
+                } else  {
+                	message = $translate.instant(val[error], context); 
                 }
                 return true;
-            }
+            } 
         });
 
       
