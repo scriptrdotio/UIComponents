@@ -980,23 +980,30 @@ angular.module('schemaForm').provider('sfErrorMessage', function() {
       };
         
         
-      [validationMessage, global, defaultMessages].some(function(val) {
-        if (angular.isString(val)) {
-          message = $translate.instant(val, context); 
-          return true;
-        }
-        if(angular.isFunction(val)) {
-            message = val;
-          	return true;
-        }
-        if (val && val[error]) {
-          message = $translate.instant("sfErrorMessage.defaultMessages."+error, context); 
-          if(message == "sfErrorMessage.defaultMessages."+error) {
-              message = $interpolate(val[error])(context) ;
-          }
-          return true;
-        }
-      });
+        [validationMessage, global, defaultMessages].some(function(val) {
+            if (angular.isString(val)) {
+                message = $translate.instant(val, context); 
+                return true;
+            }
+            if(angular.isFunction(val)) {
+                message = val;
+                return true;
+            }
+            if (val && val[error]) {
+                if(Object.keys(validationMessage).length === 0)
+                    message = $translate.instant("sfErrorMessage.defaultMessages."+error, context);
+                else 
+                    message = $translate.instant("sfErrorMessage.customMessages."+error, context); 
+
+                if(message == "sfErrorMessage.defaultMessages."+error) {
+                    message = $interpolate(val[error])(context) ;
+                }
+                if(message == "sfErrorMessage.customMessages."+error) {
+                    message = $interpolate(val[error])(context) ;
+                }
+                return true;
+            }
+        });
 
       
       if (angular.isFunction(message)) {
