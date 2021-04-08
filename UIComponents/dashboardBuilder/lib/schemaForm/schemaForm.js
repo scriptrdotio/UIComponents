@@ -998,7 +998,7 @@ angular.module('schemaForm').provider('sfErrorMessage', function() {
                 if(message == "sfErrorMessage.defaultMessages."+error) {
                     message = $interpolate(val[error])(context) ;
                 }
-                if(message == "sfErrorMessage.customMessages."+error) {
+                else if(message == "sfErrorMessage.customMessages."+error) {
                     message = $interpolate(val[error])(context) ;
                 }
                 return true;
