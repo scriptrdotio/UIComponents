@@ -194,9 +194,9 @@ angular
                     } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
                         $scope.$watch(function( $scope ) {
                             // wait for the timeout
-                            if( (!isNaN(parseFloat($scope.$ctrl.data)) && isFinite($scope.$ctrl.data)) ){
+                            //if( (!isNaN(parseFloat($scope.$ctrl.data)) && isFinite($scope.$ctrl.data)) ){
                                 return $scope.$ctrl.data
-                            }
+                            //}
                         },function(newVal, oldVal){
                             if(JSON.stringify(newVal)){
                                 self.consumeData(newVal);
