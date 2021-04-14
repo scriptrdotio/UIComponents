@@ -65,30 +65,6 @@ angular.module('schemaForm').directive('pickADate', function ($translate, $rootS
               externalOptions.min = formatDate(externalOptions.min);
           }
 
-          if(externalOptions.monthsFull) {
-              var translatedArray = $translate.instant(externalOptions.monthsFull)
-              externalOptions.monthsFull = JSON.parse(translatedArray)
-          }
-          
-          if(externalOptions.weekdaysShort) {
-              var translatedArray = $translate.instant(externalOptions.weekdaysShort)
-              externalOptions.weekdaysShort = JSON.parse(translatedArray)
-          }
-          
-          if(externalOptions.today) {
-              var translatedArray = $translate.instant(externalOptions.today)
-              externalOptions.today = translatedArray
-          }
-          
-          if(externalOptions.clear) {
-              var translatedArray = $translate.instant(externalOptions.clear)
-              externalOptions.clear = translatedArray
-          }
-          
-          if(externalOptions.close) {
-              var translatedArray = $translate.instant(externalOptions.close)
-              externalOptions.close = translatedArray
-          }
 
         var fullOptions = angular.merge({}, basicOptions, externalOptions);
 
@@ -374,30 +350,6 @@ angular.module('schemaForm').directive('pickATime', function ($translate) {
               externalOptions.min = formatTime(externalOptions.min);
           }
 
-          if(externalOptions.monthsFull) {
-              var translatedArray = $translate.instant(externalOptions.monthsFull)
-              externalOptions.monthsFull = JSON.parse(translatedArray)
-          }
-
-          if(externalOptions.weekdaysShort) {
-              var translatedArray = $translate.instant(externalOptions.weekdaysShort)
-              externalOptions.weekdaysShort = JSON.parse(translatedArray)
-          }
-
-          if(externalOptions.today) {
-              var translatedArray = $translate.instant(externalOptions.today)
-              externalOptions.today = translatedArray
-          }
-
-          if(externalOptions.clear) {
-              var translatedArray = $translate.instant(externalOptions.clear)
-              externalOptions.clear = translatedArray
-          }
-
-          if(externalOptions.close) {
-              var translatedArray = $translate.instant(externalOptions.close)
-              externalOptions.close = translatedArray
-          }
 
         var fullOptions = angular.merge({}, basicOptions, externalOptions);
 
