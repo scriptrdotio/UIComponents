@@ -24,7 +24,7 @@ if(jsonResult.metadata.status == "success"){
                 data["token"] = tokens["auth_token"];
                 data["expiry"] = tokens["expiry"];
             } else {
-                var getUserToken = user.generateToken(id, {"password": password, "expiry": 1800, "lifeTime": 7200, "bindToReferrer": "false"});
+                var getUserToken = user.generateToken(id, {"bindToReferrer": "false"});
                 if(getUserToken.metadata.status == "success"){
                     data["token"] = getUserToken.result["token"];
                     data["expiry"] = getUserToken.result["expiry"];
@@ -68,9 +68,11 @@ function writeResponse(data, authKey, id){
     var cookieHeader = {"Set-Cookie": "token=" + data["token"] + ";expires=" + date.toUTCString()+ ";Path=/;Secure"};
     var cookieHeader2 = {"Set-Cookie": "user=" + JSON.stringify(data["user"]) + ";expires=" + date.toUTCString()+ ";Path=/;Secure"};
     var cookieHeader3 = {"Set-Cookie": "lang=" + data["lang"] + ";expires=" + date.toUTCString()+ ";Path=/;Secure"};
+    var cookieHeader4 = {"Set-Cookie": "tokenExpiry=" + date.toUTCString() + ";expires=" + date.toUTCString()+ ";Path=/;Secure"};
     response.addHeaders(cookieHeader);
     response.addHeaders(cookieHeader2);
     response.addHeaders(cookieHeader3);
+    response.addHeaders(cookieHeader4);
     response.addHeaders({"access-control-allow-headers": "Set-Cookie"});
     response.addHeaders(configuration.crossDomainHeaders);
     response.setHeader("content-type","application/json;charset=UTF-8")

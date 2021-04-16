@@ -1,0 +1,11 @@
+var log = require("log"); log.setLevel("info");
+var users = require("user");
+var id = request.user.id;
+log.info("id: " + id);
+var params = request.parameters && Object.keys(request.parameters).length > 0 ? request.parameters : request.body;
+if (params &&  params.body) {
+    params = JSON.parse(params.body);
+}
+var token = params.token;
+log.info("token: " + token);
+return users.renewToken(id, token);

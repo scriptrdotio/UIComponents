@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type ='text/css' />
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css' rel='stylesheet' type ='text/css' />
+   	<link rel="icon" href="data:;base64,iVBORw0KGgo=">  
+    <link href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type ='text/css' />
+    <link href='//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css' rel='stylesheet' type ='text/css' />
     <link href='//fonts.googleapis.com/css?family=Raleway:300,800' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'>
@@ -16,12 +16,24 @@
    
     <link rel="stylesheet" href="/login/view/css/login.css"> 
    
-    
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js" ></script>
-    <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js" ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+    <script src="//code.jquery.com/jquery-1.9.1.min.js" ></script>
+    <script src="//code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+      
+    <!-- i18n -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+    <!-- /i18n -->
+      
+    <script src="/login/view/javascript/global.js"></script>
     <script src="/login/view/javascript/login.js"></script>
     <script src="/login/view/javascript/authorization.js"></script>
     
@@ -44,6 +56,7 @@
         vm.login = constants.login;
         vm.appTitle = constants.appTitle;
         vm.showLang = constants.showLang;
+        vm.languages = constants.languages;
         angular.forEach(vm.login, function(value, key) {
            vm.login[key] = $sce.trustAsHtml(value);
         });
@@ -58,18 +71,16 @@
                   <img ng-src="{{vm.login.logo}}" height="auto">
               </div>
               <div class="form-wrap col-xs-12 col-sm-6">
-                  <div id="login-wrap">
+                  <div id="login-wrap" style="display: none;">
                       
                       <form id="loginForm" class="loginForm">
                           <div class="row">
-                          	<h3 class="col-xs-12" ng-class="(vm.showLang)?'col-lg-7':'text-center'">Welcome !</h3>
+                          	<h3 class="col-xs-12" data-i18n="welcome" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
                             <div class="col-xs-12 col-lg-5 language" ng-if="vm.showLang">
                                 <div class="form-group">
-                                    <img class="login-icon" src="//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/globe.svg">
+                                    <img class="login-icon" ng-src="{{vm.login.language}}">
                                     <select class="form-control" name="langSelect" id="langSelect">
-                                          <option value="EN">English</option>
-                                          <option value="ES">Español</option>
-                                          <option value="FR">Français</option>
+                                          <option ng-repeat="item in vm.languages" value="{{item.value}}">{{item.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -78,16 +89,15 @@
                           <div id="errorMessage" class="error alert alert-danger hide"></div>
                           <div class="form-group">
                               <i class="fa fa-user login-icon" aria-hidden="true"> </i>
-                              <input class="form-control" id="id" name="id" placeholder="Username">
+                              <input class="form-control" id="id" name="id" data-i18n="[placeholder]username" >
                           </div>
                           <div class="form-group">
                               <i class="fa fa-lock login-icon" aria-hidden="true"></i>
-                              <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                              <input type="password" class="form-control" name="password" id="password" data-i18n="[placeholder]password">
                       	  </div>
 
-                          <button id="submitBtn"  class="btn btn-primary btn-block text-uppercase" >Login</button>
-                          <span class="text-primary text-center pull-right"><a href="" id="forgot_password_anchor"><small>Forgot
-                              password?</small></a>
+                          <button id="submitBtn"  class="btn btn-primary btn-block text-uppercase" data-i18n="login"></button>
+                          <span class="text-primary text-center pull-right"><a href="" id="forgot_password_anchor"><small data-i18n="forgot-password"></small></a>
                           </span>
                           <div id="loadingDiv" class="text-center" style="display:none"><i class="fa fa-spinner fa-spin fa-2x fa-fws"></i></div>
                           
@@ -95,18 +105,50 @@
                       </form>
                   </div>
                   <div id="forgot-password-wrap" style="display: none;">
-                      <h3>Get back to your application!</h3>
-                      <h5>We will send password reset instructions to the below email address.</h5>
+                      <h3 data-i18n="forgot-password-title"></h3>
+                      <h5 data-i18n="forgot-password-sub-title"></h5>
                       <form id="forgotPassForm" class="loginForm">
                           <div id="errorMessage" class="error alert alert-danger hide"></div>
                           <div id="successMessage" class="success alert alert-success hide"></div>
                           <div class="form-group">
                               <i class="fa fa-user login-icon" aria-hidden="true"> </i>
-                              <input class="form-control" id="email" name="email" placeholder="Email">
+                              <input class="form-control" id="email" name="email" data-i18n="[placeholder]email">
                           </div>
-                          <button id="submitForgotPassBtn" class="btn btn-primary btn-block text-uppercase">Submit</button>
+                          <button id="submitForgotPassBtn" class="btn btn-primary btn-block text-uppercase" data-i18n="submit"></button>
                           <div id="loadingDiv" class="text-center" style="display:none"><i class="fa fa-spinner fa-spin fa-2x fa-fws"></i></div>
-                          <span class="text-primary text-center pull-right"><a href="" id="back_to_login_anchor"><small>Back to login</small></a></span>
+                          <span class="text-primary text-center pull-right"><a href="" id="back_to_login_anchor"><small data-i18n="back-to-login"></small></a></span>
+                      </form>
+                  </div>
+                  <div id="reset-password-form-wrap" style="display:none;">
+                      <form id="resetPassForm" class="loginForm">
+                          <div class="row">
+                              <h3 class="col-xs-12" data-i18n="reset-password-title" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
+                              <div class="col-xs-12 col-lg-5 language" ng-if="vm.showLang">
+                                  <div class="form-group">
+                                      <img class="login-icon" ng-src="{{vm.login.language}}">
+                                      <select class="form-control" name="langSelect" id="langSelect">
+                                          <option ng-repeat="item in vm.languages" value="{{item.value}}">{{item.name}}</option>
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+                      
+                          <div id="errorMessage" class="error alert alert-danger hide"></div>
+                          <div id="successMessage" class="success alert alert-success hide"></div>
+                          <div class="form-group">
+                              <i class="fa fa-user login-icon" aria-hidden="true"> </i>
+                              <input class="form-control" id="id" name="id" data-i18n="[placeholder]username">
+                          </div>
+                          <div class="form-group">
+                              <i class="fa fa-lock login-icon" aria-hidden="true"></i>
+                              <input type="password" class="form-control" name="password" id="password" data-i18n="[placeholder]password">
+                          </div>
+                          <div class="form-group">
+                              <i class="fa fa-lock login-icon" aria-hidden="true"> </i>
+                              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" data-i18n="[placeholder]confirm-password">
+                          </div>
+                          <button id="submitResetPasswordBtn"  class="btn btn-primary btn-block text-uppercase" data-i18n="reset"></button>
+                          <div id="loadingDiv" class="text-center" style="display:none"><i class="fa fa-spinner fa-spin fa-2x fa-fws"></i></div>
                       </form>
                   </div>
               </div>
@@ -117,6 +159,7 @@
     <script type="text/javascript">	
         $('#loginForm').loginWidget({redirectTarget: config.redirect, expiry: login.expiry, loginApi: login.loginApi, validateTokenApi: login.validateTokenApi});
         $("#forgotPassForm").loginWidget({forgotPasswordApi: forgotPassword.forgotPasswordApi});
+        $("#resetPassForm").loginWidget({redirectResetTarget: config.loginPage, resetPasswordApi: resetPassword.resetPasswordApi});
     </script>
   </body>
 </html>

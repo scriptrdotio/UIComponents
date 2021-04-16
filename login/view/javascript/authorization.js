@@ -65,6 +65,8 @@ $.widget( "scriptr.authorization", {
     onTokenInvalid :function(){
         $.removeCookie('user',{'path':'/'});
         $.removeCookie('token',{'path':'/'});
+        $.removeCookie('tokenExpiry',{'path':'/'});
+        $.removeCookie('lang',{'path':'/'});
         location.href= this.loginPage;
     },
     
@@ -75,6 +77,8 @@ $.widget( "scriptr.authorization", {
     logout:function(){
         $.removeCookie('user',{'path':'/'});
         $.removeCookie('token',{'path':'/'});
+        $.removeCookie('tokenExpiry',{'path':'/'});
+        $.removeCookie('lang',{'path':'/'});
         window.localStorage.clear();
         location.href= this.loginPage;
     }

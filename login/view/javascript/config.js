@@ -16,3 +16,4 @@ var forgotPassword = {
 var resetPassword = {
     resetPasswordApi: "/login/api/resetPassword",
 }
+
