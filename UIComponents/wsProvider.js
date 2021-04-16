@@ -17,7 +17,12 @@ angular
 	            var _token = null;
 	            var _socketUrl = null;
 	            var _socketSession = null;
-                var _queueingInterval = 100; //in ms
+               var _queueingInterval = 100; //in ms
+                
+        var _renewTokenApi = "login/api/renewToken";
+        var _tokenExpiry = null;
+        var _tokenExpiryInterval = 1500000; //used to determine after how much from the current time to renew the token. The value is in ms and it should be set relative to the token expiry time
+        var _tokenUpdateInProgress = false; //used to lock the renew of token so no two concurrent calls update it at the same time
 	            
 	            // Keep all pending requests here until they get responses
 	            var callbacks = {};
@@ -58,10 +63,23 @@ angular
 		           return _subscribeChannel;
 	            };
 
+        this.setRenewTokenApi = function(api){
+            if(api && api != "")
+                _renewTokenApi = api;
+        };
+        this.getRenewTokenApi = function(){
+            return _renewTokenApi;
+        };
 	            this.setToken = function(textString) {
 		            _token = textString;
 	            };
-
+        this.setTokenExpiry = function(tokenExpiry){
+            _tokenExpiry = tokenExpiry;
+        };
+        this.setTokenExpiryInterval = function(tokenExpiryInterval){
+            _tokenExpiryInterval = tokenExpiryInterval;
+        }
+        
 	            var _buildSocketUrl = function() {
 		            _socketUrl = _baseUrl + ((_token) ? ( "/" + _token) : (""));
 	            }
@@ -88,7 +106,15 @@ angular
 		            return _socketSession + "-"
 		                  + ((prefix) ? (prefix + "_" + callbackId) : callbackId);
 	            }
-
+	            
+        var _isTokenExpired = function(){
+            var expiryDate = new Date(_tokenExpiry);
+            var currentDate = new Date();
+            if(expiryDate.getTime() - currentDate.getTime() <= _tokenExpiryInterval && !_tokenUpdateInProgress){
+                return true;
+            }
+            return false;
+        }
 	            this.$get = [
 	                  "$websocket",
 	                  "$cookies",
@@ -96,13 +122,17 @@ angular
 	                  "$rootScope",
                       "_", 
                       "$interval",
-	                  function wsFactory($websocket, $cookies, $q, $rootScope, _, $interval) {
+                      "$http",
+	                  function wsFactory($websocket, $cookies, $q, $rootScope, _, $interval, $http) {
 
 		                  // In case we have a cookie with a token, update the token
 		                  if ($cookies.get("token")) {
 			                  this.setToken($cookies.get("token"));
 		                  }
 
+                if ($cookies.get("tokenExpiry")) {
+                    this.setTokenExpiry($cookies.get("tokenExpiry"));
+                }
 		                  _buildSocketUrl();
 
                           $interval(function() {
@@ -260,6 +290,74 @@ angular
 			                  }
 		                  }
 
+                var setDefaultObject = function(obj, key, value) {
+                    if (!obj || !obj[key]) {
+                        if (!obj) {
+                            obj = {};
+                        }
+                        obj[key] = value;
+                    }
+                    return obj;
+                }
+                var renewToken = function(){
+                    var config = {};
+                    var d = $q.defer();
+                    config["method"] = "GET";
+                    config["url"] = "/" + self.getRenewTokenApi();
+                    if(_token) {
+                        config["headers"] = setDefaultObject(
+                            config["headers"], "Authorization", "Bearer "
+                            + _token);
+                    }
+                    config["params"] = {"token": _token};
+                    $http(config)
+                        .then(
+                        function(response) {
+                            if (response.data
+                                && response.data.response) {
+                                var data = response.data.response;
+                                if (data.metadata.statusCode == "200"
+                                    && data.metadata.status == "success") {
+                                    if (data.result
+                                        && data.result.metadata) {
+                                        // Check for nested scriptr response
+                                        if (data.result.metadata.status == "success") {
+                                            d.resolve(
+                                                data.result.result,
+                                                response);
+                                        } else {
+                                            d
+                                                .reject(
+                                                data.result.metadata,
+                                                response);
+                                        }
+                                    } else {// No Nested scriptr response
+                                        d.resolve(data.result,
+                                                  response);
+                                    }
+                                } else {// Not a success, logical failure
+                                    d.reject(data.metadata,
+                                             response);
+                                }
+                            } else { // It's not a scriptr structure response, resolve and let caller handle the data
+                                console.debug("Not the excpected scriptr response format", response)
+                                d.resolve(response);
+                            }
+                        }, function(err) {
+                            console.log("ERROR", err)
+                            if(err.status == "429") {
+                                if($("body").find(".alert-transport").length == 0) {
+                                    $("body").append("<div class=\"alert alert-danger alert-dismissable alert-transport\" style=\"position: absolute; z-index: 1000; top: 0; width: 600px; left: 30%; text-align: center\">You have reached you requests rate limit. For more info check the <a href=\"https://www.scriptr.io/documentation#documentation-ratelimitingRateLimiting\" target=\"blank\">documentation.</a><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button></div>")
+                                }
+                                console.error("You have reached your requests rate limit. For more info check the documentation. https://www.scriptr.io/documentation#documentation-ratelimitingRateLimiting")   
+                            }
+                            if(err.data && err.data.response && err.data.response.metadata)
+                                d.reject(err.data.response.metadata);
+                            else
+                                d.reject(err);  
+                        });
+                    return d.promise;
+                }
 		                  // properties/methods that will be available in controller when passed the provider
 		                  var methods = {
 
@@ -344,6 +442,14 @@ angular
 		                     },
 
 		                     call : function(scriptName, params, prefix) {
+                        		//update the token and token expiry values in case they were renewed through http calls
+                        		if ($cookies.get("token")) {
+                            		_token = $cookies.get("token");
+                        		}
+                        		if ($cookies.get("tokenExpiry")) {
+                            		self.setTokenExpiry($cookies.get("tokenExpiry"));
+                        		}
+                        		
 			                     var defer = $q.defer();
 			                     var request = {
 			                        "method" : scriptName,
@@ -367,6 +473,34 @@ angular
                                  
                                  queuedCalls.push(request);
                                  
+                        //check if token is about to expire
+                        if(_isTokenExpired()){
+                        	 _tokenUpdateInProgress = true;
+                            renewToken().then(function (data, response) {
+                                var date = new Date();
+                                date.setTime(date.getTime() + (parseInt(data["expiry"])*1000));
+                                $cookies.put('token', data.token, {'path':'/', 'secure': true, 'expires': date.toUTCString()});
+                                $cookies.put('tokenExpiry', date.toUTCString(), {'path':'/', 'secure': true, 'expires': date.toUTCString()});
+                                if ($cookies.get("user")) {
+                                    $cookies.put('user', $cookies.get("user"), {'path':'/', 'secure': true, 'expires': date.toUTCString()});
+                                }
+                                if ($cookies.get("lang")) {
+                                    $cookies.put('lang', $cookies.get("lang"), {'path':'/', 'secure': true, 'expires': date.toUTCString()});
+                                }
+                                self.setToken(data.token);
+                                self.setTokenExpiry(date.toUTCString());
+                                //reconnect the web socket with the new token
+                                _buildSocketUrl();
+                                dataStream.url = _socketUrl;
+                                dataStream.close();
+                                dataStream.reconnect();
+                                _tokenUpdateInProgress = false;
+                                console.log("renew token data: ", data);
+                            },function (err) {
+                                _tokenUpdateInProgress = false;
+                                console.log("Failed to renew token", err);
+                            });
+                        }
 			                     return defer.promise;
 		                     },
                             
@@ -394,6 +528,11 @@ angular
 			                  	  if ($cookies.get("token")) {
 						                  self.setToken($cookies.get("token"));
 					                  }
+					                  
+					                  if ($cookies.get("tokenExpiry")) {
+                            			self.setTokenExpiry($cookies.get("tokenExpiry"));
+                        			}
+                        			
 			                  	  _buildSocketUrl();
 			                  	  
 			                  	  dataStream.url = _socketUrl;
@@ -412,3 +551,4 @@ angular
 		                  return methods;
 	                  } ]
             });
+

@@ -18,7 +18,7 @@ angular.module('ui-leaflet', ['nemLogging']).directive('leaflet', ["$q", "leafle
             maxbounds: '=',
             bounds: '=',
             markers: '=',
-            legend: '=',
+            lfLegend: '=',
             geojson: '=',
             paths: '=',
             tiles: '=',
@@ -3993,7 +3993,7 @@ angular.module('ui-leaflet').directive('layers', ["leafletLogger", "$q", "leafle
 
 'use strict';
 
-angular.module("ui-leaflet").directive('legend', ["leafletLogger", "$http", "$timeout", "leafletHelpers", "leafletLegendHelpers", function (leafletLogger, $http, $timeout, leafletHelpers, leafletLegendHelpers) {
+angular.module("ui-leaflet").directive('lfLegend', ["leafletLogger", "$http", "$timeout", "leafletHelpers", "leafletLegendHelpers", function (leafletLogger, $http, $timeout, leafletHelpers, leafletLegendHelpers) {
     var $log = leafletLogger,
         errorHeader = leafletHelpers.errorHeader + ' [Legend] ';
     return {
@@ -4010,14 +4010,14 @@ angular.module("ui-leaflet").directive('legend', ["leafletLogger", "$http", "$ti
                 isDefined = leafletHelpers.isDefined,
                 isFunction = leafletHelpers.isFunction,
                 leafletScope = controller.getLeafletScope(),
-                legend = leafletScope.legend;
+                lfLegend = leafletScope.lfLegend;
 
             var legendClass;
             var position;
             var leafletLegend;
             var type;
 
-            leafletScope.$watch('legend', function (newLegend) {
+            leafletScope.$watch('lfLegend', function (newLegend) {
 
                 if (isDefined(newLegend)) {
                     legendClass = newLegend.legendClass ? newLegend.legendClass : "legend";
@@ -4046,7 +4046,7 @@ angular.module("ui-leaflet").directive('legend', ["leafletLogger", "$http", "$ti
             };
 
             controller.getMap().then(function (map) {
-                leafletScope.$watch('legend', function (newLegend) {
+                leafletScope.$watch('lfLegend', function (newLegend) {
                     if (!isDefined(newLegend)) {
                         if (isDefined(leafletLegend)) {
                             leafletLegend.removeFrom(map);
