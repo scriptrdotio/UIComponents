@@ -35,5 +35,6 @@
     "INVALID_USER": "An Error has occurred, please send a forgot password again.",
     "INVALID_TOKEN": "Your reset token has expired, please send a forgot password again.",
     "INVALID_ACCOUNT": "Login provided is invalid or your reset token has expired, please enter a valid email address or send a forgot password again.",
-    "INTERNAL_ERROR": "An error has occurred. Please try again later."
+    "INTERNAL_ERROR": "An error has occurred. Please try again later.",
+    "Missing_Parameter": "Mandatory parameters are missing"
 }

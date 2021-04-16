@@ -35,5 +35,6 @@
     "INVALID_USER": "Se ha producido un error, vuelva a enviar una contraseña olvidada.",
     "INVALID_TOKEN": "Su token de restablecimiento ha caducado, envíe una contraseña olvidada nuevamente.",
     "INVALID_ACCOUNT": "El inicio de sesión proporcionado no es válido o su token de restablecimiento ha caducado, ingrese una dirección de correo electrónico válida o envíe una contraseña olvidada nuevamente.",
-    "INTERNAL_ERROR": "Se ha producido un error. Por favor, inténtelo de nuevo más tarde."
+    "INTERNAL_ERROR": "Se ha producido un error. Por favor, inténtelo de nuevo más tarde.",
+    "Missing_Parameter": "Faltan parámetros obligatorios"
 }
