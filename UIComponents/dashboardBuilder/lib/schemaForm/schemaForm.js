@@ -1675,7 +1675,7 @@ angular.module('schemaForm').directive('sfArray', ['sfSelect', 'schemaForm', 'sf
                   if (angular.isFunction(scope.form.onChange)) {
                       scope.form.onChange(scope.modelArray, scope.form, scope.model, scope);
                   } else {
-                      scope.evalExpr(scope.form.onChange, {'modelValue': scope.modelArray, form: scope.form, model: scope.model, scope});
+                      scope.evalExpr(scope.form.onChange, {'modelValue': scope.modelArray, form: scope.form, model: scope.model, scope: scope});
                   }
               }
           };
