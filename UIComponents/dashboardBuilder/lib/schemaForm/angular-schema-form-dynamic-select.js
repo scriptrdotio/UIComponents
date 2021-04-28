@@ -223,11 +223,7 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
         }
 
         if ($scope.insideModel && $scope.select_model.selected === undefined) {
-          console.log("insideModel: "+$scope.insideModel)
-          
-          console.log("titleMap: ", $scope.form.titleMap)
           $scope.select_model.selected = $scope.find_in_titleMap($scope.insideModel);
-          console.log("Selected model select_model.selected: "+$scope.select_model.selected)
         }
 
         // The ui-selects needs to be reinitialized (UI select sets the internalModel and externalModel.

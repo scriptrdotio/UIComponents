@@ -51,7 +51,6 @@ angular
 		            var currentDate = new Date();
 		            if (expiryDate.getTime() - currentDate.getTime() <= _tokenExpiryInterval
 		                  && !_tokenUpdateInProgress) {
-			            _tokenUpdateInProgress = true;
 			            return true;
 		            }
 		            return false;
@@ -180,6 +179,7 @@ angular
                               
 			                  // check if token is about to expire
 			                  if (_isTokenExpired()) {
+			                  	_tokenUpdateInProgress = true;
 				                  renewToken()
 				                        .then(
 				                              function(data, response) {
