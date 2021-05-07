@@ -11,6 +11,7 @@ angular
 	            var _tokenExpiry = null;
 	            var _tokenExpiryInterval = 1500000; // used to determine after how much from the current time to renew the token. The value is in ms and it should be set relative to the token expiry time
 	            var _tokenUpdateInProgress = false; // used to lock the renew of token so no two concurrent calls update it at the same time
+	            var _cookies = {}; //JSON object to keep track of cookies in the session
 	            
 	            var self = this;
 
@@ -41,6 +42,10 @@ angular
 		            _tokenExpiryInterval = tokenExpiryInterval;
 	            };
 	            
+	            this.setCookies = function(name, value){
+		        	_cookies[name] = value;
+		        };
+	            
 	            var _buildUrl = function(scriptName) {
 		            _restUrl = _baseUrl + "/" + scriptName;
 		            console.log(_restUrl)
@@ -68,6 +73,14 @@ angular
 		                  
 		                  if ($cookies.get("tokenExpiry")) {
 			                  this.setTokenExpiry($cookies.get("tokenExpiry"));
+		                  }
+		                  
+		                  if ($cookies.get("user")) {
+		                	  this.setCookies("user", $cookies.get("user"));
+		                  }
+		                  
+		                  if ($cookies.get("lang")) {
+		                	  this.setCookies("lang", $cookies.get("lang"));
 		                  }
 		                  
 		                  var setDefaultObject = function(obj, key, value) {
@@ -200,18 +213,16 @@ angular
 					                                 'secure' : true,
 					                                 'expires' : date.toUTCString()
 					                              });
-					                              if ($cookies.get("user")) {
-						                              $cookies.put('user', $cookies
-						                                    .get("user"), {
+					                              if (_cookies["user"]) {
+						                              $cookies.put('user', _cookies["user"], {
 						                                 'path' : '/',
 						                                 'secure' : true,
 						                                 'expires' : date
 						                                       .toUTCString()
 						                              });
 					                              }
-					                              if ($cookies.get("lang")) {
-						                              $cookies.put('lang', $cookies
-						                                    .get("lang"), {
+					                              if (_cookies["lang"]) {
+						                              $cookies.put('lang', _cookies["lang"], {
 						                                 'path' : '/',
 						                                 'secure' : true,
 						                                 'expires' : date
@@ -264,6 +275,10 @@ angular
 		                     
 		                     updateToken: function(token) {
 		                     	self.setToken(token);
+		                     },
+		                     
+		                     updateCookies: function(name, value){
+		                    	 self.setCookies(name, value);
 		                     }
 		                  };
 		                  return methods;
