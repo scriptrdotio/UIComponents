@@ -17,12 +17,8 @@ angular
 	            var _token = null;
 	            var _socketUrl = null;
 	            var _socketSession = null;
-	            var _queueingInterval = 100; //in ms
+	            var _queueingInterval = 100; //in ms, how much to wait between requests sent over socket connection
                 
-		        var _renewTokenApi = "login/api/renewToken";
-		        var _tokenExpiry = null;
-		        var _tokenExpiryInterval = 1500000; //used to determine after how much from the current time to renew the token. The value is in ms and it should be set relative to the token expiry time
-		        var _tokenUpdateInProgress = false; //used to lock the renew of token so no two concurrent calls update it at the same time
 	            var _cookies = {}; //JSON object to keep track of cookies in the session
 	            // Keep all pending requests here until they get responses
 	            var callbacks = {};
@@ -61,23 +57,11 @@ angular
 		           return _subscribeChannel;
 	            };
 
-		        this.setRenewTokenApi = function(api){
-		            if(api && api != "")
-		                _renewTokenApi = api;
-		        };
-		        this.getRenewTokenApi = function(){
-		            return _renewTokenApi;
-		        };
 	            this.setToken = function(textString) {
 		            _token = textString;
 	            };
-		        this.setTokenExpiry = function(tokenExpiry){
-		            _tokenExpiry = tokenExpiry;
-		        };
-		        this.setTokenExpiryInterval = function(tokenExpiryInterval){
-		            _tokenExpiryInterval = tokenExpiryInterval;
-		        }
-		        this.setCookies = function(name, value){
+
+                this.setCookies = function(name, value){
 		        	_cookies[name] = value;
 		        }
         
@@ -104,18 +88,12 @@ angular
 	            }
 
 	            var _getResponseCallId = function(callbackId, prefix) {
-		            return _socketSession + "-"
-		                  + ((prefix) ? (prefix + "_" + callbackId) : callbackId);
+		            /**return _socketSession + "-"
+		                  + ((prefix) ? (prefix + "_" + callbackId) : callbackId);**/ 
+                    //MFE: remove _socketSession from tracking callbacks as it might lead to losing all callbacks on reconnect as we get a new session id
+                    return((prefix) ? (prefix + "_" + callbackId) : callbackId);
 	            }
 	            
-		        var _isTokenExpired = function(){
-		            var expiryDate = new Date(_tokenExpiry);
-		            var currentDate = new Date();
-		            if(expiryDate.getTime() - currentDate.getTime() <= _tokenExpiryInterval && !_tokenUpdateInProgress){
-		                return true;
-		            }
-		            return false;
-		        }
 	            this.$get = [
 	                  "$websocket",
 	                  "$cookies",
@@ -124,15 +102,14 @@ angular
                       "_", 
                       "$interval",
                       "$http",
-	                  function wsFactory($websocket, $cookies, $q, $rootScope, _, $interval, $http) {
+                      "httpClient",
+	                  function wsFactory($websocket, $cookies, $q, $rootScope, _, $interval, $http, httpClient) {
 
 		                  // In case we have a cookie with a token, update the token
 		                  if ($cookies.get("token")) {
 			                  this.setToken($cookies.get("token"));
 		                  }
-		                  if ($cookies.get("tokenExpiry")) {
-		                	  this.setTokenExpiry($cookies.get("tokenExpiry"));
-		                  }
+		                 
 		                  if ($cookies.get("user")) {
 		                	  this.setCookies("user", $cookies.get("user"));
 		                  }
@@ -141,11 +118,33 @@ angular
 		                  }
 		                  _buildSocketUrl();
 
+                          var isReconnectInProgress = false;
+                          var lastSentRequest = null
                           $interval(function() {
                               if(ready.promise && queuedCalls.length >0) {
                                   var task = queuedCalls[0];
+                                  
+                                  if(httpClient) { //Try to renew token
+                                     	httpClient.renewToken().then(function (data, response) {
+									    				onRenewToken(data);
+		                                		console.log("[wsProvider] Renewed token data initiated by wsClient: ", data);
+		                            		},function (err) {
+                                        	if(err == true) {//_tokenUpdateInProgress a renew token is in process
+                                          	console.log("[wsProvider] A renew token is in progress.")
+                                        	} else {
+                                           	console.log("[wsProvider] No need to renew token.");
+                                        	}
+		                           		});
+                                  
+                                  		//In case a renew token was in place wait or we are reconnecting the socket
+                                  		if(httpClient.isTokenAboutToExpire() || httpClient.isRenewInProgress() || isReconnectInProgress) {
+                                      		console.log("[wsProvider] Pause sending requests over socket. A renew token is in progress.")
+                                      		return;
+                                  		}
+                                  }
                                   dataStream.send(task)
-                                  queuedCalls.shift();
+                                  //Keep track of last sent request in case we need to replay it
+                                  lastSentRequest = queuedCalls.shift();
                               }
                           }, _queueingInterval);
                           
@@ -192,10 +191,21 @@ angular
 		                        });
 
 		                  dataStream.onClose(function(e) {
-			                  console.log("Socket Closed", e);
+			                  console.log("Socket on close ", e);
 			                  close.resolve(e);
-                              if(e.code == "4000" || e.code == "4010") {
-                                 invalidAuthentication.resolve(e);
+                              var currentSocketUrl = e.currentTarget.url;
+                              var currentSocketToken = currentSocketUrl.substring(currentSocketUrl.lastIndexOf("/") + 1, currentSocketUrl.length);
+                              if(e.code == "4000" || e.code == "4010") { //We sent a request and got invalid token response
+                                  console.log("Cookie token "+ $cookies.get("token") + " currentSocketToken "+ currentSocketToken);
+                                  if($cookies.get("token") != currentSocketToken && !isReconnectInProgress) {
+                                     onRenewToken({"token": $cookies.get("token")});
+                                     if(lastSentRequest) {
+                                         queuedCalls.unshift(lastSentRequest);
+                                         lastSentRequest = null;
+                                     }
+                                 } else {
+                                     invalidAuthentication.resolve(e);
+                                 }
                               } else {
                                    console.log("Trying to reconnect closed socket.")
                                    dataStream.reconnect(); // TODO: Make it incremental timed retiral based on status code
@@ -255,6 +265,8 @@ angular
 		                  var callbackHandler = function(data) {
 			                  // Get the message callback id
 			                  var callbackId = data.id;
+                           //Remove the request session id from callback id, because on socket reconnect we are getting a new session id
+                           var callbackId = callbackId.split(/-(.+)/)[1]
 			                  if (callbackId && callbacks.hasOwnProperty(callbackId)) {
 				                  console.log("Execute registered call back for received socket message.", callbacks[callbackId]);
 				                  if(data.status == "failure") {
@@ -296,74 +308,20 @@ angular
 			                  }
 		                  }
 
-			                var setDefaultObject = function(obj, key, value) {
-			                    if (!obj || !obj[key]) {
-			                        if (!obj) {
-			                            obj = {};
-			                        }
-			                        obj[key] = value;
-			                    }
-			                    return obj;
-			                }
-			                var renewToken = function(){
-			                    var config = {};
-			                    var d = $q.defer();
-			                    config["method"] = "GET";
-			                    config["url"] = "/" + self.getRenewTokenApi();
-			                    if(_token) {
-			                        config["headers"] = setDefaultObject(
-			                            config["headers"], "Authorization", "Bearer "
-			                            + _token);
-			                    }
-			                    config["params"] = {"token": _token};
-			                    $http(config)
-			                        .then(
-			                        function(response) {
-			                            if (response.data
-			                                && response.data.response) {
-			                                var data = response.data.response;
-			                                if (data.metadata.statusCode == "200"
-			                                    && data.metadata.status == "success") {
-			                                    if (data.result
-			                                        && data.result.metadata) {
-			                                        // Check for nested scriptr response
-			                                        if (data.result.metadata.status == "success") {
-			                                            d.resolve(
-			                                                data.result.result,
-			                                                response);
-			                                        } else {
-			                                            d
-			                                                .reject(
-			                                                data.result.metadata,
-			                                                response);
-			                                        }
-			                                    } else {// No Nested scriptr response
-			                                        d.resolve(data.result,
-			                                                  response);
-			                                    }
-			                                } else {// Not a success, logical failure
-			                                    d.reject(data.metadata,
-			                                             response);
-			                                }
-			                            } else { // It's not a scriptr structure response, resolve and let caller handle the data
-			                                console.debug("Not the excpected scriptr response format", response)
-			                                d.resolve(response);
-			                            }
-			                        }, function(err) {
-			                            console.log("ERROR", err)
-			                            if(err.status == "429") {
-			                                if($("body").find(".alert-transport").length == 0) {
-			                                    $("body").append("<div class=\"alert alert-danger alert-dismissable alert-transport\" style=\"position: absolute; z-index: 1000; top: 0; width: 600px; left: 30%; text-align: center\">You have reached you requests rate limit. For more info check the <a href=\"https://www.scriptr.io/documentation#documentation-ratelimitingRateLimiting\" target=\"blank\">documentation.</a><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button></div>")
-			                                }
-			                                console.error("You have reached your requests rate limit. For more info check the documentation. https://www.scriptr.io/documentation#documentation-ratelimitingRateLimiting")   
-			                            }
-			                            if(err.data && err.data.response && err.data.response.metadata)
-			                                d.reject(err.data.response.metadata);
-			                            else
-			                                d.reject(err);  
-			                        });
-			                    return d.promise;
-			                }
+                         var onRenewToken = function(data) {
+                             isReconnectInProgress = true;
+                             ready = $q.defer(); //Let the socket send a new ready event on reconnect
+                             ready.promise.then(function() {
+                                 console.log("[updateTokenAndReconnect] token was renewed and soket reconnected.")
+                                 isReconnectInProgress = false;
+                             })
+                             self.setToken(data.token);
+                             //reconnect the web socket with the new token
+                             _buildSocketUrl();
+                             dataStream.url = _socketUrl;
+                             dataStream.close(); //On close will reconnect
+                         }
+		                 
 		                  // properties/methods that will be available in controller when passed the provider
 		                  var methods = {
 
@@ -430,8 +388,9 @@ angular
 
 				                     message["id"] = id;
 				                     console
-				                           .log('Sending publish message', message);
-				                     dataStream.send({
+				                           .log('Sending publish message  over socket.', message);
+
+                                     queuedCalls.push({
 				                        "method" : "Publish",
 				                        "params" : {
 				                           "channel" : publishingChannel,
@@ -452,9 +411,6 @@ angular
                         		if ($cookies.get("token")) {
                             		_token = $cookies.get("token");
                         		}
-                        		if ($cookies.get("tokenExpiry")) {
-                            		self.setTokenExpiry($cookies.get("tokenExpiry"));
-                        		}
                         		
 			                     var defer = $q.defer();
 			                     var request = {
@@ -474,39 +430,8 @@ angular
 
 			                     request["id"] = _getRequestCallId(callbackId, prefix);
 			                     console.log('Sending call api request over socket.', request);
-                               
-			                      //dataStream.send(request);
-                                 
                                  queuedCalls.push(request);
                                  
-		                        //check if token is about to expire
-		                        if(_isTokenExpired()){
-		                        	 _tokenUpdateInProgress = true;
-		                            renewToken().then(function (data, response) {
-		                                var date = new Date();
-		                                date.setTime(date.getTime() + (parseInt(data["expiry"])*1000));
-		                                $cookies.put('token', data.token, {'path':'/', 'secure': true, 'expires': date.toUTCString()});
-		                                $cookies.put('tokenExpiry', date.toUTCString(), {'path':'/', 'secure': true, 'expires': date.toUTCString()});
-		                                if (_cookies["user"]) {
-		                                    $cookies.put('user', _cookies["user"], {'path':'/', 'secure': true, 'expires': date.toUTCString()});
-		                                }
-		                                if (_cookies["lang"]) {
-		                                    $cookies.put('lang', _cookies["lang"], {'path':'/', 'secure': true, 'expires': date.toUTCString()});
-		                                }
-		                                self.setToken(data.token);
-		                                self.setTokenExpiry(date.toUTCString());
-		                                //reconnect the web socket with the new token
-		                                _buildSocketUrl();
-		                                dataStream.url = _socketUrl;
-		                                dataStream.close();
-		                                dataStream.reconnect();
-		                                _tokenUpdateInProgress = false;
-		                                console.log("renew token data: ", data);
-		                            },function (err) {
-		                                _tokenUpdateInProgress = false;
-		                                console.log("Failed to renew token", err);
-		                            });
-		                        }
 			                     return defer.promise;
 		                     },
                             
@@ -529,23 +454,9 @@ angular
 				                     dataStream.close(false);
 			                     }
 		                     }, 
-		                    updateTokenAndReconnect: function() {
-		                  	  
-		                  	  if ($cookies.get("token")) {
-					                  self.setToken($cookies.get("token"));
-				                  }
-				                  
-				                  if ($cookies.get("tokenExpiry")) {
-                        			self.setTokenExpiry($cookies.get("tokenExpiry"));
-                    			}
-                    			
-		                  	  _buildSocketUrl();
-		                  	  
-		                  	  dataStream.url = _socketUrl;
-		                  	  
-		                  	  dataStream.close();
-		                  	  
-		                  	  dataStream.reconnect();
+		                     
+                            updateTokenAndReconnect: function() {
+                                  onRenewToken({"token": $cookies.get("token")})
 		                    },
 	                    	updateCookies: function(name, value){
 		                    	 self.setCookies(name, value);
