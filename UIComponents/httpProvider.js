@@ -9,15 +9,15 @@ angular
 	            
 	            var _renewTokenApi = "login/api/renewToken"; // default api to renew token
 	            var _tokenExpiry = null;
-	            var _tokenExpiryInterval = 1500000; // used to determine after how much from the current time to renew the token. The value is in ms and it should be set relative to the token expiry time
-	            var _tokenUpdateInProgress = false; // used to lock the renew of token so no two concurrent calls update it at the same time
+	            var _tokenRenewInterval = 1500000; // in ms, If time remaining for token to expire is less than _tokenRenewInterval a renewToken will be invoked
+	            var _tokenUpdateInProgress = false; // used to lock the renew of token so no two concurrent calls renew it it at the same time
 	            var _cookies = {}; //JSON object to keep track of cookies in the session
 	            
 	            var self = this;
 
 	            this.setBaseUrl = function(textString) {
 		            _baseUrl = textString;
-		            console.log(_baseUrl)
+		             console.log(_baseUrl)
 	            };
 	            
 	            this.setToken = function(textString) {
@@ -38,8 +38,8 @@ angular
 		            _tokenExpiry = tokenExpiry;
 	            };
 	            
-	            this.setTokenExpiryInterval = function(tokenExpiryInterval) {
-		            _tokenExpiryInterval = tokenExpiryInterval;
+	            this.setTokenRenewInterval = function(tokenRenewInterval) {
+		            _tokenRenewInterval = tokenRenewInterval;
 	            };
 	            
 	            this.setCookies = function(name, value){
@@ -51,11 +51,11 @@ angular
 		            console.log(_restUrl)
 	            };
 	            
-	            var _isTokenExpired = function() {
+	            //Check if token expiry is <= _tokenRenewInterval
+	            var _isTokenAboutToExpire = function() {
 		            var expiryDate = new Date(_tokenExpiry);
 		            var currentDate = new Date();
-		            if (expiryDate.getTime() - currentDate.getTime() <= _tokenExpiryInterval
-		                  && !_tokenUpdateInProgress) {
+		            if (expiryDate.getTime() - currentDate.getTime() <= _tokenRenewInterval) {
 			            return true;
 		            }
 		            return false;
@@ -67,6 +67,9 @@ angular
 	                  "$http",
 	                  function wsFactory($cookies, $q, $http) {
 
+                          
+                        var invalidAuthentication = $q.defer();
+                          
 		                  if ($cookies.get("token")) {
 			                  _token = $cookies.get("token");
 		                  }
@@ -89,26 +92,80 @@ angular
 					                  obj = {};
 				                  }
 				                  obj[key] = value;
-			                  }
+			                  } else {
+                                  obj[key] = value;
+                           }
 			                  return obj;
 		                  }
-		                  
-		                  var renewToken = function() {
-			                  var d = $q.defer();
-			                  // Build base rest Url
-			                  _buildUrl(self.getRenewTokenApi());
-			                  config["url"] = _restUrl;
-			                  if (_token) {
-				                  config["headers"] = setDefaultObject(
-				                        config["headers"], "Authorization",
-				                        "Bearer " + _token);
-			                  }
-			                  config["params"] = {
-				                  "token" : _token
-			                  };
+                          
+		                  self._renewToken = function() {
+			                   var d2 = $q.defer();
                               
-                              d = httpCall(d, config);
-			                  return d.promise;
+                              // check if token is about to expire
+			                  if (_isTokenAboutToExpire()  && !_tokenUpdateInProgress) {
+			                 	  _tokenUpdateInProgress = true;
+                                 // Build base rest Url
+                                  _buildUrl(self.getRenewTokenApi());
+                                  config["url"] = _restUrl;
+                                  if (_token) {
+                                      config["headers"] = setDefaultObject(
+                                          config["headers"], "Authorization",
+                                          "Bearer " + _token);
+                                  }
+                                  config["params"] = {
+                                      "token" : _token
+                                  };
+
+                                  var d = $q.defer();
+                                  var promise = httpCall(d, config).promise;
+                                  promise.then(function(data, response) {
+                                      _tokenUpdateInProgress = false;
+                                      var date = new Date();
+                                      date
+                                          .setTime(date.getTime()
+                                                   + (parseInt(data["expiry"]) * 1000));
+                                      $cookies.put('token', data.token,
+                                                   {
+                                          'path' : '/',
+                                          'secure' : true,
+                                          'expires' : date
+                                          .toUTCString()
+                                      });
+                                      $cookies.put('tokenExpiry', date
+                                                   .toUTCString(), {
+                                          'path' : '/',
+                                          'secure' : true,
+                                          'expires' : date.toUTCString()
+                                      });
+                                      if (_cookies["user"]) {
+                                          $cookies.put('user', _cookies["user"], {
+                                              'path' : '/',
+                                              'secure' : true,
+                                              'expires' : date
+                                              .toUTCString()
+                                          });
+                                      }
+                                      if (_cookies["lang"]) {
+                                          $cookies.put('lang', _cookies["lang"], {
+                                              'path' : '/',
+                                              'secure' : true,
+                                              'expires' : date
+                                              .toUTCString()
+                                          });
+                                      }
+                                      self.setToken(data.token);
+                                      self.setTokenExpiry(date
+                                                          .toUTCString());
+                                      d2.resolve(data, response)
+                                  }, function(data, response){
+                                       _tokenUpdateInProgress = false;
+                                       d2.reject(data, response);
+                                  });
+                                  
+                              } else {
+                                  d2.reject(_tokenUpdateInProgress);
+                              }
+                              return d2.promise;
 		                  }
                           
                           var httpCall = function(d, config){
@@ -128,6 +185,9 @@ angular
                                                           data.result.result,
                                                           response);
                                                   } else {
+                                                       if(data.result.metadata.errorCode == "INVALID_TOKEN") {
+                                                            invalidAuthentication.resolve(e);
+                                                      }
                                                       d
                                                           .reject(
                                                           data.result.metadata,
@@ -138,6 +198,9 @@ angular
                                                             response);
                                               }
                                           } else {// Not a success, logical failure
+                                              if(data.metadata.errorCode == "INVALID_TOKEN") {
+                                          			invalidAuthentication.resolve(data.metadata);
+                                      		  }
                                               d.reject(data.metadata,
                                                        response);
                                           }
@@ -161,12 +224,18 @@ angular
                                           console
                                               .error("You have reached your requests rate limit. For more info check the documentation. https://www.scriptr.io/documentation#documentation-ratelimitingRateLimiting")
                                       }
+                                      if(err.status == "400" && err.data && err.data.response
+                                          && err.data.response.metadata &&  err.data.response.metadata.errorCode == "INVALID_TOKEN" ) {
+                                          invalidAuthentication.resolve(err.data.response.metadata);
+                                      }
                                       if (err.data && err.data.response
-                                          && err.data.response.metadata)
+                                          && err.data.response.metadata) {
                                           d
                                               .reject(err.data.response.metadata);
-                                      else
+                                      } else {
                                           d.reject(err);
+                                      }
+                                          
                                   });
                               return d;
                           }
@@ -190,56 +259,18 @@ angular
 			                  }
                               d = httpCall(d, config);
                               
-			                  // check if token is about to expire
-			                  if (_isTokenExpired()) {
-			                  	_tokenUpdateInProgress = true;
-				                  renewToken()
-				                        .then(
-				                              function(data, response) {
-					                              var date = new Date();
-					                              date
-					                                    .setTime(date.getTime()
-					                                          + (parseInt(data["expiry"]) * 1000));
-					                              $cookies.put('token', data.token,
-					                                    {
-					                                       'path' : '/',
-					                                       'secure' : true,
-					                                       'expires' : date
-					                                             .toUTCString()
-					                                    });
-					                              $cookies.put('tokenExpiry', date
-					                                    .toUTCString(), {
-					                                 'path' : '/',
-					                                 'secure' : true,
-					                                 'expires' : date.toUTCString()
-					                              });
-					                              if (_cookies["user"]) {
-						                              $cookies.put('user', _cookies["user"], {
-						                                 'path' : '/',
-						                                 'secure' : true,
-						                                 'expires' : date
-						                                       .toUTCString()
-						                              });
-					                              }
-					                              if (_cookies["lang"]) {
-						                              $cookies.put('lang', _cookies["lang"], {
-						                                 'path' : '/',
-						                                 'secure' : true,
-						                                 'expires' : date
-						                                       .toUTCString()
-						                              });
-					                              }
-					                              self.setToken(data.token);
-					                              self.setTokenExpiry(date
-					                                    .toUTCString());
-				                              },
-				                              function(err) {
-					                              console
-					                                    .log(
-					                                          "Failed to renew token",
-					                                          err);
-				                              });
-			                  }
+				              self._renewToken()
+                                  .then(
+                                  function(data, response) { 
+                                      console.log("https renew token data: ", data);
+                                  },
+                                  function(err) {
+                                     if(err == true) {//_tokenUpdateInProgress a renew token is in process
+                                         console.log("A renew token is in progress.")
+                                     } else {
+                                         console.log("No need to renew token.");
+                                     }
+                                  });
 			                  return d.promise;
 		                  };
 		                  var methods = {
@@ -276,10 +307,24 @@ angular
 		                     updateToken: function(token) {
 		                     	self.setToken(token);
 		                     },
-		                     
+                              
+                             isTokenAboutToExpire: function() {
+                               return  _isTokenAboutToExpire(); 
+                             },
+                              
+                             isRenewInProgress: function() {
+                               return  _tokenUpdateInProgress; 
+                             },
+                              
+                             renewToken: function() {
+                                 return self._renewToken();
+                             },
+                              
 		                     updateCookies: function(name, value){
 		                    	 self.setCookies(name, value);
-		                     }
+		                     },
+                              
+                             onInvalidAuthentication: invalidAuthentication.promise
 		                  };
 		                  return methods;
 	                  }]; 

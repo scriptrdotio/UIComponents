@@ -304,7 +304,8 @@
         {
          	 onTokenValid: function(){ }, 
              loginPage: config.loginPage,
-             validateTokenApi: login.validateTokenApi
+             validateTokenApi: login.validateTokenApi,
+             validateTokenInterval: login.validateTokenInterval
 
         }
       )
@@ -341,8 +342,15 @@
             }) 
             .otherwise({redirectTo:'/'})
        })
-   	  angular.module('myApp').controller('dashboardCtrl', function($scope, httpClient, $sce, $route, $routeParams) {
+   	  angular.module('myApp').controller('dashboardCtrl', function($scope, httpClient, wsClient, $sce, $route, $routeParams) {
           var vm = this;
+          wsClient.onInvalidAuthentication.then(function(e) {
+             authorization.onTokenInvalid() 
+         });
+           
+         httpClient.onInvalidAuthentication.then(function(e) {
+             authorization.onTokenInvalid() 
+         });
       });
 }(jQuery));     
 </script>
