@@ -245,7 +245,7 @@ $.widget( "scriptr.loginWidget", {
         var login = this.element.find("#id").val();
         var password=  this.element.find("#password").val();
       	var langSelect=  this.element.find("#langSelect") ? this.element.find("#langSelect").val() : null;
-        var parameters = {"id" : login, "password" : password, "langSelect" : langSelect, "expiry" : "" + this.expiry};
+        var parameters = {"id" : login, "password" : password, "langSelect" : langSelect};
         $.ajax({
             type: "POST",
             url: "https://"+ document.location.hostname + this.loginApi,
