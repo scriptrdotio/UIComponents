@@ -49,9 +49,10 @@ var config = {
 }
 
 var login = {
-   expiry:6,
    loginApi: "/login/api/login",
    validateTokenApi: "/login/api/validateToken",
+   validateTokenInterval:30 //in seconds if not set it will default to 30. Sets the interval over which we will call validateTokenApi to check if the token is still valid. This is needed for static pages who don't pass by providers httpClient & wsClient.
+
 };
 
 var forgotPassword = {
