@@ -79,3 +79,39 @@ myApp.constant("constants", {
   }
 })
 ```
+
+## sample usage in applications
+
+```
+<!-- login includes -->
+    <script src="/login/view/javascript/authorization.js"></script>
+    <script src="/login/view/javascript/config.js"></script>
+```
+
+```
+<script type="text/javascript"> 
+          
+          var authorization  = $.scriptr.authorization(
+              {
+                  onTokenValid: function(){ }, 
+                  loginPage: config.loginPage,
+                  validateTokenApi: login.validateTokenApi,
+                  validateTokenInterval: login.validateTokenInterval
+              }
+          );
+
+          angular.module('myApp').controller('myAppCtrl', function($rootScope, $scope, constants, $sce, wsClient, httpClient) {
+            
+            wsClient.onInvalidAuthentication.then(function(e) {
+                authorization.onTokenInvalid() 
+            });
+              
+            httpClient.onInvalidAuthentication.then(function(e) {
+                authorization.onTokenInvalid() 
+            });
+         });
+          
+     	
+    </script>
+```
+
