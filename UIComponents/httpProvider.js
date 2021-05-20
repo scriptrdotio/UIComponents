@@ -100,10 +100,14 @@ angular
                           
 		                  self._renewToken = function() {
 			                   var d2 = $q.defer();
-                              
                               // check if token is about to expire
 			                  if (_isTokenAboutToExpire()  && !_tokenUpdateInProgress) {
-			                 	  _tokenUpdateInProgress = true;
+			                  	   var config = {
+					                     "method" : "GET"
+				                     };
+			                  	
+			                  	  _tokenUpdateInProgress = true;
+			                 	  		
                                  // Build base rest Url
                                   _buildUrl(self.getRenewTokenApi());
                                   config["url"] = _restUrl;
