@@ -53,12 +53,15 @@ angular
 	            
 	            //Check if token expiry is <= _tokenRenewInterval
 	            var _isTokenAboutToExpire = function() {
-		            var expiryDate = new Date(_tokenExpiry);
-		            var currentDate = new Date();
-		            if (expiryDate.getTime() - currentDate.getTime() <= _tokenRenewInterval) {
-			            return true;
-		            }
-		            return false;
+	            	var isExpiring = false;
+	            	if(_tokenExpiry) {
+	            		var expiryDate = new Date(_tokenExpiry);
+			            var currentDate = new Date();
+			            if (expiryDate.getTime() - currentDate.getTime() <= _tokenRenewInterval) {
+			            	isExpiring = true;
+			            }
+	            	} 
+		            return isExpiring;
 	            };
 	            
 	            this.$get = [
