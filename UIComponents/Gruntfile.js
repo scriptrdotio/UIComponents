@@ -77,7 +77,9 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/legacy.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.date.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.time.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'
+	                     'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js'
 	               ]
 	            }
 	         },
@@ -359,6 +361,8 @@ module.exports = function(grunt) {
 	               src : [
 	                     'concat/min-safe/angular-underscore.js',
 	                     'concat/min-safe/angular-translate.min.js',
+	                     'lib/angular-translate-loader-static-files.js',
+	                     'lib/angular-translate-handler-log.js',
 	                     'concat/min-safe/select.min.js',
 	                     'lib/ui-bootstrap.min.js',
 	                     'lib/ui-bootstrap-tpls.min.js',
