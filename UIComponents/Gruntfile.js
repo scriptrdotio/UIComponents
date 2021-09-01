@@ -225,7 +225,6 @@ module.exports = function(grunt) {
 		               'concat/min-safe/bootstrap-colorpicker.min.js' : [ 'dashboardBuilder/lib/schemaForm/bootstrap-colorpicker.min.js' ],
 		               'concat/min-safe/ng-file-upload.js' : [ 'dashboardBuilder/lib/schemaForm/ng-file-upload.js' ],
 		               'concat/min-safe/schema-form-file.js' : [ 'dashboardBuilder/lib/schemaForm/schema-form-file.js' ],
-		               //'concat/min-safe/schema-form-date-time-picker.min.js':['dashboardBuilder/lib/schemaForm/schema-form-date-time-picker.min.js'],
 		              'concat/min-safe/bootstrap-picker.js':['dashboardBuilder/lib/schemaForm/bootstrap-picker.js'],		              
 		              'concat/min-safe/ui.sortable.js':['dashboardBuilder/lib/schemaForm/ui.sortable.js'],
 		               'concat/min-safe/ui-codemirror.js' : [ 'dashboardBuilder/lib/codemirror/js/mode/ui-codemirror.js' ],
@@ -425,10 +424,9 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/angular-strap.js',
 	                     'concat/min-safe/angular-strap.tpl.min.js',
 	                     'concat/min-safe/angular-schema-form-dynamic-select.js',
-	                     //'concat/min-safe/schema-form-date-time-picker.min.js',
 	                     'lib/picker.js',
 	                     'lib/legacy.js',
-	                     'lib/picker.data.js',
+	                     'lib/picker.date.js',
 	                     'lib.picker.time.js',
 	                     'concat/min-safe/bootstrap-picker.js',
 	                     'concat/min-safe/markdown-directive.js',
@@ -539,7 +537,7 @@ module.exports = function(grunt) {
 	                     'dashboardBuilder/lib/schemaForm/schema-form-file.css',
 	                     'layout/frontend/components/header/header.css',
 	                     'layout/frontend/components/menu/menu.css',
-	                     //'dashboard/frontend/components/datetimepicker/datetimepicker.css',
+	                     'dashboard/frontend/components/datetimepicker/datetimepicker.css',
 	                     'lib/classic.css',
 	                     'lib/classic.date.css',
 	                     'lib/classic.time.css',
@@ -577,31 +575,31 @@ module.exports = function(grunt) {
 	             },
 	             dist: {
 	                files: {
-	                    'build/css/components.stripped.css': 'build/css/components.css',
-	                    'build/css/light.stripped.css': 'dashboardBuilder/css/light.css',
-	                    'build/css/dark.stripped.css': 'dashboardBuilder/css/dark.css'
+	                    'build/css/components.css': 'build/css/components.css',
+	                    'build/css/light.css': 'dashboardBuilder/css/light.css',
+	                    'build/css/dark.css': 'dashboardBuilder/css/dark.css'
 	                    
 	                }
 	            }
 	         },
 	         cssmin : {
 	            components : {
-	               src : 'build/css/components.stripped.css',
+	               src : 'build/css/components.css',
 	               dest : 'build/css/components.min.css'
 	            },
 	            light: {
-	            	src : 'build/css/light.stripped.css',
+	            	src : 'build/css/light.css',
 	               dest : 'build/css/light.min.css'
 	            },
 	            dark: {
-	            	src : 'build/css/dark.stripped.css',
+	            	src : 'build/css/dark.css',
 	               dest : 'build/css/dark.min.css'
 	            }
 
 	         },
 
 	         clean : {
-		         folder : [ 'concat/', 'lib/', 'build/css', 'build/javascript' ]
+		         folder : [ 'concat/', 'lib/', 'build/css', 'build/js' ]
 	         },
 
 	         less : {
@@ -664,6 +662,7 @@ module.exports = function(grunt) {
 	// Run the tasks
 	grunt.registerTask('buildCss', [ 'less:production' ]);
 	grunt.registerTask('dashboardBuilder', [ 
+			'clean',
 			'fetchFromCDN', 
 			'fetch_ag_grid',
 	      'ngtemplates', 
