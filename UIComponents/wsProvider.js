@@ -30,6 +30,8 @@ angular
 	            var subscribersRegistry = {};
 
 	             var queuedCalls = [];
+	             
+	             var dontOpenWSConnection = false;
 
                 
                 /** This section for setting queuing interval in ms * */
@@ -61,9 +63,13 @@ angular
 		            _token = textString;
 	            };
 
-                this.setCookies = function(name, value){
+               this.setCookies = function(name, value){
 		        	_cookies[name] = value;
 		        }
+               
+               this.preventConnectionSetup = function(value) {
+               	dontOpenWSConnection = value
+               }
         
 	            var _buildSocketUrl = function() {
 		            _socketUrl = _baseUrl + ((_token) ? ( "/" + _token) : (""));
@@ -94,6 +100,7 @@ angular
                     return((prefix) ? (prefix + "_" + callbackId) : callbackId);
 	            }
 	            
+	            
 	            this.$get = [
 	                  "$websocket",
 	                  "$cookies",
@@ -116,40 +123,18 @@ angular
 		                  if ($cookies.get("lang")) {
 		                	  this.setCookies("lang", $cookies.get("lang"));
 		                  }
-		                  _buildSocketUrl();
-
-                          var isReconnectInProgress = false;
-                          var lastSentRequest = null
-                          $interval(function() {
-                              if(ready.promise && queuedCalls.length >0) {
-                                  var task = queuedCalls[0];
-                                  
-                                  if(httpClient) { //Try to renew token
-                                     	httpClient.renewToken().then(function (data, response) {
-									    				onRenewToken(data);
-		                                		console.log("[wsProvider] Renewed token data initiated by wsClient: ", data);
-		                            		},function (err) {
-                                        	if(err == true) {//_tokenUpdateInProgress a renew token is in process
-                                          	console.log("[wsProvider] A renew token is in progress.")
-                                        	} else {
-                                           	console.log("[wsProvider] No need to renew token.");
-                                        	}
-		                           		});
-                                  
-                                  		//In case a renew token was in place wait or we are reconnecting the socket
-                                  		if(httpClient.isTokenAboutToExpire() || httpClient.isRenewInProgress() || isReconnectInProgress) {
-                                      		console.log("[wsProvider] Pause sending requests over socket. A renew token is in progress.")
-                                      		return;
-                                  		}
-                                  }
-                                  dataStream.send(task)
-                                  //Keep track of last sent request in case we need to replay it
-                                  lastSentRequest = queuedCalls.shift();
-                              }
-                          }, _queueingInterval);
                           
+                    var dataStream  = null;
+                          
+                    if(!dontOpenWSConnection) {
+                  	
+                  	  _buildSocketUrl();
+		                  
+                       var isReconnectInProgress = false;
+                       var lastSentRequest = null
+                       
 		                  // Open a WebSocket connection
-		                  var dataStream = $websocket(_socketUrl);
+		                 dataStream = $websocket(_socketUrl);
 
 		                  var msg = {};
 		                  var ready = $q.defer();
@@ -216,17 +201,48 @@ angular
 			                  console.log("Socket Error", e);
 			                  error.resolve();
 		                  });
+		                  
+		                  
+		                  $interval(function() {
+                           if(ready && ready.promise && queuedCalls.length >0) {
+                               var task = queuedCalls[0];
+                               
+                               if(httpClient) { //Try to renew token
+                                  	httpClient.renewToken().then(function (data, response) {
+								    				onRenewToken(data);
+	                                		console.log("[wsProvider] Renewed token data initiated by wsClient: ", data);
+	                            		},function (err) {
+                                     	if(err == true) {//_tokenUpdateInProgress a renew token is in process
+                                       	console.log("[wsProvider] A renew token is in progress.")
+                                     	} else {
+                                        	console.log("[wsProvider] No need to renew token.");
+                                     	}
+	                           		});
+                               
+                               		//In case a renew token was in place wait or we are reconnecting the socket
+                               		if(httpClient.isTokenAboutToExpire() || httpClient.isRenewInProgress() || isReconnectInProgress) {
+                                   		console.log("[wsProvider] Pause sending requests over socket. A renew token is in progress.")
+                                   		return;
+                               		}
+                               }
+                               dataStream.send(task)
+                               //Keep track of last sent request in case we need to replay it
+                               lastSentRequest = queuedCalls.shift();
+                           }
+                       }, _queueingInterval);
+		                  
+		        }
                           
                           var subscribe = function(channels) {
                               if (channels) {
-                               if(typeof channels == "string") {
-                                  dataStream.send(JSON.stringify({
-				                     "method" : "Subscribe",
-				                     "params" : {
-					                     "channel" : channels
-				                     }
-				                  }));
-                               } else if(channels.constructor.name == "Array") {
+                               if(typeof channels == "string" && dataStream) {
+	                                  dataStream.send(JSON.stringify({
+					                     "method" : "Subscribe",
+					                     "params" : {
+						                     "channel" : channels
+					                     }
+					                  }));
+                               } else if(channels.constructor.name == "Array" && dataStream) {
                                    for(var i =0; i < channels.length; i++) {
                                      dataStream.send(JSON.stringify({
 				                     "method" : "Subscribe",
@@ -241,14 +257,14 @@ angular
                           
                           var unsubscribe = function(channels) {
                               if (channels) {
-                               if(typeof channels == "string") {
+                               if(typeof channels == "string" && dataStream) {
                                   dataStream.send(JSON.stringify({
 				                     "method" : "Unsubscribe",
 				                     "params" : {
 					                     "channel" : channels
 				                     }
 				                  }));
-                               } else if(channels.constructor.name == "Array") {
+                               } else if(channels.constructor.name == "Array" && dataStream) {
                                    for(var i =0; i < channels.length; i++) {
                                      dataStream.send(JSON.stringify({
 				                     "method" : "Unscubscribe",
@@ -260,6 +276,8 @@ angular
                                }
 			                  }
                           }
+                          
+                      
 
 		                  // Check if message received has a registered callback in our registry
 		                  var callbackHandler = function(data) {
@@ -316,10 +334,14 @@ angular
                                  isReconnectInProgress = false;
                              })
                              self.setToken(data.token);
-                             //reconnect the web socket with the new token
-                             _buildSocketUrl();
-                             dataStream.url = _socketUrl;
-                             dataStream.close(); //On close will reconnect
+                             
+                             if(dataStream) {
+                           	  //reconnect the web socket with the new token
+                                _buildSocketUrl();
+                                dataStream.url = _socketUrl;
+                                dataStream.close(); //On close will reconnect
+                             }
+                             
                          }
 		                 
 		                  // properties/methods that will be available in controller when passed the provider
@@ -328,7 +350,7 @@ angular
 		                     getMessage : function(){ return msg;},
 
 		                     getStatus : function() {
-			                     return dataStream.readyState;
+	                     		return dataStream.readyState;
 		                     },
 
 		                     subscribe : function(prefix, callback, id) {
