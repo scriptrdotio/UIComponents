@@ -31,7 +31,7 @@
     * @ngdoc object
     * @name angular.morris
     **/
-    angular.module('angular.morris', []);
+    angular.module('angular.morris', ['pascalprecht.translate']);
 })();
 /**
  * angular-morris is an angular.js module that wraps morris.js charts

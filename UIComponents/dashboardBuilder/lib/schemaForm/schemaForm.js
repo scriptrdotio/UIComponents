@@ -28,6 +28,13 @@ try {
   angular.module('angularSpectrumColorpicker');
   deps.push('angularSpectrumColorpicker');
 } catch (e) {}
+    
+    
+try {
+    //This throws an expection if module does not exist.
+    angular.module('pascalprecht.translate');
+    deps.push('pascalprecht.translate');
+} catch (e) {}
 
 var schemaForm = angular.module('schemaForm', deps);
 

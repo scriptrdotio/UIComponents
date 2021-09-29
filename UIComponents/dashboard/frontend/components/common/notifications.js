@@ -1,4 +1,4 @@
-angular.module('ComponentsCommon', ['ui.bootstrap']);
+angular.module('ComponentsCommon', ['ui.bootstrap', 'pascalprecht.translate']);
 
 angular
   .module('ComponentsCommon')

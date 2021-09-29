@@ -1,5 +1,5 @@
 agGrid.initialiseAgGridWithAngular1(angular);
-angular.module('Grid', ['agGrid', 'ui.bootstrap', 'ngRoute']);
+angular.module('Grid', ['agGrid', 'ui.bootstrap', 'ngRoute', 'pascalprecht.translate']);
 angular
     .module("Grid")
     .component(
