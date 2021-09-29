@@ -35,7 +35,12 @@ angular
                    
                   "unit" : "@",
                   
-                  "height" : "@"
+                  "height" : "@",
+                   
+                   
+                   "applyConversion": "<?",
+                   "conversion": "&",
+                   "conversionUnit": "@"
                    
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
@@ -51,21 +56,52 @@ angular
                       this.hasData = (!isNaN(parseFloat(this.value)) && isFinite(this.value)) ?  true : false;
 	               	  this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
                       this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;
-              		  this.customSectors = (this.customSectors && this.customSectors.length > 0) ? this.customSectors : [{"color": "#CC5464", "lo": 0, "hi": 30}, {"color": "#FCC717", "lo": 30, "hi": 60}, {"color": "#38B9D6", "lo": 60, "hi": 90}];
-
-                       //remove empty objects from the array
-                       if(this.customSectors)
-                      	 	this.customSectors = _.reject(this.customSectors, _.isEmpty);
+              		  
                        
                        this.outOfRangeColor = this.outOfRangeColor ? this.outOfRangeColor : "#E90088";
                        
-                       this.thermoUnit =  (this.unit) ? this.unit : "°C";
+                       this.applyConversion =  (this.applyConversion && this.applyConversion == true) ? true : false ;
+                       this.step = (self.step) ? self.step : "30";
                        
                        this.height = (this.height) ? this.height : "100";
-                                              
-                       this.mercuryColor = this.evaluateColor(this.value);
                        
-                       this.step = (this.step) ? this.step : "30";
+                       this.customSectors = (this.customSectors && this.customSectors.length > 0) ?  _.reject(this.customSectors, _.isEmpty) : [{"color": "#CC5464", "lo": 0, "hi": 30}, {"color": "#FCC717", "lo": 30, "hi": 60}, {"color": "#38B9D6", "lo": 60, "hi": 90}];
+                       
+                       this.evaluateTicksSectorsUnitStep()
+                       
+                       this.transport = (this.transport) ? this.transport : null;
+		               this.msgTag = (this.msgTag) ? this.msgTag : null;
+                       this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
+                       
+                       this.style = {};
+	               }
+                   
+                   this.evaluateTicksSectorsUnitStep = function() {
+                       
+                       if(self.applyConversion  && self.applyConversion == true && self.conversion() && typeof self.conversion() == "function") {
+                           this.thermoUnit =  (self.conversionUnit) ? self.conversionUnit : "°F";
+                           this._step =  self.conversion()(this.step)
+                           self._customSectors = _.map(self.customSectors, function(entry){
+                               var tmp = JSON.parse(JSON.stringify(entry))
+                               tmp.lo = self.conversion()(entry.lo);
+                               tmp.hi = self.conversion()(entry.hi);
+                               return tmp;
+                           });
+                           if(self.value || JSON.stringify(self.value)) {
+                              self.beforeConversionValue = self.value;
+                              self.value = self.conversion()(self.value);
+                           }
+                           		
+                  	   } else {
+                           self._customSectors = JSON.parse(JSON.stringify(self.customSectors))
+                           self.thermoUnit =  (self.unit) ? self.unit : "°C";
+                           this._step = this.step;
+                           if((self.value || JSON.stringify(self.value)) && (self.beforeConversionValue && JSON.stringify(self.beforeConversionValue))) {
+                               self.value =  self.beforeConversionValue;
+                           }
+                       }
+                       
+                       self.calculateDataVariants(self.value)
                        
                        var lowestTick = this.getLowestTick();
                        var highestTick = this.getHighestTick();
@@ -74,7 +110,7 @@ angular
                        this.sectors = [];
                        this.sectors.push(tick);
                        while(tick < highestTick){
-                           tick += parseInt(this.step);
+                           tick += parseInt(this._step);
                            this.sectors.push(tick);
                        }
                        
@@ -90,13 +126,7 @@ angular
                            obj["percent"] = (this.sectors[i] - this.minSectorValue) * this.height / (this.mercuryMax - this.minSectorValue);
                            this.ticks.push(obj);
                        }
-                       
-                       this.transport = (this.transport) ? this.transport : null;
-		               this.msgTag = (this.msgTag) ? this.msgTag : null;
-                       this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
-                       
-                       this.style = {};
-	               }
+                   }
                    
                    this.onResize = function() {
                         if (self.timeoutId != null) {
@@ -114,7 +144,18 @@ angular
                    this.$postLink = function () {
                       self.timeoutId = $timeout(self.resize.bind(self), 100);
                       angular.element($window).on('resize', self.onResize);
-
+                       
+                      $scope.$watch(function( $scope ) {
+                          // wait for the timeout
+                          if($scope.$ctrl.applyConversion){
+                              return $scope.$ctrl.applyConversion
+                          }
+                      },function(newVal, oldVal){
+                          if(JSON.stringify(newVal) != JSON.stringify(oldVal)){
+                              self.evaluateTicksSectorsUnitStep()
+                          }
+                      });
+                       
                       if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
                           initDataService(this.transport);
                       } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
@@ -209,9 +250,11 @@ angular
                           if(data != null){
                               data = parseFloat(data);
                               if(!isNaN(data) && isFinite(data)){
-                                  self.mercuryColor = self.evaluateColor(data);
-                                  self.value = (data > self.mercuryMax) ? self.mercuryMax : data;
-                                  self.percent = parseInt((data - self.minSectorValue) * self.height / (self.mercuryMax - self.minSectorValue));
+                                  self.beforeConversionValue = data;
+                                  if(self.applyConversion && typeof self.conversion() == "function") {
+                                      data = self.conversion()(data);
+                                  }
+                                  self.calculateDataVariants(data)
                                   self.hasData = true;
                                   self.noResults = false;
                               	  self.stalledData = false;
@@ -233,18 +276,24 @@ angular
                  }, 
                       
                       
+                   this.calculateDataVariants = function(data) {
+                      self.mercuryColor = self.evaluateColor(data);
+                      self.value = (data > self.mercuryMax) ? self.mercuryMax : data;
+                      self.percent = parseInt((data - self.minSectorValue) * self.height / (self.mercuryMax - self.minSectorValue));
+                   }  
+                  
                    this.evaluateColor = function(data) {
                      var color = self.outOfRangeColor;
-                     _.some(self.customSectors, function(obj){ if( obj.lo <= data &&  data <= obj.hi) {color = obj.color; return true;} });
+                     _.some(self._customSectors, function(obj){ if( obj.lo <= data &&  data <= obj.hi) {color = obj.color; return true;} });
                       return color;
                    },
                       
                    this.getLowestTick = function(){
-                      return _.min(_.pluck(this.customSectors, "lo"));
+                      return _.min(_.pluck(this._customSectors, "lo"));
                    },
                       
                    this.getHighestTick = function(){
-                      return _.max(_.pluck(this.customSectors, "hi"));
+                      return _.max(_.pluck(this._customSectors, "hi"));
                    }
                }
             });
