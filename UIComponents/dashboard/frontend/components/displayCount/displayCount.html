@@ -1,46 +1,31 @@
-<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" loading-message="{{$ctrl.loadingMessage}}" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" loading-message="{{$ctrl.loadingMessage}}" failure-message="$ctrl.dataFailureMessage ? $ctrl.dataFailureMessage : $ctrl.stalledDataMessage ? $ctrl.stalledDataMessage : $ctrl.invalidData ? $ctrl.invalidData : '' " action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
 </scriptr-notifications>
 
 
 <!-- Messages from the backend -->
 <div class="display-count" ng-if="$ctrl.value">
-    <div ng-if="$ctrl.widgetLayout == 'vertical'" ng-style="{ 'border' : '{{$ctrl.borderSize}}px solid {{$ctrl.borderColor}}' }">
-            <div class="vertical-count-media" ng-style="$ctrl.numberStyle">{{$ctrl.value}}</div>
-            <div class="vertical-count-media" ng-style="{ 'background' : '{{$ctrl.messageBackgroundColor}}', 'font-weight' : '{{$ctrl.messageFontWeight}}', 'font-family' : '{{$ctrl.messageFontFamily}}', 'color' : '{{$ctrl.messageTextColor}}', 'text-align' : '{{$ctrl.messageTextAlignment}}' }">{{$ctrl.message}}</div>    
+    
+    <div ng-if="$ctrl.widgetLayout == 'vertical'" ng-style="$ctrl.containerStyle">
+      <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "top") ? "column-reverse" : "column" }'>
+        <section ng-style="$ctrl.valueStyle">
+            <div class="value-wrapper">
+                <div class="cell-value">{{$ctrl.value}}{{$ctrl.unit}}</div>
+                <div class="cell-info" ng-show="$ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{$ctrl.info}}</div>
+            </div>
+        </section>
+        <section class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$ctrl.message}}</section>
+      </div>
     </div>
-	<div ng-if="$ctrl.widgetLayout == 'horizontal'" ng-style="{ 'border' : '{{$ctrl.borderSize}}px solid {{ $ctrl.borderColor}}' }">
-        <div ng-if="$ctrl.numberCellSize == 'small'"    class="media horizontal-count-media">
-            <div class="media-left media-middle pull-none col-xs-3" ng-style="$ctrl.numberStyle">
-                <i ng-style="{ 'display' : ($ctrl.isLoading) ? 'block' : 'none' }" class="fas fa-spinner fa-spin"></i>
-                <span ng-style="{ 'display' : ($ctrl.isLoading) ? 'none' : 'block' }">{{$ctrl.value}}</span>
-            </div>
-            <div class="media-body media-middle" ng-style="{ 'background' : '{{$ctrl.messageBackgroundColor}}'}">
-                <span ng-style="{ 'color:' : '{{$ctrl.messageTextColor}}', 'font-weight' : '{{$ctrl.messageFontWeight}}', 'font-family' : '{{$ctrl.messageFontFamily}}', 'text-align' : '{{$ctrl.messageTextAlignment}}' }">{{$ctrl.message}}</span>
-            </div>
+    
+	<div ng-if="$ctrl.widgetLayout == 'horizontal'" ng-style="$ctrl.containerStyle">
+        <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "left") ? "row-reverse" : "row" }'>
+            <section  class="cell-value" ng-style="$ctrl.valueStyle" >
+                 <div class="value-wrapper">
+                    <div class="cell-value">{{$ctrl.value}}{{$ctrl.unit}}</div>
+                    <div class="cell-info" ng-show="$ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{$ctrl.info}}</div>
+                </div>
+            </section>
+            <section class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$ctrl.message}}</section>
          </div>
-        <div ng-if="$ctrl.numberCellSize == 'medium'"    class="media horizontal-count-media">
-            <div class="media-left media-middle pull-none col-xs-6 col-sm-5 col-md-6" ng-style='$ctrl.numberStyle'>
-                <i ng-style="{ 'display' : ($ctrl.isLoading) ? 'block' : 'none' }" class="fas fa-spinner fa-spin"></i><span ng-style="{ 'display' : ($ctrl.isLoading) ? 'none' : 'block' }">{{$ctrl.value}}</span>
-            </div>
-            <div class="media-body media-middle" ng-style="{ 'background' : '{{$ctrl.messageBackgroundColor}}'}">
-                <span ng-style="{ 'color' : '{{$ctrl.messageTextColor}}', 'font-weight' : '{{$ctrl.messageFontWeight}}', 'font-family' : '{{$ctrl.messageFontFamily}}', 'text-align' : '{{$ctrl.messageTextAlignment}}'}">{{$ctrl.message}}</span>
-            </div>
-         </div>
-         <div ng-if="$ctrl.numberCellSize == 'large'"    class="media horizontal-count-media">
-            <div class="media-left media-middle pull-none col-xs-10" ng-style="$ctrl.numberStyle">
-                <i ng-style="{ 'display' : ($ctrl.isLoading) ? 'block' : 'none' }" class="fas fa-spinner fa-spin"></i><span ng-style="{ 'display' : ($ctrl.isLoading) ? 'none' : 'block' }">{{$ctrl.value}}</span>
-            </div>
-            <div class="media-body media-middle" ng-style="{ 'background' : '{{$ctrl.messageBackgroundColor}}' }">
-                <span ng-style="{ 'color' : '{{$ctrl.messageTextColor}}', 'font-weight' : '{{$ctrl.messageFontWeight}}', 'font-family' : '{{$ctrl.messageFontFamily}}', 'text-align' : '{{$ctrl.messageTextAlignment}}' }">{{$ctrl.message}}</span>
-            </div>
-         </div> 
-         <div ng-if="$ctrl.numberCellSize == ''"    class="media horizontal-count-media">
-            <div class="media-left media-middle pull-none" ng-style="$ctrl.numberStyle">
-                <i ng-style="{ 'display' : ($ctrl.isLoading) ? 'block' : 'none' }" class="fas fa-spinner fa-spin"></i><span ng-style="{ 'display' : ($ctrl.isLoading) ? 'none' : 'block' }">{{$ctrl.value}}</span>
-            </div>
-            <div class="media-body media-middle" ng-style="{ 'background' : '{{$ctrl.messageBackgroundColor}}' }">
-                <span ng-style="{ 'color' : '{{$ctrl.messageTextColor}}', 'font-weight' : '{{$ctrl.messageFontWeight}}', 'font-family' : '{{$ctrl.messageFontFamily}}', 'text-align' : '{{$ctrl.messageTextAlignment}}' }">{{$ctrl.message}}</span>
-            </div>
-        </div>    
     </div>  
 </div>

@@ -5,12 +5,16 @@
     <script src="//use.fontawesome.com/3d61d6959e.js"></script>
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+        
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    
     <!-- Adding Angular -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
-    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-websocket/1.0.9/angular-websocket.min.js"></script>
     
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
@@ -22,16 +26,47 @@
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
     <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
     
+     <!-- i18n -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js"></script>
+    <!-- /i18n -->
+    
     <script src="/UIComponents/dashboard/frontend/components/displayCount/displayCount.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/displayCount/count.css">
-
+    
+   
 </head> 
   
 <script>
     var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Display"])
     angular.module('myApp').config(wssConfig);
   	angular.module('myApp').config(httpsConfig);
+    
+    angular.module('myApp').config(['$translateProvider', function ($translateProvider) {
+        lang = 'en'
+        $translateProvider
+            .useStaticFilesLoader({
+
+            files: [{
+                prefix: '/i18n/local-',
+                suffix: '.json'
+            }, {
+                prefix: '/i18n/local-ui-',
+                suffix: '.json'
+            }]
+        })
+            .registerAvailableLanguageKeys(['en'], {
+            'en_*': 'en',
+            '*': 'en'
+        })
+            .fallbackLanguage('en')
+            .useLoaderCache(true)
+            .preferredLanguage(lang)
+            .forceAsyncReload(true);
+    $translateProvider.useSanitizeValueStrategy('escaped');
+}]);
   
     angular.module('myApp').controller('testCtrl', function($scope) {
           var vm = this;
@@ -43,8 +78,50 @@
   <div ng-controller="testCtrl as vm" >
     	<scriptr-displaycount 
               transport="wss" 
-              widget-layout="horizontal"
-              api="UIComponents/dashboard/frontend/examples/displayCount/getCount">
+              api="UIComponents/dashboard/frontend/examples/displayCount/getCount"
+                              
+             			  loading-message="DASHBOARDS.OCCUPANCY.LIVE.DISPLAY_COUNT.LIVE_OCCUPNACY_LOADING_MESSAGE",
+                          icon="//scriptr-cdn.s3.amazonaws.com/saepio/dev/images/timer.png",
+                          widget-layout="horizontal"
+                          
+                          border-size="0"
+                          border-radius="5px"
+                              
+                              
+                          background-image="//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/facilities.svg"
+	                      background-size= "auto 70%"
+                          background-position="bottom 5px right"
+                          background-color="red"
+                          
+                          message-text-alignment="center"
+                          message-background-color="transparent"
+                          message-text-transform="uppercase"
+                          message-position="top"
+                          message-text-color="#333333"
+                          message-font-size=13
+                          message-font-weight=900
+                          message-vertical-alignment="center"
+                              
+                          unit="%"
+                              
+                          value-text-alignment="center"
+                          value-background-color="blue"
+                          value-text-color="#333333"
+                          value-font-size="23px"
+                          value-font-weight=800
+                          value-cell-size="small"
+                          value-vertical-alignment="center"
+                         
+                          
+                          info="info text"
+                          info-font-size=11
+                          info-font-weight=500
+                          info-text-color="#333333"
+                          info-background-color=""
+                          info-text-alignment="left"
+                          info-margin-top= "0"
+                          
+          >
         </scriptr-displaycount>
   </div>
 

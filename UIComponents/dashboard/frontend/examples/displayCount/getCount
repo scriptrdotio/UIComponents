@@ -18,6 +18,6 @@ var publishResponse = function(channel, data, request, id) {
    publish(channel, message);
 }
 
-publishResponse("responseChannel",  {"value": count}, request, "count");
+publishResponse("responseChannel",  {"value": count, "message": "message"}, request, "count");
 
-return {"value": count} ;
+return {"value": count, "message": "message"} ;
