@@ -17,6 +17,7 @@
  	flex: 1;
 	height: auto;
     display: inline-flex;
+    padding: 0 10 0 10;
 }
 
 

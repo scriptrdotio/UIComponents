@@ -38,6 +38,7 @@ angular
         "valueBackgroundColors": "<?",  
         "valueTextAlignment": "@",
         "valueVerticalAlignment": "@",  //values: top, bottom, center
+        "valueTextTransform": "@",
          
         "message": "@",     
         "messageFontFamily": "@",            
@@ -103,7 +104,8 @@ angular
                 this.valueTextColor = (this.valueTextColor) ? this.valueTextColor : "#ffffff";             
                 this.valueTextAlignment = (this.valueTextAlignment && this.valueTextAlignment == "right") ? "flex-end" : ( (this.valueTextAlignment && this.valueTextAlignment == "left") ? "flex-start" : "center"); 
                 this.valueVerticalAlignment = (this.valueVerticalAlignment && this.valueVerticalAlignment == "bottom") ? "flex-end" : ( (this.valueVerticalAlignment && this.valueVerticalAlignment == "top") ? "flex-start" : "center"); 
-                this.valueBackgroundColor = (this.valueBackgroundColor) ? this.valueBackgroundColor : "#ff8c00";  
+                this.valueBackgroundColor = (this.valueBackgroundColor) ? this.valueBackgroundColor : "";  
+                 this.valueTextTransform = this.valueTextTransform ? this.valueTextTransform : "";
                 
                 this.unit = this.unit ? this.unit : "";
                 
@@ -111,7 +113,7 @@ angular
                 this.messageFontSize = (this.messageFontSize) ? this.messageFontSize : "18";             
                 this.messageFontWeight = (this.messageFontWeight) ? this.messageFontWeight : "";             
                 this.messageTextColor = (this.messageTextColor) ? this.messageTextColor : "#686868";             
-                this.messageBackgroundColor = (this.messageBackgroundColor) ? this.messageBackgroundColor : "white";  
+                this.messageBackgroundColor = (this.messageBackgroundColor) ? this.messageBackgroundColor : "transparent";  
                 
                 if(this.widgetLayout == "vertical") {
                     this._messagePosition = (this.messagePosition && this.messagePosition  == "top") ? this.messagePosition : "bottom";
@@ -140,7 +142,8 @@ angular
                     'color' : this.valueTextColor, 
                     'justify-content' : this.valueTextAlignment,
                     'align-items': this.valueVerticalAlignment,
-                    'font-size' : this.valueFontSize +'px'
+                    'font-size' : this.valueFontSize +'px',
+                    'text-transform': this.valueTextTransform
                 }
                 
  

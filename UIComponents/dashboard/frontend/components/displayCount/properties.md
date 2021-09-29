@@ -18,19 +18,20 @@
   value-font-weight     | null	 | The Value Font weight. | string | NO
   value-text-color     | #ffffff	 | The Value Text Color. | string | NO
   value-text-alignment | center	 | One of: right, left, center | string | NO
+  value-text-transform | | applies a text-transform style to value text| string | NO
   value-vertical-alignment | center	 | One of: top, bottom, center | string | NO
-  value-background-color     | #ff8c00	 | The Value Background Default Color. | string | NO
-  value-background-colors     | null	 | The Value Background Colors array used to define a background for each range of values , example value [{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]. | string | NO
+  value-background-color     | 	 | The Value Background Default Color. | string | NO
+  value-background-colors     | 	 | The Value Background Colors array used to define a background for each range of values , example value [{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]. | string | NO
   unit | null   | sting to display next to the value. ex: % | string | NO
   message-font-family     | 	 | The Label Font Family. | string | NO
   message-font-size     | 18	 | The Label Font Size in pixel. | string | NO
   message-font-weight     |  | The Label Font weight. | string | NO
   message-text-color     | #686868	 | The Label Text Color. | string | NO
-  message-background-color     | white	 | The Label Background Default Color. | string | NO
+  message-background-color     | 	 | The Label Background Default Color. | string | NO
   message-position | bottom or right | Position of message top/bottom in widget-layout vertical, right/left in widget-layout horizontal | string | NO
   message-text-alignment     | center	 | The Label Alignment in the box one of: right, left, center. | string | NO
   message-vertical-alignment     | center	 | The Label Alignment in the box one of: top, bottom, center. | string | NO
-
+  message-text-transform | | applies a text-transform style to label text| string | NO
   info  | 	 | Text to display under value | string | NO     
   info-font-family     | 	 | The info Font Family. | string | NO
   info-font-size     | 18	 | The info Font Size in pixel. | string | NO
