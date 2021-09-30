@@ -112,7 +112,9 @@ angular
            if(self.api){
                self.showList = false;
                initDataService(this.transport);
-           }  
+           } else if(self.localData) {
+         	  self.showList = true;
+           }
          }
          
          self.addObjectToList = function(obj){

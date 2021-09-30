@@ -1,15 +1,7 @@
 {
-  "name": "demo",
+  "name": "UIComponents",
   "version": "1.0.0",
-  "description": "demo component",
-  "main": "httpProvider.js",
-  "directories": {
-    "example": "examples",
-    "test": "tests"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "UI components packaging",
   "author": "Scriptr",
   "license": "ISC",
   "dependencies": {
