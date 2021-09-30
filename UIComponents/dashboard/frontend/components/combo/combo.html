@@ -1,0 +1,12 @@
+
+<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+</scriptr-notifications>
+
+<div gridster="$ctrl.gridsterOptions" ng-if="$ctrl.hasData" >
+    <ul class="combo-boxes">
+        <li class="myItem" gridster-item="cbwdg" ng-repeat="cbwdg in $ctrl.widgets track by $index"  ng-class="{'fit-to-widget': (cbwdg.fitToWidget === true)}">
+            <box widget="cbwdg" counter="$index"></box>
+        </li>
+    </ul>
+</div>
+

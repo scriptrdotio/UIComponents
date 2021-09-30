@@ -1,0 +1,173 @@
+<html ng-app="myApp">
+<head>
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    
+        
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    
+    <!-- Adding Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-websocket/1.0.9/angular-websocket.min.js"></script>
+    
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+	<script src="/UIComponents/dataService.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  	
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+    
+     <!-- i18n -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js"></script>
+    <!-- /i18n -->
+    
+    <script src="/UIComponents/dashboard/frontend/components/combo/combo.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/combo/combo.css">
+    
+   
+</head> 
+  
+<script>
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Combo"])
+    angular.module('myApp').config(wssConfig);
+  	angular.module('myApp').config(httpsConfig);
+  	var cdnImagesPath = "//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/";
+  	angular.module('myApp').controller('testCtrl', function($scope, $interval) {
+      var vm = this;
+      
+      vm.titleWidget = {
+            "layout": {"sizeX": {"web": 6, "tablet": 12}, "sizeY": {"web": 1, "tablet": 2}},
+            "type": "scriptr-title",
+            "sizeX" : 6,
+            "sizeY" : 1, 
+            "fitToWidget": true,
+            "boxClass": "comboTitle",
+            "options": {
+                "boxHeader": "false",
+                "on-format-data": "return {\"value\": data };",
+                "message-font-size": "14px;",
+                "message-text-color": "#FFF",
+                "border-size": "0",
+                "wrapper-background-color": "#09425a"
+            }
+        };
+      
+       vm.groupWidget = {
+          "layout": {"sizeX": {"web": 3, "tablet": 6}, "sizeY": {"web": 3, "tablet": 3}},
+          "sizeX" : 3,
+          "sizeY" : 3,
+          "fitToWidget": true,
+          "type": "display-count",
+          "show": "true",
+          "options": {
+              "loading-message": "Loading...",
+              "icon": function() {return cdnImagesPath +"odometer-bg.svg";},
+              "boxHeader": "false",
+              "widget-layout":"vertical",
+              "image": function() {return cdnImagesPath +"zone.svg";},
+              "image-position": "right",
+              "message-text-alignment": "right",
+              "value-text-alignment": "right",
+              "message-background-color": "transparent",
+              "message-text-transform": "uppercase",
+              "value-background-color": "transparent",
+              "message-position": "top",
+              "wrapper-background-color": "#aabec6",
+              "border-size": "0",
+              "border-radius": "5px",
+              "value-text-color": "#333333",
+              "message-text-color": "#333333",
+              "value-font-size": "23px",
+              "value-font-weight": 800,
+              "message-font-size": 13,
+              "background-size": "auto 60%",
+              "background-position": "bottom 5px left 5px",
+              "info-font-size": 11,
+              "info-font-weight": 500,
+              "info-text-color": "#333333",
+              "info-background-color": "transparent",
+              "info-text-alignment": "right",
+              "info-margin-top": -18,
+              "unit": "%",
+              "on-format-data": "self.info=(\"Past \" + data.numberOfHighOccupancyPeriods + (data.period == \"pastDay\" ? \" hour(s)\" : \" day(s)\")); return {\"message\": data.zoneName, \"value\": parseFloat(data.minimumOccupancyPercentage).toFixed(2) };"
+          }
+      };
+       
+     vm.noDataWidget = {
+        "layout": {"sizeX": {"web": 12, "tablet": 12}, "sizeY": {"web": 6, "tablet": 8}},
+        "sizeX" : 12,
+        "sizeY" : 4,
+        "fitToWidget": true,
+        "type": "display-count",
+        "show": "true",
+        "options": {
+            "loading-message": "Loading",
+            "icon": function() {return cdnImagesPath +"odometer-bg.svg";},
+            "boxHeader": "false",
+            "widget-layout":"vertical",
+            "image": function() {return cdnImagesPath +"congratsIcon.svg";},
+            "image-position": "right",
+            "message-text-alignment": "right",
+            "value-text-alignment": "right",
+            "message-background-color": "transparent",
+            "message-text-transform": "",//"uppercase",
+            "value-background-color": "transparent",
+            "message-position": "top",
+            "wrapper-background-color": "#09425a",
+            "border-size": "0",
+            "border-radius": "5px",
+            "value-text-color": "#fff",
+            "message-text-color": "#fff",
+            "value-font-size": "16px",
+            "value-font-weight": 500,
+            "message-font-weight": 700,
+            "message-font-size": 27,
+            "background-size": "auto 60%",
+            "background-position": "bottom 5px left 5px",
+            "data": {"message": "Congratulations", "value": "for the best conditions." }
+        }
+    }
+       
+       
+      
+      
+      
+  });
+</script>
+
+<body ng-controller="testCtrl as vm">  
+   <div class="col-xs-12 col-sm-6 mb10">
+   		<sciptr-combo
+   			box-header="true"
+            boxLabel="DASHBOARDS.OCCUPANCY.HISTORICAl.BOX_LABEL",
+            transport="wss"
+            api= "app/api/dashboard/occupancy/getSustainedHighOccupancy"
+            groups-count= 2
+            group-items-count= 2
+            is-vertical= false
+            parent-item-size-x= 6
+            parent-item-size-y= 12
+            group-title-field= "locationName"
+            group-data-field= "zones"
+            title-widget="vm.titleWidget"
+            group-widget="vm.groupWidget"
+            no-data-widget="vm.noDataWidget"
+        ></sciptr-combo>
+  </div>
+  
+
+</body>  
+   
+</html>

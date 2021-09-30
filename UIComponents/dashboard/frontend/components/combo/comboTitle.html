@@ -1,0 +1,7 @@
+<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+</scriptr-notifications>
+
+
+<div  class="combo-title" ng-style="{ 'background' : '{{$ctrl.messageBackgroundColor}}', 'font-weight' : '{{$ctrl.messageFontWeight}}','font-size' : '{{$ctrl.messageFontSize}}px', 'font-family' : '{{$ctrl.messageFontFamily}}', 'color' : '{{$ctrl.messageTextColor}}', 'text-align' : '{{$ctrl.messageTextAlignment}}', 'border' : '{{$ctrl.borderSize}}px solid {{$ctrl.borderColor}}', 'background-color': '{{$ctrl.wrapperBackgroundColor}}', 'border-radius': '{{$ctrl.borderRadius}}' }" translate>
+    {{$ctrl.message}}
+</div>  

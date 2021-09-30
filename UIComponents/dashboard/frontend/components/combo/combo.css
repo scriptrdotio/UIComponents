@@ -1,0 +1,59 @@
+/** CSS for combo title **/
+.combo-title {
+	height: 100%;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    align-items: center;
+    text-transform: uppercase;
+}
+.combo-boxes .display-count .message {
+    margin-top: 0;
+    font-weight: 800!important;
+}
+.combo-boxes .gauge {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.combo-boxes .display-count .value {
+    padding-top: 0;
+    text-transform: uppercase;
+    font-weight: 500!important;
+}
+.dashboardTheme .gridster-mobile .comboWidget > .box-content {
+    height: auto!important;
+}
+
+.saepioDashboard .gridster-mobile .comboWidget > .box-content .gridster-loaded {height: auto!important;}
+
+.dashboardTheme .gridster-mobile .GroupWidget > .box-content {
+    height: 40vh!important;
+}
+.dashboardTheme .gridster-mobile .comboTitle > .box-content {
+    height: 80px!important;
+}
+.dashboardTheme .gridster-mobile .combo > .box-content {
+    height: auto!important;
+}
+.dashboardTheme .gridster-mobile .combo > .box-content .gridster-loaded {height: auto!important;}
+
+.GroupWidget > .box-content .gauge {
+    height: 100%!important;
+}
+.dashboardTheme .gridster-mobile .gridster > .combo-boxes {
+    padding-left: 10px;
+}
+.dashboardTheme .gridster-mobile .combo-boxes > .gridster-item {
+    height: auto!important;
+    margin-bottom: 10px!important;
+    width: 98%!important;
+}
+
+@media only screen and (min-width: 0) and (max-width: 852px) {
+.combo-boxes .display-count .message {
+    font-size: 40px!important;
+}
+.combo-boxes .display-count .value {
+    font-size: 15px!important;
+}
+}
