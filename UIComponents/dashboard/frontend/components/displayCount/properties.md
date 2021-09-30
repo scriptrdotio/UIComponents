@@ -41,8 +41,6 @@
   info-text-transform | bottom or right | applies a text-transform style to info text| string | NO
   info-text-alignment     | center	 | The info text Alignment in the box one of: right, left, center. | string | NO
   info-margin-top     | center	 | The info margin from value in px | string | NO           
-  
-  
   api | null | Name of the API to get data | string | Required if getting data from backend 
   on-format-data | null | Callback function to be called after data is returned from backend | function | NO
   transport |  'wss'     | 	method used to call api (can take "https" or "wss").	 | string | NO
