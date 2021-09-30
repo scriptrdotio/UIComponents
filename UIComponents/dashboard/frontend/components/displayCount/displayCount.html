@@ -3,7 +3,7 @@
 
 
 <!-- Messages from the backend -->
-<div class="display-count" ng-if="$ctrl.value">
+<div class="display-count" ng-if="$ctrl.value != null">
     
     <div ng-if="$ctrl.widgetLayout == 'vertical'" ng-style="$ctrl.containerStyle">
       <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "top") ? "column-reverse" : "column" }'>
