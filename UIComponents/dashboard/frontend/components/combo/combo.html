@@ -5,7 +5,7 @@
 <div gridster="$ctrl.gridsterOptions" ng-if="$ctrl.hasData" >
     <ul class="combo-boxes">
         <li class="myItem" gridster-item="cbwdg" ng-repeat="cbwdg in $ctrl.widgets track by $index"  ng-class="{'fit-to-widget': (cbwdg.fitToWidget === true)}">
-            <box widget="cbwdg" counter="$index"></box>
+            <combo-box widget="cbwdg" counter="$index"></combo-box>
         </li>
     </ul>
 </div>

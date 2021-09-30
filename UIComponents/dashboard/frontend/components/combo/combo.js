@@ -1,4 +1,4 @@
-angular.module('Combo', ['ComponentsCommon', 'DataService']);
+angular.module('Combo', ['ComponentsCommon', 'DataService','gridster']);
 angular
     .module('Combo')
     .component(
@@ -292,7 +292,7 @@ angular
           "messageFontWeight": "@",         
           "messageTextColor": "@",                   
           "messageBackgroundColor": "@",
-          "wrapperBackgroundColor": "@",
+          "backgroundColor": "@",
           "messageTextAlignment": "@" ,
           "borderSize": "@",
           "borderRadius": "@",
@@ -315,7 +315,7 @@ angular
                this.messageFontWeight = (this.messageFontWeight) ? this.messageFontWeight : "600";             
                this.messageTextColor = (this.messageTextColor) ? this.messageTextColor : "#686868";             
                this.messageBackgroundColor = (this.messageBackgroundColor) ? this.messageBackgroundColor : "white";  
-               this.wrapperBackgroundColor = (this.wrapperBackgroundColor) ? this.wrapperBackgroundColor : "#009ABB";  
+               this.backgroundColor = (this.backgroundColor) ? this.backgroundColor : "#009ABB";  
                this.messageTextAlignment = (this.messageTextAlignment) ? this.messageTextAlignment : "center";  
       	 }
          
@@ -457,3 +457,84 @@ angular
         }
         }
 	});
+
+
+angular
+    .module('Combo')
+    .component('comboBox',
+    {
+        bindings : {
+            "widget": "<",
+            "counter": "<?"
+        },
+        templateUrl: '/UIComponents/dashboard/frontend/components/combo/comboBox.html',
+        controller: function($translate, $rootScope, $scope, $compile, $element, _) {
+            
+            this.$onInit =  function() {
+                $translate.use($rootScope.lang);
+                var self = this;
+             /**   $rootScope.mobileBreakPoint = '(max-width: 480px)';
+                $rootScope.tabletBreakPoint = '(max-width: 991px)';
+
+                //We need this, to inform the widgets that we have reached the mobile breakpoint to resize based on it
+                //Because gridster breakpoint is not the view port size but the gridster div size
+                $scope.$on('gridster-mobile-changed', function(event, gridster) { 
+                    if(gridster.isMobile) {
+                        $rootScope.mobileBreakPoint = '(max-width:'+$(window).innerWidth()+'px)';
+                    }
+                });
+                
+                $scope.$on('gridster-item-transition-end', function(item) { 
+                    setTimeout( function(){ $(window).trigger('resize'); window.dispatchEvent(new Event('resize'));},100);
+                })**/
+        
+                if(this.widget) {
+                    this.addWidget(this.widget);
+                }
+        
+            };
+          
+            this.addWidget = function(widget) {
+                var self = this;
+                this.chart = angular.element(document.createElement(widget.type));
+                angular.forEach(widget.options, function(value, key) {
+                    if(angular.isArray(value) || angular.isObject(value)){
+                        if (value["functionValue"] && value["functionArguments"]) {
+                            // we can only pass a function as string in JSON ==> doing a real function
+                            this.counter += 1;
+                       		var counter = this.counter;
+                            var functionName = (widget.name+ key+counter);
+                        	self[functionName] = new Function(value.functionArguments, value.functionValue);
+                            self.chart.attr(key, ("$ctrl."+functionName));
+                        } else {
+                            self.chart.attr(key, JSON.stringify(value, function(key, value) {
+                              if (typeof value === "function") {
+                                return value();
+                              }
+                              return value;
+                            }));
+                        }
+                    } else if(key == "on-format-data") {
+                        if(!this.counter){
+                            this.counter = 0; 
+                        }
+                        this.counter += 1;
+                        var counter = this.counter;
+                        var functionName = (widget.name+ "FormatData"+counter);
+                        self[functionName] = new Function('data', 'self', value);
+                        widget["formatFunction"] = functionName;
+                        widget["formatFunctionValue"] = value;
+                        self.chart.attr("on-format-data", ("$ctrl."+functionName))
+                    } else {
+                     	self.chart.attr(key, value);
+                 	}
+                }, this);
+                var el = $compile( this.chart )( $scope );
+                var boxContent =  angular.element($element.find(".box-content"));
+                boxContent.append(el);
+            }
+
+            
+            
+        }
+    });

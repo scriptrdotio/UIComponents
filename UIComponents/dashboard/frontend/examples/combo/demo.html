@@ -32,15 +32,31 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js"></script>
     <!-- /i18n -->
     
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    
+    <script src="/UIComponents/dashboard/frontend/components/displayCount/displayCount.js"></script>
+    
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/displayCount/count.css">
+    
+    
+    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css">
+    
+     <link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/light.css">
+    <script src="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/combo/combo.js"></script>
     <script src="/UIComponents/config/scriptrTransport.js"></script>
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/combo/combo.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/justgage/1.2.2/justgage.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/gauge/angular.gauge.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/gauge/gauge.js"></script>
     
    
 </head> 
   
 <script>
-    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Combo"])
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Combo", "Display", "Gauge"])
     angular.module('myApp').config(wssConfig);
   	angular.module('myApp').config(httpsConfig);
   	var cdnImagesPath = "//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/";
@@ -48,126 +64,214 @@
       var vm = this;
       
       vm.titleWidget = {
-            "layout": {"sizeX": {"web": 6, "tablet": 12}, "sizeY": {"web": 1, "tablet": 2}},
-            "type": "scriptr-title",
-            "sizeX" : 6,
-            "sizeY" : 1, 
-            "fitToWidget": true,
-            "boxClass": "comboTitle",
-            "options": {
-                "boxHeader": "false",
-                "on-format-data": "return {\"value\": data };",
-                "message-font-size": "14px;",
-                "message-text-color": "#FFF",
-                "border-size": "0",
-                "wrapper-background-color": "#09425a"
-            }
-        };
+                        	"layout": {"sizeX": {"web": 12, "tablet": 12}, "sizeY": {"web": 2, "tablet": 4}},
+                            "type": "scriptr-title",
+                            "sizeX" : 12,
+                            "sizeY" : 2, 
+                            "fitToWidget": true,
+                        	"boxClass": "comboTitle",
+                            "options": {
+                                "boxHeader": "false",
+                                "on-format-data": "return {\"value\": data };",
+                                "message-font-size": "14px;",
+                                "message-text-color": "#FFF",
+                                "border-size": "0",
+                                "background-color": "#09425a"
+                                
+                            }
+                    };
       
        vm.groupWidget = {
-          "layout": {"sizeX": {"web": 3, "tablet": 6}, "sizeY": {"web": 3, "tablet": 3}},
-          "sizeX" : 3,
-          "sizeY" : 3,
-          "fitToWidget": true,
-          "type": "display-count",
-          "show": "true",
-          "options": {
-              "loading-message": "Loading...",
-              "icon": function() {return cdnImagesPath +"odometer-bg.svg";},
-              "boxHeader": "false",
-              "widget-layout":"vertical",
-              "image": function() {return cdnImagesPath +"zone.svg";},
-              "image-position": "right",
-              "message-text-alignment": "right",
-              "value-text-alignment": "right",
-              "message-background-color": "transparent",
-              "message-text-transform": "uppercase",
-              "value-background-color": "transparent",
-              "message-position": "top",
-              "wrapper-background-color": "#aabec6",
-              "border-size": "0",
-              "border-radius": "5px",
-              "value-text-color": "#333333",
-              "message-text-color": "#333333",
-              "value-font-size": "23px",
-              "value-font-weight": 800,
-              "message-font-size": 13,
-              "background-size": "auto 60%",
-              "background-position": "bottom 5px left 5px",
-              "info-font-size": 11,
-              "info-font-weight": 500,
-              "info-text-color": "#333333",
-              "info-background-color": "transparent",
-              "info-text-alignment": "right",
-              "info-margin-top": -18,
-              "unit": "%",
-              "on-format-data": "self.info=(\"Past \" + data.numberOfHighOccupancyPeriods + (data.period == \"pastDay\" ? \" hour(s)\" : \" day(s)\")); return {\"message\": data.zoneName, \"value\": parseFloat(data.minimumOccupancyPercentage).toFixed(2) };"
-          }
-      };
+                        	"layout": {"sizeX": {"web": 6, "tablet": 12}, "sizeY": {"web": 6, "tablet": 7}},
+                            "sizeX" : 6,
+                            "sizeY" : 6,
+                            "fitToWidget": true,
+                            "type": "scriptr-displaycount",
+                            "show": "true",
+                            "options": {
+                                    "loading-message": "DASHBOARDS.OCCUPANCY.LIVE.COMBO.GAUGE.FACILITIES1_GAUGE_LAODING_MESSAGE",
+                                    "icon": function() {return cdnImagesPath +"odometer-bg.svg";},
+                                	"unit": "%",
+                                    "boxHeader": "false",
+                                    "widget-layout":"vertical",
+                                    "background-image":"//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/zone.svg",
+                                    "background-position": "left",
+                                	"message-position": "top",
+                                	"message-text-transform": "uppercase",
+                                    "message-text-alignment": "right",
+                                    "value-text-alignment": "right",
+                                    "message-background-color": "transparent",
+                                    "value-background-color": "transparent",
+                                    "background-color": "#009ABB",
+                                    "border-size": "0",
+                                    "border-radius": "5px",
+                                    "value-text-color": "#FFF",
+                                    "message-text-color": "#FFF",
+                                    "message-font-size": 13,
+                                    "value-font-size": "28px",
+                                	"value-font-weight": 800,
+                                    "background-size": "auto 60%",
+                                	"background-position": "bottom 5px left 5px",
+                                    "on-format-data": "return { \"message\": data.zoneName, \"value\": parseFloat((data.liveOccupancy/data.optimalOccupancy)*100).toFixed()};"
+                                }
+                            };
+        
+     vm.groupWidgetGauge ={
+                        "layout": {"sizeX": {"web": 6, "tablet": 6}, "sizeY": {"web": 10, "tablet": 8}},
+                        "sizeX" : 6,
+                        "sizeY" : 10,
+                        "fitToWidget": true,
+                        "boxClass": "GroupWidget",
+                        "type": "scriptr-gauge",
+                        "show": "true",
+                        "options": {
+                            "loading-message": "DASHBOARDS.OCCUPANCY_PER_FACILITY.LIVE.COMBO.GAUGE.ZONE1_GAUGE_LOADING_MESSAGE",
+                            "icon":function() {return cdnImagesPath +"gauge-bg.svg";},
+                            "boxHeader": "false",
+                            "title-font-size": "1.1em",
+                            "title-position": "left",
+                            "title-text-transform": "uppercase",
+                            "min": 0,
+                            "max": 100,
+                            "level-colors": "[\"#8e8ea4\",\"#007c92\",\"#aa241d\"]",
+                            "transport": "wss", 
+                            "on-format-data": "self.title=data.zoneName; self.label=\"Optimal \" + parseFloat(data.optimalOccupancy).toFixed(); self.max=data.maxOccupancy; return data.liveOccupancy;"
+                        }
+                    };
        
      vm.noDataWidget = {
-        "layout": {"sizeX": {"web": 12, "tablet": 12}, "sizeY": {"web": 6, "tablet": 8}},
-        "sizeX" : 12,
-        "sizeY" : 4,
-        "fitToWidget": true,
-        "type": "display-count",
-        "show": "true",
-        "options": {
-            "loading-message": "Loading",
-            "icon": function() {return cdnImagesPath +"odometer-bg.svg";},
-            "boxHeader": "false",
-            "widget-layout":"vertical",
-            "image": function() {return cdnImagesPath +"congratsIcon.svg";},
-            "image-position": "right",
-            "message-text-alignment": "right",
-            "value-text-alignment": "right",
-            "message-background-color": "transparent",
-            "message-text-transform": "",//"uppercase",
-            "value-background-color": "transparent",
-            "message-position": "top",
-            "wrapper-background-color": "#09425a",
-            "border-size": "0",
-            "border-radius": "5px",
-            "value-text-color": "#fff",
-            "message-text-color": "#fff",
-            "value-font-size": "16px",
-            "value-font-weight": 500,
-            "message-font-weight": 700,
-            "message-font-size": 27,
-            "background-size": "auto 60%",
-            "background-position": "bottom 5px left 5px",
-            "data": {"message": "Congratulations", "value": "for the best conditions." }
-        }
-    }
+                       "layout": {"sizeX": {"web": 12, "tablet": 12}, "sizeY": {"web": 18, "tablet": 26}},
+                        "sizeX" : 12,
+                        "sizeY" : 16,
+                        "fitToWidget": true,
+                        "type": "scriptr-displaycount",
+                        "show": "true",
+                        "options": {
+                            "loading-message": "DASHBOARDS.OCCUPANCY.LIVE.DISPLAY_COUNT.LIVE_OCCUPNACY_LOADING_MESSAGE",
+                            "icon": function() {return cdnImagesPath +"odometer-bg.svg";},
+                            "boxHeader": "false",
+                            "widget-layout":"vertical",
+                            "background-image": function() {return cdnImagesPath +"congratsIcon.svg";},
+                            "background-position": "right",
+                            "message-text-alignment": "right",
+                            "value-text-alignment": "right",
+                            "message-background-color": "transparent",
+                            "message-text-transform": "",//"uppercase",
+                            "background-color": "transparent",
+                            "message-position": "top",
+                            "background-color": "#09425a",
+                            "border-size": "0",
+                            "border-radius": "5px",
+                            "value-text-color": "#fff",
+                            "message-text-color": "#fff",
+                            "value-font-size": "13px",
+                            "value-font-weight": 500,
+                            "message-font-weight": 700,
+                            "message-font-size": 24,
+                            "background-size": "auto 40%",
+                            "background-position": "bottom 5px left 5px",
+                            "data": {"message": "Congratulations", "value": "for the best conditions." }
+                        }
+                    }
        
-       
-      
-      
-      
   });
 </script>
 
-<body ng-controller="testCtrl as vm">  
+<body ng-controller="testCtrl as vm" class="dashboardTheme">  
    <div class="col-xs-12 col-sm-6 mb10">
-   		<sciptr-combo
+   		<scriptr-combo
    			box-header="true"
             boxLabel="DASHBOARDS.OCCUPANCY.HISTORICAl.BOX_LABEL",
             transport="wss"
-            api= "app/api/dashboard/occupancy/getSustainedHighOccupancy"
+            api= "UIComponents/dashboard/frontend/examples/combo/getData"
             groups-count= 2
             group-items-count= 2
-            is-vertical= false
-            parent-item-size-x= 6
-            parent-item-size-y= 12
-            group-title-field= "locationName"
+            is-vertical= true
+            parent-item-size-x= 12
+            parent-item-size-y= 25
+            group-title-field= "name"
             group-data-field= "zones"
             title-widget="vm.titleWidget"
             group-widget="vm.groupWidget"
             no-data-widget="vm.noDataWidget"
-        ></sciptr-combo>
+        ></scriptr-combo>
+  </div>
+    
+  <div class="col-xs-12 col-sm-6 mb10">
+   		<scriptr-combo
+   			box-header="true"
+            boxLabel="DASHBOARDS.OCCUPANCY.HISTORICAl.BOX_LABEL",
+            transport="wss"
+            api= "UIComponents/dashboard/frontend/examples/combo/getData"
+            groups-count= 1
+            group-items-count= 2
+            is-vertical= false
+            parent-item-size-x= 6
+            parent-item-size-y= 6
+            group-title-field= "name"
+            group-data-field= "zones"
+            title-widget="vm.titleWidget"
+            group-widget="vm.groupWidget"
+            no-data-widget="vm.noDataWidget"
+        ></scriptr-combo>
   </div>
   
-
+  <div class="col-xs-12 col-sm-6 mb10">
+   		<scriptr-combo
+   			box-header="true"
+            boxLabel="DASHBOARDS.OCCUPANCY.HISTORICAl.BOX_LABEL",
+            transport="wss"
+            api= "UIComponents/dashboard/frontend/examples/combo/getData"
+            groups-count= 2
+            group-items-count= 2
+            is-vertical= true
+            parent-item-size-x= 12
+            parent-item-size-y= 30
+            group-title-field= "name"
+            group-data-field= "zones"
+            title-widget="vm.titleWidget"
+            group-widget="vm.groupWidgetGauge"
+            no-data-widget="vm.noDataWidget"
+        ></scriptr-combo>l
+  </div>
+    
+  <div class="col-xs-12 col-sm-6 mb10">
+   		<scriptr-combo
+   			box-header="true"
+            boxLabel="DASHBOARDS.OCCUPANCY.HISTORICAl.BOX_LABEL",
+            transport="wss"
+            api= "UIComponents/dashboard/frontend/examples/combo/getData"
+            groups-count= 1
+            group-items-count= 4
+            is-vertical= false
+            parent-item-size-x= 6
+            parent-item-size-y= 6
+            group-title-field= "name"
+            group-data-field= "zones"
+            title-widget="vm.titleWidget"
+            group-widget="vm.groupWidgetGauge"
+            no-data-widget="vm.noDataWidget"
+        ></scriptr-combo>
+   </div>
+    
+    
+    <div class="col-xs-12 col-sm-6 mb10">
+   		<scriptr-combo
+   			box-header="true"
+            boxLabel="DASHBOARDS.OCCUPANCY.HISTORICAl.BOX_LABEL",
+            transport="wss"
+            api= "UIComponents/dashboard/frontend/examples/combo/getData"
+            groups-count= 2
+            group-items-count= 2
+            is-vertical= false
+            parent-item-size-x= 12
+            parent-item-size-y= 25
+            group-title-field= "name"
+            group-data-field= "zones"
+            group-widget="vm.groupWidgetGauge"
+            no-data-widget="vm.noDataWidget"
+        ></scriptr-combo>
+   </div>
 </body>  
    
 </html>
