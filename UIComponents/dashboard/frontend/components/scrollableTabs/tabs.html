@@ -1,0 +1,18 @@
+<div class="nav-tabs-wrapper row">
+    <div class="col-xs-12" id="alertDiv"><div ng-if="$ctrl.hasAlert" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')  + ' mt10'" close="$ctrl.closeAlert()" dismiss-on-timeout="3000" class="mrgb0">{{$ctrl.message.content}}</div></div>
+    <div ng-class="$ctrl.wrapperClass" ng-if="$ctrl._tabs"> 
+        <div scrolling-tabs-wrapper watch-tabs="$ctrl._tabs" class="scrtabs-allow-scrollbar">
+            <ul class="nav nav-tabs facilityContainer" >
+                <li ng-repeat="tab in $ctrl._tabs"  class="facilityTabs"  ng-class="{'active' : tab.active}">
+                    <a ng-hide="tab.isEditMode" ng-dblclick="$ctrl.swithToEditMode($event, tab)" href="javascript: void(0);" data-target="#tab.id" data-toggle="tab" ng-click="$ctrl.setActive(tab.id, tab)">{{tab.title}}
+                        <i ng-hide="$ctrl.isNotEditable" ng-click="$ctrl.showRemoveTabConfirmDlg($event, tab)" class="fa fa-close" aria-hidden="true"></i>
+                    </a>
+                    <input class="changeFacilityName" ng-show="tab.isEditMode && !$ctrl.isNotEditable" ng-dblclick="$ctrl.swithToShow($event)" ng-blur="$ctrl.swithToShow($event, tab)" ng-keyup="$event.keyCode == 13 ? $ctrl.swithToShow($event, tab) : null" ng-model="tab.title">
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div ng-hide="$ctrl.isNotEditable" class="col-xs-2 col-md-1 add-new">
+    	<button ng-click="$ctrl.addTab()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i></button>
+    </div>
+</div>
