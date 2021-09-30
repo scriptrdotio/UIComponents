@@ -15,6 +15,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-websocket/1.0.9/angular-websocket.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>      
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script> 
     
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
@@ -29,10 +32,17 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js"></script>
     <!-- /i18n -->
     
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.min.js"></script>
+    
     <!-- Scrolling Tabs component -->
-    <link rel="stylesheet" href="/app/view/javascript/components/scrollableTabs/scrolling-tabs.css">
-    <script src="/app/view/javascript/components/scrollableTabs/scrolling-tabs.js"></script>
-    <script src="/app/view/javascript/components/scrollableTabs/tabs.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/scrollableTabs/scrolling-tabs.css">
+    <script src="/UIComponents/dashboard/frontend/components/scrollableTabs/scrolling-tabs.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/scrollableTabs/tabs.js"></script>
+    
+   
     
     
 </head> 
@@ -42,14 +52,86 @@
     angular.module('myApp').config(wssConfig);
   	angular.module('myApp').config(httpsConfig);
 
-  	angular.module('myApp').controller('testCtrl', function($scope, $interval) {
+  	angular.module('myApp').controller('testCtrl', function($scope, $q, $timeout) {
       var vm = this;
       
+        vm.tabs = [
+            {"id":0,"title":"Deck 1","content":"Just created 0","loaded":false,"key":"Key 1","initialTitle":"Deck 1"},
+            {"id":1,"title":"Deck 2","content":"Just created 1","loaded":false,"key":"Key 2","initialTitle":"Deck 2"},
+            {"id":2,"title":"Deck 3","content":"Just created 2","loaded":false,"key":"Key 3","initialTitle":"Deck 3"}
+        ];
+        
+        vm.onTabCreate = function(tab, tabs) {
+            console.log("onTabCreate" , tab, tabs)
+            var d = $q.defer();
+            $timeout(function(){d.resolve()}, 500)
+            return d.promise;
+        }
+        
+        vm.onTabDelete = function(tab, tabs) {
+            console.log("onTabDelete", tab, tabs)
+            var d = $q.defer();
+            $timeout(function(){d.resolve()}, 500)
+            return d.promise;
+        }
+        
+        vm.onTabsChanged = function(tab, tabs, event) {
+            console.log("onTabsChanged", tab, tabs, event);
+            var d = $q.defer();
+            $timeout(function(){d.resolve()}, 500)
+            return d.promise;
+        }
+        
+        
+        
+         vm.tabs2 = [
+            {"id":0,"title":"Requests","content":"Just created 0"},
+            {"id":1,"title":"Execution Time","content":"Just created 1"},
+            {"id":2,"title":"Usage","content":"Just created 2"},
+            {"id":3,"title":"Devices","content":"Just created 3"},
+            {"id":4,"title":"Users","content":"Just created 4"}
+        ];
+        
+        vm.onTabCreate = function(tab, tabs) {
+            console.log("onTabCreate" , tab, tabs)
+            var d = $q.defer();
+            $timeout(function(){d.resolve()}, 500)
+            return d.promise;
+        }
+        
+        vm.onTabDelete = function(tab, tabs) {
+            console.log("onTabDelete", tab, tabs)
+            var d = $q.defer();
+            $timeout(function(){d.resolve()}, 500)
+            return d.promise;
+        }
+        
+        vm.onTabsChanged = function(tab, tabs, event) {
+            console.log("onTabsChanged", tab, tabs, event);
+            var d = $q.defer();
+            $timeout(function(){d.resolve()}, 500)
+            return d.promise;
+        }
   });
 </script>
 
 <body ng-controller="testCtrl as vm">  
-
+    <section>
+    <scriptr-scrollable-tabs tabs="vm.tabs" on-tabs-changed="vm.onTabsChanged({tab:tab, tabs: tabs, event: event})" on-tab-initial-load="vm.onTabCreate({tab:tab, tabs: tabs })" on-tab-remove="vm.onTabDelete({tab:tab, tabs: tabs})"></scriptr-scrollable-tabs>
+    <div class="tab-content">
+        <div ng-repeat="tab in vm.tabs" class="tab-pane" ng-class="{'active' : tab.active}">
+              {{tab}}
+        </div> 
+    </div>
+   <section>
+   <section>
+    <scriptr-scrollable-tabs tabs="vm.tabs2" on-tabs-changed="vm.onTabsChanged({tab:tab, tabs: tabs, event: event})" on-tab-initial-load="vm.onTabCreate({tab:tab, tabs: tabs })" on-tab-remove="vm.onTabDelete({tab:tab, tabs: tabs})" is-not-editable="true"></scriptr-scrollable-tabs>
+    <div class="tab-content">
+        <div ng-repeat="tab in vm.tabs2" class="tab-pane" ng-class="{'active' : tab.active}">
+              {{tab}}
+        </div> 
+    </div>
+       </section>
 </body>  
    
 </html>

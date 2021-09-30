@@ -1,4 +1,4 @@
-angular.module('ScrollableTabs', ['mj.scrollingTabs', 'pascalprecht.translate'])
+angular.module('ScrollableTabs', ['mj.scrollingTabs', 'pascalprecht.translate', 'ngMaterial'])
 angular
   .module('ScrollableTabs')
   .component("scriptrScrollableTabs", {
@@ -14,7 +14,7 @@ angular
         "defaultTabName": "@"
     },
     "templateUrl": "/UIComponents/dashboard/frontend/components/scrollableTabs/tabs.html",
-    "controller": function($translate, $scope, $rootScope, $element, httpClient, $timeout, $location, $routeParams, $timeout,  $route, facilityForms, constants, $mdDialog, $q) {
+    "controller": function($translate, $scope, $timeout, $mdDialog, $q) {
 
         var self = this;
 
