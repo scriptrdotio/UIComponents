@@ -1,49 +1,38 @@
 .tg-thermometer {
 	width: 100px;
+    margin-top: 1%;
 	position: relative;
-    height: 100%;
-}
-
-
-.thermowrapper {
-  margin: 10px 0px 10px 0px;
 }
 .tg-thermometer.small .meter {
 	width: 6px
 }
-
 .tg-thermometer.small .meter .mask {
 	width: 6px
 }
-
 .tg-thermometer.small .meter .bg-color {
 	height: calc(120px - 57px)
 }
-
 .tg-thermometer.small .draw-a {
 	width: 20px
 }
-
 .tg-thermometer.small .draw-a:after {
 	width: 32px;
 	height: 32px;
 	left: -6px;
 	bottom: -10px
 }
-
+/**
 .tg-thermometer.small .draw-b:before {
 	width: 6px
 }
-
 .tg-thermometer.small .draw-b:after {
 	width: 14px;
 	height: 14px
 }
-
+**/
 .tg-thermometer.small .percent-b, .tg-thermometer.small .percent-d {
 	display: none
 }
-
 .tg-thermometer .statistics {
 	position: absolute;
 	left: 0;
@@ -55,34 +44,29 @@
 	font-weight: 500;
 	text-shadow: 1px 1px #fff
 }
-
 .tg-thermometer .statistics .percent {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	text-align: right;
 	position: absolute;
-	width: 40px
+	width: 40px;
 }
-
+.tg-thermometer .statistics .percent, .tg-thermometer.large .statistics .percent {margin-left: 10px;}
+.tg-thermometer.small .statistics .percent {margin-left: 14px;}
 .tg-thermometer .statistics .percent.percent-0 {
 	bottom: calc(100% - 2px)
 }
-
 .tg-thermometer .statistics .percent.percent-1 {
 	bottom: calc(75% - 2px)
 }
-
 .tg-thermometer .statistics .percent.percent-2 {
 	bottom: calc(50% - 2px)
 }
-
 .tg-thermometer .statistics .percent.percent-3 {
 	bottom: calc(25% - 2px)
 }
-
 .tg-thermometer .statistics .percent.percent-4 {
 	bottom: calc(0% - 2px)
 }
-
 .tg-thermometer .meter {
 	width: 10px;
 	margin: auto;
@@ -91,23 +75,21 @@
 	height: calc(100% - 58px);
 	top: 12px;
 	position: absolute;
-	background-color: #d6d6d6;
+	background-color: #D6D6D6;
 	border-radius: 10px 10px 0 0;
 	z-index: 1
 }
-
 .tg-thermometer .meter .mercury {
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	background-color: #f44336;
+	background-color: #F44336;
 	border-radius: 10px 10px 0 0;
-	background: linear-gradient(0deg, #f44336, #3f51b5);
+	/**background: linear-gradient(0deg, #F44336, #3F51B5);**/
 	transition: all .5s ease-in-out;
 	height: 0
 }
-
 .tg-thermometer .meter .mask {
 	position: absolute;
 	bottom: 0;
@@ -116,28 +98,25 @@
 	height: 100%;
 	border-radius: 10px 10px 0 0
 }
-
 .tg-thermometer .meter .bg-color {
 	position: absolute;
 	width: 10px;
 	height: calc(200px - 57px);
 	bottom: 0
 }
-
 .tg-thermometer .meter .percent-current {
 	position: absolute;
 	left: 0;
 	top: 4px;
 	transform: translateX(calc(-100% - 8px)) translateY(-50%);
 	background-color: #fff;
-	padding: 5px 10px;
+	padding: 3px 5px;
 	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 3px 3px 6px rgba(0, 0, 0, 0.1);
 	border-radius: 2px;
 	font-weight: 500;
-	font-size: 1.5em;
+	font-size: 0.85em;
 	color: #333
 }
-
 .tg-thermometer .meter .percent-current:after {
 	border-left: 8px solid white;
 	border-top: 6px solid transparent;
@@ -152,7 +131,6 @@
 	width: 0;
 	height: 0
 }
-
 .tg-thermometer .meter .percent-current:before {
 	border-left: 7px solid rgba(0, 0, 0, 0.2);
 	border-top: 6px solid transparent;
@@ -167,7 +145,6 @@
 	width: 0;
 	height: 0
 }
-
 .tg-thermometer .draw-a {
 	background-color: #fff;
 	height: calc(100% - 20px);
@@ -178,7 +155,6 @@
 	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 1px 1px 5px
 		rgba(0, 0, 0, 0.2)
 }
-
 .tg-thermometer .draw-a:before {
 	width: 100%;
 	bottom: 0px;
@@ -189,7 +165,6 @@
 	content: "";
 	z-index: 1
 }
-
 .tg-thermometer .draw-a:after {
 	content: "";
 	width: 50px;
@@ -202,7 +177,6 @@
 	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 1px 1px 5px
 		rgba(0, 0, 0, 0.2)
 }
-
 .tg-thermometer .draw-b {
 	position: absolute;
 	width: 50px;
@@ -213,34 +187,12 @@
 	height: 50px;
 	z-index: 1
 }
-
 .tg-thermometer .draw-b:after {
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	margin: auto;
-	width: 24px;
-	height: 24px;
-	background-color: #f44336;
-	content: "";
-	border-radius: 50%
+	
 }
-
 .tg-thermometer .draw-b:before {
-	position: absolute;
-	left: 0;
-	right: 0;
-	width: 10px;
-	top: 0;
-	margin: auto;
-	height: 20px;
-	background-color: #f44336;
-	content: "";
-	border-radius: 10px 10px 0 0
+	
 }
-
 .centered {
 	position: absolute !important;
 	left: 0;
@@ -254,18 +206,45 @@
 	justify-content: space-between;
 	align-items: center
 }
-
 .title {
 	text-align: center;
 	margin: 60px 0 0
 }
-
 .title .upper {
 	text-transform: uppercase
 }
-
 .title a {
 	text-decoration: none;
 	color: #3F51B5
 }
-/*# sourceMappingURL=style.css.map */
+/*** ie fixes ***/
+scriptr-thermometer {height: 100%;}
+scriptr-thermometer > div:first-child {height: 100%;}
+/** iPad 1, 2, Mini and Air **/
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+	.tg-thermometer .meter .percent-current{
+        padding:5px 1px;
+        font-size:10px;
+    }
+}
+/* iPhone 6/7/8+, iPhone x */
+@media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
+	.tg-thermometer .meter .percent-current {
+   		padding:5px 3px;
+    	font-size:9px;
+    }
+}
+/** iPhone 6, 6S, 7 and 8 **/
+@media only screen and (min-width: 375px) and (max-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+	.tg-thermometer .meter .percent-current {
+        padding:5px 3px;
+        font-size:9px;
+    }
+}
+/** iPhone 5, 5S, 5C and 5SE **/
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+  	.tg-thermometer .meter .percent-current {
+  		padding:5px 1px;
+  		font-size:8px;
+  	}
+}
