@@ -39,7 +39,8 @@ angular
         "valueTextAlignment": "@",
         "valueVerticalAlignment": "@",  //values: top, bottom, center
         "valueTextTransform": "@",
-         
+        "colorAcrossComponent": "@",                 
+          
         "message": "@",     
         "messageFontFamily": "@",            
         "messageFontSize": "@",                      
@@ -197,6 +198,7 @@ angular
                 this.transport = (this.transport) ? this.transport : null;
                 this.msgTag = (this.msgTag) ? this.msgTag : null;
                 this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
+                this.colorAcrossComponent = (this.colorAcrossComponent) ? this.colorAcrossComponent : "false";
                 this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;
                 this.style = {};
             }
@@ -212,7 +214,10 @@ angular
                     });
                 }
                 if(match!=null){
-                    self.valueStyle.background = match.color;
+                    if(self.colorAcrossComponent=="true")
+                        self.containerStyle.background = match.color;
+                    else
+                    	self.valueStyle.background = match.color;                    	
                     self.valueBackgroundColor=match.color;
                 }
             }

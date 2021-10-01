@@ -9,7 +9,7 @@
       <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "top") ? "column-reverse" : "column" }'>
         <section ng-style="$ctrl.valueStyle">
             <div class="value-wrapper">
-                <div class="cell-value">{{$ctrl.value}}{{$ctrl.unit}}</div>
+                <div class="cell-value">{{$ctrl.value}}<span>{{$ctrl.unit}}</span></div>
                 <div class="cell-info" ng-show="$ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{$ctrl.info}}</div>
             </div>
         </section>
@@ -21,7 +21,7 @@
         <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "left") ? "row-reverse" : "row" }'>
             <section  class="cell-value" ng-style="$ctrl.valueStyle" >
                  <div class="value-wrapper">
-                    <div class="cell-value">{{$ctrl.value}}{{$ctrl.unit}}</div>
+                    <div class="cell-value">{{$ctrl.value}}<span>{{$ctrl.unit}}</span></div>
                     <div class="cell-info" ng-show="$ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{$ctrl.info}}</div>
                 </div>
             </section>
