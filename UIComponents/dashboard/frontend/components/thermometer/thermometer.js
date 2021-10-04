@@ -89,7 +89,7 @@ angular
                            });
                            if(self.value || JSON.stringify(self.value)) {
                               self.beforeConversionValue = self.value;
-                              self.value = self.conversion()(self.value);
+                              self.value = self.conversion()(self.value).toFixed(2);
                            }
                            		
                   	   } else {
@@ -100,9 +100,11 @@ angular
                                self.value =  self.beforeConversionValue;
                            }
                        }
-                       
+                       self.calculateTics();                       
                        self.calculateDataVariants(self.value)
-                       
+                   }
+                   
+                   this.calculateTics = function(){
                        var lowestTick = this.getLowestTick();
                        var highestTick = this.getHighestTick();
                        
@@ -254,7 +256,8 @@ angular
                                   if(self.applyConversion && typeof self.conversion() == "function") {
                                       data = self.conversion()(data);
                                   }
-                                  self.calculateDataVariants(data)
+                                  self.calculateTics();
+                                  self.calculateDataVariants(data);
                                   self.hasData = true;
                                   self.noResults = false;
                               	  self.stalledData = false;
