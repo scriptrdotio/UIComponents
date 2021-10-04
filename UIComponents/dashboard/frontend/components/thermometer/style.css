@@ -5,6 +5,9 @@
     display: block;
     min-height: 200px;
 }
+
+.thermowrapper {height: 100%;}
+
 .tg-thermometer.small .meter {
 	width: 6px
 }
