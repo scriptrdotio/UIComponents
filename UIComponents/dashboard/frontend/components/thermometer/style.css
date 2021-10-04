@@ -2,8 +2,8 @@
 	width: 100px;
     margin-top: 1%;
 	position: absolute;
-    height: 100%;
     display: block;
+    min-height: 200px;
 }
 .tg-thermometer.small .meter {
 	width: 6px
@@ -220,7 +220,7 @@
 	color: #3F51B5
 }
 /*** ie fixes ***/
-scriptr-thermometer, tg-thermometer-vertical {height: 100%;display: block;}
+scriptr-thermometer, tg-thermometer-vertical {height: 100%;display: block;min-height: 230px;}
 scriptr-thermometer > div:first-child {height: 100%;}
 
 /** iPad 1, 2, Mini and Air **/
