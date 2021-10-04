@@ -485,7 +485,7 @@ module.exports = function(grunt) {
 	            editor: {
 	            	src: [
 	            	   'concat/min-safe/module.js',
-                     'concat/min-safe/ACL.js',
+                     'concat/min-safe/acl.js',
                      'dashboardBuilder/javascript/components/library/commonsConfig.js',
                      'dashboardBuilder/javascript/components/library/commonsActionConfig.js',
                      'dashboardBuilder/javascript/components/library/boxStyleConfig.js',
