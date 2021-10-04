@@ -105,7 +105,7 @@ angular
                    }
                    
                    this.calculateTics = function(){
-                       var lowestTick = this.getLowestTick();
+                        var lowestTick = this.getLowestTick();
                        var highestTick = this.getHighestTick();
                        
                        var tick = parseInt(lowestTick);
@@ -254,7 +254,7 @@ angular
                               if(!isNaN(data) && isFinite(data)){
                                   self.beforeConversionValue = data;
                                   if(self.applyConversion && typeof self.conversion() == "function") {
-                                      data = self.conversion()(data);
+                                      data = self.conversion()(data).toFixed(2);;
                                   }
                                   self.calculateTics();
                                   self.calculateDataVariants(data);
