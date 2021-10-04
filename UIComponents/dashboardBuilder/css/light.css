@@ -553,8 +553,8 @@
 .dashboardTheme .btn-primary:active,
 .dashboardTheme .btn-primary.active {
   color: #FFF;
-  background-color: #d6690b !important;
-  border-color: #d6690b !important;
+  background-color: #d6690b;
+  border-color: #d6690b;
 }
 .dashboardTheme .open > .dropdown-toggle.btn-primary {
   color: #FFF;
