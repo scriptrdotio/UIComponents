@@ -215,9 +215,9 @@ angular
                 }
                 if(match!=null){
                     if(self.colorAcrossComponent=="true")
-                        self.containerStyle.background = match.color;
+                        self.containerStyle["background-color"] = match.color;
                     else
-                    	self.valueStyle.background = match.color;                    	
+                    	self.valueStyle["background-color"] = match.color;                    	
                     self.valueBackgroundColor=match.color;
                 }
             }
