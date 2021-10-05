@@ -95,7 +95,8 @@ angular
           "interaction": "<?",
           
           
-          "xaxisLabelFormatter": "&"
+          "xaxisLabelFormatter": "&",
+          "fillGraph": "@"
           //functional data
         //   "useFunctional": "<?",
         //   "functionalDataType": "@",//scattered , range
@@ -410,6 +411,7 @@ angular
              this.options.pointSize = (this.pointSize!=null) ? this.pointSize : 3; 
            
              this.options.interactionModel = (this.interaction) ? Dygraph.defaultInteractionModel    :  Dygraph.nonInteractiveModel;
+             this.options.fillGraph = this.fillGraph || false;
              
              //this.data = JSON.parse(this.data);
              //this.resize = (this.resize) ? this.resize : true;
