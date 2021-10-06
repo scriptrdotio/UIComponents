@@ -138,7 +138,11 @@ module.exports = function(grunt) {
 		                  //'dashboard/frontend/components/grideye/grideye.html',
 		                  'dashboard/frontend/components/imagemap/imagemap.html',
 		                  'dashboard/frontend/components/displayCount/displayCount.html',
-		                  'dashboard/frontend/components/datetimepicker/datetimepicker_directive.html'
+		                  'dashboard/frontend/components/datetimepicker/datetimepicker_directive.html',
+		                  'dashboard/frontend/components/combo/combo.html',
+		                  'dashboard/frontend/components/combo/comboBox.html',
+		                  'dashboard/frontend/components/combo/comboTitle.html',
+		                  'dashboard/frontend/components/scrollableTabs/tabs.html'
 		                  ],
 		                
 		            dest :'build/js/templates.js',
@@ -267,7 +271,10 @@ module.exports = function(grunt) {
 		               'concat/min-safe/ui-leaflet.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet.js'],
 		               'concat/min-safe/ui-leaflet-layers.min.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet-layers.min.js'],
 		               'concat/min-safe/ui-leaflet-draw.js' : [ 'dashboard/frontend/components/imagemap/ui-leaflet-draw.js'],
-						   'concat/min-safe/imagemap.js' : [ 'dashboard/frontend/components/imagemap/imagemap.js']
+						   'concat/min-safe/imagemap.js' : [ 'dashboard/frontend/components/imagemap/imagemap.js'],
+						   'concat/min-safe/combo.js' : [ 'dashboard/frontend/components/combo/combo.js'],
+						   'concat/min-safe/scrolling-tabs.js' : [ 'dashboard/frontend/components/scrollableTabs/scrolling-tabs.js'],
+						   'concat/min-safe/tabs.js' : [ 'dashboard/frontend/components/scrollableTabs/tabs.js']
 							
 		            }
 	            }
@@ -477,6 +484,9 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/datetimepicker.js',
 	                     'concat/min-safe/dateTimeInput.js',
 						      'concat/min-safe/imagemap.js',
+						      'concat/min-safe/combo.js',
+						      'concat/min-safe/scrolling-tabs.js',
+						      'concat/min-safe/tabs.js'
 						       //'concat/min-safe/cell.js',
 								  //'concat/min-safe/grideye.js',
 	                     ],
@@ -545,7 +555,9 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/imagemap/leaflet-draw.css',
 	                     'lib/MarkerCluster.css',
 	                     'lib/MarkerCluster.Default.css',
-	                     'dashboard/frontend/components/imagemap/imageMap.css'
+	                     'dashboard/frontend/components/imagemap/imageMap.css',
+	                     'dashboard/frontend/components/combo/combo.css',
+	                     'dashboard/frontend/components/scrollableTabs/scrolling-tabs.css'
 	                     ],
 	               dest : 'build/css/components.css'
 	            }
