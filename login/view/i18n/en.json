@@ -12,7 +12,7 @@
     "reset-password-title": "Reset Password",
     "confirm-password": "Confirm Password",
     "reset": "Reset",
-    "invalid-login-credentials": "Invalid Username or password.",
+    "invalid-login-credentials": "Invalid username or password.",
     "forgot-password-success-msg": "An email message has been sent to the provided email address with instructions on how to reset your password.",
     "reset-password-success-msg": "Your password has been successfully reset. You will be automatically redirected to the login page.",
     "confirm-password-error": "Password does not match",
