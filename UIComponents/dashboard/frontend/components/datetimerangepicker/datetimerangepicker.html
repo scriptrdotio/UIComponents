@@ -1,0 +1,8 @@
+<div class="date-container">
+    <img src="{{$ctrl.icon}}"/>
+    <div class="fieldsWrap">
+        <p>Date Range</p>
+        <input date-range-picker name="daterange" class="date-picker" type="text"
+               ng-model="$ctrl.dateFilter" options="$ctrl.dateFilterOptions" clearable="true" min="$ctrl.minDate" max="$ctrl.maxDate"/>
+    </div>
+</div>

@@ -79,7 +79,9 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.time.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
-	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js'
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.css'
 	               ]
 	            }
 	         },
@@ -142,7 +144,8 @@ module.exports = function(grunt) {
 		                  'dashboard/frontend/components/combo/combo.html',
 		                  'dashboard/frontend/components/combo/comboBox.html',
 		                  'dashboard/frontend/components/combo/comboTitle.html',
-		                  'dashboard/frontend/components/scrollableTabs/tabs.html'
+		                  'dashboard/frontend/components/scrollableTabs/tabs.html',
+		                  'dashboard/frontend/components/datetimerangepicker/datetimerangepicker.html'
 		                  ],
 		                
 		            dest :'build/js/templates.js',
@@ -274,7 +277,9 @@ module.exports = function(grunt) {
 						   'concat/min-safe/imagemap.js' : [ 'dashboard/frontend/components/imagemap/imagemap.js'],
 						   'concat/min-safe/combo.js' : [ 'dashboard/frontend/components/combo/combo.js'],
 						   'concat/min-safe/scrolling-tabs.js' : [ 'dashboard/frontend/components/scrollableTabs/scrolling-tabs.js'],
-						   'concat/min-safe/tabs.js' : [ 'dashboard/frontend/components/scrollableTabs/tabs.js']
+						   'concat/min-safe/tabs.js' : [ 'dashboard/frontend/components/scrollableTabs/tabs.js'],
+						   'concat/min-safe/angular-daterangepicker.js' : [ 'dashboard/frontend/components/datetimerangepicker/angular-daterangepicker.min.js'],
+						   'concat/min-safe/datetimerangepicker.js' : [ 'dashboard/frontend/components/datetimerangepicker/datetimerangepicker.js']
 							
 		            }
 	            }
@@ -486,7 +491,9 @@ module.exports = function(grunt) {
 						      'concat/min-safe/imagemap.js',
 						      'concat/min-safe/combo.js',
 						      'concat/min-safe/scrolling-tabs.js',
-						      'concat/min-safe/tabs.js'
+						      'concat/min-safe/tabs.js',
+						      'concat/min-safe/angular-daterangepicker.js',
+						      'concat/min-safe/datetimerangepicker.js'
 						       //'concat/min-safe/cell.js',
 								  //'concat/min-safe/grideye.js',
 	                     ],
