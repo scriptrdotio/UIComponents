@@ -37,6 +37,7 @@ angular
                   
                   "height" : "@",
                    
+                  "decimals" : "@", // quantity of decimal numbers to show (int)
                    
                    "applyConversion": "<?",
                    "conversion": "&",
@@ -64,6 +65,7 @@ angular
                        this.step = (self.step) ? self.step : "30";
                        
                        this.height = (this.height) ? this.height : "100";
+                       this.decimals = (this.decimals) ? this.decimals : "2";
                        
                        this.customSectors = (this.customSectors && this.customSectors.length > 0) ?  _.reject(this.customSectors, _.isEmpty) : [{"color": "#CC5464", "lo": 0, "hi": 30}, {"color": "#FCC717", "lo": 30, "hi": 60}, {"color": "#38B9D6", "lo": 60, "hi": 90}];
                        
@@ -89,7 +91,7 @@ angular
                            });
                            if(self.value || JSON.stringify(self.value)) {
                               self.beforeConversionValue = self.value;
-                              self.value = self.conversion()(self.value).toFixed(2);
+                              self.value = self.conversion()(self.value).toFixed(self.decimals);
                            }
                            		
                   	   } else {
@@ -254,7 +256,7 @@ angular
                               if(!isNaN(data) && isFinite(data)){
                                   self.beforeConversionValue = data;
                                   if(self.applyConversion && typeof self.conversion() == "function") {
-                                      data = self.conversion()(data).toFixed(2);;
+                                      data = self.conversion()(data).toFixed(self.decimals);
                                   }
                                   self.calculateTics();
                                   self.calculateDataVariants(data);
