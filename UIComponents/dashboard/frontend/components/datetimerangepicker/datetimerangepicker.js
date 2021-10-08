@@ -33,7 +33,7 @@ angular.module("DateTimeRangePicker").component("scriptrDateTimeRangePicker", {
         
         this.$onInit = function() {
         	var self = this;
-        	this.icon = "//scriptr-cdn.s3.amazonaws.com/uicomponents/images/display-data-bg.svg";
+        	this.icon = "http://scriptr-cdn.s3.amazonaws.com/uicomponents/images/calendar.svg";
         	this.startDate = this.startDate || moment().subtract(1, "days");
             this.endDate = this.endDate || moment();
             this.minDate = this.minDate || moment().subtract(1, "years").format("YYYY-MM-DD");
