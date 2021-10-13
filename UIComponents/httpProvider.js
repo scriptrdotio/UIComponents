@@ -131,7 +131,14 @@ angular
                                       date
                                           .setTime(date.getTime()
                                                    + (parseInt(data["expiry"]) * 1000));
-                                      $cookies.put('token', data.token,
+                                      
+                                      
+                                      document.cookie =  "token=" + data["token"] + ";expires=" + date.toUTCString()+ ";Path=/;Secure";
+                                      document.cookie =  "tokenExpiry=" + date.toUTCString() + ";expires=" + date.toUTCString()+ ";Path=/;Secure";
+                                      document.cookie =  "user=" +  _cookies["user"] + ";expires=" + date.toUTCString()+ ";Path=/;Secure";
+                                      document.cookie = "lang=" + _cookies["lang"] + ";expires=" + date.toUTCString()+ ";Path=/;Secure";
+                                     
+                                      /**  $cookies.put('token', data.token,
                                                    {
                                           'path' : '/',
                                           'secure' : true,
@@ -159,7 +166,7 @@ angular
                                               'expires' : date
                                               .toUTCString()
                                           });
-                                      }
+                                      }**/
                                       self.setToken(data.token);
                                       self.setTokenExpiry(date
                                                           .toUTCString());
