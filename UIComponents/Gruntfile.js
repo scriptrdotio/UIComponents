@@ -445,7 +445,8 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/datetimepicker_directive.js',
 	                     'concat/min-safe/ui-leaflet.js',
 	                     'concat/min-safe/ui-leaflet-layers.min.js',
-	                     'concat/min-safe/ui-leaflet-draw.js'
+	                     'concat/min-safe/ui-leaflet-draw.js',
+	                     'lib/daterangepicker.min.js'
 	                     ],
 	               dest : 'build/js/directives_2.min.js'
 	            },
@@ -564,7 +565,8 @@ module.exports = function(grunt) {
 	                     'lib/MarkerCluster.Default.css',
 	                     'dashboard/frontend/components/imagemap/imageMap.css',
 	                     'dashboard/frontend/components/combo/combo.css',
-	                     'dashboard/frontend/components/scrollableTabs/scrolling-tabs.css'
+	                     'dashboard/frontend/components/scrollableTabs/scrolling-tabs.css',
+	                     'lib/daterangepicker.min.css'
 	                     ],
 	               dest : 'build/css/components.css'
 	            }
