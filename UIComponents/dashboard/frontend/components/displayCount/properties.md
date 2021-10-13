@@ -22,6 +22,7 @@
   value-vertical-alignment | center	 | One of: top, bottom, center | string | NO
   value-background-color     | 	 | The Value Background Default Color. | string | NO
   value-background-colors     | 	 | The Value Background Colors array used to define a background for each range of values , example value [{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]. | string | NO
+  color-accross-component   | false | Change the message & value background color based on ranges | string | NO
   unit | null   | sting to display next to the value. ex: % | string | NO
   message-font-family     | 	 | The Label Font Family. | string | NO
   message-font-size     | 18	 | The Label Font Size in pixel. | string | NO
