@@ -122,9 +122,9 @@ angular
              this.hasData = (this.datas != null  && this.datas.length > 0) ?  true : false;
              
               this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
-             if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
+             /**if(typeof this.api == 'undefined' && typeof this.msgTag == 'undefined' && ((this.data && this.data.length == 0) || this.data == null)){
                this.noResults = true;
-             }
+             }**/
              
              //Set axes options
            	 this.options = {};

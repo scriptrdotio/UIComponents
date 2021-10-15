@@ -1,5 +1,6 @@
 
 
+<!doctype html>
 <html ng-app="myApp">
 <head>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -17,20 +18,18 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone-with-data.min.js"></script>
     <!-- Adding Angular -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
-    
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
-    
-    
-     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/chart/chart.css">
   
-  	<link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/light.css">
-  
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+   <link name="light" rel="stylesheet" href="/UIComponents/dashboardBuilder/css/light.css"> 
+    
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
-    <script src="//cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-websocket/1.0.9/angular-websocket.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>      
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script> 
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
     <script src="/UIComponents/dataService.js"></script>
@@ -44,6 +43,26 @@
     <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
     <script src="/UIComponents/config/scriptrTransport.js"></script>
+    
+    
+    
+          <!-- i18n -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js"></script>
+    <!-- /i18n -->
+    
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.min.js"></script>
+    
+    <!-- Scrolling Tabs component -->
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/scrollableTabs/scrolling-tabs.css">
+    <script src="/UIComponents/dashboard/frontend/components/scrollableTabs/scrolling-tabs.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/scrollableTabs/tabs.js"></script>
+    
+    
+    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css">
+    <script src="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js"></script>
 </head> 
   
   
@@ -57,63 +76,112 @@
 
 (function() {
 	
-   $.urlParam = function(name){
-	     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-	     if (results==null){
-	         return null;
-	     }else{
-	         return results[1] || 0;
-	     }
-	}
 
-	$.getUrlVars = function() {
-		var vars = [], hash;
-		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-		for(var i = 0; i < hashes.length; i++)
-		{
-			hash = hashes[i].split('=');
-			vars.push(hash[0]);
-			vars[hash[0]] = hash[1];
-		}
-		return vars;
-	}
     
-     var myApp= angular.module("myApp", ["WsClient", "HttpClient", 'Dygraphs'])
+     var myApp= angular.module("myApp", ["WsClient", "HttpClient", 'Dygraphs', "ScrollableTabs", "gridster"])
      angular.module('myApp').config(wssConfig);
      angular.module('myApp').config(httpsConfig);
      
-     myApp.config(function($interpolateProvider, $locationProvider) {
-        $interpolateProvider.startSymbol('{[{');
-        $interpolateProvider.endSymbol('}]}');
-        $locationProvider.html5Mode({
-          enabled: true,
-          requireBase: false
-        });
-     });
+
   
-     myApp.controller('RootCtrl', function($scope, $interpolate, $location, $interval) {
+     myApp.controller('RootCtrl', function($rootScope, $scope, $interpolate, $location, $interval, $q, $timeout) {
        var vm = this;
       
+        vm.tabs = [
+            {"id":1,"title":"Chart with api ","content":"Just created 1","loaded":false},
+            {"id":2,"title":"Chart with data","content":"Just created 1","loaded":false},
+            {"id":3,"title":"Chart with large data set ","content":"Just created 2","loaded":false}
+        ];
+        
+        vm.onTabCreate = function(tab, tabs, event) {
+            console.log("onTabCreate" , tab, tabs)
+            var d = $q.defer();
+            $timeout(function(){d.resolve()}, 500)
+            return d.promise;
+        }
+        
+        vm.onTabDelete = function(tab, tabs) {
+            console.log("onTabDelete", tab, tabs)
+            var d = $q.defer();
+            $timeout(function(){d.resolve()}, 500)
+            return d.promise;
+        }
+        
+        vm.onTabsChanged = function(tab, tabs, event) {
+            console.log("onTabsChanged", tab, tabs, event);
+             if(tab.id == 1) {
+                 $("#tab2")[0].style.display="none"
+                 $("#tab3")[0].style.display="none"
+                 $("#tab1")[0].style.display=""
+             }
+
+
+            if(tab.id == 2){
+                $("#tab1")[0].style.display="none"
+                $("#tab3")[0].style.display="none"
+                $("#tab2")[0].style.display=""
+            }
+
+            if(tab.id == 3){
+                $("#tab1")[0].style.display="none"
+                $("#tab2")[0].style.display="none"
+                $("#tab3")[0].style.display=""
+            }
+            
+             vm.selectedTab = tab.id;
+               	 	
+        }
+        
+        
         vm.init = function() {
-            vm.data = generateData();
+            vm.data = generateData(10);
             $interval(function(){
-            	vm.data= generateData();
-            }, 10000)
+            	vm.data= generateData(2);
+            }, 30000)
+            
+            vm.largeDataSet = generateData(3000);
         }
         
         vm.lineFormatData7 = function(data){
             return data;
         }
         
-        var generateData = function() {
+        var generateData = function(dataPointsCount) {
             var data = [];
             var t = new Date();
-            for (var i = 10; i >= 0; i--) {
+            for (var i = dataPointsCount; i >= 0; i--) {
                 var x = new Date(t.getTime() - i * 1000);
                 data.push([x, Math.random()]);
             }
             return data;
         }
+        
+        
+        vm.gridsterOptions = {
+          defaultSizeY: 50,
+          defaultSizeX:50,
+          minRows: 1, // the minimum height of the grid, in rows
+          maxRows: 100,
+          columns: 6, // the width of the grid, in columns
+          colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
+          rowHeight: '50', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+          margins: [10, 10], // the pixel distance between each widget
+          defaultSizeX: 2, // the default width of a gridster item, if not specifed
+          defaultSizeY: 1, // the default height of a gridster item, if not specified
+          mobileBreakPoint:480, // if the screen is not wider that this, remove the grid layout and stack the items
+          minColumns: 1, // the minimum columns the grid must have
+          resizable: {
+            enabled: false
+          },
+          draggable: {
+             enabled: false
+          }
+       };
+       
+         
+       $rootScope.$on('gridster-loaded', function(event, gridster){
+            console.log("Gridster loaded", gridster)
+        })
         
      });
         	
@@ -121,9 +189,104 @@
   
 </script>
 
-   <body class="dashboard-template"  ng-controller="RootCtrl as vm" ng-init="vm.init();">
-       <div class="col-md-6"> 
-						  		<scriptr-dygraphs
+   <body class="dashboardTheme"  ng-controller="RootCtrl as vm" ng-init="vm.init();">
+       
+<header>
+    <scriptr-scrollable-tabs tabs="vm.tabs" on-tabs-changed="vm.onTabsChanged(tab)" on-tab-initial-load="vm.onTabCreate({tab:tab, tabs: tabs })" on-tab-remove="vm.onTabDelete({tab:tab, tabs: tabs})"></scriptr-scrollable-tabs>
+</header>
+<div class="dashboardContainer">
+<section id="tab2" style="display: none;">
+<div  gridster="vm.gridsterOptions">
+       <ul>
+            <li class="myItem " gridster-item='{sizeX: 5, sizeY: 5, col: 2 , row: 4 }'>
+               <div class="box"  ng-if="vm.selectedTab == 2">
+                  <div class="box-header">
+                     <div class="box-label"><span tooltip-append-to-body="true" uib-tooltip="data">Chart Title</span></div>
+                     <div class="box-header-btns">
+                     </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="box-content">
+						  		<scriptr-dygraphs 
+										type='line'
+										data-type='raw'
+										data-format='dygraphs'
+										schema-for='line'
+										display-metric-param='display_metric'
+										boxLabel='Line Chart'
+										boxBorder='true'
+										grid-text-family='Source Sans Pro'
+										x1-axis-label-font-size='12'
+										x1-axis-label-width='40'
+										y2-axis-label-width='40'
+										y-axis-label-width='40'
+										y2-axis-label-font-size='12'
+										y-axis-label-font-size='12'
+										independent-ticks='independent'
+										colors-mapping='[{"labels":"Y1","colors":"#ad7fa8","axisSelection":"y","unit":"%"},{"labels":"Y2","colors":"#FCC717","axisSelection":"y","unit":"X"},{"labels":"Y3","colors":"#38B9D6","axisSelection":"y","unit":"Hz"},{"labels":"Y4","colors":"#1DBC68","axisSelection":"y","unit":"%"}]'
+										show-legend='true'
+										legend-position='bottom'
+										draw-x1-axis='true'
+										draw-y-axis='true'
+										draw-y2-axis='false'
+										custom-goals='[{"goal-line-colors":"#f0f0f0","goals":null}]'
+										events='["2010-02-02"]'
+										event-line-colors='["#ffffff"]'
+										x1-axis-line-color='#e9b96e'
+										y-axis-line-color='#ef2929'
+										y2-axis-line-color='#000000'
+										x1-axis-line-width='1'
+										y-axis-line-width='1'
+										y2-axis-line-width='1'
+										y-axis-include-zero='false'
+										y2-axis-include-zero='false'
+										y-axis-labels-kmb='false'
+										y2-axis-labels-kmb='false'
+										show-range-selector='true'
+										range-selector-alpha='0.6'
+										range-selector-background-line-width='1'
+										range-selector-background-stroke-color='#808080'
+										range-selector-foreground-line-width='1'
+										range-selector-foreground-stroke-color='#000000'
+										range-selector-height='40'
+										range-selector-plot-fill-color='#A7B1C4'
+										range-selector-plot-fill-gradient-color='#FFFFFF'
+										range-selector-plot-line-width='1.5'
+										range-selector-plot-stroke-color='#808FAB'
+										x1-draw-grid='true'
+										y-draw-grid='true'
+										y2-draw-grid='false'
+										x1-grid-line-color='#000000'
+										y-grid-line-color='#000000'
+										y2-grid-line-color='#000000'
+										x1-grid-line-width='1'
+										y-grid-line-width='1'
+										y2-grid-line-width='1'
+										x1-axis-label='Label1'
+										y-axis-label='Label2'
+										y2-axis-label=''
+                                  		on-format-data='vm.lineFormatData7'
+										data='vm.data',
+                                        delta="true"
+                           		>
+                                
+                                    
+                                </scriptr-dygraphs>
+       </div>
+</section>
+<section id="tab3" style="display: none;">
+   <div  gridster="vm.gridsterOptions">
+       <ul>
+            <li class="myItem " gridster-item='{sizeX: 5, sizeY: 5, col: 2 , row: 4 }'>
+               <div class="box">
+                  <div class="box-header">
+                     <div class="box-label"><span tooltip-append-to-body="true" uib-tooltip="data">Chart Title</span></div>
+                     <div class="box-header-btns">
+                     </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="box-content">
+						  		<scriptr-dygraphs  ng-if="vm.selectedTab == 3"
 										type='line'
 										data-type='raw'
 										data-format='dygraphs'
@@ -184,15 +347,20 @@
 										
                                   		on-format-data='vm.lineFormatData7'
                                         fetch-data-interval="10"
-										data='vm.data',
+										data='vm.largeDataSet',
                                         delta="true"
                            		>
                                 
                                     
                                 </scriptr-dygraphs>
+                      </div>
+               </div>
+            </li>
 
-      </div>
-      <div class="col-md-6"> 
+    </div>
+</section>
+<section id="tab1">
+      <div class="col-md-6"  style="height: 300px;"> 
           <scriptr-dygraphs
                             type='line'
                             data-type='raw'
@@ -259,7 +427,7 @@
                             >
           </scriptr-dygraphs>
       </div>
-       <div class="col-md-6"> 
+       <div class="col-md-6"  style="height: 300px;"> 
           <scriptr-dygraphs
                             type='line'
                             data-type='raw'
@@ -328,7 +496,8 @@
                             >
           </scriptr-dygraphs>
       </div>
-       
+    </section>
+       </div>
   </body>  
 </html>
 
