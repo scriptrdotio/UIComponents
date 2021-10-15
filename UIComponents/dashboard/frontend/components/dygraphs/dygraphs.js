@@ -140,50 +140,7 @@ angular
 			
              this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];  
 
-             if(this.colorsMapping && this.showLegend && this.showLegend == "true"){
-                 this.colors = _.pluck(this.colorsMapping, "colors");
-                 this.legendLabels = ["x"];
-                 this.legendLabels = this.legendLabels.concat(_.pluck(this.colorsMapping, "labels"));
-                 var legendLabelsArray = angular.copy(this.legendLabels);
-                 var translatedArray = [];
-                 legendLabelsArray.forEach(function(label){
-                     var translatedLabel = $translate.instant(label)
-                     translatedArray.push(translatedLabel)
-                 });
-                 this.legendLabels = translatedArray;
-                 this.legendMapping = ["X"];
-                 this.legendMapping = this.legendMapping.concat(_.pluck(this.colorsMapping, "axisSelection"));
-                 this.legendUnitsMapping = _.pluck(this.colorsMapping, "unit");
-                 for(var i = 1; i < this.legendLabels.length; i++){
-                     if(this.legendUnitsMapping[i-1] && this.legendUnitsMapping[i-1] != "")
-                         this.legendLabels[i] = this.legendLabels[i] + " (" + this.legendUnitsMapping[i-1] + ")";
-                 }
-                 this.legendLabels = (this.legendLabels) ? this.legendLabels : ["X", "Y1", "Y2", "Y3", "Y4"];   
-                 //this.legendLabels = $translate.instant(this.legendLabels) 
-                 console.log("labels",  this.legendLabels)
-                 this.legendMapping = (this.legendMapping) ? this.legendMapping : ["x", "y", "y", "y2", "y2"];  
-
-                 for(var v=0; v < this.legendLabels.length; v++){
-                     var labelValue = this.legendLabels[v];
-                     if(v!=0){
-                         if(this.legendMapping[v]=="y2" && this.drawY2Axis){
-                             if(labelValue){
-                                 this.options.series[labelValue] = {"axis":this.legendMapping[v]};
-                             }else{
-                                 this.options.series["Y" + v] = {"axis":this.legendMapping[v]};
-                             }
-                         }
-                     }
-                 }
-             }
-             
-            
-             
-             
-             //Legend Labels
-             if(this.legendLabels && this.legendLabels!=""){
-	             this.options.labels = this.legendLabels;
-             }
+             this.buildLegend.bind(self)(this.colorsMapping)
              
              this.options.customGoals = (this.customGoals) ? _.reject(this.customGoals, function(item) {return (item.goal === "" || item.goal == null)}) : [];
             // this.goalLineColors = _.pluck(this.customGoals, "goal-line-colors");
@@ -498,6 +455,54 @@ angular
                 
                 $scope.$emit("waiting-for-data");
            }
+        }
+         
+         
+        this.buildLegend = function(colorsMapping) {
+            if(colorsMapping && self.showLegend && self.showLegend == "true"){
+                 self.colors = _.pluck(colorsMapping, "colors");
+                 self.legendLabels = ["x"];
+                 self.legendLabels = self.legendLabels.concat(_.pluck(colorsMapping, "labels"));
+                 var legendLabelsArray = angular.copy(self.legendLabels);
+                 var translatedArray = [];
+                 legendLabelsArray.forEach(function(label){
+                     var translatedLabel = $translate.instant(label)
+                     translatedArray.push(translatedLabel)
+                 });
+                 self.legendLabels = translatedArray;
+                 self.legendMapping = ["X"];
+                 self.legendMapping = self.legendMapping.concat(_.pluck(colorsMapping, "axisSelection"));
+                 self.legendUnitsMapping = _.pluck(colorsMapping, "unit");
+                 for(var i = 1; i < self.legendLabels.length; i++){
+                     if(self.legendUnitsMapping[i-1] && self.legendUnitsMapping[i-1] != "")
+                         self.legendLabels[i] = self.legendLabels[i] + " (" + self.legendUnitsMapping[i-1] + ")";
+                 }
+                 self.legendLabels = (self.legendLabels) ? self.legendLabels : ["X", "Y1", "Y2", "Y3", "Y4"];   
+                 //self.legendLabels = $translate.instant(self.legendLabels) 
+                 console.log("labels",  self.legendLabels)
+                 self.legendMapping = (self.legendMapping) ? self.legendMapping : ["x", "y", "y", "y2", "y2"];  
+
+                 for(var v=0; v < self.legendLabels.length; v++){
+                     var labelValue = self.legendLabels[v];
+                     if(v!=0){
+                         if(self.legendMapping[v]=="y2" && self.drawY2Axis){
+                             if(labelValue){
+                                 self.options.series[labelValue] = {"axis":self.legendMapping[v]};
+                             }else{
+                                 self.options.series["Y" + v] = {"axis":self.legendMapping[v]};
+                             }
+                         }
+                     }
+                 }
+             }
+             
+            
+             
+             
+             //Legend Labels
+             if(self.legendLabels && self.legendLabels!=""){
+	             self.options.labels = self.legendLabels;
+             }
         }
          
         this.onResize = function() {
