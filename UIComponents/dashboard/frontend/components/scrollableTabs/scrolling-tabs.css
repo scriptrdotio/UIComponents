@@ -51,3 +51,15 @@
 
 .scrtabs-tabs-fixed-container ul.nav-tabs > li {
   white-space: nowrap; }
+
+
+.scrtabs-tabs-fixed-container ul.nav-tabs li img.icon {
+height: 13px;
+margin-right: 5px;
+width: auto;
+margin-top: -4px;
+}
+.scrtabs-tabs-fixed-container ul.nav-tabs li i.icon {
+margin-right: 5px;
+font-size: 14px;
+}

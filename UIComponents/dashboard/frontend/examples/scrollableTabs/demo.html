@@ -56,8 +56,8 @@
       var vm = this;
       
         vm.tabs = [
-            {"id":0,"title":"Deck 1","content":"Just created 0","loaded":false,"key":"Key 1","initialTitle":"Deck 1"},
-            {"id":1,"title":"Deck 2","content":"Just created 1","loaded":false,"key":"Key 2","initialTitle":"Deck 2"},
+            {"id":0,"title":"Deck 1","content":"Just created 0","loaded":false,"key":"Key 1","initialTitle":"Deck 1", icon: "fa fa-cog"},
+            {"id":1,"title":"Deck 2","content":"Just created 1","loaded":false,"key":"Key 2","initialTitle":"Deck 2", img: "//scriptr-cdn.s3.amazonaws.com/saepio/dev/images/timer.png"},
             {"id":2,"title":"Deck 3","content":"Just created 2","loaded":false,"key":"Key 3","initialTitle":"Deck 3"}
         ];
         
@@ -124,6 +124,7 @@
         </div> 
     </div>
    <section>
+       <section style="height: 300px"></section>
    <section>
     <scriptr-scrollable-tabs tabs="vm.tabs2" on-tabs-changed="vm.onTabsChanged({tab:tab, tabs: tabs, event: event})" on-tab-initial-load="vm.onTabCreate({tab:tab, tabs: tabs })" on-tab-remove="vm.onTabDelete({tab:tab, tabs: tabs})" is-not-editable="true"></scriptr-scrollable-tabs>
     <div class="tab-content">
