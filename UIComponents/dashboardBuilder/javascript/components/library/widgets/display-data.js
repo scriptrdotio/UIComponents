@@ -10,8 +10,8 @@ const __DISPLAY_DATA__ = {
         "boxHeader": false,
         "data": JSON.stringify({"value": 12}),
         "message": "Connected Devices",
-        "number-cell-size": "medium",
-        "number-background-colors":[{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]
+        "value-cell-size": "medium",
+        "value-background-colors":[{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]
     },
     "box": {
         sizeX: 3,
@@ -56,7 +56,7 @@ const __DISPLAY_DATA__ = {
                         ['#ef2929', '#888a85', '#deface']]
                     }
                 }, {
-                    "key": "number-cell-size",
+                    "key": "value-cell-size",
                     "notitle": false,
                     "type": "strapselect",
                     "titleMap": [{
@@ -80,7 +80,7 @@ const __DISPLAY_DATA__ = {
                     "type": "section",
                     "htmlClass": "col-xs-12 col-sm-6 row",
                     "items": [{
-                        "key": "number-font-family",
+                        "key": "value-font-family",
                         "notitle": false,
                         "type": "strapselect",
                         "titleMap": [{
@@ -133,10 +133,10 @@ const __DISPLAY_DATA__ = {
                             "name": "Source Sans Pro"
                         }]
                     },
-                        "number-font-size",
-                        "number-font-weight",
+                        "value-font-size",
+                        "value-font-weight",
                     {
-                        "key": "number-text-color",
+                        "key": "value-text-color",
                         "colorFormat": "hex3",
                         "spectrumOptions": {
                             showInput: true,
@@ -151,7 +151,7 @@ const __DISPLAY_DATA__ = {
                     },
                     
                     {
-                        "key": "number-Text-Alignment",
+                        "key": "value-text-alignement",
                         "notitle": false,
                         "type": "strapselect",
                         "titleMap": [{
@@ -256,7 +256,7 @@ const __DISPLAY_DATA__ = {
                         }
                     },
                     {
-                        "key": "message-Text-Alignment",
+                        "key": "message-text-alignement",
                         "notitle": false,
                         "type": "strapselect",
                         "titleMap": [{
@@ -284,7 +284,7 @@ const __DISPLAY_DATA__ = {
                 {
                             "type": "section",
                             "htmlClass": "col-xs-3",
-                            "items": ["number-background-color"]
+                            "items": ["value-background-color"]
                 },
                 
                 {
@@ -292,7 +292,7 @@ const __DISPLAY_DATA__ = {
                             "htmlClass": "col-xs-9",
                             "items": [
                                 {
-                                    key: "number-background-colors",
+                                    key: "value-background-colors",
                                     startEmpty: true,
                                     items: [{
                                         "type": "section",
@@ -302,7 +302,7 @@ const __DISPLAY_DATA__ = {
                                                 "type": "section",
                                                 "htmlClass": "col-sm-6",
                                                 "items": [{
-                                                    key: "number-background-colors[].value",
+                                                    key: "value-background-colors[].value",
                                                    
                                                 }]
                                             },
@@ -310,7 +310,7 @@ const __DISPLAY_DATA__ = {
                                                 "type": "section",
                                                 "htmlClass": "col-sm-6",
                                                 "items": [{
-                                                    key: "number-background-colors[].color",
+                                                    key: "value-background-colors[].color",
                                                     "colorFormat": "hex",
                                                     
                                                 }]
@@ -336,7 +336,7 @@ const __DISPLAY_DATA__ = {
                 "placeholder": " ",
                 "description": "Define your widget's layout."
             },
-            "number-cell-size": {
+            "value-cell-size": {
                 "title": "Numbers Cell Size",
                 "type": "string",
                 "default": "medium",
@@ -349,7 +349,7 @@ const __DISPLAY_DATA__ = {
                 "default": "Items",
                 "description": "Define your widget message."
             },
-            "number-font-family": {
+            "value-font-family": {
                 "title": "Number Font family",
                 "type": "string",
                 "description": "Define your widget number font family.",
@@ -363,7 +363,7 @@ const __DISPLAY_DATA__ = {
                 "default": "Arial",
                 "placeholder": " "
             },
-            "number-font-size": {
+            "value-font-size": {
                 "title": "Number Font Size",
                 "type": "number",
                 "default": 42,
@@ -375,7 +375,7 @@ const __DISPLAY_DATA__ = {
                 "default": 18,
                 "description": "Define your widget message font size."
             },
-            "number-font-weight": {
+            "value-font-weight": {
                 "title": "Number Font Weight",
                 "type": "number",
                 "default": 600,
@@ -387,7 +387,7 @@ const __DISPLAY_DATA__ = {
                 "default": 600,
                 "description": "Define your widget message font weight."
             },
-            "number-text-color": {
+            "value-text-color": {
                 "title": "Number Text Color",
                 "type": "string",
                 "description": "Define your widget number text color.",
@@ -403,7 +403,7 @@ const __DISPLAY_DATA__ = {
                 "default": "#686868",
                 "validationMessage": "Invalid Color"
             },
-            "number-background-color": {
+            "value-background-color": {
                 "title": "Number Default Backgrount Color",
                 "type": "string",
                 "description": "Define your widget number background color.",
@@ -411,7 +411,7 @@ const __DISPLAY_DATA__ = {
                 "default": "#ff8c00",
                 "validationMessage": "Invalid Color"
             },
-            "number-background-colors": {
+            "value-background-colors": {
                 "title": "Number Backgrount Colors",
                 "type": "array",
                 "description": "Define your widget number background colors.If data not matching any defined color default color will be used.",
@@ -439,14 +439,14 @@ const __DISPLAY_DATA__ = {
                 "default": "white",
                 "validationMessage": "Invalid Color"
             },
-            "message-Text-Alignment": {
+            "message-text-alignement": {
                 "title": "Message Text Alignment",
                 "type": "string",
                 "default": "center",
                 "placeholder": " ",
                 "description": "Define your widget message text alignment."
             },
-            "number-Text-Alignment": {
+            "value-text-alignement": {
                 "title": "Number Text Alignment",
                 "type": "string",
                 "default": "center",
@@ -466,6 +466,11 @@ const __DISPLAY_DATA__ = {
                 "format": "color",
                 "default": "#d7d7d7",
                 "validationMessage": "Invalid Color"
+            },
+            "border-radius": {
+                "title": "Border Radius",
+                "type": "string",
+                "description": "Define your widget border radius."
             },
             "data": {
                 "title": "Data",
