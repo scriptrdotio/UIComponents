@@ -212,7 +212,7 @@ angular
                                } else {
                                   if(data[self.serviceTag])
                                     self.consumeData(data[self.serviceTag]);
-                                else
+                                else if(!self.serviceTag)
                                     self.consumeData(data);
                              } 
                         });

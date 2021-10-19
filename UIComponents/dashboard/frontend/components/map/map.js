@@ -423,7 +423,7 @@ angular
                   if(data) {
                       if(data[self.serviceTag])
                           self.processAssets(data[self.serviceTag]);
-                      else
+                      else if(!self.serviceTag)
                           self.processAssets(data);
                   }
               });
