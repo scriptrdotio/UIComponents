@@ -67,4 +67,10 @@
   api-params  | null      | 	api parameters.  					| object | NO
   fetch-data-interval |  null     | 	the refresh interval in case of https transport.	 | int | NO
   use-window-params |  null     | 	If true the widget will merge the defined api-params with the params passed in the URL query params	 | boolean | NO
+  fill-graph | false | Should the area underneath the graph be filled? This may be set on a per-series basis. | boolean | NO
+  stacked-graph | false | If set, stack series on top of one another rather than drawing them independently. The first series specified in the input data will wind up on top of the chart and the last will be on bottom. NaN values are drawn as white areas without a line on top, see stackedGraphNaNFill for details. | boolean | NO
+  stacked-graph-naN-fill | all | Controls handling of NaN values inside a stacked graph. NaN values are interpolated/extended for stacking purposes, but the actual point value remains NaN in the legend display. Valid option values are "all" (interpolate internally, repeat leftmost and rightmost value as needed), "inside" (interpolate internally only, use zero outside leftmost and rightmost value), and "none" (treat NaN as zero everywhere). | string | NO
+ digits-after-decimal| 4 | format the y values on axis and in legend to have a fixed decimal point (by Default 4) | Integer | NO
+ x1-legend-label |  | When set display a label before the x series value in legend | String | NO
+  
   

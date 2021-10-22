@@ -96,7 +96,11 @@ angular
           
           
           "xaxisLabelFormatter": "&",
-          "fillGraph": "@"
+          "fillGraph": "<?",
+          "stackedGraph": "<?",
+          "stackedGraphNaNFill": "@",
+          "digitsAfterDecimal": "<?",
+          "x1LegendLabel": "@",
           //functional data
         //   "useFunctional": "<?",
         //   "functionalDataType": "@",//scattered , range
@@ -250,9 +254,9 @@ angular
                  }
                    
              }   
-             
-             this.options.axes.x.valueFormatter = function(d) {
-                 return moment(d).format("YYYY-MM-DD kk:mm");
+             this.options.axes.x.valueFormatter = function(x, xOptView, xLabel, g, row, index) {
+                 var tmp =  moment(x).format("YYYY-MM-DD kk:mm")
+                 return  (xLabel) ? (xLabel + ": " + tmp) : tmp;
              }
                  
              
@@ -273,9 +277,9 @@ angular
              
              //Hardcode not passed as param
              
-             var digitsAfterDecimal = 4; 
-             this.options.digitsAfterDecimal = digitsAfterDecimal;
+             this.options.digitsAfterDecimal = (!isNaN(parseFloat(this.digitsAfterDecimal)) && isFinite(this.digitsAfterDecimal)) ? this.digitsAfterDecimal : 4;
              
+             var digitsAfterDecimal = (!isNaN(parseFloat(this.digitsAfterDecimal)) && isFinite(this.digitsAfterDecimal)) ? this.digitsAfterDecimal : 4;
              var formatYAxisValues = function(y,digitsAfterDecimal) {
                  var shift = Math.pow(10, digitsAfterDecimal);
                  return Math.round(y * shift) / shift;
@@ -283,6 +287,10 @@ angular
              
              this.options.axes.y.ticker = Dygraph.numericLinearTicks
              this.options.axes.y.axisLabelFormatter =  function(y) {
+                 return formatYAxisValues(y,digitsAfterDecimal)
+             }
+             
+             this.options.axes.y.valueFormatter =  function(y) {
                  return formatYAxisValues(y,digitsAfterDecimal)
              }
 			
@@ -369,6 +377,8 @@ angular
            
              this.options.interactionModel = (this.interaction) ? Dygraph.defaultInteractionModel    :  Dygraph.nonInteractiveModel;
              this.options.fillGraph = this.fillGraph || false;
+             this.options.stackedGraph = this.stackedGraph || false;
+             this.options.stackedGraphNaNFill = this.stackedGraphNaNFill || "all";
              
              //this.data = JSON.parse(this.data);
              //this.resize = (this.resize) ? this.resize : true;
@@ -461,7 +471,7 @@ angular
         this.buildLegend = function(colorsMapping) {
             if(colorsMapping && self.showLegend && self.showLegend == "true"){
                  self.colors = _.pluck(colorsMapping, "colors");
-                 self.legendLabels = ["x"];
+                 self.legendLabels = [((self.x1LegendLabel) ? self.x1LegendLabel : "")];
                  self.legendLabels = self.legendLabels.concat(_.pluck(colorsMapping, "labels"));
                  var legendLabelsArray = angular.copy(self.legendLabels);
                  var translatedArray = [];
@@ -470,14 +480,14 @@ angular
                      translatedArray.push(translatedLabel)
                  });
                  self.legendLabels = translatedArray;
-                 self.legendMapping = ["X"];
+                 self.legendMapping = [((self.x1LegendLabel) ? self.x1LegendLabel : "")];
                  self.legendMapping = self.legendMapping.concat(_.pluck(colorsMapping, "axisSelection"));
                  self.legendUnitsMapping = _.pluck(colorsMapping, "unit");
                  for(var i = 1; i < self.legendLabels.length; i++){
                      if(self.legendUnitsMapping[i-1] && self.legendUnitsMapping[i-1] != "")
                          self.legendLabels[i] = self.legendLabels[i] + " (" + self.legendUnitsMapping[i-1] + ")";
                  }
-                 self.legendLabels = (self.legendLabels) ? self.legendLabels : ["X", "Y1", "Y2", "Y3", "Y4"];   
+                 self.legendLabels = (self.legendLabels) ? self.legendLabels : [((self.x1LegendLabel) ? self.x1LegendLabel : ""), "Y1", "Y2", "Y3", "Y4"];   
                  //self.legendLabels = $translate.instant(self.legendLabels) 
                  console.log("labels",  self.legendLabels)
                  self.legendMapping = (self.legendMapping) ? self.legendMapping : ["x", "y", "y", "y2", "y2"];  
