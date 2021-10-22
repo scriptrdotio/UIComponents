@@ -1,12 +1,57 @@
-.mb10 {margin-bottom: 10px;}
-.box-shadow {box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05); text-align: center; min-height: 370px;}
-.bg-white {background: #fff;}
-.loading {margin: 30px 0; display: inline-block; width: 100%;}
-.gauge {margin: 0 auto;}
-.padder10 {padding: 10px;}
-.m10 {margin: 10px;}
-
 .morris-chart-dimension {width: 100%; height: 100%;}
-.morris-chart-legend ul {list-style: none; padding: 0;}
 .morris-chart-container,.fullHeight, .fullHeight div {height: 100%;}
 .morris-hover.morris-default-style,.morris-hover.morris-default-style div,.morris-chart-legend div {height: auto;}
+
+
+.morris-chart-wrapper.with-legend {
+  width: calc(100% - 100px);
+  float: left;
+}
+
+.morris-chart-legend ul li span {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.morris-chart-legend div {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.morris-chart-legend::-webkit-scrollbar {
+  width: 12px;
+}
+
+.dygraphs-legend {
+  width: 110px;
+}
+
+.morris-chart-legend ul {
+  padding: 0;
+  list-style: none;
+}
+
+.morris-chart-wrapper.with-legend {
+  width: calc(100% - 100px);
+  float: left;
+}
+
+.morris-chart-legend {
+  background: #fff;
+  margin-top: 22px;
+  width: 100px;
+  text-align: left;
+  float: right;
+  overflow-y: auto;
+  font-size: 12px;
+}
+.morris-chart-legend::-webkit-scrollbar {
+  width: 12px;
+}
+.morris-chart-legend::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+.morris-chart-legend::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
