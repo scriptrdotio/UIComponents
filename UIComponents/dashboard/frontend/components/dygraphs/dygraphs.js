@@ -256,7 +256,7 @@ angular
              }   
              this.options.axes.x.valueFormatter = function(x, xOptView, xLabel, g, row, index) {
                  var tmp =  moment(x).format("YYYY-MM-DD kk:mm")
-                 return  (xLabel) ? (xLabel + ": " + tmp) : tmp;
+                 return  (xLabel) ? (xLabel + " " + tmp) : tmp;
              }
                  
              
