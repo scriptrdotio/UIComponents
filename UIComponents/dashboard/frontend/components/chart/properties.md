@@ -20,16 +20,11 @@
   ymax | undefined | Max. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the max y-value is at least [num]. | NO | *  |  * | 
   ymin | undefined | Min. bound for Y-values. Alternatively, set this to 'auto' to compute automatically, or 'auto [num]' to automatically compute and ensure that the min y-value is at most [num]. You can use this to create graphs with false origins. | NO | *  |  * | 
   smooth | undefined | Set to false to disable line smoothing. | NO | *  |  | 
-  hide-hover | undefined | Set to false to always show a hover legend. Set to true or 'auto' to only show the hover legend when the mouse cursor is over the chart. Set to 'always' to never show a hover legend. | NO | *  |  * | 
-  hover-callback | undefined | Provide a function on this option to generate custom hover legends. The function will be called with the index of the row under the hover legend, the options object passed to the constructor as arguments, a string containing the default generated hover legend content HTML, and an object containing the original data for the row as passed in the data option. hoverCallback: function (index, options, content, row) {return "sin(" + row.x + ") = " + row.y} | NO | *  |  * | 
-  parse-time | undefined | Set to false to skip time/date parsing for X values, instead treating them as an equally-spaced series. | NO | *  |  * | 
   units | undefined | Width of the series lines, in pixels. | NO | *  |  * | 
   post-units | undefined |Set to a string value (eg: '%') to add a label suffix all y-labels. | NO | *  |  * | 
   pre-units | undefined | Set to a string value (eg: '$') to add a label prefix all y-labels. | NO | *  |  * | 
   xlabels | undefined | Sets the x axis labelling interval. By default the interval will be automatically computed. The following are valid interval strings. "decade", "year", "month", "week", "day", "hour", "30min", "15min", "10min", "5min", "minute", "30sec", "15sec", "10sec", "5sec", "second"| NO | *  |  | 
   xlabel-angle | undefined | The angle in degrees from horizontal to draw x-axis labels.  | NO | *  |  * | 
-  xlabel-format | undefined | A function that accepts Date objects and formats them for display as x-axis labels. Overrides the default formatter chosen by the automatic labeller or the xLabels option. function (x) { return x.toString(); } | NO | *  |  | 
-  ylabel-format | undefined | 	A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; } | NO | *  |  * | 
   goals | undefined | A list of y-values to draw as horizontal 'goal' lines on the chart. goals: [1.0, -1.0] | NO | *  |  * | 
   goal-stroke-width | undefined | Width, in pixels, of the goal lines. | NO | *  |  * | 
   goal-line-colors | undefined | Array of color values to use for the goal line colors. If you list fewer colors here than you have lines in goals, then the values will be cycled. | NO | *  |  * | 
@@ -46,8 +41,17 @@
   fill-opacity | undefined | Change the opacity of the area fill colour. Accepts values between 0.0 (for completely transparent) and 1.0 (for completely opaque). | NO | *  |  | 
   resize | true | Set to true to enable automatic resizing when the containing element resizes. (default: false). This has a significant performance impact, so is disabled by default. | NO | *  |  * | *
   behave-like-line | undefined | Set to true to overlay the areas on top of each other instead of stacking them. | NO | *  |  | 
-  date-format | undefined | A function that accepts millisecond timestamps and formats them for display as chart labels. default is function (x) { return new Date(x).toString() }| NO | *  |  | 
   stacked | undefined | Set to true to draw bars stacked vertically | NO |   |  * | 
+  horizontal | false | set to true to draw bars horizontally | NO |  | * | |
+  show-legend | true | set to false if you want to hide legend | NO | * | * | *|
+  legend-type | hover | set to right if you want to display legend to the right | NO | * | * | * |
+  hide-hover | always | When show-legend is true and legend-type is not "right" Set to false to always show a hover legend. Set to true or 'auto' to only show the hover legend when the mouse cursor is over the chart. Set to 'always' to never show a hover legend. | NO | *  |  * | 
+  hover-callback | undefined | Provide a function on this option to generate custom hover legends when parseTime is false. The function will be called with the index of the row under the hover legend, the options object passed to the constructor as arguments, a string containing the default generated hover legend content HTML, and an object containing the original data for the row as passed in the data option. hoverCallback: function (index, options, content, row) {return "sin(" + row.x + ") = " + row.y} | NO | *  |  * | 
+  parse-time | undefined | Set to false to skip time/date parsing for X values, instead treating them as an equally-spaced series. | NO | *  |  * | 
+  xlabel-format | undefined | A function that accepts Date objects and formats them for display as x-axis labels. Overrides the default formatter chosen by the automatic labeller or the xLabels option. function (x) { return x.toString(); } | NO | *  |  | 
+  ylabel-format | undefined | 	A function that accepts y-values and formats them for display as y-axis labels. function (y) { return y.toString() + 'km'; } | NO | *  |  * | 
+  date-format | undefined | If parse-time is not true, you can pass a function that accepts millisecond timestamps and formats them for display as chart labels. default is function (x) { return new Date(x).toString() }| NO | *  | * |
+  xdate-moment-format | "DD-MM-YYYY HH:mm:ss" | If parse-time is true, and no xlabel-formart or date-format was passed. We use the xdate-moment-format to parse the date using the moment library | NO | * |* | |
   api | undefined | Name of the api to get data | Required if getting data from backend | *  |  * | *
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO | * | * | *
   transport |  'wss'     | 	Method used to call api (can take "https" or "wss").	 | NO | *  |  * | *

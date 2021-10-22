@@ -157,7 +157,10 @@ angular
 
           "showLegend": "@",
           "legendType": "@", //"hover", "right"
-          "horizontal": "@"
+          "horizontal": "@",
+           
+          
+          "x1LegendLabel": "@"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
       controller: function($translate, httpClient,$rootScope, wsClient, $scope, $element, $timeout, $window, $interval, dataService) {
@@ -254,9 +257,9 @@ angular
                             if(self.datas) {
                                 if(row && row[$scope.$ctrl.xkey]){
                                     if(self.parseTime) {
-                                           $scope.$ctrl.legendDate = self.dateFormat(row[self.xkey]);
+                                           $scope.$ctrl.legendDate =  (self.x1LegendLabel) ? ((self.x1LegendLabel + ": ") +  self.dateFormat(row[self.xkey])) : self.dateFormat(row[self.xkey]);
                                     } else {
-                                        $scope.$ctrl.legendDate = row[self.xkey];
+                                        $scope.$ctrl.legendDate = (self.x1LegendLabel) ? ((self.x1LegendLabel + ": ") + row[self.xkey]) : row[self.xkey] ;
                                     }  
                                 }
                                  _.mapObject(row, function(val, key) {
@@ -300,36 +303,45 @@ angular
              
              if(this.parseTime) {
                 this.onDateFormat = function(date) {
-                 	try {
-                        if(self.timeZone){
-                            return moment(date).utcOffset(self.timeZone).format(self.xdateMomentFormat);
-                        }else {
-                             return moment(date).format(self.xdateMomentFormat);
-                        }
-                           
-                    } catch(e) {
-                         console.error("Invalid date format passed", self.xdateMomentFormat);
-                         if(self.timeZone){
-                         	return moment(date).utcOffset(self.timeZone).format("DD-MM-YYYY HH:mm:ss");
-                        } else {
-                            return moment(date).format("DD-MM-YYYY HH:mm:ss");
+                    if(self.dateFormat) {
+                         return self.dateFormat()(date);
+                    } else {
+                        try {
+                            if(self.timeZone){
+                                return moment(date).utcOffset(self.timeZone).format(self.xdateMomentFormat);
+                            }else {
+                                 return moment(date).format(self.xdateMomentFormat);
+                            }
+
+                        } catch(e) {
+                             console.error("Invalid date format passed", self.xdateMomentFormat);
+                             if(self.timeZone){
+                                return moment(date).utcOffset(self.timeZone).format("DD-MM-YYYY HH:mm:ss");
+                            } else {
+                                return moment(date).format("DD-MM-YYYY HH:mm:ss");
+                            }
                         }
                     }
+                 	
                 }
                 
                 this.onXlabelFormat = function(date) {
-                 	try {
-                        if(self.timeZone){
-                            return moment(date).utcOffset(self.timeZone).format(self.xdateMomentFormat);
-                        } else {
-                            return moment(date).format(self.xdateMomentFormat);
-                        }
-                    } catch(e) {
-                         console.error("Invalid date format passed", self.xdateMomentFormat);
-                        if(self.timeZone){
-                         	return moment(date).utcOffset(self.timeZone).format("DD-MM-YYYY HH:mm:ss");
-                        } else {
-                            return moment(date).format("DD-MM-YYYY HH:mm:ss");
+                    if(self.xlabelFormat) {
+                         return self.xlabelFormat()(date);
+                    } else {
+                        try {
+                            if(self.timeZone){
+                                return moment(date).utcOffset(self.timeZone).format(self.xdateMomentFormat);
+                            } else {
+                                return moment(date).format(self.xdateMomentFormat);
+                            }
+                        } catch(e) {
+                             console.error("Invalid date format passed", self.xdateMomentFormat);
+                            if(self.timeZone){
+                                return moment(date).utcOffset(self.timeZone).format("DD-MM-YYYY HH:mm:ss");
+                            } else {
+                                return moment(date).format("DD-MM-YYYY HH:mm:ss");
+                            }
                         }
                     }
                 }

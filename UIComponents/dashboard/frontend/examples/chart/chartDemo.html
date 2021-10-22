@@ -24,6 +24,9 @@
     <script src="/UIComponents/wsProvider.js"></script>
     <script src="/UIComponents/httpProvider.js"></script>
     <script src="/UIComponents/dataService.js"></script>
+    
+     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone-with-data.min.js"></script>
     <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
@@ -32,6 +35,13 @@
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
   
     <script src="/UIComponents/config/scriptrTransport.js"></script>
+    
+       <!-- i18n -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js"></script>
+        <!-- /i18n -->
+        
 </head> 
   
 <script>
@@ -121,7 +131,7 @@
     </div>
 
     <!-- On initial load do not show data, when msg received over channel with msg-tag = chart, show data -->
-    <div class="col-xs-6 col-sm-6 mb10"> 
+    <div class="col-xs-6 col-sm-12 mb10"> 
       <div class="box-shadow bg-white">
       <scriptr-chart
           type="area"     
@@ -134,10 +144,13 @@
           colors='["#cfc"]'
           point-size="2"   
           line-width="20"
+          x1-legend-label="Date/Time"
           goals="[1.0, -1.0]"
+          show-legend="true"
+          legend-type="hover"
           api='UIComponents/dashboard/frontend/examples/chart/getChartData'
           fetch-data-interval="10"
-          hover-callback="vm.hoverCallback"
+          
           on-format-data="vm.callback">          
       </scriptr-chart>  
       </div>
@@ -155,6 +168,8 @@
           parseTime="true"
           colors='["#FCC717", "#E90088"]'
           data='vm.data'
+                    parse-time="true"
+                    xdate-moment-format="LLL"
                     delta="true"
       </scriptr-chart>
       </div>
@@ -171,6 +186,7 @@
           labels='["Serie A", "Serie B"]'   
           transport="wss"
           msg-tag="chart"
+          x1-legend-label="Date"
           api='UIComponents/dashboard/frontend/examples/chart/getChartData'
       </scriptr-chart>
       </div>
