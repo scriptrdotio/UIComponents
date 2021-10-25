@@ -1,3 +1,5 @@
+//return {"message": "test", "type": "INFO"};
+return {"title": {"value": "Alerts", "icon": "fa fa-cog"}, "values": [{"message": "Test 1", "type": "INFO"}, {"message": "Test 2", "time": "2:30 AM", "type": "DANGER"}]};
 var log = require("log");
 log.setLevel("INFO");
 

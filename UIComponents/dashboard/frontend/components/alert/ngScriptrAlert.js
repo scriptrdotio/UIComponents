@@ -8,9 +8,11 @@ angular.module('angular-scriptrui', []).directive('ngScriptrAlert', function() {
     require: 'ngModel',
     scope: {                        // Isolate scope
          msg: '=ngModel',
-         type: '@', //info, warning, success, error
+         type: '@', //info, warning, success, error,
+		 time: '@',
+		 title: '@'
     },
-    template: '<div class="alert alert-{{type}} scriptr-alert" role="alert"><span ng-bind="msg"></span></div>',
+    template: '<div class="alert alert-{{type}} scriptr-alert" role="alert"><span ng-if="time" class="time">{{time}}|</span><span ng-bind="msg" class="message"></span></div>',
     replace: true
   }
 });

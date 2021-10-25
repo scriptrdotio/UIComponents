@@ -1,5 +1,19 @@
 <scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" loading-message="{{$ctrl.loadingMessage}}" failure-message="$ctrl.dataFailureMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
 </scriptr-notifications>
 
-<!-- Messages from the backend -->
-<ng-scriptr-alert ng-if="$ctrl.message" ng-model="$ctrl.message" type="{{$ctrl.type}}"></ng-scriptr-alert>
+<div class="scriptrAlertWidget {{$ctrl.wrapperClass}}" ng-if="$ctrl.values.length > 0">
+	<div ng-if="$ctrl.title">
+		<h3><i class="{{$ctrl.icon}}" ng-if="$ctrl.icon != null"></i>{{$ctrl.title}}</h3>
+	</div>
+    <slick 
+           settings="$ctrl.slickConfig"
+           infinite="{{$ctrl.infinite}}"
+           slides-to-show={{$ctrl.slidesToShow}}
+           slides-to-scroll={{$ctrl.slidesToScroll}}
+           init-onload="{{$ctrl.initOnload}}"
+           >
+        <div class="slick-item" ng-repeat="item in $ctrl.values" >
+            <ng-scriptr-alert ng-if="item.message" ng-model="item.message" type="{{item.type}}" time="{{item.time}}"></ng-scriptr-alert>
+        </div>
+    </slick>
+</div>
