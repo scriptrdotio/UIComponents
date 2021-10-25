@@ -480,7 +480,15 @@ angular
           	})
             .then(
             	function(map) { 
-                   if(!self.mapcenter)  {
+                    if(self.assets==null || Object.keys(self.assets).length==0){
+                        if(self.defaultCenter!=null){
+                            var latlng = self.defaultCenter.split(/, ?/)
+                            var latlng =  new google.maps.LatLng(parseFloat(latlng[0]), parseFloat(latlng[1])); 
+                            self.bounds = new google.maps.LatLngBounds(latlng);
+                            map.setCenter(self.bounds.getCenter());
+                        }
+
+                    }else if(!self.mapcenter)  {
             			self.mapcenter = self.bounds.getCenter().lat()+","+self.bounds.getCenter().lng();
                         map.setCenter(self.bounds.getCenter());
                     	map.fitBounds(self.bounds);
