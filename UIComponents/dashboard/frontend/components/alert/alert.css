@@ -1,0 +1,97 @@
+.scriptrAlertWidget {
+	box-shadow: 2px 2px 3px -2px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 2px 2px 3px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 2px 2px 3px -2px rgba(0,0,0,0.3);
+}
+.scriptrAlertWidget h3 {
+    width: 100%;
+    position: relative;
+    background: #ff3636;
+    color: #FFF;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    margin: 0;
+    padding: 16px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.scriptrAlertWidget h3:after {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 54, 54, 0);
+	border-top-color: #ff3636;
+	border-width: 10px;
+	margin-left: -10px;
+    z-index: 1;
+}
+.scriptrAlertWidget .sliderWrapper {
+    width: 100%;
+}
+.scriptrAlertWidget .slick-initialized .slick-slide {
+    text-align: center;
+    height: auto;
+}
+
+.scriptrAlertWidget .time {
+    font-weight: bold;
+    padding-right: 10px;
+    border-right: 1px solid #5a5050;
+    margin-right: 10px;
+}
+
+.scriptrAlertWidget .slick-prev, .scriptrAlertWidget .slick-next {
+    width: 40px;
+    height: 40px;
+    top: auto;
+    bottom: 15%;
+    -webkit-transform: translate(0, -15%);
+    -ms-transform: translate(0, -15%);
+    transform: translate(0, -15%);
+    z-index: 1;
+}
+
+.scriptrAlertWidget .slick-prev {left: 0;}
+.scriptrAlertWidget .slick-next {right: 0;}
+.scriptrAlertWidget .alert {border-radius: unset;margin-bottom: 0;padding: 30px;}
+
+
+
+@media (min-width: 768px) {
+    .scriptrAlertWidget {width: 100%;}
+    .scriptrAlertWidget h3 {width: 200px;float: left;z-index: 1;}
+    .scriptrAlertWidget h3:after, .scriptrAlertWidget h3:before {
+        left: 100%;
+        top: 50%;
+        border: solid transparent;
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .scriptrAlertWidget h3:after {
+        border-color: rgba(255, 54, 54, 0);
+        border-left-color: #ff3636;
+        border-width: 10px;
+        margin-top: -10px;
+    }
+    .scriptrAlertWidget h3:before {
+        border-color: rgba(255, 54, 54, 0);
+        border-left-color: #ff3636;
+        border-width: 11px;
+        margin-top: -11px;
+    }
+    .scriptrAlertWidget .slick-initialized .slick-slide {text-align: left;}
+    .scriptrAlertWidget .sliderWrapper {width:calc(100% - 200px);float: left}
+    .scriptrAlertWidget .alert {padding: 15px 90px 15px 30px;border: none;}
+    .scriptrAlertWidget .slick-prev, .scriptrAlertWidget .slick-next {bottom: 0;}
+    .scriptrAlertWidget .slick-prev {right: 40px;left: auto;}
+}

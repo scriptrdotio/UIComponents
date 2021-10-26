@@ -2,18 +2,18 @@
 </scriptr-notifications>
 
 <div class="scriptrAlertWidget {{$ctrl.wrapperClass}}" ng-if="$ctrl.values.length > 0">
-	<div ng-if="$ctrl.title">
-		<h3><i class="{{$ctrl.icon}}" ng-if="$ctrl.icon != null"></i>{{$ctrl.title}}</h3>
-	</div>
-    <slick 
-           settings="$ctrl.slickConfig"
-           infinite="{{$ctrl.infinite}}"
-           slides-to-show={{$ctrl.slidesToShow}}
-           slides-to-scroll={{$ctrl.slidesToScroll}}
-           init-onload="{{$ctrl.initOnload}}"
-           >
-        <div class="slick-item" ng-repeat="item in $ctrl.values" >
-            <ng-scriptr-alert ng-if="item.message" ng-model="item.message" type="{{item.type}}" time="{{item.time}}"></ng-scriptr-alert>
-        </div>
-    </slick>
+    <h3 ng-if="$ctrl.title"><i class="{{$ctrl.icon}}" ng-if="$ctrl.icon != null"></i>{{$ctrl.title}}</h3>
+    <div class="sliderWrapper">
+        <slick 
+               settings="$ctrl.slickConfig"
+               infinite="{{$ctrl.infinite}}"
+               slides-to-show={{$ctrl.slidesToShow}}
+               slides-to-scroll={{$ctrl.slidesToScroll}}
+               init-onload="{{$ctrl.initOnload}}"
+               >
+            <div class="slick-item" ng-repeat="item in $ctrl.values" >
+                <ng-scriptr-alert ng-if="item.message" ng-model="item.message" type="{{item.type}}" time="{{item.time}}"></ng-scriptr-alert>
+            </div>
+        </slick>
+    </div>
 </div>
