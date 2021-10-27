@@ -6,10 +6,8 @@
     <div class="sliderWrapper">
         <slick 
                settings="$ctrl.slickConfig"
-               infinite="{{$ctrl.infinite}}"
                slides-to-show={{$ctrl.slidesToShow}}
                slides-to-scroll={{$ctrl.slidesToScroll}}
-               init-onload="{{$ctrl.initOnload}}"
                >
             <div class="slick-item" ng-repeat="item in $ctrl.values" >
                 <ng-scriptr-alert ng-if="item.message" ng-model="item.message" type="{{item.type}}" time="{{item.time}}"></ng-scriptr-alert>

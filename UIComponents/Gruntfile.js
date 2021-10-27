@@ -566,7 +566,8 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/imagemap/imageMap.css',
 	                     'dashboard/frontend/components/combo/combo.css',
 	                     'dashboard/frontend/components/scrollableTabs/scrolling-tabs.css',
-	                     'lib/daterangepicker.min.css'
+	                     'lib/daterangepicker.min.css',
+	                     'dashboard/frontend/components/alert/alert.css'
 	                     ],
 	               dest : 'build/css/components.css'
 	            }

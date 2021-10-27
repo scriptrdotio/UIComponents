@@ -54,25 +54,32 @@ angular
 			this.titleIcon = (this.titleIcon) ? this.titleIcon : null;
             //this.data = (this.data) ? this.data : "Waiting for info...";
 			this.slickConfig = {
-				enabled: this.enabled,
-				autoplay: this.autoPlay ? this.autoPlay : false,
-				draggable: this.draggable || false,
-				infinite: this.infinite || false,
-
-				autoplaySpeed: (this.autoplaySpeed ? this.autoplaySpeed : 0),
-				method: {},
-				event: {
+                event: {
 					beforeChange: function (event, slick, currentSlide, nextSlide) {
+                        var x = 1;
 					},
 					afterChange: function (event, slick, currentSlide, nextSlide) {
+                        var x = 1;
 					}
 				}
-			};
+            };
+            if(this.draggable){
+                this.slickConfig["draggable"] = this.draggable == "false" ? false : true;   
+            }
+            if(this.autoPlay){
+                this.slickConfig["autoplay"] = this.autoPlay == "false" ? false : true;   
+            }
+            if(this.autoplaySpeed){
+                this.slickConfig["autoplaySpeed"] = this.autoplaySpeed;   
+            }
 			if(this.responsive){
 				this.slickConfig["responsive"] = this.responsive;
 			}
+            if(this.infinite){
+				this.slickConfig["infinite"] = this.infinite == "false" ? false : true;
+			}
 			if(this.arrows){
-				this.slickConfig["arrows"] = this.arrows;
+				this.slickConfig["arrows"] = this.arrows == "false" ? false : true;
 			}
 			if(this.prevArrow){
 				this.slickConfig["prevArrow"] = this.prevArrow;
@@ -81,13 +88,13 @@ angular
 				this.slickConfig["nextArrow"] = this.nextArrow;
 			}
 			if(this.dots){
-				this.slickConfig["dots"] = this.dots;
+				this.slickConfig["dots"] = this.dots == "false" ? false : true;
 			}
 			if(this.dotsClass){
 				this.slickConfig["dotsClass"] = this.dotsClass;
 			}
 			if(this.fade){
-				this.slickConfig["fade"] = this.fade;
+				this.slickConfig["fade"] = this.fade == "false" ? false : true;
 			}
 			if(this.pauseOnFocus){
 				this.slickConfig["pauseOnFocus"] = this.pauseOnFocus;
@@ -102,7 +109,7 @@ angular
 				this.slickConfig["speed"] = this.speed;
 			}
 			if(this.swipe){
-				this.slickConfig["swipe"] = this.swipe;
+				this.slickConfig["swipe"] = this.swipe == "false" ? false : true;
 			}
       	 }
          
