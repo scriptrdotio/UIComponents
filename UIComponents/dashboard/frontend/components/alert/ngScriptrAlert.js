@@ -12,7 +12,7 @@ angular.module('angular-scriptrui', []).directive('ngScriptrAlert', function() {
 		 time: '@',
 		 title: '@'
     },
-    template: '<div class="alert alert-{{type}} scriptr-alert" role="alert"><span ng-if="time" class="time">{{time}}|</span><span ng-bind="msg" class="message"></span></div>',
+    template: '<div class="alert alert-{{type}} scriptr-alert" role="alert"><span ng-if="time" class="time">{{time}}</span><span ng-bind="msg" class="message"></span></div>',
     replace: true
   }
 });

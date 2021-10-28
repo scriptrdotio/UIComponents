@@ -53,16 +53,7 @@ angular
             this.title = (this.title) ? this.title : "Alerts";
 			this.titleIcon = (this.titleIcon) ? this.titleIcon : null;
             //this.data = (this.data) ? this.data : "Waiting for info...";
-			this.slickConfig = {
-                event: {
-					beforeChange: function (event, slick, currentSlide, nextSlide) {
-                        var x = 1;
-					},
-					afterChange: function (event, slick, currentSlide, nextSlide) {
-                        var x = 1;
-					}
-				}
-            };
+			this.slickConfig = {};
             if(this.draggable){
                 this.slickConfig["draggable"] = this.draggable == "false" ? false : true;   
             }
