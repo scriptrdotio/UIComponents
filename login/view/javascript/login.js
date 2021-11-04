@@ -401,6 +401,9 @@ $.widget( "scriptr.loginWidget", {
         });
     },
     switchForm: function(source_form, target_form) {
+    	var validator = $('#' + source_form).find('form').data('bootstrapValidator');
+        validator.resetForm();
+        $('#' + source_form).find('input').val('');
         this.animateSwitchForm(source_form, target_form);
     },
     animateSwitchForm: function(wrap_from, wrap_to) {
