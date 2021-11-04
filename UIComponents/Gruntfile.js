@@ -571,7 +571,8 @@ module.exports = function(grunt) {
 	                     'dashboard/frontend/components/combo/combo.css',
 	                     'dashboard/frontend/components/scrollableTabs/scrolling-tabs.css',
 	                     'lib/daterangepicker.min.css',
-	                     'dashboard/frontend/components/alert/alert.css'
+	                     'dashboard/frontend/components/alert/alert.css',
+	                     'dashboard/frontend/components/ngTagsInput/ng-tags-input.min.css'
 	                     ],
 	               dest : 'build/css/components.css'
 	            }
