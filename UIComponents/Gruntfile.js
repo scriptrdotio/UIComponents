@@ -280,7 +280,8 @@ module.exports = function(grunt) {
 		               'concat/min-safe/tabs.js' : [ 'dashboard/frontend/components/scrollableTabs/tabs.js'],
 		               'concat/min-safe/angular-daterangepicker.js' : [ 'dashboard/frontend/components/datetimerangepicker/angular-daterangepicker.min.js'],
 		               'concat/min-safe/datetimerangepicker.js' : [ 'dashboard/frontend/components/datetimerangepicker/datetimerangepicker.js'],
-		               'concat/min-safe/loadingOverlay.js' : [ 'dashboard/frontend/components/loadingOverlay/loadingOverlay.min.js']
+		               'concat/min-safe/loadingOverlay.js' : [ 'dashboard/frontend/components/loadingOverlay/loadingOverlay.min.js'],
+		               'concat/min-safe/ngTagsInput.js' : [ 'dashboard/frontend/components/ngTagsInput/ng-tags-input.min.js']
 							
 		            }
 	            }
@@ -498,7 +499,8 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/datetimerangepicker.js',
 	                     //'concat/min-safe/cell.js',
 	                     //'concat/min-safe/grideye.js',
-	                     'concat/min-safe/loadingOverlay.js'
+	                     'concat/min-safe/loadingOverlay.js',
+	                     'concat/min-safe/ngTagsInput.js'
 	                     ],
 	               dest : 'build/js/components.min.js'
 	            },

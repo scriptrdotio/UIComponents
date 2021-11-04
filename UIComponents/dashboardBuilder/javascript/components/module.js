@@ -51,5 +51,7 @@ angular.module("DashboardBuilder", [
     'mgcrea.ngStrap.select',
 	"Display", 
 	"Plotly",
-    "ngSchemaFormFile"
+    "ngSchemaFormFile",
+    "ngLoadingOverlay",
+    "ngTagsInput"
 ]);
