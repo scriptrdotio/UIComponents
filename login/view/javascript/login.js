@@ -62,6 +62,12 @@ $.widget( "scriptr.loginWidget", {
         
         $(document).ready(jQuery.proxy(function() {
             if(this.resetCode != null){
+            	this.id = $.urlParam("id");
+                if(this.id != null){
+                    this.element.find("#id").val(this.id);
+                    this.element.find("#id").prop("disabled", true);
+                }
+                
                 $("#reset-password-form-wrap").show();
             }else{
                 $("#login-wrap").show();
