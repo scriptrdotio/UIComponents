@@ -1,7 +1,7 @@
 <div class="nav-tabs-wrapper row">
     <div class="col-xs-12" id="alertDiv"><div ng-if="$ctrl.hasAlert" uib-alert ng-class="'alert-' + ( $ctrl.message.type || 'warning')  + ' mt10'" close="$ctrl.closeAlert()" dismiss-on-timeout="3000" class="mrgb0">{{$ctrl.message.content}}</div></div>
     <div ng-class="$ctrl.wrapperClass" ng-if="$ctrl._tabs"> 
-        <div scrolling-tabs-wrapper watch-tabs="$ctrl._tabs" class="scrtabs-allow-scrollbar">
+        <div scrolling-tabs-wrapper watch-tabs="$ctrl._tabs" class="scrtabs-allow-scrollbar"  refresh-on="$ctrl.triggerRefresh">
             <ul class="nav nav-tabs scriptrScrollableTabsContainer" >
                 <li ng-repeat="tab in $ctrl._tabs"  class="scriptrScrollableTabs"  ng-class="{'active' : tab.active}">
                     <a ng-hide="tab.isEditMode" ng-dblclick="$ctrl.swithToEditMode($event, tab)" href="javascript: void(0);" data-target="#tab.id" data-toggle="tab" ng-click="$ctrl.setActive(tab.id, tab)"> <i ng-if="tab.icon" class="icon {{tab.icon}}" aria-hidden="true"></i><img ng-if="tab.img" class="icon" src="{{tab.img}}"></img>{{tab.title}}

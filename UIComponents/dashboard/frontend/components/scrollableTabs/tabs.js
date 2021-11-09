@@ -11,7 +11,8 @@ angular
         "onTabInitialLoad": "&?",
         "isNotEditable": "<?",
         "wrapperClass": "@",
-        "defaultTabName": "@"
+        "defaultTabName": "@",
+        "triggerRefresh": "<?"
     },
     "templateUrl": "/UIComponents/dashboard/frontend/components/scrollableTabs/tabs.html",
     "controller": function($translate, $scope, $timeout, $mdDialog, $q) {
