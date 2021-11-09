@@ -1,12 +1,12 @@
 :focus {outline: 0!important;}
 /*** filter ***/
-.filter-bar {padding: 4px 0; background: #f6f6f6; display: inline-block; width: 100%; margin-bottom: 8px; font-family: "Josefin Sans",sans-serif;}
+.filter-bar {padding: 4px 0; background: #f6f6f6; display: inline-block; width: 100%; margin-bottom: 8px;}
 .filter-bar .form-group {margin-bottom: 0;}
 .filter-bar .tooltip-inner {min-width:85px; }
 .filter-bar .mt4 {margin-top: 4px;}
 
 /*** Grid ***/
-.ag-bootstrap {font-family: "Josefin Sans",sans-serif!important; text-align: left;}
+.ag-bootstrap {text-align: left;}
 .ag-bootstrap .ag-body {background-color: #fff!important;}
 .ag-bootstrap .ag-header-cell-label {padding: 2px 2px!important;}
 .ag-bootstrap .ag-header {border-bottom: 2px solid #ddd!important;}
@@ -16,7 +16,7 @@
 .ag-bootstrap .ag-paging-panel {border-top: 2px solid #ddd!important;}
 .ag-bootstrap .ag-paging-button {background: #eee; border: 1px solid #ddd;}
 .ag-bootstrap .ag-paging-row-summary-panel {color: #888;}
-.ag-bootstrap .ag-menu {font-family: "Josefin Sans",sans-serif!important; border: 1px solid #ddd!important;}
+.ag-bootstrap .ag-menu {border: 1px solid #ddd!important;}
 .ag-bootstrap .ag-filter-select {width: 95%; height: 25px;}
 .ag-bootstrap .ag-overlay-loading-wrapper {background: rgba(0,0,0,0.2)!important;}
 .ag-bootstrap .ag-overlay-loading-center {padding: 20px!important; color: #323232!important;}

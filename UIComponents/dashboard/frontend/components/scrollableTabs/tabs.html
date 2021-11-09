@@ -4,7 +4,7 @@
         <div scrolling-tabs-wrapper watch-tabs="$ctrl._tabs" class="scrtabs-allow-scrollbar">
             <ul class="nav nav-tabs scriptrScrollableTabsContainer" >
                 <li ng-repeat="tab in $ctrl._tabs"  class="scriptrScrollableTabs"  ng-class="{'active' : tab.active}">
-                    <a ng-hide="tab.isEditMode" ng-dblclick="$ctrl.swithToEditMode($event, tab)" href="javascript: void(0);" data-target="#tab.id" data-toggle="tab" ng-click="$ctrl.setActive(tab.id, tab)"> <i ng-if="tab.icon" class="icon {{tab.icon}}" aria-hidden="true"></i><img class="icon" src="{{tab.img}}"></img>{{tab.title}}
+                    <a ng-hide="tab.isEditMode" ng-dblclick="$ctrl.swithToEditMode($event, tab)" href="javascript: void(0);" data-target="#tab.id" data-toggle="tab" ng-click="$ctrl.setActive(tab.id, tab)"> <i ng-if="tab.icon" class="icon {{tab.icon}}" aria-hidden="true"></i><img ng-if="tab.img" class="icon" src="{{tab.img}}"></img>{{tab.title}}
                         <i ng-hide="$ctrl.isNotEditable" ng-click="$ctrl.showRemoveTabConfirmDlg($event, tab)" class="fa fa-close" aria-hidden="true"></i>
                     </a>
                     <input class="changeScriptrScrollableTabName" ng-show="tab.isEditMode && !$ctrl.isNotEditable" ng-dblclick="$ctrl.swithToShow($event)" ng-blur="$ctrl.swithToShow($event, tab)" ng-keyup="$event.keyCode == 13 ? $ctrl.swithToShow($event, tab) : null" ng-model="tab.title">
