@@ -21,7 +21,7 @@ angular
 
         this.$onInit = function() {
 
-      	   this.defaultTabName = (this.defaultTabName) ? defaultTabName : "Tab";
+      	   this.defaultTabName = (this.defaultTabName) ? this.defaultTabName : "Tab";
       	   
             if(!self.tabs || self.tabs.length == 0) {
                 if(this.isNotEditable) return;
