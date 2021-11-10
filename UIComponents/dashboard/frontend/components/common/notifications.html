@@ -1,5 +1,5 @@
 <div class="data-notification center"  ng-hide="$ctrl.hasData || $ctrl.noResults">
-    <i class="fa fa-spinner fa-spin fa-1x"></i> <div ng-if="!$ctrl.usePopover" translate>{{$ctrl.loadingMessage}}</div>
+    <i class="fa fa-spinner fa-spin fa-1x"></i> <div ng-if="!$ctrl.usePopover">{{$ctrl.loadingMessage | translate}}</div>
 </div>
 
 <div class="data-notification" ng-if="!$ctrl.usePopover && $ctrl.noResults" ng-class="{'center': !$ctrl.stalledData, 'bottom': $ctrl.stalledData}" >
@@ -9,13 +9,13 @@
 </div>
 
 <div class="data-notification bottom" ng-if="$ctrl.usePopover && $ctrl.noResults" ng-class="{'danger': ($ctrl.noResults && !$ctrl.stalledData), 'warning': $ctrl.stalledData}"  ng-init="$ctrl.popClass = (($ctrl.noResults && !$ctrl.stalledData) ? 'data-notification-popup alert alert-danger' : (($ctrl.stalledData) ? 'data-notification-popup alert alert-warning' : 'data-notification-popup alert alert-info'))">
-    <div translate uib-popover="{{$ctrl.failureMessage || ('DASHBOARDS.GLOBAL.DEFAULT_FAILURE_MESSAGE') | translate}}" popover-placement="auto right" popover-append-to-body="true" popover-class="{{$ctrl.popClass}}" popover-trigger="'outsideClick'">
+    <div uib-popover="{{$ctrl.failureMessage || ('DASHBOARDS.GLOBAL.DEFAULT_FAILURE_MESSAGE') | translate}}" popover-placement="auto right" popover-append-to-body="true" popover-class="{{$ctrl.popClass}}" popover-trigger="'outsideClick'">
         <i class="fa fa-exclamation-triangle fa-1x"></i>
     </div>
 </div>
 
 <div ng-if="$ctrl.actionMessage && $ctrl.usePopover" class="data-notification action alert" ng-class="{'alert-success': $ctrl.actionSuccess, 'alert-danger':  !$ctrl.actionSuccess}"  ng-init="$ctrl.popClass = (($ctrl.noResults && !$ctrl.stalledData) ? 'data-notification-popup alert alert-danger' : (($ctrl.actionSuccess) ? 'data-notification-popup alert alert-success' : 'data-notification-popup alert alert-danger'))">
-    <div translate uib-popover="{{$ctrl.actionMessage}}" popover-placement="auto top" popover-append-to-body="true" popover-class="{{$ctrl.popClass}}" popover-trigger="'outsideClick'">
+    <div uib-popover="{{$ctrl.actionMessage | translate}}" popover-placement="auto top" popover-append-to-body="true" popover-class="{{$ctrl.popClass}}" popover-trigger="'outsideClick'">
     	<div class="center-icon">
             	<i  class="fa fa-times fa-1x" ng-if="!$ctrl.actionSuccess"></i>
         		<i  class="fa fa-check fa-1x" ng-if="$ctrl.actionSuccess"></i>
@@ -24,8 +24,8 @@
 </div>
 
 <div ng-if="$ctrl.actionMessage && !$ctrl.usePopover" class="data-notification action">
-    <div translate uib-alert ng-class="{'alert-success': $ctrl.actionSuccess, 'alert-danger':  !$ctrl.actionSuccess}">
-           {{$ctrl.actionMessage}}
+    <div uib-alert ng-class="{'alert-success': $ctrl.actionSuccess, 'alert-danger':  !$ctrl.actionSuccess}">
+           {{$ctrl.actionMessage | translate}}
     </div>
 </div>
 
