@@ -334,8 +334,21 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
         else if (form.options.httpGet) {
             var finalOptions = $scope.getOptions(form.options, search);
             var params = $scope.$parent.$eval(finalOptions.httpGet.parameter);
-            var minSearch = finalOptions.httpGet.minSearch;
-            if(minSearch){
+            var minSearch = finalOptions.httpGet.minSearch || 0;
+            
+           if ($scope.insideModel && $scope.select_model.selected === undefined) {
+               var loadParams = $scope.$parent.$eval(finalOptions.httpGet.onLoadParameter);
+               return  httpClient
+                   .get(finalOptions.httpGet.onLoadUrl, loadParams).then(
+                   function (data, response) {
+                       $scope.finalizeTitleMap(form, data, finalOptions);
+                       $scope.select_model.selected = $scope.find_in_titleMap($scope.insideModel);
+                   },
+                   function (err) {
+                       console.log("Reject http call", err);
+                   });
+            } 
+            if(!isNaN(parseFloat(minSearch)) && isFinite(minSearch)){
                 if(search.length >= minSearch)
                     params.queryFilter = search;
                 else{
