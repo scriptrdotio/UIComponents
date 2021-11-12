@@ -333,11 +333,11 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
         }
         else if (form.options.httpGet) {
             var finalOptions = $scope.getOptions(form.options, search);
-            var params = $scope.$parent.$eval(finalOptions.httpGet.parameter);
+            var params = (finalOptions.httpGet.parameter) ? $scope.$parent.$eval(finalOptions.httpGet.parameter) : {};
             var minSearch = finalOptions.httpGet.minSearch || 0;
             
-           if ($scope.insideModel && $scope.select_model.selected === undefined) {
-               var loadParams = $scope.$parent.$eval(finalOptions.httpGet.onLoadParameter);
+           if ($scope.insideModel && $scope.select_model.selected === undefined && finalOptions.httpGet.onLoadUrl) {
+               var loadParams = (finalOptions.httpGet.onLoadParameter) ? $scope.$parent.$eval(finalOptions.httpGet.onLoadParameter) : {};
                return  httpClient
                    .get(finalOptions.httpGet.onLoadUrl, loadParams).then(
                    function (data, response) {
@@ -352,8 +352,8 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
                 if(search.length >= minSearch)
                     params.queryFilter = search;
                 else{
-                    form.titleMap = [];
-                    return;
+                        form.titleMap = [];
+                    	return;
                 }
             }
             return  httpClient
@@ -364,16 +364,6 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
                 function (err) {
                     console.log("Reject http call", err);
                 });
-                  
-           /** return $http.get(finalOptions.httpGet.url, finalOptions.httpGet.parameter).then(
-                function (data) {
-                    $scope.finalizeTitleMap(form, data.data, finalOptions);
-                    //console.log('httpGet items', form.titleMap);
-                },
-                function (data, status) {
-                    alert("Loading select items failed (URL: '" + String(finalOptions.httpGet.url) +
-                    "\nError: " + status);
-                });**/
         } else {
             //MFE: added this for translation of titlemap in form
           	$scope.finalizeTitleMap(form,form.titleMap, form.options);
