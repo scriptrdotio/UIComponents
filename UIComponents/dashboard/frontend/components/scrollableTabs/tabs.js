@@ -13,7 +13,7 @@ angular
         "wrapperClass": "@",
         "defaultTabName": "@",
         "triggerRefresh": "<?",
-        "attachDialogsTo": "<?"
+        "dialogDomSelector": "@"
     },
     "templateUrl": "/UIComponents/dashboard/frontend/components/scrollableTabs/tabs.html",
     "controller": function($translate, $scope, $timeout, $mdDialog, $q, $element) {
@@ -85,8 +85,7 @@ angular
 
 
         this.showRemoveTabConfirmDlg = function($event, tab) {
-            var confirmDialog = $mdDialog.confirm().title("Confirm remove").textContent("Are you sure you want to remove " + tab.title + " tab?").clickOutsideToClose(true).ok("Remove").cancel("Cancel").parent((self.attachDialogsTo) ? self.attachDialogsTo : null /**angular.element(document.querySelector(".scriptrScrollableTabs-"+self.id**/)
-              
+            var confirmDialog = $mdDialog.confirm().title("Confirm remove").textContent("Are you sure you want to remove " + tab.title + " tab?").clickOutsideToClose(true).ok("Remove").cancel("Cancel").parent((self.dialogDomSelector) ? angular.element(document.querySelector(self.dialogDomSelector)) : null)
             $mdDialog.show(confirmDialog).then(function(){
                 console.log("Removing tab", $event, tab)
                 self.removeTab($event,tab)
