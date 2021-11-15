@@ -12,17 +12,18 @@ angular
         "isNotEditable": "<?",
         "wrapperClass": "@",
         "defaultTabName": "@",
-        "triggerRefresh": "<?"
+        "triggerRefresh": "<?",
+        "attachDialogsTo": "<?"
     },
     "templateUrl": "/UIComponents/dashboard/frontend/components/scrollableTabs/tabs.html",
-    "controller": function($translate, $scope, $timeout, $mdDialog, $q) {
+    "controller": function($translate, $scope, $timeout, $mdDialog, $q, $element) {
 
         var self = this;
 
         this.$onInit = function() {
 
       	   this.defaultTabName = (this.defaultTabName) ? this.defaultTabName : "Tab";
-      	   
+      	   this.id = $scope.$id;
             if(!self.tabs || self.tabs.length == 0) {
                 if(this.isNotEditable) return;
                 this._tabs = this.tabs;
@@ -84,20 +85,14 @@ angular
 
 
         this.showRemoveTabConfirmDlg = function($event, tab) {
-            $mdDialog.show($mdDialog.confirm({
-                title: "Confirm remove",
-                textContent: "Are you sure you want to remove " + tab.title + " tab?",
-                clickOutsideToClose:true,
-                //escapeToClose: true,
-                ok:"Remove",
-                cancel: "Cancel",
-                parent: angular.element(document.querySelector(".nav-tabs-wrapper"))
-            })).then(function(){
+            var confirmDialog = $mdDialog.confirm().title("Confirm remove").textContent("Are you sure you want to remove " + tab.title + " tab?").clickOutsideToClose(true).ok("Remove").cancel("Cancel").parent((self.attachDialogsTo) ? self.attachDialogsTo : null /**angular.element(document.querySelector(".scriptrScrollableTabs-"+self.id**/)
+              
+            $mdDialog.show(confirmDialog).then(function(){
                 console.log("Removing tab", $event, tab)
                 self.removeTab($event,tab)
             },function(){
                 console.log("Cancel Removing tab", $event, tab)
-            });;
+            });
         }
 
         this.setActive = function(tab_id, tab){

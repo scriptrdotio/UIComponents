@@ -341,7 +341,8 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
                return  httpClient
                    .get(finalOptions.httpGet.onLoadUrl, loadParams).then(
                    function (data, response) {
-                       $scope.finalizeTitleMap(form, data, finalOptions);
+                       if(data != null)
+                       		$scope.finalizeTitleMap(form, data, finalOptions);
                        $scope.select_model.selected = $scope.find_in_titleMap($scope.insideModel);
                    },
                    function (err) {
@@ -359,7 +360,8 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
             return  httpClient
                 .get(finalOptions.httpGet.url, params).then(
                 function (data, response) {
-                     $scope.finalizeTitleMap(form, data, finalOptions);
+                     if(data != null)
+                     	$scope.finalizeTitleMap(form, data, finalOptions);
                 },
                 function (err) {
                     console.log("Reject http call", err);
