@@ -91,6 +91,7 @@ angular
                 //escapeToClose: true,
                 ok:"Remove",
                 cancel: "Cancel",
+                parent: angular.element(document.querySelector(".nav-tabs-wrapper"))
             })).then(function(){
                 console.log("Removing tab", $event, tab)
                 self.removeTab($event,tab)
