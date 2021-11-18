@@ -1,4 +1,4 @@
-angular.module('ScrollableTabs', ['mj.scrollingTabs', 'pascalprecht.translate', 'ngMaterial'])
+angular.module('ScrollableTabs', ['mj.scrollingTabs', 'pascalprecht.translate', 'ngMaterial', 'ui.bootstrap'])
 angular
   .module('ScrollableTabs')
   .component("scriptrScrollableTabs", {
