@@ -31,14 +31,14 @@ angular
             "noDataWidget": "<?"
         },
         templateUrl:'/UIComponents/dashboard/frontend/components/combo/combo.html',
-        controller: function(httpClient, wsClient,dataService,$scope,$interval, $window, $element, $timeout, $rootScope) {
+        controller: function(httpClient, wsClient,dataService,$scope,$interval, $window, $element, $timeout) {
             var self = this;
             this.$onInit = function() {
                 this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/occupancy-bg.svg";
                 this.dfGridsterOptions = {
                     sparse: false,
-                    defaultSizeY: 100,
-                    defaultSizeX:100,
+                    defaultSizeY: 20,
+                    defaultSizeX:20,
                     minRows: 1, // the minimum height of the grid, in rows
                     maxRows: 100,
                     columns: 12, // the width of the grid, in columns
@@ -65,16 +65,6 @@ angular
             this.$postLink = function () {
                 self.timeoutId = $timeout(self.resize.bind(self), 100);
                 angular.element($window).on('resize', self.onResize);
-                $scope.$watch(function() {
-                  /** console.log("Combo size: ", $element, $element.width()) **/
-                   return $element.parent().width();
-               }, function(oldValue, newValue) {
-                 /** if(oldValue != newValue) {
-                     $(window).trigger('resize');
-                     window.dispatchEvent(new Event('resize'));
-                  }**/ return 1;
-              });
-                
                 if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
                     initDataService(this.transport);
                 } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
@@ -123,7 +113,7 @@ angular
             }   
             
             this.onResize = function() {
-               if (self.timeoutId != null) {
+                if (self.timeoutId != null) {
                     $timeout.cancel(self.timeoutId);
                 }
                 self.timeoutId = $timeout(self.resize.bind(self), 100);
@@ -549,10 +539,9 @@ angular
                 var boxContent =  angular.element($element.find(".box-content"));
                 boxContent.append(el);
             }
+
             
-            this.$onDestroy = function() {
-                console.log("Box destroyed")
-            }
+            
         }
     });
 
