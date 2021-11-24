@@ -28,19 +28,17 @@ angular
             "groupsCount": "<?",
             "groupItemsCount": "<?",
             "isVertical": "<?",
-            "parentItemSizeX": "<?",
-            "parentItemSizeY": "<?",
             "noDataWidget": "<?"
         },
         templateUrl:'/UIComponents/dashboard/frontend/components/combo/combo.html',
-        controller: function(httpClient, wsClient,dataService,$scope,$interval, $window, $element, $timeout) {
+        controller: function(httpClient, wsClient,dataService,$scope,$interval, $window, $element, $timeout, $rootScope) {
             var self = this;
             this.$onInit = function() {
                 this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/occupancy-bg.svg";
                 this.dfGridsterOptions = {
                     sparse: false,
-                    defaultSizeY: 20,
-                    defaultSizeX:20,
+                    defaultSizeY: 100,
+                    defaultSizeX:100,
                     minRows: 1, // the minimum height of the grid, in rows
                     maxRows: 100,
                     columns: 12, // the width of the grid, in columns
@@ -67,6 +65,16 @@ angular
             this.$postLink = function () {
                 self.timeoutId = $timeout(self.resize.bind(self), 100);
                 angular.element($window).on('resize', self.onResize);
+                $scope.$watch(function() {
+                  /** console.log("Combo size: ", $element, $element.width()) **/
+                   return $element.parent().width();
+               }, function(oldValue, newValue) {
+                 /** if(oldValue != newValue) {
+                     $(window).trigger('resize');
+                     window.dispatchEvent(new Event('resize'));
+                  }**/ return 1;
+              });
+                
                 if((self.transport == "wss" && (self.api || self.msgTag)) || (self.transport == "https" && self.api)) {//Fetch data from backend
                     initDataService(this.transport);
                 } else if(self.data != null) { //set datas info when data binding is changed, this allows the user to change the data through a parent controller
@@ -115,7 +123,7 @@ angular
             }   
             
             this.onResize = function() {
-                if (self.timeoutId != null) {
+               if (self.timeoutId != null) {
                     $timeout.cancel(self.timeoutId);
                 }
                 self.timeoutId = $timeout(self.resize.bind(self), 100);
@@ -468,11 +476,12 @@ angular
             "counter": "<?"
         },
         templateUrl: '/UIComponents/dashboard/frontend/components/combo/comboBox.html',
-        controller: function($translate, $rootScope, $scope, $compile, $element, _) {
-            
+        controller: function($translate, $rootScope, $scope, $compile, $element, _, $timeout) {
+             var self = this;
             this.$onInit =  function() {
+                console.log("Initialize Combo Box")
                 $translate.use($rootScope.lang);
-                var self = this;
+               
              /**   $rootScope.mobileBreakPoint = '(max-width: 480px)';
                 $rootScope.tabletBreakPoint = '(max-width: 991px)';
 
@@ -488,11 +497,18 @@ angular
                     setTimeout( function(){ $(window).trigger('resize'); window.dispatchEvent(new Event('resize'));},100);
                 })**/
         
-                if(this.widget) {
-                    this.addWidget(this.widget);
-                }
-        
-            };
+            }
+            
+            this.$postLink = function () {
+                angular.element($element).ready(function() {
+                      $timeout(function(){
+                         if(self.widget) {
+                            self.addWidget(self.widget);
+                        }
+                    },100)
+                })
+            }
+
           
             this.addWidget = function(widget) {
                 var self = this;
@@ -533,8 +549,100 @@ angular
                 var boxContent =  angular.element($element.find(".box-content"));
                 boxContent.append(el);
             }
-
             
-            
+            this.$onDestroy = function() {
+                console.log("Box destroyed")
+            }
         }
     });
+
+angular
+    .module('Combo')
+    .component(
+    'scriptrPopoverCombo',
+    {
+        bindings : {
+            combo: "<?",
+            id: "@",
+            popoverComboClass: "@",
+            popoverComboPlacement: "@",
+            popoverComboTrigger: "@",
+            popoverIcon: "@",
+            popoverImg: "@"
+        },
+        templateUrl:'/UIComponents/dashboard/frontend/components/combo/popoverCombo.html',
+        controller: function($scope, httpClient, wsClient,dataService,$scope,$interval, $window, $element, $timeout, $compile, $templateCache) {
+            
+            var self = this;
+            this.$onInit = function() {
+                 
+                 self.comboTemplate =  angular.element(document.createElement("div"));
+                 self.comboTemplate.attr("class", (self.popoverComboClass) ? ("popoverComboWrapper " + self.popoverComboClass ) : "popoverComboWrapper ");
+                
+               self.comboTemplateCombo =  angular.element(document.createElement("scriptr-combo"));
+               if(self.combo.type) 
+                 	self.comboTemplateCombo.attr("type", "{{$ctrl.combo.type}}");
+                 if(self.combo.icon) 
+                 	self.comboTemplateCombo.attr("icon", "{{$ctrl.combo.icon}}");
+                 if(self.combo.transport) 
+                 	self.comboTemplateCombo.attr("transport", "{{$ctrl.combo.transport}}");
+                 if(self.combo.api) 
+                 	self.comboTemplateCombo.attr("api", "{{$ctrl.combo.api}}");
+                 if(self.combo.apiParams) 
+                 	self.comboTemplateCombo.attr("api-params", "$ctrl.combo.apiParams");
+                if(self.combo.msgTag) 
+                 	self.comboTemplateCombo.attr("msg-tag", "{{$ctrl.combo.msgTag}}");
+                 if(self.combo.httpMethod) 
+                 	self.comboTemplateCombo.attr("http-method", "{{$ctrl.combo.httpMethod}}");
+                 if(self.combo.fetchDataInterval) 
+                 	self.comboTemplateCombo.attr("fetch-data-interval", "{{$ctrl.combo.fetchDataInterval}}");
+                if(self.combo.serviceTag) 
+                 	self.comboTemplateCombo.attr("service-tag", "{{$ctrl.combo.serviceTag}}");
+                 if(self.combo.useWindowParams) 
+                 	self.comboTemplateCombo.attr("use-window-params", "{{$ctrl.combo.useWindowParams}}");
+                 if(self.combo.data) 
+                 	self.comboTemplateCombo.attr("data", "$ctrl.combo.data");
+                 if(self.combo.gridsterConfig) 
+                 	self.comboTemplateCombo.attr("gridster-config", "$ctrl.combo.gridsterConfig");
+                 if(self.combo.mobileBreakPoint) 
+                 	self.comboTemplateCombo.attr("mobile-break-point", "$ctrl.combo.mobileBreakPoint");
+                if(self.combo.groupTitleField) 
+                 	self.comboTemplateCombo.attr("group-title-field", "{{$ctrl.combo.groupTitleField}}");
+                 if(self.combo.groupDataField) 
+                 	self.comboTemplateCombo.attr("group-data-field",  "{{$ctrl.combo.groupDataField}}");
+                 if(self.combo.titleWidget) 
+                 	self.comboTemplateCombo.attr("title-widget", "$ctrl.combo.titleWidget");
+                if(self.combo.groupWidget) 
+                 	self.comboTemplateCombo.attr("group-widget", "$ctrl.combo.groupWidget");
+                 if(self.combo.groupsCount) 
+                 	self.comboTemplateCombo.attr("groups-count", "$ctrl.combo.groupsCount");
+                 if(self.combo.groupItemsCount) 
+                 	self.comboTemplateCombo.attr("group-items-count", "$ctrl.combo.groupItemsCount");
+                if(self.combo.isVertical) 
+                 	self.comboTemplateCombo.attr("is-vertical", "$ctrl.combo.isVertical");
+                 if(self.combo.parentItemSizeX) 
+                 	self.comboTemplateCombo.attr("parent-item-size-x", "$ctrl.combo.parentItemSizeX");
+                 if(self.combo.parentItemSizeY) 
+                 	self.comboTemplateCombo.attr("parent-item-size-y", "$ctrl.combo.parentItemSizeY");
+                if(self.combo.noDataWidget) 
+                 	self.comboTemplateCombo.attr("no-data-widget", "$ctrl.combo.noDataWidget");
+                
+                if(angular.isArray(self.combo.onFormatData) || angular.isObject(self.combo.onFormatData)){
+                    if (self.combo.onFormatData["functionValue"] && self.combo.onFormatData["functionArguments"]) {
+                        // we can only pass a function as string in JSON ==> doing a real function
+                        this.counter += 1;
+                        var counter = this.counter;
+                        var functionName = ("scriptrComboPopoverOnFormatData"+ counter);
+                        self[functionName] = new Function(self.combo.onFormatData.functionArguments, self.combo.onFormatData.functionValue);
+                        self.comboTemplateCombo.attr("on-format-data", "$ctrl."+functionName);
+                    }
+                }
+               
+                 self.comboTemplate.append(self.comboTemplateCombo);
+                 self.popoverComboTemplateId = (this.id) ? (this.id + "-" + $scope.$id) : ("popoverCombo-"+$scope.$id);
+                 $templateCache.put(self.popoverComboTemplateId, self.comboTemplate[0].outerHTML);
+                 self._popoverComboTemplateId = self.popoverComboTemplateId
+            }
+                
+    }	
+});
