@@ -25,12 +25,13 @@ angular
                 
                 this.setActiveMenuItem();
 
-                $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
+                $scope.$on('$routeChangeSuccess', function(angularEvent, next, current) { 
                     console.log("next", next);
                     if(next && next.$$route) {
                         console.log("current", next.$$route);
 
                         self.currentRoute =  "#"+next.$$route.originalPath;
+                        self.setActiveMenuItem();
                     } else {
                         console.log("Missing route definition");
                         //angularEvent.preventDefault();
@@ -210,8 +211,6 @@ angular
                         }
                     }
                 }
-
-
             }
             
             this.setActiveMenuItem = function(){
@@ -220,10 +219,17 @@ angular
                     if(item.route && item.route == self.currentRoute)
                         item.active = "true";
                     else if(item.routes){
+                        var isFound = false;
                         _.forEach(item.routes, function(route, idx){
-                            if(self.currentRoute.indexOf(route) != -1)
+                            if(self.currentRoute.indexOf(route) != -1){
+                                isFound = true;
                                 item.active = "true";
+                            }
                         });
+                        if(!isFound)
+                            item.active = "false";
+                    }else{
+                        item.active = "false";
                     }
                 });
             }
