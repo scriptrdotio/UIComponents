@@ -22,6 +22,8 @@ angular
                 }else{
                     this.currentRoute = this.menuItems[this.menuItems.mainMenu][0].route;
                 }
+                
+                this.setActiveMenuItem();
 
                 $scope.$on('$routeChangeStart', function(angularEvent, next, current) { 
                     console.log("next", next);
@@ -210,6 +212,20 @@ angular
                 }
 
 
+            }
+            
+            this.setActiveMenuItem = function(){
+                var self = this;
+                _.forEach(this.menuItems[this.menuItems.mainMenu], function(item, idx){
+                    if(item.route && item.route == self.currentRoute)
+                        item.active = "true";
+                    else if(item.routes){
+                        _.forEach(item.routes, function(route, idx){
+                            if(self.currentRoute.indexOf(route) != -1)
+                                item.active = "true";
+                        });
+                    }
+                });
             }
         }
     });
