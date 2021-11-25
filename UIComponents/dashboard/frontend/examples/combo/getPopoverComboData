@@ -1,0 +1,53 @@
+var log = require("log");
+log.setLevel("INFO");
+
+var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
+var requestParams = typeof(body) == "string" ? JSON.parse(body) : body;
+
+var publishResponse = function(channel, data, request, id) {
+   var message = {"result": data};
+   if(body && body.id) {
+     message["id"] = body.id;
+   } else {
+     if(!id) {
+        id = "chart"
+     }
+     //Add a default id to identify the message published over the socket
+      message["id"] = id;
+   }
+   publish(channel, message);
+}
+
+
+// data for line, bar, and area charts
+var dataline =[{"chartData":  [ 
+    [{ y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+    { y: (new Date().getTime()), a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) }]
+    ]
+               
+ }];
+
+var barChart2 =[{"barChartData": [[
+    			{ y: "2006", a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) },
+                { y: "2007", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+                { y: "2008", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+                { y: "2009", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+                { y: "2010", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+                { y: "2011", a: Math.floor((Math.random() * 100) + 1),  b: Math.floor((Math.random() * 100) + 1) },
+                { y: "2012", a: Math.floor((Math.random() * 100) + 1), b: Math.floor((Math.random() * 100) + 1) }
+			]]               
+ }];
+
+// data for donut chart
+var donutdata = [{label: "Cranes", value: Math.floor((Math.random() * 100) + 1) }, {label: "Drillers",value: Math.floor((Math.random() * 100) + 1) }, {label: "Blasters", value: Math.floor((Math.random() * 100) + 1) }];
+
+
+//publishResponse("responseChannel", dataline, request, "chartline");
+//publishResponse("responseChannel", donutdata, request, "donut");
+
+return {"sample1": dataline, "sample2": barChart2};

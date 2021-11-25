@@ -1,0 +1,7 @@
+<div class="popoverComboWrapper">
+    <div ng-if="$ctrl._popoverComboTemplateId">
+        <div uib-popover-template="'{{$ctrl._popoverComboTemplateId}}'" popover-placement="{{$ctrl.popoverComboPlacement}}" popover-append-to-body="true" popover-class="popoverCombo {{$ctrl.popoverComboClass}}" popover-trigger="'{{$ctrl.popoverComboTrigger || 'outsideClick'}}'">
+            <i ng-if="$ctrl.popoverIcon" class="icon {{$ctrl.popoverIcon}}" aria-hidden="true"></i><img ng-if="$ctrl.popoverImg" class="icon" src="{{Sctrl.popoverImg}}"></img>
+        </div>
+    </div>
+</div>

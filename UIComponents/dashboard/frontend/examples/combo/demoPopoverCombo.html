@@ -1,0 +1,219 @@
+<html ng-app="myApp">
+<head>
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    
+    <!-- Adding Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-websocket/1.0.9/angular-websocket.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+	<script src="/UIComponents/dataService.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
+  	
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+    
+     <!-- i18n -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js"></script>
+    <!-- /i18n -->
+    
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    
+    <script src="/UIComponents/dashboard/frontend/components/displayCount/displayCount.js"></script>
+    
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/displayCount/count.css">
+    
+    
+    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css">
+    <script src="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/combo/combo.js"></script>
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/combo/combo.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+  
+    
+     <!-- Charts used in historical angular.morris -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/chart/chart.css">
+  
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/chart/angular.morris.js"></script>
+     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone-with-data.min.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/chart/chart.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/css/light.css">
+    
+   
+</head> 
+  
+<script>
+    var myApp= angular.module("myApp", ["WsClient", "HttpClient", "Combo", "Display", "Chart"])
+    angular.module('myApp').config(wssConfig);
+  	angular.module('myApp').config(httpsConfig);
+  	var cdnImagesPath = "//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/";
+  	angular.module('myApp').controller('testCtrl', function($scope, $interval) {
+      var vm = this;
+      
+      vm.titleWidget = {
+                        	"layout": {"sizeX": {"web": 12, "tablet": 12}, "sizeY": {"web": 2, "tablet": 4}},
+                            "type": "scriptr-title",
+                            "sizeX" : 12,
+                            "sizeY" : 2, 
+                            "fitToWidget": true,
+                        	"boxClass": "comboTitle",
+                            "options": {
+                                "boxHeader": "false",
+                                "on-format-data": "return {\"value\": data };",
+                                "message-font-size": "14px;",
+                                "message-text-color": "#FFF",
+                                "border-size": "0",
+                                "background-color": "#09425a"
+                                
+                            }
+                    };
+      
+       vm.groupWidget = {
+                        	"layout": {"sizeX": {"web": 12, "tablet": 12}, "sizeY": {"web": 12, "tablet": 12}},
+                            "sizeX" : 12,
+                            "sizeY" : 12,
+                            "fitToWidget": true,
+                            "type": "scriptr-chart",
+                            "show": "true",
+                            "options": {
+                                    "loading-message": "Loading historical data",
+                                    "icon": function() {return cdnImagesPath +"odometer-bg.svg";},
+								    "type":"area" ,   
+                                    "ykeys":'["a", "b"]',
+                                    "xkey":'y',
+                                    "labels":'["Serie A", "Serie B"]',    
+                                    "msg-tag":"chart",
+                                    "xlabel-angle":"45",
+                                    "colors":'["#cfc"]',
+                                    "point-size":"2"  ,
+                                    "line-width":"20",
+                                    "x1-legend-label":"Date/Time",
+                                    "goals":"[1.0, -1.0]",
+                                    "show-legend":"true",
+                                    "legend-type":"right"
+                                }
+                            };
+       
+     vm.noDataWidget = {
+                       "layout": {"sizeX": {"web": 12, "tablet": 12}, "sizeY": {"web": 18, "tablet": 26}},
+                        "sizeX" : 12,
+                        "sizeY" : 16,
+                        "fitToWidget": true,
+                        "type": "scriptr-displaycount",
+                        "show": "true",
+                        "options": {
+                            "loading-message": "DASHBOARDS.OCCUPANCY.LIVE.DISPLAY_COUNT.LIVE_OCCUPNACY_LOADING_MESSAGE",
+                            "icon": function() {return cdnImagesPath +"odometer-bg.svg";},
+                            "boxHeader": "false",
+                            "widget-layout":"vertical",
+                            "background-image": function() {return cdnImagesPath +"congratsIcon.svg";},
+                            "background-position": "right",
+                            "message-text-alignment": "right",
+                            "value-text-alignment": "right",
+                            "message-background-color": "transparent",
+                            "message-text-transform": "",//"uppercase",
+                            "background-color": "transparent",
+                            "message-position": "top",
+                            "background-color": "#09425a",
+                            "border-size": "0",
+                            "border-radius": "5px",
+                            "value-text-color": "#fff",
+                            "message-text-color": "#fff",
+                            "value-font-size": "13px",
+                            "value-font-weight": 500,
+                            "message-font-weight": 700,
+                            "message-font-size": 24,
+                            "background-size": "auto 40%",
+                            "background-position": "bottom 5px left 5px",
+                            "data": {"message": "Congratulations", "value": "for the best conditions." }
+                        }
+                    }
+     
+     vm.groupWidget2 = {
+                        	"layout": {"sizeX": {"web": 12, "tablet": 12}, "sizeY": {"web": 12, "tablet": 12}},
+                            "sizeX" : 12,
+                            "sizeY" : 12,
+                            "fitToWidget": true,
+                            "type": "scriptr-chart",
+                            "show": "true",
+        
+                            "options": {
+                                    "loading-message": "Loading historical data",
+								    "type":"bar" ,   
+                                    "ykeys":'["a", "b"]',
+                                    "xkey":'y',
+                                    "labels":'["Serie A", "Serie B"]',    
+                                    "msg-tag":"chart",
+                                    "xlabel-angle":"45",
+                                    "colors":'["#cfc"]',
+                                    "line-width":"20",
+                                    "x1-legend-label":"Date"
+                                }
+                            };
+       vm.comboConfig = {
+            transport:"https",
+            api: "UIComponents/dashboard/frontend/examples/combo/getPopoverComboData",
+            groupsCount: 1,
+            groupItemsCount: 1,
+            isVertical: true,
+            parentItemSizeX: 12,
+            parentItemSizeY: 25,
+            groupTitleField:"name",
+            groupDataField: "chartData",
+            titleWidget: vm.titleWidget,
+            groupWidget: vm.groupWidget,
+            noDataWidget: vm.noDataWidget,
+            onFormatData: {"functionValue": "return data[\"sample1\"];","functionArguments": ["data"] }
+       }
+       
+       vm.comboConfig2 = {
+            transport:"https",
+            api: "UIComponents/dashboard/frontend/examples/combo/getPopoverComboData",
+            groupsCount: 1,
+            groupItemsCount: 1,
+            isVertical: true,
+            parentItemSizeX: 12,
+            parentItemSizeY: 25,
+            groupTitleField:"name",
+            groupDataField: "barChartData",
+            titleWidget: vm.titleWidget,
+            groupWidget: vm.groupWidget2,
+            noDataWidget: vm.noDataWidget,
+            onFormatData: {"functionValue": "return data[\"sample2\"];","functionArguments": ["data"] }
+       }
+       
+  });
+</script>
+
+<body ng-controller="testCtrl as vm" class="dashboardTheme">  
+  <div>
+   		<scriptr-popover-combo combo="vm.comboConfig" popover-icon="fa fa-line-chart" popover-combo-placement="bottom" popover-combo-trigger="outsideClick"
+        ></scriptr-popover-combo>
+  </div>
+    <br/><br/>
+  <div>
+   		<scriptr-popover-combo combo="vm.comboConfig2" popover-icon="fa fa-bar-chart" popover-combo-placement="bottom"
+        ></scriptr-popover-combo>
+  </div>
+</body>  
+   
+</html>
