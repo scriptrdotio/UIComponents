@@ -64,6 +64,7 @@ angular
             "suppressRowClickSelection": "<?",
             "suppressCellSelection":"<?",
             "enableRangeSelection":"<?",
+            "headerHeight": "<?"
         },
         templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
         controller : function($translate, $rootScope, $scope, $window, $uibModal, $timeout, wsClient, dataStore, $routeParams) {
@@ -176,6 +177,7 @@ angular
                 this.gridOptions = {
                     angularCompileRows: true,
                     rowHeight : (this.rowHeight) ? this.rowHeight : 25,
+                    headerHeight: (this.headerHeight) ? this.headerHeight : 25,
                     enableSorting: (typeof this.enableClientSideSorting != 'undefined')? this.enableClientSideSorting : true,
                     enableServerSideSorting : (typeof this.enableServerSideSorting != 'undefined')? this.enableServerSideSorting : true,
                     enableServerSideFilter : (typeof this.enableServerSideFilter != 'undefined') ? this.enableServerSideFilter : true,
