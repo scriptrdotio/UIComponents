@@ -198,7 +198,7 @@ angular
                                 return $scope.$ctrl.data
                             //}
                         },function(newVal, oldVal){
-                            if(JSON.stringify(newVal)){
+                            if(JSON.stringify(newVal) != JSON.stringify(oldVal) || !self.hasData){
                                 self.consumeData(newVal);
                             }
                         });
@@ -286,30 +286,41 @@ angular
                          }
                     } else {
                         if(typeof self.onFormatData() == "function"){
-                          data = self.onFormatData()(data, self);
+                          data = self.onFormatData()(data, self, $rootScope);
                         }
 						if(data != null){
                             data = parseFloat(data);
                             if(!isNaN(data) && isFinite(data)){
-                                self.gaugeValue = data;
+                                self.gaugeValue = angular.copy(data);
                                 
                                 self.hasData = true;
                                 self.noResults = false;
                                 self.stalledData = false;
                             } else {
-                                  self.noResults = true;
-                                  if(self.gaugeValue != null) {
-                                      self.stalledData = true;
-                                  } 
-                                  self.invalidData = $translate.instant(this.invalidData);
+                                self.noResults = true;
+                                if(self.resetDataOnConsume) {
+                                    self.gaugeValue = null;
+                                    self.stalledData = false;
+                                }else{
+                                    if(self.gaugeValue != null) {
+                                        self.stalledData = true;
+                                    } 
+                                }
+                                self.invalidData = $translate.instant(this.invalidData);
                               }
                         } else {
-                            self.noResults = true;
-                            if(self.gaugeValue != null) {
-                                 self.stalledData = true;
-                             } 
-                            self.invalidData = $translate.instant(this.invalidData);
-                            console.log(e);
+                            if(self.resetDataOnConsume) {
+                                self.gaugeValue = null;
+                                self.noResults = true;
+                                self.stalledData = false;
+                            }else{
+                                self.noResults = true;
+                                if(self.gaugeValue != null) {
+                                     self.stalledData = true;
+                                 } 
+                                self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
+                                console.log(e);
+                            }
                         }
                         
                     }

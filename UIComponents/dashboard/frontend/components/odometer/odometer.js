@@ -30,7 +30,7 @@ angular
 
         },
         templateUrl: '/UIComponents/dashboard/frontend/components/odometer/odometer.html',
-        controller: function($scope, httpClient, wsClient, $element, $window, $timeout, $interval, dataService) {
+        controller: function($scope, httpClient, wsClient, $element, $window, $timeout, $interval, dataService, $rootScope) {
 
            var self = this;
 
@@ -98,7 +98,7 @@ angular
                             return $scope.$ctrl.data
                         }
                     },function(newVal, oldVal){
-                        if(JSON.stringify(newVal)){
+                        if(JSON.stringify(newVal) != JSON.stringify(oldVal) || !self.hasData){
                             self.consumeData(newVal);
                         }
                     });
@@ -171,7 +171,7 @@ angular
                    }
               } else {
                   if(typeof self.onFormatData() == "function"){
-                      data = self.onFormatData()(data, self);
+                      data = self.onFormatData()(data, self, $rootScope);
                   }
                   if(data != null){
                       data = parseFloat(data);
@@ -183,16 +183,26 @@ angular
                           self.stalledData = false;
                        }else{
                            self.noResults = true;
-                           if(self.odometerValue != null) {
-                               self.stalledData = true;
-                           } 
+                           if(self.resetDataOnConsume) {
+                        	   self.odometerValue = undefined;
+                               self.stalledData = false;
+                           } else {
+	                           if(self.odometerValue != null) {
+	                               self.stalledData = true;
+	                           }
+                           }
                        		self.dataFailureMessage = "Failed to update data, invalid data format.";
                    	   }
                   } else {
                       self.noResults = true;
-                      if(self.odometerValue != null) {
-                          self.stalledData = true;
-                      } 
+                      if(self.resetDataOnConsume) {
+                   	   self.odometerValue = undefined;
+                          self.stalledData = false;
+                      } else {
+	                      if(self.odometerValue != null) {
+	                          self.stalledData = true;
+	                      } 
+                      }
                       self.dataFailureMessage = "Failed to update data, invalid data format."
                       console.log(e);
                   }

@@ -160,7 +160,9 @@ angular
           "horizontal": "@",
            
           
-          "x1LegendLabel": "@"
+          "x1LegendLabel": "@",
+          
+          "resetDataOnConsume": "<?"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/chart/chart.html',
       controller: function($translate, httpClient,$rootScope, wsClient, $scope, $element, $timeout, $window, $interval, dataService) {
@@ -374,7 +376,7 @@ angular
                        return $scope.$ctrl.data
                    }
                },function(newVal, oldVal){
-                   if(JSON.stringify(newVal)){
+                   if(JSON.stringify(newVal) != JSON.stringify(oldVal) || !self.hasData){
                        self.consumeData(newVal);
                    }
                });
@@ -461,7 +463,7 @@ angular
                  } 
             } else {
                 if(typeof self.onFormatData() == "function"){
-                    data = self.onFormatData()(data, self);
+                    data = self.onFormatData()(data, self, $rootScope);
                 }
                 if(data != null) {
                    if(typeof data == "object" && Array.isArray(data)){
@@ -469,16 +471,22 @@ angular
                           if(this.datas != null && this.delta) {
                             this.datas = this.datas.concat(data)
                           } else {
-                              this.datas = data;
+                              this.datas = angular.copy(data);
                           }
                           self.hasData = true;
                           self.noResults = false;
                           self.stalledData = false;
                       } else {
-                          self.noResults = true;
-                          if(self.datas != null  && self.datas.length > 0) {
-                              self.stalledData = true;
-                          } 
+                     	  if(self.resetDataOnConsume) {
+                     		  this.datas =  angular.copy(data);
+                     		  self.noResults = true;
+                     		  self.stalledData = false;
+                     	  } else {
+                     		  self.noResults = true;
+                             if(self.datas != null  && self.datas.length > 0) {
+                                 self.stalledData = true;
+                             } 
+                     	  }
                           self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
                       }
                    } else {
@@ -489,11 +497,17 @@ angular
                         self.invalidData = $translate.instant(this.invalidData);
                    }
                 }else{
-                  	self.noResults = true;
-                    if(self.datas != null  && self.datas.length > 0) {
-                        self.stalledData = true;
-                    } 
-                    self.invalidData = $translate.instant(this.invalidData);
+                    if(self.resetDataOnConsume) {
+                        this.datas =  angular.copy(data);
+                        self.noResults = true;
+                        self.stalledData = false;
+                    } else {
+                        self.noResults = true;
+                        if(self.datas != null  && self.datas.length > 0) {
+                            self.stalledData = true;
+                        } 
+                    }
+                    self.stalledDataMessage = $translate.instant(this.stalledDataMessage);
                 } 
             }
           }

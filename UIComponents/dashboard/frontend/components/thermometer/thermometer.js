@@ -169,7 +169,7 @@ angular
                                   return $scope.$ctrl.data
                               }
                           },function(newVal, oldVal){
-                              if(JSON.stringify(newVal)){
+                              if(JSON.stringify(newVal) != JSON.stringify(oldVal) || !self.hasData){
                                   self.consumeData(newVal);
                               }
                           });
@@ -249,7 +249,7 @@ angular
                           }
                       } else {
                           if(typeof this.onFormatData() == "function"){
-                              data = self.onFormatData()(data, self);
+                              data = self.onFormatData()(data, self, $rootScope);
                           }
                           if(data != null){
                               data = parseFloat(data);
@@ -266,25 +266,39 @@ angular
                                   self.timeout = true;  
                               } else {
                                   self.noResults = true;
-                                  if(self.value != null) {
-                                      self.stalledData = true;
-                                  } 
+                                  if(self.resetDataOnConsume) {
+                                      self.value =  undefined;
+                                      self.stalledData = false;
+                                  } else {
+                                      if(self.value != null) {
+                                          self.stalledData = true;
+                                      } 
+                                  }
                                   self.dataFailureMessage = "Failed to update data, invalid data format.";
                               }
                           } else{
-                              self.noResults = true;
-                              if(self.value != null) { ////typeOf value !== 'undefined' || data !== null
-                             	  self.stalledData = true;
-                         	  } 
+                        	  if(self.resetDataOnConsume) {
+                        		  self.value =  undefined;
+                        		  self.noResults = true;
+                        		  self.stalledData = false;
+                        	  } else {
+	                              self.noResults = true;
+	                              if(self.value != null) { ////typeOf value !== 'undefined' || data !== null
+	                             	  self.stalledData = true;
+	                         	  } 
+                        	  }
+                              self.dataFailureMessage = "No data available.";
+                        	  
                           }
                      }
                  }, 
                       
                       
                    this.calculateDataVariants = function(data) {
-                      self.mercuryColor = self.evaluateColor(data);
-                      self.value = (data > self.mercuryMax) ? self.mercuryMax : data;
-                      self.percent = parseInt((data - self.minSectorValue) * self.height / (self.mercuryMax - self.minSectorValue));
+                	 var copyData = angular.copy(data);
+                      self.mercuryColor = self.evaluateColor(copyData);
+                      self.value = (copyData > self.mercuryMax) ? self.mercuryMax : copyData;
+                      self.percent = parseInt((copyData - self.minSectorValue) * self.height / (self.mercuryMax - self.minSectorValue));
                    }  
                   
                    this.evaluateColor = function(data) {

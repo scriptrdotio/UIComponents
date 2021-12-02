@@ -118,7 +118,7 @@ angular
                         return $scope.$ctrl.data
                     }
                 },function(newVal, oldVal){
-                    if(JSON.stringify(newVal)){
+                	if(JSON.stringify(newVal) != JSON.stringify(oldVal) || !self.hasData){
                         self.consumeData(newVal);
                     }
                 });

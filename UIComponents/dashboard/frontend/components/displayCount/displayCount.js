@@ -240,7 +240,7 @@ angular
                             return $scope.$ctrl.data
                         }
                     },function(newVal, oldVal){
-                        if(JSON.stringify(newVal)){
+                        if(JSON.stringify(newVal) != JSON.stringify(oldVal) || !self.hasData){
                             self.consumeData(newVal);
                         }
                     });
@@ -318,13 +318,14 @@ angular
                     }
                 } else {
                     if(typeof self.onFormatData() == "function"){
-                        data = self.onFormatData()(data, self);
+                        data = self.onFormatData()(data, self, $rootScope);
                     }	
                     if(data != null) {
                         if(typeof data == "object" && data.value != null){  
-                            self.value = data.value;
+                            self.data = angular.copy(data);
+                            self.value = self.data.value;
                             if(data.message){
-                                self.message = data.message;
+                                self.message = self.data.message;
                             } 
                             self.rerender();
                             self.hasData = true;
@@ -332,16 +333,29 @@ angular
                             self.stalledData = false;
                         } else {
                             self.noResults = true;
+                            if(self.resetDataOnConsume) {
+                                self.value = undefined;
+                            	self.message = undefined;
+                                self.stalledData = false;
+                            } else{
+                                if(self.value != null) {
+                                    self.stalledData = true;
+                                } 
+                            }
+                            self.stalledDataMessage = $translate.instant(this.stalledDataMessage);
+                        }
+                    } else {
+                        if(self.resetDataOnConsume) {
+                            self.value = undefined;
+                            self.message = undefined;
+                            self.noResults = true;
+                            self.stalledData = false;
+                        }else{
+                            self.noResults = true;
                             if(self.value != null) {
                                 self.stalledData = true;
                             } 
-                            self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
                         }
-                    } else {
-                        self.noResults = true;
-                        if(self.value != null) {
-                            self.stalledData = true;
-                        } 
                         self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
                     }
                 }
