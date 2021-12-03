@@ -142,10 +142,15 @@ angular
                        //if(this.data)
 		               //this.gaugeValue = (this.gaugeValue) ? this.gaugeValue : ((this.data) ? this.data : 0 );
 		               $translate.use($rootScope.lang);
+             
+             			 this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
+             			 this.stalledDataMessage = (this.stalledDataMessage) ? this.stalledDataMessage : "No data available.";
+             			 this.dataFailureMessage = (this.dataFailureMessage) ? this.dataFailureMessage : "Failed to fetch data.";
+             			 this.invalidData = (this.invalidData) ? this.invalidData : "Invalid data format.";
+                       
                        this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/gauge-bg.svg";
                        
-                       this.hasData = (!isNaN(parseFloat(this.gaugeValue)) && isFinite(this.gaugeValue)) ?  true : false;
-                       this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
+                     this.hasData = (!isNaN(parseFloat(this.gaugeValue)) && isFinite(this.gaugeValue)) ?  true : false;
 		               this.customSectors = (this.customSectors) ? this.customSectors : {  percents: true, ranges: []};
 		               this.valueFontColor = (this.valueFontColor) ? this.valueFontColor
 		                     : "#999";
@@ -279,10 +284,10 @@ angular
                this.consumeData = function(data, response) {
                    if(data.status && data.status == "failure") {
                          self.noResults = true;
-                         self.dataFailureMessage = $translate.instant(this.dataFailureMessage)
+                         self.dataMessage = this.dataFailureMessage
                          if(self.gaugeValue) {
                              self.stalledData = true;
-                             self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
+                             self.dataMessage = this.stalledDataMessage
                          }
                     } else {
                         if(typeof self.onFormatData() == "function"){
@@ -306,7 +311,7 @@ angular
                                         self.stalledData = true;
                                     } 
                                 }
-                                self.invalidData = $translate.instant(this.invalidData);
+                                self.dataMessage = this.invalidData;
                               }
                         } else {
                             if(self.resetDataOnConsume) {
@@ -318,9 +323,8 @@ angular
                                 if(self.gaugeValue != null) {
                                      self.stalledData = true;
                                  } 
-                                self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
-                                console.log(e);
                             }
+                            self.dataMessage = this.stalledDataMessage
                         }
                         
                     }
