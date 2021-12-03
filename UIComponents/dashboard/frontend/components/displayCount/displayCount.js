@@ -71,7 +71,8 @@ angular
         "infoTextAlignment": "@",
         "infoMarginTop": "@",
           
-        "info": "@"
+        "info": "@",
+        "resetDataOnConsume": "<?"
           
         },
         templateUrl:'/UIComponents/dashboard/frontend/components/displayCount/displayCount.html',
@@ -82,6 +83,10 @@ angular
                 $translate.use($rootScope.lang);
                 this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/display-data-bg.svg";
                 this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
+             	this.stalledDataMessage = (this.stalledDataMessage) ? this.stalledDataMessage : "No data available.";
+             	this.dataFailureMessage = (this.dataFailureMessage) ? this.dataFailureMessage : "Failed to fetch data.";
+             	this.invalidData = (this.invalidData) ? this.invalidData : "Invalid data format.";
+                
                 this.hasData = (this.value != null && this.value != "") ?  true : false;
                 this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
                 this.widgetLayout = (this.widgetLayout=="vertical") ? this.widgetLayout : "horizontal";
@@ -311,10 +316,10 @@ angular
             this.consumeData = function(data, response) {
                 if(data.status && data.status == "failure") {
                     self.noResults = true;
-                    self.dataFailureMessage = $translate.instant(this.dataFailureMessage)
+                    self.dataMessage = this.dataFailureMessage
                     if(self.value) {
                         self.stalledData = true;
-                        self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
+                        self.dataMessage = this.stalledDataMessage
                     }
                 } else {
                     if(typeof self.onFormatData() == "function"){
@@ -342,7 +347,7 @@ angular
                                     self.stalledData = true;
                                 } 
                             }
-                            self.stalledDataMessage = $translate.instant(this.stalledDataMessage);
+                            self.dataMessage = this.stalledDataMessage;
                         }
                     } else {
                         if(self.resetDataOnConsume) {
@@ -356,7 +361,7 @@ angular
                                 self.stalledData = true;
                             } 
                         }
-                        self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
+                        self.dataMessage = this.stalledDataMessage;
                     }
                 }
             }
