@@ -54,11 +54,12 @@ angular
         
         "needleCol" : "@",
         
-        "defaultFonts" : "@"
+        "defaultFonts" : "@",
+        "resetDataOnConsume": "<?"
         
       },
       templateUrl: '/UIComponents/dashboard/frontend/components/speedometer/speedometer.html',
-      controller: function(httpClient, wsClient, $element, $window, $scope, $compile, $timeout, $interval, dataService, $rootScope) {
+      controller: function(httpClient, wsClient, $element, $window, $scope, $compile, $timeout, $interval, dataService, $rootScope, $translate) {
         
          var self = this;
 
@@ -66,7 +67,12 @@ angular
             this.speedoConfig = {};
            
             this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/speedometer-bg.svg";
-             this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";          
+
+             this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
+             this.stalledDataMessage = (this.stalledDataMessage) ? this.stalledDataMessage : "No data available.";
+             this.dataFailureMessage = (this.dataFailureMessage) ? this.dataFailureMessage : "Failed to fetch data.";
+             this.invalidData = (this.invalidData) ? this.invalidData : "Invalid data format.";
+             
              this.hasData = (!isNaN(parseFloat(this.speedoConfig.needleVal)) && isFinite(this.speedoConfig.needleVal)) ?  true : false;
              
             if(this.theme == "speed" || typeof this.theme == 'undefined'){
@@ -243,10 +249,10 @@ angular
           this.consumeData = function(data, response) {
            if(data.status && data.status == "failure") {
                self.noResults = true;
-               self.dataFailureMessage = "Failed to fetch data.";
+               self.dataMessage = this.dataFailureMessage;
                if(self.speedoConfig.needleVal) {
                    self.stalledData = true;
-                   self.dataFailureMessage = "Failed to update data.";
+                   self.dataMessage = this.dataFailureMessage;
                }
            } else {
                if(typeof self.onFormatData() == "function"){
@@ -272,7 +278,7 @@ angular
                                self.stalledData = true;
                            } 
                        }
-                       self.dataFailureMessage = "Failed to update data, invalid data format.";
+                       self.dataMessage = this.invalidData;
                    }
                } else {
                    self.noResults = true;
@@ -284,7 +290,7 @@ angular
                            self.stalledData = true;
                        } 
                    }
-                   self.dataFailureMessage = "Failed to update data, invalid data format.";
+                   self.dataMessage = this.stalledDataMessage
                }
 
            }

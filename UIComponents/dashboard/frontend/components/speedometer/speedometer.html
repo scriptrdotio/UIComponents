@@ -1,4 +1,4 @@
-<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataFailureMessage" loading-message="{{$ctrl.loadingMessage}}" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataMessage" loading-message="{{$ctrl.loadingMessage}}" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
 </scriptr-notifications>
 
-<div class="speedometer-wrapper"></div>
+<div class="speedometer-wrapper" ng-if="!$ctrl.noResults"></div>
