@@ -109,6 +109,7 @@ angular
         //   "rangeMin": "<?",
         //   "rangeMax": "<?",
         //   "rangeStep": "<?",
+          "resetDataOnConsume": "<?"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.html',
       controller: function($translate, $rootScope, httpClient, wsClient, $scope, $element, $timeout, $interval, $window, dataService) {
@@ -122,7 +123,12 @@ angular
              //this.evalFuncionalData();
              $translate.use($rootScope.lang);
              this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/dygraphs-line-bg.svg";
-             this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";        
+             
+             this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
+             this.stalledDataMessage = (this.stalledDataMessage) ? this.stalledDataMessage : "No data available.";
+             this.dataFailureMessage = (this.dataFailureMessage) ? this.dataFailureMessage : "Failed to fetch data.";
+             this.invalidData = (this.invalidData) ? this.invalidData : "Invalid data format.";
+             
              this.hasData = (this.datas != null  && this.datas.length > 0) ?  true : false;
              
               this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
@@ -586,14 +592,14 @@ angular
             
             if(data.status && data.status == "failure") {
                  this.noResults = true;
-                 self.dataFailureMessage = $translate.instant(this.dataFailureMessage);
+                 self.dataMessage = this.dataFailureMessage;
                  if(this.datas && this.datas.length > 0) {
                      this.stalledData = true;
-                     self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
+                     self.dataMessage = this.stalledDataMessage
                  } 
             } else { 
                 if(typeof self.onFormatData() == "function"){
-                  data = self.onFormatData()(data, self);
+                  data = self.onFormatData()(data, self, $rootScope);
                 }
                 if(data != null) {
                    if(typeof data == "object" && Array.isArray(data)){
@@ -607,26 +613,37 @@ angular
                           self.noResults = false;
                           self.stalledData = false;
                       } else {
-                          self.noResults = true;
-                          if(self.datas != null  && self.datas.length > 0) {
-                              self.stalledData = true;
+                          if(self.resetDataOnConsume) {
+                     		  this.datas =  angular.copy(data);
+                     		  self.noResults = true;
+                     		  self.stalledData = false;
+                     	  } else {
+                              self.noResults = true;
+                              if(self.datas != null  && self.datas.length > 0) {
+                                  self.stalledData = true;
+                              }
                           }
-                          
-                          self.stalledDataMessage = $translate.instant(this.stalledDataMessage)
+                          self.dataMessage = this.stalledDataMessage
                       }
                    } else {
                        self.noResults = true;
                        if(self.datas != null  && self.datas.length > 0) {
                           self.stalledData = true;
                         } 
-                        self.invalidData = $translate.instant(this.invalidData)
+                        self.dataMessage =this.invalidData
                    }
                 }else{
-                  	self.noResults = true;
-                    if(self.datas != null  && self.datas.length > 0) {
-                        self.stalledData = true;
-                    } 
-                    self.invalidData = $translate.instant(this.invalidData)
+                    if(self.resetDataOnConsume) {
+                        this.datas =  angular.copy(data);
+                        self.noResults = true;
+                        self.stalledData = false;
+                    } else {
+                        self.noResults = true;
+                        if(self.datas != null  && self.datas.length > 0) {
+                            self.stalledData = true;
+                        } 
+                    }
+                    self.dataMessage = this.invalidData
                 } 
               }
            }
