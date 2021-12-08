@@ -195,7 +195,7 @@ angular
                     rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
                     paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
                     overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> '+$translate.instant(this.loadingLabel)+'</span>',
-                    overlayNoRowsTemplate: '<span class="ag-overlay-no-rows-center">'+$translate.instant(this.noRowsLabel)+'</span>',
+                    overlayNoRowsTemplate: '<div class="ag-overlay-no-rows-center data-notification center"><div class="alert alert-danger"><span><i class="fa fa-exclamation-triangle fa-1x"></i>'+$translate.instant(this.noRowsLabel)+'</span></div></div>',
                     defaultColDef : {
                         filterParams : {
                             apply : true

@@ -41,7 +41,8 @@ angular
                    
                    "applyConversion": "<?",
                    "conversion": "&",
-                   "conversionUnit": "@"
+                   "conversionUnit": "@",
+                   "resetDataOnConsume": "<?",
                    
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
@@ -53,9 +54,14 @@ angular
 	               this.$onInit = function() {
                        
                       this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/thermometer-bg.svg";
-                      this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data"; 
+                      
+                      this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
+                      this.stalledDataMessage = (this.stalledDataMessage) ? this.stalledDataMessage : "No data available.";
+                      this.dataFailureMessage = (this.dataFailureMessage) ? this.dataFailureMessage : "Failed to fetch data.";
+                      this.invalidData = (this.invalidData) ? this.invalidData : "Invalid data format.";
+
                       this.hasData = (!isNaN(parseFloat(this.value)) && isFinite(this.value)) ?  true : false;
-	               	  this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
+	               	 this._apiParams = (this.apiParams) ?  angular.copy(this.apiParams) : [];
                       this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;
               		  
                        
@@ -242,10 +248,10 @@ angular
 	              this.consumeData = function(data, response) {
                       if(data.status && data.status == "failure") {
                           this.noResults = true;
-                          self.dataFailureMessage = "Failed to fetch data.";
+                          self.dataMessage = this.dataFailureMessage;
                           if(self.value != null) {
                               self.stalledData = true;
-                              self.dataFailureMessage = "Failed to update data.";
+                              self.dataMessage = this.dataFailureMessage;
                           }
                       } else {
                           if(typeof this.onFormatData() == "function"){
@@ -274,7 +280,7 @@ angular
                                           self.stalledData = true;
                                       } 
                                   }
-                                  self.dataFailureMessage = "Failed to update data, invalid data format.";
+                                  self.dataMessage = this.invalidData;
                               }
                           } else{
                         	  if(self.resetDataOnConsume) {
@@ -287,7 +293,7 @@ angular
 	                             	  self.stalledData = true;
 	                         	  } 
                         	  }
-                              self.dataFailureMessage = "No data available.";
+                              self.dataMessage = this.stalledDataMessage;
                         	  
                           }
                      }

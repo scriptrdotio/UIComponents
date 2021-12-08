@@ -26,14 +26,15 @@ angular.module("DateTimeRangePicker").component("scriptrDateTimeRangePicker", {
         "showCustomRangeLabel": "@", // (true/false) Displays "Custom Range" at the end of the list of predefined ranges, when the ranges option is used
         "buttonClasses": "@", //(string) CSS class names that will be added to both the apply and cancel buttons.
 		"applyButtonClasses": "@", //(string) CSS class names that will be added only to the apply button.	
-        "cancelButtonClasses": "@" //(string) CSS class names that will be added only to the cancel button.
+        "cancelButtonClasses": "@", //(string) CSS class names that will be added only to the cancel button.
+        "icon": "@"
     },
     "templateUrl": "/UIComponents/dashboard/frontend/components/datetimerangepicker/datetimerangepicker.html",
     "controller": function($rootScope, $scope, $route, $routeParams, $location) {
         
         this.$onInit = function() {
         	var self = this;
-        	this.icon = "http://scriptr-cdn.s3.amazonaws.com/uicomponents/images/calendar.svg";
+            this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/images/calendar.svg";
         	this.startDate = this.startDate || moment().subtract(1, "days");
             this.endDate = this.endDate || moment();
             this.minDate = this.minDate || moment().subtract(1, "years").format("YYYY-MM-DD");
