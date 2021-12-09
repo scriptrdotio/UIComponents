@@ -4979,7 +4979,7 @@ angular.module('ui-leaflet').factory('leafletMapEvents', ["$rootScope", "$q", "l
             maybeMapId = maybeMapId + '.';
         }
         return function (e) {
-             console.log('MFE leafletDirectiveMap.' + maybeMapId + eventName)
+             //console.log('MFE leafletDirectiveMap.' + maybeMapId + eventName)
             // Put together broadcast name
             var broadcastName = 'leafletDirectiveMap.' + maybeMapId + eventName;
             leafletLogger.debug(broadcastName);
