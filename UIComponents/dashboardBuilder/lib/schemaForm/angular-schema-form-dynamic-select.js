@@ -127,7 +127,7 @@ angular.module('schemaForm').config(
                             //only match if this property is actually in the item to avoid
                             var text = props[prop].toLowerCase();
                             //search for either a space before the text or the textg at the start of the string so that the middle of words are not matched
-                            if ((item[prop].toString().toLowerCase().indexOf(text) === 0 || ( item[prop].toString()).toLowerCase().indexOf(' ' + text) !== -1) && counter < limit) {
+                            if ((item[prop].toString().toLowerCase().indexOf(text) >= 0 || ( item[prop].toString()).toLowerCase().indexOf(' ' + text) !== -1) && counter < limit) {
                                 counter++;
                                 itemMatches = true;
                                 break;
@@ -333,22 +333,22 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
         }
         else if (form.options.httpGet) {
             var finalOptions = $scope.getOptions(form.options, search);
-            var params = (finalOptions.httpGet.parameter) ? $scope.$parent.$eval(finalOptions.httpGet.parameter) : {};
+            
+            if(angular.isFunction(finalOptions.httpGet.parameter)) {
+            	var params = finalOptions.httpGet.parameter($scope.$parent.$eval("form"), $scope.$parent.$eval("model"));
+          	} else { 
+                var params = (finalOptions.httpGet.parameter) ? $scope.$parent.$eval(finalOptions.httpGet.parameter) : {};
+                
+            }
+           
+            
             var minSearch = finalOptions.httpGet.minSearch || 0;
             
-           if ($scope.insideModel && $scope.select_model.selected === undefined && finalOptions.httpGet.onLoadUrl) {
-               var loadParams = (finalOptions.httpGet.onLoadParameter) ? $scope.$parent.$eval(finalOptions.httpGet.onLoadParameter) : {};
-               return  httpClient
-                   .get(finalOptions.httpGet.onLoadUrl, loadParams).then(
-                   function (data, response) {
-                       if(data != null)
-                       		$scope.finalizeTitleMap(form, data, finalOptions);
-                       $scope.select_model.selected = $scope.find_in_titleMap($scope.insideModel);
-                   },
-                   function (err) {
-                       console.log("Reject http call", err);
-                   });
-            } 
+             if ($scope.insideModel && $scope.select_model.selected === undefined) {
+                 $scope.finalizeTitleMap(form,  $scope.$parent.$eval(finalOptions.httpGet.onLoadTitleMap), finalOptions);
+                 $scope.select_model.selected = $scope.find_in_titleMap($scope.insideModel);
+             }
+            
             if(!isNaN(parseFloat(minSearch)) && isFinite(minSearch)){
                 if(search.length >= minSearch)
                     params.queryFilter = search;
@@ -356,8 +356,8 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
                         form.titleMap = [];
                     	return;
                 }
-            }
-            return  httpClient
+            
+            	return  httpClient
                 .get(finalOptions.httpGet.url, params).then(
                 function (data, response) {
                      if(data != null)
@@ -366,6 +366,7 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
                 function (err) {
                     console.log("Reject http call", err);
                 });
+                }
         } else {
             //MFE: added this for translation of titlemap in form
           	$scope.finalizeTitleMap(form,form.titleMap, form.options);
