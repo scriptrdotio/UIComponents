@@ -349,7 +349,7 @@ angular.module('schemaForm').controller('dynamicSelectController', ['$scope', '$
             
             var minSearch = finalOptions.httpGet.minSearch || 0;
             
-             if ($scope.insideModel && $scope.select_model.selected === undefined) {
+             if ($scope.insideModel && $scope.select_model.selected === undefined && finalOptions.httpGet.onLoadTitleMap) {
                  $scope.finalizeTitleMap(form,  $scope.$parent.$eval(finalOptions.httpGet.onLoadTitleMap), finalOptions);
                  $scope.select_model.selected = $scope.find_in_titleMap($scope.insideModel);
              }
