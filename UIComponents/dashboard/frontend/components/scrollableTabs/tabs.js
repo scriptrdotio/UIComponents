@@ -16,12 +16,16 @@ angular
         "dialogDomSelector": "@"
     },
     "templateUrl": "/UIComponents/dashboard/frontend/components/scrollableTabs/tabs.html",
-    "controller": function($translate, $scope, $timeout, $mdDialog, $q, $element) {
+    "controller": function($translate, $scope, $timeout, $mdDialog, $q, $element, $window) {
 
         var self = this;
-
+        
+        self.onResize = function() {
+            self.triggerRefresh +=1;
+        }
+        
         this.$onInit = function() {
-
+		   angular.element($window).on('resize', self.onResize);
       	   this.defaultTabName = (this.defaultTabName) ? this.defaultTabName : "Tab";
       	   this.id = $scope.$id;
             if(!self.tabs || self.tabs.length == 0) {
@@ -161,6 +165,11 @@ angular
                 } else {
                     removeTab(tab);
                 } 
+        }
+        
+        
+        this.$onDestroy = function() {
+            angular.element($window).off('resize', self.onResize);
         }
     }
 });
