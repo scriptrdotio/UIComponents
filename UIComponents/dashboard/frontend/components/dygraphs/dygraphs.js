@@ -320,6 +320,9 @@ angular
              this.options.axes.y2.axisLabelFormatter =  function(y2) {
                   return formatYAxisValues(y2,digitsAfterDecimal)
              } 
+             this.options.axes.y2.valueFormatter =  function(y2) {
+                 return formatYAxisValues(y2,digitsAfterDecimal)
+             }
 
              //Set Range Selector Data
              this.options.showRangeSelector = JSON.parse(this.showRangeSelector);
