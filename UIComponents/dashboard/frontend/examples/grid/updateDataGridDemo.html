@@ -29,43 +29,53 @@
     <script src="/UIComponents/dashboard/frontend/components/grid/grid.js"></script>
   
   <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/grid/grid.css">
-    
-            
+        
        <!-- i18n -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js"></script>
         <!-- /i18n -->
 </head>
-  
-<body>
-  
-<script>
+ <script>
              
     var myApp = angular.module('myApp', ["HttpClient", "WsClient", "Grid"]);
 
     angular.module('myApp').config(wssConfig);
     angular.module('myApp').config(httpsConfig); 
     
-</script>
+     angular.module('myApp').controller('testCtrl', function($scope, $interval, wsClient) {
+          var vm = this;
+          vm.init = function() {
+              wsClient.subscribe("grid", function(data){
+                 $scope.$broadcast("update-data", {"grid": data["documents"]})
+              });
+          }
+          
+          
+     });
+    
+</script> 
+<body ng-controller="testCtrl as vm" ng-init="vm.init();">
+  
+
     
  <scriptr-grid
            columns-definition='[{headerName: "Name", field: "name"},{headerName: "Model", field: "model"},{headerName: "Price", field: "price", type: "numeric"}]' 
-           row-data = '[{name: "Toyota", model: "Celica", price: 35000},{name: "Ford", model: "Mondeo", price: 32000},{name: "Porsche", model: "Boxter", price: 72000}]'
-           enable-sorting='true'    
-           enable-delete-row='true'
+           enable-sorting='false'    
+           enable-delete-row='false'
            grid-height="500"
            row-model-type='pagination'     
-           enable-add-row='true'
+           enable-add-row='false'
            on-cell-value-changed-script='UIComponents/dashboard/frontend/examples/grid/addRow'
            on-delete-row-script='UIComponents/dashboard/frontend/examples/grid/removeRow'
-           cell-editable='true'
+           cell-editable='false'
            enable-client-side-filter='false'
-           enable-server-side-filter='true' 
-           enable-server-side-sorting='true'
+           enable-server-side-filter='false' 
+           enable-server-side-sorting='false'
            row-model-selection='multiple'
            pagination-page-size='5'
-           transport='wss'>
+           service-tag="grid"
+           >
   </scriptr-grid>
 </body>
 

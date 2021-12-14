@@ -1,0 +1,8 @@
+var result = {"count": 3, "documents": [{name: "Porsche", model: "Boxter", price: 72670}, {name: "Ford", model: "Mondeo", price: 67000}]}
+  
+ publish("responseChannel", {"id": "grid", "result": result})
+
+
+
+
+

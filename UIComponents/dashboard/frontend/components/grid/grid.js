@@ -169,9 +169,9 @@ angular
                 if(this.data && this.data.length > 0) {
                     this.rowData = angular.copy(this.data);
                 }
-                this.noRowsLabel = this.customNoRowsLabel ? this.customNoRowsLabel : $translate.instant("DASHBOARDS.SOCIAL_DISTANCING.GRID.NO_RESULTS_FOUND");
+                this.noRowsLabel = this.customNoRowsLabel ? this.customNoRowsLabel : $translate.instant("GRID.NO_RESULTS_FOUND");
                 this.showLoadingOverlay = (this.showLoadingOverlay !== undefined) ? this.showLoadingOverlay : false;
-                this.loadingLabel = this.customLoadingLabel ? this.customLoadingLabel : $translate.instant("DASHBOARDS.SOCIAL_DISTANCING.GRID.CUSTOM_LOADING_MESSAGE");
+                this.loadingLabel = this.customLoadingLabel ? this.customLoadingLabel : $translate.instant("GRID.CUSTOM_LOADING_MESSAGE");
                 this._dataIdentifierProperty = (this.gridDataIdentifierProperty) ? this.gridDataIdentifierProperty : "key";
                 this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
                 this.gridOptions = {
@@ -248,7 +248,29 @@ angular
                             if(self.api){
                                 self._createNewDatasource();
                             }else{
-                                event.api.setRowData([]);
+                                   
+                               //Listen on update-data event to build data
+                               $scope.$on("update-data", function(event, data) {
+                                     if(data == null) { //typeOf data == 'undefined' || data === null
+                                             self.gridOptions.api.setRowData([]);
+                                       } else {
+                                          var tmp = []
+                                          if(data[self.serviceTag]) {
+                                              tmp = data[self.serviceTag];
+                                             
+                                          } else if(!self.serviceTag) {
+                                               tmp = data;
+                                          }
+                                          if(typeof self.onFormatData() == "function"){
+                                                self.gridOptions.api.setRowData(self.onFormatData()(tmp));
+                                          } else {
+                                               self.gridOptions.api.setRowData(tmp);
+                                          }
+                                          self.gridOptions.api.sizeColumnsToFit();
+                                     } 
+                                });
+
+                              $scope.$emit("waiting-for-data"); 
                             }
                         }else{
                             event.api.sizeColumnsToFit();
