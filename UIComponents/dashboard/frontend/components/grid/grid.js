@@ -252,28 +252,19 @@ angular
                                    
                                //Listen on update-data event to build data
                                $scope.$on("update-data", function(event, data) {
-                                     if(data == null) { //typeOf data == 'undefined' || data === null
-                                             self.gridOptions.api.setRowData([]);
+                                   var tmp = [];
+                                   if(data[self.serviceTag]) {
+                                       tmp = data[self.serviceTag];
+                                       if(typeof self.onFormatData() == "function"){
+                                           self.gridOptions.api.setRowData(self.onFormatData()(tmp, self, $rootScope));
                                        } else {
-                                          var tmp = []
-                                          if(data[self.serviceTag]) {
-                                              tmp = data[self.serviceTag];
-                                             
-                                          } else if(!self.serviceTag) {
-                                               tmp = data;
-                                          }
-                                          if(data[self.serviceTag] || !self.serviceTag){
-                                              if(typeof self.onFormatData() == "function"){
-                                                    self.gridOptions.api.setRowData(self.onFormatData()(tmp, self, $rootScope));
-                                              } else {
-                                                   self.gridOptions.api.setRowData(tmp);
-                                              }
-                                              self.gridOptions.api.sizeColumnsToFit();
-                                          }
-                                     } 
+                                           self.gridOptions.api.setRowData(tmp);
+                                       }
+                                       self.gridOptions.api.sizeColumnsToFit();
+                                   } 
                                 });
 
-                              $scope.$emit("waiting-for-data"); 
+                                $scope.$emit("waiting-for-data"); 
                             }
                         }else{
                             event.api.sizeColumnsToFit();
