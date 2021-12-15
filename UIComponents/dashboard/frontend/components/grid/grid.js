@@ -64,7 +64,8 @@ angular
             "suppressRowClickSelection": "<?",
             "suppressCellSelection":"<?",
             "enableRangeSelection":"<?",
-            "headerHeight": "<?"
+            "headerHeight": "<?",
+            "resetDataOnConsume": "<?"
         },
         templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
         controller : function($translate, $rootScope, $scope, $window, $uibModal, $timeout, wsClient, dataStore, $routeParams) {
@@ -261,12 +262,14 @@ angular
                                           } else if(!self.serviceTag) {
                                                tmp = data;
                                           }
-                                          if(typeof self.onFormatData() == "function"){
-                                                self.gridOptions.api.setRowData(self.onFormatData()(tmp));
-                                          } else {
-                                               self.gridOptions.api.setRowData(tmp);
+                                          if(data[self.serviceTag] || !self.serviceTag){
+                                              if(typeof self.onFormatData() == "function"){
+                                                    self.gridOptions.api.setRowData(self.onFormatData()(tmp, self, $rootScope));
+                                              } else {
+                                                   self.gridOptions.api.setRowData(tmp);
+                                              }
+                                              self.gridOptions.api.sizeColumnsToFit();
                                           }
-                                          self.gridOptions.api.sizeColumnsToFit();
                                      } 
                                 });
 
