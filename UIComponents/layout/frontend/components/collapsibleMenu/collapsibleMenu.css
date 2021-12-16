@@ -152,6 +152,7 @@
     background: #FFF;
     padding-top: 15px;
     box-shadow: 2px 2px 12px 0px rgba(51, 51, 51, 0.3);
+    display: none;
 }
 .mobileHeader .overlay-profile .wrap li {font-size: 1em;}
 .mobileHeader .overlay-profile .wrap li a {text-align: left;}
