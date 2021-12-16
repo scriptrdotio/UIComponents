@@ -3,7 +3,7 @@
 </scriptr-notifications>
       
     
-       <div ng-style="$ctrl.style" class="thermowrapper" ng-if="$ctrl.value">
+       <div ng-style="$ctrl.style" class="thermowrapper" ng-if="$ctrl.value != null">
             <tg-thermometer-vertical
                                      value="{{$ctrl.value}}"
                                      unit="{{$ctrl.thermoUnit}}"
