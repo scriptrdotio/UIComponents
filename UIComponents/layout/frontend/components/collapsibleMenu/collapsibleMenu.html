@@ -1,0 +1,73 @@
+<header>
+    <div class="wrapper">
+        <a href="#/" class="col-xs-3"><img src="{{$ctrl.logo}}" class="mobileLogo" /></a>
+        <div class="col-xs-offset-4 col-xs-5 button text-right">
+            <a href="javascript: void(0);" id="mobile-menu" ng-click="$ctrl.toggleMenu()" class="btn-open pull-right"><i class="fa fa-bars"></i></a>
+            <div class="pull-right">
+                <a id="profile-button" class="header-icon" ng-click="$ctrl.toggleProfileMenu()">
+                    <i class="fa fa-user-circle"></i>
+                </a>
+            </div>
+            <div class="pull-right" ng-if="$ctrl.languages != null">
+                <a id="language-button" class="header-icon"  ng-click="$ctrl.toggleLanguageMenu()">
+                    <img src="{{$ctrl.languageIcon}}"/>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+<article class="header-overlay overlay overlay-language arrow-top hidden-md hidden-lg">
+    <div class="wrap">
+        <a href="javascript:void(0)" ng-click="$ctrl.hideLanguageMenu()" class="close">
+        	<i class="fa fa-times"></i>
+        </a>
+        <ul class="wrap-nav">
+             <li role="menuitem" ng-repeat="item in $ctrl.languages" ng-click="$ctrl.onChangeLang(item)">
+                 <a href="javascript: void(0);" ng-click="$ctrl.hideLanguageMenu()" ng-class="(item.value == $ctrl.preferredLanguage) ? 'active' : ''"><i aria-hidden="true"></i>{{item.name}}</a>
+            </li>
+        </ul>
+    </div>
+</article>
+<article class="header-overlay overlay overlay-profile arrow-top hidden-md hidden-lg">
+    <div class="wrap">
+        <a href="javascript:void(0)" ng-click="$ctrl.hideProfileMenu()" class="close">
+        	<i class="fa fa-times"></i>
+        </a>
+        <ul class="wrap-nav">
+             <li class="btn-group login clearfix">
+                <a href="javascript: void(0);" id="username-button">
+                    <span  ng-class="{'iconWrap': $ctrl.user}">
+                        <i ng-if="$ctrl.user != null" class="fa fa-user-circle" aria-hidden="false"></i>
+                    </span>{{$ctrl.user.login || $ctrl.caretlabel }}</span>
+                </a>
+                <ul class="sub-menu" ng-if="$ctrl.user != null">
+                    <li ng-if="$ctrl.inGroup(item.roles) || !item.roles" role="menuitem" ng-repeat="item in $ctrl.subitems track by $index" ><a href="{{item.route}}" ng-click="$ctrl.hideProfileMenu()" ng-class="{'active': $ctrl.checkIfSelected(item)}" translate><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a></li>
+                    <li ng-show="$ctrl.logout" role="menuitem" >
+                        <a href="{{$ctrl.logout.route}}" ng-click="$ctrl.hideProfileMenu()" translate>{{$ctrl.logout.label || "Logout"}}</a>
+                    </li>
+                </ul>
+            </li> 
+        </ul>
+    </div>
+</article>
+<article class="overlay overlay-menu hidden-md hidden-lg">
+    <div class="wrap">
+        <ul class="wrap-nav" ng-if="$ctrl.currentRoute">
+            <li class="btn-group clearfix" ng-if="$ctrl.inGroup(item.roles) || !item.roles" ng-repeat="item in $ctrl.items track by $index" ng-class='($ctrl.currentRoute.includes(item.route) || $ctrl.checkIfSelected(item)) ? "menu-opened" : ""'>
+                <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-if="!item.route || item.subitems.length > 0;" >
+                    <span class="iconWrap">
+                        <img src="{{item.icon}}"/>
+                    </span>{{item.label | translate}} <span class="fa fa-chevron-down"></span>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-href="{{item.route}}/{{$ctrl.lockId.value}}" ng-click="$ctrl.toggleMenu();" ng-if="item.route && (!item.subitems || item.subitems.length == 0)" >
+                    <span class="iconWrap">
+                        <img src="{{item.icon}}"/>
+                    </span>{{item.label | translate}} <!--span class="fa fa-chevron-down"></span-->
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-if="subitem.show == 'true'" ng-repeat="subitem in item.subitems track by $index" ng-if="$ctrl.inGroup(subitem.roles) || !subitem.roles"><a href="{{subitem.route}}" ng-click="$ctrl.onItemClick(subitem); $ctrl.toggleMenu();" route="{{subitem.route}}" index="{{colIndex = $index}}" ng-class="{'active': subitem.route == $ctrl.currentRoute}" translate><i class="{{subitem.icon}}" aria-hidden="true"></i>{{subitem.label}}</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</article>
