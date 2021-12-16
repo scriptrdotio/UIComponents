@@ -46,7 +46,6 @@
 }
 
 .mobileHeader .login li:last-child a {border-bottom: 0!important;}
-.mobileHeader .overlay .wrap {padding: 0 15px;}
 .mobileHeader .overlay .wrap .wrap-nav {text-transform: capitalize;padding: 0;}
 .mobileHeader .overlay .wrap li {
     font-size: 1.2em;
@@ -57,7 +56,7 @@
 .mobileHeader .overlay .wrap-nav a {
   color: #ffffff;
   display: block;
-  padding: 20px 0;
+  padding: 20px 15px;
   text-decoration: none;
   transition-property: all .2s linear 0s;
   -moz-transition: all .2s linear 0s;
@@ -65,8 +64,10 @@
   -o-transition: all .2s linear 0s;
   box-shadow: none;
   border-bottom: 1px solid rgba(255,255,255,0.2);
-  text-align: center;
+  text-align: left;
 }
+
+.mobileHeader .overlay .wrap li.open a {background-color: #FFF;color: #5a5050;}
 
 .mobileHeader .overlay .wrap-nav a i {display: inline-block;padding-right: 5px;}
 .mobileHeader .overlay .wrap-nav a span {font-size: 14px;float: right;margin-right: 10px;}
@@ -76,7 +77,6 @@
     height: 36px;
     display: flex;
     align-items: center;
-    background-color: #009ABB;
     color: #fff;
     transition: 0.5s;
     float: left;
@@ -127,7 +127,6 @@
 .mobileHeader .overlay .btn-menu li a:hover {background-color: #7f176b;color: #ffffff;}
 
 .mobileHeader .overlay .open .fa:before {
-  content: "\f077";
   transition-property: all .2s linear 0s;
   -moz-transition: all .2s linear 0s;
   -webkit-transition: all .2s linear 0s;
