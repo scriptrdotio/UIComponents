@@ -169,6 +169,7 @@
 }
 .mobileHeader .overlay-profile .wrap-nav a {padding-bottom: 15px;padding-top: 0;}
 .mobileHeader .overlay-profile .wrap-nav #username-button {cursor: default;line-height: unset;font-weight: bold;font-size: 1.1em;border-bottom: 1px solid #f2f2f2;}
+.mobileHeader .overlay-profile .wrap-nav #username-button i {color: #5a5050;}
 .mobileHeader .overlay-profile .sub-menu li:first-child a {padding-top: 15px;}
 .mobileHeader .header-overlay .wrap .wrap-nav a:hover, .mobileHeader .header-overlay .wrap .wrap-nav a.active, .mobileHeader .login .sub-menu a:hover, .mobileHeader .login .sub-menu a:active, .mobileHeader .login .sub-menu a.active {
     color: #09425A;
