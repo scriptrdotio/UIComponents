@@ -65,7 +65,8 @@
 }
 
 .data-notification .alert-danger .fa-1x {
-    color: #cc5463;;
+    color: #cc5463;
+    padding-right: 5px;
 }
 
 .data-notification .alert-success .fa-1x {
