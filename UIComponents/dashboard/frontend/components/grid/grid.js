@@ -58,14 +58,14 @@ angular
             "class" : "@",
             "defaultCellRenderer": "&",  
             "onGridReady" : "&",
+            "customNoRowsClass": "@",
             "customNoRowsLabel": "@",
             "showLoadingOverlay": "<?",
             "customLoadingLabel": "@",
             "suppressRowClickSelection": "<?",
             "suppressCellSelection":"<?",
             "enableRangeSelection":"<?",
-            "headerHeight": "<?",
-            "resetDataOnConsume": "<?"
+            "headerHeight": "<?"
         },
         templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
         controller : function($translate, $rootScope, $scope, $window, $uibModal, $timeout, wsClient, dataStore, $routeParams) {
@@ -170,9 +170,10 @@ angular
                 if(this.data && this.data.length > 0) {
                     this.rowData = angular.copy(this.data);
                 }
-                this.noRowsLabel = this.customNoRowsLabel ? this.customNoRowsLabel : $translate.instant("GRID.NO_RESULTS_FOUND");
+                this.noRowsClass = this.customNoRowsClass ? this.customNoRowsClass : "";
+                this.noRowsLabel = this.customNoRowsLabel ? this.customNoRowsLabel : $translate.instant("DASHBOARDS.SOCIAL_DISTANCING.GRID.NO_RESULTS_FOUND");
                 this.showLoadingOverlay = (this.showLoadingOverlay !== undefined) ? this.showLoadingOverlay : false;
-                this.loadingLabel = this.customLoadingLabel ? this.customLoadingLabel : $translate.instant("GRID.CUSTOM_LOADING_MESSAGE");
+                this.loadingLabel = this.customLoadingLabel ? this.customLoadingLabel : $translate.instant("DASHBOARDS.SOCIAL_DISTANCING.GRID.CUSTOM_LOADING_MESSAGE");
                 this._dataIdentifierProperty = (this.gridDataIdentifierProperty) ? this.gridDataIdentifierProperty : "key";
                 this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
                 this.gridOptions = {
@@ -196,7 +197,7 @@ angular
                     rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
                     paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
                     overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> '+$translate.instant(this.loadingLabel)+'</span>',
-                    overlayNoRowsTemplate: '<div class="ag-overlay-no-rows-center data-notification center"><div class="alert alert-danger"><span><i class="fa fa-exclamation-triangle fa-1x"></i>'+$translate.instant(this.noRowsLabel)+'</span></div></div>',
+                    overlayNoRowsTemplate: '<span class="ag-overlay-no-rows-center '+this.noRowsClass+'">'+$translate.instant(this.noRowsLabel)+'</span>',
                     defaultColDef : {
                         filterParams : {
                             apply : true
@@ -249,22 +250,7 @@ angular
                             if(self.api){
                                 self._createNewDatasource();
                             }else{
-                                   
-                               //Listen on update-data event to build data
-                               $scope.$on("update-data", function(event, data) {
-                                   var tmp = [];
-                                   if(data[self.serviceTag]) {
-                                       tmp = data[self.serviceTag];
-                                       if(typeof self.onFormatData() == "function"){
-                                           self.gridOptions.api.setRowData(self.onFormatData()(tmp, self, $rootScope));
-                                       } else {
-                                           self.gridOptions.api.setRowData(tmp);
-                                       }
-                                       self.gridOptions.api.sizeColumnsToFit();
-                                   } 
-                                });
-
-                                $scope.$emit("waiting-for-data"); 
+                                event.api.setRowData([]);
                             }
                         }else{
                             event.api.sizeColumnsToFit();
