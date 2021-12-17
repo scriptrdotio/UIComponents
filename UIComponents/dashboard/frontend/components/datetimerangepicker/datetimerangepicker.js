@@ -1,4 +1,4 @@
-angular.module("DateTimeRangePicker", ["ngMessages", "daterangepicker"]);
+angular.module("DateTimeRangePicker", ["ngMessages", "ngRoute", "daterangepicker"]);
 angular.module("DateTimeRangePicker").component("scriptrDateTimeRangePicker", {
 	"bindings": {
 		"onDateFilterSelectCallback": "&", //callback function to handle selected date
@@ -37,14 +37,13 @@ angular.module("DateTimeRangePicker").component("scriptrDateTimeRangePicker", {
             this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/images/calendar.svg";
         	this.startDate = this.startDate || moment().subtract(1, "days");
             this.endDate = this.endDate || moment();
-            this.minDate = this.minDate || moment().subtract(1, "years").format("YYYY-MM-DD");
-            this.maxDate = this.maxDate || moment().format("YYYY-MM-DD");
+            this.minDate = this.minDate || moment().subtract(1, "years").format("YYYY-MM-DD HH:mm:ss");
+            this.maxDate = this.maxDate || moment().format("YYYY-MM-DD HH:mm:ss");
             this.applyClass = this.applyClass || "btn-green";
             this.applyLabel = this.applyLabel || "Apply";
             this.fromLabel = this.fromLabel || "From";
             this.toLabel = this.toLabel || "To";
             this.cancelLabel = this.cancelLabel || "Cancel";
-            this.format = this.format || "YYYY-MM-DD";
             this.customRangeLabel = this.customRangeLabel || "Custom Range";
             this.isSimple = this.isSimple || "true";
             this.enableTimePicker = this.enableTimePicker == "true" ? true : false;
@@ -73,12 +72,15 @@ angular.module("DateTimeRangePicker").component("scriptrDateTimeRangePicker", {
                     applyClass: this.applyClass,
                     applyLabel: this.applyLabel,
                     fromLabel: this.fromLabel,
-                    format: this.format,
                     toLabel: this.toLabel,
                     cancelLabel: this.cancelLabel,
                     customRangeLabel: this.customRangeLabel
                 }
             };
+            
+            if(this.format){
+                this.dateFilterOptions.locale.format = this.format;
+            }
             if(this.ranges){
             	this.dateFilterOptions.ranges = this.ranges;
             }
