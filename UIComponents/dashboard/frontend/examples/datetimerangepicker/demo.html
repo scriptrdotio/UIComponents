@@ -2,16 +2,15 @@
 <head>
   
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/datetimepicker/datetimepicker.css">
   	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.css">
   	
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>   
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/de.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/zh-cn.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>
   
     <script src="/UIComponents/dashboard/frontend/components/datetimerangepicker/angular-daterangepicker.min.js"></script>
@@ -29,7 +28,7 @@
       vm.dateFilterRanges = {
           'Past Day': [moment().subtract(1, 'days'), moment()],
           'Past Week': [moment().subtract(7, 'days'), moment()],
-          'Past Month': [moment().subtract(1, 'month'), moment()]
+          'Past Month': [moment().subtract(29, 'days'), moment()]
       };
       
       vm.filterStartDate = moment().subtract(1, "month");
