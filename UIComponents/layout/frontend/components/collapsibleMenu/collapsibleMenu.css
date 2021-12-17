@@ -69,8 +69,8 @@
   margin: 0;
 }
 
-.mobileHeader .overlay .wrap li.open a {background-color: #FFF;color: #5a5050;}
-.mobileHeader .overlay .wrap li.open a i {color: #5a5050;}
+.mobileHeader .overlay .wrap li.menu-opened a {background-color: #FFF;color: #5a5050;}
+.mobileHeader .overlay .wrap li.menu-opened a i {color: #5a5050;}
 
 .mobileHeader .overlay .wrap-nav a i {display: inline-block;padding-right: 5px;}
 .mobileHeader .overlay .wrap-nav a span {font-size: 14px;float: right;margin-right: 10px;}
