@@ -36,7 +36,7 @@
             <i ng-show="$ctrl.user != null" class="fa fa-user-circle"></i> {{$ctrl.user.login || $ctrl.caretlabel }} <span class="caret"></span>
           </button>
           <ul class="dropdown-menu dropdown-menu-right"  uib-dropdown-menu role="menu" aria-labelledby="single-button">
-            <li ng-if="$ctrl.inGroup(item.roles) || !item.roles" role="menuitem" ng-repeat="item in $ctrl.subitems track by $index" ><a href="{{item.route}}" ng-class="{'selected': $ctrl.checkIfSelected([item])}"><i class="{{item.icon}}" aria-hidden="true"></i> {{item.label}}</a></li>
+            <li ng-if="$ctrl.inGroup(item.roles) || !item.roles" role="menuitem" ng-repeat="item in $ctrl.subitems track by $index" ><a href="{{item.route}}" ng-class="{'selected': $ctrl.checkIfSelected([item])}"><i class="{{item.iconClass}}" aria-hidden="true"></i> {{item.label}}</a></li>
             <li ng-show="$ctrl.logout && $ctrl.subitems.length > 0" class="divider"></li>
             <li ng-show="$ctrl.logout" role="menuitem" ><a href="{{$ctrl.logout.route}}"><i class="{{$ctrl.logout.icon}}" aria-hidden="true"></i> {{$ctrl.logout.label || "Logout"}}</a></li>
           </ul>
