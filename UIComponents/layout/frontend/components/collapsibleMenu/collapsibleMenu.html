@@ -41,9 +41,13 @@
                     </span>{{$ctrl.user.login || $ctrl.caretlabel }}</span>
                 </a>
                 <ul class="sub-menu" ng-if="$ctrl.user != null">
-                    <li ng-if="$ctrl.inGroup(item.roles) || !item.roles" role="menuitem" ng-repeat="item in $ctrl.subitems track by $index" ><a href="{{item.route}}" ng-click="$ctrl.hideProfileMenu()" ng-class="{'active': $ctrl.checkIfSelected(item)}" translate><i class="{{item.iconClass}}" aria-hidden="true"></i> {{item.label}}</a></li>
+                    <li ng-if="$ctrl.inGroup(item.roles) || !item.roles" role="menuitem" ng-repeat="item in $ctrl.subitems track by $index" >
+                        <a href="{{item.route}}" ng-click="$ctrl.hideProfileMenu()" ng-class="{'active': $ctrl.checkIfSelected(item)}">
+                            <i class="{{item.iconClass}}"></i> {{item.label | translate}}
+                        </a>
+                    </li>
                     <li ng-show="$ctrl.logout" role="menuitem" >
-                        <a href="{{$ctrl.logout.route}}" ng-click="$ctrl.hideProfileMenu()" translate><i class="{{$ctrl.logout.icon}}" aria-hidden="true"></i> {{$ctrl.logout.label || "Logout"}}</a>
+                        <a href="{{$ctrl.logout.route}}" ng-click="$ctrl.hideProfileMenu()"><i class="{{$ctrl.logout.icon}}" aria-hidden="true"></i> {{($ctrl.logout.label | translate) || "Logout"}}</a>
                     </li>
                 </ul>
             </li> 
@@ -62,12 +66,16 @@
                 </a>
                 <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-href="{{item.route}}/{{$ctrl.lockId.value}}" ng-click="$ctrl.toggleMenu();" ng-if="item.route && (!item.subitems || item.subitems.length == 0)" >
                     <span class="iconWrap">
-                        <img ng-if="!item.iconClass && item.icon" src="{{item.icon}}"/>
-                        <i ng-if="item.iconClass" class="{{item.iconClass}}"></i>
+                        <img ng-if="!item.iconClass && item.icon && item.icon != ''" src="{{item.icon}}"/>
+                        <i ng-if="item.iconClass && item.iconClass != ''" class="{{item.iconClass}}"></i>
                     </span>{{item.label | translate}} <!--span class="fa fa-chevron-down"></span-->
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-if="subitem.show == 'true'" ng-repeat="subitem in item.subitems track by $index" ng-if="$ctrl.inGroup(subitem.roles) || !subitem.roles"><a href="{{subitem.route}}" ng-click="$ctrl.onItemClick(subitem); $ctrl.toggleMenu();" route="{{subitem.route}}" index="{{colIndex = $index}}" ng-class="{'active': subitem.route == $ctrl.currentRoute}" translate><i class="{{subitem.iconClass}}" aria-hidden="true"></i>{{subitem.label}}</a></li>
+                    <li ng-if="subitem.show == 'true'" ng-repeat="subitem in item.subitems track by $index" ng-if="$ctrl.inGroup(subitem.roles) || !subitem.roles">
+                        <a href="{{subitem.route}}" ng-click="$ctrl.onItemClick(subitem); $ctrl.toggleMenu();" route="{{subitem.route}}" index="{{colIndex = $index}}" ng-class="{'active': subitem.route == $ctrl.currentRoute}">
+                            <i class="{{subitem.iconClass}}" aria-hidden="true"></i>{{subitem.label | translate}}
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
