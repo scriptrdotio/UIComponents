@@ -168,7 +168,7 @@ angular
         
           self.maxAssetPoints = (self.maxAssetPoints) ? self.maxAssetPoints : 100;
           //We need default center to be a lat,long otherwise loading it becomes asynchronous and might happen after changing it to a different mapcenter when loading the assets
-          self.defaultcenter = (self.defaultCenter) ? (self.defaultCenter.replaceAll(" ","")) : null;
+          self.defaultcenter = (self.defaultCenter) ? (self.defaultCenter.replace(/ /g, "")) : null;
           self.trackedAsset = (self.trackedAsset) ? self.trackedAsset : null;
           self.clusterStyles = (self.clusterStyles) ? self.clusterStyles : [ ];
         
