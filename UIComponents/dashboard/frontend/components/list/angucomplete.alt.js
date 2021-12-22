@@ -99,7 +99,7 @@
       unbindInitialValue = scope.$watch('initialValue', function(newval) {
         if (newval) {
           // remove scope listener
-          unbindInitialValue();
+          //unbindInitialValue();
           // change input
           try {
               handleInputChange(JSON.parse(newval), true);
