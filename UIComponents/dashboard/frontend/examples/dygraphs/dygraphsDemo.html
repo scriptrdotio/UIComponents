@@ -107,6 +107,8 @@
             return d.promise;
         }
         
+        
+        
         vm.onTabsChanged = function(tab, tabs, event) {
             console.log("onTabsChanged", tab, tabs, event);
              if(tab.id == 1) {
@@ -134,12 +136,12 @@
         
         
         vm.init = function() {
-            vm.data = generateData(10);
+            vm.data = generateData(1000);
             $interval(function(){
             	vm.data= generateData(2);
-            }, 300000)
+            }, 100000)
             
-            vm.largeDataSet = generateData(300);
+            vm.largeDataSet = generateData(8000);
         }
         
         vm.lineFormatData7 = function(data){
@@ -378,6 +380,7 @@
                             y-axis-label-font-size='12'
                             independent-ticks='independent'
                             colors-mapping='[{"labels":"Y1","colors":"#ad7fa8","axisSelection":"y","unit":"%"},{"labels":"Y2","colors":"#FCC717","axisSelection":"y","unit":"X"},{"labels":"Y3","colors":"#38B9D6","axisSelection":"y","unit":"Hz"},{"labels":"Y4","colors":"#1DBC68","axisSelection":"y","unit":"%"}]'
+                            toggle-series-visibility="true"
                             show-legend='true'
                             legend-position='bottom'
                             draw-x1-axis='true'
@@ -468,6 +471,8 @@
                             fill-graph="true"
                             stacked-graph="true"
                             x1-legend-label="Date/Time<br/>"
+                            draw-points="false"
+                            point-size="1"
                             range-selector-background-line-width='1'
                             range-selector-background-stroke-color='#808080'
                             range-selector-foreground-line-width='1'
