@@ -72,5 +72,6 @@
   stacked-graph-naN-fill | all | Controls handling of NaN values inside a stacked graph. NaN values are interpolated/extended for stacking purposes, but the actual point value remains NaN in the legend display. Valid option values are "all" (interpolate internally, repeat leftmost and rightmost value as needed), "inside" (interpolate internally only, use zero outside leftmost and rightmost value), and "none" (treat NaN as zero everywhere). | string | NO
  digits-after-decimal| 4 | format the y values on axis and in legend to have a fixed decimal point (by Default 4) | Integer | NO
  x1-legend-label |  | When set display a label before the x series value in legend | String | NO
+ toggle-series-visibility | false | When set to true a checkbox bar with series shows on top of graph to toggle each serie visibility on chart | Boolean | NO
   
   
