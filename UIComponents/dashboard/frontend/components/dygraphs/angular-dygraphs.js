@@ -14,9 +14,13 @@ angular.module("angular-dygraphs", [
             scope: { // Isolate scope
                 data: '=',
                 options: '=',
+                seriesVisibility: '=?'
             },
             template: 	'<div class="ng-dygraphs">' +             // Outer div to hold the whole directive
-                            '<div class="graph"></div>' + 			  // Div for graph
+                              '<div class="graph" ng-class="{\'seriesVisibilityBar\': (seriesVisibility && seriesVisibility.length > 0)}"></div>' + 			  // Div for graph
+            '<div class="series-container">' +                      // Div for series visibility
+                  '<label ng-repeat="serie in seriesVisibility track by $index" ng-style="serie.colors && {color: serie.colors}"><input type=checkbox  ng-click="toggleSerieVisibility($index, serie)" ng-model="serie.visible" ng-checked="serie.visible">{{serie.labels}}</label>' +
+                '</div>' +    
                         '</div>',                                            // Outer div
 						
 
@@ -26,6 +30,12 @@ angular.module("angular-dygraphs", [
                 var mainDiv = element.children()[0];
                 var chartDiv = $(mainDiv).children()[0];
 				var graph_initialized = false;
+                
+                scope.toggleSerieVisibility = function toggleSerieVisibility(index, series) {
+                    return graph.setVisibility(index, series.visible);
+                };
+
+                
                	var annotations = [];
                 var legendElement = null;
                 

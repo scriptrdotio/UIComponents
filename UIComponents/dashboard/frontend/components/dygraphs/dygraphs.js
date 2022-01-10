@@ -109,7 +109,8 @@ angular
         //   "rangeMin": "<?",
         //   "rangeMax": "<?",
         //   "rangeStep": "<?",
-          "resetDataOnConsume": "<?"
+          "resetDataOnConsume": "<?",
+          "toggleSeriesVisibility": "<?"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.html',
       controller: function($translate, $rootScope, httpClient, wsClient, $scope, $element, $timeout, $interval, $window, dataService) {
@@ -388,6 +389,14 @@ angular
              this.options.fillGraph = this.fillGraph || false;
              this.options.stackedGraph = this.stackedGraph || false;
              this.options.stackedGraphNaNFill = this.stackedGraphNaNFill || "all";
+             if(this.toggleSeriesVisibility && this.toggleSeriesVisibility == true) {
+                   this.seriesVisibility = [];
+                   for(var v=0; v < self.colorsMapping.length; v++){
+                        var tmp = self.colorsMapping[v]
+                        if(tmp.visible != false || tmp.visible != true) tmp.visible = true
+                   		this.seriesVisibility.push(tmp);
+                   }
+             }
              
              //this.data = JSON.parse(this.data);
              //this.resize = (this.resize) ? this.resize : true;
