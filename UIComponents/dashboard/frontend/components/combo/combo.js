@@ -28,10 +28,11 @@ angular
             "groupsCount": "<?",
             "groupItemsCount": "<?",
             "isVertical": "<?",
-            "noDataWidget": "<?"
+            "noDataWidget": "<?",
+			"resetDataOnConsume": "<?"
         },
         templateUrl:'/UIComponents/dashboard/frontend/components/combo/combo.html',
-        controller: function(httpClient, wsClient,dataService,$scope,$interval, $window, $element, $timeout) {
+        controller: function($rootScope, httpClient, wsClient,dataService,$scope,$interval, $window, $element, $timeout) {
             var self = this;
             this.$onInit = function() {
                 this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/occupancy-bg.svg";
@@ -166,7 +167,7 @@ angular
                     }
                 } else {
                     if(typeof self.onFormatData() == "function"){
-                        data = self.onFormatData()(data, self);
+                        data = self.onFormatData()(data, self, $rootScope);
                     }
                     if(data != null) {
                         if(typeof data == "object" && Array.isArray(data)){
@@ -231,9 +232,14 @@ angular
                                 self.stalledData = false;
                             }  else {
                                 self.noResults = true;
-                                if(self.data != null  && self.data.length > 0) {
-                                    self.stalledData = true;
-                                }
+								if(self.resetDataOnConsume) {
+									self.data = null;
+									self.stalledData = false;
+								}else{
+									if(self.data != null  && self.data.length > 0) {
+										self.stalledData = true;
+									}
+								}
                                 self.dataFailureMessage = "No data returned.";
                                 
                                 if(self.noDataWidget) {
@@ -247,16 +253,26 @@ angular
                             }
                         } else {
                             self.noResults = true;
-                            if(self.data != null  && self.data.length > 0) {
-                                self.stalledData = true;
-                            } 
+							if(self.resetDataOnConsume) {
+								self.data = null;
+								self.stalledData = false;
+							}else{
+								if(self.data != null  && self.data.length > 0) {
+									self.stalledData = true;
+								} 
+							}
                             self.dataFailureMessage = "Failed to update data, invalid data format.";
                         } 
                     } else {
                         self.noResults = true;
-                        if(self.message != null && self.message != "") {
-                            self.stalledData = true;
-                        } 
+						if(self.resetDataOnConsume) {
+							self.data = null;
+							self.stalledData = false;
+						}else{
+							if(self.message != null && self.message != "") {
+								self.stalledData = true;
+							} 
+						}
                         self.dataFailureMessage = "Failed to update data, invalid data format.";
                     }
                 }
