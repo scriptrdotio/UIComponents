@@ -14,7 +14,8 @@ angular.module("angular-dygraphs", [
             scope: { // Isolate scope
                 data: '=',
                 options: '=',
-                seriesVisibility: '=?'
+                seriesVisibility: '=?',
+                annotations: '=?'
             },
             template: 	'<div class="ng-dygraphs">' +             // Outer div to hold the whole directive
                               '<div class="graph" ng-class="{\'seriesVisibilityBar\': (seriesVisibility && seriesVisibility.length > 0)}"></div>' + 			  // Div for graph
@@ -77,6 +78,16 @@ angular.module("angular-dygraphs", [
                 delete scope.options.legendPosition;
 
                 var graph = new Dygraph(chartDiv, scope.data, scope.options);
+                
+                graph.ready(function() {
+                    if(scope.annotations && scope.data)
+                    	graph.setAnnotations(scope.annotations);
+               });
+                
+                scope.$watch("annotations", function () {
+                    if(scope.annotations && scope.data)
+                    	graph.setAnnotations(scope.annotations);
+                })
                // setTimeout( function(){ 
                 //    graph.resize();
                 //},1000);

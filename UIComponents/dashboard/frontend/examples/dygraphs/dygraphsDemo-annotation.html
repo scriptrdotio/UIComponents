@@ -1,0 +1,342 @@
+
+
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//use.fontawesome.com/3d61d6959e.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  
+    <!-- Adding JQUERY To use jQuery, simply ensure it is loaded before the angular.js file. -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+ 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone-with-data.min.js"></script>
+    <!-- Adding Angular -->
+  
+   <link name="light" rel="stylesheet" href="/UIComponents/dashboardBuilder/css/light.css"> 
+    
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-websocket/1.0.9/angular-websocket.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>      
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script> 
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    
+    <script src="/UIComponents/wsProvider.js"></script>
+    <script src="/UIComponents/httpProvider.js"></script>
+    <script src="/UIComponents/dataService.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/dygraphs/dygraphs-2.1.0.css">
+    <script src="/UIComponents/dashboard/frontend/components/dygraphs/dygraphs-2.1.0.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/dygraphs/angular-dygraphs.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.js"></script>
+    
+    <script src="/UIComponents/dashboard/frontend/components/common/notifications.js"></script>
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
+    <script src="/UIComponents/config/scriptrTransport.js"></script>
+    
+    
+    
+          <!-- i18n -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.2/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate-handler-log/2.18.2/angular-translate-handler-log.js"></script>
+    <!-- /i18n -->
+    
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.min.js"></script>
+    
+    <!-- Scrolling Tabs component -->
+    <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/scrollableTabs/scrolling-tabs.css">
+    <script src="/UIComponents/dashboard/frontend/components/scrollableTabs/scrolling-tabs.js"></script>
+    <script src="/UIComponents/dashboard/frontend/components/scrollableTabs/tabs.js"></script>
+    
+    
+    <link rel="stylesheet" href="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.css">
+    <script src="/UIComponents/dashboardBuilder/lib/gridster/angular_gridster.min.js"></script>
+</head> 
+  
+  
+<style>
+
+</style>
+<script>
+
+(function() {
+	
+
+    
+     var myApp= angular.module("myApp", ["WsClient", "HttpClient", 'Dygraphs', "ScrollableTabs", "gridster","ui.bootstrap"])
+     angular.module('myApp').config(wssConfig);
+     angular.module('myApp').config(httpsConfig);
+     
+  myApp.component('modalComponent', {
+  templateUrl: 'myModalContent.html',
+  bindings: {
+    resolve: '<',
+    close: '&',
+    dismiss: '&'
+  },
+  controller: function () {
+    var $ctrl = this;
+
+    $ctrl.$onInit = function () {
+      $ctrl.items = $ctrl.resolve.items;
+      $ctrl.selected = {
+        item: $ctrl.items[0]
+      };
+    };
+
+    $ctrl.ok = function () {
+      $ctrl.close({$value: $ctrl.selected.item});
+    };
+
+    $ctrl.cancel = function () {
+      $ctrl.dismiss({$value: 'cancel'});
+    };
+  }
+});
+  
+     myApp.controller('RootCtrl', function($rootScope, $scope, $interpolate, $location, $interval, $q, $timeout, $uibModal) {
+       var vm = this;
+        
+         vm.pointClickCallback = function(e, p) {
+             //Object { x: 0.26315789473684215, y: 0.80111720512862, xval: 1643889607073, yval: 18.232, name: "Y3 (Hz)", idx: 5, yval_stacked: 14.808, y_stacked: 0.80111720512862, canvasx: 166.78947368421055, canvasy: 160.223441025724 }
+             console.log("<b>Point Click</b> " + p.name + ": " , p);
+             var modalInstance = $uibModal.open({
+                 component: 'modalComponent',
+                 resolve: {
+                     items: function () {
+                         return p;
+                     }
+                 }
+             });
+       }
+        
+        vm.init = function() {
+            vm.data = generateData(1000);
+            $timeout(function(){
+            	$scope.$broadcast("update-annotations-data",{"chart1":[{name: "temperature", x: 1643924687056, shortText: "L", text: "annotation warmest"},{name: "humidity", x: 1643924697056, shortText: "L", text: "annotation warmest"}]})
+            }, 10000)
+        }
+        
+        vm.lineFormatData7 = function(data){
+            return data;
+        }
+        
+        var generateData = function(dataPointsCount) {
+            var data = [];
+            var t = new Date();
+            for (var i = dataPointsCount; i >= 0; i--) {
+                var x = new Date(t.getTime() - i * 1000);
+                data.push([x, Math.random()]);
+            }
+            return data;
+        }
+        
+        
+        vm.gridsterOptions = {
+          defaultSizeY: 50,
+          defaultSizeX:50,
+          minRows: 1, // the minimum height of the grid, in rows
+          maxRows: 100,
+          columns: 6, // the width of the grid, in columns
+          colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
+          rowHeight: '50', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+          margins: [10, 10], // the pixel distance between each widget
+          defaultSizeX: 2, // the default width of a gridster item, if not specifed
+          defaultSizeY: 1, // the default height of a gridster item, if not specified
+          mobileBreakPoint:480, // if the screen is not wider that this, remove the grid layout and stack the items
+          minColumns: 1, // the minimum columns the grid must have
+          resizable: {
+            enabled: false
+          },
+          draggable: {
+             enabled: false
+          }
+       };
+        
+     });
+        	
+})();
+  
+</script>
+
+   <body class="dashboardTheme"  ng-controller="RootCtrl as vm" ng-init="vm.init();">
+     
+<section id="tab1">
+      <div class="col-md-6"  style="height: 300px;"> 
+          <scriptr-dygraphs
+                            type='line'
+                            data-type='raw'
+                            data-format='dygraphs'
+                            schema-for='line'
+                            display-metric-param='display_metric'
+                            boxLabel='Line Chart'
+                            boxBorder='true'
+                            grid-text-family='Source Sans Pro'
+                            x1-axis-label-font-size='12'
+                            x1-axis-label-width='40'
+                            y2-axis-label-width='40'
+                            y-axis-label-width='40'
+                            y2-axis-label-font-size='12'
+                            y-axis-label-font-size='12'
+                            independent-ticks='independent'
+                            colors-mapping='[{"labels":"Temperature", "colors":"#ad7fa8", "axisSelection":"y2", "annotations":{"name": "temperature", "cssClass": "annotationsClass", "width": "32", "height": "32" ,"tickHeight":"10", "tickWidth":"2", "icon": "http://s3.amazonaws.com/scriptr-cdn/common/images/marker-container.png"}},{"labels":"Humidity","colors":"#FCC717","axisSelection":"y","unit":"X","annotations":{"name": "humidity", "cssClass": "annotationsClass", "width": "32", "height": "32", "attachAtBottom": "true"}},{"labels":"Pressure","colors":"#38B9D6","axisSelection":"y"},{"labels":"Battery","colors":"#1DBC68","axisSelection":"y","unit":"%"}]'
+                            annotations='[{name: "temperature", x: 1643924696056, shortText: "L", text: "annotation coldest"},{name: "humidity", x: 1643924702056, shortText: "L", text: "annotation coldest"}]'
+                            service-tag="chart1"
+                            toggle-series-visibility="true"
+                            show-legend='true'
+                            legend-position='bottom'
+                            draw-x1-axis='true'
+                            draw-y-axis='true'
+                            draw-y2-axis='true'
+                            custom-goals='[{"goal-line-colors":"#f0f0f0","goals":null}]'
+                            events='["2010-02-02"]'
+                            event-line-colors='["#ffffff"]'
+                            x1-axis-line-color='#e9b96e'
+                            y-axis-line-color='#ef2929'
+                            y2-axis-line-color='#000000'
+                            x1-axis-line-width='1'
+                            y-axis-line-width='1'
+                            y2-axis-line-width='1'
+                            y-axis-include-zero='false'
+                            y2-axis-include-zero='false'
+                            y-axis-labels-kmb='false'
+                            y2-axis-labels-kmb='false'
+                            show-range-selector='true'
+                            range-selector-alpha='0.6'
+                            range-selector-background-line-width='1'
+                            range-selector-background-stroke-color='#808080'
+                            range-selector-foreground-line-width='1'
+                            range-selector-foreground-stroke-color='#000000'
+                            range-selector-height='40'
+                            range-selector-plot-fill-color='#A7B1C4'
+                            range-selector-plot-fill-gradient-color='#FFFFFF'
+                            range-selector-plot-line-width='1.5'
+                            range-selector-plot-stroke-color='#808FAB'
+                            x1-draw-grid='true'
+                            y-draw-grid='true'
+                            y2-draw-grid='false'
+                            x1-grid-line-color='#000000'
+                            y-grid-line-color='#000000'
+                            y2-grid-line-color='#000000'
+                            x1-grid-line-width='1'
+                            y-grid-line-width='1'
+                            y2-grid-line-width='1'
+                            x1-axis-label='Label1'
+                            y-axis-label='Label2'
+                            y2-axis-label=''
+                            on-format-data='vm.lineFormatData7'
+                            api='UIComponents/dashboard/frontend/examples/dygraphs/getDygraphsData2',
+                            transport="wss"
+                            msg-tag="dygraphs2" 
+                            point-click-callback="vm.pointClickCallback"
+                            >
+          </scriptr-dygraphs>
+      </div>
+       <div class="col-md-6"  style="height: 300px;"> 
+          <scriptr-dygraphs
+                            type='line'
+                            data-type='raw'
+                            data-format='dygraphs'
+                            schema-for='line'
+                            display-metric-param='display_metric'
+                            boxLabel='Line Chart'
+                            boxBorder='true'
+                            grid-text-family='Source Sans Pro'
+                            x1-axis-label-font-size='12'
+                            x1-axis-label-width='40'
+                            y2-axis-label-width='40'
+                            y-axis-label-width='40'
+                            y2-axis-label-font-size='12'
+                            y-axis-label-font-size='12'
+                            independent-ticks='independent'
+                            colors-mapping='[{"labels":"Y1","colors":"#ad7fa8","axisSelection":"y","unit":"%"},{"labels":"Y2","colors":"#FCC717","axisSelection":"y","unit":"X"},{"labels":"Y3","colors":"#38B9D6","axisSelection":"y","unit":"Hz"},{"labels":"Y4","colors":"#1DBC68","axisSelection":"y","unit":"%"}]'
+                            show-legend='true'
+                            legend-position='bottom'
+                            draw-x1-axis='true'
+                            draw-y-axis='true'
+                            draw-y2-axis='false'
+                            custom-goals='[{"goal-line-colors":"#f0f0f0","goals":null}]'
+                            events='["2010-02-02"]'
+                            event-line-colors='["#ffffff"]'
+                            x1-axis-line-color='#e9b96e'
+                            y-axis-line-color='#ef2929'
+                            y2-axis-line-color='#000000'
+                            x1-axis-line-width='1'
+                            y-axis-line-width='1'
+                            y2-axis-line-width='1'
+                            y-axis-include-zero='false'
+                            y2-axis-include-zero='false'
+                            y-axis-labels-kmb='false'
+                            y2-axis-labels-kmb='false'
+                            show-range-selector='true'
+                            range-selector-alpha='0.6'
+                            digits-after-decimal=5
+                            fill-graph="true"
+                            stacked-graph="true"
+                            x1-legend-label="Date/Time<br/>"
+                            draw-points="false"
+                            point-size="1"
+                            range-selector-background-line-width='1'
+                            range-selector-background-stroke-color='#808080'
+                            range-selector-foreground-line-width='1'
+                            range-selector-foreground-stroke-color='#000000'
+                            range-selector-height='40'
+                            range-selector-plot-fill-color='#A7B1C4'
+                            range-selector-plot-fill-gradient-color='#FFFFFF'
+                            range-selector-plot-line-width='1.5'
+                            range-selector-plot-stroke-color='#808FAB'
+                            x1-draw-grid='true'
+                            y-draw-grid='true'
+                            y2-draw-grid='false'
+                            x1-grid-line-color='#000000'
+                            y-grid-line-color='#000000'
+                            y2-grid-line-color='#000000'
+                            x1-grid-line-width='1'
+                            y-grid-line-width='1'
+                            y2-grid-line-width='1'
+                            x1-axis-label='Label1'
+                            y-axis-label='Label2'
+                            y2-axis-label=''
+                            on-format-data='vm.lineFormatData7'
+                            fetch-data-interval="120"
+                            delta="true"
+                            api='UIComponents/dashboard/frontend/examples/dygraphs/getDygraphsData',
+                            transport="https"
+                            msg-tag="dygraphs" 
+                            >
+          </scriptr-dygraphs>
+      </div>
+    </section>
+       </div>
+     <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <ul>
+                <li ng-repeat="item in $ctrl.items">
+                    <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ $ctrl.selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+        </div>
+    </script>
+  </body>  
+</html>
+

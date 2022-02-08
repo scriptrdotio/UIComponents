@@ -110,7 +110,11 @@ angular
         //   "rangeMax": "<?",
         //   "rangeStep": "<?",
           "resetDataOnConsume": "<?",
-          "toggleSeriesVisibility": "<?"
+          "toggleSeriesVisibility": "<?",
+          "pointClickCallback": "&",
+          "legendFormatter": "&",
+          "annotations": "<?",
+          "annotationServiceTag": "@",
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.html',
       controller: function($translate, $rootScope, httpClient, wsClient, $scope, $element, $timeout, $interval, $window, dataService) {
@@ -243,10 +247,10 @@ angular
            	 //Format x-axis as date, use default formatting to be comforme to Onset
              this.options.axes.x.independentTicks = true;  
              this.options.axes.x.ticker = Dygraph.dateTicker
-             
-            this.options.xValueParser = function(date) {
-               return moment(date).format("YYYY-MM-DD kk:mm");
-             }
+             /** A function which parses x-values (i.e. the dependent series). Must return a number, even when the values are dates. In this case, millis since epoch are used. **/
+             this.options.xValueParser = function(date) {
+               return moment(date).valueOf(); //return moment(date).format("YYYY-MM-DD kk:mm");
+             } 
            
              //this.options.labelsUTC = true;
 
@@ -406,7 +410,19 @@ angular
              this.useWindowParams = (this.useWindowParams) ? this.useWindowParams : "true";
              
              this.fetchDataInterval = (this.fetchDataInterval) ? parseInt(this.fetchDataInterval) : null;
-           
+             
+             if(this.annotations) this._annotations = this.annotations
+             $scope.$on("update-annotations-data", function(event, data) {
+                 if(data[self.annotationServiceTag] || data[self.serviceTag])
+                     self._annotations = data[self.annotationServiceTag] || data[self.serviceTag]
+                 else if(!self.serviceTag)
+                         self._annotations = data;
+             });
+             
+             if(this.pointClickCallback)
+                 self.options.pointClickCallback = function(e,p) {
+                     self.pointClickCallback()(e,p);
+                 }
        }
          
         //  this.evalFuncionalData=function(){
@@ -487,8 +503,10 @@ angular
          
          
         this.buildLegend = function(colorsMapping) {
-            if(colorsMapping && self.showLegend && self.showLegend == "true"){
+            if(colorsMapping){ //&& self.showLegend && self.showLegend == "true"
                  self.colors = _.pluck(colorsMapping, "colors");
+                 self.annotationsConfig ={};
+                
                  self.legendLabels = [((self.x1LegendLabel) ? self.x1LegendLabel : "")];
                  self.legendLabels = self.legendLabels.concat(_.pluck(colorsMapping, "labels"));
                  var legendLabelsArray = angular.copy(self.legendLabels);
@@ -501,9 +519,17 @@ angular
                  self.legendMapping = [((self.x1LegendLabel) ? self.x1LegendLabel : "")];
                  self.legendMapping = self.legendMapping.concat(_.pluck(colorsMapping, "axisSelection"));
                  self.legendUnitsMapping = _.pluck(colorsMapping, "unit");
+                 self.legendUnits = [];
                  for(var i = 1; i < self.legendLabels.length; i++){
-                     if(self.legendUnitsMapping[i-1] && self.legendUnitsMapping[i-1] != "")
-                         self.legendLabels[i] = self.legendLabels[i] + " (" + self.legendUnitsMapping[i-1] + ")";
+                     /** MFE: removed logic added to custom legendFormatter
+                       if(self.legendUnitsMapping[i-1] && self.legendUnitsMapping[i-1] != "")
+                         self.legendLabels[i] = self.legendLabels[i] + " (" + self.legendUnitsMapping[i-1] + ")"; **/
+                       self.legendUnits.push(self.legendUnitsMapping[i-1]);
+                       if(colorsMapping[i-1] && colorsMapping[i-1].annotations && colorsMapping[i-1].annotations.name) {
+                           var tmp = colorsMapping[i-1].annotations.name;
+                           self.annotationsConfig[tmp] = {"labelIdx": i} //The labels index (i.e the series name index)
+                           _.extend(self.annotationsConfig[tmp], colorsMapping[i-1].annotations)
+                       }
                  }
                  self.legendLabels = (self.legendLabels) ? self.legendLabels : [((self.x1LegendLabel) ? self.x1LegendLabel : ""), "Y1", "Y2", "Y3", "Y4"];   
                  //self.legendLabels = $translate.instant(self.legendLabels) 
@@ -530,9 +556,20 @@ angular
              //Legend Labels
              if(self.legendLabels && self.legendLabels!=""){
 	             self.options.labels = self.legendLabels;
+                 self.options.units = self.legendUnits;
+                 self.options.annotationsConfig = self.annotationsConfig;
+             }
+            
+            
+           
+             self.options.legendFormatter =  function (data) {
+               if(typeof self.legendFormatter() == "function"){
+                   return self.legendFormatter()(data, self);
+                } else {
+                    return self.defaultLegendFormatter(data)
+                }
              }
         }
-         
         this.onResize = function() {
             if (self.timeoutId != null) {
                 $timeout.cancel(self.timeoutId);
@@ -659,5 +696,48 @@ angular
                 } 
               }
            }
+          
+          
+           self.defaultLegendFormatter =  function (data) {
+                  var g = data.dygraph;
+
+                  // TODO(danvk): deprecate this option in place of {legend: 'never'}
+                  // XXX should this logic be in the formatter?
+                  if (g.getOption('showLabelsOnHighlight') !== true) return '';
+
+                   var sepLines = g.getOption('labelsSeparateLines');
+                   var html;
+
+                   if (typeof data.x === 'undefined') {
+                       // TODO: this check is duplicated in generateLegendHTML. Put it in one place.
+                       if (g.getOption('legend') != 'always') {
+                           return '';
+                       }
+
+                       html = '';
+                       for (var i = 0; i < data.series.length; i++) {
+                           var series = data.series[i];
+                           if (!series.isVisible) continue;
+
+                           if (html !== '') html += sepLines ? '<br/>' : ' ';
+                           html += "<span style='font-weight: bold; color: " + series.color + ";'>" + series.dashHTML + " " + series.labelHTML + "</span>";
+                       }
+                       return html;
+                   }
+
+                  html = data.xHTML;
+                  for (var i = 0; i < data.series.length; i++) {
+                    var series = data.series[i];
+                    if (!series.isVisible) continue;
+                    if (sepLines) html += '<br>';
+                    var cls = series.isHighlighted ? ' class="highlight"' : '';
+                    html += "<span" + cls + "> <b><span style='color: " + series.color + ";'>" +  series.labelHTML;
+                      if(series.unit) {
+                          html += " ("   + series.unit + ")"
+                      }
+                      html +=  "</span></b>:&#160;" + (( typeof series.yHTML != 'undefined' && series.yHTML != null) ? series.yHTML : "")  + "</span>";
+                  }
+                  return html;
+                };
         }
 	});

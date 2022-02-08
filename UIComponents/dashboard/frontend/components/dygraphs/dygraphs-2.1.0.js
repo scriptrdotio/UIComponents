@@ -3214,8 +3214,16 @@ DygraphLayout.prototype._evaluateAnnotations = function () {
   // Make a map from (setName, xval) to annotation for quick lookups.
   var i;
   var annotations = {};
+  var labels = this.dygraph_.getLabels();  
+  var annotationsConfig = this.dygraph_.getAnnotationsConfig();
   for (i = 0; i < this.annotations.length; i++) {
     var a = this.annotations[i];
+    if(annotationsConfig) {
+         _.extend(a, annotationsConfig[a.name]);
+    }
+    if(annotationsConfig && a.name && annotationsConfig[a.name] && annotationsConfig[a.name]["labelIdx"]) {
+        a.series = labels[annotationsConfig[a.name]["labelIdx"]];
+    } 
     annotations[a.xval + "," + a.series] = a;
   }
 
@@ -3734,6 +3742,18 @@ if (typeof process !== 'undefined') {
         "labels": ["Legend"],
         "type": "array<string>",
         "description": "A name for each data series, including the independent (X) series. For CSV files and DataTable objections, this is determined by context. For raw data, this must be specified. If it is not, default values are supplied and a warning is logged."
+      },
+      "units": {
+        "default": "No unit is set",
+        "labels": ["Units"],
+        "type": "array<string>",
+        "description": "A unit for each data series, excluding the independent (X) series." 
+      },
+      "annotationsConfig": {
+        "default": "No annotations configuration is set",
+        "labels": ["annotationsConfig"],
+        "type": "object",
+        "description": "A configuration for the annotations by name. To be used when displaying the annotations. 'labelIdx' contains the series index to which the annotation should map to." 
       },
       "dateWindow": {
         "default": "Full range of the input is shown",
@@ -7460,6 +7480,10 @@ this.annotations_ = ann;if(!this.layout_){console.warn("Tried to setAnnotations 
  *
  * Returns null when labels have not yet been defined.
  */Dygraph.prototype.getLabels = function(){var labels=this.attr_("labels");return labels?labels.slice():null;}; /**
+ * Returns null when units have not yet been defined.
+ */Dygraph.prototype.getUnits = function(){var units=this.attr_("units");return units?units:null;}; /** 
+ * Returns null when annotationsConfig have not yet been defined.
+ */Dygraph.prototype.getAnnotationsConfig = function(){var annotationsConfig=this.attr_("annotationsConfig");return annotationsConfig?annotationsConfig:null;}; /**
  * Get the index of a series (column) given its name. The first column is the
  * x-axis, so the data series start with index 1.
  */Dygraph.prototype.indexFromSetName = function(name){return this.setIndexByName_[name];}; /**
@@ -7715,6 +7739,7 @@ annotations.prototype.didDrawChart = function (e) {
     div.style.width = width + "px";
     div.style.height = height + "px";
     div.title = p.annotation.text;
+    $(div).tooltip({template: '<div class="tooltip md-tooltip-email"><div class="tooltip-arrow md-arrow"></div><div class="tooltip-inner md-inner-email">'+p.annotation.text+'</div></div>'});
     div.style.color = g.colorsMap_[p.name];
     div.style.borderColor = g.colorsMap_[p.name];
     a.div = div;
@@ -8589,6 +8614,7 @@ Legend.generateLegendHTML = function (g, x, sel_points, oneEmWidth, row) {
 
   var labelToSeries = {};
   var labels = g.getLabels();
+  var units = g.getUnits();
   if (labels) {
     for (var i = 1; i < labels.length; i++) {
       var series = g.getPropertiesForSeries(labels[i]);
@@ -8600,6 +8626,10 @@ Legend.generateLegendHTML = function (g, x, sel_points, oneEmWidth, row) {
         isVisible: series.visible,
         color: series.color
       };
+      if(units && units[i-1]) {
+          seriesData.unit = escapeHTML(units[i-1])
+      }
+
 
       data.series.push(seriesData);
       labelToSeries[labels[i]] = seriesData;
