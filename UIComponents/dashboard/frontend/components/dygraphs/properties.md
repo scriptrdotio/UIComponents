@@ -55,7 +55,7 @@
   legend-mapping     | ["X"]	 | The Legend Labels mappings. | array | NO
   custom-goals     | null	 | Array of goals and goal line color ex: [{"goal-line-colors":"#f0f0f0","goals":1}]. | array | NO
   custom-events     | null	 |  Array of events and event line color ex: [{"event-line-colors":"#cccccc","events":"20-03-2008"}]. | array | NO
-  colors-mapping     | null	 | Map colors values to colors option. | array | NO
+  colors-mapping     | null	 | Map colors values to colors option. Contains the info each series available in the graph data. labels, colors, axisSelection (y1 or y2) , unit, annotations (default annotations configuration of the annotations to be shown on this series: name, cssClass, width, height, tickHeight, tickWidth, icon).| array | NO
   connect-separated-points     | true	 | Connect the points if there is gaps ,gaps comes from null Y values. | boolean | NO
   draw-points     | true	 | Drow the points over the chart line. | boolean | NO
   point-size     | 3	 | The point size in px. | float | NO
@@ -73,5 +73,12 @@
  digits-after-decimal| 4 | format the y values on axis and in legend to have a fixed decimal point (by Default 4) | Integer | NO
  x1-legend-label |  | When set display a label before the x series value in legend | String | NO
  toggle-series-visibility | false | When set to true a checkbox bar with series shows on top of graph to toggle each serie visibility on chart | Boolean | NO
+ toggleSeriesVisibility | false | if true the widget show a bar at the top to toggle the visibility of available series (labels from custom-goals is displayed in the bar) | boolean | NO 
+pointClickCallback | null | Callback function when a series point is clicked. function(e, point) e: the event object for the click point: the point that was clicked. | function | NO
+legendFormatter | null | Set this to supply a custom formatter for the legend. Type: function(data): string. If not supplied a default legend formatter is available which will concat the label and the unit if any from the colors-mapping entries to build the legends of the series| function | NO
+annotations" | null | An array of objects defining the annotations to add to the graph. Check Annotations property reference https://dygraphs.com/annotations.html to see all the supported properties. 1 extra property is "name", which contains the stored column name or sensor to which belong the annotation. | array | NO
+annotationServiceTag | null | Used with the event update-annotations-data to set/update the annotations to display, if not available we fallback to serivceTag, if not there all the data passed to event will be considered the annotations to set on graph | String | NO
+
+
   
   
