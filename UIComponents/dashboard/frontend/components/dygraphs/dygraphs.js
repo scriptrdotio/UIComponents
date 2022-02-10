@@ -111,19 +111,16 @@ angular
         //   "rangeStep": "<?",
           "resetDataOnConsume": "<?",
           "toggleSeriesVisibility": "<?",
-          "pointClickCallback": "&",
+          "onPointClick": "&",
           "legendFormatter": "&",
           "annotations": "<?",
           "annotationServiceTag": "@",
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.html',
-      controller: function($translate, $rootScope, httpClient, wsClient, $scope, $element, $timeout, $interval, $window, dataService) {
+      controller: function($translate, $rootScope, httpClient, wsClient, $scope, $element, $timeout, $interval, $window, dataService, $uibModal) {
         
          var self = this;
          this.$onInit = function() {
-             
-             //if functional data call function
-             
              
              //this.evalFuncionalData();
              $translate.use($rootScope.lang);
@@ -419,10 +416,12 @@ angular
                          self._annotations = data;
              });
              
-             if(this.pointClickCallback)
+             if(typeof self.onPointClick() == "function") {
                  self.options.pointClickCallback = function(e,p) {
-                     self.pointClickCallback()(e,p);
+                     self.onPointClick()(e,p, $uibModal, $element);
                  }
+             }
+                 
        }
          
         //  this.evalFuncionalData=function(){

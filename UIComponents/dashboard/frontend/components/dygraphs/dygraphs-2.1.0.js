@@ -3751,7 +3751,7 @@ if (typeof process !== 'undefined') {
       },
       "annotationsConfig": {
         "default": "No annotations configuration is set",
-        "labels": ["annotationsConfig"],
+        "labels": ["Annotations Config"],
         "type": "object",
         "description": "A configuration for the annotations by name. To be used when displaying the annotations. 'labelIdx' contains the series index to which the annotation should map to." 
       },
@@ -4043,7 +4043,7 @@ if (typeof process !== 'undefined') {
       if (window.console) window.console.warn(msg);
     };
     var flds = ['type', 'default', 'description'];
-    var valid_cats = ['Annotations', 'Axis display', 'Chart labels', 'CSV parsing', 'Callbacks', 'Data', 'Data Line display', 'Data Series Colors', 'Error Bars', 'Grid', 'Interactive Elements', 'Range Selector', 'Legend', 'Overall display', 'Rolling Averages', 'Series', 'Value display/formatting', 'Zooming', 'Debugging', 'Configuration', 'Deprecated'];
+    var valid_cats = ['Annotations', 'Axis display', 'Chart labels', 'CSV parsing', 'Callbacks', 'Data', 'Data Line display', 'Data Series Colors', 'Error Bars', 'Grid', 'Interactive Elements', 'Range Selector', 'Legend', 'Overall display', 'Rolling Averages', 'Series', 'Value display/formatting', 'Zooming', 'Debugging', 'Configuration', 'Deprecated', "Units", "Annotations Config"];
     var i;
     var cats = {};
     for (i = 0; i < valid_cats.length; i++) cats[valid_cats[i]] = true;
