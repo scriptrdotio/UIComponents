@@ -115,6 +115,9 @@ angular
           "legendFormatter": "&",
           "annotations": "<?",
           "annotationServiceTag": "@",
+          "onAnnotationClick": "&",
+          "onAnnotationDblClick": "&",
+          "annotationTooltipFormatter": "&"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.html',
       controller: function($translate, $rootScope, httpClient, wsClient, $scope, $element, $timeout, $interval, $window, dataService, $uibModal) {
@@ -418,7 +421,25 @@ angular
              
              if(typeof self.onPointClick() == "function") {
                  self.options.pointClickCallback = function(e,p) {
-                     self.onPointClick()(e,p, $uibModal, $element);
+                     self.onPointClick()(e, p, self, $uibModal, $element);
+                 }
+             }
+             
+              if(typeof self.onAnnotationClick() == "function") {
+                 self.options.annotationClickHandler = function(annotation, point, dygraph, event) {
+                     self.onAnnotationClick()(annotation, point, dygraph, event, self, $uibModal, $element);
+                 }
+             }
+             
+             if(typeof self.onAnnotationDblClick() == "function") {
+                 self.options.annotationDblClickHandler = function(annotation, point, dygraph, event) {
+                     self.onAnnotationDblClick()(annotation, point, dygraph, event, self, $uibModal, $element);
+                 }
+             }
+             
+             if(typeof self.annotationTooltipFormatter () == "function") {
+                 self.options.annotationTooltipFormatter = function(annotation) {
+                     return self.annotationTooltipFormatter()(annotation);
                  }
              }
                  

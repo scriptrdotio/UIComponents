@@ -750,7 +750,7 @@ handler.prototype.extractSeries = function (rawData, seriesIndex, options) {};
  *          number of skipped points left of the date window minimum (if any).
  * @return {!Array.<Dygraph.PointType>} List of points for this series.
  */
-handler.prototype.seriesToPoints = function (series, setName, boundaryIdStart) {
+handler.prototype.seriesToPoints = function (series, setName, boundaryIdStart, annotationName) {
   // TODO(bhs): these loops are a hot-spot for high-point-count charts. In
   // fact,
   // on chrome+linux, they are 6 times more expensive than iterating through
@@ -770,6 +770,8 @@ handler.prototype.seriesToPoints = function (series, setName, boundaryIdStart) {
       name: setName, // TODO(danvk): is this really necessary?
       idx: i + boundaryIdStart
     };
+    if(annotationName)
+        point.annotationName = annotationName;
     points.push(point);
   }
   this.onPointsCreated_(series, points);
@@ -3470,6 +3472,13 @@ if (typeof process !== 'undefined') {
         "type": "function(annotation, point, dygraph, event)",
         "parameters": [["annotation", "the annotation left"], ["point", "the point associated with the annotation"], ["dygraph", "the reference graph"], ["event", "the mouse event"]],
         "description": "If provided, this function is called whenever the user double-clicks on an annotation."
+      },
+     "annotationTooltipFormatter": {
+        "default": "null",
+        "labels": ["Annotations"],
+        "type": "function(annotation)",
+        "parameters": [["annotation", "the annotation left"]],
+        "description": "If provided, returns the tooltip content for annotation."
       },
       "drawCallback": {
         "default": "null",
@@ -7172,7 +7181,7 @@ if(dateWindow){series = rolledSeries[seriesIdx];var low=dateWindow[0];var high=d
 // TODO(danvk): pass firstIdx and lastIdx directly to the renderer.
 firstIdx = null;lastIdx = null;for(sampleIdx = 0;sampleIdx < series.length;sampleIdx++) {if(series[sampleIdx][0] >= low && firstIdx === null){firstIdx = sampleIdx;}if(series[sampleIdx][0] <= high){lastIdx = sampleIdx;}}if(firstIdx === null)firstIdx = 0;var correctedFirstIdx=firstIdx;var isInvalidValue=true;while(isInvalidValue && correctedFirstIdx > 0) {correctedFirstIdx--; // check if the y value is null.
 isInvalidValue = series[correctedFirstIdx][1] === null;}if(lastIdx === null)lastIdx = series.length - 1;var correctedLastIdx=lastIdx;isInvalidValue = true;while(isInvalidValue && correctedLastIdx < series.length - 1) {correctedLastIdx++;isInvalidValue = series[correctedLastIdx][1] === null;}if(correctedFirstIdx !== firstIdx){firstIdx = correctedFirstIdx;}if(correctedLastIdx !== lastIdx){lastIdx = correctedLastIdx;}boundaryIds[seriesIdx - 1] = [firstIdx,lastIdx]; // .slice's end is exclusive, we want to include lastIdx.
-series = series.slice(firstIdx,lastIdx + 1);}else {series = rolledSeries[seriesIdx];boundaryIds[seriesIdx - 1] = [0,series.length - 1];}var seriesName=this.attr_("labels")[seriesIdx];var seriesExtremes=this.dataHandler_.getExtremeYValues(series,dateWindow,this.getBooleanOption("stepPlot",seriesName));var seriesPoints=this.dataHandler_.seriesToPoints(series,seriesName,boundaryIds[seriesIdx - 1][0]);if(this.getBooleanOption("stackedGraph")){axisIdx = this.attributes_.axisForSeries(seriesName);if(cumulativeYval[axisIdx] === undefined){cumulativeYval[axisIdx] = [];}Dygraph.stackPoints_(seriesPoints,cumulativeYval[axisIdx],seriesExtremes,this.getBooleanOption("stackedGraphNaNFill"));}extremes[seriesName] = seriesExtremes;points[seriesIdx] = seriesPoints;}return {points:points,extremes:extremes,boundaryIds:boundaryIds};}; /**
+series = series.slice(firstIdx,lastIdx + 1);}else {series = rolledSeries[seriesIdx];boundaryIds[seriesIdx - 1] = [0,series.length - 1];}var seriesName=this.attr_("labels")[seriesIdx]; if(this.attr_("annotationsConfig")) { var annotationsConfig = this.attr_("annotationsConfig"); for (var key in annotationsConfig) { if(annotationsConfig[key]["labelIdx"] == seriesIdx) var annotationName = key;}}; var seriesExtremes=this.dataHandler_.getExtremeYValues(series,dateWindow,this.getBooleanOption("stepPlot",seriesName));var seriesPoints=this.dataHandler_.seriesToPoints(series,seriesName,boundaryIds[seriesIdx - 1][0], annotationName);if(this.getBooleanOption("stackedGraph")){axisIdx = this.attributes_.axisForSeries(seriesName);if(cumulativeYval[axisIdx] === undefined){cumulativeYval[axisIdx] = [];}Dygraph.stackPoints_(seriesPoints,cumulativeYval[axisIdx],seriesExtremes,this.getBooleanOption("stackedGraphNaNFill"));}extremes[seriesName] = seriesExtremes;points[seriesIdx] = seriesPoints;}return {points:points,extremes:extremes,boundaryIds:boundaryIds};}; /**
  * Update the graph with new data. This method is called when the viewing area
  * has changed. If the underlying data or options have changed, predraw_ will
  * be called before drawGraph_ is called.
@@ -7738,8 +7747,14 @@ annotations.prototype.didDrawChart = function (e) {
     div.style.top = divTop + "px";
     div.style.width = width + "px";
     div.style.height = height + "px";
-    div.title = p.annotation.text;
-    $(div).tooltip({template: '<div class="tooltip md-tooltip-email"><div class="tooltip-arrow md-arrow"></div><div class="tooltip-inner md-inner-email">'+p.annotation.text+'</div></div>'});
+    var tooltipTemplate = g.getOption('annotationTooltipFormatter')
+    if(tooltipTemplate) {
+        $(div).tooltip({html: "true", title:  tooltipTemplate(p.annotation)});
+    } else {
+        div.title = p.annotation.text;
+    }
+    
+    
     div.style.color = g.colorsMap_[p.name];
     div.style.borderColor = g.colorsMap_[p.name];
     a.div = div;
@@ -8615,6 +8630,7 @@ Legend.generateLegendHTML = function (g, x, sel_points, oneEmWidth, row) {
   var labelToSeries = {};
   var labels = g.getLabels();
   var units = g.getUnits();
+  var annotationsConfig = g.getAnnotationsConfig();
   if (labels) {
     for (var i = 1; i < labels.length; i++) {
       var series = g.getPropertiesForSeries(labels[i]);
@@ -8629,6 +8645,12 @@ Legend.generateLegendHTML = function (g, x, sel_points, oneEmWidth, row) {
       if(units && units[i-1]) {
           seriesData.unit = escapeHTML(units[i-1])
       }
+        
+      for (var key in annotationsConfig) {
+      	  if(annotationsConfig[key]["labelIdx"] == i)
+          		seriesData.annotationName = key;
+      }
+        
 
 
       data.series.push(seriesData);

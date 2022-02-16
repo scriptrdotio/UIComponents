@@ -75,9 +75,12 @@
  toggle-series-visibility | false | When set to true a checkbox bar with series shows on top of graph to toggle each serie visibility on chart | Boolean | NO
  toggleSeriesVisibility | false | if true the widget show a bar at the top to toggle the visibility of available series (labels from custom-goals is displayed in the bar) | boolean | NO 
 on-point-click | null | Callback function when a series point is clicked. function(e, point, $uibModal, $element) e: the event object for the click point: the point that was clicked, & the uibModal service, and the dygraphs component html element | function | NO
-legendFormatter | null | Set this to supply a custom formatter for the legend. Type: function(data): string. If not supplied a default legend formatter is available which will concat the label and the unit if any from the colors-mapping entries to build the legends of the series| function | NO
+legend-formatter | null | Set this to supply a custom formatter for the legend. Type: function(data): string. If not supplied a default legend formatter is available which will concat the label and the unit if any from the colors-mapping entries to build the legends of the series| function | NO
 annotations | null | An array of objects defining the annotations to add to the graph. Check Annotations property reference https://dygraphs.com/annotations.html to see all the supported properties. 1 extra property is "name", which contains the stored column name or sensor to which belong the annotation. ex: [{name: "temperature", x: 1643924696056, shortText: "L", text: "annotation coldest"},{name: "humidity", x: 1643924702056, shortText: "L", text: "annotation coldest"}] | array | NO
-annotationServiceTag | null | Used with the event update-annotations-data to set/update the annotations to display, if not available we fallback to serivceTag, if not there all the data passed to event will be considered the annotations to set on graph | String | NO
+annotation-service-tag | null | Used with the event update-annotations-data to set/update the annotations to display, if not available we fallback to serivceTag, if not there all the data passed to event will be considered the annotations to set on graph | String | NO
+on-annotation-click | null | Function to be called on annotation click with arguments annotation, point, dygraph, event, self, $uibModal, $element | function | NO
+on-annotation-dbl-click |  null | Function to be called on annotation double click with arguments annotation, point, dygraph, event, self, $uibModal, $element | function | NO
+annotation-tooltip-formatter |  null | Function allows to format the annotation data as html, evaluated html will be displayed  in a tooltip | function | NO
 
 
   
