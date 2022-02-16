@@ -84,8 +84,8 @@ angular.module("angular-dygraphs", [
                     	graph.setAnnotations(scope.annotations);
                });
                 
-                scope.$watch("annotations", function () {
-                    if(scope.annotations && scope.data)
+                scope.$watch("annotations", function (newVal, oldVal) {
+                    //if(scope.annotations && scope.data)
                     	graph.setAnnotations(scope.annotations);
                 })
                // setTimeout( function(){ 
