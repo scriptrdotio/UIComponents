@@ -3480,6 +3480,13 @@ if (typeof process !== 'undefined') {
         "parameters": [["annotation", "the annotation left"]],
         "description": "If provided, returns the tooltip content for annotation."
       },
+      "annotationContentDisplay": {
+        "default": "null",
+        "labels": ["Annotations"],
+        "type": "function(annotation)",
+        "parameters": [["div", "the annotation div element on graph"], ["point", "the point associated with the annotation"], ["annotation", "the annotation left"]],
+        "description": "If set, this callback sets any event or property on the annotation div displayed on the graph."
+      },
       "drawCallback": {
         "default": "null",
         "labels": ["Callbacks"],
@@ -7747,12 +7754,15 @@ annotations.prototype.didDrawChart = function (e) {
     div.style.top = divTop + "px";
     div.style.width = width + "px";
     div.style.height = height + "px";
-    var tooltipTemplate = g.getOption('annotationTooltipFormatter')
-    if(tooltipTemplate) {
-        $(div).tooltip({html: "true", title:  tooltipTemplate(p.annotation)});
-    } else {
+    var annotationContentDisplay = g.getOption('annotationContentDisplay')
+
+    var tooltipFormatter = g.getOption('annotationTooltipFormatter')
+    if(tooltipFormatter) {
+        var tooltipInfo = tooltipFormatter(p.annotation)
+        $(div).tooltip({html: "true", title:  tooltipInfo.content, placement: tooltipInfo.placement, trigger:tooltipInfo.trigger, container: tooltipInfo.container });
+    } else { 
         div.title = p.annotation.text;
-    }
+    } 
     
     
     div.style.color = g.colorsMap_[p.name];

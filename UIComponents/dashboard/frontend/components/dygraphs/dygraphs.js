@@ -439,7 +439,7 @@ angular
              
              if(typeof self.annotationTooltipFormatter () == "function") {
                  self.options.annotationTooltipFormatter = function(annotation) {
-                     return self.annotationTooltipFormatter()(annotation);
+                     return self.annotationTooltipFormatter()(annotation, $element);
                  }
              }
                  
