@@ -60,6 +60,8 @@ angular
 
             if(!this.active_tab) { //Set first tab as active
                 this.setActive(this._tabs[0].id, this._tabs[0]);
+            }else{
+                this.setActive(this.active_tab.id, this.active_tab);
             }
 
         };
