@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 	                     // CSS      
 	                     'https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css',
-	                     'https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.5/angular-material.min.css',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.min.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/css/xeditable.min.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.31/css/colorpicker.min.css',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.css',
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js',
 	                     'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js',
 	                     'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js',
-	                     'https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.5/angular-material.js',
+	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.min.js',
 	                     'https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js',
@@ -390,7 +390,7 @@ module.exports = function(grunt) {
 
 	            external_angular_resources_3 : {
 	               src : [ 
-	               	   'lib/angular-material.js',
+	               	   'lib/angular-material.min.js',
 	                     'concat/min-safe/svg-assets-cache.js',
 	                     'concat/min-safe/markerClusterer.js' ,
 	                     //'concat/min-safe/angular-p5.js',
