@@ -144,7 +144,9 @@ angular
         
          "renderOnlyClickedAsset": "<?", //Default true, to remove the display of the markers except the clicked marker
         
-         "onBuildAssetTitle": "&?" //To set the title on the hover of the marker
+         "onBuildAssetTitle": "&?", //To set the title on the hover of the marker
+         	
+         "clustererImagePath": "@" //Image Path for the clusterer icons
         
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
@@ -555,7 +557,7 @@ angular
           _.toArray(self.dynMarkers),
           {
             maxZoom :  self.clusteredZoomMax,
-            imagePath : 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m',
+            imagePath : self.clustererImagePath || '//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard/images/map/markerclusterer/m',
             minimumClusterSize : -1,
             gridSize : 50,
             averageCenter : true,
