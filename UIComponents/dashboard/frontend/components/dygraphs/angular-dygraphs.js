@@ -86,7 +86,10 @@ angular.module("angular-dygraphs", [
                 
                 scope.$watch("annotations", function (newVal, oldVal) {
                     //if(scope.annotations && scope.data)
-                    	graph.setAnnotations(scope.annotations);
+                    if(scope.annotations)
+                    		graph.setAnnotations(scope.annotations);
+                    else
+                        graph.setAnnotations([]);
                 })
                // setTimeout( function(){ 
                 //    graph.resize();
