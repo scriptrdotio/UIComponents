@@ -80,6 +80,8 @@ annotations | null | An array of objects defining the annotations to add to the 
 annotation-service-tag | null | Used with the event update-annotations-data to set/update the annotations to display, if not available we fallback to serivceTag, if not there all the data passed to event will be considered the annotations to set on graph | String | NO
 on-annotation-click | null | Function to be called on annotation click with arguments annotation, point, dygraph, event, self, $uibModal, $element | function | NO
 on-annotation-dbl-click |  null | Function to be called on annotation double click with arguments annotation, point, dygraph, event, self, $uibModal, $element | function | NO
+on-annotation-mouse-over |  null | Function to be called on annotation mouseover with arguments annotation, point, dygraph, event, self, $uibModal, $element | function | NO
+on-annotation-mouse-out |  null | Function to be called on annotation mouseout with arguments annotation, point, dygraph, event, self, $uibModal, $element | function | NO
 annotation-tooltip-formatter |  null | Function allows to set the properties of the annotation tooltip to display. arguments: annotation Object, & $element which is the scriptr dygraphs object element. It should return an object ex: return {"content": Handlebars.compile("<article><p class='noteText'>{{text}}</p><p class='noteOwner'>By: {{lastModifiedBy}}</p><article>")(annotation), "placement": "auto bottom", "trigger": "click", "container": $element.parent().parent() | function | NO
 
 

@@ -117,6 +117,8 @@ angular
           "annotationServiceTag": "@",
           "onAnnotationClick": "&",
           "onAnnotationDblClick": "&",
+          "onAnnotationMouseOut": "&",
+          "onAnnotationMouseOver": "&",
           "annotationTooltipFormatter": "&"
       },
       templateUrl:'/UIComponents/dashboard/frontend/components/dygraphs/dygraphs.html',
@@ -434,6 +436,18 @@ angular
              if(typeof self.onAnnotationDblClick() == "function") {
                  self.options.annotationDblClickHandler = function(annotation, point, dygraph, event) {
                      self.onAnnotationDblClick()(annotation, point, dygraph, event, self, $uibModal, $element);
+                 }
+             }
+             
+             if(typeof self.onAnnotationMouseOut() == "function") {
+                 self.options.annotationMouseOutHandler = function(annotation, point, dygraph, event) {
+                     self.onAnnotationMouseOut()(annotation, point, dygraph, event, self, $uibModal, $element);
+                 }
+             }
+             
+             if(typeof self.onAnnotationMouseOver() == "function") {
+                 self.options.annotationMouseOverHandler = function(annotation, point, dygraph, event) {
+                     self.onAnnotationMouseOver()(annotation, point, dygraph, event, self, $uibModal, $element);
                  }
              }
              
