@@ -41,10 +41,12 @@ angular
           "y2AxisLabelWidth": "@",
           "x1AxisLineColor": "@",
           "yAxisLineColor": "@",
+          "yAxisValueRange": "<?",
           "y2AxisLineColor": "@",
           "x1AxisLineWidth": "@",
           "yAxisLineWidth": "@",
           "y2AxisLineWidth": "@",
+          "y2AxisValueRange": "<?",
           "x1AxisTickSize": "@",
           "x1MinGranularity": "@",
           "yAxisTickSize": "@",
@@ -378,6 +380,13 @@ angular
              }
         	
             
+             if(this.yAxisValueRange && this.yAxisValueRange.length > 0) {
+                 this.options.axes.y.valueRange = this.yAxisValueRange;       
+             }
+             
+             if(this.y2AxisValueRange && this.y2AxisValueRange.length > 0 ) {
+                 this.options.axes.y2.valueRange = this.y2AxisValueRange;       
+             }
              
              //this.options.goals = (this.goals) ? this.goals : [];   
              //this.options.goalLineColors = (this.goalLineColors) ? this.goalLineColors : ["#ffffff"];   

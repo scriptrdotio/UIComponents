@@ -83,6 +83,12 @@ on-annotation-dbl-click |  null | Function to be called on annotation double cli
 on-annotation-mouse-over |  null | Function to be called on annotation mouseover with arguments annotation, point, dygraph, event, self, $uibModal, $element | function | NO
 on-annotation-mouse-out |  null | Function to be called on annotation mouseout with arguments annotation, point, dygraph, event, self, $uibModal, $element | function | NO
 annotation-tooltip-formatter |  null | Function allows to set the properties of the annotation tooltip to display. arguments: annotation Object, & $element which is the scriptr dygraphs object element. It should return an object ex: return {"content": Handlebars.compile("<article><p class='noteText'>{{text}}</p><p class='noteOwner'>By: {{lastModifiedBy}}</p><article>")(annotation), "placement": "auto bottom", "trigger": "click", "container": $element.parent().parent() | function | NO
+y-axis-value-range |  null | Explicitly set the vertical range of the graph to [low, high]. This may be set on a per-axis basis to define each y-axis separately. If either limit is unspecified, it will be calculated automatically (e.g. [null, 30] to automatically calculate just the lower bound)
+Type: Array of two numbers
+Default: Full range of the input is shown | array | NO
+y2-axis-value-range |  null | Explicitly set the vertical range of the graph to [low, high]. This may be set on a per-axis basis to define each y-axis separately. If either limit is unspecified, it will be calculated automatically (e.g. [null, 30] to automatically calculate just the lower bound)
+Type: Array of two numbers
+Default: Full range of the input is shown | array | NO
 
 
   
