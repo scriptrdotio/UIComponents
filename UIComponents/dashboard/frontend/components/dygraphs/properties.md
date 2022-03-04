@@ -53,7 +53,7 @@
   legend-labels     | ["x"]	 | The Legend Labels to show. | array | NO
   independent-ticks     | y-primary	 | independent ticks . | string | NO
   legend-mapping     | ["X"]	 | The Legend Labels mappings. | array | NO
-  custom-goals     | null	 | Array of goals and goal line color ex: [{"goal-line-colors":"#f0f0f0","goals":1}]. | array | NO
+  custom-goals     | null	 | Array of goals and goal line color ex: [{"goal-line-colors":"#f0f0f0","goals":1, "label":"test", size: "1"}]. | array | NO
   custom-events     | null	 |  Array of events and event line color ex: [{"event-line-colors":"#cccccc","events":"20-03-2008"}]. | array | NO
   colors-mapping     | null	 | Map colors values to colors option. Contains the info each series available in the graph data. labels, colors, axisSelection (y1 or y2) , unit, annotations (default annotations configuration of the annotations to be shown on this series: (name, cssClass, width, height, tickHeight, tickWidth, tickColor, shortText or icon, attachAtBottom. For more info Check Annotations property reference in https://dygraphs.com/annotations.html). ex: [{"labels":"Temperature", "colors":"#ad7fa8", "axisSelection":"y2", "annotations":{"name": "temperature", "cssClass": "annotationsClass", "width": "32", "height": "32" ,"tickHeight":"10", "tickWidth":"2", "icon": "http://s3.amazonaws.com/scriptr-cdn/common/images/marker-container.png"}},{"labels":"Humidity","colors":"#FCC717","axisSelection":"y","unit":"X","annotations":{"name": "humidity", "cssClass": "annotationsClass", "width": "32", "height": "32", "attachAtBottom": "true"}},{"labels":"Pressure","colors":"#38B9D6","axisSelection":"y"},{"labels":"Battery","colors":"#1DBC68","axisSelection":"y","unit":"%"}]. Note: In scriptr, Annotations are stored by name instead of series. The serie is defined by the labels value, and from the annotations config the fetched annotation series will be retrieved. | array | NO
   connect-separated-points     | true	 | Connect the points if there is gaps ,gaps comes from null Y values. | boolean | NO
@@ -83,6 +83,12 @@ on-annotation-dbl-click |  null | Function to be called on annotation double cli
 on-annotation-mouse-over |  null | Function to be called on annotation mouseover with arguments annotation, point, dygraph, event, self, $uibModal, $element | function | NO
 on-annotation-mouse-out |  null | Function to be called on annotation mouseout with arguments annotation, point, dygraph, event, self, $uibModal, $element | function | NO
 annotation-tooltip-formatter |  null | Function allows to set the properties of the annotation tooltip to display. arguments: annotation Object, & $element which is the scriptr dygraphs object element. It should return an object ex: return {"content": Handlebars.compile("<article><p class='noteText'>{{text}}</p><p class='noteOwner'>By: {{lastModifiedBy}}</p><article>")(annotation), "placement": "auto bottom", "trigger": "click", "container": $element.parent().parent() | function | NO
+y-axis-value-range |  null | Explicitly set the vertical range of the graph to [low, high]. This may be set on a per-axis basis to define each y-axis separately. If either limit is unspecified, it will be calculated automatically (e.g. [null, 30] to automatically calculate just the lower bound)
+Type: Array of two numbers
+Default: Full range of the input is shown | array | NO
+y2-axis-value-range |  null | Explicitly set the vertical range of the graph to [low, high]. This may be set on a per-axis basis to define each y-axis separately. If either limit is unspecified, it will be calculated automatically (e.g. [null, 30] to automatically calculate just the lower bound)
+Type: Array of two numbers
+Default: Full range of the input is shown | array | NO
 
 
   

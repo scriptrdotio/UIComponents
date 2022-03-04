@@ -87,7 +87,7 @@ angular.module("angular-dygraphs", [
                 scope.$watch("annotations", function (newVal, oldVal) {
                     //if(scope.annotations && scope.data)
                     if(scope.annotations)
-                    		graph.setAnnotations(scope.annotations);
+                    	graph.setAnnotations(scope.annotations);
                     else
                         graph.setAnnotations([]);
                 })
@@ -118,9 +118,14 @@ angular.module("angular-dygraphs", [
 				scope.underlayCallback = function(canvas, area, g){
                     //fill the goals colors
                     var goals = _.sortBy(angular.copy(scope.customGoals), "goal").reverse(); //To get it in descending order
+                    
                     _.forEach(goals, function(item){
                         var splitDate = moment().valueOf();
-                        var coords = g.toDomCoords(splitDate, item.goal);
+                        var axis = 0;
+                        if(item.axis && item.axis.toLocaleLowerCase() == "y2") {
+                            axis = 1;
+                        }
+                        var coords = g.toDomCoords(splitDate, parseFloat(item.goal), axis);
                         // splitX and splitY are the coordinates on the canvas for (2006-11-19, 2.25).
                         var splitX = coords[0];
                         var splitY = coords[1];
@@ -130,10 +135,18 @@ angular.module("angular-dygraphs", [
                             var bottomHeight = area.h - topHeight;
                         	canvas.fillRect(area.x, splitY, area.w, bottomHeight);    
                         } else {
-                            canvas.fillRect(area.x, splitY, area.w, item.size);   
+                            canvas.fillRect(area.x, splitY, area.w, item.size); 
+                            if(item.label) {
+                                canvas.font = scope.options.axes.x.axisLabelFontSize + "px";
+                                canvas.fillText( item.label, area.w/2, splitY);  
+                                /**if(item.axis && item.axis.toLocaleLowerCase() == "y2") {
+                            		canvas.fillText(item.label, (area.w + scope.options.axes.y2.axisLabelWidth), splitY)
+                        		} else {
+                                    canvas.fillText(item.label, (0 - scope.options.axes.y2.axisLabelWidth), splitY)
+                                }**/
+                            }
+                            
                         }
-                        
-
                     });
                     
                     

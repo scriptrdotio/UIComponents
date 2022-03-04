@@ -3480,13 +3480,6 @@ if (typeof process !== 'undefined') {
         "parameters": [["annotation", "the annotation left"]],
         "description": "If provided, returns the tooltip content for annotation."
       },
-      "annotationContentDisplay": {
-        "default": "null",
-        "labels": ["Annotations"],
-        "type": "function(annotation)",
-        "parameters": [["div", "the annotation div element on graph"], ["point", "the point associated with the annotation"], ["annotation", "the annotation left"]],
-        "description": "If set, this callback sets any event or property on the annotation div displayed on the graph."
-      },
       "drawCallback": {
         "default": "null",
         "labels": ["Callbacks"],
@@ -7754,7 +7747,6 @@ annotations.prototype.didDrawChart = function (e) {
     div.style.top = divTop + "px";
     div.style.width = width + "px";
     div.style.height = height + "px";
-    var annotationContentDisplay = g.getOption('annotationContentDisplay')
 
     var tooltipFormatter = g.getOption('annotationTooltipFormatter')
     if(tooltipFormatter) {
