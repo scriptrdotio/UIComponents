@@ -1856,7 +1856,8 @@ angular.module('ui-leaflet').factory('leafletMapDefaults', ["$q", "leafletHelper
                 lng: 0,
                 zoom: 1
             },
-            trackResize: true
+            trackResize: true,
+            zoomSnap: 1
         };
     }
 
@@ -1891,7 +1892,8 @@ angular.module('ui-leaflet').factory('leafletMapDefaults', ["$q", "leafletHelper
                 attributionControl: d.attributionControl,
                 worldCopyJump: d.worldCopyJump,
                 crs: d.crs,
-                trackResize: d.trackResize
+                trackResize: d.trackResize,
+                zoomSnap: d.zoomSnap
             };
 
             if (isDefined(d.minZoom)) {
@@ -1908,6 +1910,10 @@ angular.module('ui-leaflet').factory('leafletMapDefaults', ["$q", "leafletHelper
 
             if (isDefined(d.markerZoomAnimation)) {
                 mapDefaults.markerZoomAnimation = d.markerZoomAnimation;
+            }
+            
+             if (isDefined(d.zoomSnap)) {
+                mapDefaults.zoomSnap = d.zoomSnap;
             }
 
             if (d.map) {
@@ -1935,6 +1941,7 @@ angular.module('ui-leaflet').factory('leafletMapDefaults', ["$q", "leafletHelper
                 newDefaults.keyboard = isDefined(userDefaults.keyboard) ? userDefaults.keyboard : newDefaults.keyboard;
                 newDefaults.dragging = isDefined(userDefaults.dragging) ? userDefaults.dragging : newDefaults.dragging;
                 newDefaults.trackResize = isDefined(userDefaults.trackResize) ? userDefaults.trackResize : newDefaults.trackResize;
+                newDefaults.zoomSnap = isDefined(userDefaults.zoomSnap) ? userDefaults.zoomSnap : newDefaults.zoomSnap;
 
                 if (isDefined(userDefaults.controls)) {
                     angular.extend(newDefaults.controls, userDefaults.controls);
@@ -1960,6 +1967,10 @@ angular.module('ui-leaflet').factory('leafletMapDefaults', ["$q", "leafletHelper
 
                 if (isDefined(userDefaults.minZoom)) {
                     newDefaults.minZoom = userDefaults.minZoom;
+                }
+
+                 if (isDefined(userDefaults.zoomSnap)) {
+                    newDefaults.zoomSnap = userDefaults.zoomSnap;
                 }
 
                 if (isDefined(userDefaults.zoomAnimation)) {

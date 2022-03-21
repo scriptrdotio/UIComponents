@@ -9878,7 +9878,7 @@
   		setPosition(this._container, pos.add(anchor));
   	},
 
-  	_adjustPan: function () {
+  	_adjustPan: function (e) {
   		if (!this.options.autoPan) { return; }
   		if (this._map._panAnim) { this._map._panAnim.stop(); }
 
@@ -9918,7 +9918,7 @@
   		if (dx || dy) {
   			map
   			    .fire('autopanstart')
-  			    .panBy([dx, dy]);
+  			    .panBy([dx, dy], {animate: e && e.type === 'moveend'});
   		}
   	},
 
