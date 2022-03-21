@@ -13,7 +13,8 @@ angular
         "wrapperClass": "@",
         "defaultTabName": "@",
         "triggerRefresh": "<?",
-        "dialogDomSelector": "@"
+        "dialogDomSelector": "@",
+        "serviceTag": "@"
     },
     "templateUrl": "/UIComponents/dashboard/frontend/components/scrollableTabs/tabs.html",
     "controller": function($translate, $scope, $timeout, $mdDialog, $q, $element, $window) {
@@ -28,21 +29,34 @@ angular
 		   angular.element($window).on('resize', self.onResize);
       	   this.defaultTabName = (this.defaultTabName) ? this.defaultTabName : "Tab";
       	   this.id = $scope.$id;
-            if(!self.tabs || self.tabs.length == 0) {
-                if(this.isNotEditable) return;
-                this._tabs = this.tabs;
+            
+           this.initializeTabs(this.tabs)
+            
+           this.wrapperClass = this.wrapperClass ? this.wrapperClass : (this.isNotEditable ? "col-xs-12" : "col-xs-10 col-md-11");
+
+        };
+        
+        this.initializeTabs = function(tabs) {
+            if(!tabs || tabs.length == 0) {
+                if(this.isNotEditable) {
+                    this._tabs = null;
+                    return;
+                }
+                this._tabs = tabs;
                 this.last_id = 0;
                 this.addTab(); //Create a default tab
             } else {
-                this._tabs = this.tabs;
+                this._tabs = tabs;
                 this.last_id = this._tabs.length;
             }
-            
-            this.wrapperClass = this.wrapperClass ? this.wrapperClass : (this.isNotEditable ? "col-xs-12" : "col-xs-10 col-md-11");
-
             this.renderTabs();
-
-        };
+        }
+        this.$postLink = function() {
+            $scope.$on("update-tabs", function( event, data ) {
+                 if(self.serviceTag)
+                    self.initializeTabs(data[self.serviceTag])
+            });
+        }
 
         this.addTab = function () {
             var new_tab = {id: this.last_id, title: this.defaultTabName + " " + this.last_id , initialTitle:  this.defaultTabName + " " + this.last_id, content:'Just created ' + this.last_id, loaded: false};
