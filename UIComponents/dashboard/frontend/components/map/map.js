@@ -199,6 +199,7 @@ angular
            if(!self.clusterZoom) {
            		self.clusterZoom = 3;
             }
+            self.defaultClusterZoom = angular.copy(self.clusterZoom)
          } else { //No clustered View check the detailed zoom min
            if(!self.detailedZoomMin) {
             	self.detailedZoomMin = 0;
@@ -206,6 +207,7 @@ angular
            //By default set as if we are viewing all TODO: check if we are tracking a single asset
            self.detailedmapzoom = self.detailedZoomMin;
          }
+          self.defaultDetailedZoom = angular.copy(self.detailedZoomMin);
         //Set the focus when showing a single asset
         if(!self.focusedMarkerZoom || (self.clusteredView && self.focusedMarkerZoom < self.clusteredZoomMax)) {
            self.focusedMarkerZoom = (self.detailedZoomMin < 18) ? (self.detailedZoomMin + 3) : self.detailedZoomMin;
@@ -252,38 +254,7 @@ angular
         });
           
         //Show info window of asset 
-        $scope.$on("mapRerender", function(event) {
-           	rerenderAllAssets();
-            
-            if (self.clusteredView) {
-                self.showDetailedMap = false;
-            	self.clusterZoom =  self.clusteredZoomMax;
-                NgMap
-                    .getMap({
-                    id : 'clustered-'+self.$wdgid //TODO: figure out another thing then id, or pass id as a param
-                })
-                    .then(
-                    function(map) {
-                        map.setCenter(self.bounds.getCenter());
-        			    map.fitBounds(self.bounds);
-                    }, function(e) {
-                        
-               });
-            } else {
-                 NgMap
-                    .getMap({
-                    id : 'detailed-'+self.$wdgid //TODO: figure out another thing then id, or pass id as a param
-                })
-                    .then(
-                    function(map) {
-                        map.setCenter(self.bounds.getCenter());
-        			    map.fitBounds(self.bounds);
-                    }, function(e) {
-                        
-               });
-            }
-
-        });
+        $scope.$on("mapRerender", self.mapRerender.bind(self));
           
         self.switchStatus = (self.heatmap === false || self.heatmap === true) ?  self.heatmap : false;
         $scope.$on('mapInitialized', function(event, map) {
@@ -433,6 +404,43 @@ angular
           }
 
       }
+      
+      self.mapRerender = function(event) {
+          self.hideinfoWindow();
+          self.clusterZoom =  self.defaultClusterZoom;
+          self.detailedmapzoom = self.defaultDetailedZoom;
+          self.mapcenter = self.bounds.getCenter().lat()+","+self.bounds.getCenter().lng();
+          self.rerenderAllAssets();
+          if (self.clusteredView) {
+                self.showDetailedMap = false;
+               NgMap
+                    .getMap({
+                    id : 'clustered-'+self.$wdgid //TODO: figure out another thing then id, or pass id as a param
+                })
+                    .then(
+                    function(map) {
+                        map.setZoom(self.defaultClusterZoom)
+                        map.setCenter(self.bounds.getCenter());
+        			    map.fitBounds(self.bounds);
+                    }, function(e) {
+                        console.log(e)
+               });
+            } else {
+                NgMap
+                    .getMap({
+                    id : 'detailed-'+self.$wdgid //TODO: figure out another thing then id, or pass id as a param
+                })
+                    .then(
+                    function(map) {
+                        map.setZoom(self.defaultDetailedZoom)
+                        map.setCenter(self.bounds.getCenter());
+        			    map.fitBounds(self.bounds);
+                    }, function(e) {
+                        console.log(e)
+                        
+               });
+            }
+      }
         
       self.removeAssets = function(assets) {
          for (var key in assets) {
@@ -566,7 +574,7 @@ angular
       };
       
       //Render all assets
-      var rerenderAllAssets = function() {
+      self.rerenderAllAssets = function() {
         self.selectedAsset = "all";
         self.renderAssets();
       };
@@ -615,7 +623,7 @@ angular
               	self.showDetailedMap = false;
               	if(self.markerClusterer) 
                 	self.markerClusterer.setMap(map);
-              	rerenderAllAssets();
+              	self.rerenderAllAssets();
             }
           });
         }
@@ -631,7 +639,7 @@ angular
             if (map.getZoom() <=  self.clusteredZoomMax) {
               self.showDetailedMap = false;
               self.clusterZoom =  self.clusteredZoomMax;
-              rerenderAllAssets();
+              self.rerenderAllAssets();
             } else {
               self.showDetailedMap = true;
             }
