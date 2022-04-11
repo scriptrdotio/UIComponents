@@ -137,8 +137,13 @@ angular.module("angular-dygraphs", [
                         } else {
                             canvas.fillRect(area.x, splitY, area.w, item.size); 
                             if(item.label) {
-                                canvas.font = scope.options.axes.x.axisLabelFontSize + "px";
-                                canvas.fillText( item.label, area.w/2, splitY);  
+                                if (item.labelFont)
+                                	canvas.font = item.labelFont;
+                                
+                                //display label at the end of the goal line
+                                canvas.textAlign = "end";
+                                //canvas.globalCompositeOperation='destination-over';
+                                canvas.fillText( item.label, area.x + area.w -2, splitY - 2); 
                                 /**if(item.axis && item.axis.toLocaleLowerCase() == "y2") {
                             		canvas.fillText(item.label, (area.w + scope.options.axes.y2.axisLabelWidth), splitY)
                         		} else {
