@@ -146,7 +146,9 @@ angular
         
          "onBuildAssetTitle": "&?", //To set the title on the hover of the marker
          	
-         "clustererImagePath": "@" //Image Path for the clusterer icons
+         "clustererImagePath": "@", //Image Path for the clusterer icons
+        
+          "onMapInitialized": "&?"
         
     },
     templateUrl : '/UIComponents/dashboard/frontend/components/map/map.html',
@@ -258,7 +260,13 @@ angular
           
         self.switchStatus = (self.heatmap === false || self.heatmap === true) ?  self.heatmap : false;
         $scope.$on('mapInitialized', function(event, map) {
-              self.map = map;
+               self.map = map;
+			   if(typeof self.onMapInitialized() == "function"){
+                   $timeout(function() { //MFE: Waiting for the markers to load
+                    //call the onMapInitialized() function passing in the map and assets this is why we are using timeout to give time for assets to load.
+                    self.onMapInitialized()(map, self.assets);
+                   },1000);
+              }
               if(self.switchStatus == true && self.heatmap){
                   heatmap = new google.maps.visualization.HeatmapLayer({
                       data: _.toArray(self.heatMap),
