@@ -446,7 +446,7 @@ module.exports = function(grunt) {
 	                     'lib/picker.js',
 	                     'lib/legacy.js',
 	                     'lib/picker.date.js',
-	                     'lib.picker.time.js',
+	                     'lib/picker.time.js',
 	                     'concat/min-safe/bootstrap-picker.js',
 	                     'concat/min-safe/markdown-directive.js',
 	                     'concat/min-safe/datetimepicker_directive.js',
