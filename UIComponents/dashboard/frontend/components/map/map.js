@@ -261,7 +261,7 @@ angular
         self.switchStatus = (self.heatmap === false || self.heatmap === true) ?  self.heatmap : false;
         $scope.$on('mapInitialized', function(event, map) {
                self.map = map;
-			   if(typeof self.onMapInitialized() == "function"){
+			   if(self.onMapInitialized && typeof self.onMapInitialized() == "function"){
                    $timeout(function() { //MFE: Waiting for the markers to load
                     //call the onMapInitialized() function passing in the map and assets this is why we are using timeout to give time for assets to load.
                     self.onMapInitialized()(map, self.assets);
