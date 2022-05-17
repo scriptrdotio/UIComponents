@@ -482,7 +482,9 @@ angular.module('schemaForm').filter('selectFilter', [function ($filter) {
                //console.log("---> tmp localModel", tmp );
                 angular.forEach(tmp, function (value) { 
                     if(dataValues.indexOf(value) == -1) {
-                        localModel.splice(localModel.indexOf(value), 1);
+                        var i = localModel.indexOf(value)
+                        localModel.splice(i, 1);
+                        controller.internalModel.splice(i,1)
                     }
                 });
 
@@ -491,6 +493,7 @@ angular.module('schemaForm').filter('selectFilter', [function ($filter) {
                 //console.log("Setting model of type " + controller.localModelType  + "to null.");
                 if(dataValues.indexOf(localModel) == -1) {
                     localModel = null;
+                    controller.internalModel = null
                 }
             }
         }
@@ -503,6 +506,7 @@ angular.module('schemaForm').filter('selectFilter', [function ($filter) {
             //console.log("Resetting model of type " + controller.localModelType  + " to [].");
 
             controller.$eval(strLocalModel + "=[]");
+            controller.internalModel=[];
         }
 
         ////console.log("Input: " + JSON.stringify(inputArray));
