@@ -402,6 +402,8 @@ angular.module('schemaForm').directive('pickATime', function ($translate) {
                   viewValue = ngModelCtrl.$formatters[i](viewValue);
               }
               ngModelCtrl.$viewValue = viewValue;
+              if(formatterRanOnce)
+              		picker.set('select', viewValue)
               ngModelCtrl.$render();
             }
           }, 250);
