@@ -2868,7 +2868,7 @@ angular.module('schemaForm').directive('schemaValidate', ['sfValidator', '$parse
             angular.forEach(form[attr], function(fn, name) {
               //ngModel[attr][name] = fn;
               ngModel[attr][name] = function(modelValue, viewValue) {
-              	return fn(modelValue, viewValue, scope.model, form);
+              	return fn(modelValue, viewValue, scope.model, form, scope);
               };
             });
           }

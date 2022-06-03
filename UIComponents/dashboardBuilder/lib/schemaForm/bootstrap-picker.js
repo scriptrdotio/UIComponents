@@ -113,6 +113,8 @@ angular.module('schemaForm').directive('pickADate', function ($translate, $rootS
                   viewValue = ngModelCtrl.$formatters[i](viewValue);
               }
               ngModelCtrl.$viewValue = viewValue;
+              if(formatterRanOnce)
+                  picker.set('select', viewValue)
               ngModelCtrl.$render();
             }
           }, 250);

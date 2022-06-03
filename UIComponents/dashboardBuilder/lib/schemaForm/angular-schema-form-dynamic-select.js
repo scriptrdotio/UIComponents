@@ -1,3 +1,4 @@
+//https://github.com/OptimalBPM/angular-schema-form-dynamic-select
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['angular-schema-form'], factory);
