@@ -32,6 +32,7 @@
   /*** slick styles ***/
   /*** Gridtser ***/
   /** MFE **/
+  /**Display count**/
   /*** dashboard builder wrap ***/
   /***  devices-models-tree ***/
   /*** to show tooltip on slick list items ***/
@@ -355,6 +356,9 @@
 }
 .dashboardTheme .gauge {
   margin: 0 auto;
+}
+.dashboardTheme .cells-wrapper {
+  padding: 10px;
 }
 .dashboardTheme .slick-wrap {
   min-height: calc(100vh - 44px);

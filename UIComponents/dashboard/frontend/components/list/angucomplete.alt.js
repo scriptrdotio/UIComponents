@@ -55,6 +55,10 @@
         '        <img ng-if="result.image && result.image != \'\'" ng-src="{{result.image}}" class="angucomplete-image"/>' +
         '        <div ng-if="!result.image && result.image != \'\'" class="angucomplete-image-default"></div>' +
         '      </div>' +
+ 		'      <div ng-if="iconField" class="angucomplete-icon-holder">' +
+        '        <i ng-if="result.icon && result.icon != \'\'" class="angucomplete-icon {{result.icon}}"/>' +
+        '        <div><i ng-if="!result.icon && result.icon != \'\'" class="angucomplete-icon-default"/></div>' +
+        '      </div>' +           
         '      <div class="angucomplete-title" ng-if="matchClass" ng-bind-html="result.title"></div>' +
         '      <div class="angucomplete-title" ng-if="!matchClass">{{ result.title }}</div>' +
         '      <div ng-if="matchClass && result.description && result.description != \'\'" class="angucomplete-description" ng-bind-html="result.description"></div>' +
@@ -650,7 +654,7 @@
       }
 
       function processResults(responseData, str) {
-        var i, description, image, text, formattedText, formattedDesc;
+        var i, description, image, text, formattedText, formattedDesc, icon;
 
         if (responseData && responseData.length > 0) {
           scope.results = [];
@@ -669,6 +673,11 @@
             if (scope.imageField) {
               image = extractValue(responseData[i], scope.imageField);
             }
+              
+            icon = '';
+            if (scope.iconField) {
+              icon = extractValue(responseData[i], scope.iconField);
+            }  
 
             if (scope.matchClass) {
               formattedText = findMatchString(text, str);
@@ -679,6 +688,7 @@
               title: formattedText,
               description: formattedDesc,
               image: image,
+              icon: icon,
               originalObject: responseData[i]
             };
           }
@@ -885,6 +895,7 @@
         titleField: '@',
         descriptionField: '@',
         imageField: '@',
+        iconField: '@',
         inputClass: '@',
         pause: '@',
         searchFields: '@',
