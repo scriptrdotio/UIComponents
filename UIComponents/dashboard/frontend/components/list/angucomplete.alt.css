@@ -65,6 +65,25 @@
 }
 
 
+.angucomplete-icon-holder {
+    padding-top: 2px;
+    float: left;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.angucomplete-icon {
+    font-size: 14px;
+}
+
+.angucomplete-icon-default {
+    /* Add your own default image here
+     background-image: url('/assets/default.png');
+    */
+    font-size: 14px;
+}
+
+
 /*** acl listing ***/
 .mr5 {margin-right: 5px;}
 .text-primary {color: #ff8c00 !important;}

@@ -32,6 +32,8 @@ angular
         "descriptionField": "@",	//The name of the field in the JSON objects returned back that should be used for displaying the description in the autocomplete list.
         
         "imageField": "@",	//The name of the field in the JSON objects returned back that should be used for displaying an image in the autocomplete list. example	No	@	pic
+        
+        "iconField": "@",	//The name of the field in the JSON objects returned back that should be used for displaying an icon in the autocomplete list. example	No	@	offline/online
          
         "minlength": "@",	//The minimum length of string required before searching. example. If set to 0, it shows all items. It works both local and remote but is intended to use with local data. If used with remote API, it needs to return all items when query parameter is empty string.	
         
