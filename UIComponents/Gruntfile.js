@@ -1,3 +1,4 @@
+
 /*
  * grunt-angular-templates
  * https://github.com/ericclemmons/grunt-angular-templates
@@ -68,7 +69,7 @@ module.exports = function(grunt) {
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js',
 	                     'https://d3js.org/d3.v4.min.js',
-	                     'https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js',
+	                     //'https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.7.0/js/xeditable.js',
 	                     'https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/themes/classic.css',
@@ -197,6 +198,7 @@ module.exports = function(grunt) {
 		               'concat/min-safe/acl.js' : [ 'dashboard/frontend/components/ACL/ACL.js' ],
 		               'concat/min-safe/abn_tree_directive.js' : [ 'dashboard/frontend/components/searchBox/abn_tree_directive.js' ],
 		               'concat/min-safe/markerClusterer.js' : [ 'dashboard/frontend/components/map/markerClusterer.js' ],
+		               'concat/min-safe/ng-map.js' : [ 'dashboard/frontend/components/map/ng-map.js' ],
 		               'concat/min-safe/map.js' : [ 'dashboard/frontend/components/map/map.js' ],
 		               'concat/min-safe/angucomplete.alt.js' : [ 'dashboard/frontend/components/list/angucomplete.alt.js' ],
 		               'concat/min-safe/grid.js' : [ 'dashboard/frontend/components/grid/grid.js' ],
@@ -414,7 +416,7 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/angular.odometer.min.js',
 	                     'concat/min-safe/abn_tree_directive.js',
 	                     'concat/min-safe/thermometer_directive.js',
-	                     'lib/ng-map.js' 
+	                     'concat/min-safe/ng-map.js'
 	                     ],
 	               dest :'build/js/directives_1.min.js'
 	            },
