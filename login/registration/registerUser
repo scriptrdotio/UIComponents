@@ -1,0 +1,160 @@
+/*
+ * This script can be used to register users or to create accounts (if the caller is entitled to do so).
+ * @param : mandatory parameters are "name", "email", "password", 
+ * @param : optional parameters are "groups" (not when creating account), "company",
+ * "webSite", "jobTitle", "phone"
+ * Parameters not prefixed with "user" will not be saved.
+ * @return { status :"success" , url: redirection_url} if registrationRedirectURL is
+ * specified in registration/common or true if not specified
+ *  or
+ * {status : "failure", errorDetail : "xxxx", errorCode: "yyyy"} in case of failure
+ */
+
+var logLevel = request.parameters["logLevel"];
+if (logLevel) {
+	apsdb.log.setLogLevel(logLevel);
+}
+
+
+var scriptrCommon = apsdb.require("registration/common")
+
+var configuration = scriptrCommon.getConfiguration()
+var isRegistrationPending = false;
+var resendValidationEmail = false;
+var commonLib = apsdb.require("registration/commonLib")
+
+function sendEmail(validationCode) {
+	var url = scriptrCommon.parseTemplate(
+		configuration.templates.verifyUrl, 
+		{login: params.login, confirmation: validationCode})
+
+	var tokens = {
+	    projectName: configuration.projectName,
+	    apstrataHomeEnvironment: configuration.apstrataHomeEnvironment,
+	    apstrataHomeKey: configuration.apstrataHomeKey,
+	    appSiteURL: configuration.appSiteURL,
+	    user: params.name,
+	    url: url
+	}
+	
+	var emailSubject = scriptrCommon.parseTemplate(configuration.templates.subject, tokens)
+	var emailBody = scriptrCommon.parseTemplate(configuration.templates.body, tokens)
+		
+	var sendEmailInput = {
+		"apsma.to": params.email, 
+		"apsma.subject": emailSubject, 
+		"apsma.htmlBody": emailBody,
+		"apsma.senderName": "scriptr.io"		
+	};
+	
+	apsdb.log.debug("Email parameters", {params:sendEmailInput});
+	
+	return apsdb.callApi("SendEmail", sendEmailInput, null);		
+}
+
+function getUser(login) {
+	var params = {
+		login: login
+	}
+
+	return apsdb.callApi("GetUser", params, null);
+}
+
+try {
+	var params = {};
+	var login = request.parameters["login"];
+	var email = request.parameters["email"];
+	var name = request.parameters["name"];
+	var password = request.parameters["password"];
+	
+	if(login == null || (login != null && login.trim() != "")){
+		login = email;
+	}
+	
+	if(login != null && login.trim() != ""){
+		 var userResponse = getUser(login);
+		 console.log(JSON.stringify(userResponse));
+
+	     // verify that this login doesn't already exist
+	     if (userResponse.metadata.status == "success"){
+	    	//check if the user has an unverified account 
+	    	console.log(JSON.stringify(userResponse));
+	    	
+	    	 if(userResponse.result.user.code != null){
+	    		resendValidationEmail = request.parameters["resend"] != null && request.parameters["resend"] == "true";
+	    		 if(!resendValidationEmail){  
+	    			
+	    			 isRegistrationPending = true;
+	    			 return { 
+				    	status: "failure", 
+				    	errorDetail: "",
+					    errorCode: "VERIFICATION_PENDING"
+			    	};	 	
+	    		 }
+	    		 params["apsdb.update"] = "true";
+	    	 }else{
+	    		 return { 
+					status: "failure", 
+					errorDetail: "Unable to register user [email already exists]",
+					errorCode: "DUPLICATE_USER"
+				};		
+	    	 }	
+        	 params["name"] = userResponse.result.user.name;
+
+	     }
+    	 params["login"] = login;
+
+	}    
+	//update the registration data 
+	if(!resendValidationEmail){
+        params["name"] = name;
+    	params["password"] = password;
+		params["isSuspended"] = "true";
+	}
+	params["email"] = email;
+	
+    var validationCode = commonLib.generateCode();
+	params["code"] = validationCode;
+    console.log(JSON.stringify(params));
+	// Save the user
+	apsdb.log.debug("Save user params", {params: params});
+	saveUserResult = apsdb.callApi("SaveUser", params, null);
+
+	if (saveUserResult.metadata.status == "success") {
+		
+			var sendEmailResult = sendEmail(validationCode);
+			if (sendEmailResult.metadata.status == 'failure') {			
+				return { 
+					status: "failure", 
+					errorDetail: "Unable to send email [" 
+					 + sendEmailResult.metadata.errorDetail + "]",
+					 params : params 	
+				};
+			} else {			
+				var url = true;		
+				if ((configuration.registrationRedirectUrl) && (configuration.registrationRedirectUrl != "")){
+					url = configuration.registrationRedirectUrl;
+				}
+				
+				return {
+					status : "success",
+					url : url				
+				}
+			}
+	
+	} else {		
+		return { 
+			status: "failure", 
+			errorDetail: "Unable to register user [" 
+			 + saveUserResult.metadata.errorCode + "]"
+		};
+	}
+}catch(exception) {	
+	return { 
+		status: "failure", 
+		errorDetail: "Unable to register user [" 
+		 + exception + "]"
+	};	
+}
+
+

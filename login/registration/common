@@ -1,0 +1,138 @@
+<script>
+<scriptACL>
+     <execute>anonymous</execute>
+     <read>nobody</read>
+     <write>nobody</write>
+</scriptACL>
+<code><![CDATA[
+
+/*
+ * The below variables will be populated at deployment time with the correct values
+ */
+
+// The name of the project (or site) the user is subscribing to
+var projectName = "scriptr.io";
+
+// The name of the default group to which subscribing users will belong once registered
+var defaultUsersGroup = "users";
+
+// The rest url of the apstrata home environment
+var apstrataHomeEnvironment = "https://local.apstrata.com/apsdb/rest";
+
+// The auth key of the provisioning account on the client application
+var apstrataHomeKey = "G7E819C6D6 ";
+
+// The secret of the provisioning account on the client application
+var apstrataHomeSecret = "V85D8305B74B692F004993F5EFFEE468";
+
+// The type of registration that is required ("user" -> for user registration, or "account" -> for account creation)
+var registrationType = "account";
+
+// Specify if an email should be sent to the user upon successful registration (true/false)
+var sendEmailOnceRegistrationConfirmed = true;
+
+// The URL that is sent in the verification e-mail for the subscriber to click on (you normally should not change this)
+var verifyUrl = apstrataHomeEnvironment + "/" + apstrataHomeKey + "/RunScript?apsws.authMode=simple&apsdb.scriptName=registration%2FverifyAccount&login=$login&d=$confirmation";
+
+// The base url of the website
+var appSiteURL = "http://scriptr.local.elementn.com";
+
+// The URL where to redirect the user after he submits his registration form
+var registrationRedirectUrl = appSiteURL + "/processingReg";
+
+// Specify if an email should be sent to the site admin upon successful registration (true/false)
+var sendEmailToSiteAdmin = true;
+
+var siteAdminEmail = "wissam.saikali@elementn.com";
+
+// The id of the device that gets created upon user registration confirmation
+var deviceId = "scriptr";
+
+//configuration used for mailchaimp subscription.
+var subscribeToMailchimp = true;
+var mailChimpApiKey = "N/A";
+var mailChimpListId = "N/A";
+var mailChimpURI = "https://us5.api.mailchimp.com/2.0/lists/subscribe.json";
+ 
+var zohoClientId = "N/A";
+var zohoSecretId = "N/A";
+var zohoRefreshId = "N/A";
+var zohoDepartmentId = "${zohoDepartmentId}";
+var zohoCompany = "";
+
+var vboutKey = "N/A";
+var vboutAPIURL = "https://api.vbout.com/1";
+var vboutListId = "4327";
+var subscribeToVBout = true;
+
+var defaultAppName = "My Application";
+var scriptrTechnicalEmail = "elias.sfeir@elementn.com";
+
+var configuration = {
+	projectName: projectName,
+	defaultUsersGroup: defaultUsersGroup,
+	apstrataHomeEnvironment: apstrataHomeEnvironment,	
+	apstrataHomeKey: apstrataHomeKey,
+	registrationType: registrationType,
+	registrationRedirectUrl: registrationRedirectUrl,
+	sendEmailOnceRegistrationConfirmed: sendEmailOnceRegistrationConfirmed,	
+	sendEmailToSiteAdmin: sendEmailToSiteAdmin,
+	siteAdminEmail: siteAdminEmail,
+	appSiteURL: appSiteURL,
+	deviceId: deviceId,
+	subscribeToMailchimp: subscribeToMailchimp,
+	mailChimpApiKey: mailChimpApiKey,
+	mailChimpListId: mailChimpListId,
+	mailChimpURI: mailChimpURI,
+	vboutKey:vboutKey, 
+	vboutAPIURL:vboutAPIURL,
+	vboutListId:vboutListId,
+	subscribeToVBout:subscribeToVBout,
+	defaultAppName: defaultAppName,
+	scriptrTechnicalEmail: scriptrTechnicalEmail,
+	templates: {
+		subject: "$projectName Email Verification",
+		body: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Newsletter</title></head><body><table width="600" cellpadding="0" cellspacing="0" align="center" bgcolor="#f1f1f1"><tr><td bgcolor="#313131"><table cellpadding="0" cellspacing="0" bgcolor="#313131"><tr><td width="40" bgcolor="#313131">&nbsp;</td><td width="170" style="line-height:50px;"><a target="_blank" href="$appSiteURL"><img style="margin: 0; border: 0; padding: 0; display: block;" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=logo.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" alt="" border="0" width="170px" height="50px"/></a></td><td width="390" bgcolor="#313131">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#ffffff" height="30">&nbsp;</td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0"><tr><td width="40" bgcolor="#ffffff">&nbsp;</td><td width="520" bgcolor="#ffffff"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="font-size: 13px;"><font color="#333333" face="Arial" style="line-height: 150%;">Hello $user,<br /><br />Thank you for signing up to scriptr&#173;.io! <br /><br />To activate your account, click on the link below, or you can copy and paste the link into the address bar of your browser. <br /><br /> <a id="scriptrConfirmationLink" target="_blank" href="$url" style="color:#F99219; text-decoration:none;">$url</a><br /></font> </td></tr><tr><td height="20">&nbsp;</td></tr></table></td><td width="40" bgcolor="#ffffff">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#222222" height="20">&nbsp;</td></tr><tr><td bgcolor="#222222"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td width="40">&nbsp;</td><td width="300"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">Happy Scripting</font></td></tr><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">&nbsp;</font></td></tr><tr><td height="20"></td></tr><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">The scriptr&#173;.io Team</font></td></tr></table></td><td></td><td><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td style="font-size:12px;" align="right"><font color="#ffffff" face="Arial">Follow us on</font></td></tr><tr><td height="10">&nbsp;</td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" align="right"><tr><td width="42">&nbsp;</td><td width="32"><a target="_blank" href="http://www.facebook.com/scriptrdotio"><img width="32px" height="32px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=facebook.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" /></a></td><td width="10">&nbsp;</td><td width="32"><a target="_blank" href="http://twitter.com/scriptrdotio"><img width="31px" height="34px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=twitter.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" /></a></td><td width="10"></td><td width="32"><a target="_blank" href="http://blog.scriptr.io/"><img width="32px" height="32px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=blog.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata"/></a></td></tr></table></td></tr></table></td><td width="40">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#222222" height="20">&nbsp;</td></tr></table></body></html>',
+		verifyUrl: verifyUrl 
+	},
+
+	templatesConfirmed:{
+		"scriptr" : {
+			subject: "Welcome to $projectName",
+			body: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Newsletter</title></head><body><table width="600" cellpadding="0" cellspacing="0" align="center" bgcolor="#f1f1f1"><tr><td bgcolor="#313131"><table cellpadding="0" cellspacing="0" bgcolor="#313131"><tr><td width="40" bgcolor="#313131">&nbsp;</td><td width="170" style="line-height:50px;"><a target="_blank" href="$appSiteURL"><img style="margin: 0; border: 0; padding: 0; display: block;" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=logo.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" alt="" border="0" width="170px" height="50px"/></a></td><td width="390" bgcolor="#313131">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#ffffff" height="30">&nbsp;</td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0"><tr><td width="40" bgcolor="#ffffff">&nbsp;</td><td width="520" bgcolor="#ffffff"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="font-size: 13px;"><font color="#333333" face="Arial" style="line-height: 150%;">Welcome to scriptr&#173;.io $user,<br /><br />You are one step away from creating great projects!<br /><br />Before getting started with your first script, you can go through our first <a target="_blank" href="http://blog.scriptr.io/weather-machine" style="color:#F99219;text-decoration:none;">tutorial</a> that shows you how to create a weather machine in less than an hour. You can also check our detailed <a target="_blank" href="$appSiteURL/documentation" style="color:#F99219;text-decoration:none;">documentation</a> to learn how to harness the power of scriptr&#173;.io.<br /><br />You can <a target="_blank" href="$appSiteURL/login" style="color:#F99219; text-decoration:none;">login</a> to your <a target="_blank" href="$appSiteURL/workspace" style="color:#F99219; text-decoration:none;">workspace</a> to manage your projects as well as test and run your scripts. <br /><br />If you encounter any issues or have a specific question you can contact our support team on <a target="_blank" href="mailto:support@scriptr.io" style="color:#F99219; text-decoration:none;">support@scriptr.io</a>.<br /><br />Don\'t forget to check out our <a target="_blank" href="http://blog.scriptr.io" style="color:#F99219;text-decoration:none;">blog</a>, like us on <a target="_blank" href="http://www.facebook.com/scriptrdotio" style="color:#F99219; text-decoration:none;">Facebook </a>and follow us on <a target="_blank" href="http://twitter.com/scriptrdotio" style="color:#F99219;text-decoration:none;">Twitter</a> to get updates on our latest news and tutorials.<br /><br /><div style="text-align:center"><a target="_blank" href="$appSiteURL/workspace"><img src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=btn.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" alt="get started" title="Get Started" /></a></div></font></td></tr><tr><td height="20">&nbsp;</td></tr></table></td><td width="40" bgcolor="#ffffff">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#222222" height="20">&nbsp;</td></tr><tr><td bgcolor="#222222"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td width="40">&nbsp;</td><td width="300"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">Happy Scripting</font></td></tr><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">&nbsp;</font></td></tr><tr><td height="20"></td></tr><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">The scriptr&#173;.io Team</font></td></tr></table></td><td><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td style="font-size:12px;" align="right"><font color="#ffffff" face="Arial">Follow us on</font></td></tr><tr><td height="10">&nbsp;</td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" align="right"><tr><td width="42">&nbsp;</td><td width="32"><a target="_blank" href="http://www.facebook.com/scriptrdotio"><img width="32px" height="32px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=facebook.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" /></a></td><td width="10">&nbsp;</td><td width="32"><a target="_blank" href="http://twitter.com/scriptrdotio"><img width="31px" height="34px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=twitter.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" /></a></td><td width="10"></td><td width="32"><a target="_blank" href="http://blog.scriptr.io/"><img width="32px" height="32px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=blog.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata"/></a></td></tr></table></td></tr></table></td><td width="40">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#222222" height="20">&nbsp;</td></tr></table></body></html>'
+		},
+		"multitech" : {
+			subject: "Welcome to $projectName",
+			body: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Newsletter</title></head><body><table width="600" cellpadding="0" cellspacing="0" align="center" bgcolor="#f1f1f1"><tr><td bgcolor="#313131"><table cellpadding="0" cellspacing="0" bgcolor="#313131"><tr><td width="40" bgcolor="#313131">&nbsp;</td><td width="170" style="line-height:50px;"><a target="_blank" href="$appSiteURL"><img style="margin: 0; border: 0; padding: 0; display: block;" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=logo.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" alt="" border="0" width="170px" height="50px"/></a></td><td width="390" bgcolor="#313131">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#ffffff" height="30">&nbsp;</td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0"><tr><td width="40" bgcolor="#ffffff">&nbsp;</td><td width="520" bgcolor="#ffffff"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="font-size: 13px;"><font color="#333333" face="Arial" style="line-height: 150%;">Welcome to scriptr&#173;.io $user,<br /><br />You are one step away from creating great projects!<br /><br />Your account is pre-configured with two sample applications, <a target="_blank" href="http://www.scriptr.io/login" style="color:#F99219; text-decoration:none;">login</a> to your <a target="_blank" href="http://www.scriptr.io/workspace" style="color:#F99219; text-decoration:none;">workspace</a> to get started. To learn how to get your MultiConnect<span class="fnt19">&reg;</span> Conduit&trade; connected to <a target="_blank" href="http://www.scriptr.io" style="color:#F99219; text-decoration:none;">scriptr.io</a> check out the <a target="_blank" href="https://blog.scriptr.io/connecting-the-multitech-conduit-to-scriptr-io" style="color:#F99219; text-decoration:none;">Connecting the MultiTech Conduit to Scriptr.io</a> blog post.<br/><br/>You can also check our detailed <a target="_blank" href="http://www.scriptr.io/documentation" style="color:#F99219;text-decoration:none;">documentation</a> to learn how to harness the power of <a target="_blank" href="http://www.scriptr.io" style="color:#F99219; text-decoration:none;">scriptr.io</a>. <br/><br/>If you encounter any issues or have a specific question you can contact our support team on <a target="_blank" href="mailto:support@scriptr.io" style="color:#F99219; text-decoration:none;">support@scriptr.io</a>.<br /><br />Don\'t forget to check out our <a target="_blank" href="http://blog.scriptr.io" style="color:#F99219;text-decoration:none;">blog</a>, like us on <a target="_blank" href="http://www.facebook.com/scriptrdotio" style="color:#F99219; text-decoration:none;">Facebook </a>and follow us on <a target="_blank" href="http://twitter.com/scriptrdotio" style="color:#F99219;text-decoration:none;">Twitter</a> to get updates on our latest news and tutorials.<br /><br /><div style="text-align:center"><a target="_blank" href="http://www.scriptr.io/workspace"><img src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=btn.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" alt="get started" title="Get Started" /></a></div></font></td></tr><tr><td height="20">&nbsp;</td></tr></table></td><td width="40" bgcolor="#ffffff">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#222222" height="20">&nbsp;</td></tr><tr><td bgcolor="#222222"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td width="40">&nbsp;</td><td width="300"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">Happy Scripting</font></td></tr><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">&nbsp;</font></td></tr><tr><td height="20"></td></tr><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">The scriptr&#173;.io Team</font></td></tr></table></td><td><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td style="font-size:12px;" align="right"><font color="#ffffff" face="Arial">Follow us on</font></td></tr><tr><td height="10">&nbsp;</td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" align="right"><tr><td width="42">&nbsp;</td><td width="32"><a target="_blank" href="http://www.facebook.com/scriptrdotio"><img width="32px" height="32px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=facebook.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" /></a></td><td width="10">&nbsp;</td><td width="32"><a target="_blank" href="http://twitter.com/scriptrdotio"><img width="31px" height="34px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=twitter.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" /></a></td><td width="10"></td><td width="32"><a target="_blank" href="http://blog.scriptr.io/"><img width="32px" height="32px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=blog.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata"/></a></td></tr></table></td></tr></table></td><td width="40">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#222222" height="20">&nbsp;</td></tr></table></body></html>'
+		}
+	},
+	
+	resetPasswordVerification: {
+		subject: "Reset Password - Verification",
+		body: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Newsletter</title></head><body><table width="600" cellpadding="0" cellspacing="0" align="center" bgcolor="#f1f1f1"><tr><td bgcolor="#313131"><table cellpadding="0" cellspacing="0" bgcolor="#313131"><tr><td width="40" bgcolor="#313131">&nbsp;</td><td width="170" style="line-height:50px;"><a target="_blank" href="$appSiteURL"><img style="margin: 0; border: 0; padding: 0; display: block;" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=logo.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" alt="" border="0" width="170px" height="50px"/></a></td><td width="390" bgcolor="#313131">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#ffffff" height="30">&nbsp;</td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0"><tr><td width="40" bgcolor="#ffffff">&nbsp;</td><td width="520" bgcolor="#ffffff"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="font-size: 13px;"><font color="#333333" face="Arial" style="line-height: 150%;">Hello $user,<br /><br /> Your password has been reset. <br/><br/> Please click on the link below to set your new password. If the link does not work, copy and paste the link directly into the address bar of your internet browser.<br/><a href="$url" style="color:#F99219; text-decoration:none;">$url</a><br/><br/></font> </td></tr><tr><td height="20">&nbsp;</td></tr></table></td><td width="40" bgcolor="#ffffff">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#222222" height="20">&nbsp;</td></tr><tr><td bgcolor="#222222"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td width="40">&nbsp;</td><td width="300"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">Happy Scripting</font></td></tr><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">&nbsp;</font></td></tr><tr><td height="20"></td></tr><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">The scriptr&#173;.io Team</font></td></tr></table></td><td></td><td><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td style="font-size:12px;" align="right"><font color="#ffffff" face="Arial">Follow us on</font></td></tr><tr><td height="10">&nbsp;</td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" align="right"><tr><td width="42">&nbsp;</td><td width="32"><a target="_blank" href="http://www.facebook.com/scriptrdotio"><img width="32px" height="32px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=facebook.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" /></a></td><td width="10">&nbsp;</td><td width="32"><a target="_blank" href="http://twitter.com/scriptrdotio"><img width="31px" height="34px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=twitter.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" /></a></td><td width="10"></td><td width="32"><a target="_blank" href="http://blog.scriptr.io/"><img width="32px" height="32px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=blog.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata"/></a></td></tr></table></td></tr></table></td><td width="40">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#222222" height="20">&nbsp;</td></tr></table></body></html>',
+		// The URL that is sent in the verification e-mail for the subscriber to click on (you normally should not change this)
+		resetUrl: appSiteURL + "/resetPassword?resetToken=$resetToken"
+	},
+	
+	templatesZendesk: {
+		body: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Newsletter</title></head><body><table width="600" cellpadding="0" cellspacing="0" align="center" bgcolor="#f1f1f1"><tr><td bgcolor="#313131"><table cellpadding="0" cellspacing="0" bgcolor="#313131"><tr><td width="40" bgcolor="#313131">&nbsp;</td><td width="170" style="line-height:50px;"><a target="_blank" href="$appSiteURL"><img style="margin: 0; border: 0; padding: 0; display: block;" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=logo.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" alt="" border="0" width="170px" height="50px"/></a></td><td width="390" bgcolor="#313131">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#ffffff" height="30">&nbsp;</td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0"><tr><td width="40" bgcolor="#ffffff">&nbsp;</td><td width="520" bgcolor="#ffffff"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="font-size: 13px;"><font color="#333333" face="Arial" style="line-height: 150%;">{{content}}</font> </td></tr><tr><td height="20">&nbsp;</td></tr></table></td><td width="40" bgcolor="#ffffff">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#222222" height="20">&nbsp;</td></tr><tr><td bgcolor="#222222"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td width="40">&nbsp;</td><td width="300"><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">Happy Scripting</font></td></tr><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">&nbsp;</font></td></tr><tr><td height="20"></td></tr><tr><td style="font-size:12px;"><font color="#ffffff" face="Arial">The scriptr&#173;.io Team</font></td></tr></table></td><td></td><td><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" width="100%"><tr><td style="font-size:12px;" align="right"><font color="#ffffff" face="Arial">Follow us on</font></td></tr><tr><td height="10">&nbsp;</td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0" bgcolor="#222222" align="right"><tr><td width="42">&nbsp;</td><td width="32"><a target="_blank" href="http://www.facebook.com/scriptrdotio"><img width="32px" height="32px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=facebook.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" /></a></td><td width="10">&nbsp;</td><td width="32"><a target="_blank" href="http://twitter.com/scriptrdotio"><img width="31px" height="34px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=twitter.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata" /></a></td><td width="10"></td><td width="32"><a target="_blank" href="http://blog.scriptr.io/"><img width="32px" height="32px" border="0" alt="" src="$apstrataHomeEnvironment/$apstrataHomeKey/GetFile?apsdb.fileName=blog.png&apsdb.fieldName=apsdb_attachments&apsdb.documentKey=logo&apsdb.store=apstrata"/></a></td></tr></table></td></tr></table></td><td width="40">&nbsp;</td></tr></table></td></tr><tr><td bgcolor="#222222" height="20">&nbsp;</td></tr></table></body></html>'
+	}
+
+	
+}
+
+function parseTemplate(template, tokens) {
+    var t = template + ""
+    for (var key in tokens) {
+        template = template.replace(new RegExp("\\$"+key, "g"), tokens[key])
+    }    
+    return template
+}
+
+function getConfiguration() {
+	return configuration
+}
+
+]]>
+</code>
+</script>
