@@ -1,0 +1,32 @@
+/*
+ * This script can be used to register users or to create accounts (if the caller is entitled to do so).
+ * @param : mandatory parameters are "name", "email", "password", 
+ *
+ * {status : "failure", errorDetail : "xxxx", errorCode: "yyyy"} in case of failure
+ */
+var log = require("log")
+log.setLevel("INFO");
+log.info("something"); 
+
+/* register script */
+
+/* return fail */
+// verification pending
+return { 
+    status: "failure", 
+    errorDetail: "",
+    errorCode: "VERIFICATION_PENDING"
+};	
+// duplicate user
+return { 
+    status: "failure", 
+    errorDetail: "Unable to register user [email already exists]",
+    errorCode: "DUPLICATE_USER"
+};		
+// unable to register
+/*return { 
+			status: "failure", 
+			errorDetail: "Unable to register user [" 
+			 + saveUserResult.metadata.errorCode + "]"
+		};
+*/

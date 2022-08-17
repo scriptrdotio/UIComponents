@@ -1,0 +1,115 @@
+<script>
+<scriptACL>
+  <execute>anonymous</execute>
+  <read>nobody</read>
+  <write>nobody</write>
+</scriptACL>
+<code><![CDATA[
+
+/*
+ * This script should be used when registering a new user or when provisioning a new account.
+ * The script will consider that it is running an account provisioning scenario 
+ * if one of the following is true
+ * (a)registration/common/configuration.registrationType == "account"
+ * (b) request.parameters["registrationType"] == "account"
+ * @param login : the login of the user 
+ * @param d : the validation code
+ * @return : if successful and registrationRedirectUrl is defined in registration/common, returns the url + 
+ * "&status=complete". Otherwise (if url not specified) returns the last response.
+ * If unsuccessful and redirection url defined, returns the url + "&status=error&error=error_msg".
+ * Otherwise, returns {status: "failure", errorDetail: the_error_messag}
+ */
+
+var logLevel = request.parameters["logLevel"];
+if (logLevel){
+	apsdb.log.setLogLevel(logLevel); 
+}
+
+var scriptrCommon = apsdb.require("registration/common");
+var configuration = scriptrCommon.getConfiguration();
+  
+// Retrieve the temporary user and verify that the temporary profile contains
+// the provided confirmation code
+try {	
+
+	var getUserParams = {
+		login: request.parameters["login"]
+	};
+	
+	var user = apsdb.callApi("GetUser", getUserParams, null);
+	
+ // check if d parameter was sent in the request
+	if(!(request.parameters["d"]) || request.parameters["d"]==null){
+		throw "INVALID_REQUEST";
+	}
+	
+	if (!(user.result) || (!user.result.user) || (user.result.user.code != request.parameters["d"])) {
+		throw "WRONG_CONFIRMATION_CODE";		
+	}
+	
+	// If we were able to retrieve the user, prepare to update its profile info 			
+	// Create the parameters of the SaveUser API from the data contained
+	// in the temporary user document
+	user = user.result.user;
+
+	// retrieve advanced configuration 
+	var advancedScriptrCommon = apsdb.require("registration/common.advanced");
+	var advancedConfig = advancedScriptrCommon.getConfiguration()
+
+	var updatedUser = {
+		"login": user.login,
+		"isSuspended": "false",
+		"apsdb.update": "true",
+		"code": "",
+		"groups": configuration.defaultUsersGroup,
+		"name": user.name, // used in the function that creates the application account for the user
+		"email": user.email // used in the function that creates the application account for the user
+	};
+	if(user.promoCode) {
+		updatedUser.promoCode = user.promoCode;
+	}
+	
+	var commonLib = apsdb.require("registration/commonLib");
+	commonLib.registerUser(request, updatedUser, configuration, advancedConfig, apsdb, logLevel);
+		
+	var response = {status : "success", result : response }; 
+	var url = configuration.registrationRedirectUrl;
+	if (url && url != ""){
+		if (url.indexOf("?") > 0) {
+			apsdb.httpRedirect(url + "&status=complete");
+		} else {
+			apsdb.httpRedirect(url + "?status=complete");
+		}						
+	}else {
+		return response;
+	}
+	
+}catch(exception){
+	
+	apsdb.log.debug("Exception", {exception: exception});
+	
+	var errorDetail = exception ? exception : "An error occurred";		
+	var resp = {
+		status: "failure", 		
+		errorDetail: exception
+	};
+	
+	var url = configuration.registrationRedirectUrl;
+	
+	apsdb.log.debug("Redirect URL", {url : url});
+	
+	if (url && url != ""){
+		if (url.indexOf("?") > 0) {
+			apsdb.httpRedirect(url + "&status=error&error=" + resp.errorDetail);
+		} else {
+			apsdb.httpRedirect(url + "?status=error&error=" + resp.errorDetail);
+		}
+					
+	}else {
+		return resp;
+	}
+}
+
+]]>
+</code>
+</script>

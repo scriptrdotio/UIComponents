@@ -17,6 +17,7 @@ $.urlParam = function(name){
         return results[1] || 0;
     }
 }
+
 $.widget( "scriptr.loginWidget", {
     _create: function() {
         var self = this;
@@ -41,6 +42,9 @@ $.widget( "scriptr.loginWidget", {
         }
         if(this.options.loginApi){
             this.loginApi = this.options.loginApi;  
+        }
+        if(this.options.registerApi){
+            this.registerApi = this.options.registerApi;  
         }
         $.scriptr.authorization({
             validateTokenApi: this.options.validateTokenApi,
@@ -72,11 +76,79 @@ $.widget( "scriptr.loginWidget", {
             }else{
                 $("#login-wrap").show();
             }
+            if(this.verification_pending){
+                
+            }
             if(this.element.find("#langSelect") != null){
                 this.element.find("#langSelect").val(this.defaultLang);
                 this.element.find("#langSelect").on("change", jQuery.proxy(this.changeLanguage,this));
             }
         }, this));
+        /* registration form */
+         $('#registerForm').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                register_firstName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'register-first-name-required-error'
+                        }
+                    }
+                },
+                register_lastName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'register-last-name-required-error'
+                        }
+                    }
+                },
+                register_email: {
+                    validators: {
+                        emailAddress: {
+                            message: 'register-email-required-error'
+                        }
+                    }
+                },
+                register_password: {
+                    validators: {
+                        notEmpty: {
+                            message: 'register-password-required-error'
+                        }
+                    }
+                },
+                register_confirmPassword: {
+                    validators: {
+                        notEmpty: {
+                            message: 'register-confirm-password-required-error'
+                        },
+                        identical: {
+                            field: 'register_password',
+                            message: 'confirm-password-error'
+                        }
+                    }
+                }
+            }
+        }).on('error.validator.bv', function(e, data) {
+            // $(e.target)    --> The field element
+            // data.bv        --> The BootstrapValidator instance
+            // data.field     --> The field name
+            // data.element   --> The field element
+            // data.validator --> The current validator name
+            var el = data.element
+                .data('bv.messages')
+            // Hide all the messages
+                .find('.help-block[data-bv-for="' + data.field + '"]').hide()
+            // Show only message associated with current validator
+                .filter('[data-bv-validator="' + data.validator + '"]');
+            //translate error message before showing field
+            el[0].innerText = $.i18n(el[0].innerText);
+            el.show();
+        });
+        /* end of  registration form */
         
         $('#loginForm').bootstrapValidator({
             feedbackIcons: {
@@ -203,9 +275,35 @@ $.widget( "scriptr.loginWidget", {
             el.show();
         });
         
+        
+        
         this.element.find("#submitForgotPassBtn").on("click",jQuery.proxy(this.forgotPassword,this));
         this.element.find("#submitBtn").on("click",jQuery.proxy(this.login,this));
         this.element.find("#submitResetPasswordBtn").on("click",jQuery.proxy(this.resetPassword,this));
+        this.element.find("#submitRegBtn").on("click",jQuery.proxy(this.register,this));
+        
+        /* if resend verification email link is requested */
+        //this.element.find("#verification_email_anchor").on("click",jQuery.proxy(function(e){
+        $("#verification_email_anchor").on("click",jQuery.proxy(function(e){
+        	// set resend flag and call register functions
+            //alert("alert");
+            this.resend = true;
+            this.register();
+        },this));
+        
+         this.element.find('#back_to_login_anchor').on('click', jQuery.proxy(function(e) {
+            this.switchForm('forgot-password-wrap', 'login-wrap');
+        }, this));
+        
+        /* register form handling enter */
+        $('#registerForm').on('keypress', jQuery.proxy(function(e) {
+            e.stopImmediatePropagation();
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                e.preventDefault();
+                this.register();
+            }
+        }, this));
         
         $('#loginForm').on('keypress', jQuery.proxy(function(e) {
             e.stopImmediatePropagation();
@@ -240,6 +338,83 @@ $.widget( "scriptr.loginWidget", {
         this.element.find('#back_to_login_anchor').on('click', jQuery.proxy(function(e) {
             this.switchForm('forgot-password-wrap', 'login-wrap');
         }, this));
+    },
+    
+    register:function(){
+        var validator = $('#registerForm').data('bootstrapValidator');
+        validator.validate();
+        if(!validator.isValid()){
+            return;
+        }
+        this.showLoading();
+        var fname 	= this.element.find("#register_firstName").val();
+        var lname	= this.element.find("#register_lastName").val();
+      	var email	= this.element.find("#register_email").val();
+        var password= this.element.find("#register_password").val();
+        
+        var resend = false
+        // if clicked by resend
+        if(this.resend){
+            resend = true
+        }
+        var parameters = {"fname" : fname,"lname":lname,"email":email, "password" : password, "resend":resend};
+        
+        console.log("location : "+document.location.hostname + this.registerApi)
+        
+        $.ajax({
+            type: "POST",
+            url: "https://"+ document.location.hostname + this.registerApi,
+            data: parameters,
+            dataType: 'json',
+            success: jQuery.proxy(function(data) {
+                validator.resetForm();
+                var errorMessageDiv = 	this.element.find("#errorMessage");
+                //console.log(" data "+JSON.stringify(data))
+                //console.log(" data "+JSON.stringify(data.response.result))
+                $('#verification-error-div').hide();
+                $('#duplicate-error-div').hide();
+                
+                if(data.response.metadata.status == "success"){ //script could fail for unexpected reasons.
+                    if(data.response.result && data.response.result.status == "success"){
+                        localStorage.user = JSON.stringify(data.response.result.result.user);
+                        location.href= this.redirectTarget;
+                    }else{
+                        if(data.response.result && data.response.result.errorCode == "VERIFICATION_PENDING"){
+                            console.log("verification pending")
+                            // show verification message 
+                            $('#verification-error-div').show();
+                        }else if(data.response.result && data.response.result.errorCode == "DUPLICATE_USER"){
+                            // show duplicate user message
+                            $('#duplicate-error-div').show();
+                        }
+                        /*console.log("failed ")
+                        this.hideLoading();
+                        errorMessageDiv.removeClass("hide");
+                        errorMessageDiv.text($.i18n('invalid-login-credentials'));
+                        setTimeout(function() {
+                            errorMessageDiv.addClass("hide");
+                        }, 5000);*/
+                    }
+                }else{
+                    /*console.log("failed 2")
+                    errorMessageDiv.removeClass("hide");
+                    errorMessageDiv.text($.i18n('INTERNAL_ERROR'));
+                    setTimeout(function() {
+                        errorMessageDiv.addClass("hide");
+                    }, 5000);*/
+                }
+            },this), error:jQuery.proxy(function(){
+                this.hideLoading();
+                var errorMessageDiv = 	this.element.find("#errorMessage");
+                errorMessageDiv.removeClass("hide");
+                errorMessageDiv.text($.i18n('INTERNAL_ERROR'));
+                setTimeout(function() {
+                    errorMessageDiv.addClass("hide");
+                }, 5000);
+            },this)	
+        });
+        
+        
     },
     login:function(){
         var validator = $('#loginForm').data('bootstrapValidator');

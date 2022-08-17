@@ -1,0 +1,240 @@
+<script>
+<scriptACL>
+  <execute>nobody</execute>
+  <read>nobody</read>
+  <write>nobody</write>
+</scriptACL>
+<code><![CDATA[
+
+var log = require("log");
+log.setLevel("INFO");
+               
+/***********************************************************************
+ * This function creates an application account for the user, creates
+ * a device under the application account, generates a token for the 
+ * device and finally saves the user document in the user directory
+ **********************************************************************/
+function registerUser(request, user, configuration, advancedConfig, apsdb, logLevel, welcomeEmail) {
+	var applications = {};
+	var authKey = "";
+	var authSecret = "";
+	var deviceId = "";
+	var deviceToken = "";
+	var response = {};
+	
+	if (welcomeEmail === undefined) {
+		welcomeEmail = true;
+	}
+	
+	response = apsdb.callApi("SaveUser", user, attachments);		
+	
+	
+	if (response.metadata.status == "failure") {
+		//resp = accountProcess.handleAccountDeletion(authKey, advancedConfig, apsdb, logLevel);
+		throw "USER-C";
+	}
+	
+	// sendWelcomeEmail e-mail
+	if (configuration.sendEmailOnceRegistrationConfirmed == true && welcomeEmail == true) {
+		sendWelcomeEmail(apsdb, user, configuration);
+	}
+	
+	return {
+		appId: authKey,
+		appSecret: authSecret,
+		deviceId: deviceId,
+		deviceToken: deviceToken
+	}
+	
+}
+
+
+
+function generateKey (apsdb, params) {
+	var conc = "";
+	var key;
+	for (key in params) {
+		conc += params [key];
+	}
+	
+	var md5Lib = apsdb.require("registration/hex.library");
+	
+	var result = md5Lib.hex_md5(conc);
+	return result;
+}
+
+/**
+ * get the user profile.
+ *
+ * @return { "status" : "success", "userProfile" : user}. 
+ */
+function getUserProfile(apsdb, login, loggedInUser) {
+	// returns the user's profile.
+	var userRequestParams = {"apsdb.attributes": '*', "apsdb.query": 'login = "' + login + '"'};
+	if(loggedInUser) userRequestParams["apsdb.runAs"] = loggedInUser;
+	
+    var users = apsdb.callApi("ListUsers", userRequestParams, null);
+	if (users.metadata.status == "failure" || users.result.users.length == 0) {
+		return users.metadata;
+		//return { status: "failure", errorDetail: "Unable to get profile for user " + login };
+	} else {
+		var tmpObj = users.result.users[0], user = {};
+		var prp = null
+		for (prp in tmpObj) {
+			if (prp != "groups")
+				user[prp] = tmpObj[prp][0];
+			else
+				user[prp] = tmpObj[prp];
+		}
+	}
+	return { "status" : "success", "userProfile" : user};
+}
+
+/**
+Validates that each item in the array "requiredParams" exists as a key in "params" and has a value.
+@param params: map of keys & values
+@param requiredParams: array of parameters that should exist as keys in params and should have values.
+@return an array:
+		"status" = "success" or "failure" 
+		if "failure" then result["errorDetail"] will be an array, keyed by the parameter names that that had an error, and containing 
+		"errorDetail" with the reason
+*/
+function validateParamsNonEmpty (apsdb, params, requiredParams) {
+
+	var result = {"status":"success", "errorCode":{}, "errorDetail":{}};
+	
+	for (var i = 0; i < requiredParams.length; i ++){
+		var key = requiredParams [i];
+		var value = params [key];
+		var keySuccess = {};
+		keySuccess = validateParamIsSet (key,  value);
+		
+		if (keySuccess.status == "failure"){
+			result.status = "failure";
+			result["errorDetail"][key] = {"errorDetail":keySuccess.errorDetail};
+			result["errorCode"][key] = {"errorCode":keySuccess.errorCode};
+		}
+	}
+	
+	return result;
+
+}
+
+/**
+Validates that the given value is not empty.
+@param name: The name of the parameter being validated.
+@param value: The value that must not be empty.
+@return an array keyed by "status" and "errorDetail". If status is "success" then validation passed, else status will be "failure" and errorDetail will give the description of the error.
+*/
+function validateParamIsSet (name, value) {
+	var message = { "status" : "success" };
+	
+	var result = true;
+	if (typeof value == 'undefined') {
+		result = false;
+	}else if (typeof value == 'string' && value == '') {
+		result = false;
+	}else if (typeof value == 'object' && value == null){
+		result = false;
+	}
+	if (!result) {
+		message = { "status": "failure", "errorCode": "MISSING_PARAMETER", "errorDetail": "This parameter is required: " + name };
+	}		
+	return message;
+}
+
+function generateCode() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 10; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+function sendWelcomeEmail(apsdb, user, configuration) {
+	var scriptrCommon = apsdb.require("registration/common");
+
+	var tokens = {
+	    projectName: configuration.projectName,
+	    user: user.name,
+	    appSiteURL: configuration.appSiteURL,
+	    apstrataHomeEnvironment: configuration.apstrataHomeEnvironment,
+	    apstrataHomeKey: configuration.apstrataHomeKey,
+	    app_code: user.promoCode
+	};
+	var	emailSubject;
+	var	emailBody;
+	if(user.promoCode && configuration.templatesConfirmed[user.promoCode.toLowerCase()] != null){
+		emailSubject = scriptrCommon.parseTemplate(configuration.templatesConfirmed[user.promoCode.toLowerCase()].subject, tokens);
+		emailBody = scriptrCommon.parseTemplate(configuration.templatesConfirmed[user.promoCode.toLowerCase()].body, tokens);
+	}else{
+		emailSubject = scriptrCommon.parseTemplate(configuration.templatesConfirmed["scriptr"].subject, tokens);
+		emailBody = scriptrCommon.parseTemplate(configuration.templatesConfirmed["scriptr"].body, tokens);
+	}
+	
+	var sendEmailInput = {
+		"apsma.to": user.email, 
+		"apsma.subject": emailSubject, 
+		"apsma.htmlBody": emailBody,
+		"apsma.senderName": "scriptr.io"
+	};
+	
+	return apsdb.callApi("SendEmail", sendEmailInput, null);	
+}
+
+function subscribeUserToMailchimp(apsdb, user, configuration) {
+	var mailChimpApiKey = configuration.mailChimpApiKey;
+	var listId = configuration.mailChimpListId;
+	var requestURI = configuration.mailChimpURI;
+    var groupingId = 17465;
+    var groupName = "Scriptr.io";
+	var theName = user.name.split(" ");
+	
+    var requestParamsObj = {
+                             "apikey": mailChimpApiKey,
+                             "id": listId,
+                             "email[email]": user.email,
+                             "merge_vars[FNAME]":theName[0],
+                             "merge_vars[LNAME]":theName.length > 1 ? theName[1]: "",
+                             "merge_vars[groupings][0][id]": groupingId,
+                             "merge_vars[groupings][0][groups][0]": groupName,
+                             "double_optin":"false",
+                             "send_welcome": "false"
+                           };
+
+	return apsdb.callHttp(requestURI, "GET", requestParamsObj, null, null, null, true, null, false, false);
+}
+
+function subscribeUserToVBout(apsdb,user,configuration){
+
+	var vboutKey = configuration.vboutKey;
+	var email = user.email; 
+	var name = user.name.split(" ");
+    var firstName = name[0];
+	var vboutListId = configuration.vboutListId;
+	var lastName = "";
+	
+    if(name.length > 1){
+        for(var i=1;i < name.length ;i++){
+            lastName += name[i];
+            if(i != (name.length - 1)){
+                lastName += " ";
+            }
+        }
+    }
+	
+    var uri = configuration.vboutAPIURL + "/emailmarketing/addcontact.json?" + encodeURI("key=" + vboutKey + "&status=active&email=" + email + "&listId=" + vboutListId  + "&fields[24692]=" + firstName + "&fields[24693]=" + lastName);
+	var params = {};
+	var response = apsdb.callHttp(uri, "POST" ,params, null, null, null, true, null, false, false);
+	log.info(JSON.stringify(response));
+	
+	return response; 
+
+}
+
+
+]]>
+</code>
+</script>
