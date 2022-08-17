@@ -11,6 +11,8 @@
 
 
 module.exports = function(grunt) {
+	
+	var sass = require('node-sass');
 
 	grunt
 	      .initConfig({
@@ -645,7 +647,18 @@ module.exports = function(grunt) {
 			            'dashboardBuilder/css/dark.css' : 'dashboardBuilder/css/dark.less'
 			         }
 		         }
-	         }
+	         },
+	         sass: {
+	            options: {
+	                implementation: sass,
+	                sourceMap: true
+	            },
+	            production: {
+	                files: {
+	                    '../login/view/css/registration.css': '../login/view/css/registration.scss'
+	                }
+	            }
+	        }
 	      });
 
 	var fs = require('fs');
@@ -694,9 +707,13 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-strip-css-comments');
+	grunt.loadNpmTasks('grunt-sass');
+	grunt.loadNpmTasks('node-sass');
 
 	// Run the tasks
 	grunt.registerTask('buildCss', [ 'less:production' ]);
+	
+	grunt.registerTask('buildScss', [ 'sass:production' ]);
 	grunt.registerTask('dashboardBuilder', [ 
 			'clean',
 			'fetchFromCDN', 
