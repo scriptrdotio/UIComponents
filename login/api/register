@@ -4,25 +4,114 @@
  *
  * {status : "failure", errorDetail : "xxxx", errorCode: "yyyy"} in case of failure
  */
+
+var users = require("user");
+var groups = require("group");
+var config = require("login/entities/config")
 var log = require("log")
 log.setLevel("INFO");
-log.info("something"); 
 
+
+/* get params */
+var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
+var params = typeof(body) == "string" ? JSON.parse(body) : body;
+log.info("params received"+JSON.stringify(params))
+
+
+var required = ["fname","lname","password","email","resend"]
+var isRegistrationPending = false;
+var resendValidationEmail = false;
+
+// validate parameters 
+var missing_parameter = false
+required.forEach(function(idx){
+    //console.log(idx+" "+params[idx]+(params[idx] === null))
+    if(params[idx] === null){
+        log.info("mising parameter "+idx)
+		missing_parameter= true        
+    }
+}) 
+// return failur in case of missing parameters.
+if(missing_parameter){
+    return { 
+            status: "failure", 
+    		errorDetail: "",
+    		errorCode: "MISSING_PARAMETERS"
+    	}
+}
 /* register script */
+// check if this user already exists
+log.info("querying"+":email =\" "+params["email"]+"\"",)
+param = {
+    "query":"email =\""+params["email"]+"\"",
+    "fields":"*"
+        }
+userResults = users.query(param)
+log.info("userResults"+JSON.stringify(userResults))
+//userResults= users.query(queryParams)
+if(userResults.metadata.status == "success"){
+    log.info("userResults"+JSON.stringify(userResults))
+	// if user exists 
+    if(userResults.result.users.length>0){
+        
+	    // has code check if this is a resend 
+        if(userResults.result.users[0].code!=null){
+            log.info("user has code :"+userResults.result.users[0].code + " and resend : "+params["resend"])
+            // if this is a resend
+            if(params["resend"] == 'true'){
+                log.info("resending code")
+                // generate a new code and resend it by email 
+                var code = generateCode();
+                emaildata = {"fname":params["fname"],"lname":params["lname"],"password":params["password"],"email":params["email"],"resend":params["resend"],"code":code}
+                sendValidation(emaildata)
+                return { 
+                    status: "success", 
+                    message: "VERIFICATION_RESENT"
+                };
+                
+            }else{
+                log.info("return verification pending  ")
+            	// if this is not a resend 
+                // return verification pending
+                return { 
+                    status: "failure", 
+                    errorDetail: "",
+                    errorCode: "VERIFICATION_PENDING"
+                };	
+            }
+        }else{
+            // if the user doesn't have a verification code.
+            // send duplicate user error
+            return { 
+                status: "failure", 
+                errorDetail: "Unable to register user [email already exists]",
+                errorCode: "DUPLICATE_USER"
+            };
+        }       
+    }else{ 
+        // if this user didn't already exist
+        log.info("user doesn't exist , registering user ")
+        // generate verification code 
+        code = generateCode();
+        // register user
+        userdata = {id:params["email"] ,"name":params["fname"]+" "+params["lname"],"password":params["password"],"email":params["email"],"resend":params["resend"],"code":code}
 
-/* return fail */
-// verification pending
-return { 
-    status: "failure", 
-    errorDetail: "",
-    errorCode: "VERIFICATION_PENDING"
-};	
-// duplicate user
-return { 
-    status: "failure", 
-    errorDetail: "Unable to register user [email already exists]",
-    errorCode: "DUPLICATE_USER"
-};		
+		var saveUser= users.save(userdata);
+        log.info("saveuser results "+JSON.stringify(saveUser))
+        //send email 
+        sendValidation(userdata)
+        return { 
+            status: "success", 
+            message: "REGISTRATION_SUCCESS"
+        };
+    }
+}else{
+    // userResults.metadata.status != "success" 
+    return {"status":"problem fetching users"}
+}
+
+
+
 // unable to register
 /*return { 
 			status: "failure", 
@@ -30,3 +119,43 @@ return {
 			 + saveUserResult.metadata.errorCode + "]"
 		};
 */
+
+/* function is used to send/resend a validation email */
+function sendValidation(emaildata){
+    // get details on who to send to from config
+    var toEmail = emaildata.email
+    var fromEmail = config.validationEmail["fromName"]
+    log.info("emaildata"+JSON.stringify(emaildata))
+    
+    var subject = config.validationEmail["subject"];
+    var body 	= config.validationEmail["body"];
+    
+    var subdomain = apsdb.callApi("ListSubdomains", {}, null); 
+    var link 	= "https://"+subdomain.result[0].name+"."+config.baseDomain+config.verificationPage+"?login="+emaildata.id+"&code="+emaildata.code;
+    
+    body = body.replace("<%user>", emaildata.name);
+    body = body.replace("<%link>",link );
+    body = body.replace("<%link>",link );
+    body = body.replace("<%link>",link );
+    sendMail(toEmail, fromEmail, subject, body);
+    
+    
+    // check if send or resend 
+    /*if(emaildata.resend){
+        // resend email 
+    }else{
+        // send email with validation 
+    }*/
+    
+}
+
+/* function is used to generate validation code > same as commonLib */
+function generateCode() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 10; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}

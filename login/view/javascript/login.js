@@ -10,6 +10,7 @@
 **/
 $.urlParam = function(name){
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    console.log("name:"+name+", results : "+results+" "+window.location.href)
     if (results==null){
         return null;
     }
@@ -21,6 +22,7 @@ $.urlParam = function(name){
 $.widget( "scriptr.loginWidget", {
     _create: function() {
         var self = this;
+        this.resend = false;
         if(window.location.protocol != "https:") {
             window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
         }
@@ -65,6 +67,9 @@ $.widget( "scriptr.loginWidget", {
         }
         
         $(document).ready(jQuery.proxy(function() {
+            this.verified = $.urlParam("verified");
+            $("#verification-success-div").hide();
+            
             if(this.resetCode != null){
             	this.id = $.urlParam("id");
                 if(this.id != null){
@@ -76,8 +81,9 @@ $.widget( "scriptr.loginWidget", {
             }else{
                 $("#login-wrap").show();
             }
-            if(this.verification_pending){
-                
+            if(this.verified){
+                // show verification message
+                $("#verification-success-div").show();
             }
             if(this.element.find("#langSelect") != null){
                 this.element.find("#langSelect").val(this.defaultLang);
@@ -360,6 +366,7 @@ $.widget( "scriptr.loginWidget", {
         var parameters = {"fname" : fname,"lname":lname,"email":email, "password" : password, "resend":resend};
         
         console.log("location : "+document.location.hostname + this.registerApi)
+        console.log("parameters : "+JSON.stringify(parameters))
         
         $.ajax({
             type: "POST",
@@ -368,16 +375,22 @@ $.widget( "scriptr.loginWidget", {
             dataType: 'json',
             success: jQuery.proxy(function(data) {
                 validator.resetForm();
-                var errorMessageDiv = 	this.element.find("#errorMessage");
+                ///var errorMessageDiv = 	this.element.find("#errorMessage");
                 //console.log(" data "+JSON.stringify(data))
                 //console.log(" data "+JSON.stringify(data.response.result))
                 $('#verification-error-div').hide();
                 $('#duplicate-error-div').hide();
+                $('#errorMessage').hide();
                 
                 if(data.response.metadata.status == "success"){ //script could fail for unexpected reasons.
                     if(data.response.result && data.response.result.status == "success"){
-                        localStorage.user = JSON.stringify(data.response.result.result.user);
-                        location.href= this.redirectTarget;
+                        // if verification was resent show message
+                        $("#verification-success").show();
+                        /*if(data.response.result.message == "REGISTRATION_SUCCESS"){
+                            //localStorage.user = JSON.stringify(data.response.result.result.user);
+                            location.href= this.redirectTarget;
+                        }*/
+                        
                     }else{
                         if(data.response.result && data.response.result.errorCode == "VERIFICATION_PENDING"){
                             console.log("verification pending")
@@ -387,21 +400,9 @@ $.widget( "scriptr.loginWidget", {
                             // show duplicate user message
                             $('#duplicate-error-div').show();
                         }
-                        /*console.log("failed ")
-                        this.hideLoading();
-                        errorMessageDiv.removeClass("hide");
-                        errorMessageDiv.text($.i18n('invalid-login-credentials'));
-                        setTimeout(function() {
-                            errorMessageDiv.addClass("hide");
-                        }, 5000);*/
                     }
                 }else{
-                    /*console.log("failed 2")
-                    errorMessageDiv.removeClass("hide");
-                    errorMessageDiv.text($.i18n('INTERNAL_ERROR'));
-                    setTimeout(function() {
-                        errorMessageDiv.addClass("hide");
-                    }, 5000);*/
+                    console.log("failed 2")
                 }
             },this), error:jQuery.proxy(function(){
                 this.hideLoading();

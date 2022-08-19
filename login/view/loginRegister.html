@@ -46,7 +46,6 @@
   
   </head>
   <script type="text/javascript"> 
-    
     var redirect = {
        index: config.redirect,
     };
@@ -69,7 +68,7 @@
           <div class="element col-xs-12 col-sm-10 col-md-7">
               <div class="form-wrap col-xs-12 col-sm-6">
                   <div id="login-wrap" style="display: none;">
-                      
+                      <div id="verification-success-div" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">Your account was sucessfully verified.You can now login with your information.</div>
                       <form id="loginForm" class="loginForm">
                           <div class="row">
                             <h3 class="col-xs-12" data-i18n="welcome" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
@@ -150,7 +149,12 @@
                   </div>
               </div>
               <div class="form-wrap col-xs-12 col-sm-6">        
-                  <div id="verification-error-div" class="col-sm-12 center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
+                  <div id="verification-error-div" class="col-sm-12 center-div alert fadeIn animated alert-warning" style="display: none;">
+                      The account has already been registered but not verified. <a id="verification_email_anchor">Resend</a> the verification email.
+                  </div>
+                  <div id="verification-success" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">
+                      An email was sent with your verification code.
+                  </div>
                   <div id="duplicate-error-div" class="col-sm-12 center-div alert fadeIn animated alert-error" style="display: none;">Duplicate Account Found : An Account with that email already exists</div>
                     <form id="registerForm" class="loginForm">
                  		<h3 class="col-xs-12" data-i18n="Create your account" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
@@ -185,6 +189,7 @@
         
         $("#forgotPassForm").loginWidget({forgotPasswordApi: forgotPassword.forgotPasswordApi});
         $("#resetPassForm").loginWidget({redirectResetTarget: config.loginPage, resetPasswordApi: resetPassword.resetPasswordApi});
+
     </script>
   </body>
 </html>

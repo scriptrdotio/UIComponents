@@ -1,0 +1,102 @@
+/*
+ * This script will activate user's account (remove suspension) when a correct user/code are sent 
+ * @param : mandatory parameters are "login", "code", 
+ *
+ * {status : "failure", errorDetail : "xxxx", errorCode: "yyyy"} in case of failure
+ */
+
+var users = require("user");
+var groups = require("group");
+var config = require("login/entities/config")
+var log = require("log")
+log.setLevel("INFO");
+
+var file =  require("file");
+var hogan = require("modules/hogan/hogan.js").Hogan;
+
+/* get params */
+var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
+var params = typeof(body) == "string" ? JSON.parse(body) : body;
+log.info("params received"+JSON.stringify(params))
+
+var required = ["login","code"]
+var missing_parameter = false
+var nextPage = config.verificationSuccessPage;
+
+
+required.forEach(function(idx){
+    console.log(idx+" "+params[idx]+(params[idx] === null))
+    if(params[idx] === null){
+        log.info("mising parameter "+idx)
+		missing_parameter= true        
+    }
+}) 
+// return failure in case of missing parameters.
+if(missing_parameter){
+    return { 
+            status: "failure", 
+    		errorDetail: "",
+    		errorCode: "MISSING_PARAMETERS"
+    	}
+}
+
+// fetch user 
+param = {
+    "query":"email =\""+params["login"]+"\"",
+    "fields":"*"
+        }
+var userResults = users.query(param);
+
+log.info("userResults"+JSON.stringify(userResults))
+
+
+if(userResults.metadata.status == "success"){
+	// if user exists 
+    if(userResults.result.users.length>0){
+		// check code 
+        if(userResults.result.users[0].code == params["code"]){
+            // if code is correct 
+            log.info("code is correct")
+            var oldUserData = userResults.result.users[0];
+            
+            // delete code & change user status to un-suspended/active
+            //delete userUpdate.code
+            var updatedUser = {
+                "id": oldUserData.login,
+                "isSuspended": "false",
+                "code": "",
+                "name": oldUserData.name, // used in the function that creates the application account for the user
+                "email": oldUserData.email // used in the function that creates the application account for the user
+            };
+            var userRes =  users.update(updatedUser)
+            log.info("userRes"+JSON.stringify(userRes))
+            
+            log.info("nextPage success"+nextPage)
+            // redirect user to login page 
+            redirectToPage(config.verificationSuccessPage)//+'?verified="true"'
+        }else{
+            // return fail message
+            log.info("nextPage fail"+"/"+config.verificationFailPage)
+            redirectToPage(config.verificationFailPage)
+        }
+    }
+}
+
+function redirectToPage(page){
+    log.info("redirecting to: "+page)
+    var html = file.read(page);
+    var fileContent = html.content;
+    
+    response.setHeader("Access-Control-Allow-Credentials", "false");
+    response.addHeaders(configuration.crossDomainHeaders);
+    //response.("verified=true")
+    response.write(fileContent);
+    response.close();
+    
+    /*response.setHeader("Access-Control-Allow-Credentials", "false");
+    response.addHeaders(configuration.crossDomainHeaders);
+    response.setHeader("location", page);
+    response.close();*/
+}
+
+
