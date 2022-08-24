@@ -184,7 +184,7 @@
                 'hoverCallback', 'parseTime', 'units', 'postUnits', 'preUnits', 'dateFormat',
                 'xLabels', 'xLabelFormat', 'xLabelAngle', 'yLabelFormat', 'goals', 'goalStrokeWidth',
                 'goalLineColors', 'events', 'eventStrokeWidth', 'eventLineColors', 'continuousLine',
-                'axes', 'grid', 'gridTextColor', 'gridTextSize', 'gridTextFamily', 'gridTextWeight',
+                'axes', 'grid', 'gridTextColor', 'gridTextSize', 'gridTextFamily', 'gridTextWeight', 'gridLineColor', 'gridStrokeWidth',
                 'fillOpacity', 'resize', 'behaveLikeLine'
             ];
 
@@ -260,7 +260,7 @@
         // http://morrisjs.github.io/morris.js/bars.html
         var OPTION_KEYS = [
             'data', 'xkey', 'ykeys', 'labels', 'barColors', 'stacked', 'hideHover',
-            'hoverCallback', 'axes', 'grid', 'gridTextColor', 'gridTextSize', 'gridTextFamily',
+            'hoverCallback', 'axes', 'grid', 'gridTextColor', 'gridTextSize', 'gridTextFamily', 'gridLineColor', 'gridStrokeWidth',
             'gridTextWeight', 'resize','dateFormat', 'xLabelFormat', 'yLabelFormat',
             // In spite of being missing in the documentation, these do exist
             // They are part of the base grid: https://github.com/morrisjs/morris.js/blob/master/lib/morris.grid.coffee
@@ -430,7 +430,7 @@
             'hoverCallback', 'parseTime', 'units', 'postUnits', 'preUnits', 'dateFormat',
             'xLabels', 'xLabelFormat', 'xLabelAngle', 'yLabelFormat', 'goals', 'goalStrokeWidth',
             'goalLineColors', 'events', 'eventStrokeWidth', 'eventLineColors', 'continuousLine',
-            'axes', 'grid', 'gridTextColor', 'gridTextSize', 'gridTextFamily', 'gridTextWeight',
+            'axes', 'grid', 'gridTextColor', 'gridTextSize', 'gridTextFamily', 'gridTextWeight', 'gridLineColor', 'gridStrokeWidth',
             'fillOpacity', 'resize'
         ];
 

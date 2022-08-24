@@ -34,6 +34,8 @@
   continuous-line | undefined | When set to false (the default), all null and undefined values in a data series will be ignored and lines will be drawn spanning them. When set to true, null values will break the line and undefined values will be spanned. Note that in v0.5.0, this setting will be removed and the behaviour will be to break lines at null values. | NO | *  |  | 
   axes | undefined | Set to false to disable drawing the x and y axes. | NO | *  |  * | 
   grid | undefined | Set to false to disable drawing the horizontal grid lines. | NO | *  |  * | 
+  grid-stroke-width | undefined | Set the stoke width of the grid line.If not set, default: 0.5 | NO | *  |  * | 
+  grid-line-color |undefined | Set the color of the grid line.  If not set, default: #aaa| NO | *  |  * | 
   grid-text-color | undefined | Set the color of the axis labels (default: #888). | NO | *  |  * | 
   grid-text-size | undefined | Set the point size of the axis labels (default: 12). | NO | *  |  * | 
   grid-text-family | undefined | Set the font family of the axis labels (default: sans-serif). | NO | *  |  * | 

@@ -137,6 +137,8 @@ angular
           "gridTextSize": "@", 
           "gridTextFamily": "@", 
           "gridTextWeight": "@",
+          'gridLineColor': "@", 
+          'gridStrokeWidth': "@",
           "fillOpacity": "@", 
           "resize": "@", 
           "behaveLikeLine": "@",
