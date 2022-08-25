@@ -50,7 +50,7 @@
     };
     
     angular.module('myApp').controller('loginCtrl', function($scope, constants, $sce) {
-      var vm = this;  
+      	var vm = this;  
         vm.login = constants.login;
         vm.appTitle = constants.appTitle;
         vm.showLang = constants.showLang;
@@ -58,16 +58,22 @@
         angular.forEach(vm.login, function(value, key) {
            vm.login[key] = $sce.trustAsHtml(value);
         });
+        vm.isMobile = (window.innerWidth <= 800);
+        vm.innerWidth = window.innerWidth;
+        console.log("vm.isMobile")
+        /*-----------------*/
+      	
     }); 
   </script>
   <body ng-cloak>
+      --- marwan -- innerWidth {{vm.innerWidth}} --------- vm.isMobile {{ vm.isMobile}} -------
       <div class="bckimg" ng-style="{'background-image':'url({{vm.login.background}})', 'background-repeat': 'no-repeat', 'background-size': 'cover', 'background-position': 'center top'}"></div>
       <div class="powered"> <img ng-src="{{vm.login.poweredBy}}" width="150px"></div>
-      <div class="cont hidden-xs hidden-sm">
+      <div class="cont hidden-xs hidden-sm" ng-if="!vm.isMobile">
           <div class="form sign-in">
               <div id="login-wrap" style="display: none;">
                   <!--img src="https://www.iot-now.com/wp-content/uploads/2016/07/scriptr.png" class="brandImg" alt="Brand image" width='200px'/-->
-                 
+                  
                   <form id="loginForm">
                       <h3 data-i18n="welcome"></h3>
                       <div class="col-xs-12 col-lg-5 language" ng-if="vm.showLang">
