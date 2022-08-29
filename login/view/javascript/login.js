@@ -90,6 +90,15 @@ $.widget( "scriptr.loginWidget", {
                 this.element.find("#langSelect").on("change", jQuery.proxy(this.changeLanguage,this));
             }
         }, this));
+        /* mobile's */
+        $("#signup_anchor").click(function(){
+            $("#login-wrap").hide();
+            $("#registration-form-wrap").show();
+        });
+        $("#signin_anchor").click(function(){
+            $("#login-wrap").show();
+            $("#registration-form-wrap").hide();
+        });
         /* registration form */
          $('#registerForm').bootstrapValidator({
             feedbackIcons: {
