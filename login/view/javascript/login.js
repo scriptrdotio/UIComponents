@@ -70,6 +70,8 @@ $.widget( "scriptr.loginWidget", {
             this.verified = $.urlParam("verified");
             $("#verification-success-div").hide();
             
+			$(".signin_block").hide();
+            
             if(this.resetCode != null){
             	this.id = $.urlParam("id");
                 if(this.id != null){
@@ -93,11 +95,15 @@ $.widget( "scriptr.loginWidget", {
         /* mobile's */
         $("#signup_anchor").click(function(){
             $("#login-wrap").hide();
-            $("#registration-form-wrap").show();
+            $("#registration-form-wrap").show();            
+            $(".signup_block").hide();
+            $(".signin_block").show();
         });
         $("#signin_anchor").click(function(){
             $("#login-wrap").show();
             $("#registration-form-wrap").hide();
+            $(".signin_block").hide();
+            $(".signup_block").show();
         });
         /* registration form */
          $('#registerForm').bootstrapValidator({
