@@ -48,6 +48,8 @@
     "register-email-required-error":"Email is requried",
     "register-password-required-error":"Password is requried",
     "register-confirm-password-required-error":"Password confirmation is requried",
-    "pending-resend-btn":"Resend Verification Code"
+    "pending-resend-btn":"Resend Verification Code",
+    "registration-form" : "Sign Up",
+    "login-form" : "Sign In",
         
 }

@@ -80,8 +80,12 @@ $.widget( "scriptr.loginWidget", {
                 }
                 
                 $("#reset-password-form-wrap").show();
+                
+                onLoad("reset-password-form-wrap");        
+
             }else{
                 $("#login-wrap").show();
+                $(".mobile_view").find("#login-wrap").show()
             }
             if(this.verified){
                 // show verification message
@@ -96,15 +100,23 @@ $.widget( "scriptr.loginWidget", {
         $("#signup_anchor").click(function(){
             $("#login-wrap").hide();
             $("#registration-form-wrap").show();            
+            
+            $(".mobile_view").find("#login-wrap").hide()
+            $(".mobile_view").find("#registration-form-wrap").show();            
+            
             $(".signup_block").hide();
             $(".signin_block").show();
         });
         $("#signin_anchor").click(function(){
             $("#login-wrap").show();
             $("#registration-form-wrap").hide();
+            
+            $(".mobile_view").find("#login-wrap").show()
+            $(".mobile_view").find("#registration-form-wrap").hide();
             $(".signin_block").hide();
             $(".signup_block").show();
         });
+        
         /* registration form */
          $('#registerForm').bootstrapValidator({
             feedbackIcons: {
@@ -354,7 +366,9 @@ $.widget( "scriptr.loginWidget", {
         }, this));
 
         this.element.find('#forgot_password_anchor').on('click', jQuery.proxy(function(e) {
+            //alert("test")
             this.switchForm('login-wrap', 'forgot-password-wrap');
+            //this.switchForm('login-wrap', 'forgot-password-wrap');
         }, this));
         this.element.find('#back_to_login_anchor').on('click', jQuery.proxy(function(e) {
             this.switchForm('forgot-password-wrap', 'login-wrap');
@@ -390,11 +404,10 @@ $.widget( "scriptr.loginWidget", {
             dataType: 'json',
             success: jQuery.proxy(function(data) {
                 validator.resetForm();
-                ///var errorMessageDiv = 	this.element.find("#errorMessage");
-                //console.log(" data "+JSON.stringify(data))
-                //console.log(" data "+JSON.stringify(data.response.result))
-                $('#verification-error-div').hide();
+
+                $('#verification-error-div').hide();//verification-success
                 $('#duplicate-error-div').hide();
+                $('#verification-success').hide();
                 $('#errorMessage').hide();
                 
                 if(data.response.metadata.status == "success"){ //script could fail for unexpected reasons.
@@ -594,12 +607,17 @@ $.widget( "scriptr.loginWidget", {
     switchForm: function(source_form, target_form) {
     	var validator = $('#' + source_form).find('form').data('bootstrapValidator');
         validator.resetForm();
+        
         $('#' + source_form).find('input').val('');
+        $('.mobile_view').find('#' + source_form).find('input').val('');
         this.animateSwitchForm(source_form, target_form);
     },
     animateSwitchForm: function(wrap_from, wrap_to) {
         $('#' + wrap_from).fadeOut(function() {
             $('#' + wrap_to).fadeIn(500);
+        });
+        $('.mobile_view').find('#' + wrap_from).fadeOut(function() {
+            $('.mobile_view').find('#' + wrap_to).fadeIn(500);
         });
     },
     showLoading:function(id){

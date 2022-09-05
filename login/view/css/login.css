@@ -43,6 +43,10 @@ html, body, .wrap {
 .wrap h3 { font-family: 'texgyreherosbold'; margin-top: 0;font-size: 1.7em;text-align: center}
 
 /*** Form centering ***/
+.form-group{
+    position: relative;
+}
+
 .form-wrap {
     background: #fff;
     box-shadow: 0 0 3px #ddd;

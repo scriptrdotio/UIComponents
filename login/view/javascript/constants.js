@@ -1,4 +1,4 @@
-myApp.constant("constants", {
+var constants = {
   appTitle: "App",
   login: {
     "background": '', 
@@ -6,7 +6,7 @@ myApp.constant("constants", {
     "poweredBy": '//scriptr-cdn.s3.amazonaws.com/carwash/images/powered-by-scriptr.png',
  	"language": '//scriptr-cdn.s3.amazonaws.com/uicomponents/login/images/globe.svg'
   },
-  showLang : false,
+  showLang : true,
   languages: [
         {  
             "name":"English",
@@ -21,4 +21,5 @@ myApp.constant("constants", {
             "value":"ar"
         }
     ]
-});
+};
+myApp.constant("constants", constants);
