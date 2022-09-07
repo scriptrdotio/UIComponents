@@ -1,0 +1,19 @@
+<scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataMessage" loading-message="{{$ctrl.loadingMessage}}" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
+</scriptr-notifications>
+
+<div class="diskfill-wrapper" >
+	<div  ng-style="$ctrl.containerStyle">
+        <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._diskPosition == "left") ? "row-reverse" : "row" }'>
+            <section  class="cell-value" ng-style="$ctrl.valueStyle" >
+                 <div class="value-wrapper">
+                    <div class="cell-value">{{$ctrl.value}}<span>{{$ctrl.unit}}</span></div>
+                    <div class="cell-info" ng-show="$ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{$ctrl.info}}</div>
+                </div>
+            </section>
+            <section class="cell-disk" ng-style="$ctrl.diskStyle" translate>
+                    <canvas class="diskfill-canvas">
+                    </canvas>
+            </section>
+         </div>
+    </div>  
+</div>

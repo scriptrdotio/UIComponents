@@ -1,0 +1,22 @@
+var log = require("log");
+log.setLevel("INFO");
+
+var value =  Math.floor((Math.random() * 100) + 1); 
+
+var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
+var requestParams = typeof(body) == "string" ? JSON.parse(body) : body;
+
+var publishResponse = function(channel, data, request) {
+   var message = {"result": data};
+   if(body && body.id) {
+     message["id"] = body.id;
+   } else {
+     //Add a default id to identify the message published over the socket
+      message["id"] = "diskfill";
+   }
+   publish(channel, message);
+}
+
+publishResponse("responseChannel", {"value": value, "info": "Humidity"}, request);
+
+return {"value": value, "info": "Humidity"};

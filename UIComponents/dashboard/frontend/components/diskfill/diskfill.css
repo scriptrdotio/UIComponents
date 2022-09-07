@@ -1,0 +1,45 @@
+@media only screen and (min-width: 0) and (max-width: 852px) {
+	.diskfill-wrapper .value {font-size: 40px!important;}
+    .inlineBoxes .diskfill-wrapper .value {font-size: 15px!important;}
+}
+@media only screen and (min-width: 853px) and (max-width: 992px) {
+    .inlineBoxes .diskfill-wrapper .value {font-size: 2vw!important;}
+}
+
+.diskfill-wrapper {height: 100%;border-radius: 5px;, overflow: hidden;}
+.diskfill-wrapper div {height: 100%;}
+
+.diskfill-wrapper .cells-wrapper {
+    display: flex;
+}
+
+.diskfill-wrapper .cells-wrapper section {
+ 	flex: 1;
+	height: auto;
+    display: inline-flex;
+    padding: 0 10 0 10;
+}
+
+.diskfill-wrapper .cell-disk {
+    overflow: hidden;
+}
+
+.diskfill-wrapper .value-wrapper {
+    height: auto!important;
+    display: flex;
+    flex-direction: column;
+}
+
+.diskfill-wrapper  .value-wrapper div {
+    flex: 1;
+	height: auto;
+    display: inline-flex;
+}
+
+.diskfill-wrapper .value-wrapper .cell-value{
+    align-items: flex-end;
+}
+
+.diskfill-wrapper  .value-wrapper .cell-info{
+    align-items: flex-start;
+}
