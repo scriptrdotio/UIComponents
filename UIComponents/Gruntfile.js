@@ -145,6 +145,7 @@ module.exports = function(grunt) {
 		                  //'dashboard/frontend/components/grideye/grideye.html',
 		                  'dashboard/frontend/components/imagemap/imagemap.html',
 		                  'dashboard/frontend/components/displayCount/displayCount.html',
+                          'dashboard/frontend/components/diskfill/diskfill.html',
 		                  'dashboard/frontend/components/datetimepicker/datetimepicker_directive.html',
 		                  'dashboard/frontend/components/combo/combo.html',
 		                  'dashboard/frontend/components/combo/comboBox.html',
@@ -211,6 +212,7 @@ module.exports = function(grunt) {
 		               'concat/min-safe/chart.js' : [ 'dashboard/frontend/components/chart/chart.js' ],
 		               'concat/min-safe/searchBox.js' : [ 'dashboard/frontend/components/searchBox/searchBox.js' ],
 		               'concat/min-safe/displayCount.js' : [ 'dashboard/frontend/components/displayCount/displayCount.js' ],
+                       'concat/min-safe/diskfill.js' : [ 'dashboard/frontend/components/diskfill/diskfill.js' ],
 		               'concat/min-safe/httpProvider.js' : [ 'httpProvider.js' ],
 		               'concat/min-safe/wsProvider.js' : [ 'wsProvider.js' ],
 		               'concat/min-safe/dataService.js' : [ 'dataService.js' ],
@@ -486,6 +488,8 @@ module.exports = function(grunt) {
 	                     'concat/min-safe/IFrame.js',
 	                     'concat/min-safe/accelerometer.js',
 	                     'concat/min-safe/displayCount.js',
+                          'concat/min-safe/diskfill.js',
+                         
 
 	                     'concat/min-safe/angular_plotly.js',
 	                     'concat/min-safe/plotly.js',
@@ -561,6 +565,7 @@ module.exports = function(grunt) {
 	                     'lib/neo.min.css',
 	                     'dashboard/frontend/components/dygraphs/dygraphs-2.1.0.css',
 	                     'dashboard/frontend/components/displayCount/count.css',
+                       	 'dashboard/frontend/components/diskfill/diskfill.css',
 	                     'dashboard/frontend/components/slider/slider.css',
 	                     'dashboard/frontend/components/plotly/windrose.css',
 	                     'dashboard/frontend/components/common/notifications.css',
