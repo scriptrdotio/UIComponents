@@ -24,6 +24,7 @@ angular
             
             "resetDataOnConsume": "<?",
              
+            "wrapperClass": "@",
             "borderSize": "@",
             "borderRadius": "@",
             "borderColor": "@",          
@@ -37,7 +38,6 @@ angular
             "valueTextAlignment": "@",
             "valueVerticalAlignment": "@",  //values: top, bottom, center
             "valueTextTransform": "@",
-            "colorAcrossComponent": "@",                 
 
             "diskFontFamily": "@",            
             "diskFontSize": "@",                      
@@ -53,9 +53,19 @@ angular
             "outerDiskColor": "@",
             "innerDiskColor": "@",
             "innerDiskRangeColors": "<?",  
+            
+            "unitFontFamily": "@",        
+            "unitFontSize": "@",           
+            "unitFontWeight": "@",        
+            "unitTextColor": "@",        
+            "unitBackgroundColor": "@",        
+            "unitTextTransform": "@",        
+            "unitTextAlignment" : "@",        
+            "unitMarginBottom": "@",
+            "unit": "@",
+            
             "min": "<?",
             "max": "<?",
-            "unit": "@",
             "value": "<?",
 
             "backgroundColor": "@",
@@ -140,6 +150,17 @@ angular
                 this.infoMarginTop = this.infoMarginTop ? this.infoMarginTop : 0;
                 this.info = this.info ? this.info : "";
                 
+                
+                this.unitFontFamily = (this.unitFontFamily) ? this.unitFontFamily : null;             
+                this.unitFontSize = (this.unitFontSize) ? this.unitFontSize : null;             
+                this.unitFontWeight = (this.unitFontWeight) ? this.unitFontWeight : null;             
+                this.unitTextColor = (this.unitTextColor) ? this.unitTextColor : null;             
+                this.unitBackgroundColor = (this.unitBackgroundColor) ? this.unitBackgroundColor : null;  
+                this.unitTextTransform = this.unitTextTransform ? this.unitTextTransform : null;
+                this.unitTextAlignment = (this.unitTextAlignment) ? this.unitTextAlignment : null; 
+                this.unitMarginBottom = this.unitMarginBottom ? this.unitMarginBottom : null;
+                this.unit = this.unit ? this.unit : "";
+                
                 this.valueStyle = { 
                     'background' : this.valueBackgroundColor, 
                     'font-family' : this.valueFontFamily, 
@@ -189,10 +210,20 @@ angular
                 }
                 
                 
+                 this.unitStyle = {
+                    'background':  this.unitBackgroundColor,
+                    'font-weight': this.unitFontWeight,
+                    'font-size': (this.unitFontSize) ? (this.unitFontSize +"px") : null,
+                    'font-family': this.unitFontFamily,
+                    'color': this.unitTextColor,
+                    'text-align': this.unitTextAlignment,
+                    'text-transform': this.unitTextTransform,
+                    'margin-bottom': this.unitMarginBottom+"px"
+                }
+                
                 
                 self.min = (self.min) ? self.min : 0;
                 self.max = (self.max) ? self.max : 100;
-                self.unit = (self.unit) ? self.unit : "";
                 
             }
             

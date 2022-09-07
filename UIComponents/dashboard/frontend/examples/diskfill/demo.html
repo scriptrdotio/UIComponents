@@ -54,7 +54,7 @@
 <body>
   
   <div ng-controller="testCtrl as vm" >
-    <div style="border: 1px solid #eee; text-align: center; height: 350px; width: 500px;">            
+    <div style="border: 1px solid #eee; text-align: center; height: 350px; width: 250px;">            
       <scriptr-disk-fill 
                 transport='wss' 
                 msg-tag="diskfill" 
@@ -65,12 +65,12 @@
                 info="humidity"
                 message-position="right"
                 value-cell-size="small"
-                         disk-font-size="18"
-                         disk-font-weight="bold"
-                         disk-font-family="verdana"
-                          disk-display-value="true" 
+                disk-font-size="18"
+                disk-font-weight="bold"
+                disk-font-family="verdana"
+                disk-display-value="true" 
                 api='UIComponents/dashboard/frontend/examples/diskfill/getDiskFillVal'
-                       inner-disk-range-colors= '[{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]'
+                inner-disk-range-colors= '[{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]'
                 on-format-data="vm.callback">
       </scriptr-disk-fill>
     </div>
@@ -110,8 +110,6 @@
                 on-format-data="vm.callback">
       </scriptr-disk-fill>
     </div>
-      
-      
   </div>
   
 </body>

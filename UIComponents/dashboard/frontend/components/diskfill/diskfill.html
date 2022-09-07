@@ -1,7 +1,7 @@
 <scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" failure-message="$ctrl.dataMessage" loading-message="{{$ctrl.loadingMessage}}" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
 </scriptr-notifications>
 
-<div class="diskfill-wrapper" >
+<div class="diskfill-wrapper  {{$ctrl.wrapperClass}}" ng-if="$ctrl.value != null || $ctrl.data !=null">
 	<div  ng-style="$ctrl.containerStyle">
         <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._diskPosition == "left") ? "row-reverse" : "row" }'>
             <section  class="cell-value" ng-style="$ctrl.valueStyle" >

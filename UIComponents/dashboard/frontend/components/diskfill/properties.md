@@ -2,6 +2,7 @@
 
 | Option        | Default value   | Description   | Type | Required   |
 | ------------- |:-------------:|:-------------:|:-------------:|:----------|
+  wrapper-class  | 	 |Allows to pass a Css class on the root html element | string | NO
   border-size     | 1	 | The Border width. | int | NO
   border-color     | #d7d7d7	 | The Border Color. | string | NO
   border-radius     | 0	 | The Border Color. | string | NO
@@ -15,8 +16,6 @@
   value-text-transform | | applies a text-transform style to value text| string | NO
   value-vertical-alignment | center	 | One of: top, bottom, center | string | NO
   value-background-color     | 	 | The Value Background Default Color. | string | NO
-  color-accross-component   | false | Change the message & value background color based on ranges | string | NO
-  unit | null   | sting to display next to the value. ex: % | string | NO
   disk-display-value   | false	 | show/hide the disk Label. | string | NO
   disk-font-family     | 	 | Disk Label Font Family. | string | NO
   disk-font-family     | 	 | Disk Label Font Family. | string | NO
@@ -41,6 +40,15 @@
   info-text-transform | bottom or right | applies a text-transform style to info text| string | NO
   info-text-alignment     | center	 | The info text Alignment in the box one of: right, left, center. | string | NO
   info-margin-top     | center	 | The info margin from value in px | string | NO 
+  unit | null   | sting to display next to the value. ex: % | string | NO
+  unit-font-family     | 	 | The unit Font Family. | string | NO
+  unit-font-size     | 18	 | The unit Font Size in pixel. | string | NO
+  unit-font-weight     |  | The unit Font weight. | string | NO
+  unit-text-color     | #686868	 | The unit Text Color. | string | NO
+  unit-background-color     | 	 | The unit Background Default Color. | string | NO
+  unit-text-transform | bottom or right | applies a text-transform style to unit text| string | NO
+  unit-text-alignment     | center	 | The unit text Alignment in the box one of: right, left, center. | string | NO
+  unit-margin-top     | center	 | The unit margin from value in px | string | NO   
   min       | 0    | 	minimum disk radial value.		| float | NO
   max       | 100    | 	maximum disk radial value.	| float | NO
   api | null | Name of the API to get data | string | Required if getting data from backend 
