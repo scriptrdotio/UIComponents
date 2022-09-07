@@ -228,50 +228,50 @@ angular
             }
             
             
-            this.setupOuterDisk =  function(){
+            this.renderDisk =  function(){
                  self.canvas = angular.element($element).find(".diskfill-canvas")[0];
-                 self.canvas.width = $element.parent().innerWidth() - angular.element($element).find(".cell-value")[0].offsetWidth;  
-	        	 self.canvas.height = $element.parent().height(); 
-                if (self.canvas.getContext){
+                 if(self.canvas) {
+                     self.canvas.width = $element.parent().innerWidth() - angular.element($element).find(".cell-value")[0].offsetWidth;  
+                     self.canvas.height = $element.parent().height(); 
+                    if (self.canvas.getContext){
+                        var context = self.canvas.getContext('2d');
+                        var centerX = self.canvas.width / 2;
+                        var centerY = self.canvas.height / 2;
+                        var radius = (self.canvas.height <= self.canvas.width) ? (self.canvas.height/2 - self.outerDiskLineWidth - 10) : (self.canvas.width/2 -  self.outerDiskLineWidth - 10);
 
-                    var context = self.canvas.getContext('2d');
-                    var centerX = self.canvas.width / 2;
-                    var centerY = self.canvas.height / 2;
-                    var radius = (self.canvas.height <= self.canvas.width) ? (self.canvas.height/2 - self.outerDiskLineWidth - 10) : (self.canvas.width/2 -  self.outerDiskLineWidth - 10);
-
-                    context.beginPath();
-                    context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-                    context.fillStyle = self.outerDiskColor;
-                    context.strokeStyle =  self.outerDiskColor;
-                    context.fill();
-                    context.lineWidth = self.outerDiskLineWidth;
-                    context.stroke();
-
-                   // radius is   self.max,
-                    if(!isNaN(self.value) && isFinite(self.value)) {
-                        self.innerDiskRadius = (self.value * radius) / self.max;
-                    
                         context.beginPath();
-                        context.arc(centerX, centerY, self.innerDiskRadius, 0, 2 * Math.PI, false);
-                        
-                        var colorInnerDisk = self.findBackgroundColor(self.value, self.innerDiskRangeColors); 
-                        
-                        context.fillStyle = (colorInnerDisk) ? colorInnerDisk : self.innerDiskColor;
-                        context.strokeStyle =  (colorInnerDisk) ? colorInnerDisk : self.innerDiskColor;
+                        context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+                        context.fillStyle = self.outerDiskColor;
+                        context.strokeStyle =  self.outerDiskColor;
                         context.fill();
-                        context.lineWidth = 0;
+                        context.lineWidth = self.outerDiskLineWidth;
                         context.stroke();
-                    }
 
-                    
-                    if(self.diskDisplayValue) {
-                        context.textAlign = this.diskTextAlignment;
-                        context.textBaseline = this.diskTextBaseline;
-                        context.font = self.diskFontWeight + " " + self.diskFontSize + "px " + self.diskFontFamily;
-                        context.fillStyle =  self.diskTextColor;
-                        context.fillText(self.value + ((self.unit) ? self.unit :""), centerX, centerY)
+                       // radius is   self.max,
+                        if(!isNaN(self.value) && isFinite(self.value)) {
+                            self.innerDiskRadius = (self.value * radius) / self.max;
+
+                            context.beginPath();
+                            context.arc(centerX, centerY, self.innerDiskRadius, 0, 2 * Math.PI, false);
+
+                            var colorInnerDisk = self.findBackgroundColor(self.value, self.innerDiskRangeColors); 
+
+                            context.fillStyle = (colorInnerDisk) ? colorInnerDisk : self.innerDiskColor;
+                            context.strokeStyle =  (colorInnerDisk) ? colorInnerDisk : self.innerDiskColor;
+                            context.fill();
+                            context.lineWidth = 0;
+                            context.stroke();
+                            
+                            if(self.diskDisplayValue) {
+                                context.textAlign = this.diskTextAlignment;
+                                context.textBaseline = this.diskTextBaseline;
+                                context.font = self.diskFontWeight + " " + self.diskFontSize + "px " + self.diskFontFamily;
+                                context.fillStyle =  self.diskTextColor;
+                                context.fillText(self.value + ((self.unit) ? self.unit :""), centerX, centerY)
+                            }
+                        }
                     }
-                }
+                 }
             }
             
             
@@ -333,7 +333,7 @@ angular
                 self.timeoutId = $timeout(self.resize.bind(self), 100);
             }
             this.resize = function() {
-            	this.setupOuterDisk();
+            	this.renderDisk();
                 this.calculateNotificationsDisplay();
             }
             this.calculateNotificationsDisplay = function() {
@@ -393,7 +393,7 @@ angular
                             if(data.info) {
                                 self.info = self.data.info;
                             }
-                            self.setupOuterDisk()
+                            self.renderDisk()
                             self.hasData = true;
                             self.noResults = false;
                             self.stalledData = false;
