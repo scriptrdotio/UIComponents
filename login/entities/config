@@ -15,5 +15,5 @@ var validationEmail ={
 var baseDomain = "scriptrapps.io";
 var verificationPage = "/login/api/verify"
 var verificationFailPage = "/login/view/verificationFail.html";
-var verificationSuccessPage = "/verificationSuccess.html"//"/login/view/loginRegister.html";//"/login/view/login.html";
+var verificationSuccessPage = "/login/view/verificationSuccess.html"//"/login/view/loginRegister.html";//"/login/view/login.html";
 
