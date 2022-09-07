@@ -1,6 +1,7 @@
 <div>
        <scriptr-notifications icon="$ctrl.icon" has-data="$ctrl.hasData" no-results="$ctrl.noResults" stalled-data="$ctrl.stalledData" use-popover="$ctrl.usePopover" loading-message="{{$ctrl.loadingMessage}}" failure-message="$ctrl.dataMessage" action-message="$ctrl.actionMessage"  action-success="$ctrl.actionSuccess">
 </scriptr-notifications>
+    
       
     
        <div ng-style="$ctrl.style" class="thermowrapper" ng-if="$ctrl.value != null">
@@ -12,6 +13,7 @@
                                      ticks="$ctrl.ticks"
                                      height="{{$ctrl.height}}"
                                      mercury-color="$ctrl.mercuryColor"
+                                     display-value="$ctrl.displayValue"
                                      >
             </tg-thermometer-vertical>
         </div>

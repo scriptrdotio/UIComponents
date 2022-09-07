@@ -11,7 +11,8 @@ angular.module('angularThermometer',[]).directive('tgThermometerVertical', funct
                value: '@',
                unit: '@',
                sectors: '<?',
-               mercuryColor: '<?'
+               mercuryColor: '<?',
+               displayValue: '<?'
           },
           templateUrl: '/UIComponents/dashboard/frontend/components/thermometer/tg_thermometer_vertical.html'
 	}

@@ -18,4 +18,5 @@
   conversion | null | a function which will be used to convert sectors lo & hi, steps, ticks calc, values when apply-conversion is true | NO
   conversion-unit | null | the unit to display next to the value and ticks when apply-conversion is true | NO
   decimals | 2 | how many decimals to display on value and ticks | NO
+  display-value | false | true/false to display/hide the value unit under thermometer | NO
  

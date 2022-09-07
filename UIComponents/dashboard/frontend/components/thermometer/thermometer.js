@@ -44,6 +44,8 @@ angular
                    "conversionUnit": "@",
                    "resetDataOnConsume": "<?",
                    
+                   "displayValue": "<?",
+                   
                },
                templateUrl : '/UIComponents/dashboard/frontend/components/thermometer/thermometer.html',
                controller : function($rootScope, $scope, $window, $element, $timeout, httpClient, wsClient, _, $interval, dataService) {
