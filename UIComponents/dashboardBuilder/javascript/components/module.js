@@ -53,5 +53,6 @@ angular.module("DashboardBuilder", [
 	"Plotly",
     "ngSchemaFormFile",
     "ngLoadingOverlay",
-    "ngTagsInput"
+    "ngTagsInput",
+    "DiskFill"
 ]);
