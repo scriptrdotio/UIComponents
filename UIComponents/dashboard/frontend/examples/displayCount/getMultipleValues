@@ -1,0 +1,24 @@
+var log = require("log");
+log.setLevel("INFO");
+
+var body = request.body ? request.body : ((request.rawBody) ? request.rawBody : request.parameters);
+var requestParams = typeof(body) == "string" ? JSON.parse(body) : body;
+var count = Math.floor(Math.random() * 100);
+var count2 = Math.floor(Math.random() * 100);
+var publishResponse = function(channel, data, request, id) {
+   var message = {"result": data};
+   if(body && body.id) {
+     message["id"] = body.id;
+   } else {
+     if(!id) {
+        id = "multivalue"
+     }
+     //Add a default id to identify the message published over the socket
+      message["id"] = id;
+   }
+   publish(channel, message);
+}
+
+publishResponse("responseChannel",  [{"value": count, "info": "info 1"}, {"value": count2, "info": "info 2"}], request, "multivalue");
+
+return [{"value": count, "info": "info 1"}, {"value": count2, "info": "info 2"}];

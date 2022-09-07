@@ -39,8 +39,16 @@ angular
         "valueTextAlignment": "@",
         "valueVerticalAlignment": "@",  //values: top, bottom, center
         "valueTextTransform": "@",
-        "colorAcrossComponent": "@",                 
+        
+        "valueBackgroundRepeat": "@",
+        "valueBackgroundImage": "@",
+        "valuesBackgroundImages": "<?",
+        "valueBackgroundPosition": "@",  
+        "valueBackgroundSize": "@",
           
+        "colorAcrossComponent": "@",                 
+        
+         
         "message": "@",     
         "messageFontFamily": "@",            
         "messageFontSize": "@",                      
@@ -51,6 +59,7 @@ angular
         "messageTextTransform": "@",
         "messageTextAlignment": "@", 
         "messageVerticalAlignment": "@", //values: top, bottom, center
+        "hideMessage": "<?",
           
         "backgroundImage": "@",
         "backgroundPosition": "@",  
@@ -59,7 +68,15 @@ angular
         "backgroundRepeat": "@",
         
         "icon": "@",
-          
+        
+        "unitFontFamily": "@",        
+        "unitFontSize": "@",           
+        "unitFontWeight": "@",        
+        "unitTextColor": "@",        
+        "unitBackgroundColor": "@",        
+        "unitTextTransform": "@",        
+        "unitTextAlignment" : "@",        
+        "unitMarginBottom": "@",        
         "unit": "@",
           
         "infoFontFamily": "@",
@@ -72,7 +89,12 @@ angular
         "infoMarginTop": "@",
           
         "info": "@",
-        "resetDataOnConsume": "<?"
+          
+        "wrapperClass": "@",
+          
+        "resetDataOnConsume": "<?",
+          
+        "isMultiData": "<?"
           
         },
         templateUrl:'/UIComponents/dashboard/frontend/components/displayCount/displayCount.html',
@@ -112,9 +134,23 @@ angular
                 this.valueVerticalAlignment = (this.valueVerticalAlignment && this.valueVerticalAlignment == "bottom") ? "flex-end" : ( (this.valueVerticalAlignment && this.valueVerticalAlignment == "top") ? "flex-start" : "center"); 
                 this.valueBackgroundColor = (this.valueBackgroundColor) ? this.valueBackgroundColor : "";  
                  this.valueTextTransform = this.valueTextTransform ? this.valueTextTransform : "";
+                this.valueBackgroundRepeat = (this.valueBackgroundRepeat) ? this.valueBackgroundRepeat : "no-repeat"; 
+                this.valueBackgroundImage = this.valueBackgroundImage ? this.bavalueBackgroundImageckgroundImage : "";
+                this.valueBackgroundPosition = (this.valueBackgroundPosition) ? this.valueBackgroundPosition : "right bottom"; 
+                this.valueBackgroundSize = (this.valueBackgroundSize) ? this.valueBackgroundSize : "auto"; 
                 
+                
+                this.unitFontFamily = (this.unitFontFamily) ? this.unitFontFamily : null;             
+                this.unitFontSize = (this.unitFontSize) ? this.unitFontSize : null;             
+                this.unitFontWeight = (this.unitFontWeight) ? this.unitFontWeight : null;             
+                this.unitTextColor = (this.unitTextColor) ? this.unitTextColor : null;             
+                this.unitBackgroundColor = (this.unitBackgroundColor) ? this.unitBackgroundColor : null;  
+                this.unitTextTransform = this.unitTextTransform ? this.unitTextTransform : null;
+                this.unitTextAlignment = (this.unitTextAlignment) ? this.unitTextAlignment : null; 
+                this.unitMarginBottom = this.unitMarginBottom ? this.unitMarginBottom : null;
                 this.unit = this.unit ? this.unit : "";
                 
+                this.hideMessage =  (this.hideMessage) ? this.hideMessage : false; //Default do not hide message section   
                 this.messageFontFamily = (this.messageFontFamily) ? this.messageFontFamily : "";             
                 this.messageFontSize = (this.messageFontSize) ? this.messageFontSize : "18";             
                 this.messageFontWeight = (this.messageFontWeight) ? this.messageFontWeight : "";             
@@ -149,9 +185,19 @@ angular
                     'justify-content' : this.valueTextAlignment,
                     'align-items': this.valueVerticalAlignment,
                     'font-size' : this.valueFontSize +'px',
-                    'text-transform': this.valueTextTransform
+                    'text-transform': this.valueTextTransform,
+                    'background-image': "url(\'"+this.valueBackgroundImage+"\')",
+                    'background-repeat': this.valueBackgroundRepeat,
+                    'background-size': this.valueBackgroundSize,
+                    'background-position': this.valueBackgroundPosition
                 }
                 
+                this.valuesStyle = [];
+                if(this.valuesBackgroundImages) {
+                    _.forEach(this.valuesBackgroundImages, function(entry) {
+                        self.valuesStyle.push(_.extend({}, self.valueStyle, {'background-image': "url(\'"+entry+"\')"}))
+                    })
+                }
  
                 this.messageStyle = {
                     'background': this.messageBackgroundColor,
@@ -195,6 +241,17 @@ angular
                     'text-align': this.infoTextAlignment,
                     'text-transform': this.infoTextTransform,
                     'margin-top': this.infoMarginTop+"px"
+                }
+                
+                this.unitStyle = {
+                    'background':  this.unitBackgroundColor,
+                    'font-weight': this.unitFontWeight,
+                    'font-size': (this.unitFontSize) ? (this.unitFontSize +"px") : null,
+                    'font-family': this.unitFontFamily,
+                    'color': this.unitTextColor,
+                    'text-align': this.unitTextAlignment,
+                    'text-transform': this.unitTextTransform,
+                    'margin-bottom': this.unitMarginBottom+"px"
                 }
                 
                 
@@ -326,12 +383,23 @@ angular
                         data = self.onFormatData()(data, self, $rootScope);
                     }	
                     if(data != null) {
-                        if(typeof data == "object" && data.value != null){  
+                        if(typeof data == "object" && data.value != null && !Array.isArray(data)){  
+                            self.isMultiData = false;
                             self.data = angular.copy(data);
                             self.value = self.data.value;
                             if(data.message){
                                 self.message = self.data.message;
                             } 
+                            if(data.info) {
+                                self.info = self.data.info;
+                            }
+                            self.rerender();
+                            self.hasData = true;
+                            self.noResults = false;
+                            self.stalledData = false;
+                        } else if(typeof data == "object" && Array.isArray(data)) {
+                            self.isMultiData = true;
+                            self.data = angular.copy(data);
                             self.rerender();
                             self.hasData = true;
                             self.noResults = false;

@@ -4,6 +4,7 @@
 | ------------- |:-------------:|:-------------:|:-------------:|:----------|
   message     | Items	 | The Value Label. | string | NO
   widget-layout     | horizontal	 | Layout is horizontal or vertical. | string | NO
+  wrapper-class  | 	 |Allows to pass a Css class on the root html element | string | NO
   border-size     | 1	 | The Border width. | int | NO
   border-color     | #d7d7d7	 | The Border Color. | string | NO
   border-radius     | 0	 | The Border Color. | string | NO
@@ -22,8 +23,21 @@
   value-vertical-alignment | center	 | One of: top, bottom, center | string | NO
   value-background-color     | 	 | The Value Background Default Color. | string | NO
   value-background-colors     | 	 | The Value Background Colors array used to define a background for each range of values , example value [{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]. | string | NO
+  value-background-repeat |no-repeat | the value box background image repeat | string | NO
+  value-background-image  |null | the value box background image | string | NO
+  value-background-images   | null | in case we have multiple values each value box background image | array | NO
+  value-background-position  |right bottom | the container background position | string | NO
+  value-background-size |no-repeat | the value box background image repeat | string | NO
   color-accross-component   | false | Change the message & value background color based on ranges | string | NO
   unit | null   | sting to display next to the value. ex: % | string | NO
+  unit-font-family     | 	 | The unit Font Family. | string | NO
+  unit-font-size     | 18	 | The unit Font Size in pixel. | string | NO
+  unit-font-weight     |  | The unit Font weight. | string | NO
+  unit-text-color     | #686868	 | The unit Text Color. | string | NO
+  unit-background-color     | 	 | The unit Background Default Color. | string | NO
+  unit-text-transform | bottom or right | applies a text-transform style to unit text| string | NO
+  unit-text-alignment     | center	 | The unit text Alignment in the box one of: right, left, center. | string | NO
+  unit-margin-top     | center	 | The unit margin from value in px | string | NO           
   message-font-family     | 	 | The Label Font Family. | string | NO
   message-font-size     | 18	 | The Label Font Size in pixel. | string | NO
   message-font-weight     |  | The Label Font weight. | string | NO
@@ -32,6 +46,7 @@
   message-position | bottom or right | Position of message top/bottom in widget-layout vertical, right/left in widget-layout horizontal | string | NO
   message-text-alignment     | center	 | The Label Alignment in the box one of: right, left, center. | string | NO
   message-vertical-alignment     | center	 | The Label Alignment in the box one of: top, bottom, center. | string | NO
+  hide-message   | 	false | Do not show message box and content. By default false | string | NO
   message-text-transform | | applies a text-transform style to label text| string | NO
   info  | 	 | Text to display under value | string | NO     
   info-font-family     | 	 | The info Font Family. | string | NO
@@ -49,4 +64,5 @@
   api-params  | null      | 	api parameters.  					| object | NO
   fetch-data-interval |  null     | 	the refresh interval in case of https transport.	 | int | NO
   use-window-params |  null     | 	If true the widget will merge the defined api-params with the params passed in the URL query params	 | boolean | NO
+  data | null  | {"info": <text>, "value": <number>, "message": <text>}  or [{"info": <text>, "value": <number>},{"info": <text>, "value": <number>}] message and info are optional in data and can be defined as static properties at start | object | NO
   

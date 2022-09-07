@@ -9,11 +9,11 @@
 .display-count {height: 100%;border-radius: 5px;}
 .display-count div {height: 100%;}
 
-.cells-wrapper {
+.display-count .cells-wrapper {
     display: flex;
 }
 
-.cells-wrapper section {
+.display-count .cells-wrapper section {
  	flex: 1;
 	height: auto;
     display: inline-flex;
@@ -21,22 +21,23 @@
 }
 
 
-.value-wrapper {
+.display-count .value-wrapper {
     height: auto!important;
     display: flex;
     flex-direction: column;
 }
 
-.value-wrapper div {
+.display-count .value-wrapper div {
     flex: 1;
 	height: auto;
     display: inline-flex;
 }
 
-.value-wrapper .cell-value{
+.display-count .value-wrapper .cell-value{
     align-items: flex-end;
 }
 
-.value-wrapper .cell-info{
+.display-count .value-wrapper .cell-info{
     align-items: flex-start;
 }
+

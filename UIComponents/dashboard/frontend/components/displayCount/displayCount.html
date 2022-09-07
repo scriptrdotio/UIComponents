@@ -3,29 +3,39 @@
 
 
 <!-- Messages from the backend -->
-<div class="display-count" ng-if="$ctrl.value != null">
+<div class="display-count {{$ctrl.wrapperClass}}" ng-if="$ctrl.value != null || $ctrl.data !=null">
     
     <div ng-if="$ctrl.widgetLayout == 'vertical'" ng-style="$ctrl.containerStyle">
       <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "top") ? "column-reverse" : "column" }'>
         <section ng-style="$ctrl.valueStyle">
             <div class="value-wrapper">
-                <div class="cell-value">{{$ctrl.value}}<span>{{$ctrl.unit}}</span></div>
+                <div class="cell-value">{{$ctrl.value}}<span  ng-style="$ctrl.unitStyle">{{$ctrl.unit}}</span></div>
                 <div class="cell-info" ng-show="$ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{$ctrl.info}}</div>
             </div>
         </section>
-        <section class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$ctrl.message}}</section>
+        <section ng-if="!$ctrl.hideMessage" class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$ctrl.message}}</section>
       </div>
     </div>
     
 	<div ng-if="$ctrl.widgetLayout == 'horizontal'" ng-style="$ctrl.containerStyle">
-        <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "left") ? "row-reverse" : "row" }'>
+        <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "left") ? "row-reverse" : "row" }' ng-if="!$ctrl.isMultiData">
             <section  class="cell-value" ng-style="$ctrl.valueStyle" >
                  <div class="value-wrapper">
-                    <div class="cell-value">{{$ctrl.value}}<span>{{$ctrl.unit}}</span></div>
+                    <div class="cell-value">{{$ctrl.value}}<span ng-style="$ctrl.unitStyle">{{$ctrl.unit}}</span></div>
                     <div class="cell-info" ng-show="$ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{$ctrl.info}}</div>
                 </div>
             </section>
             <section class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$ctrl.message}}</section>
+         </div>
+        
+         <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "left") ? "row-reverse" : "row" }' ng-if="$ctrl.isMultiData" >
+            <section  class="cell-value" ng-style="$ctrl.valuesStyle[$index] || $ctrl.valueStyle" ng-repeat="entry in $ctrl.data track by $index"> 
+                 <div class="value-wrapper">
+                    <div class="cell-value">{{entry.value}}<span ng-style="$ctrl.unitStyle">{{entry.unit || $ctrl.unit}}</span></div>
+                    <div class="cell-info" ng-show="entry.info != '' || $ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{entry.info || $ctrl.info}}</div>
+                </div>
+            </section>
+            <section ng-if="!$ctrl.hideMessage" class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$entry.message || $ctrl.message}}</section>
          </div>
     </div>  
 </div>
