@@ -92,7 +92,10 @@ JustGage = function(config) {
     // maxTxt : string
     // max value text
     maxTxt: kvLookup('maxTxt', config, dataset, false),
-
+    
+    //minMaxValueAlignment: bool
+    minMaxValueAlignment: kvLookup('minMaxValueAlignment', config, dataset, false),
+    
     // reverse : bool
     // reverse min and max
     reverse: kvLookup('reverse', config, dataset, false),
@@ -362,13 +365,22 @@ JustGage = function(config) {
 
     // min
     minFontSize = ((widgetH / 16) > obj.config.minLabelMinFontSize) ? (widgetH / 16) : obj.config.minLabelMinFontSize;
-    minX = dx + (widgetW / 10) + (widgetW / 6.666666666666667 * obj.config.gaugeWidthScale) / 2;
-    minY = labelY;
-
+    if(obj.config.minMaxValueAlignment) { //Align with value
+    	minX = dx  + (widgetW / 6.666666666666667 * obj.config.gaugeWidthScale) / 2;
+      minY = valueY;
+    } else { //align with label, ie under gauge
+    	minX = dx + (widgetW / 10) + (widgetW / 6.666666666666667 * obj.config.gaugeWidthScale) / 2;
+    	minY = labelY;
+    }
     // max
     maxFontSize = ((widgetH / 16) > obj.config.maxLabelMinFontSize) ? (widgetH / 16) : obj.config.maxLabelMinFontSize;
-    maxX = dx + widgetW - (widgetW / 10) - (widgetW / 6.666666666666667 * obj.config.gaugeWidthScale) / 2;
-    maxY = labelY;
+   if(obj.config.minMaxValueAlignment) { //Align with value
+    	 maxX = dx + widgetW - (widgetW / 6.666666666666667 * obj.config.gaugeWidthScale) / 2;
+   	 maxY = valueY;
+    } else { //align with label, ie under gauge
+    	 maxX = dx + widgetW - (widgetW / 10) - (widgetW / 6.666666666666667 * obj.config.gaugeWidthScale) / 2;
+    	 maxY = labelY;
+    }
   }
 
   // parameters

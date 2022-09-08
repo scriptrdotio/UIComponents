@@ -113,7 +113,9 @@ angular
                   "donutStartAngle" : "@", // angle to start from when in donut mode (int)
                  
                   "reverse" : "@", // if true, max and min are swapped (with max appearing on the left, min on the right) boolean
-                 
+                   
+                  "minMaxValueAlignment" : "@", // if true, max and min are swapped (with max appearing on the left, min on the right) boolean
+                   
                   "decimals" : "@", // quantity of decimal numbers to show (int)
                  
                   "symbol" : "@", // unit of measure that will be appended to value (string)
