@@ -312,10 +312,10 @@ angular
                 } else {   
                     //Listen on update-data event to build data
                     $scope.$on("update-data", function(event, data) {
-                        if(data == null) { //typeOf data == 'undefined' || data === null
-                            if(self.gaugeValue == null) {
+                        if(data == null) {
+                            if( self.value == null) {
                                 self.noResults = true;
-                            } 
+                            }
                         } else {
                             if(data[self.serviceTag])
                                 self.consumeData(data[self.serviceTag]);
@@ -423,17 +423,6 @@ angular
                         self.dataMessage = this.stalledDataMessage
                     }
                 }
-            }
-            this.calculateDataVariants = function(data) {
-                var copyData = angular.copy(data);
-                self.mercuryColor = self.evaluateColor(copyData);
-                self.value = (copyData > self.mercuryMax) ? self.mercuryMax : copyData;
-                self.percent = parseInt((copyData - self.minSectorValue) * self.height / (self.mercuryMax - self.minSectorValue));
-            }  
-            this.evaluateColor = function(data) {
-                var color = self.outOfRangeColor;
-                _.some(self._customSectors, function(obj){ if( obj.lo <= data &&  data <= obj.hi) {color = obj.color; return true;} });
-                return color;
             }
         }
         });
