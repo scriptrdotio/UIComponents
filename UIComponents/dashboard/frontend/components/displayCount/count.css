@@ -6,7 +6,7 @@
     .inlineBoxes .display-count .value {font-size: 2vw!important;}
 }
 
-.display-count {height: 100%;border-radius: 5px;}
+.display-count {height: 100%; border-radius: 5px;}
 .display-count div {height: 100%;}
 
 .display-count .cells-wrapper {
@@ -24,28 +24,24 @@
 .display-count .value-wrapper {
     height: auto!important;
     display: flex;
-    flex-direction: row;
-}
-
-.display-count .cell-image {
-    display: flex;
-}
-
-.display-count .cell-image img{
-    width: 100%;
-}
-
-
-.display-count .value-wrapper .cell-text-wrapper {
-    display: flex;
     flex-direction: column;
 }
 
-.display-count .value-wrapper .cell-text-wrapper .cell-value{
+.display-count .value-wrapper div {
+    flex: 1;
+	height: auto;
+    display: inline-flex;
+}
+
+.display-count .value-wrapper .cell-value{
     align-items: flex-end;
 }
 
-.display-count .value-wrapper .cell-text-wrapper .cell-info{
+.display-count .value-wrapper .cell-info{
     align-items: flex-start;
+}
+
+.display-count .cell-image img {
+    width: 100%;
 }
 
