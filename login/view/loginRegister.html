@@ -200,8 +200,12 @@
                           <input type="text" class="form-control" id="register_lastName" name="register_lastName" data-i18n="[placeholder]register-last-name">
                       </div>
                       <div class="form-group">
+                          <i class="fa fa-phone login-icon" aria-hidden="true"></i>
+                          <input type="text" class="form-control" id="register_phone" name="register_phone"  required data-i18n="[placeholder]register-phone" pattern="^(\+|00)[1-9][0-9 \-\(\)\.]{7,32}$" data-bv-regexp-message="Invalid or incomplete phone number"  />
+                      </div>
+                      <div class="form-group">
                           <i class="fa fa-envelope login-icon" aria-hidden="true"></i>
-                          <input type="text" class="form-control" id="register_email" name="register_email"  required data-i18n="[placeholder]register-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  />
+                          <input type="text" class="form-control" id="register_email" name="register_email"  required data-i18n="[placeholder]register-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" data-bv-regexp-message="Invalid or incomplete email address." />
                       </div>
                       <div class="form-group">
                           <i class="fa fa-lock login-icon" aria-hidden="true"></i>
@@ -321,8 +325,12 @@
                           <input type="text" class="form-control" id="register_lastName" name="register_lastName" data-i18n="[placeholder]register-last-name">
                       </div>
                       <div class="form-group">
+                          <i class="fa fa-phone login-icon" aria-hidden="true"></i>
+                          <input type="text" class="form-control" id="register_phone" name="register_phone"  required data-i18n="[placeholder]register-phone" pattern="^(\+|00)[1-9][0-9 \-\(\)\.]{7,32}$" data-bv-regexp-message="Invalid or incomplete phone number"  />
+                      </div>
+                      <div class="form-group">
                           <i class="fa fa-envelope login-icon" aria-hidden="true"></i>
-                          <input type="text" class="form-control" id="register_email" name="register_email"  required data-i18n="[placeholder]register-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="title"  />
+                          <input type="text" class="form-control" id="register_email" name="register_email"  required data-i18n="[placeholder]register-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" data-bv-regexp-message="Invalid or incomplete email address." />
                       </div>
                       <div class="form-group">
                           <i class="fa fa-lock login-icon" aria-hidden="true"></i>
