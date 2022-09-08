@@ -40,9 +40,8 @@ angular
         "valueVerticalAlignment": "@",  //values: top, bottom, center
         "valueTextTransform": "@",
         
-        "valueBackgroundRepeat": "@",
-        "valueBackgroundImage": "@",
-        "valuesBackgroundImages": "<?",
+        "valueDefaultImage": "<?",
+        "valuesImages": "<?",
         "valueBackgroundPosition": "@",  
         "valueBackgroundSize": "@",
           
@@ -186,19 +185,9 @@ angular
                     'align-items': this.valueVerticalAlignment,
                     'font-size' : this.valueFontSize +'px',
                     'text-transform': this.valueTextTransform,
-                    'background-image': "url(\'"+this.valueBackgroundImage+"\')",
-                    'background-repeat': this.valueBackgroundRepeat,
-                    'background-size': this.valueBackgroundSize,
-                    'background-position': this.valueBackgroundPosition
                 }
                 
-                this.valuesStyle = [];
-                if(this.valuesBackgroundImages) {
-                    _.forEach(this.valuesBackgroundImages, function(entry) {
-                        self.valuesStyle.push(_.extend({}, self.valueStyle, {'background-image': "url(\'"+entry+"\')"}))
-                    })
-                }
- 
+
                 this.messageStyle = {
                     'background': this.messageBackgroundColor,
                     'font-weight' : this.messageFontWeight,

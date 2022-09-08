@@ -29,10 +29,13 @@
          </div>
         
          <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "left") ? "row-reverse" : "row" }' ng-if="$ctrl.isMultiData" >
-            <section  class="cell-value" ng-style="$ctrl.valuesStyle[$index] || $ctrl.valueStyle" ng-repeat="entry in $ctrl.data track by $index"> 
+            <section  class="cell-value" ng-style="$ctrl.valueStyle" ng-repeat="entry in $ctrl.data track by $index"> 
                  <div class="value-wrapper">
-                    <div class="cell-value">{{entry.value}}<span ng-style="$ctrl.unitStyle">{{entry.unit || $ctrl.unit}}</span></div>
-                    <div class="cell-info" ng-show="entry.info != '' || $ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{entry.info || $ctrl.info}}</div>
+                    <div class="cell-image" ng-if="$ctrl.valuesImages[$index].url || $ctrl.valueDefaultImage.url"><img ng-src="{{$ctrl.valuesImages[$index].url || $ctrl.valueDefaultImage.url}}"/></div>
+                    <div class="cell-text-wrapper">
+                        <div class="cell-value">{{entry.value}}<span ng-style="$ctrl.unitStyle">{{entry.unit || $ctrl.unit}}</span></div>
+                    	<div class="cell-info" ng-show="entry.info != '' || $ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{entry.info || $ctrl.info}}</div>
+                    <div>
                 </div>
             </section>
             <section ng-if="!$ctrl.hideMessage" class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$entry.message || $ctrl.message}}</section>

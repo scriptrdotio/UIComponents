@@ -24,14 +24,23 @@
 .display-count .value-wrapper {
     height: auto!important;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
-.display-count .value-wrapper div {
+.display-count .cell-image {
+    display: flex;
+}
+
+.display-count .cell-image img{
+    width: 100%;
+}
+
+
+/**.display-count .value-wrapper .cell-text-wrapper div {
     flex: 1;
 	height: auto;
     display: inline-flex;
-}
+}**/
 
 .display-count .value-wrapper .cell-value{
     align-items: flex-end;

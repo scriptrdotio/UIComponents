@@ -23,11 +23,8 @@
   value-vertical-alignment | center	 | One of: top, bottom, center | string | NO
   value-background-color     | 	 | The Value Background Default Color. | string | NO
   value-background-colors     | 	 | The Value Background Colors array used to define a background for each range of values , example value [{"value":10,"color":"#ef2929"},{"value":20,"color":"#729fcf"},{"value":30,"color":"#8ae234"}]. | string | NO
-  value-background-repeat |no-repeat | the value box background image repeat | string | NO
-  value-background-image  |null | the value box background image | string | NO
-  value-background-images   | null | in case we have multiple values each value box background image | array | NO
-  value-background-position  |right bottom | the container background position | string | NO
-  value-background-size |no-repeat | the value box background image repeat | string | NO
+  value-default-image  |null | the value box default image {'url': '/img1.svg'} | object | NO
+  values-images   | null | in case we have multiple values each value box can have an image  [{'url': '/img1.svg'}, {'url': '/img2.svg'}]| array | NO
   color-accross-component   | false | Change the message & value background color based on ranges | string | NO
   unit | null   | sting to display next to the value. ex: % | string | NO
   unit-font-family     | 	 | The unit Font Family. | string | NO
