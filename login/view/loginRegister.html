@@ -185,7 +185,7 @@
               </div>
               <div class="form sign-up">
                   <div id="verification-error-div" class="col-sm-12 center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
-                  <div id="duplicate-error-div" class="col-sm-12 center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate Account Found : An Account with that email already exists</div>
+                  <div id="duplicate-error-div" class="col-sm-12 center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
                   <div id="verification-success" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">
                       An email was sent with your verification code.
                   </div>
@@ -306,7 +306,7 @@
                       <div class="row">
                       	<h3 data-i18n="Create your account" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
                         <div id="verification-error-div" class="col-sm-12 center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
-                        <div id="duplicate-error-div" class="col-sm-12 center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate Account Found : An Account with that email already exists</div>
+                        <div id="duplicate-error-div" class="col-sm-12 center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
                       	<div id="verification-success" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">
                       		An email was sent with your verification code.
                   	  	</div>
@@ -322,7 +322,7 @@
                       </div>
                       <div class="form-group">
                           <i class="fa fa-envelope login-icon" aria-hidden="true"></i>
-                          <input type="text" class="form-control" id="register_email" name="register_email"  required data-i18n="[placeholder]register-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  />
+                          <input type="text" class="form-control" id="register_email" name="register_email"  required data-i18n="[placeholder]register-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="title"  />
                       </div>
                       <div class="form-group">
                           <i class="fa fa-lock login-icon" aria-hidden="true"></i>
