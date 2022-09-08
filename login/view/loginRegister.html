@@ -369,6 +369,9 @@
             lastSetting = "desktop"
            	document.querySelector('.img__btn').addEventListener('click', function() {
                 document.querySelector('.cont').classList.toggle('s--signup');
+                // reset forms when switching
+                $("#loginForm").bootstrapValidator('resetForm', true);
+                $('#registerForm').bootstrapValidator('resetForm', true);
             });
             $('#loginForm').loginWidget({redirectTarget: config.redirect, expiry: login.expiry, loginApi: login.loginApi, validateTokenApi: login.validateTokenApi});
             $('#registerForm').loginWidget({redirectTarget: config.redirect, expiry: login.expiry, registerApi: login.registerApi, validateTokenApi: login.validateTokenApi});
@@ -411,7 +414,7 @@
                     lastSetting = "mobile"
                     
                     onLoad("login-wrap"); 
-                  $('#loginForm').loginWidget({redirectTarget: config.redirect, expiry: login.expiry, loginApi: login.loginApi, validateTokenApi: login.validateTokenApi});
+                    $('#loginForm').loginWidget({redirectTarget: config.redirect, expiry: login.expiry, loginApi: login.loginApi, validateTokenApi: login.validateTokenApi});
         			$('#registerForm').loginWidget({redirectTarget: config.redirect, expiry: login.expiry, registerApi: login.registerApi, validateTokenApi: login.validateTokenApi});
 
        				$("#forgotPassForm").loginWidget({forgotPasswordApi: forgotPassword.forgotPasswordApi});
@@ -429,6 +432,9 @@
                    
                     document.querySelector('.img__btn').addEventListener('click', function() {
                         document.querySelector('.cont').classList.toggle('s--signup');
+                        // reset forms when switching
+                        $("#loginForm").bootstrapValidator('resetForm', true);
+                        $('#registerForm').bootstrapValidator('resetForm', true);
                     });
 
                     onLoad("login-wrap"); 
