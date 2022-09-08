@@ -18,7 +18,7 @@ var params = typeof(body) == "string" ? JSON.parse(body) : body;
 log.info("params received"+JSON.stringify(params))
 
 
-var required = ["fname","lname","password","email","resend"]
+var required = ["fname","lname","password","phone","email","resend"]
 var isRegistrationPending = false;
 var resendValidationEmail = false;
 
@@ -94,7 +94,7 @@ if(userResults.metadata.status == "success"){
         // generate verification code 
         code = generateCode();
         // register user
-        userdata = {id:params["email"] ,"name":params["fname"]+" "+params["lname"],"password":params["password"],"email":params["email"],"resend":params["resend"],"code":code}
+        userdata = {id:params["email"] ,"name":params["fname"]+" "+params["lname"],"password":params["password"],"phone":params["phone"],"email":params["email"],"resend":params["resend"],"code":code,"isSuspended":'true'}
 
 		var saveUser= users.save(userdata);
         log.info("saveuser results "+JSON.stringify(saveUser))

@@ -139,6 +139,14 @@ $.widget( "scriptr.loginWidget", {
                         }
                     }
                 },
+                register_phone: {
+                    validators: {
+                        regexp: {
+                            regexp: /^(\+|00)[1-9][0-9 \-\(\)\.]{7,32}$/i,
+                            message: 'register-phone-required-error'
+                        }
+                    }
+                },
                 register_email: {
                     validators: {
                         emailAddress: {
@@ -384,7 +392,8 @@ $.widget( "scriptr.loginWidget", {
         this.showLoading();
         var fname 	= this.element.find("#register_firstName").val();
         var lname	= this.element.find("#register_lastName").val();
-      	var email	= this.element.find("#register_email").val();
+      	var phone	= this.element.find("#register_phone").val();
+        var email	= this.element.find("#register_email").val();
         var password= this.element.find("#register_password").val();
         
         var resend = false
@@ -392,7 +401,7 @@ $.widget( "scriptr.loginWidget", {
         if(this.resend){
             resend = true
         }
-        var parameters = {"fname" : fname,"lname":lname,"email":email, "password" : password, "resend":resend};
+        var parameters = {"fname" : fname,"lname":lname,"phone":phone,"email":email, "password" : password, "resend":resend};
         
         console.log("location : "+document.location.hostname + this.registerApi)
         console.log("parameters : "+JSON.stringify(parameters))
@@ -414,6 +423,9 @@ $.widget( "scriptr.loginWidget", {
                     if(data.response.result && data.response.result.status == "success"){
                         // if verification was resent show message
                         $("#verification-success").show();
+                        
+                        $("#registerForm-title").hide()
+                        $("#registerForm").hide()
                         /*if(data.response.result.message == "REGISTRATION_SUCCESS"){
                             //localStorage.user = JSON.stringify(data.response.result.result.user);
                             location.href= this.redirectTarget;

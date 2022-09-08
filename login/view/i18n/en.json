@@ -37,19 +37,21 @@
     "INVALID_ACCOUNT": "Login provided is invalid or your reset token has expired, please enter a valid email address or send a forgot password again.",
     "INTERNAL_ERROR": "An error has occurred. Please try again later.",
     "Missing_Parameter": "Mandatory parameters are missing",
-    "useless comment": "--------------- registration form ---------------",
+
     "register-first-name":"First Name",
     "register-last-name":"Last Name",
+    "register-phone":"Phone",
     "register-email":"Email",
     "register-password":"Password",
     "register-confirm-password":"Confirm Password",
-    "register-first-name-required-error":"First Name is requried",
-    "register-last-name-required-error":"Last Name is requried",
-    "register-email-required-error":"Email is requried",
-    "register-password-required-error":"Password is requried",
+    "register-first-name-required-error":"First Name is required",
+    "register-last-name-required-error":"Last Name is required",
+    "register-email-required-error":"Email is required",
+    "register-phone-required-error":"Phone is required",
+    "register-password-required-error":"Password is required",
     "register-confirm-password-required-error":"Password confirmation is requried",
     "pending-resend-btn":"Resend Verification Code",
     "registration-form" : "Sign Up",
-    "login-form" : "Sign In",
+    "login-form" : "Sign In"
         
 }
