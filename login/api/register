@@ -62,7 +62,7 @@ if(userResults.metadata.status == "success"){
                 log.info("resending code")
                 // generate a new code and resend it by email 
                 var code = generateCode();
-                emaildata = {"fname":params["fname"],"lname":params["lname"],"password":params["password"],"email":params["email"],"resend":params["resend"],"code":code}
+                emaildata = {"name":params["fname"]+" "+params["lname"],"password":params["password"],"email":params["email"],"resend":params["resend"],"code":code,"id":params["email"]}
                 sendValidation(emaildata)
                 return { 
                     status: "success", 
@@ -94,7 +94,7 @@ if(userResults.metadata.status == "success"){
         // generate verification code 
         code = generateCode();
         // register user
-        userdata = {id:params["email"] ,"name":params["fname"]+" "+params["lname"],"password":params["password"],"phone":params["phone"],"email":params["email"],"resend":params["resend"],"code":code,"isSuspended":'true'}
+        userdata = {id:params["email"] ,"name":params["fname"]+" "+params["lname"],"password":params["password"],"phone":params["phone"], "email":params["email"],"resend":params["resend"],"code":code,"isSuspended":'true'}
 
 		var saveUser= users.save(userdata);
         log.info("saveuser results "+JSON.stringify(saveUser))

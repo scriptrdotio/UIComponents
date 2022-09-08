@@ -390,11 +390,11 @@ $.widget( "scriptr.loginWidget", {
             return;
         }
         this.showLoading();
-        var fname 	= this.element.find("#register_firstName").val();
-        var lname	= this.element.find("#register_lastName").val();
-      	var phone	= this.element.find("#register_phone").val();
-        var email	= this.element.find("#register_email").val();
-        var password= this.element.find("#register_password").val();
+        var fname 	= $("#register_firstName").val();//this.element.find("#register_firstName").val();
+        var lname	= $("#register_lastName").val();//this.element.find("#register_lastName").val();
+      	var phone	= $("#register_phone").val();//this.element.find("#register_phone").val();
+        var email	= $("#register_email").val();//this.element.find("#register_email").val();
+        var password= $("#register_password").val();//this.element.find("#register_password").val();
         
         var resend = false
         // if clicked by resend
