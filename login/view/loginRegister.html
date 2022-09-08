@@ -189,7 +189,7 @@
                   <div id="verification-success" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">
                       An email was sent with your verification code.
                   </div>
-                  <h3 data-i18n="Create your account" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
+                  <h3 id="registerForm-title" data-i18n="Create your account" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
                   <form id="registerForm" class="loginForm" >
                       <div class="form-group">
                           <i class="fa fa-user login-icon" aria-hidden="true"> </i>
@@ -306,15 +306,16 @@
               </div>
 
               <div id="registration-form-wrap" style="display:none;">
-                  <form id="registerForm" class="loginForm"><!-- registration-form -->
-                      <div class="row">
-                      	<h3 data-i18n="Create your account" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
+                       <div class="row">
+                      	<h3 id="registerForm-title" data-i18n="Create your account" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
                         <div id="verification-error-div" class="col-sm-12 center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
                         <div id="duplicate-error-div" class="col-sm-12 center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
                       	<div id="verification-success" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">
                       		An email was sent with your verification code.
                   	  	</div>
                       </div>
+                  <form id="registerForm" class="loginForm"><!-- registration-form -->
+
 
                       <div class="form-group">
                           <i class="fa fa-user login-icon" aria-hidden="true"> </i>

@@ -423,6 +423,9 @@ $.widget( "scriptr.loginWidget", {
                     if(data.response.result && data.response.result.status == "success"){
                         // if verification was resent show message
                         $("#verification-success").show();
+                        
+                        $("#registerForm-title").hide()
+                        $("#registerForm").hide()
                         /*if(data.response.result.message == "REGISTRATION_SUCCESS"){
                             //localStorage.user = JSON.stringify(data.response.result.result.user);
                             location.href= this.redirectTarget;
