@@ -36,17 +36,16 @@
 }
 
 
-/**.display-count .value-wrapper .cell-text-wrapper div {
-    flex: 1;
-	height: auto;
-    display: inline-flex;
-}**/
+.display-count .value-wrapper .cell-text-wrapper {
+    display: flex;
+    flex-direction: column;
+}
 
-.display-count .value-wrapper .cell-value{
+.display-count .value-wrapper .cell-text-wrapper .cell-value{
     align-items: flex-end;
 }
 
-.display-count .value-wrapper .cell-info{
+.display-count .value-wrapper .cell-text-wrapper .cell-info{
     align-items: flex-start;
 }
 

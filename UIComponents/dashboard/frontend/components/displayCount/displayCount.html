@@ -9,8 +9,10 @@
       <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "top") ? "column-reverse" : "column" }'>
         <section ng-style="$ctrl.valueStyle">
             <div class="value-wrapper">
-                <div class="cell-value">{{$ctrl.value}}<span  ng-style="$ctrl.unitStyle">{{$ctrl.unit}}</span></div>
-                <div class="cell-info" ng-show="$ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{$ctrl.info}}</div>
+                <div class="cell-text-wrapper">
+                    <div class="cell-value">{{$ctrl.value}}<span  ng-style="$ctrl.unitStyle">{{$ctrl.unit}}</span></div>
+                    <div class="cell-info" ng-show="$ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{$ctrl.info}}</div>
+                </div>
             </div>
         </section>
         <section ng-if="!$ctrl.hideMessage" class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$ctrl.message}}</section>
@@ -21,8 +23,10 @@
         <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "left") ? "row-reverse" : "row" }' ng-if="!$ctrl.isMultiData">
             <section  class="cell-value" ng-style="$ctrl.valueStyle" >
                  <div class="value-wrapper">
+                 <div class="cell-text-wrapper">
                     <div class="cell-value">{{$ctrl.value}}<span ng-style="$ctrl.unitStyle">{{$ctrl.unit}}</span></div>
                     <div class="cell-info" ng-show="$ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{$ctrl.info}}</div>
+                 </div>
                 </div>
             </section>
             <section class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$ctrl.message}}</section>
