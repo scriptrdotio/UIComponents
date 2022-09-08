@@ -94,7 +94,7 @@ if(userResults.metadata.status == "success"){
         // generate verification code 
         code = generateCode();
         // register user
-        userdata = {id:params["email"] ,"name":params["fname"]+" "+params["lname"],"password":params["password"],"phone":params["phone"],"email":params["email"],"resend":params["resend"],"code":code}
+        userdata = {id:params["email"] ,"name":params["fname"]+" "+params["lname"],"password":params["password"],"phone":params["phone"],"email":params["email"],"resend":params["resend"],"code":code,"isSuspended":'true'}
 
 		var saveUser= users.save(userdata);
         log.info("saveuser results "+JSON.stringify(saveUser))

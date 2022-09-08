@@ -40,6 +40,7 @@
 
     "register-first-name":"First Name",
     "register-last-name":"Last Name",
+    "register-phone":"Phone",
     "register-email":"Email",
     "register-password":"Password",
     "register-confirm-password":"Confirm Password",
