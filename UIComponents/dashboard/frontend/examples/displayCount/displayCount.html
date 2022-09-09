@@ -20,7 +20,7 @@
     <script src="/UIComponents/httpProvider.js"></script>
 	<script src="/UIComponents/dataService.js"></script>
     
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <sscript src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
   	
     <link rel="stylesheet" href="/UIComponents/dashboard/frontend/components/common/notifications.css">
@@ -137,6 +137,58 @@
              			  loading-message="DASHBOARDS.OCCUPANCY.LIVE.DISPLAY_COUNT.LIVE_OCCUPNACY_LOADING_MESSAGE",
                           icon="//scriptr-cdn.s3.amazonaws.com/saepio/dev/images/timer.png",
                           widget-layout="horizontal"
+                          
+                          border-size="0"
+                          border-radius="5px"
+                             
+                              
+                          background-image="//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/facilities.svg"
+	                      background-size= "auto 70%"
+                          background-position="bottom 5px right"
+                          background-color="red"
+                          
+                          message-text-alignment="center"
+                          message-background-color="transparent"
+                          message-text-transform="uppercase"
+                          message-position="top"
+                          message-text-color="#333333"
+                          message-font-size=13
+                          message-font-weight=900
+                          message-vertical-alignment="center"
+                              
+                          unit="%"
+                              
+                          hide-message="true"
+                          value-default-image = "{'url': '//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/facilities.svg'}"
+                    	  values-images="[{'url': '//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/zones.svg', 'url':'//scriptr-cdn.s3.amazonaws.com/saepio-vertical/dev/images/facilities.svg'}]",
+                          value-text-alignment="center"
+                          value-background-color="blue"
+                          value-text-color="#333333"
+                          value-font-size="23px"
+                          value-font-weight=800
+                          value-cell-size="small"
+                          value-vertical-alignment="center"
+                          info="info text"
+                          info-font-size=11
+                          info-font-weight=500
+                          info-text-color="#333333"
+                          info-background-color=""
+                          info-text-alignment="left"
+                          info-margin-top= "0"
+                          
+          >
+        </scriptr-displaycount>
+  </div>
+    
+    
+     <div class="col-xs-12 col-sm-6 mb10">
+    	<scriptr-displaycount 
+              transport="wss" 
+              api="UIComponents/dashboard/frontend/examples/displayCount/getMultipleValues"
+                              
+             			  loading-message="DASHBOARDS.OCCUPANCY.LIVE.DISPLAY_COUNT.LIVE_OCCUPNACY_LOADING_MESSAGE",
+                          icon="//scriptr-cdn.s3.amazonaws.com/saepio/dev/images/timer.png",
+                          widget-layout="vertical"
                           
                           border-size="0"
                           border-radius="5px"

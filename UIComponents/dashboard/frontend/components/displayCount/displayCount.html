@@ -6,7 +6,7 @@
 <div class="display-count {{$ctrl.wrapperClass}}" ng-if="$ctrl.value != null || $ctrl.data !=null">
     
     <div ng-if="$ctrl.widgetLayout == 'vertical'" ng-style="$ctrl.containerStyle">
-      <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "top") ? "column-reverse" : "column" }'>
+      <div class="cells-wrapper" ng-style='{"flex-direction": ($ctrl._messagePosition == "top") ? "column-reverse" : "column" }'  ng-if="!$ctrl.isMultiData">
         <section ng-style="$ctrl.valueStyle">
             <div class="cell-image" ng-if="$ctrl.valueDefaultImage && $ctrl.valueDefaultImage.url"><img ng-src="{{$ctrl.valuesImages[$index].url || $ctrl.valueDefaultImage.url}}"/></div>
             <div class="value-wrapper">
@@ -16,6 +16,17 @@
         </section>
         <section ng-if="!$ctrl.hideMessage" class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$ctrl.message}}</section>
       </div>
+       <div class="cells-wrapper"  ng-style='{"flex-direction": ($ctrl._messagePosition == "top") ? "column-reverse" : "column" }'  ng-if="$ctrl.isMultiData" >
+            <section  class="cell-value" ng-style="$ctrl.valueStyle" ng-repeat="entry in $ctrl.data track by $index"> 
+                <div class="cell-image" ng-if="$ctrl.valuesImages[$index].url || $ctrl.valueDefaultImage.url"><img ng-src="{{$ctrl.valuesImages[$index].url || $ctrl.valueDefaultImage.url}}"/></div>
+                <div class="value-wrapper">
+                        <div class="cell-value">{{entry.value}}<span ng-style="$ctrl.unitStyle">{{entry.unit || $ctrl.unit}}</span></div>
+                    	<div class="cell-info" ng-show="entry.info != '' || $ctrl.info != ''" ng-style="$ctrl.infoStyle" translate>{{entry.info || $ctrl.info}}</div>
+                </div>
+            </section>
+            <section ng-if="!$ctrl.hideMessage" class="cell-message" ng-style="$ctrl.messageStyle" translate>{{$entry.message || $ctrl.message}}</section>
+         </div>
+     
     </div>
     
 	<div ng-if="$ctrl.widgetLayout == 'horizontal'" ng-style="$ctrl.containerStyle">
