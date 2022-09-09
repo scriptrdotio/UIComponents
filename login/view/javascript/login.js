@@ -374,9 +374,11 @@ $.widget( "scriptr.loginWidget", {
         }, this));
 
         this.element.find('#forgot_password_anchor').on('click', jQuery.proxy(function(e) {
-            //alert("test")
+            // store email before switching and resetting the forms 
+            var email = $('#loginForm #id').val()
             this.switchForm('login-wrap', 'forgot-password-wrap');
-            //this.switchForm('login-wrap', 'forgot-password-wrap');
+            // carry the username to forgot password
+            $("#forgotPassForm #email").val(email)
         }, this));
         this.element.find('#back_to_login_anchor').on('click', jQuery.proxy(function(e) {
             this.switchForm('forgot-password-wrap', 'login-wrap');
