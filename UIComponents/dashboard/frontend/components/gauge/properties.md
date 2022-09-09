@@ -35,7 +35,7 @@
   pointer       | null    | show value pointer.	| bool | NO
   hide-min-max       | false    | 	hide min and max values.	| bool | NO
   hide-value       | false    | 	hide value text.	| bool | NO
-  hide-inner-shadow       | true    | 	hide inner shadow.	| bool | NO
+  show-inner-shadow       | true    | 	show/hide inner shadow.	| bool | NO
   gauge-color       | '#e9e9e9'    | 	background color of gauge element.	| string | NO
   shadow-size       | 0    | 	 inner shadow size.	| int | NO
   shadow-opacity       | 0    | 	shadow opacity, values 0 ~ 1.	| float | NO

@@ -88,7 +88,7 @@ angular
             var self = this;
             self.showSelectStream = self.api ? false: true;
             this.$onInit = function() {
-                this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/thermometer-bg.svg";
+                this.icon = (this.icon) ? this.icon : "//scriptr-cdn.s3.amazonaws.com/uicomponents/dashboard-builder/images/diskFill.svg";
                 this.loadingMessage = (this.loadingMessage) ? this.loadingMessage : "Waiting for data";
                 this.stalledDataMessage = (this.stalledDataMessage) ? this.stalledDataMessage : "No data available.";
                 this.dataFailureMessage = (this.dataFailureMessage) ? this.dataFailureMessage : "Failed to fetch data.";
@@ -400,10 +400,12 @@ angular
                         } else {
                             self.noResults = true;
                             if(self.resetDataOnConsume) {
-                                self.innerDiskRadius = null;
-                                self.stalledData = false;
+                                self.value = null;
+                                 self.noResults = true;
+                            	 self.stalledData = false;
                             }else{
-                                if(self.innerDiskRadius != null) {
+                                self.noResults = true;
+                                if(self.value != null) {
                                     self.stalledData = true;
                                 } 
                             }
@@ -411,12 +413,12 @@ angular
                         }
                     } else {
                         if(self.resetDataOnConsume) {
-                            self.innerDiskRadius = null;
+                            self.value = null;
                             self.noResults = true;
                             self.stalledData = false;
                         }else{
                             self.noResults = true;
-                            if(self.innerDiskRadius != null) {
+                            if(self.value != null) {
                                 self.stalledData = true;
                             } 
                         }
