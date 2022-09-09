@@ -56,6 +56,11 @@
   xdate-moment-format | "DD-MM-YYYY HH:mm:ss" | If parse-time is true, and no xlabel-formart or date-format was passed. We use the xdate-moment-format to parse the date using the moment library | NO | * |* | |
   api | undefined | Name of the api to get data | Required if getting data from backend | *  |  * | *
   on-format-data | undefined | Callback function to be called after data is returned from backend | NO | * | * | *
-  transport |  'wss'     | 	Method used to call api (can take "https" or "wss").	 | NO | *  |  * | *
+  transport |  null   | 	Method used to call api (can take "https" or "wss").	 | NO | *  |  * | *
   msg-tag   | null      | 	Subscribe to socket messages with tag name.		 | NO     | *  |  * | *
   api-params  | null      | 	Api parameters.  	| NO		 | *  |  * | *
+ bar-size  | null | The bar size width, if less than the calculated ratio it will be used | NO |   |  * | 
+ bar-size-ratio | 0.75| is the proportion of the width of the entire graph given to bars. It defaults to 0.75. Increase the number closer to 1 to make the bars wider, if its =1 the bars will take up the entire graph, if its > 1 bars will overlap. | NO |   |  * | 
+ bar-gap | 3 | is an integer that sets the space between bars in a single bar group. It defaults to 3. Increase it to space them further, decrease it to bring them closer together. | NO |   |  * | 
+ bar-opacity| 1 | between 0.1 & 1 default is 1 | NO |   |  * | 
+ bar-radius| [0,0,0,0] | Sets the bars radius default is [0,0,0,0]| NO |   |  * | 
