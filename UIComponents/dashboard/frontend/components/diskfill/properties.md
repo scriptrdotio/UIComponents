@@ -58,4 +58,5 @@
   api-params  | null      | 	api parameters.  					| object | NO
   fetch-data-interval |  null     | 	the refresh interval in case of https transport.	 | int | NO
   use-window-params |  null     | 	If true the widget will merge the defined api-params with the params passed in the URL query params	 | boolean | NO
+  data | null | {"value": <number>, "info": ""} | object | NO
   
