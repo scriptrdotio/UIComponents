@@ -1,5 +1,7 @@
-h3 {text-align: left;margin-bottom: 40px;padding: 0 15px;}
+.loginHeader {margin-bottom: 40px;text-align: center;}
+h3 {text-align: left;margin-top: 0;}
 h5 {padding-right: 15px;padding-left: 15px;}
+.language .form-group {text-align: left;}
 .brandImg {margin-bottom: 40px;width:30%; height: auto;}
 .cont {
 	overflow-x: hidden;
