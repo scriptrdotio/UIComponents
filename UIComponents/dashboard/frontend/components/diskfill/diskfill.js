@@ -386,8 +386,8 @@ angular
                     if(typeof self.onFormatData() == "function"){
                         data = self.onFormatData()(data, self, $rootScope);
                     }
-                    if(data != null){
-                        if(typeof data == "object" && data.value != null && !isNaN(data.value) && isFinite(data.value)){  
+                    if(data != null ){
+                        if(typeof data == "object" && typeof data.value != "undefined" && data.value != null && !isNaN(data.value) && isFinite(data.value)){  
                             self.data = angular.copy(data);
                             self.value = self.data.value;
                             if(data.info) {
@@ -411,7 +411,9 @@ angular
                             }
                             self.dataMessage = this.invalidData;
                         }
-                    } else {
+                    } 
+                    
+                   if(typeof data == "undefined" || data == null || (data != null && (typeof data.value == "undefined" || data.value == null)))  {
                         if(self.resetDataOnConsume) {
                             self.value = null;
                             self.noResults = true;
