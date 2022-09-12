@@ -88,7 +88,7 @@
 	</div>
       
     <div style="border: 1px solid red;"  class="col-xs-12 col-sm-6 mb10">
-       <div style="border: 1px solid green; width: 200px"> 
+       <div style="border: 1px solid green; width: 200px; height: 300px"> 
             <scriptr-thermometer 
             	transport="https" 
                 api="UIComponents/dashboard/frontend/examples/thermometer/getThermometerVal" 
@@ -97,7 +97,8 @@
                 step="40" 
                 unit="°C" 
                 on-format-data="vm.callback2"
-                custom-sectors='vm.customTemperatureRanges'>
+                custom-sectors='vm.customTemperatureRanges'
+                                 display-value="true">
     		</scriptr-thermometer>
       </div>
 	</div>
