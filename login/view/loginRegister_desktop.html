@@ -100,9 +100,11 @@
                   </form>
               </div>
               <div id="forgot-password-wrap" style="display: none;">
-                  <h3 data-i18n="forgot-password-title"></h3>
-                  <h5 data-i18n="forgot-password-sub-title"></h5>
                   <form id="forgotPassForm" class="loginForm">
+                      <header class="loginHeader">
+                          <h3 data-i18n="forgot-password-title"></h3>
+                          <h5 data-i18n="forgot-password-sub-title"></h5>
+                      </header>
                       <div id="errorMessage" class="error alert alert-danger hide"></div>
                       <div id="successMessage" class="success alert alert-success hide"></div>
                       <div class="form-group">
@@ -167,10 +169,12 @@
                   </div>
               </div>
               <div class="form sign-up">
-                  <div id="verification-error-div" class="col-sm-12 center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
-                  <div id="duplicate-error-div" class="col-sm-12 center-div alert fadeIn animated alert-error" style="display: none;">Duplicate Account Found : An Account with that email already exists</div>
-                  <h3 data-i18n="Create your account" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
                   <form id="registerForm" class="loginForm" >
+                      <header class="loginHeader">
+                      	<h3 data-i18n="Create your account"></h3><!--ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'-->
+                      </header>
+                      <div id="verification-error-div" class="col-sm-12 center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
+                      <div id="duplicate-error-div" class="col-sm-12 center-div alert fadeIn animated alert-error" style="display: none;">Duplicate Account Found : An Account with that email already exists</div>
                       <div class="form-group">
                           <i class="fa fa-user login-icon" aria-hidden="true"> </i>
                           <input type="text" class="form-control" id="register_firstName" name="register_firstName" data-i18n="[placeholder]register-first-name">
