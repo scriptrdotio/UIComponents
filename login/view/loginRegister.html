@@ -373,11 +373,14 @@
                 // reset forms when switching
                 $("#loginForm").bootstrapValidator('resetForm', true);
                 $('#registerForm').bootstrapValidator('resetForm', true);
-                
+                $('#registerForm').show();
                 $('#verification-error-div').hide();
-                $('#duplicate-error-div').hide();
+                $('#duplicate-error-div').hide();//verification-error-div
+                
                 $('#verification-success').hide();
-                $('#errorMessage').hide();
+                $('#errorMessage').removeClass("hide");
+                $('#successMessage').removeClass("hide");
+                
                 
             });
             $('#loginForm').loginWidget({redirectTarget: config.redirect, expiry: login.expiry, loginApi: login.loginApi, validateTokenApi: login.validateTokenApi});
