@@ -141,16 +141,22 @@ $.widget( "scriptr.loginWidget", {
                 },
                 register_phone: {
                     validators: {
+                        notEmpty: {
+                            message: 'register-phone-required-error'
+                        },
                         regexp: {
                             regexp: /^(\+|00)[1-9][0-9 \-\(\)\.]{7,32}$/i,
-                            message: 'register-phone-required-error'
+                            message: 'register-phone-validation-error'//'register-phone-required-error'
                         }
                     }
                 },
                 register_email: {
                     validators: {
-                        emailAddress: {
+                        notEmpty: {
                             message: 'register-email-required-error'
+                        },
+                        emailAddress: {
+                            message: 'register-email-validation-error'//'register-email-required-error'
                         }
                     }
                 },
@@ -375,10 +381,10 @@ $.widget( "scriptr.loginWidget", {
 
         this.element.find('#forgot_password_anchor').on('click', jQuery.proxy(function(e) {
             // store email before switching and resetting the forms 
-            var email = $('#loginForm #id').val()
+            //var email = $('#loginForm #id').val()
             this.switchForm('login-wrap', 'forgot-password-wrap');
             // carry the username to forgot password
-            $("#forgotPassForm #email").val(email)
+            //$("#forgotPassForm #email").val(email)
         }, this));
         this.element.find('#back_to_login_anchor').on('click', jQuery.proxy(function(e) {
             this.switchForm('forgot-password-wrap', 'login-wrap');
@@ -530,6 +536,7 @@ $.widget( "scriptr.loginWidget", {
                     if (data.response.result.status == "success") {
                         this.hideLoading("ForgotPass");
                         successMessageDiv.removeClass("hide");
+                        //successMessageDiv.show();
                         successMessageDiv.text($.i18n('forgot-password-success-msg'));
                         setTimeout(function() {
                             successMessageDiv.addClass("hide");
@@ -537,6 +544,7 @@ $.widget( "scriptr.loginWidget", {
                     } else {
                         this.hideLoading("ForgotPass");
                         errorMessageDiv.removeClass("hide");
+                        //errorMessageDiv.show();
                         errorMessageDiv.text($.i18n(data.response.result.errorCode));
                         setTimeout(function() {
                             errorMessageDiv.text($.i18n('INTERNAL_ERROR'));
