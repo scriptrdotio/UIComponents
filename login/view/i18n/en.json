@@ -46,6 +46,8 @@
     "register-confirm-password":"Confirm Password",
     "register-first-name-required-error":"First Name is required",
     "register-last-name-required-error":"Last Name is required",
+    "register-email-validation-error":"Email format invalid",
+    "register-phone-validation-error":"Phone format invalid",
     "register-email-required-error":"Email is required",
     "register-phone-required-error":"Phone is required",
     "register-password-required-error":"Password is required",

@@ -63,6 +63,11 @@ if(userResults.metadata.status == "success"){
                 // generate a new code and resend it by email 
                 var code = generateCode();
                 emaildata = {"name":params["fname"]+" "+params["lname"],"password":params["password"],"email":params["email"],"resend":params["resend"],"code":code,"id":params["email"]}
+                // update user data (including code )
+                var saveUser= users.save(emaildata);
+       			log.info("saveuser results "+JSON.stringify(emaildata))
+                // resend data debug
+                log.info("resending validation with data "+JSON.stringify(emaildata))
                 sendValidation(emaildata)
                 return { 
                     status: "success", 

@@ -397,7 +397,7 @@
             $('#registerForm').loginWidget({redirectTarget: config.redirect, expiry: login.expiry, registerApi: login.registerApi, validateTokenApi: login.validateTokenApi});
 
             $("#forgotPassForm").loginWidget({forgotPasswordApi: forgotPassword.forgotPasswordApi});
-            $("#resetPassForm").loginWidget({redirectResetTarget: config.loginPage, resetPasswordApi: resetPassword.resetPasswordApi});
+            $("#resetPassForm").loginWidget({redirectResetTarget: config.loginRegisterPage, resetPasswordApi: resetPassword.resetPasswordApi});
 
         }
         
