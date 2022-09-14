@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="/login/view/css/login.css">
     <link rel="stylesheet" type="text/css" href="/login/view/css/registration.css">
+    <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
+	<link rel="shortcut icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico" type="image/png">
     <script src="//code.jquery.com/jquery-1.9.1.min.js" ></script>
     <script src="//code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
@@ -87,18 +89,19 @@
       <div class="cont hidden-xs hidden-sm desktop_view">
           <div class="form sign-in">
               <div id="login-wrap" style="display: none;">
-                  <!--img src="https://www.iot-now.com/wp-content/uploads/2016/07/scriptr.png" class="brandImg" alt="Brand image" width='200px'/-->
-				  <div id="verification-success-div" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">Your account was sucessfully verified.You can now login with your information.</div>
                   <form id="loginForm">
-                      <h3 data-i18n="welcome"></h3>
-                      <div class="col-xs-12 col-lg-5 language">
-                          <div class="form-group">
-                              <img class="login-icon login-icon-language">
-                              <select class="form-control" name="langSelect" id="langSelect">
-                              </select>
+                      <header class="loginHeader">
+                          <h3 data-i18n="welcome"></h3>
+                          <div class="language">
+                              <div class="form-group">
+                                  <img class="login-icon login-icon-language">
+                                  <select class="form-control" name="langSelect" id="langSelect">
+                                  </select>
+                              </div>
                           </div>
-                      </div>
+                      </header>
                       <div class="clearfix"></div>
+                      <div id="verification-success-div" class="alert alert-success fadeIn animated" style="display: none;">Your account was sucessfully verified.You can now login with your information.</div>
                       <div id="errorMessage" class="error alert alert-danger hide"></div>
                       <div class="form-group">
                           <i class="fa fa-user login-icon" aria-hidden="true"> </i>
@@ -110,7 +113,7 @@
                       </div>
 
                       <button id="submitBtn"  class="btn btn-primary btn-block text-uppercase" data-i18n="login"></button>
-                      <span class="text-primary text-center pull-right"><a href="" id="forgot_password_anchor"><small data-i18n="forgot-password"></small></a>
+                      <span class="text-primary text-right pull-right"><a href="" id="forgot_password_anchor"><small data-i18n="forgot-password"></small></a>
                       </span>
                       <div id="loadingDiv" class="text-center" style="display:none"><i class="fa fa-spinner fa-spin fa-2x fa-fws"></i></div>
 
@@ -118,34 +121,35 @@
                   </form>
               </div>
               <div id="forgot-password-wrap" style="display: none;">
-                  <h3 data-i18n="forgot-password-title"></h3>
-                  <h5 data-i18n="forgot-password-sub-title"></h5>
                   <form id="forgotPassForm" class="loginForm">
-                      <div id="errorMessage" class="error alert alert-danger hide"></div>
-                      <div id="successMessage" class="success alert alert-success hide"></div>
+                      <header class="loginHeader">
+                          <h3 data-i18n="forgot-password-title"></h3>
+                          <h5 data-i18n="forgot-password-sub-title"></h5>
+                      </header>
+                      <div id="errorMessage" class="error alert alert-danger hide" style="display: none"></div>
+                      <div id="successMessage" class="success alert alert-success hide" style="display: none"></div>
                       <div class="form-group">
                           <i class="fa fa-user login-icon" aria-hidden="true"> </i>
                           <input class="form-control" id="email" name="email" data-i18n="[placeholder]email">
                       </div>
                       <button id="submitForgotPassBtn" class="btn btn-primary btn-block text-uppercase" data-i18n="submit"></button>
                       <div id="loadingDiv" class="text-center" style="display:none"><i class="fa fa-spinner fa-spin fa-2x fa-fws"></i></div>
-                      <span class="text-primary text-center pull-right"><a href="" id="back_to_login_anchor"><small data-i18n="back-to-login"></small></a></span>
+                      <span class="text-primary text-right pull-right"><a href="" id="back_to_login_anchor"><small data-i18n="back-to-login"></small></a></span>
                   </form>
               </div>
 
               <div id="reset-password-form-wrap" style="display:none;">
                   <form id="resetPassForm" class="loginForm">
-                      <div class="row">
-                          <h3 class="col-xs-12" data-i18n="reset-password-title" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
-                          <div class="col-xs-12 col-lg-5 language">
+                      <header class="loginHeader">
+                          <h3 data-i18n="reset-password-title"></h3>
+                          <div class="language">
                               <div class="form-group">
                                   <img class="login-icon login-icon-language">
                                   <select class="form-control" name="langSelect" id="langSelect">
                                   </select>
                               </div>
                           </div>
-                      </div>
-
+                      </header>
                       <div id="errorMessage" class="error alert alert-danger hide"></div>
                       <div id="successMessage" class="success alert alert-success hide"></div>
                       <div class="form-group">
@@ -184,13 +188,17 @@
                   </div>
               </div>
               <div class="form sign-up">
-                  <div id="verification-error-div" class="col-sm-12 center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
-                  <div id="duplicate-error-div" class="col-sm-12 center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
-                  <div id="verification-success" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">
-                      An email was sent with your verification code.
+                  <div class="loginForm" id="verification-success" style="display: none;">
+                      <div class="center-div alert fadeIn animated alert-success">
+                          An email was sent with your verification code.
+                      </div>
                   </div>
-                  <h3 id="registerForm-title" data-i18n="Create your account" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
-                  <form id="registerForm" class="loginForm" >
+                  <form id="registerForm" class="loginForm">
+                      <header class="loginHeader">
+                          <h3 id="registerForm-title" data-i18n="Create your account"></h3>
+                      </header>
+                      <div id="verification-error-div" class="center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
+                      <div id="duplicate-error-div" class="center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
                       <div class="form-group">
                           <i class="fa fa-user login-icon" aria-hidden="true"> </i>
                           <input type="text" class="form-control" id="register_firstName" name="register_firstName" data-i18n="[placeholder]register-first-name">
@@ -225,20 +233,19 @@
       <div class="cont hidden-md hidden-lg mobile_view">
           <div class="form sign-in">
               <div id="login-wrap" style="display: none;">
-                  <!--img src="https://www.iot-now.com/wp-content/uploads/2016/07/scriptr.png" class="brandImg" alt="Brand image" width='200px'/-->
-                  <div id="verification-success-div" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">Your account was sucessfully verified.You can now login with your information.</div>
-                  <h3 data-i18n="welcome"></h3>
                   <form id="loginForm">
-                      <div class="row">
-                          <div class="col-xs-12 col-lg-5 language">
+                      <header class="loginHeader">
+                          <h3 data-i18n="welcome"></h3>
+                          <div class="language">
                               <div class="form-group">
                                   <img class="login-icon login-icon-language">
                                   <select class="form-control" name="langSelect" id="langSelect">
                                   </select>
                               </div>
                           </div>
-                      </div>
+                      </header>
                       <div class="clearfix"></div>
+                      <div id="verification-success-div" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">Your account was sucessfully verified.You can now login with your information.</div>
                       <div id="errorMessage" class="error alert alert-danger hide"></div>
                       <div class="form-group">
                           <i class="fa fa-user login-icon" aria-hidden="true"> </i>
@@ -250,7 +257,7 @@
                       </div>
 
                       <button id="submitBtn"  class="btn btn-primary btn-block text-uppercase" data-i18n="login"></button>
-                      <span class="text-primary text-center pull-right"><a href="" id="forgot_password_anchor"><small data-i18n="forgot-password"></small></a>
+                      <span class="text-primary text-right pull-right"><a href="" id="forgot_password_anchor"><small data-i18n="forgot-password"></small></a>
                       </span>
                       <div id="loadingDiv" class="text-center" style="display:none"><i class="fa fa-spinner fa-spin fa-2x fa-fws"></i></div>
 
@@ -258,9 +265,11 @@
                   </form>
               </div>
               <div id="forgot-password-wrap" style="display: none;">
-                  <h3 data-i18n="forgot-password-title"></h3>
-                  <h5 data-i18n="forgot-password-sub-title"></h5>
                   <form id="forgotPassForm" class="loginForm">
+                      <header class="headerLogin">
+                          <h3 data-i18n="forgot-password-title"></h3>
+                          <h5 data-i18n="forgot-password-sub-title"></h5>
+                      </header>
                       <div id="errorMessage" class="error alert alert-danger hide"></div>
                       <div id="successMessage" class="success alert alert-success hide"></div>
                       <div class="form-group">
@@ -275,16 +284,16 @@
 
               <div id="reset-password-form-wrap" style="display:none;">
                   <form id="resetPassForm" class="loginForm">
-                      <div class="row">
-                          <h3 class="col-xs-12" data-i18n="reset-password-title" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
-                          <div class="col-xs-12 col-lg-5 language">
+                      <header class="headerLogin">
+                          <h3 data-i18n="reset-password-title"></h3>
+                          <div class="language">
                               <div class="form-group">
                                   <img class="login-icon login-icon-language">
                                   <select class="form-control" name="langSelect" id="langSelect">
                                   </select>
                               </div>
                           </div>
-                      </div>
+                      </header>
 
                       <div id="errorMessage" class="error alert alert-danger hide"></div>
                       <div id="successMessage" class="success alert alert-success hide"></div>
@@ -306,17 +315,18 @@
               </div>
 
               <div id="registration-form-wrap" style="display:none;">
-                       <div class="row">
-                      	<h3 id="registerForm-title" data-i18n="Create your account" ng-class='{"col-lg-7": vm.showLang, "col-lg-12" :!vm.showLang}'></h3>
-                        <div id="verification-error-div" class="col-sm-12 center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
-                        <div id="duplicate-error-div" class="col-sm-12 center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
-                      	<div id="verification-success" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">
-                      		An email was sent with your verification code.
-                  	  	</div>
-                      </div>
+                  <div id="verification-success" class="loginForm" style="display:none;">
+                  	<div class="center-div alert fadeIn animated alert-success" >
+                        An email was sent with your verification code.
+                    </div>
+                  </div>
                   <form id="registerForm" class="loginForm"><!-- registration-form -->
-
-
+                      <header class="headerLogin">
+                          <h3 id="registerForm-title" data-i18n="Create your account"></h3>
+                      </header>
+                      <div id="verification-error-div" class="center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
+                      <div id="duplicate-error-div" class="center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
+                      
                       <div class="form-group">
                           <i class="fa fa-user login-icon" aria-hidden="true"> </i>
                           <input type="text" class="form-control" id="register_firstName" name="register_firstName" data-i18n="[placeholder]register-first-name">
@@ -347,12 +357,12 @@
           </div>
           <div class="sub-cont">
               <div class="formWrapper">
-                  <div class="col-xs-12 signup_block">
+                  <div class="signup_block">
                       <h3>New here?</h3>
                       <p>Sign up and discover great amount of new opportunities!</p>
                       <button class="outlined-btn" id="signup_anchor">Sign Up</button>
                   </div>
-                  <div class="col-xs-12 signin_block">
+                  <div class="signin_block">
                       <h3>One of us?</h3>
                       <p>If you already have an account, just sign in. We've missed you!</p>
                       <button class="outlined-btn" id="signin_anchor">Sign In</button>
