@@ -530,13 +530,13 @@ $.widget( "scriptr.loginWidget", {
             dataType: 'json',
             success: jQuery.proxy(function(data) {
                 validator.resetForm();
-                var errorMessageDiv = this.element.find("#errorMessage");
-                var successMessageDiv = this.element.find("#successMessage");
+                var errorMessageDiv = $("#forgot-password-wrap #errorMessage");
+                var successMessageDiv = $("#forgot-password-wrap #successMessage");
                 if (data.response.metadata.status == "success") { //script could fail for unexpected reasons.
                     if (data.response.result.status == "success") {
                         this.hideLoading("ForgotPass");
                         successMessageDiv.removeClass("hide");
-                        //successMessageDiv.show();
+                        successMessageDiv.show();
                         successMessageDiv.text($.i18n('forgot-password-success-msg'));
                         setTimeout(function() {
                             successMessageDiv.addClass("hide");
@@ -544,7 +544,7 @@ $.widget( "scriptr.loginWidget", {
                     } else {
                         this.hideLoading("ForgotPass");
                         errorMessageDiv.removeClass("hide");
-                        //errorMessageDiv.show();
+                        errorMessageDiv.show();
                         errorMessageDiv.text($.i18n(data.response.result.errorCode));
                         setTimeout(function() {
                             errorMessageDiv.text($.i18n('INTERNAL_ERROR'));
