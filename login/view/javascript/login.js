@@ -444,9 +444,11 @@ $.widget( "scriptr.loginWidget", {
                             console.log("verification pending")
                             // show verification message 
                             $('#verification-error-div').show();
+                            $("#registerForm").scrollTop( 0 );
                         }else if(data.response.result && data.response.result.errorCode == "DUPLICATE_USER"){
                             // show duplicate user message
                             $('#duplicate-error-div').show();
+                            $("#registerForm").scrollTop( 0 );
                         }
                     }
                 }else{
