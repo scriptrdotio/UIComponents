@@ -425,7 +425,7 @@ $.widget( "scriptr.loginWidget", {
                 $('#verification-error-div').hide();//verification-success
                 $('#duplicate-error-div').hide();
                 $('#verification-success').hide();
-                $('#errorMessage').hide();
+                $('#errorMessage').removeClass("hide");//.hide();
                 
                 if(data.response.metadata.status == "success"){ //script could fail for unexpected reasons.
                     if(data.response.result && data.response.result.status == "success"){
@@ -485,24 +485,28 @@ $.widget( "scriptr.loginWidget", {
             dataType: 'json',
             success: jQuery.proxy(function(data) {
                 validator.resetForm();
-                var errorMessageDiv = 	this.element.find("#errorMessage");
+                var errorMessageDiv = $("#errorMessage");//this.element.find("#errorMessage");
                 if(data.response.metadata.status == "success"){ //script could fail for unexpected reasons.
                     if(data.response.result.metadata && data.response.result.metadata.status == "success"){
                         localStorage.user = JSON.stringify(data.response.result.result.user);
                         location.href= this.redirectTarget;
                     }else{
                         this.hideLoading();
+                        errorMessageDiv.show();
                         errorMessageDiv.removeClass("hide");
                         errorMessageDiv.text($.i18n('invalid-login-credentials'));
                         setTimeout(function() {
                             errorMessageDiv.addClass("hide");
+                            errorMessageDiv.hide();
                         }, 5000);
                     }
                 }else{
+                    errorMessageDiv.show();
                     errorMessageDiv.removeClass("hide");
                     errorMessageDiv.text($.i18n('INTERNAL_ERROR'));
                     setTimeout(function() {
                         errorMessageDiv.addClass("hide");
+                        errorMessageDiv.hide();
                     }, 5000);
                 }
             },this), error:jQuery.proxy(function(){
