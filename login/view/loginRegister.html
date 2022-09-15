@@ -101,8 +101,10 @@
                           </div>
                       </header>
                       <div class="clearfix"></div>
-                      <div id="verification-success-div" class="alert alert-success fadeIn animated" style="display: none;">Your account was sucessfully verified.You can now login with your information.</div>
-                      <div id="errorMessage" class="error alert alert-danger hide" style="display: none;"></div>
+                      <section class="alertMsgs">
+                          <div id="verification-success-div" class="alert alert-success fadeIn animated" style="display: none;">Your account was sucessfully verified.You can now login with your information.</div>
+                          <div id="errorMessage" class="error alert alert-danger hide" style="display: none;"></div>
+                      </section>
                       <form id="loginForm">
                           <div class="form-group">
                               <i class="fa fa-user login-icon" aria-hidden="true"> </i>
@@ -128,8 +130,10 @@
                           <h3 data-i18n="forgot-password-title"></h3>
                           <h5 data-i18n="forgot-password-sub-title"></h5>
                       </header>
-                      <div id="errorMessage" class="error alert alert-danger hide" style="display: none"></div>
-                      <div id="successMessage" class="success alert alert-success hide" style="display: none"></div>
+                      <section class="alertMsgs">
+                          <div id="errorMessage" class="error alert alert-danger hide" style="display: none"></div>
+                          <div id="successMessage" class="success alert alert-success hide" style="display: none"></div>
+                      </section>
                       <form id="forgotPassForm">
                           <div class="form-group">
                               <i class="fa fa-user login-icon" aria-hidden="true"> </i>
@@ -154,8 +158,10 @@
                               </div>
                           </div>
                       </header>
-                      <div id="errorMessage" class="error alert alert-danger hide" style="display: none;"></div>
-                      <div id="successMessage" class="success alert alert-success hide" style="display: none;"></div>
+                      <section class="alertMsgs">
+                          <div id="errorMessage" class="error alert alert-danger hide" style="display: none;"></div>
+                          <div id="successMessage" class="success alert alert-success hide" style="display: none;"></div>
+                      </section>
                       <form id="resetPassForm">
                           <div class="form-group">
                               <i class="fa fa-user login-icon" aria-hidden="true"> </i>
@@ -195,15 +201,19 @@
               </div>
               <div class="form sign-up">
                   <article class="loginForm">
-                      <div class="center-div alert fadeIn animated alert-success" id="verification-success" style="display: none;">
-                          An email was sent with your verification code.
-                      </div>
+                      <section class="alertMsgs">
+                          <div class="center-div alert fadeIn animated alert-success" id="verification-success" style="display: none;">
+                              An email was sent with your verification code.
+                          </div>
+                      </section>
                       <form id="registerForm">
                           <header class="loginHeader">
                               <h3 id="registerForm-title" data-i18n="Create your account"></h3>
                           </header>
-                          <div id="verification-error-div" class="center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
-                          <div id="duplicate-error-div" class="center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
+                          <section class="alertMsgs">
+                              <div id="verification-error-div" class="center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
+                              <div id="duplicate-error-div" class="center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
+                          </section>
                           <div class="form-group">
                               <i class="fa fa-user login-icon" aria-hidden="true"> </i>
                               <input type="text" class="form-control" id="register_firstName" name="register_firstName" data-i18n="[placeholder]register-first-name">
@@ -251,8 +261,10 @@
                           </div>
                       </header>
                       <div class="clearfix"></div>
-                      <div id="verification-success-div" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">Your account was sucessfully verified.You can now login with your information.</div>
-                      <div id="errorMessage" class="error alert alert-danger hide"></div>
+                      <section class="alertMsgs">
+                          <div id="verification-success-div" class="col-sm-12 center-div alert fadeIn animated alert-success" style="display: none;">Your account was sucessfully verified.You can now login with your information.</div>
+                          <div id="errorMessage" class="error alert alert-danger hide"></div>
+                      </section>
                       <form id="loginForm">
                           <div class="form-group">
                               <i class="fa fa-user login-icon" aria-hidden="true"> </i>
@@ -278,8 +290,10 @@
                           <h3 data-i18n="forgot-password-title"></h3>
                           <h5 data-i18n="forgot-password-sub-title"></h5>
                       </header>
-                      <div id="errorMessage" class="error alert alert-danger hide"></div>
-                      <div id="successMessage" class="success alert alert-success hide"></div>
+                      <section class="alertMsgs">
+                          <div id="errorMessage" class="error alert alert-danger hide"></div>
+                          <div id="successMessage" class="success alert alert-success hide"></div>
+                      </section>
                       <form id="forgotPassForm">
                           <div class="form-group">
                               <i class="fa fa-user login-icon" aria-hidden="true"> </i>
@@ -304,9 +318,10 @@
                               </div>
                           </div>
                       </header>
-
-                      <div id="errorMessage" class="error alert alert-danger hide"></div>
-                      <div id="successMessage" class="success alert alert-success hide"></div>
+                      <section class="alertMsgs">
+                          <div id="errorMessage" class="error alert alert-danger hide"></div>
+                          <div id="successMessage" class="success alert alert-success hide"></div>
+                      </section>
                       <form id="resetPassForm">
                           <div class="form-group">
                               <i class="fa fa-user login-icon" aria-hidden="true"> </i>
@@ -327,17 +342,20 @@
               </div>
 
               <div id="registration-form-wrap" style="display:none;">
-                  <article class="loginForm">
-                  	<div class="center-div alert fadeIn animated alert-success" id="verification-success" style="display:none;">
-                        An email was sent with your verification code.
-                    </div>
+                  <article class="loginForm">\
+                      <section class="alertMsgs">
+                        <div class="center-div alert fadeIn animated alert-success" id="verification-success" style="display:none;">
+                            An email was sent with your verification code.
+                        </div>
+                      </section>
                       <form id="registerForm"><!-- registration-form -->
                           <header class="headerLogin">
                               <h3 id="registerForm-title" data-i18n="Create your account"></h3>
                           </header>
-                          <div id="verification-error-div" class="center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
-                          <div id="duplicate-error-div" class="center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
-
+                          <section class="alertMsgs">
+                              <div id="verification-error-div" class="center-div alert fadeIn animated alert-warning" style="display: none;">The account has already been registered but not verified. <a id="verification_email_anchor" href>Resend</a> the verification email.</div>
+                              <div id="duplicate-error-div" class="center-div alert fadeIn animated alert-danger" style="display: none;">Duplicate account found : An account with this email already exists</div>
+                          </section>
                           <div class="form-group">
                               <i class="fa fa-user login-icon" aria-hidden="true"> </i>
                               <input type="text" class="form-control" id="register_firstName" name="register_firstName" data-i18n="[placeholder]register-first-name">
