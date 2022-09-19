@@ -595,12 +595,13 @@ $.widget( "scriptr.loginWidget", {
             dataType: 'json',
             success: jQuery.proxy(function(data) {
                 validator.resetForm();
-                var errorMessageDiv = 	this.element.find("#errorMessage");
-                var successMessageDiv = 	this.element.find("#successMessage");
+                var errorMessageDiv = 	$("#reset-password-form-wrap #errorMessage");
+                var successMessageDiv = 	$("#reset-password-form-wrap #successMessage");
                 if(data.response.metadata.status == "success"){ //script could fail for unexpected reasons.
                     if(data.response.result.status == "success"){
                         this.hideLoading("ResetPassword");
                         successMessageDiv.removeClass("hide");
+                        //successMessageDiv.show();
                         successMessageDiv.text($.i18n('reset-password-success-msg'));
                         setTimeout(function() {
                             successMessageDiv.addClass("hide");
