@@ -601,7 +601,7 @@ $.widget( "scriptr.loginWidget", {
                     if(data.response.result.status == "success"){
                         this.hideLoading("ResetPassword");
                         successMessageDiv.removeClass("hide");
-                        //successMessageDiv.show();
+                        successMessageDiv.show();
                         successMessageDiv.text($.i18n('reset-password-success-msg'));
                         setTimeout(function() {
                             successMessageDiv.addClass("hide");
