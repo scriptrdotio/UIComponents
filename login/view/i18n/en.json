@@ -51,7 +51,7 @@
     "register-email-required-error":"Email is required",
     "register-phone-required-error":"Phone is required",
     "register-password-required-error":"Password is required",
-    "register-confirm-password-required-error":"Password confirmation is requried",
+    "register-confirm-password-required-error":"Password confirmation is required",
     "pending-resend-btn":"Resend Verification Code",
     "registration-form" : "Sign Up",
     "login-form" : "Sign In"
