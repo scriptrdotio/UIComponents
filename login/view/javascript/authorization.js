@@ -24,6 +24,8 @@ $.widget( "scriptr.authorization", {
              this.validateTokenInterval = 30000;
         }
         
+        this.timeout = null;
+        
         this.validateToken();    
     },
     
@@ -54,7 +56,7 @@ $.widget( "scriptr.authorization", {
                 if(data.response.metadata.status == "success"){
                     this.user = data.response.result;
                     this.onTokenValid();
-                    setTimeout(jQuery.proxy(this.validateToken,this), this.validateTokenInterval);
+                    this.timeout = setTimeout(jQuery.proxy(this.validateToken,this), this.validateTokenInterval);
                 }
             },this),
             error:jQuery.proxy(function(data){
@@ -82,13 +84,17 @@ $.widget( "scriptr.authorization", {
     },
     
     logout:function(redirectTo){
+        if(this.timeout) {
+            window.clearTimeout(this.timeout)
+        }
         $.removeCookie('user',{'path':'/'});
         $.removeCookie('token',{'path':'/'});
         $.removeCookie('tokenExpiry',{'path':'/'});
         $.removeCookie('lang',{'path':'/'});
         window.localStorage.clear();
         if(redirectTo) {
-            location.href= redirectTo
+            location.href= redirectTo;
+            window.location.reload(true);
         } else {
             location.href= this.loginPage;
         }
