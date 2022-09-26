@@ -81,12 +81,16 @@ $.widget( "scriptr.authorization", {
     onTokenValid:function(){
     },
     
-    logout:function(){
+    logout:function(redirectTo){
         $.removeCookie('user',{'path':'/'});
         $.removeCookie('token',{'path':'/'});
         $.removeCookie('tokenExpiry',{'path':'/'});
         $.removeCookie('lang',{'path':'/'});
         window.localStorage.clear();
-        location.href= this.loginPage;
+        if(redirectTo) {
+            location.href= redirectTo
+        } else {
+            location.href= this.loginPage;
+        }
     }
 });
