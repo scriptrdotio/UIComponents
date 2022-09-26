@@ -1,7 +1,7 @@
 var config = {
    redirect: "/UIComponents/dashboardBuilder/index.html",
    loginPage: "/login/view/login.html",
-   loginRegisterPage:"/login/view/login.html"
+   loginRegisterPage:"/login/view/loginRegister.html"
    
 }
 
