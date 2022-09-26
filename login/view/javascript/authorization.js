@@ -76,6 +76,7 @@ $.widget( "scriptr.authorization", {
         $.removeCookie('token',{'path':'/'});
         $.removeCookie('tokenExpiry',{'path':'/'});
         $.removeCookie('lang',{'path':'/'});
+        window.localStorage.clear();
         location.href= this.loginPage;
     },
     
