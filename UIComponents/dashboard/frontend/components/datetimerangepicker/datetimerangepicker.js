@@ -27,7 +27,9 @@ angular.module("DateTimeRangePicker").component("scriptrDateTimeRangePicker", {
         "buttonClasses": "@", //(string) CSS class names that will be added to both the apply and cancel buttons.
 		"applyButtonClasses": "@", //(string) CSS class names that will be added only to the apply button.	
         "cancelButtonClasses": "@", //(string) CSS class names that will be added only to the cancel button.
-        "icon": "@"
+        "icon": "@",
+        "showDropdowns": "@",
+        "linkedCalendars": "@"
     },
     "templateUrl": "/UIComponents/dashboard/frontend/components/datetimerangepicker/datetimerangepicker.html",
     "controller": function($rootScope, $scope, $route, $routeParams, $location) {
@@ -53,6 +55,8 @@ angular.module("DateTimeRangePicker").component("scriptrDateTimeRangePicker", {
             this.timePicker24Hour = this.timePicker24Hour == "true" ? true : false;
             this.timePickerSeconds = this.timePickerSeconds == "true" ? true : false;
             this.showCustomRangeLabel = this.showCustomRangeLabel == "true" ? true : false;
+            this.showDropdowns = this.showDropdowns == "true" ? true : false;
+            this.linkedCalendars =  this.linkedCalendars == "false" ? false : true;
             
             this.dateFilter = {
                 startDate: this.startDate,
@@ -67,7 +71,9 @@ angular.module("DateTimeRangePicker").component("scriptrDateTimeRangePicker", {
             	showISOWeekNumbers: this.showISOWeekNumbers,
             	showWeekNumbers: this.showWeekNumbers,
             	singleDatePicker : this.singleDatePicker,
+                showDropdowns: this.showDropdowns,
                 timePicker: this.enableTimePicker,
+                linkedCalendars: this.linkedCalendars,
                 locale: {
                     applyClass: this.applyClass,
                     applyLabel: this.applyLabel,
