@@ -28,8 +28,8 @@ angular.module("DateTimeRangePicker").component("scriptrDateTimeRangePicker", {
 		"applyButtonClasses": "@", //(string) CSS class names that will be added only to the apply button.	
         "cancelButtonClasses": "@", //(string) CSS class names that will be added only to the cancel button.
         "icon": "@",
-        "showDropdowns": "@",
-        "linkedCalendars": "@"
+        "showDropdowns": "@", //(true/false) Show year and month select boxes above calendars to jump to a specific month and year.
+        "linkedCalendars": "@" // (true/false) When enabled, the two calendars displayed will always be for two sequential months (i.e. January and February), and both will be advanced when clicking the left or right arrows above the calendars. When disabled, the two calendars can be individually advanced and display any month/year.
     },
     "templateUrl": "/UIComponents/dashboard/frontend/components/datetimerangepicker/datetimerangepicker.html",
     "controller": function($rootScope, $scope, $route, $routeParams, $location) {
