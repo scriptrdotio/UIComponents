@@ -135,8 +135,12 @@ function sendValidation(emaildata){
     var subject = config.validationEmail["subject"];
     var body 	= config.validationEmail["body"];
     
+    var origin = request.headers.host.split(".")
+    origin.shift();
+    var domain = origin.join(".")
+        
     var subdomain = apsdb.callApi("ListSubdomains", {}, null); 
-    var link 	= "https://"+subdomain.result[0].name+"."+config.baseDomain+config.verificationPage+"?login="+emaildata.id+"&code="+emaildata.code;
+    var link 	= "https://"+subdomain.result[0].name+"."+domain+config.verificationPage+"?login="+emaildata.id+"&code="+emaildata.code;
     
     body = body.replace("<%user>", emaildata.name);
     body = body.replace("<%link>",link );
