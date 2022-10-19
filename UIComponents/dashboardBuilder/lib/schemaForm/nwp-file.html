@@ -1,53 +1,54 @@
-<div class="form-group schema-form-{{form.type}} {{form.htmlClass}} file-upload mb-lg"
-	ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-success': form.disableSuccessState !== true && hasSuccess(), 'has-feedback': form.feedback !== false }" ng-schema-file ng-if="!form.simpleImageUpload" ng-model="$$value$$" sf-changed="form" schema-validate="form">
-    <label class="control-label {{form.labelHtmlClass}}"
-		ng-class="{'sr-only': !showTitle()}" for="{{form.key.slice(-1)[0]}}">{{form.title | translate}}</label>
-    
-    <div class="row mb" ng-if="$$value$$ && $$value$$.length > 0">
-        <div class="col-sm-5 mb-sm">
-            <label title="{{ form.i18n.preview? form.i18n.preview : ('modules.upload.field.preview' | translate)}}" class="text-info">{{ form.i18n.preview? (form.i18n.preview | translate) : ('modules.upload.field.preview' | translate)}}</label>
-        </div>
-        <div class="col-sm-5 mb-sm">
-            <label title="{{ form.i18n.filename ? form.i18n.filename : ('modules.upload.field.filename' | translate)  }}" class="text-info">{{ form.i18n.filename ? (form.i18n.filename | translate) : ('modules.upload.field.filename' | translate)}}</label>
-        </div>
-        <div class="col-sm-2 mb-sm">
-            
-        </div>
-    </div>
-    <div ng-if="files" ng-repeat="file in files">
-        <div class="row mb">
-            <div class="col-sm-5 mb-sm">
-                <img ngf-src="file" class="img-thumbnail img-responsive">
-                <div class="img-placeholder" ng-class="{'show': isEmptyObject(file) || (file.$invalid && !file.$ngfBlobUrl), 'hide': !file || file.$ngfBlobUrl}">{{ form.i18n.preview? (form.i18n.nopreview | translate) : ('modules.upload.field.nopreview' | translate)}}
-                </div>
-            </div>
-            <div class="col-sm-5 mb-sm">
-                <div class="filename" title="{{ file.name }}">{{ file.name }}</div>
-            </div>
-            <div class="col-sm-2 mb-sm">
-               <div class="remove-file">
-                   <a ng-click="removeFile(file)" uib-tooltip="Remove" tooltip-placement="auto" tooltip-append-to-body="true"><i class="fa fa-times" aria-hidden="true"></i></a>
-                </div> 
-            </div>
-        </div>
-    </div>
-
-    <div class="well well-sm bg-white mb" ng-class="{'has-error border-danger': (hasError() && errorMessage(schemaError()))}">
-        <small class="text-muted" ng-show="form.description" ng-bind-html="form.description"></small>
-        <div ng-if="form.schema.format == 'singlefile'" ng-include="'singleFileUpload.html'"></div>
-        <div ng-if="form.schema.format == 'multifile'" ng-include="'multiFileUpload.html'"></div>
-        <span ng-if="hasError() || hasSuccess()" class="sr-only">{{ hasSuccess() ? '(success)' : '(error)' }}</span><div class="help-block" sf-message="form.description | translate" ng-if="!invalidFiles || invalidFiles.length <= 0"></div> 
-        <div ng-messages="invalidFile.$errorMessages" ng-messages-multiple ng-repeat="invalidFile in invalidFiles"> 
-                <div class="text-danger errorMsg" ng-message="maxSize">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong>. ({{ form.schema[invalidFile.$error].validationMessage2 | translate:invalidFile }} <strong>{{invalidFile.size / 1000000|number:1}}MB</strong>)</div>
-                <div class="text-danger errorMsg" ng-message="pattern">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong></div>
-                <div class="text-danger errorMsg" ng-message="maxItems">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile}} <strong>{{invalidFile.$errorParam}}</strong></div>
-                <div class="text-danger errorMsg" ng-message="minItems">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong></div>
-                <div class="text-danger errorMsg" ng-show="errorMsg">{{errorMsg}}</div>
-            </div>
-    </div>
-</div>
-
-<script type='text/ng-template' id="singleFileUpload.html">
+<div>
+	<div class="form-group schema-form-{{form.type}} {{form.htmlClass}} file-upload mb-lg"
+		ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-success': form.disableSuccessState !== true && hasSuccess(), 'has-feedback': form.feedback !== false }" ng-schema-file ng-if="!form.simpleImageUpload" ng-model="$$value$$" sf-changed="form" schema-validate="form">
+	    <label class="control-label {{form.labelHtmlClass}}"
+			ng-class="{'sr-only': !showTitle()}" for="{{form.key.slice(-1)[0]}}">{{form.title | translate}}</label>
+	    
+	    <div class="row mb" ng-if="$$value$$ && $$value$$.length > 0">
+	        <div class="col-sm-5 mb-sm">
+	            <label title="{{ form.i18n.preview? form.i18n.preview : ('modules.upload.field.preview' | translate)}}" class="text-info">{{ form.i18n.preview? (form.i18n.preview | translate) : ('modules.upload.field.preview' | translate)}}</label>
+	        </div>
+	        <div class="col-sm-5 mb-sm">
+	            <label title="{{ form.i18n.filename ? form.i18n.filename : ('modules.upload.field.filename' | translate)  }}" class="text-info">{{ form.i18n.filename ? (form.i18n.filename | translate) : ('modules.upload.field.filename' | translate)}}</label>
+	        </div>
+	        <div class="col-sm-2 mb-sm">
+	            
+	        </div>
+	    </div>
+	    <div ng-if="files" ng-repeat="file in files">
+	        <div class="row mb">
+	            <div class="col-sm-5 mb-sm">
+	                <img ngf-src="file" class="img-thumbnail img-responsive">
+	                <div class="img-placeholder" ng-class="{'show': isEmptyObject(file) || (file.$invalid && !file.$ngfBlobUrl), 'hide': !file || file.$ngfBlobUrl}">{{ form.i18n.preview? (form.i18n.nopreview | translate) : ('modules.upload.field.nopreview' | translate)}}
+	                </div>
+	            </div>
+	            <div class="col-sm-5 mb-sm">
+	                <div class="filename" title="{{ file.name }}">{{ file.name }}</div>
+	            </div>
+	            <div class="col-sm-2 mb-sm">
+	               <div class="remove-file">
+	                   <a ng-click="removeFile(file)" uib-tooltip="Remove" tooltip-placement="auto" tooltip-append-to-body="true"><i class="fa fa-times" aria-hidden="true"></i></a>
+	                </div> 
+	            </div>
+	        </div>
+	    </div>
+	
+	    <div class="well well-sm bg-white mb" ng-class="{'has-error border-danger': (hasError() && errorMessage(schemaError()))}">
+	        <small class="text-muted" ng-show="form.description" ng-bind-html="form.description"></small>
+	        <div ng-if="form.schema.format == 'singlefile'" ng-include="'singleFileUpload.html'"></div>
+	        <div ng-if="form.schema.format == 'multifile'" ng-include="'multiFileUpload.html'"></div>
+	        <span ng-if="hasError() || hasSuccess()" class="sr-only">{{ hasSuccess() ? '(success)' : '(error)' }}</span><div class="help-block" sf-message="form.description | translate" ng-if="!invalidFiles || invalidFiles.length <= 0"></div> 
+	        <div ng-messages="invalidFile.$errorMessages" ng-messages-multiple ng-repeat="invalidFile in invalidFiles"> 
+	                <div class="text-danger errorMsg" ng-message="maxSize">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong>. ({{ form.schema[invalidFile.$error].validationMessage2 | translate:invalidFile }} <strong>{{invalidFile.size / 1000000|number:1}}MB</strong>)</div>
+	                <div class="text-danger errorMsg" ng-message="pattern">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong></div>
+	                <div class="text-danger errorMsg" ng-message="maxItems">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile}} <strong>{{invalidFile.$errorParam}}</strong></div>
+	                <div class="text-danger errorMsg" ng-message="minItems">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong></div>
+	                <div class="text-danger errorMsg" ng-show="errorMsg">{{errorMsg}}</div>
+	            </div>
+	    </div>
+	</div>
+	
+	<script type='text/ng-template' id="singleFileUpload.html">
     <div ngf-drop ngf-select ngf-change="selectFile($files, $invalidFiles)" type="file" ngf-multiple="false" ngf-pattern="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-accept="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" ngf-drag-over-class="dragover" class="drop-box dragAndDropDescription">
         <p class="text-center" >{{form.i18n.dragorclick ? (form.i18n.dragorclick | translate):('modules.upload.descriptionSinglefile' | translate)}}</p>
     </div>
@@ -57,8 +58,8 @@
         {{form.i18n.add ? (form.i18n.add | translate ) : ('buttons.add' | translate)}}
     </button>
     
-</script>
-<script type='text/ng-template' id="multiFileUpload.html">
+	</script>
+	<script type='text/ng-template' id="multiFileUpload.html">
     <div ngf-drop ngf-select ngf-change="selectFile($files, $invalidFiles)" type="file" ngf-multiple="form.schema.format == 'multifile'" ngf-pattern="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-accept="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" ngf-drag-over-class="dragover" class="drop-box dragAndDropDescription">
         <p class="text-center">{{form.i18n.dragorclick ? (form.i18n.dragorclick | translate):('modules.upload.descriptionMultifile' | translate)}}</p>
     </div>
@@ -67,48 +68,48 @@
         <fa fw="fw" name="upload" class="mr-sm"></fa>
         {{form.i18n.add ? (form.i18n.add | translate) : ('buttons.add' | translate)}}
     </button>
-</script>
-
-
-<div class="form-group schema-form-{{form.type}} {{form.htmlClass}} simple-image-upload mb-lg"
-	ng-class="{'has-error border-danger': form.disableErrorState !== true && hasError() && errorMessage(schemaError()), 'has-success': form.disableSuccessState !== true && hasSuccess(), 'has-feedback': form.feedback !== false }"ng-schema-file ng-if="form.simpleImageUpload"  ng-model="$$value$$" sf-changed="form" schema-validate="form">
-    <label class="control-label {{form.labelHtmlClass}}"
-		ng-class="{'sr-only': !showTitle()}" for="{{form.key.slice(-1)[0]}}">{{form.title | translate}}</label>
-    <div class="upload-section">
-        <div ngf-drop ngf-select ngf-change="selectFile($files, $invalidFiles)" type="file" ngf-multiple="form.schema.format == 'multifile'" ngf-pattern="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-accept="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" ngf-drag-over-class="dragover" class="drop-box dragAndDropDescription"> 
-           <div class="default-image fas" ng-if="!$$value$$ || $$value$$.length == 0"> 
-               <img ng-if="form.schema.default" ng-src="{{form.schema.default}}" />
-               <i ng-if="!form.schema.default" class="fa fa-paperclip pdt6" aria-hidden="true"></i>
-            </div>
-            <div ng-if="$$value$$ && $$value$$.length > 0" class="uploaded-image">
-                <div class="mb">
-                    <div class="table-display">
-                        <div class="cell-display">
-                            <img ngf-src="$$value$$[0]" class="img-responsive">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="remove-file" ng-show="$$value$$ && $$value$$.length > 0">
-           <a ng-click="removeFile()" uib-tooltip="Remove Image" tooltip-placement="auto" tooltip-append-to-body="true"><i class="fa fa-times" aria-hidden="true"></i></a>
-        </div> 
-    </div>
-    <small class="text-muted" ng-show="form.description" ng-bind-html="form.description"></small>
-     <div class="help-block mb0" ng-show="uploadForm.$error.required && !uploadForm.$pristine">
-            {{ 'modules.attribute.fields.required.caption' | translate }}</div>
-        <div class="help-block mb0" ng-show="(hasError() && errorMessage(schemaError()))" ng-bind-html="(hasError() && errorMessage(schemaError()))"></div>
-
-    <span ng-if="hasError() || hasSuccess()" class="sr-only">{{ hasSuccess() ? '(success)' : '(error)' }}</span>
-    <div class="help-block" sf-message="form.description | translate" ng-if="!invalidFiles || invalidFiles.length <= 0"></div> 
-    <div ng-messages="invalidFile.$errorMessages" ng-messages-multiple ng-repeat="invalidFile in invalidFiles"> 
-        <div class="text-danger errorMsg" ng-message="maxSize">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong>. ({{ form.schema[invalidFile.$error].validationMessage2 | translate }} <strong>{{invalidFile.size / 1000000|number:1}}MB</strong>)</div>
-        <div class="text-danger errorMsg" ng-message="pattern">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong></div>
-        <div class="text-danger errorMsg" ng-message="maxItems">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong></div>
-        <div class="text-danger errorMsg" ng-message="minItems">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong></div>
-        <div class="text-danger errorMsg" ng-show="errorMsg">{{errorMsg}}</div>
-    </div>
-  </div>
-
+	</script>
+	
+	
+	<div class="form-group schema-form-{{form.type}} {{form.htmlClass}} simple-image-upload mb-lg"
+		ng-class="{'has-error border-danger': form.disableErrorState !== true && hasError() && errorMessage(schemaError()), 'has-success': form.disableSuccessState !== true && hasSuccess(), 'has-feedback': form.feedback !== false }"ng-schema-file ng-if="form.simpleImageUpload"  ng-model="$$value$$" sf-changed="form" schema-validate="form">
+	    <label class="control-label {{form.labelHtmlClass}}"
+			ng-class="{'sr-only': !showTitle()}" for="{{form.key.slice(-1)[0]}}">{{form.title | translate}}</label>
+	    <div class="upload-section">
+	        <div ngf-drop ngf-select ngf-change="selectFile($files, $invalidFiles)" type="file" ngf-multiple="form.schema.format == 'multifile'" ngf-pattern="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-accept="'{{form.schema.pattern && form.schema.pattern.mimeType ? form.schema.pattern.mimeType : undefined }}'" ngf-max-size="{{form.schema.maxSize && form.schema.maxSize.maximum ? form.schema.maxSize.maximum : undefined }}" ng-required="form.required" accept="{{form.schema.pattern && form.schema.pattern.mimeType}}" ng-model-options="form.ngModelOptions" ngf-drag-over-class="dragover" class="drop-box dragAndDropDescription"> 
+	           <div class="default-image fas" ng-if="!$$value$$ || $$value$$.length == 0"> 
+	               <img ng-if="form.schema.default" ng-src="{{form.schema.default}}" />
+	               <i ng-if="!form.schema.default" class="fa fa-paperclip pdt6" aria-hidden="true"></i>
+	            </div>
+	            <div ng-if="$$value$$ && $$value$$.length > 0" class="uploaded-image">
+	                <div class="mb">
+	                    <div class="table-display">
+	                        <div class="cell-display">
+	                            <img ngf-src="$$value$$[0]" class="img-responsive">
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="remove-file" ng-show="$$value$$ && $$value$$.length > 0">
+	           <a ng-click="removeFile()" uib-tooltip="Remove Image" tooltip-placement="auto" tooltip-append-to-body="true"><i class="fa fa-times" aria-hidden="true"></i></a>
+	        </div> 
+	    </div>
+	    <small class="text-muted" ng-show="form.description" ng-bind-html="form.description"></small>
+	     <div class="help-block mb0" ng-show="uploadForm.$error.required && !uploadForm.$pristine">
+	            {{ 'modules.attribute.fields.required.caption' | translate }}</div>
+	        <div class="help-block mb0" ng-show="(hasError() && errorMessage(schemaError()))" ng-bind-html="(hasError() && errorMessage(schemaError()))"></div>
+	
+	    <span ng-if="hasError() || hasSuccess()" class="sr-only">{{ hasSuccess() ? '(success)' : '(error)' }}</span>
+	    <div class="help-block" sf-message="form.description | translate" ng-if="!invalidFiles || invalidFiles.length <= 0"></div> 
+	    <div ng-messages="invalidFile.$errorMessages" ng-messages-multiple ng-repeat="invalidFile in invalidFiles"> 
+	        <div class="text-danger errorMsg" ng-message="maxSize">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong>. ({{ form.schema[invalidFile.$error].validationMessage2 | translate }} <strong>{{invalidFile.size / 1000000|number:1}}MB</strong>)</div>
+	        <div class="text-danger errorMsg" ng-message="pattern">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong></div>
+	        <div class="text-danger errorMsg" ng-message="maxItems">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong></div>
+	        <div class="text-danger errorMsg" ng-message="minItems">{{ form.schema[invalidFile.$error].validationMessage | translate:invalidFile }} <strong>{{invalidFile.$errorParam}}</strong></div>
+	        <div class="text-danger errorMsg" ng-show="errorMsg">{{errorMsg}}</div>
+	    </div>
+	  </div>
+</div>
 
 
