@@ -107,8 +107,12 @@ angular.module("angular-dygraphs", [
                 }, true);
 
                 scope.$watch("options", function(newOptions){
+                    if(newOptions.customGoals) 
+                        scope.customGoals = newOptions.customGoals;
+                     if(newOptions.customEvents) 
+                        scope.customEvents = newOptions.customEvents;
+                        
                     graph.updateOptions(newOptions);
-                    //resize();
                 }, true);
                 
                /** scope.zoomCallback = function(){
