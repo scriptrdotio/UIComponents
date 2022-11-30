@@ -230,7 +230,6 @@ angular
             
             this.renderDisk =  function(){
                  self.canvas = angular.element($element).find(".diskfill-canvas")[0];
-                 console.debug("Self canvas", self.canvas)
                  if(self.canvas) {
                      self.canvas.width = $element.parent().innerWidth() - angular.element($element).find(".cell-value")[0].offsetWidth;  
                      console.debug("Self canvas width", self.canvas.width)

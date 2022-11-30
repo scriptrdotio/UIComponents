@@ -96,6 +96,7 @@ angular
           "labels" : "<?",
 
           "colors" : "<?",
+          "barCustomColors": "&",
 
           "lineWidth": "@", 
           "pointSize": "@",
@@ -223,6 +224,13 @@ angular
            	 //this.type = (this.type) ? this.type : "line";
            
              this.colors = (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];
+             
+             if(typeof self.barCustomColors() == "function"){
+                 this.barColors = self.barCustomColors();
+             } else {
+                 self.barColors =  (this.colors) ? this.colors : ["#CC5464", "#FCC717", "#38B9D6", "#1DBC68", "#E90088"];
+             }
+             
              this.stacked = (this.stacked) ? this.stacked : false;
              this.resize = (this.resize) ? this.resize : true;
              // donut config

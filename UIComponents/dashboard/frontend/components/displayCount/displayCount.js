@@ -42,6 +42,7 @@ angular
         
         "valueDefaultImage": "<?",
         "valuesImages": "<?",
+        "valuesImagesBackgroundsColors": "<?", 
         "valueBackgroundPosition": "@",  
         "valueBackgroundSize": "@",
           
@@ -216,7 +217,7 @@ angular
                     'background-image': "url(\'"+this.backgroundImage+"\')",
                     'background-repeat': this.backgroundRepeat,
                     'background-position': this.backgroundPosition,
-                    'border-radius': this.borderRadius,
+                    'border-radius': this.borderRadius + "px",
                     'background-size': this.backgroundSize
                 }
                 
@@ -243,6 +244,9 @@ angular
                     'margin-bottom': this.unitMarginBottom+"px"
                 }
                 
+                this.valueImageStyle = {
+                }
+                
                 
                 this.rerender();
                 //end 
@@ -255,28 +259,53 @@ angular
             }
             this.findBackgroundColor =function(s){
                 var match=null;
-                if(typeof s.value === 'string' && s.valueBackgroundColors){
-                    match=_.find(s.valueBackgroundColors,function(e){
-                        return e.value==s.value;
-                    });
-                }else if(typeof s.value === 'number' && s.valueBackgroundColors){
-                    match=_.find(s.valueBackgroundColors.slice().reverse(),function(e){
-                        return s.value>=e.value;
-                    });
+                
+                if(!self.isMultiData) {
+                    if(typeof s.value === 'string' && s.valueBackgroundColors){
+                        match=_.find(s.valueBackgroundColors,function(e){
+                            return e.value==s.value;
+                        });
+                    }else if(typeof s.value === 'number' && s.valueBackgroundColors){
+                        match=_.find(s.valueBackgroundColors.slice().reverse(),function(e){
+                            return s.value>=e.value;
+                        });
+                    }
+                    if(match!=null){
+                        if(self.colorAcrossComponent=="true")
+                            self.containerStyle["background-color"] = match.color;
+                        else
+                            self.valueStyle["background-color"] = match.color;                    	
+                        self.valueBackgroundColor=match.color;
+                    }
+                } else {
+                    for(var i = 0; i < self.data.length && s.valuesImagesBackgroundsColors && s.valuesImagesBackgroundsColors.length > 0 ; i++) {
+                        var value = self.data[i].value;
+                        var valueImageBackroundColor = s.valuesImagesBackgroundsColors[i];
+                         if(typeof value === 'string' && isNaN(value) && valueImageBackroundColor){
+                             match=_.find(valueImageBackroundColor,function(e){
+                                 return e.value==value;
+                             });
+                         }else if((typeof value === 'number' || !isNaN(value)) && valueImageBackroundColor){
+                             match=_.find(valueImageBackroundColor.slice().reverse(),function(e){
+                                 return parseFloat(value) >=e.value;
+                             });
+                         }
+                        if(match!=null){
+                            if(self.valuesImages[i] && valueImageBackroundColor) {
+                                var style = angular.copy(s.valueImageStyle);
+                            	style.background =  match.color
+                                self.valuesImages[i].style = style;
+                            }
+                        }
+                    }
                 }
-                if(match!=null){
-                    if(self.colorAcrossComponent=="true")
-                        self.containerStyle["background-color"] = match.color;
-                    else
-                    	self.valueStyle["background-color"] = match.color;                    	
-                    self.valueBackgroundColor=match.color;
-                }
+                
             }
             this.rerender=function(){
                 self.rerenderVal=false;
                 $timeout(function(){
-                    self.findBackgroundColor(self);
-                    self.rerenderVal=true;
+                        self.findBackgroundColor(self);
+                    	self.rerenderVal=true;
                 },100);
             }
             this.$postLink = function () {

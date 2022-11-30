@@ -134,27 +134,32 @@ angular.module("angular-dygraphs", [
                         var splitX = coords[0];
                         var splitY = coords[1];
                         canvas.fillStyle = item.color;
+                        canvas.globalAlpha = (item.opacity) ? item.opacity : 1.0;
                         var topHeight = splitY - area.y;
                         if(!item.size || item.size == 0) {
                             var bottomHeight = area.h - topHeight;
                         	canvas.fillRect(area.x, splitY, area.w, bottomHeight);    
                         } else {
                             canvas.fillRect(area.x, splitY, area.w, item.size); 
-                            if(item.label) {
-                                if (item.labelFont)
-                                	canvas.font = item.labelFont;
-                                
-                                //display label at the end of the goal line
-                                canvas.textAlign = "end";
-                                //canvas.globalCompositeOperation='destination-over';
-                                canvas.fillText( item.label, area.x + area.w -2, splitY - 2); 
-                                /**if(item.axis && item.axis.toLocaleLowerCase() == "y2") {
+                        }
+                        if(item.label) {
+                            if (item.labelFont)
+                                canvas.font = item.labelFont;
+                            if (item.labelColor) {
+                                 canvas.fillStyle = item.labelColor;
+                                 canvas.globalAlpha = (item.labelOpacity) ? item.labelOpacity : 1.0;
+                            }
+                               
+
+                            //display label at the end of the goal line
+                            canvas.textAlign = "end";
+                            //canvas.globalCompositeOperation='destination-over';
+                            canvas.fillText( item.label, area.x + area.w -2, splitY - 2); 
+                            /**if(item.axis && item.axis.toLocaleLowerCase() == "y2") {
                             		canvas.fillText(item.label, (area.w + scope.options.axes.y2.axisLabelWidth), splitY)
                         		} else {
                                     canvas.fillText(item.label, (0 - scope.options.axes.y2.axisLabelWidth), splitY)
                                 }**/
-                            }
-                            
                         }
                     });
                     
