@@ -50,7 +50,7 @@ var menuItems = {
     { "id": "2", "iconClass": "fa fa-fw fa-sliders", "label": "Dashboard", "route": "#/dashboard-home", "active": "false" },
     { "id": "2", "iconClass": "fa fa-fw fa-file", "label": "Reports", "route": "#/reports", "active": "false" ,roles:["admin"]},
     { "id": "2", "iconClass": "fa fa-fw fa-warning", "label": "Alerts", "route": "#/alerts", "active": "false" },
-    { "id": "2", "iconClass": "fa fa-fw fa-info-circle", "label": "Info", "route": "#/info", "active": "false" },
+    { "id": "2", "iconClass": "fa fa-fw fa-info-circle", "label": "Info", "route": "#/info", "active": "false", isBottom: true },
   ]
 };
 
