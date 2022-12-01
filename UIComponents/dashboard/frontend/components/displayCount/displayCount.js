@@ -278,7 +278,7 @@ angular
                         self.valueBackgroundColor=match.color;
                     }
                 } else {
-                    for(var i = 0; i < self.data.length && s.valuesImagesBackgroundsColors && s.valuesImagesBackgroundsColors.length > 0 ; i++) {
+                    for(var i = 0; self.data && i < self.data.length && s.valuesImagesBackgroundsColors && s.valuesImagesBackgroundsColors.length > 0 ; i++) {
                         var value = self.data[i].value;
                         var valueImageBackroundColor = s.valuesImagesBackgroundsColors[i];
                          if(typeof value === 'string' && isNaN(value) && valueImageBackroundColor){
