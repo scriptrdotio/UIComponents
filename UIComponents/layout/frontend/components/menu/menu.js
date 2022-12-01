@@ -160,6 +160,12 @@ angular
                     "class" : "md"
                 });
             }
+            
+            this.menuHasBottomItems = function(colKey){
+                var bottomItems = _.where(this.menuItems[colKey], {"isBottom": true});
+                return (bottomItems && bottomItems.length > 0) ? true : false
+                
+            }
 
             this.getSelectedRowInCol = function(menu){
                 for(var i = 0; i < this.menuItems[menu].length; i++){

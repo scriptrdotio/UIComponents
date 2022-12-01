@@ -52,3 +52,17 @@ body {font-family: 'Josefin Sans', sans-serif; background: #f1f4f9;}
 	cursor: pointer;
 }
 
+
+
+.side-bar ul.nav.nav-pills.menu-bottom {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    bottom: 0px;
+}
+
+
+.side-bar ul.nav.nav-pills.menu-bottom >li:first-child {
+    border-top: 2px solid #fff;
+}
