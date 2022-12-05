@@ -152,7 +152,8 @@ module.exports = function(grunt) {
 		                  'dashboard/frontend/components/combo/comboTitle.html',
 		                  'dashboard/frontend/components/combo/popoverCombo.html',
 		                  'dashboard/frontend/components/scrollableTabs/tabs.html',
-		                  'dashboard/frontend/components/datetimerangepicker/datetimerangepicker.html'
+		                  'dashboard/frontend/components/datetimerangepicker/datetimerangepicker.html',
+		                  'dashboard/frontend/components/alert/alert.html'
 		                  ],
 		                
 		            dest :'build/js/templates.js',
