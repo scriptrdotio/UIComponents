@@ -88,6 +88,7 @@ angular
           "independentTicks": "@",
           "legendMapping": "<?",
           "customGoals": "<?",
+          "customRanges": "<?",
           "customEvents": "<?",
           "colorsMapping": "<?",
           "connectSeparatedPoints": "<?",
@@ -162,8 +163,9 @@ angular
              this.buildLegend.bind(self)(this.colorsMapping)
              
              this.options.customGoals = (this.customGoals) ? _.reject(this.customGoals, function(item) {return (item.goal === "" || item.goal == null)}) : [];
-            // this.goalLineColors = _.pluck(this.customGoals, "goal-line-colors");
-            // this.goals = _.pluck(this.customGoals, "goals");     
+             
+              this.options.customRanges = (this.customRanges) ? _.reject(this.customRanges, function(item) {return ( !Array.isArray(item.range) || item.range.length != 2)}) : [];
+             
              
              this.options.customEvents = (this.customEvents) ? _.reject(this.customEvents, function(item) {return (item.event === "" || item.event == null)}) : [];
              //this.eventLineColors = _.pluck(this.customEvents, "event-line-colors");

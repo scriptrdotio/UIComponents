@@ -70,9 +70,11 @@ angular.module("angular-dygraphs", [
                 
                 scope.customGoals = scope.options.customGoals;
                 scope.customEvents = scope.options.customEvents;
+                scope.customRanges = scope.options.customRanges;
                 
                 delete scope.options.customGoals;
-                delete scope.options.customEvents
+                delete scope.options.customEvents;
+                delete scope.options.customRanges
                 
                 
                 delete scope.options.legendPosition;
@@ -111,6 +113,8 @@ angular.module("angular-dygraphs", [
                         scope.customGoals = newOptions.customGoals;
                      if(newOptions.customEvents) 
                         scope.customEvents = newOptions.customEvents;
+                     if(newOptions.customRanges) 
+                        scope.customRanges = newOptions.customRanges;
                         
                     graph.updateOptions(newOptions);
                 }, true);
@@ -120,17 +124,57 @@ angular.module("angular-dygraphs", [
                 };**/
                 
 				scope.underlayCallback = function(canvas, area, g){
-                    //fill the goals colors
-                    var goals = _.sortBy(angular.copy(scope.customGoals), "goal").reverse(); //To get it in descending order
                     
+                    
+                    
+                       //fill the ranges colors
+                      var ranges = angular.copy(scope.customRanges)
+                     
+                    _.forEach(ranges, function(item){
+                        var splitDate = moment().valueOf();
+                        var axis = 0;
+                        if(item.axis && item.axis.toLocaleLowerCase() == "y2") {
+                            axis = 1;
+                        }
+                        
+                        var previousItem = item;
+                        var coordsMax = g.toDomCoords(splitDate, parseFloat(item.range[1]), axis);
+                        var splitXMax = coordsMax[0];
+                        var splitYMax = coordsMax[1];
+                        canvas.fillStyle = item.color;
+                        canvas.globalAlpha = (item.opacity) ? item.opacity : 1.0;
+                       
+                        var coordsMin = g.toDomCoords(splitDate, parseFloat(item.range[0]), axis);
+                        var splitXMin = coordsMin[0];
+                        var splitYMin = coordsMin[1];
+                        var bottomHeight = splitYMax - splitYMin;
+                        
+                        //var bottomHeight = area.h - topHeight;
+                        canvas.fillRect(area.x, splitYMin, area.w, bottomHeight);  
+                        if(item.label) {
+                            if (item.labelFont)
+                                canvas.font = item.labelFont;
+                            if (item.labelColor) {
+                                 canvas.fillStyle = item.labelColor;
+                                 canvas.globalAlpha = (item.labelOpacity) ? item.labelOpacity : 1.0;
+                            }
+                            //display label at the end of the goal line
+                            canvas.textAlign = "end";
+                            canvas.fillText( item.label, area.x + area.w -2, splitY - 2); 
+                        }
+                    });
+                     //fill the goals colors
+                      var goals = _.sortBy(angular.copy(scope.customGoals), "goal").reverse(); //To get it in descending order
+                     
                     _.forEach(goals, function(item){
                         var splitDate = moment().valueOf();
                         var axis = 0;
                         if(item.axis && item.axis.toLocaleLowerCase() == "y2") {
                             axis = 1;
                         }
+                        
+                        var previousItem = item;
                         var coords = g.toDomCoords(splitDate, parseFloat(item.goal), axis);
-                        // splitX and splitY are the coordinates on the canvas for (2006-11-19, 2.25).
                         var splitX = coords[0];
                         var splitY = coords[1];
                         canvas.fillStyle = item.color;
@@ -149,8 +193,6 @@ angular.module("angular-dygraphs", [
                                  canvas.fillStyle = item.labelColor;
                                  canvas.globalAlpha = (item.labelOpacity) ? item.labelOpacity : 1.0;
                             }
-                               
-
                             //display label at the end of the goal line
                             canvas.textAlign = "end";
                             //canvas.globalCompositeOperation='destination-over';
@@ -160,9 +202,9 @@ angular.module("angular-dygraphs", [
                         		} else {
                                     canvas.fillText(item.label, (0 - scope.options.axes.y2.axisLabelWidth), splitY)
                                 }**/
-                        }
+                      }
                     });
-                    
+
                     
                     //Fill the events colors   
                     var events = _.sortBy(angular.copy(scope.customEvents), "event").reverse(); //To get it in descending order;
