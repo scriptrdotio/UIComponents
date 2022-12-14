@@ -68,13 +68,13 @@ angular.module("angular-dygraphs", [
                 //delete scope.options.events;
                 //delete scope.options.eventLineColors;
                 
-                scope.customGoals = scope.options.customGoals;
+                scope.customGoals =  scope.options.customGoals;
                 scope.customEvents = scope.options.customEvents;
                 scope.customRanges = scope.options.customRanges;
                 
-                delete scope.options.customGoals;
-                delete scope.options.customEvents;
-                delete scope.options.customRanges
+                //delete scope.options.customGoals;
+                //delete scope.options.customEvents;
+                //delete scope.options.customRanges
                 
                 
                 delete scope.options.legendPosition;
