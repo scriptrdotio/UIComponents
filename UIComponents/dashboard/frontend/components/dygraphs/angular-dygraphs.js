@@ -56,18 +56,6 @@ angular.module("angular-dygraphs", [
                 
                 scope.options.labelsSeparateLines = true;
                 
-                //scope.goals = scope.options.goals;
-                //scope.goalLineColors = scope.options.goalLineColors;
-                
-                //delete scope.options.goals;
-                //delete scope.options.goalLineColors;
-                
-                //scope.events = scope.options.events;
-                //scope.eventLineColors = scope.options.eventLineColors;
-                
-                //delete scope.options.events;
-                //delete scope.options.eventLineColors;
-                
                 scope.customGoals =  scope.options.customGoals;
                 scope.customEvents = scope.options.customEvents;
                 scope.customRanges = scope.options.customRanges;
@@ -77,9 +65,15 @@ angular.module("angular-dygraphs", [
                 //delete scope.options.customRanges
                 
                 
-                delete scope.options.legendPosition;
+                //delete scope.options.legendPosition;
+                
+                var graphOptions = Object.assign({}, scope.options) //JSON.parse(JSON.stringify(scope.options));
+                delete graphOptions.customGoals;
+                delete graphOptions.customEvents;
+                delete graphOptions.customRanges
+                delete graphOptions.legendPosition;
 
-                var graph = new Dygraph(chartDiv, scope.data, scope.options);
+                var graph = new Dygraph(chartDiv, scope.data, graphOptions);
                 
                 graph.ready(function() {
                     if(scope.annotations && scope.data)
@@ -108,15 +102,19 @@ angular.module("angular-dygraphs", [
                     //resize();
                 }, true);
 
-                scope.$watch("options", function(newOptions){
+                scope.$watch("options", function(oldOptions, newOptions){
                     if(newOptions.customGoals) 
                         scope.customGoals = newOptions.customGoals;
                      if(newOptions.customEvents) 
                         scope.customEvents = newOptions.customEvents;
                      if(newOptions.customRanges) 
                         scope.customRanges = newOptions.customRanges;
-                        
-                    graph.updateOptions(newOptions);
+                     
+                    var graphNewOptions = Object.assign({}, newOptions)
+					delete graphNewOptions.customGoals;
+                	delete graphNewOptions.customEvents;
+                	delete graphNewOptions.customRanges
+                    graph.updateOptions(graphNewOptions);
                 }, true);
                 
                /** scope.zoomCallback = function(){
