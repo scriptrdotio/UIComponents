@@ -113,7 +113,8 @@ angular.module("angular-dygraphs", [
                     var graphNewOptions = Object.assign({}, newOptions)
 					delete graphNewOptions.customGoals;
                 	delete graphNewOptions.customEvents;
-                	delete graphNewOptions.customRanges
+                	delete graphNewOptions.customRanges;
+                    delete graphNewOptions.legendPosition;
                     graph.updateOptions(graphNewOptions);
                 }, true);
                 
