@@ -102,7 +102,7 @@ angular.module("angular-dygraphs", [
                     //resize();
                 }, true);
 
-                scope.$watch("options", function(oldOptions, newOptions){
+                scope.$watch("options", function(newOptions, oldOptions){
                     if(newOptions.customGoals) 
                         scope.customGoals = newOptions.customGoals;
                      if(newOptions.customEvents) 
