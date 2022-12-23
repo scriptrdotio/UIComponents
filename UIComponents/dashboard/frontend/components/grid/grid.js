@@ -66,7 +66,9 @@ angular
             "suppressCellSelection":"<?",
             "enableRangeSelection":"<?",
             "headerHeight": "<?",
-            "resetDataOnConsume": "<?"
+            "resetDataOnConsume": "<?",
+            "onGetRowClass": "&?",
+            "onGetNodeChildDetails": "&?"
         },
         templateUrl : '/UIComponents/dashboard/frontend/components/grid/grid.html',
         controller : function($translate, $rootScope, $scope, $window, $uibModal, $timeout, wsClient, dataStore, $routeParams) {
@@ -197,6 +199,16 @@ angular
                     rowModelType : (this.api) ? "infinite" : "",
                     rowSelection : (this.rowModelSelection) ? this.rowModelSelection : "multiple",
                     paginationPageSize : (this.paginationPageSize) ? this.paginationPageSize : 50,
+                    getRowClass: function(event) {
+                        if(self.onGetRowClass != null && typeof self.onGetRowClass() == "function"){
+                            return self.onGetRowClass()(event, self.gridOptions, self.gridApi);
+                        }
+                    }, 
+                    getNodeChildDetails: function(event) {
+                        if(self.onGetNodeChildDetails != null && typeof self.onGetNodeChildDetails() == "function"){
+                            return self.onGetNodeChildDetails()(event);
+                        }
+                    }, 
                     overlayLoadingTemplate: '<span class="ag-overlay-loading-center"><i class="fa fa-spinner fa-spin fa-fw fa-2x"></i> '+$translate.instant(this.loadingLabel)+'</span>',
                     overlayNoRowsTemplate: '<span class="ag-overlay-no-rows-center '+this.noRowsClass+'">'+$translate.instant(this.noRowsLabel)+'</span>',
                     defaultColDef : {
@@ -292,7 +304,7 @@ angular
                             return $translate.instant(params.colDef.headerName);
                         }
                         
-                    },
+                    }
                 };
                 this.fixedHeight = (typeof this.fixedHeight != 'undefined') ? this.fixedHeight : true;   
                 this.style = {};   
