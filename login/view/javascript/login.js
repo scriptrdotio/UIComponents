@@ -610,9 +610,10 @@ $.widget( "scriptr.loginWidget", {
                     }else{
                         this.hideLoading("ResetPassword");
                         errorMessageDiv.removeClass("hide");
+                        errorMessageDiv.show()
                         errorMessageDiv.text($.i18n(data.response.result.errorCode));
                         setTimeout(function() {
-                            errorMessageDiv.addClass("hide");
+                            errorMessageDiv.hide();
                         }, 5000);
                     }
                 }else{
