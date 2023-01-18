@@ -90,6 +90,9 @@ $.widget( "scriptr.loginWidget", {
             if(this.verified){
                 // show verification message
                 $("#verification-success-div").show();
+                 setTimeout(function() {
+                    $("#verification-success-div").hide();
+                }, 5000);
             }
             if(this.element.find("#langSelect") != null){
                 this.element.find("#langSelect").val(this.defaultLang);
@@ -612,6 +615,7 @@ $.widget( "scriptr.loginWidget", {
                         errorMessageDiv.removeClass("hide");
                         errorMessageDiv.show()
                         errorMessageDiv.text($.i18n(data.response.result.errorCode));
+                        console.log("ERROR"+data.response.result.errorDetail)
                         setTimeout(function() {
                             errorMessageDiv.hide();
                         }, 5000);
