@@ -71,6 +71,9 @@ if(userResults.metadata.status == "success"){
             var userRes =  users.update(updatedUser)
             log.info("userRes"+JSON.stringify(userRes))
             
+            // send welcome email 
+            sendWelcomeEmail({email:params["login"]})
+            
             log.info("nextPage success"+nextPage)
             // redirect user to login page 
             redirectToPage(config.verificationSuccessPage)//+'?verified="true"'
@@ -97,6 +100,22 @@ function redirectToPage(page){
     response.addHeaders(configuration.crossDomainHeaders);
     response.setHeader("location", page);
     response.close();*/
+}
+
+function sendWelcomeEmail(toUser){
+    var lang = toUser.lang || "en";
+        mailBody = '<br/><img src="https://ci3.googleusercontent.com/proxy/Ve5w6mc4wEhPCC8hltztwtjpU_wuKSMotr3XTCLj47Yi6Lmi2X44LW-2sHqSHvlm1-El_3P-ziTRa4q33GYGHqHBl11E-KgBtksuC-L9r3JkLWE83hCz_5mUMHGP4OkSdb4=s0-d-e1-ft#http://scriptr-cdn.s3.amazonaws.com/illumipure/dev/main-921f039/images/logo.jpg" alt="Illumipure" width="135" height="64" class="CToWUd" data-bit="iit"><br/>'
+        var mailBody = "Welcome to illumiPure Marketplace ";
+        mailBody += "<br/>";
+		mailBody += "You are one step away from accessing data to provide deeper insights to your organization!You can login to your account to access your purchased data sets.If you encounter any issues or have a specific question you can contact our support team on support@illumipure.com.Don't forget to check out our linkedIn, like us on Facebook and follow us on Twitter to get updates on our latest news.";
+		
+    	var emailConfig = {
+          "to": toUser.email,
+          "fromName": config.mail.fromName,
+          "subject": "Welcome to illumiPure Marketplace ",
+          "body": mailBody
+        };
+        sendMail(emailConfig.to, emailConfig.fromName, emailConfig.subject, emailConfig.body);
 }
 
 
